@@ -80,7 +80,7 @@ describe("projen new --from", () => {
         });
       } catch (error: any) {
         expect(error.message).toContain(
-          `Could not find '@projen/some-non-existent-package' in this registry. Please ensure that the package exists, you have access it and try again.`
+          `Could not find '@projen/some-non-existent-package' in this registry. Please ensure that the package exists, you have access it and try again.`,
         );
       }
     });
@@ -98,7 +98,7 @@ describe("projen new --from", () => {
       } catch (error: any) {
         // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
         expect(error.message).toContain(
-          `Module 'typescript' does not look like it is compatible with projen. Reason: Cannot find 'typescript/.jsii'. All projen modules must be jsii modules!`
+          `Module 'typescript' does not look like it is compatible with projen. Reason: Cannot find 'typescript/.jsii'. All projen modules must be jsii modules!`,
         );
       }
     });
@@ -202,7 +202,7 @@ describe("projen new --from", () => {
         shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
         const tarball = resolve(
           projectdir,
-          "pepperize-projen-awscdk-app-ts-0.0.333.tgz"
+          "pepperize-projen-awscdk-app-ts-0.0.333.tgz",
         );
         const normalizedTarball = normalizePersistedPath(tarball);
 
@@ -226,7 +226,7 @@ describe("projen new --from", () => {
         });
         expect(actual[".projenrc.ts"]).toBeDefined();
         expect(actual[".projenrc.ts"]).toContain(
-          `import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`
+          `import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts`,
         );
         expect(actual[".projenrc.ts"]).toContain(normalizedTarball);
       });
@@ -242,7 +242,7 @@ describe("projen new --from", () => {
         } catch (error: any) {
           // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
           expect(error.message).toContain(
-            `Could not find '${external}' in this path. Please ensure that the package exists, you have access it and try again.`
+            `Could not find '${external}' in this path. Please ensure that the package exists, you have access it and try again.`,
           );
         }
       });
@@ -254,7 +254,7 @@ describe("projen new --from", () => {
       test("is enabled", () => {
         const project = new TestProject();
         expect(synthSnapshotWithPost(project)[".postsynth"]).toContain(
-          "postsynth"
+          "postsynth",
         );
       });
 
@@ -285,7 +285,7 @@ describe("projen new --from", () => {
         });
 
         expect(actual[".projenrc.ts"]).toContain(
-          "javascript.NodePackageManager.NPM"
+          "javascript.NodePackageManager.NPM",
         );
       });
     });
@@ -456,7 +456,7 @@ describe("projen new --from", () => {
         expect(
           directorySnapshot(projectdir, {
             excludeGlobs: EXCLUDE_FROM_SNAPSHOT_EXTENDED,
-          })
+          }),
         ).toMatchSnapshot();
       });
     });
@@ -497,7 +497,7 @@ describe("projen new --from", () => {
         // THEN
         const targetDirSnapshot = directorySnapshot(
           join(projectdir, "path", "to", "mydir"),
-          { excludeGlobs: EXCLUDE_FROM_SNAPSHOT }
+          { excludeGlobs: EXCLUDE_FROM_SNAPSHOT },
         );
         expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
         expect(targetDirSnapshot["package.json"]).toBeDefined();
@@ -516,7 +516,7 @@ describe("projen new --from", () => {
             "@pepperize/projen-awscdk-app-ts@0.0.333",
             "--no-post",
           ],
-          { ...process.env, NODE_ENV: "production" }
+          { ...process.env, NODE_ENV: "production" },
         );
       });
     });
@@ -580,7 +580,7 @@ describe("python project", () => {
       expect(output[".projenrc.js"]).toBeUndefined();
       expect(output[".projenrc.ts"]).toBeDefined();
       expect(output[".projenrc.ts"]).toContain(
-        'import { python } from "projen"'
+        'import { python } from "projen"',
       );
     });
   });
@@ -629,10 +629,10 @@ describe("git", () => {
         expect(
           execCapture("git log", { cwd: projectdir })
             .toString("utf8")
-            .includes("chore: project created with projen")
+            .includes("chore: project created with projen"),
         ).toBeTruthy();
       },
-      { git: false }
+      { git: false },
     );
   });
 
@@ -654,10 +654,10 @@ describe("git", () => {
         expect(
           execCapture("git rev-parse --abbrev-ref HEAD", {
             cwd: projectdir,
-          }).toString()
+          }).toString(),
         ).toContain(defaultBranch);
       },
-      { git: false }
+      { git: false },
     );
   });
 
@@ -667,7 +667,7 @@ describe("git", () => {
         execProjenCLI(projectdir, ["new", "project", "--no-git"]);
         expect(existsSync(join(projectdir, ".git"))).toBeFalsy();
       },
-      { git: false }
+      { git: false },
     );
   });
 });
@@ -692,15 +692,15 @@ describe("regressions", () => {
         undefined,
         {
           preInstallProjen: false,
-        }
+        },
       );
 
       // Load the package.json
       const packageJson = JSON.parse(
-        readFileSync(join(projectdir, "package.json"), "utf-8")
+        readFileSync(join(projectdir, "package.json"), "utf-8"),
       );
       const packageName = Object.keys(packageJson.devDependencies).find(
-        (name) => name !== "projen"
+        (name) => name !== "projen",
       );
 
       expect(packageName).toBe("@pepperize/projen-awscdk-app-ts");
@@ -741,7 +741,7 @@ describe("regressions", () => {
       {
         chdir: true,
         tmpdir: pathWithSpace,
-      }
+      },
     );
   });
 });

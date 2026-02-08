@@ -64,7 +64,7 @@ test("recursive resolve", () => {
     resolve(() => ({
       foo: 123,
       bar: () => ["bar", "baz", { hello: () => "world" }],
-    }))
+    })),
   ).toStrictEqual({
     foo: 123,
     bar: ["bar", "baz", { hello: "world" }],

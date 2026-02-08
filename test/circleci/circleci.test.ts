@@ -36,7 +36,7 @@ test("full spec of api should be provided", () => {
           {
             run: {
               command: ["echo $HELLOW_WORLD", "echo this is multiline"].join(
-                "\n"
+                "\n",
               ),
             },
           },
@@ -109,7 +109,7 @@ test("full spec of api should be provided", () => {
     expect.objectContaining({
       "install-yarn": true,
       node_version: 16.13,
-    })
+    }),
   );
 
   const customJob = yaml.jobs["custom-job-1"];
@@ -120,7 +120,7 @@ test("full spec of api should be provided", () => {
   expect(customJob.steps).toContain("checkout");
   expect(customJob).toEqual(
     // test snake case
-    expect.objectContaining({ working_directory: "." })
+    expect.objectContaining({ working_directory: "." }),
   );
   expect(customJob).toEqual(
     // test parameters
@@ -132,7 +132,7 @@ test("full spec of api should be provided", () => {
           default: "job1Param default",
         },
       },
-    })
+    }),
   );
 });
 
@@ -203,8 +203,8 @@ test("orb with the same id can not be added", () => {
     ],
   };
   const circle = new Circleci(p, options);
-  expect(() => circle.addOrb("hello", "world:3.0")).toThrowError(
-    "Circleci Config already contains an orb named hello."
+  expect(() => circle.addOrb("hello", "world:3.0")).toThrow(
+    "Circleci Config already contains an orb named hello.",
   );
 
   const snapshot = synthSnapshot(p);

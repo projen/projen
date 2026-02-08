@@ -76,7 +76,7 @@ interface ProjenInit {
 export function renderProjenInitOptions(
   fqn: string,
   args: Record<string, any>,
-  comments: InitProjectOptionHints = InitProjectOptionHints.NONE
+  comments: InitProjectOptionHints = InitProjectOptionHints.NONE,
 ): any {
   return {
     ...args,
@@ -135,7 +135,7 @@ export class ModuleImports {
   public asEsmImports(): string[] {
     return this.all().map(
       ([moduleName, namedImports]) =>
-        `import { ${[...namedImports].join(", ")} } from "${moduleName}";`
+        `import { ${[...namedImports].join(", ")} } from "${moduleName}";`,
     );
   }
 
@@ -145,7 +145,7 @@ export class ModuleImports {
   public asCjsRequire(): string[] {
     return this.all().map(
       ([moduleName, namedImports]) =>
-        `const { ${[...namedImports].join(", ")} } = require("${moduleName}");`
+        `const { ${[...namedImports].join(", ")} } = require("${moduleName}");`,
     );
   }
 
@@ -199,7 +199,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
     } else {
       const defaultValue = option.default?.startsWith("-")
         ? undefined
-        : option.default ?? undefined;
+        : (option.default ?? undefined);
       renders[optionName] = `// ${optionName}: ${defaultValue},`;
     }
   }
@@ -233,13 +233,13 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
   // render options without defaults as comments
   if (opts.comments === InitProjectOptionHints.ALL) {
     const options = opts.type.options.filter(
-      (opt) => !opt.deprecated && opts.args[opt.name] === undefined
+      (opt) => !opt.deprecated && opts.args[opt.name] === undefined,
     );
     result.push(...renderCommentedOptionsByModule(renders, options));
   } else if (opts.comments === InitProjectOptionHints.FEATURED) {
     const options = opts.type.options.filter(
       (opt) =>
-        !opt.deprecated && opts.args[opt.name] === undefined && opt.featured
+        !opt.deprecated && opts.args[opt.name] === undefined && opt.featured,
     );
     result.push(...renderCommentedOptionsInOrder(renders, options));
   } else if (opts.comments === InitProjectOptionHints.NONE) {
@@ -255,7 +255,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
 
 function renderCommentedOptionsByModule(
   renders: Record<string, string>,
-  options: inventory.ProjectOption[]
+  options: inventory.ProjectOption[],
 ) {
   const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
 
@@ -267,16 +267,16 @@ function renderCommentedOptionsByModule(
 
   for (const parentModule in optionsByModule) {
     optionsByModule[parentModule].sort((o1, o2) =>
-      o1.name.localeCompare(o2.name)
+      o1.name.localeCompare(o2.name),
     );
   }
 
   const result = [];
   const marginSize = Math.max(
-    ...options.map((opt) => renders[opt.name].length)
+    ...options.map((opt) => renders[opt.name].length),
   );
   for (const [moduleName, optionGroup] of Object.entries(
-    optionsByModule
+    optionsByModule,
   ).sort()) {
     result.push(`${TAB}/* ${moduleName} */`);
     for (const option of optionGroup) {
@@ -284,8 +284,8 @@ function renderCommentedOptionsByModule(
       const docstring = option.docs || "No documentation found.";
       result.push(
         `${TAB}${paramRender}${makePadding(
-          marginSize - paramRender.length + 2
-        )}/* ${docstring} */`
+          marginSize - paramRender.length + 2,
+        )}/* ${docstring} */`,
       );
     }
     result.push("");
@@ -295,19 +295,19 @@ function renderCommentedOptionsByModule(
 
 function renderCommentedOptionsInOrder(
   renders: Record<string, string>,
-  options: inventory.ProjectOption[]
+  options: inventory.ProjectOption[],
 ) {
   const result = [];
   const marginSize = Math.max(
-    ...options.map((opt) => renders[opt.name].length)
+    ...options.map((opt) => renders[opt.name].length),
   );
   for (const option of options) {
     const paramRender = renders[option.name];
     const docstring = option.docs || "No documentation found.";
     result.push(
       `${TAB}${paramRender}${makePadding(
-        marginSize - paramRender.length + 2
-      )}/* ${docstring} */`
+        marginSize - paramRender.length + 2,
+      )}/* ${docstring} */`,
     );
   }
   return result;
@@ -336,7 +336,7 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
     return { js: JSON.stringify(arg) };
   } else {
     throw new Error(
-      `Unexpected option ${option.name} - cannot render a value for this option because it does not have a JSON-like type.`
+      `Unexpected option ${option.name} - cannot render a value for this option because it does not have a JSON-like type.`,
     );
   }
 }

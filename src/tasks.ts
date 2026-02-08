@@ -49,7 +49,7 @@ export class Tasks extends Component {
     const task = new Task(name, options);
     if (this._tasks[name]) {
       throw new Error(
-        `A task with the name ${name} already exists. To override it, call removeTask first and then create the new task.`
+        `A task with the name ${name} already exists. To override it, call removeTask first and then create the new task.`,
       );
     }
     this._tasks[name] = task;
@@ -65,12 +65,12 @@ export class Tasks extends Component {
    */
   public removeTask(name: string): undefined | Task {
     const dependentTasks = this.all.filter((task) =>
-      task.steps.find((step) => step.spawn == name)
+      task.steps.find((step) => step.spawn == name),
     );
     if (dependentTasks.length > 0) {
       const errList = dependentTasks.map((depTask) => depTask.name).join(", ");
       throw new Error(
-        `Unable to remove task "${name}" because the following tasks depend on it: ${errList}`
+        `Unable to remove task "${name}" because the following tasks depend on it: ${errList}`,
       );
     }
 
@@ -117,11 +117,11 @@ export class Tasks extends Component {
       });
       fs.copyFileSync(
         path.join(__dirname, "..", "lib", "run-task.cjs"),
-        path.join(this.project.outdir, "scripts", "run-task.cjs")
+        path.join(this.project.outdir, "scripts", "run-task.cjs"),
       );
       fs.chmodSync(
         path.join(this.project.outdir, "scripts", "run-task.cjs"),
-        "755"
+        "755",
       );
     }
   }
@@ -129,7 +129,7 @@ export class Tasks extends Component {
   private renderTasks() {
     const tasks: { [name: string]: TaskSpec } = {};
     for (const task of Object.values(this._tasks).sort((x, y) =>
-      x.name.localeCompare(y.name)
+      x.name.localeCompare(y.name),
     )) {
       tasks[task.name] = task._renderSpec();
     }
@@ -143,7 +143,7 @@ export class Tasks extends Component {
         ...prev,
         [curr]: this.getEnvString(curr, this._env[curr]),
       }),
-      {}
+      {},
     );
   }
 
@@ -154,7 +154,7 @@ export class Tasks extends Component {
   private getEnvString(name: string, value: any) {
     if (typeof value !== "string" && value !== undefined) {
       warn(
-        `Received non-string value for environment variable ${name}. Value will be stringified.`
+        `Received non-string value for environment variable ${name}. Value will be stringified.`,
       );
       return String(value);
     } else {

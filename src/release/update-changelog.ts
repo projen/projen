@@ -43,7 +43,7 @@ export interface UpdateChangelogOptions {
  */
 export async function updateChangelog(
   cwd: string,
-  options: UpdateChangelogOptions
+  options: UpdateChangelogOptions,
 ) {
   const inputChangelog = join(cwd, options.inputChangelog);
   const outputChangelog = join(cwd, options.outputChangelog);
@@ -53,7 +53,7 @@ export async function updateChangelog(
 
   if (!version) {
     throw new Error(
-      `Unable to determine version from ${versionFile}. Cannot proceed with changelog update. Did you run 'bump'?`
+      `Unable to determine version from ${versionFile}. Cannot proceed with changelog update. Did you run 'bump'?`,
     );
   }
 
@@ -61,7 +61,7 @@ export async function updateChangelog(
 
   if (!inputChangelogContent.includes(version)) {
     throw new Error(
-      `Supplied version ${version} was not found in input changelog. You may want to check it's content.`
+      `Supplied version ${version} was not found in input changelog. You may want to check it's content.`,
     );
   }
 
@@ -73,7 +73,7 @@ export async function updateChangelog(
   const changelogVersionSearchPattern = `[${version}]`;
   if (outputChangelogContent.indexOf(changelogVersionSearchPattern) > -1) {
     logging.info(
-      `Changelog already contains an entry for ${version}. Skipping changelog update.`
+      `Changelog already contains an entry for ${version}. Skipping changelog update.`,
     );
     return;
   }
@@ -87,6 +87,6 @@ export async function updateChangelog(
 
   utils.exec(
     `git add ${outputChangelog} && git commit -m "chore(release): ${version}"`,
-    { cwd }
+    { cwd },
   );
 }

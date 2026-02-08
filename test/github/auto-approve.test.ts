@@ -53,7 +53,7 @@ describe("auto-approve", () => {
     const snapshot = synthSnapshot(project);
 
     expect(snapshot[".github/workflows/auto-approve.yml"]).toContain(
-      "runs-on: self-hosted"
+      "runs-on: self-hosted",
     );
   });
 

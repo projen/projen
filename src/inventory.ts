@@ -125,12 +125,12 @@ export function readManifest(dir: string) {
     switch (manifest.compression) {
       case "gzip":
         manifest = JSON.parse(
-          unzipSync(fs.readFileSync(compressedFile)).toString()
+          unzipSync(fs.readFileSync(compressedFile)).toString(),
         );
         break;
       default:
         throw new Error(
-          `Unsupported compression format: ${manifest.compression}`
+          `Unsupported compression format: ${manifest.compression}`,
         );
     }
   }
@@ -174,7 +174,7 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
         const nestedDependencyFolder = path.dirname(
           require.resolve(`${dependency}/package.json`, {
             paths: [dir],
-          })
+          }),
         );
 
         if (fs.existsSync(nestedDependencyFolder)) {
@@ -221,7 +221,7 @@ export function resolveProjectType(projectFqn: string): ProjectType {
 export function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   if (!isProjectType(jsii, fqn)) {
     throw new Error(
-      `Fully qualified name "${fqn}" is not a valid project type.`
+      `Fully qualified name "${fqn}" is not a valid project type.`,
     );
   }
 
@@ -276,8 +276,8 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   ) {
     throw new Error(
       `constructor for project ${fqn} must have a single "options" argument of a struct type. got ${JSON.stringify(
-        params
-      )}`
+        params,
+      )}`,
     );
   }
 
@@ -290,7 +290,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   function addOptions(
     ofqn?: string,
     basePath: string[] = [],
-    optional = false
+    optional = false,
   ) {
     if (!ofqn) {
       return;
@@ -309,7 +309,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         throw new Error(
           `duplicate option "${prop.name}" in ${fqn} (already declared in ${
             options[prop.name].parent
-          })`
+          })`,
         );
       }
 
@@ -358,7 +358,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 function getInitialValue(
   defaultValue?: string,
   pjnew?: string,
-  isOptional: boolean = false
+  isOptional: boolean = false,
 ) {
   if (pjnew) {
     return pjnew;
@@ -424,7 +424,7 @@ function isProjectType(jsii: JsiiTypes, fqn: string) {
 
   if (!type) {
     throw new Error(
-      `Could not find project type with fqn "${fqn}" in  .jsii file.`
+      `Could not find project type with fqn "${fqn}" in  .jsii file.`,
     );
   }
 
@@ -458,7 +458,7 @@ function isProjectType(jsii: JsiiTypes, fqn: string) {
 
 function isPrimitiveArray({ collection }: JsiiPropertyType) {
   return Boolean(
-    collection?.kind === "array" && collection?.elementtype.primitive
+    collection?.kind === "array" && collection?.elementtype.primitive,
   );
 }
 
@@ -469,13 +469,13 @@ function isPrimitiveOrPrimitiveArray(type: JsiiPropertyType) {
 function checkDefaultIsParsable(
   prop: string,
   value: string,
-  type?: JsiiPropertyType
+  type?: JsiiPropertyType,
 ) {
   if (!(type && isPrimitiveOrPrimitiveArray(type))) {
     throw new Error(
       `required option "${prop}" with a @default must use primitive types (string, number and boolean) or a primitive array. type found is: ${JSON.stringify(
-        type
-      )}`
+        type,
+      )}`,
     );
   }
 
@@ -507,13 +507,13 @@ function checkDefaultIsParsable(
 
     // Parsed value does not match type
     throw new Error(
-      `cannot parse @default value for mandatory option ${prop} as a ${type}: ${parsed}`
+      `cannot parse @default value for mandatory option ${prop} as a ${type}: ${parsed}`,
     );
   } catch (e) {
     throw new Error(
       `unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${
         (e as any).message
-      }`
+      }`,
     );
   }
 }

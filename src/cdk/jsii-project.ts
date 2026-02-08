@@ -389,7 +389,7 @@ export class JsiiProject extends TypeScriptProject {
       `jsii${jsiiSuffix}`,
       `jsii-rosetta${jsiiSuffix}`,
       "jsii-diff",
-      "jsii-pacmak"
+      "jsii-pacmak",
     );
 
     this.gitignore.exclude(".jsii", "tsconfig.json");
@@ -424,7 +424,7 @@ export class JsiiProject extends TypeScriptProject {
       | JsiiDotNetTarget
       | JsiiGoTarget
       | JsiiJavaTarget
-      | NpmPublishOptions
+      | NpmPublishOptions,
   ) {
     if (!this.release) {
       return;
@@ -461,7 +461,7 @@ export class JsiiProject extends TypeScriptProject {
   private addTargetToBuild(
     language: JsiiPacmakTarget,
     packTask: Task,
-    extraJobOptions: Partial<Job>
+    extraJobOptions: Partial<Job>,
   ) {
     if (!this.buildWorkflow) {
       return;
@@ -471,7 +471,7 @@ export class JsiiProject extends TypeScriptProject {
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
       ...filteredRunsOnOptions(
         extraJobOptions.runsOn,
-        extraJobOptions.runsOnGroup
+        extraJobOptions.runsOnGroup,
       ),
       permissions: {
         contents: JobPermission.READ,
@@ -516,7 +516,7 @@ export class JsiiProject extends TypeScriptProject {
 
   private pacmakForLanguage(
     target: JsiiPacmakTarget,
-    packTask: Task
+    packTask: Task,
   ): {
     publishTools: Tools;
     bootstrapSteps: Array<Step>;
@@ -562,7 +562,7 @@ export class JsiiProject extends TypeScriptProject {
       {
         name: `Collect ${target} artifact`,
         run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
-      }
+      },
     );
 
     return {
@@ -582,8 +582,8 @@ export class JsiiProject extends TypeScriptProject {
     return options.workflowRunsOnGroup
       ? { runsOnGroup: options.workflowRunsOnGroup }
       : options.workflowRunsOn
-      ? { runsOn: options.workflowRunsOn }
-      : {};
+        ? { runsOn: options.workflowRunsOn }
+        : {};
   }
 }
 
@@ -611,13 +611,13 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
   if (options.authorAddress) {
     if (options.authorEmail && options.authorEmail !== options.authorAddress) {
       throw new Error(
-        "authorEmail is deprecated and cannot be used in conjunction with authorAddress"
+        "authorEmail is deprecated and cannot be used in conjunction with authorAddress",
       );
     }
 
     if (options.authorUrl && options.authorUrl !== options.authorAddress) {
       throw new Error(
-        "authorUrl is deprecated and cannot be used in conjunction with authorAddress."
+        "authorUrl is deprecated and cannot be used in conjunction with authorAddress.",
       );
     }
 
@@ -627,7 +627,7 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
       authorUrl = options.authorAddress;
     } else {
       throw new Error(
-        `authorAddress must be either an email address or a URL: ${options.authorAddress}`
+        `authorAddress must be either an email address or a URL: ${options.authorAddress}`,
       );
     }
   }

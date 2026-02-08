@@ -61,7 +61,7 @@ describe("Workflow Environment Variables", () => {
     // The user's env variables are merged with defaults
     expect(parsedWorkflow.jobs.build.env.CI).toEqual("false");
     expect(parsedWorkflow.jobs.build.env.NPM_TOKEN).toEqual(
-      "${{ secrets.NPM_TOKEN }}"
+      "${{ secrets.NPM_TOKEN }}",
     );
     expect(parsedWorkflow.jobs.build.env.ANOTHER_VAR).toEqual("value");
   });
@@ -179,24 +179,24 @@ describe("Workflow Environment Variables", () => {
 
     // Check release workflow
     const releaseWorkflow = YAML.parse(
-      snapshot[".github/workflows/release.yml"]
+      snapshot[".github/workflows/release.yml"],
     );
     expect(releaseWorkflow.jobs.release.env.NPM_TOKEN).toBe(
-      "${{ secrets.NPM_TOKEN }}"
+      "${{ secrets.NPM_TOKEN }}",
     );
     expect(releaseWorkflow.jobs.release.env.NPM_CONFIG_REGISTRY).toBe(
-      "https://npm.pkg.github.com"
+      "https://npm.pkg.github.com",
     );
 
     // Check upgrade workflow
     const upgradeWorkflow = YAML.parse(
-      snapshot[".github/workflows/upgrade-main.yml"]
+      snapshot[".github/workflows/upgrade-main.yml"],
     );
     expect(upgradeWorkflow.jobs.upgrade.env.NPM_TOKEN).toBe(
-      "${{ secrets.NPM_TOKEN }}"
+      "${{ secrets.NPM_TOKEN }}",
     );
     expect(upgradeWorkflow.jobs.upgrade.env.NPM_CONFIG_REGISTRY).toBe(
-      "https://npm.pkg.github.com"
+      "https://npm.pkg.github.com",
     );
   });
 });

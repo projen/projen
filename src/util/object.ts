@@ -4,13 +4,13 @@
  * @returns The same object but with no properties whose value is `null` or `undefined`
  */
 export const removeNullOrUndefinedProperties = <
-  TObj extends Record<string, any>
+  TObj extends Record<string, any>,
 >(
-  obj: TObj
+  obj: TObj,
 ): TObj => {
   return Object.fromEntries(
     Object.entries(obj).filter(
-      ([_, value]) => value !== undefined && value !== null
-    )
+      ([_, value]) => value !== undefined && value !== null,
+    ),
   ) as TObj;
 };

@@ -67,7 +67,7 @@ export class Projenrc extends ProjenrcFile {
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
     this._tsProject.defaultTask?.exec(
-      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`
+      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`,
     );
   }
 
@@ -104,7 +104,7 @@ export class Projenrc extends ProjenrcFile {
         fileExtensionPattern: this._tsProject.tsconfig?.compilerOptions?.allowJs
           ? undefined
           : "ts?(x)",
-      }
+      },
     );
   }
 
@@ -142,7 +142,7 @@ export class Projenrc extends ProjenrcFile {
     mkdirSync(dirname(rcfile), { recursive: true });
     writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
-      `Project definition file was created at ${rcfile}`
+      `Project definition file was created at ${rcfile}`,
     );
   }
 }

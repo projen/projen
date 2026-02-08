@@ -74,8 +74,8 @@ test("throw when removing a dependent task", () => {
   primary.spawn(dependent);
 
   // THEN
-  expect(() => p.removeTask("dependent")).toThrowError(
-    'Unable to remove task "dependent" because the following tasks depend on it: primary'
+  expect(() => p.removeTask("dependent")).toThrow(
+    'Unable to remove task "dependent" because the following tasks depend on it: primary',
   );
 });
 
@@ -344,7 +344,7 @@ test.each([[2], [-2]])(
         },
       },
     });
-  }
+  },
 );
 
 test("insertStep throws if the index is out of bounds", () => {

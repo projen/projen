@@ -63,7 +63,7 @@ export class Pytest extends Component {
         ...this.testMatch,
       ]
         .join(" ")
-        .trimEnd()
+        .trimEnd(),
     );
   }
 }

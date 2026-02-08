@@ -35,7 +35,7 @@ export interface MergeQueueOptions {
 export class MergeQueue extends Component {
   constructor(
     scope: IConstruct,
-    private readonly options: MergeQueueOptions = {}
+    private readonly options: MergeQueueOptions = {},
   ) {
     super(scope);
 
@@ -44,7 +44,7 @@ export class MergeQueue extends Component {
       throw new Error(
         `Cannot add ${
           new.target.name
-        } to project without GitHub enabled. Please enable GitHub for this project.`
+        } to project without GitHub enabled. Please enable GitHub for this project.`,
       );
     }
 
@@ -65,15 +65,15 @@ export class MergeQueue extends Component {
         if (
           !isSubset(
             options.autoQueueOptions?.targetBranches,
-            options.targetBranches
+            options.targetBranches,
           )
         ) {
           throw new Error(
             `autoQueueOptions.targetBranches (${JSON.stringify(
-              options.autoQueueOptions?.targetBranches
+              options.autoQueueOptions?.targetBranches,
             )} must be a subset of targetBranches (${JSON.stringify(
-              options.targetBranches
-            )})`
+              options.targetBranches,
+            )})`,
           );
         }
       }

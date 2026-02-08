@@ -21,7 +21,7 @@ test("cleanup uses cache file", () => {
   const preFiles = Object.keys(preDirSnapshot);
 
   const fileList: string[] = JSON.parse(
-    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8"),
   ).files;
 
   cleanup(p.outdir, [], []);
@@ -83,7 +83,7 @@ test("cleanup only orphaned files", () => {
   const preFiles = Object.keys(preDirSnapshot);
 
   const fileList: string[] = JSON.parse(
-    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8"),
   ).files;
 
   cleanup(p.outdir, ["keep-this"], []);
@@ -114,7 +114,7 @@ test("cleanup empty files", () => {
   const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
   const fileList: string[] = JSON.parse(
-    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8"),
   ).files;
 
   p.synth();

@@ -37,15 +37,15 @@ export class WindowsBuild extends Component {
     const onlyPrimaryStepsPatches = onlyPrimaryBuildSteps.map((stepIndex) =>
       JsonPatch.add(
         buildJobPath(`/steps/${stepIndex}/if`),
-        "matrix.runner.primary_build"
-      )
+        "matrix.runner.primary_build",
+      ),
     );
     const onlyMutationAndPrimaryStepPatches =
       onlyMutationAndPrimaryBuildSteps.map((stepIndex) =>
         JsonPatch.add(
           buildJobPath(`/steps/${stepIndex}/if`),
-          "steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build"
-        )
+          "steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build",
+        ),
       );
 
     // Setup runner matrix
@@ -73,12 +73,12 @@ export class WindowsBuild extends Component {
       // Allow builds to fail based on matrix
       JsonPatch.add(
         buildJobPath("/continue-on-error"),
-        "${{ matrix.runner.allow_failure }}"
+        "${{ matrix.runner.allow_failure }}",
       ),
 
       // Add conditions to steps that should only run on the primary build
       ...onlyMutationAndPrimaryStepPatches,
-      ...onlyPrimaryStepsPatches
+      ...onlyPrimaryStepsPatches,
     );
 
     // speed up windows build
@@ -90,7 +90,7 @@ export class WindowsBuild extends Component {
           "npm config set cache D:\\a\\_temp\\npm --global", // move the npm cache to D:
           `echo "TEMP=D:\\a\\_temp" >> $env:GITHUB_ENV`, // move the tmp dir used for projen test projects to D:
         ].join("\n"),
-      })
+      }),
     );
 
     // Add the join target job for branch protection
@@ -118,7 +118,7 @@ export class WindowsBuild extends Component {
             run: "exit 1",
           },
         ],
-      })
+      }),
     );
   }
 }

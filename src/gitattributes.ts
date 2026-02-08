@@ -130,7 +130,7 @@ export class GitAttributesFile extends FileBase {
    */
   public get hasLfsPatterns() {
     return Array.from(this.attributes.values()).some((attrs) =>
-      attrs.has("filter=lfs")
+      attrs.has("filter=lfs"),
     );
   }
 
@@ -143,7 +143,7 @@ export class GitAttributesFile extends FileBase {
   protected synthesizeContent(_: IResolver): string | undefined {
     // We can assume the file map is never empty.
     const entries = Array.from(this.attributes.entries()).sort(([l], [r]) =>
-      l.localeCompare(r)
+      l.localeCompare(r),
     );
 
     if (entries.length === 0) {
@@ -154,7 +154,7 @@ export class GitAttributesFile extends FileBase {
       ...(this.marker ? [`# ${this.marker}`] : []),
       "",
       ...entries.map(
-        ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`
+        ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`,
       ),
     ].join("\n");
   }

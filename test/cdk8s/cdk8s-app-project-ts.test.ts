@@ -40,7 +40,7 @@ test("test if cdk8s synth is possible", () => {
 
   // expect postcompile step to contain synth
   expect(
-    output[".projen/tasks.json"].tasks["post-compile"].steps
+    output[".projen/tasks.json"].tasks["post-compile"].steps,
   ).toStrictEqual([{ spawn: "synth" }]);
 
   expect(output["package.json"].dependencies).toStrictEqual({

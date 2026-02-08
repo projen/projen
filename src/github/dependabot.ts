@@ -530,12 +530,12 @@ function validateGroup(name: string, group: DependabotGroup) {
   if (group.updateTypes !== undefined) {
     if (group.updateTypes.length < 1) {
       throw new Error(
-        `Dependabot group "${name}" must not have an empty array of update types.`
+        `Dependabot group "${name}" must not have an empty array of update types.`,
       );
     }
     if (new Set(group.updateTypes).size !== group.updateTypes.length) {
       throw new Error(
-        `Dependabot group "${name}" must not have duplicate update types.`
+        `Dependabot group "${name}" must not have duplicate update types.`,
       );
     }
   }

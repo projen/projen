@@ -50,7 +50,7 @@ export class TaskWorkflow extends GithubWorkflow {
       if (options.triggers.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
         throw new Error(
-          'Trigger "issueComment" should not be used due to a security concern'
+          'Trigger "issueComment" should not be used due to a security concern',
         );
       }
 

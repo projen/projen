@@ -44,13 +44,13 @@ describe("mergeTsconfigOptions", () => {
       {
         include: ["abc"],
         compilerOptions: {},
-      }
+      },
     );
 
     expect(mergedTsconfigOptions).toEqual(
       expect.objectContaining({
         include: ["typescript.test.ts", "abc"],
-      })
+      }),
     );
   });
 
@@ -63,13 +63,13 @@ describe("mergeTsconfigOptions", () => {
       {
         exclude: ["abc"],
         compilerOptions: {},
-      }
+      },
     );
 
     expect(mergedTsconfigOptions).toEqual(
       expect.objectContaining({
         exclude: ["typescript.test.ts", "abc"],
-      })
+      }),
     );
   });
 
@@ -84,7 +84,7 @@ describe("mergeTsconfigOptions", () => {
         compilerOptions: {
           esModuleInterop: true,
         },
-      }
+      },
     );
 
     expect(mergedTsconfigOptions).toEqual(
@@ -92,7 +92,7 @@ describe("mergeTsconfigOptions", () => {
         compilerOptions: {
           esModuleInterop: true,
         },
-      })
+      }),
     );
   });
 });
@@ -120,7 +120,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
       compilerOptions: expect.objectContaining({
         esModuleInterop: true,
       }),
-    })
+    }),
   );
 
   expect(out["tsconfig.dev.json"]).toEqual(
@@ -134,7 +134,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
       compilerOptions: expect.objectContaining({
         esModuleInterop: true,
       }),
-    })
+    }),
   );
 
   expect(out["tsconfig.dev.json"]).toEqual(
@@ -148,7 +148,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
       compilerOptions: expect.objectContaining({
         esModuleInterop: true,
       }),
-    })
+    }),
   );
 });
 
@@ -346,7 +346,7 @@ describe("jestConfig", () => {
         (projectdir) => {
           fs.writeFileSync(
             path.join(projectdir, "package.json"),
-            `{"dependencies": {}}`
+            `{"dependencies": {}}`,
           );
 
           const prj = new TypeScriptProject({
@@ -376,7 +376,7 @@ describe("jestConfig", () => {
             tsconfig: "tsconfig.dev.json",
           });
         },
-        { git: false }
+        { git: false },
       );
     });
 
@@ -496,10 +496,10 @@ describe("jestConfig", () => {
       const jestConfig = snapshot["package.json"].jest;
       expect(jestConfig.preset).toStrictEqual("ts-jest");
       expect(jestConfig.globals["ts-jest"].tsconfig).toStrictEqual(
-        "tsconfig.dev.json"
+        "tsconfig.dev.json",
       );
       expect(jestConfig.globals["ts-jest"].shouldBePreserved).toStrictEqual(
-        true
+        true,
       );
     });
 
@@ -525,7 +525,7 @@ describe("jestConfig", () => {
       expect(jestConfig.preset).toStrictEqual("foo");
       expect(jestConfig.globals["ts-jest"].tsconfig).toStrictEqual("bar");
       expect(jestConfig.globals["ts-jest"].shouldBePreserved).toStrictEqual(
-        true
+        true,
       );
     });
   });
@@ -547,7 +547,7 @@ describe("jestConfig", () => {
     });
 
     expect(loggerWarnSpy).toHaveBeenCalledWith(
-      "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+      "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored.",
     );
 
     loggerWarnSpy.mockRestore();
@@ -607,7 +607,7 @@ describe("tsconfigDev", () => {
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
         steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
-      })
+      }),
     );
   });
 
@@ -626,7 +626,7 @@ describe("tsconfigDev", () => {
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
         steps: [{ exec: "ts-node --project tsconfig.json .projenrc.ts" }],
-      })
+      }),
     );
   });
 
@@ -639,9 +639,9 @@ describe("tsconfigDev", () => {
           defaultReleaseBranch: "main",
           disableTsconfig: true,
           disableTsconfigDev: true,
-        })
+        }),
     ).toThrow(
-      "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
+      "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields.",
     );
   });
 
@@ -670,7 +670,7 @@ describe("tsconfigDev", () => {
 
     expect(project.packageTask.steps.length).not.toBe(0);
     expect(loggerWarnSpy).toHaveBeenCalledWith(
-      expect.stringMatching("Force enabling `package`")
+      expect.stringMatching("Force enabling `package`"),
     );
   });
 
@@ -693,7 +693,7 @@ describe("tsconfigDev", () => {
 
       const packageJson = synthSnapshot(project)["package.json"];
       expect(packageJson.devDependencies["@types/node"]).toBe(typesVersion);
-    }
+    },
   );
 
   test("@types/node version will match the typescriptVersion", () => {
@@ -731,7 +731,7 @@ describe("only one of components can be enabled", () => {
           eslint: true,
           defaultReleaseBranch: "main",
           name: "test",
-        })
-    ).toThrowError("Only one of biome and eslint can be enabled.");
+        }),
+    ).toThrow("Only one of biome and eslint can be enabled.");
   });
 });

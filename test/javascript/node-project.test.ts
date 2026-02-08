@@ -215,7 +215,7 @@ describe("deps upgrade", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
     }).toThrow(
-      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`",
     );
   });
 
@@ -229,10 +229,10 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
+      synthSnapshot(project)[".github/workflows/upgrade-main.yml"],
     );
     expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(
-      project.autoApprove?.label
+      project.autoApprove?.label,
     );
   });
 
@@ -244,7 +244,7 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
+      synthSnapshot(project)[".github/workflows/upgrade-main.yml"],
     );
     expect(snapshot.jobs.pr).toMatchSnapshot();
   });
@@ -260,7 +260,7 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/dependabot.yml"]
+      synthSnapshot(project)[".github/dependabot.yml"],
     );
     expect(snapshot.updates[0].labels).toStrictEqual(["auto-approve"]);
   });
@@ -335,7 +335,7 @@ describe("npm publishing options", () => {
 
       // npmProvenance requires publish config to be present
       expect(
-        synthSnapshot(project)["package.json"].publishConfig
+        synthSnapshot(project)["package.json"].publishConfig,
       ).toHaveProperty("access", "public");
     });
 
@@ -357,7 +357,7 @@ describe("npm publishing options", () => {
 
       // without npmProvenance we don't need to render publishConfig
       expect(
-        synthSnapshot(project)["package.json"].publishConfig
+        synthSnapshot(project)["package.json"].publishConfig,
       ).toBeUndefined();
     });
 
@@ -389,7 +389,7 @@ describe("npm publishing options", () => {
           new NodePackage(project, {
             packageName: "my-package",
             npmAccess: NpmAccess.RESTRICTED,
-          })
+          }),
       ).toThrow(/"npmAccess" cannot be RESTRICTED for non-scoped npm package/);
     });
   });
@@ -433,9 +433,9 @@ describe("npm publishing options", () => {
 
         // Since public is not the standard access, we always expect access to be rendered
         expect(
-          synthSnapshot(project)["package.json"].publishConfig
+          synthSnapshot(project)["package.json"].publishConfig,
         ).toHaveProperty("access", "public");
-      }
+      },
     );
 
     test("custom settings", () => {
@@ -476,7 +476,7 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/path/");
     expect(packageJson(project).publishConfig).toHaveProperty(
       "registry",
-      "https://foo.bar/path/"
+      "https://foo.bar/path/",
     );
   });
 
@@ -492,20 +492,20 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.npmRegistry).toStrictEqual(
-      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(npm.npmRegistryUrl).toStrictEqual(
-      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(packageJson(project).publishConfig).toHaveProperty(
       "registry",
-      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
-      "AWS_ACCESS_KEY_ID"
+      "AWS_ACCESS_KEY_ID",
     );
     expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
-      "AWS_SECRET_ACCESS_KEY"
+      "AWS_SECRET_ACCESS_KEY",
     );
   });
 
@@ -521,20 +521,20 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.npmRegistry).toStrictEqual(
-      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(npm.npmRegistryUrl).toStrictEqual(
-      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(packageJson(project).publishConfig).toHaveProperty(
       "registry",
-      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
-      "AWS_ACCESS_KEY_ID"
+      "AWS_ACCESS_KEY_ID",
     );
     expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
-      "AWS_SECRET_ACCESS_KEY"
+      "AWS_SECRET_ACCESS_KEY",
     );
   });
 
@@ -554,13 +554,13 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
-      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
     );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
-      "OTHER_AWS_ACCESS_KEY_ID"
+      "OTHER_AWS_ACCESS_KEY_ID",
     );
     expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
-      "OTHER_AWS_SECRET_ACCESS_KEY"
+      "OTHER_AWS_SECRET_ACCESS_KEY",
     );
   });
 
@@ -581,13 +581,13 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
-      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
     );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
-      "OTHER_AWS_ACCESS_KEY_ID"
+      "OTHER_AWS_ACCESS_KEY_ID",
     );
     expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
-      "OTHER_AWS_SECRET_ACCESS_KEY"
+      "OTHER_AWS_SECRET_ACCESS_KEY",
     );
   });
 
@@ -603,7 +603,7 @@ describe("npm publishing options", () => {
         npmTokenSecret: "INVALID_VALUE",
       });
     }).toThrow(
-      '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.'
+      '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.',
     );
   });
 
@@ -619,7 +619,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages.",
     );
     expect(() => {
       new NodePackage(project, {
@@ -628,7 +628,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages.",
     );
   });
 
@@ -648,7 +648,7 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
-      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
     );
     expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
   });
@@ -670,7 +670,7 @@ describe("npm publishing options", () => {
 
     // THEN
     expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
-      CodeArtifactAuthProvider.GITHUB_OIDC
+      CodeArtifactAuthProvider.GITHUB_OIDC,
     );
     expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toBeUndefined();
@@ -693,7 +693,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+      "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact",
     );
   });
 
@@ -711,7 +711,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+      '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options',
     );
   });
 
@@ -767,10 +767,10 @@ test("extend github release workflow", () => {
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
   expect(workflow).toContain(
-    "publish_docker_hub:\n    runs-on: ubuntu-latest\n"
+    "publish_docker_hub:\n    runs-on: ubuntu-latest\n",
   );
   expect(workflow).toContain(
-    "username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}"
+    "username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}",
   );
 });
 
@@ -916,7 +916,7 @@ test("javascript subprojects do not add a Projenrc component", () => {
 
   // THEN
   const rcFiles = child.components.filter((o: Component) =>
-    o.constructor.name.toLowerCase().includes("projenrc")
+    o.constructor.name.toLowerCase().includes("projenrc"),
   );
   expect(rcFiles.length).toBe(0);
 });
@@ -972,7 +972,7 @@ test("renovatebot ignored dependency overrides", () => {
 
   project.package.addPackageResolutions(
     "axios",
-    "some-overriden-package@1.0.0"
+    "some-overriden-package@1.0.0",
   );
 
   // THEN
@@ -1007,7 +1007,7 @@ test("github: false disables github integration", () => {
   // THEN
   const output = synthSnapshot(project);
   expect(
-    Object.keys(output).filter((p) => p.startsWith(".github/"))
+    Object.keys(output).filter((p) => p.startsWith(".github/")),
   ).toStrictEqual([]);
 });
 
@@ -1022,7 +1022,7 @@ test("githubOptions.workflows:false disables github workflows but not github int
   // THEN
   const output = synthSnapshot(project);
   expect(
-    Object.keys(output).filter((p) => p.startsWith(".github/"))
+    Object.keys(output).filter((p) => p.startsWith(".github/")),
   ).toStrictEqual([".github/pull_request_template.md"]);
 });
 
@@ -1112,7 +1112,7 @@ describe("Setup bun", () => {
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(setupBunIndex(releaseWorkflow.jobs.release)).toEqual(-1);
     const upgradeWorkflow = yaml.parse(
-      output[".github/workflows/upgrade-main.yml"]
+      output[".github/workflows/upgrade-main.yml"],
     );
     expect(setupBunIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
   });
@@ -1134,15 +1134,15 @@ describe("Setup bun", () => {
 
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(setupBunIndex(releaseWorkflow.jobs.release)).toBeGreaterThanOrEqual(
-      0
+      0,
     );
     expect(setupNodeIndex(releaseWorkflow.jobs.release)).toEqual(-1);
 
     const upgradeWorkflow = yaml.parse(
-      output[".github/workflows/upgrade-main.yml"]
+      output[".github/workflows/upgrade-main.yml"],
     );
     expect(setupBunIndex(upgradeWorkflow.jobs.upgrade)).toBeGreaterThanOrEqual(
-      0
+      0,
     );
     expect(setupNodeIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
   });
@@ -1166,7 +1166,7 @@ describe("Setup pnpm", () => {
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(setupPnpmIndex(releaseWorkflow.jobs.release)).toEqual(-1);
     const upgradeWorkflow = yaml.parse(
-      output[".github/workflows/upgrade-main.yml"]
+      output[".github/workflows/upgrade-main.yml"],
     );
     expect(setupPnpmIndex(upgradeWorkflow.jobs.upgrade)).toEqual(-1);
   });
@@ -1250,7 +1250,7 @@ describe("workflowPackageCache", () => {
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(cache(releaseWorkflow.jobs.release)).toEqual(expected);
     const upgradeWorkflow = yaml.parse(
-      output[".github/workflows/upgrade-main.yml"]
+      output[".github/workflows/upgrade-main.yml"],
     );
     expect(cache(upgradeWorkflow.jobs.upgrade)).toEqual(expected);
   });
@@ -1266,7 +1266,7 @@ describe("workflowRunsOn", () => {
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
-      "ubuntu-latest"
+      "ubuntu-latest",
     );
   });
 
@@ -1281,7 +1281,7 @@ describe("workflowRunsOn", () => {
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
-      "self-hosted"
+      "self-hosted",
     );
   });
 
@@ -1376,13 +1376,14 @@ test("node project can be ejected", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(p);
-  expect(outdir["package.json"]).toMatchSnapshot();
+  const outdir = synthSnapshot(p, { parseJson: false });
+  const packageJsonParsed = JSON.parse(outdir["package.json"]);
+  expect(packageJsonParsed).toMatchSnapshot();
   expect(outdir["package.json"]).not.toContain(PROJEN_MARKER);
-  expect(outdir["package.json"]["//"]).toBeUndefined();
-  expect(outdir["package.json"].scripts.eject).toBeUndefined();
-  expect(outdir["package.json"].scripts.default).toBeUndefined();
-  expect(outdir["package.json"].devDependencies.projen).toBeUndefined();
+  expect(packageJsonParsed["//"]).toBeUndefined();
+  expect(packageJsonParsed.scripts.eject).toBeUndefined();
+  expect(packageJsonParsed.scripts.default).toBeUndefined();
+  expect(packageJsonParsed.devDependencies.projen).toBeUndefined();
   expect(outdir["scripts/run-task.cjs"]).toBeDefined();
   expect(outdir["foo/bar.json"]).not.toContain(PROJEN_MARKER);
   expect(outdir["sample.txt"]).not.toContain(PROJEN_MARKER);
@@ -1434,25 +1435,25 @@ describe("scoped private packages", () => {
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
-                defaultSecretAccessKeySecret
+                defaultSecretAccessKeySecret,
               ),
             },
           },
           { name: "Install dependencies", run: "yarn install --check-files" },
-        ])
+        ]),
       );
     });
 
     test("does not add id-token permission to build workflow", () => {
       const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
       expect(Object.keys(buildWorkflow.jobs.build.permissions)).not.toContain(
-        "id-token"
+        "id-token",
       );
     });
 
     test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
       const releaseWorkflow = yaml.parse(
-        output[".github/workflows/release.yml"]
+        output[".github/workflows/release.yml"],
       );
       expect(releaseWorkflow.jobs.release.steps).toEqual(
         expect.arrayContaining([
@@ -1462,7 +1463,7 @@ describe("scoped private packages", () => {
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
-                defaultSecretAccessKeySecret
+                defaultSecretAccessKeySecret,
               ),
             },
           },
@@ -1470,21 +1471,21 @@ describe("scoped private packages", () => {
             name: "Install dependencies",
             run: "yarn install --check-files --frozen-lockfile",
           },
-        ])
+        ]),
       );
     });
 
     test("does not add id-token permission to release workflow", () => {
       const workflow = yaml.parse(output[".github/workflows/release.yml"]);
       expect(Object.keys(workflow.jobs.release.permissions)).not.toContain(
-        "id-token"
+        "id-token",
       );
     });
 
     test("does not add id-token permission to upgrade workflow", () => {
       const workflow = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
       expect(Object.keys(workflow.jobs.upgrade.permissions)).not.toContain(
-        "id-token"
+        "id-token",
       );
     });
   });
@@ -1511,7 +1512,7 @@ describe("scoped private packages", () => {
           {
             name: "Configure AWS Credentials",
             uses: expect.stringContaining(
-              "aws-actions/configure-aws-credentials"
+              "aws-actions/configure-aws-credentials",
             ),
             with: {
               "aws-region": "us-east-2",
@@ -1527,7 +1528,7 @@ describe("scoped private packages", () => {
             name: "Install dependencies",
             run: "yarn install --check-files",
           },
-        ])
+        ]),
       );
     });
 
@@ -1536,20 +1537,20 @@ describe("scoped private packages", () => {
       expect(buildWorkflow.jobs.build.permissions).toEqual(
         expect.objectContaining({
           "id-token": "write",
-        })
+        }),
       );
     });
 
     test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
       const releaseWorkflow = yaml.parse(
-        output[".github/workflows/release.yml"]
+        output[".github/workflows/release.yml"],
       );
       expect(releaseWorkflow.jobs.release.steps).toEqual(
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
             uses: expect.stringContaining(
-              "aws-actions/configure-aws-credentials"
+              "aws-actions/configure-aws-credentials",
             ),
             with: {
               "aws-region": "us-east-2",
@@ -1565,7 +1566,7 @@ describe("scoped private packages", () => {
             name: "Install dependencies",
             run: "yarn install --check-files --frozen-lockfile",
           },
-        ])
+        ]),
       );
     });
 
@@ -1574,7 +1575,7 @@ describe("scoped private packages", () => {
       expect(workflow.jobs.release.permissions).toEqual(
         expect.objectContaining({
           "id-token": "write",
-        })
+        }),
       );
     });
 
@@ -1584,7 +1585,7 @@ describe("scoped private packages", () => {
         expect.objectContaining({
           "id-token": "write",
           contents: "read",
-        })
+        }),
       );
     });
   });
@@ -1624,7 +1625,7 @@ describe("scoped private packages", () => {
           name: "Install dependencies",
           run: "yarn install --check-files --frozen-lockfile",
         },
-      ])
+      ]),
     );
   });
 
@@ -1659,7 +1660,7 @@ describe("scoped private packages", () => {
           name: "Install dependencies",
           run: "yarn install --check-files --frozen-lockfile",
         },
-      ])
+      ]),
     );
   });
 
@@ -1682,12 +1683,12 @@ describe("scoped private packages", () => {
         {
           name: "Configure AWS Credentials",
           uses: expect.stringContaining(
-            "aws-actions/configure-aws-credentials"
+            "aws-actions/configure-aws-credentials",
           ),
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(
-              defaultSecretAccessKeySecret
+              defaultSecretAccessKeySecret,
             ),
             "aws-region": "us-east-2",
             "role-to-assume": roleToAssume,
@@ -1702,7 +1703,7 @@ describe("scoped private packages", () => {
           name: "Install dependencies",
           run: "yarn install --check-files --frozen-lockfile",
         },
-      ])
+      ]),
     );
   });
 
@@ -1717,7 +1718,7 @@ describe("scoped private packages", () => {
               scope: anotherScope,
             },
           ],
-        })
+        }),
     ).toThrow(`Scope must start with "@" in options, found ${anotherScope}`);
   });
 
@@ -1731,7 +1732,7 @@ describe("scoped private packages", () => {
               scope,
             },
           ],
-        })
+        }),
     ).toThrow("Could not get CodeArtifact details from npm Registry");
   });
 
@@ -1911,14 +1912,14 @@ describe("Subproject", () => {
     ]);
 
     const subprojectReleaseWorkflow = yaml.parse(
-      snapshot[".github/workflows/release_test-node-project.yml"]
+      snapshot[".github/workflows/release_test-node-project.yml"],
     );
     expect(
       subprojectReleaseWorkflow.jobs.release.steps.find(
-        (step: any) => step.name === "Install dependencies"
-      )["working-directory"]
+        (step: any) => step.name === "Install dependencies",
+      )["working-directory"],
     ).toEqual(
-      expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
+      expect.stringContaining("."), // NodeProject is responsible for setting the install working directory to root
     );
   });
 
@@ -1950,12 +1951,12 @@ describe("Subproject", () => {
     ]);
 
     const subprojectReleaseWorkflow = yaml.parse(
-      snapshot[".github/workflows/release_test-node-project.yml"]
+      snapshot[".github/workflows/release_test-node-project.yml"],
     );
     expect(
       subprojectReleaseWorkflow.jobs.release.steps.find(
-        (step: any) => step.name === SETUP_JOB_STEP_NAME
-      )
+        (step: any) => step.name === SETUP_JOB_STEP_NAME,
+      ),
     ).toBeDefined();
   });
 
@@ -1978,17 +1979,17 @@ describe("Subproject", () => {
     ]);
 
     const subProjecBuildWorkflow = yaml.parse(
-      snapshot[".github/workflows/build_test-node-project.yml"]
+      snapshot[".github/workflows/build_test-node-project.yml"],
     );
     expect(
-      subProjecBuildWorkflow.jobs.build.defaults.run["working-directory"]
+      subProjecBuildWorkflow.jobs.build.defaults.run["working-directory"],
     ).toEqual("./child");
     expect(
       subProjecBuildWorkflow.jobs.build.steps.find(
-        (step: any) => step.name === "Install dependencies"
-      )["working-directory"]
+        (step: any) => step.name === "Install dependencies",
+      )["working-directory"],
     ).toEqual(
-      expect.stringContaining(".") // NodeProject is responsible for setting the install working directory to root
+      expect.stringContaining("."), // NodeProject is responsible for setting the install working directory to root
     );
   });
 });
@@ -2034,13 +2035,13 @@ describe("npmignore", () => {
 
     // THEN
     expect(output[".github/workflows/build.yml"]).toContain(
-      "bun-version: 1.1.38"
+      "bun-version: 1.1.38",
     );
     expect(output[".github/workflows/release.yml"]).toContain(
-      "bun-version: 1.1.38"
+      "bun-version: 1.1.38",
     );
     expect(output[".github/workflows/upgrade-main.yml"]).toContain(
-      "bun-version: 1.1.38"
+      "bun-version: 1.1.38",
     );
   });
 });
@@ -2079,7 +2080,7 @@ describe("only one of components can be enabled", () => {
           prettier: true,
           defaultReleaseBranch: "main",
           name: "test",
-        })
-    ).toThrowError("Only one of biome and prettier can be enabled.");
+        }),
+    ).toThrow("Only one of biome and prettier can be enabled.");
   });
 });

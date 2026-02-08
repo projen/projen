@@ -136,7 +136,7 @@ describe("feature flags", () => {
 
     expect(config.context["@aws-cdk/aws-iam:minimizePolicies"]).toBe(true);
     expect(config.context["@aws-cdk/aws-lambda:recognizeLayerVersion"]).toBe(
-      false
+      false,
     );
   });
 });

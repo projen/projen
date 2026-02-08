@@ -95,7 +95,7 @@ export abstract class FileBase extends Component {
   constructor(
     scope: IConstruct,
     filePath: string,
-    options: FileBaseOptions = {}
+    options: FileBaseOptions = {},
   ) {
     const project = findClosestProject(scope, new.target.name);
     const root = project.root;
@@ -133,7 +133,7 @@ export abstract class FileBase extends Component {
     } else {
       if (options.committed != null) {
         throw new Error(
-          '"gitignore" is disabled, so it does not make sense to specify "committed"'
+          '"gitignore" is disabled, so it does not make sense to specify "committed"',
         );
       }
     }
@@ -169,7 +169,7 @@ export abstract class FileBase extends Component {
     const prevReadonly = !isWritable(filePath);
     const successfulExecutableAssertion = assertExecutablePermissions(
       filePath,
-      this.executable
+      this.executable,
     );
     if (
       prev !== undefined &&
@@ -204,11 +204,11 @@ export abstract class FileBase extends Component {
     const containsMarker = contents?.includes(PROJEN_MARKER);
     if (this.marker && !containsMarker) {
       this.project.logger.debug(
-        `note: expected ${this.path} to contain marker but found none.`
+        `note: expected ${this.path} to contain marker but found none.`,
       );
     } else if (!this.marker && containsMarker) {
       this.project.logger.debug(
-        `note: expected ${this.path} to not contain marker but found one anyway.`
+        `note: expected ${this.path} to not contain marker but found one anyway.`,
       );
     }
   }

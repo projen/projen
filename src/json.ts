@@ -43,7 +43,7 @@ export class JsonFile extends ObjectFile {
       if (committed) {
         this.project.gitattributes.addAttributes(
           `/${this.path}`,
-          "linguist-language=JSON-with-Comments"
+          "linguist-language=JSON-with-Comments",
         );
       }
     }

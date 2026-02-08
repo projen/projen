@@ -24,7 +24,7 @@ export function exec(
     cwd: string;
     env?: Record<string, string>;
     stdio?: child_process.StdioOptions;
-  }
+  },
 ): void {
   logging.debug(`${command} (cwd: ${options.cwd})`);
 
@@ -41,7 +41,7 @@ export function exec(
  */
 export function execCapture(
   command: string,
-  options: { cwd: string; modEnv?: Record<string, string> }
+  options: { cwd: string; modEnv?: Record<string, string> },
 ) {
   logging.debug(`${command} (cwd: ${options.cwd})`);
 
@@ -61,7 +61,7 @@ export function execCapture(
  */
 export function execOrUndefined(
   command: string,
-  options: { cwd: string }
+  options: { cwd: string },
 ): string | undefined {
   logging.debug(`${command} (cwd: ${options.cwd})`);
 
@@ -117,7 +117,7 @@ export function getFilePermissions(options: WriteFileOptions): string {
 export function writeFile(
   filePath: string,
   data: any,
-  options: WriteFileOptions = {}
+  options: WriteFileOptions = {},
 ) {
   if (existsSync(filePath)) {
     chmodSync(filePath, "600");
@@ -161,7 +161,7 @@ export interface DecamelizeRecursivelyOptions {
 
 export function decamelizeKeysRecursively(
   input: any,
-  opt?: DecamelizeRecursivelyOptions
+  opt?: DecamelizeRecursivelyOptions,
 ): any {
   const shouldAlwaysDecamelize = () => true;
   const shouldDecamelize = opt?.shouldDecamelize ?? shouldAlwaysDecamelize;
@@ -171,7 +171,7 @@ export function decamelizeKeysRecursively(
 
   if (path_.length > maxDepth) {
     throw new Error(
-      "Decamelled too deeply - check that the input has no circular references"
+      "Decamelled too deeply - check that the input has no circular references",
     );
   }
 
@@ -180,7 +180,7 @@ export function decamelizeKeysRecursively(
       decamelizeKeysRecursively(k, {
         ...opt,
         path: [...path_, i.toString()],
-      })
+      }),
     );
   }
 
@@ -264,7 +264,7 @@ interface MergeOptions {
  */
 export function deepMerge(
   objects: Array<Obj<any> | undefined>,
-  { destructive = false, mergeArrays = false }: MergeOptions = {}
+  { destructive = false, mergeArrays = false }: MergeOptions = {},
 ) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
@@ -364,7 +364,7 @@ export function sorted<T>(x: T) {
     }
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(x).sort(([l], [r]) =>
-      l.localeCompare(r)
+      l.localeCompare(r),
     )) {
       result[key] = value;
     }
@@ -418,7 +418,7 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
 export function snakeCaseKeys<T = unknown>(
   obj: T,
   recursive = true,
-  exclusiveForRecordKeys: string[] = []
+  exclusiveForRecordKeys: string[] = [],
 ): T {
   if (typeof obj !== "object" || obj == null) {
     return obj;
@@ -427,7 +427,7 @@ export function snakeCaseKeys<T = unknown>(
   if (Array.isArray(obj)) {
     if (recursive) {
       obj = obj.map((v) =>
-        snakeCaseKeys(v, recursive, exclusiveForRecordKeys)
+        snakeCaseKeys(v, recursive, exclusiveForRecordKeys),
       ) as any;
     }
     return obj;
@@ -483,7 +483,7 @@ export function isWritable(file: string) {
  */
 export function assertExecutablePermissions(
   filePath: string,
-  shouldBeExecutable: boolean
+  shouldBeExecutable: boolean,
 ): boolean {
   const isWindows = process.platform === "win32";
   if (isWindows) {
@@ -552,7 +552,7 @@ export function isRoot(dir: string, osPathLib: typeof path = path): boolean {
  */
 export function findUp(
   lookFor: string,
-  cwd: string = process.cwd()
+  cwd: string = process.cwd(),
 ): string | undefined {
   if (existsSync(path.join(cwd, lookFor))) {
     return cwd;

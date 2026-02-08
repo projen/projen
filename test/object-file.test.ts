@@ -251,7 +251,7 @@ describe("addToArray", () => {
     file.addToArray(
       "first.second.array",
       "first extra value",
-      "second extra value"
+      "second extra value",
     );
 
     // THEN
@@ -276,7 +276,7 @@ describe("addToArray", () => {
     file.addToArray(
       "first.second.array",
       "first extra value",
-      "second extra value"
+      "second extra value",
     );
 
     // THEN
@@ -301,7 +301,7 @@ describe("addToArray", () => {
     file.addToArray(
       "first.second.object",
       "first extra value",
-      "second extra value"
+      "second extra value",
     );
 
     // THEN
@@ -334,7 +334,7 @@ describe("addToArray", () => {
     file.addToArray(
       "first.second.array",
       "first extra value",
-      "second extra value"
+      "second extra value",
     );
 
     // THEN
@@ -406,7 +406,7 @@ describe("patch", () => {
     file.patch(
       JsonPatch.add("/first/second/array", []),
       JsonPatch.add("/first/second/array/-", "first extra value"),
-      JsonPatch.add("/first/second/array/-", "second extra value")
+      JsonPatch.add("/first/second/array/-", "second extra value"),
     );
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
@@ -428,22 +428,22 @@ describe("patch", () => {
     // WHEN
     file.patch(
       JsonPatch.test("/first/second", undefined),
-      JsonPatch.add("/first/second", [])
+      JsonPatch.add("/first/second", []),
     ); // this `add` expected to be silently skipped
 
     file.patch(
       JsonPatch.add("/first/second/-", "first extra value"),
-      JsonPatch.add("/first/second/-", "second extra value")
+      JsonPatch.add("/first/second/-", "second extra value"),
     );
 
     file.patch(
       JsonPatch.test("/first/third", "test"),
-      JsonPatch.replace("/first/third", "test2")
+      JsonPatch.replace("/first/third", "test2"),
     );
 
     file.patch(
       JsonPatch.test("/first/extra", { foo: "bar" }),
-      JsonPatch.add("/first/extra/boo", "far")
+      JsonPatch.add("/first/extra/boo", "far"),
     );
 
     // THEN
@@ -469,13 +469,13 @@ describe("patch", () => {
       JsonPatch.test(
         "/first/third",
         "not-test",
-        TestFailureBehavior.FAIL_SYNTHESIS
-      )
+        TestFailureBehavior.FAIL_SYNTHESIS,
+      ),
     );
 
     // THEN
-    expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrowError(
-      "Test operation failed"
+    expect(() => synthSnapshot(prj)["my/object/file.json"]).toThrow(
+      "Test operation failed",
     );
   });
 
@@ -497,7 +497,7 @@ describe("patch", () => {
     // WHEN
     file.patch(
       JsonPatch.add("/first/second/array/-", "first extra value"),
-      JsonPatch.add("/first/second/array/-", "second extra value")
+      JsonPatch.add("/first/second/array/-", "second extra value"),
     );
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({

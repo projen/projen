@@ -94,7 +94,7 @@ test("throws when adding workflow with existing name", () => {
 
   // THEN
   expect(() => p.github?.addWorkflow("stale")).toThrow(
-    /There is already a Construct with name 'GithubWorkflow#stale' in TestProject/
+    /There is already a Construct with name 'GithubWorkflow#stale' in TestProject/,
   );
 });
 

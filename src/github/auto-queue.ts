@@ -100,7 +100,7 @@ export class AutoQueue extends Component {
       throw new Error(
         `Cannot add ${
           new.target.name
-        } to project without GitHub enabled. Please enable GitHub for this project.`
+        } to project without GitHub enabled. Please enable GitHub for this project.`,
       );
     }
 
@@ -113,10 +113,11 @@ export class AutoQueue extends Component {
         "(" +
           labels
             .map(
-              (l) => `contains(github.event.pull_request.labels.*.name, '${l}')`
+              (l) =>
+                `contains(github.event.pull_request.labels.*.name, '${l}')`,
             )
             .join(" || ") +
-          ")"
+          ")",
       );
     }
     if (usernames.length > 0) {
@@ -125,7 +126,7 @@ export class AutoQueue extends Component {
           usernames
             .map((u) => `github.event.pull_request.user.login == '${u}'`)
             .join(" || ") +
-          ")"
+          ")",
       );
     }
 

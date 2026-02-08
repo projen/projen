@@ -158,7 +158,7 @@ export class GitHub extends Component {
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
-        "projenTokenSecret is deprecated, please use projenCredentials instead"
+        "projenTokenSecret is deprecated, please use projenCredentials instead",
       );
     }
 
@@ -191,7 +191,7 @@ export class GitHub extends Component {
     if (options.pullRequestBackport ?? false) {
       if (options.mergify) {
         this.project.logger.warn(
-          "pullRequestBackport should not be used with mergify as mergify provides its own backport functionality. Please disable pullRequestBackport or mergify."
+          "pullRequestBackport should not be used with mergify as mergify provides its own backport functionality. Please disable pullRequestBackport or mergify.",
         );
       }
       new PullRequestBackport(this, options.pullRequestBackportOptions);

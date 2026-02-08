@@ -230,7 +230,7 @@ test("projectTree: true generates tree.json with project hierarchy", () => {
   expect(snapshot[".projen/tree.json"]).toBeDefined();
   const tree = snapshot[".projen/tree.json"];
   expect(tree["//"]).toBe(
-    "Experimental. Expect frequent changes to the structure of this file."
+    "Experimental. Expect frequent changes to the structure of this file.",
   );
   // The root key should be the auto-generated construct ID
   const rootKey = Object.keys(tree).find((k) => k !== "//");
@@ -259,7 +259,7 @@ test("projectTree includes subprojects in hierarchy", () => {
   expect(rootNode.nodes).toBeDefined();
   // Find the child project node
   const childKey = Object.keys(rootNode.nodes!).find((k) =>
-    k.includes("child-project")
+    k.includes("child-project"),
   );
   expect(childKey).toBeDefined();
 });

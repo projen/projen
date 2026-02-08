@@ -20,7 +20,7 @@ describe("docker-compose", () => {
     const dc = new DockerCompose(project);
 
     expect(() => dc.addService("service", {})).toThrow(
-      /requires exactly one of.*imageBuild.*image/i
+      /requires exactly one of.*imageBuild.*image/i,
     );
   });
 
@@ -34,7 +34,7 @@ describe("docker-compose", () => {
         imageBuild: {
           context: ".",
         },
-      })
+      }),
     ).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
@@ -49,7 +49,7 @@ describe("docker-compose", () => {
               image: "nginx",
             },
           },
-        })
+        }),
     ).toThrow(/Version tag needs to be a number/i);
   });
 
@@ -216,7 +216,7 @@ describe("docker-compose", () => {
     project.synth();
     expect(dc.file.path).toEqual("docker-compose.myname.yml");
     expect(
-      fs.existsSync(path.join(project.outdir, "docker-compose.myname.yml"))
+      fs.existsSync(path.join(project.outdir, "docker-compose.myname.yml")),
     );
   });
 
@@ -648,7 +648,7 @@ describe("docker-compose", () => {
             ],
           },
           name: "webapp",
-        })
+        }),
       );
 
       expect(dc._synthesizeDockerCompose()).toEqual({
@@ -878,16 +878,16 @@ describe("docker-compose", () => {
             volumes: [
               DockerCompose.namedVolume(
                 "uploads",
-                "/var/www/html/wp-content/uploads"
+                "/var/www/html/wp-content/uploads",
               ),
               DockerCompose.namedVolume("docroot", "/var/www/html"),
               DockerCompose.namedVolume(
                 "plugins",
-                "/var/www/html/wp-content/plugins"
+                "/var/www/html/wp-content/plugins",
               ),
               DockerCompose.namedVolume(
                 "themes",
-                "/var/www/html/wp-content/themes"
+                "/var/www/html/wp-content/themes",
               ),
             ],
             environment: {
@@ -934,7 +934,7 @@ describe("docker-compose", () => {
         volumes: [
           DockerCompose.namedVolume(
             "uploads",
-            "/var/www/html/wp-content/uploads"
+            "/var/www/html/wp-content/uploads",
           ),
         ],
         environment: {
@@ -948,10 +948,13 @@ describe("docker-compose", () => {
       wp.addDependsOn(setup);
       wp.addVolume(DockerCompose.namedVolume("docroot", "/var/www/html"));
       wp.addVolume(
-        DockerCompose.namedVolume("plugins", "/var/www/html/wp-content/plugins")
+        DockerCompose.namedVolume(
+          "plugins",
+          "/var/www/html/wp-content/plugins",
+        ),
       );
       wp.addVolume(
-        DockerCompose.namedVolume("themes", "/var/www/html/wp-content/themes")
+        DockerCompose.namedVolume("themes", "/var/www/html/wp-content/themes"),
       );
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
@@ -1002,12 +1005,12 @@ function assertDockerComposeFileValidates(dir: string) {
     ]);
     if (res.status !== 0) {
       throw new Error(
-        `docker-compose file does not validate: ${res.stderr.toString()}`
+        `docker-compose file does not validate: ${res.stderr.toString()}`,
       );
     }
   } else {
     console.warn(
-      "docker-compose is not present, so we cannot validate via client"
+      "docker-compose is not present, so we cannot validate via client",
     );
   }
 }

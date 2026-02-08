@@ -140,12 +140,12 @@ describe("GitAttributesFile", () => {
       project.gitattributes.addAttributes(
         "*.txt",
         "text",
-        "linguist-generated"
+        "linguist-generated",
       );
       project.gitattributes.removeAttributes(
         "*.txt",
         "some-attribute-1",
-        "some-attribute-2"
+        "some-attribute-2",
       );
 
       const snap = synthSnapshot(project);

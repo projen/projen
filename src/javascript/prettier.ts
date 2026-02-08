@@ -381,7 +381,7 @@ export class Prettier extends Component {
       this.ignoreFile = new IgnoreFile(
         project,
         ".prettierignore",
-        options.ignoreFileOptions
+        options.ignoreFileOptions,
       );
 
       project.addPackageIgnore("/.prettierignore");

@@ -159,7 +159,7 @@ export class CiConfiguration extends Component {
   constructor(
     project: Project,
     name: string,
-    options?: CiConfigurationOptions
+    options?: CiConfigurationOptions,
   ) {
     super(project);
     this.name = path.parse(name).name;
@@ -211,7 +211,7 @@ export class CiConfiguration extends Component {
       for (const existing of this.include) {
         if (this.areEqualIncludes(existing, additional)) {
           throw new Error(
-            `${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`
+            `${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`,
           );
         }
       }
@@ -240,7 +240,7 @@ export class CiConfiguration extends Component {
         * file, project
         * remote
         * template
-        `
+        `,
       );
     }
   }
@@ -280,7 +280,7 @@ export class CiConfiguration extends Component {
           additional.alias === existing.alias
         ) {
           throw new Error(
-            `${this.name}: GitLab CI already contains service ${additional}.`
+            `${this.name}: GitLab CI already contains service ${additional}.`,
           );
         }
       }
@@ -296,7 +296,7 @@ export class CiConfiguration extends Component {
     for (const [key, value] of Object.entries(variables)) {
       if (this.variables[key] !== undefined) {
         throw new Error(
-          `${this.name}: GitLab CI already contains variable ${key}.`
+          `${this.name}: GitLab CI already contains variable ${key}.`,
         );
       }
       this.variables[key] = value;
@@ -342,7 +342,7 @@ export class CiConfiguration extends Component {
   private assertIsValidCacheSetup(caches: Cache[]) {
     if (!this.isValidCacheSetup(caches)) {
       throw new Error(
-        `${this.name}: GitLab CI can only define up to 4 caches, got: ${caches.length}`
+        `${this.name}: GitLab CI can only define up to 4 caches, got: ${caches.length}`,
       );
     }
   }

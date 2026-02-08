@@ -38,7 +38,7 @@ test("pytest maxfailures", () => {
   });
 
   expect(
-    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
+    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec,
   ).toContain("--maxfail=3");
 });
 
@@ -50,7 +50,7 @@ test("pytest without sample code", () => {
   const synth = synthSnapshot(p);
   expect(synth).not.toHaveProperty("tests/__init__.py");
   expect(synth[".projen/tasks.json"].tasks.test.steps[0].exec).toEqual(
-    "pytest"
+    "pytest",
   );
 });
 
@@ -61,7 +61,7 @@ test("pytest with custom testPaths", () => {
     },
   });
   expect(
-    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
+    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec,
   ).toContain("tests/foo tests/bar");
 });
 
@@ -71,9 +71,9 @@ test("cannot specify multiple projenrc types", () => {
       new TestPythonProject({
         projenrcPython: true,
         projenrcJs: true,
-      })
+      }),
   ).toThrow(
-    /Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected./
+    /Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected./,
   );
 });
 
@@ -82,7 +82,7 @@ test("extras render properly", () => {
     deps: ["aws-lambda-powertools[tracer]"],
   });
   expect(synthSnapshot(p)["requirements.txt"]).toContain(
-    "aws-lambda-powertools[tracer]"
+    "aws-lambda-powertools[tracer]",
   );
 });
 
@@ -91,6 +91,6 @@ test("extras render properly with explicit version", () => {
     deps: ["aws-lambda-powertools[tracer]@1.0.0"],
   });
   expect(synthSnapshot(p)["requirements.txt"]).toContain(
-    "aws-lambda-powertools[tracer]==1.0.0"
+    "aws-lambda-powertools[tracer]==1.0.0",
   );
 });

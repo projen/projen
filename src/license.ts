@@ -58,7 +58,7 @@ export class License extends FileBase {
     if (text.indexOf("$copyright_owner") !== -1) {
       if (!owner) {
         throw new Error(
-          `The ${spdx} license requires "copyrightOwner" to be specified`
+          `The ${spdx} license requires "copyrightOwner" to be specified`,
         );
       }
 

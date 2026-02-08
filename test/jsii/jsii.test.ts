@@ -13,7 +13,7 @@ import { execProjenCLI, synthSnapshot } from "../util";
 function getSupportedJsiiVersions(): string[] {
   const releasesPath = path.join(
     __dirname,
-    "../../node_modules/jsii/releases.json"
+    "../../node_modules/jsii/releases.json",
   );
   const releases = JSON.parse(fs.readFileSync(releasesPath, "utf8"));
   const now = new Date();
@@ -30,7 +30,7 @@ function getSupportedJsiiVersions(): string[] {
  */
 function getSupportedNodeVersions(): string[] {
   return NodeRelease.ALL_RELEASES.filter((r) => r.supported && !r.untested).map(
-    (r) => r.majorVersion.toString()
+    (r) => r.majorVersion.toString(),
   );
 }
 
@@ -152,7 +152,7 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
   "JsiiProject with jsiiVersion: '%s'",
   (jsiiVersion) => {
     describe.each(
-      getSupportedNodeVersions().map((version) => [version, `${version}.0.0`])
+      getSupportedNodeVersions().map((version) => [version, `${version}.0.0`]),
     )("with minNodeVersion %s", (_, minNodeVersion) => {
       const originalCI = process.env.CI;
       beforeAll(() => {
@@ -180,5 +180,5 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
         execProjenCLI(project.outdir, ["compile"]);
       });
     });
-  }
+  },
 );

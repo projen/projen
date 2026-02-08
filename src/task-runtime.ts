@@ -26,7 +26,7 @@ export class TaskRuntime {
    */
   public static readonly MANIFEST_FILE = path.posix.join(
     PROJEN_DIR,
-    "tasks.json"
+    "tasks.json",
   );
 
   /**
@@ -46,7 +46,7 @@ export class TaskRuntime {
       ? parseConflictJSON(
           readFileSync(manifestPath, "utf-8"),
           undefined,
-          "theirs"
+          "theirs",
         )
       : { tasks: {} };
   }
@@ -76,7 +76,7 @@ export class TaskRuntime {
     name: string,
     parents: string[] = [],
     args: Array<string | number> = [],
-    env: { [name: string]: string } = {}
+    env: { [name: string]: string } = {},
   ) {
     const task = this.tryFindTask(name);
     if (!task) {
@@ -98,7 +98,7 @@ class RunTask {
     private readonly task: TaskSpec,
     parents: string[] = [],
     args: Array<string | number> = [],
-    envParam: { [name: string]: string } = {}
+    envParam: { [name: string]: string } = {},
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
@@ -140,7 +140,7 @@ class RunTask {
 
     if (missing.length > 0) {
       throw new Error(
-        `missing required environment variables: ${missing.join(",")}`
+        `missing required environment variables: ${missing.join(",")}`,
       );
     }
 
@@ -165,7 +165,7 @@ class RunTask {
           step.spawn,
           [...this.parents, this.task.name],
           argsList,
-          step.env
+          step.env,
         );
       }
 
@@ -190,7 +190,7 @@ class RunTask {
           // is encountered.
           command = command.replace(
             QUOTED_ARGS_MARKER,
-            argsList.map((arg) => `'${arg}'`).join(" ")
+            argsList.map((arg) => `'${arg}'`).join(" "),
           );
         } else if (command.includes(ARGS_MARKER)) {
           command = command.replace(ARGS_MARKER, argsList.join(" "));
@@ -218,8 +218,8 @@ class RunTask {
             `Task "${
               this.fullname
             }" failed when executing "${command}" (cwd: ${resolve(
-              cwd ?? this.workdir
-            )})`
+              cwd ?? this.workdir,
+            )})`,
           );
         }
       }
@@ -265,9 +265,9 @@ class RunTask {
         if (result.status !== 0) {
           const error = result.error
             ? result.error.stack
-            : result.stderr?.toString() ?? "unknown error";
+            : (result.stderr?.toString() ?? "unknown error");
           throw new Error(
-            `unable to evaluate environment variable ${key}=${value}: ${error}`
+            `unable to evaluate environment variable ${key}=${value}: ${error}`,
           );
         }
         output[key] = result.stdout.toString("utf-8").trim();
@@ -285,7 +285,7 @@ class RunTask {
    */
   private resolveEnvironment(
     envParam: { [name: string]: string },
-    parents: string[]
+    parents: string[],
   ) {
     let env = this.runtime.manifest.env ?? {};
 
@@ -347,7 +347,7 @@ class RunTask {
     const cwd = options.cwd ?? this.workdir;
     if (!existsSync(cwd) || !statSync(cwd).isDirectory()) {
       throw new Error(
-        `invalid workdir (cwd): ${cwd} must be an existing directory`
+        `invalid workdir (cwd): ${cwd} must be an existing directory`,
       );
     }
 
@@ -378,7 +378,7 @@ class RunTask {
   private renderBuiltin(builtin: string) {
     const moduleRoot = dirname(require.resolve("../package.json"));
     const program = require.resolve(
-      join(moduleRoot, "lib", `${builtin}.task.js`)
+      join(moduleRoot, "lib", `${builtin}.task.js`),
     );
     return `"${process.execPath}" "${program}"`;
   }

@@ -40,8 +40,7 @@ export interface AutoDiscoverCommonOptions {
  * Options for `IntegrationTestAutoDiscover`
  */
 export interface IntegrationTestAutoDiscoverOptions
-  extends AutoDiscoverCommonOptions,
-    IntegrationTestAutoDiscoverBaseOptions {
+  extends AutoDiscoverCommonOptions, IntegrationTestAutoDiscoverBaseOptions {
   /**
    * Options for integration tests.
    */
@@ -104,8 +103,7 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
 /**
  * Options for `EdgeLambdaAutoDiscover`
  */
-export interface EdgeLambdaAutoDiscoverOptions
-  extends AutoDiscoverCommonOptions {
+export interface EdgeLambdaAutoDiscoverOptions extends AutoDiscoverCommonOptions {
   /**
    * Project source tree (relative to project output directory).
    */
@@ -141,8 +139,7 @@ export class EdgeLambdaAutoDiscover extends AutoDiscoverBase {
 /**
  * Options for `LambdaExtensionAutoDiscover`
  */
-export interface LambdaExtensionAutoDiscoverOptions
-  extends AutoDiscoverCommonOptions {
+export interface LambdaExtensionAutoDiscoverOptions extends AutoDiscoverCommonOptions {
   /**
    * Project source tree (relative to project output directory).
    */
@@ -179,7 +176,8 @@ export class LambdaExtensionAutoDiscover extends AutoDiscoverBase {
  * Options for `AutoDiscover`
  */
 export interface AutoDiscoverOptions
-  extends LambdaAutoDiscoverOptions,
+  extends
+    LambdaAutoDiscoverOptions,
     LambdaExtensionAutoDiscoverOptions,
     IntegrationTestAutoDiscoverOptions {
   /**

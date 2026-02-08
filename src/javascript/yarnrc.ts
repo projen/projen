@@ -376,13 +376,13 @@ export class Yarnrc extends Component {
     project.gitattributes.addAttributes(
       "/.pnp.*",
       "binary",
-      "linguist-vendored"
+      "linguist-vendored",
     );
   }
 
   private validateOptionsForVersion(
     majorVersion: number,
-    options: YarnrcOptions
+    options: YarnrcOptions,
   ) {
     const removedInV4: Array<keyof YarnrcOptions> = [
       "ignoreCwd",
@@ -407,26 +407,26 @@ export class Yarnrc extends Component {
 
     if (majorVersion >= 4) {
       const invalidOptions = Object.keys(options).filter((option) =>
-        (removedInV4 as string[]).includes(option)
+        (removedInV4 as string[]).includes(option),
       );
 
       if (invalidOptions.length > 0) {
         throw new Error(
           `The following options are not available in Yarn >= 4: ${invalidOptions.join(
-            ", "
-          )}`
+            ", ",
+          )}`,
         );
       }
     } else {
       const invalidOptions = Object.keys(options).filter((option) =>
-        (newInV4 as string[]).includes(option)
+        (newInV4 as string[]).includes(option),
       );
 
       if (invalidOptions.length > 0) {
         throw new Error(
           `The following options are only available in Yarn v4 and newer: ${invalidOptions.join(
-            ", "
-          )}`
+            ", ",
+          )}`,
         );
       }
 
@@ -435,7 +435,7 @@ export class Yarnrc extends Component {
         options.checksumBehavior === YarnChecksumBehavior.RESET
       ) {
         throw new Error(
-          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer."
+          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer.",
         );
       }
     }

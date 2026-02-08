@@ -135,7 +135,7 @@ export class AiInstructions extends Component {
     this.agents =
       options.agents ??
       (Object.values(AiAgent).filter(
-        (v) => typeof v === "string"
+        (v) => typeof v === "string",
       ) as AiAgent[]);
 
     // Assert files for declared agents
@@ -146,7 +146,7 @@ export class AiInstructions extends Component {
     if (options.includeDefaultInstructions ?? true) {
       this.addInstructions(
         AiInstructions.projen(project),
-        AiInstructions.bestPractices(project)
+        AiInstructions.bestPractices(project),
       );
     }
 
@@ -156,7 +156,7 @@ export class AiInstructions extends Component {
 
     if (options.agentSpecificInstructions) {
       for (const [agent, instructions] of Object.entries(
-        options.agentSpecificInstructions
+        options.agentSpecificInstructions,
       )) {
         this.addAgentSpecificInstructions(agent as AiAgent, ...instructions);
       }

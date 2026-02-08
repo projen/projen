@@ -71,7 +71,7 @@ export class Makefile extends FileBase {
   constructor(
     project: Project,
     filePath: string,
-    options: MakefileOptions = {}
+    options: MakefileOptions = {},
   ) {
     super(project, filePath, options);
 
@@ -124,7 +124,7 @@ export class Makefile extends FileBase {
   private validateRule(rule: Rule) {
     if (!rule.targets || !rule.targets.length) {
       throw new Error(
-        '"targets" cannot be undefined or empty for items in "rules"'
+        '"targets" cannot be undefined or empty for items in "rules"',
       );
     }
   }

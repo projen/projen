@@ -334,7 +334,7 @@ export class Task {
 
     if (index < -this._steps.length || index > this.steps.length) {
       throw new Error(
-        `Cannot insert steps at index ${index} for task ${this.name} because the index is out of bounds for size ${this.steps.length}`
+        `Cannot insert steps at index ${index} for task ${this.name} because the index is out of bounds for size ${this.steps.length}`,
       );
     }
 
@@ -357,7 +357,7 @@ export class Task {
     const existingStep = this._steps[index];
     if (!existingStep) {
       throw new Error(
-        `Cannot update step at index ${index} for task ${this.name} because it does not exist`
+        `Cannot update step at index ${index} for task ${this.name} because it does not exist`,
       );
     }
 
@@ -379,7 +379,7 @@ export class Task {
     const existingStep = this._steps[index];
     if (!existingStep) {
       throw new Error(
-        `Cannot remove step at index ${index} for task ${this.name} because it does not exist`
+        `Cannot remove step at index ${index} for task ${this.name} because it does not exist`,
       );
     }
 
@@ -398,7 +398,7 @@ export class Task {
         ...prev,
         [curr]: this.getEnvString(curr, this._env[curr]),
       }),
-      {}
+      {},
     );
 
     // Ensure step-level env vars are strings
@@ -412,7 +412,7 @@ export class Task {
                     ...prev,
                     [curr]: this.getEnvString(curr, s.env![curr]),
                   }),
-                  {}
+                  {},
                 ),
               }
             : s;
@@ -438,7 +438,7 @@ export class Task {
 
   private warnForLazyValue(actionBeingUndertaken: string): void {
     warn(
-      `Cannot ${actionBeingUndertaken} task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`
+      `Cannot ${actionBeingUndertaken} task "${this.name}" because it is a lazy value, try using the preSynthesize phase.`,
     );
   }
 
@@ -449,7 +449,7 @@ export class Task {
   private getEnvString(name: string, value: any) {
     if (typeof value !== "string" && value !== undefined) {
       warn(
-        `Received non-string value for environment variable ${name}. Value will be stringified.`
+        `Received non-string value for environment variable ${name}. Value will be stringified.`,
       );
       return String(value);
     } else {

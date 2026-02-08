@@ -47,7 +47,7 @@ describe("name", () => {
       console.log(workflows);
       expect(workflows[".github/workflows/build_my-project.yml"]).toBeDefined();
       expect(
-        workflows[".github/workflows/build_my-project.yml"]
+        workflows[".github/workflows/build_my-project.yml"],
       ).toMatchSnapshot();
     });
   });

@@ -58,7 +58,7 @@ export class CdkFeatureFlagsV2 implements ICdkFeatureFlags {
         tryReadFileSync(
           require.resolve("aws-cdk-lib/recommended-feature-flags.json", {
             paths: [process.cwd()],
-          })
+          }),
         ) || "{}";
 
       return new CdkFeatureFlagsV2(JSON.parse(featureFlags));

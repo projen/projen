@@ -74,7 +74,7 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static checkoutWithPatch(
-    options: CheckoutWithPatchOptions = {}
+    options: CheckoutWithPatchOptions = {},
   ): JobStep[] {
     const { patchFile, ...restOfOptions } = options;
     const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
@@ -100,7 +100,7 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static createPullRequest(
-    options: CreatePullRequestOptions
+    options: CreatePullRequestOptions,
   ): JobStep[] {
     const workflowName = options.workflowName;
     const branchName = options.branchName ?? `github-actions/${workflowName}`;

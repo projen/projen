@@ -151,7 +151,10 @@ export class Biome extends Component {
    */
   public readonly file: JsonFile;
 
-  constructor(project: NodeProject, private options: BiomeOptions = {}) {
+  constructor(
+    project: NodeProject,
+    private options: BiomeOptions = {},
+  ) {
     super(project);
 
     const biomejs = `@biomejs/biome`;
@@ -159,9 +162,9 @@ export class Biome extends Component {
 
     const defaultConfig: BiomeConfiguration = {
       ...DEFAULT_CONFIG,
-      ...(options.linter ?? true ? DEFAULT_LINTER : {}),
-      ...(options.formatter ?? true ? DEFAULT_FORMATTER : {}),
-      ...(options.assist ?? true ? DEFAULT_ASSIST : {}),
+      ...((options.linter ?? true) ? DEFAULT_LINTER : {}),
+      ...((options.formatter ?? true) ? DEFAULT_FORMATTER : {}),
+      ...((options.assist ?? true) ? DEFAULT_ASSIST : {}),
     };
 
     this._filePatterns = new Set([
@@ -190,7 +193,7 @@ export class Biome extends Component {
           $schema: () => {
             const resolvedSchema = tryResolveModule(
               `${biomejs}/configuration_schema.json`,
-              { paths: [this.project.outdir] }
+              { paths: [this.project.outdir] },
             );
             if (
               // not found
@@ -204,7 +207,7 @@ export class Biome extends Component {
             }
 
             return normalizePersistedPath(
-              path.relative(this.project.outdir, resolvedSchema)
+              path.relative(this.project.outdir, resolvedSchema),
             );
           },
           files: {
@@ -217,7 +220,7 @@ export class Biome extends Component {
           },
         },
       ],
-      { mergeArrays: options.mergeArraysInConfiguration ?? true }
+      { mergeArrays: options.mergeArraysInConfiguration ?? true },
     );
 
     this.file = new (class extends JsonFile {
@@ -280,7 +283,7 @@ export class Biome extends Component {
       deepMerge([this.biomeConfiguration.linter.rules, rules], {
         mergeArrays: this.options.mergeArraysInConfiguration ?? true,
         destructive: true,
-      })
+      }),
     );
   }
 

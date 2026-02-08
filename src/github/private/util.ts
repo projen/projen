@@ -58,6 +58,6 @@ export function toGitHubExpr(x: NonNullable<any>): string {
  */
 export function projectPathRelativeToRepoRoot(project: Project): string {
   return ensureRelativePathStartsWithDot(
-    normalizePersistedPath(relative(project.root.outdir, project.outdir))
+    normalizePersistedPath(relative(project.root.outdir, project.outdir)),
   );
 }

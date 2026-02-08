@@ -23,14 +23,14 @@ export class GitlabConfiguration extends CiConfiguration {
     for (const [name, options] of Object.entries(config)) {
       if (this.nestedTemplates[name] !== undefined) {
         throw new Error(
-          `${this.name}: GitLab CI already contains template "${name}".`
+          `${this.name}: GitLab CI already contains template "${name}".`,
         );
       }
       const template = new NestedConfiguration(
         this.project,
         this,
         name,
-        options
+        options,
       );
       this.nestedTemplates[template.name] = template;
       this.addIncludes({ local: template.path });

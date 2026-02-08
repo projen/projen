@@ -86,14 +86,14 @@ export class DockerComposeService implements IDockerComposeServiceName {
 
   constructor(
     serviceName: string,
-    serviceDescription: DockerComposeServiceDescription
+    serviceDescription: DockerComposeServiceDescription,
   ) {
     if (
       (!serviceDescription.imageBuild && !serviceDescription.image) ||
       (serviceDescription.imageBuild && serviceDescription.image)
     ) {
       throw new Error(
-        `A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`
+        `A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`,
       );
     }
 
@@ -121,10 +121,10 @@ export class DockerComposeService implements IDockerComposeServiceName {
   public addPort(
     publishedPort: number,
     targetPort: number,
-    options?: DockerComposePortMappingOptions
+    options?: DockerComposePortMappingOptions,
   ) {
     this.ports?.push(
-      DockerCompose.portMapping(publishedPort, targetPort, options)
+      DockerCompose.portMapping(publishedPort, targetPort, options),
     );
   }
 

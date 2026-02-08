@@ -245,7 +245,7 @@ describe("Publisher Environment Support", () => {
     const outdir = synthSnapshot(project);
     const mainWorkflow = YAML.parse(outdir[".github/workflows/release.yml"]);
     const branchWorkflow = YAML.parse(
-      outdir[".github/workflows/release-2.x.yml"]
+      outdir[".github/workflows/release-2.x.yml"],
     );
 
     expect(mainWorkflow.jobs.release_npm.environment).toBe("default-env");
@@ -282,10 +282,10 @@ describe("Publisher Environment Support", () => {
     const outdir = synthSnapshot(project);
     const mainWorkflow = YAML.parse(outdir[".github/workflows/release.yml"]);
     const betaWorkflow = YAML.parse(
-      outdir[".github/workflows/release-beta.yml"]
+      outdir[".github/workflows/release-beta.yml"],
     );
     const alphaWorkflow = YAML.parse(
-      outdir[".github/workflows/release-alpha.yml"]
+      outdir[".github/workflows/release-alpha.yml"],
     );
 
     // The release job should NOT get environment - only publish jobs should

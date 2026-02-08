@@ -64,7 +64,7 @@ export class TsJestBabelConfig {
   }
 
   private constructor(
-    private readonly config: boolean | string | Record<string, any>
+    private readonly config: boolean | string | Record<string, any>,
   ) {}
 
   /**
@@ -151,7 +151,7 @@ export class TsJestTsconfig {
   }
 
   private constructor(
-    private readonly config: boolean | string | TypeScriptCompilerOptions
+    private readonly config: boolean | string | TypeScriptCompilerOptions,
   ) {}
 
   /**
@@ -425,7 +425,7 @@ export class TypeScriptProject extends NodeProject {
 
     const tsconfigFilename = options.tsconfig?.fileName;
     this.compileTask.exec(
-      ["tsc", "--build", tsconfigFilename].filter(Boolean).join(" ")
+      ["tsc", "--build", tsconfigFilename].filter(Boolean).join(" "),
     );
 
     this.watchTask = this.addTask("watch", {
@@ -446,7 +446,7 @@ export class TypeScriptProject extends NodeProject {
     if (options.entrypointTypes || this.entrypoint !== "") {
       const entrypointPath = path.join(
         path.dirname(this.entrypoint),
-        path.basename(this.entrypoint, ".js")
+        path.basename(this.entrypoint, ".js"),
       );
       const normalizedPath = normalizePersistedPath(entrypointPath);
       const entrypointTypes =
@@ -456,7 +456,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.disableTsconfigDev && options.disableTsconfig) {
       throw new Error(
-        "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
+        "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields.",
       );
     }
 
@@ -473,8 +473,8 @@ export class TypeScriptProject extends NodeProject {
               ...this.defaultTypeScriptCompilerOptions(),
             },
           },
-          options.tsconfig
-        )
+          options.tsconfig,
+        ),
       );
     }
 
@@ -493,8 +493,8 @@ export class TypeScriptProject extends NodeProject {
             compilerOptions: this.defaultTypeScriptCompilerOptions(),
           },
           options.tsconfig,
-          options.tsconfigDev
-        )
+          options.tsconfigDev,
+        ),
       );
     }
 
@@ -675,7 +675,7 @@ export class TypeScriptProject extends NodeProject {
       return path.join(
         path.dirname(fullpath),
         "__snapshots__",
-        path.basename(fullpath, ".js") + ".ts" + ext
+        path.basename(fullpath, ".js") + ".ts" + ext,
       );
     };
 
@@ -687,7 +687,7 @@ export class TypeScriptProject extends NodeProject {
 
     const resolver = new TextFile(
       this,
-      path.posix.join(PROJEN_DIR, "jest-snapshot-resolver.js")
+      path.posix.join(PROJEN_DIR, "jest-snapshot-resolver.js"),
     );
     if (!resolver.marker) {
       resolver.addLine(`// ${resolver.marker}`);
@@ -697,11 +697,11 @@ export class TypeScriptProject extends NodeProject {
     resolver.addLine(`const srctest= "${srctest}";`);
     resolver.addLine("module.exports = {");
     resolver.addLine(
-      `  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`
+      `  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`,
     );
     resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
     resolver.addLine(
-      "  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')"
+      "  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')",
     );
     resolver.addLine("};");
 
@@ -710,7 +710,7 @@ export class TypeScriptProject extends NodeProject {
 
   private addJestNoCompile(
     jest: Jest,
-    tsJestOptions: TsJestOptions | undefined
+    tsJestOptions: TsJestOptions | undefined,
   ) {
     // Ts-jest doesn't follow semver, but major should match to Jest's major.
     // For some reason this is not the case with Jest 30 anymore.
@@ -718,7 +718,7 @@ export class TypeScriptProject extends NodeProject {
     const tsJestVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
     this.addDevDeps(
       `@types/jest${jest.jestVersion}`,
-      `ts-jest${tsJestVersion}`
+      `ts-jest${tsJestVersion}`,
     );
 
     jest.discoverTestMatchPatternsForDirs([this.srcdir, this.testdir], {
@@ -756,7 +756,7 @@ export class TypeScriptProject extends NodeProject {
 
   private addJestNoCompileModern(
     jest: Jest,
-    tsJestOptions: TsJestOptions | undefined
+    tsJestOptions: TsJestOptions | undefined,
   ) {
     jest.config.transform = deepMerge([
       {
@@ -766,7 +766,7 @@ export class TypeScriptProject extends NodeProject {
           {
             tsconfig: TsJestTsconfig.fromFile(this.tsconfigDev.fileName),
             ...(tsJestOptions?.transformOptions ?? {}),
-          }
+          },
         ),
       },
       jest.config.transform,
@@ -775,11 +775,11 @@ export class TypeScriptProject extends NodeProject {
 
   private addJestNoCompileLegacy(
     jest: Jest,
-    tsJestOptions: TsJestOptions | undefined
+    tsJestOptions: TsJestOptions | undefined,
   ) {
     if (tsJestOptions) {
       this.logger.warn(
-        "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored."
+        "You are using a legacy version (<29) of jest and ts-jest that does not support tsJestOptions, they will be ignored.",
       );
     }
     if (!jest.config.preset) {
@@ -859,8 +859,7 @@ export class TypeScriptLibraryProject extends TypeScriptProject {}
 /**
  * @deprecated use TypeScriptProjectOptions
  */
-export interface TypeScriptLibraryProjectOptions
-  extends TypeScriptProjectOptions {}
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {}
 
 /**
  * @internal
@@ -880,6 +879,6 @@ export function mergeTsconfigOptions(
         ...current.compilerOptions,
       },
     }),
-    { compilerOptions: {} }
+    { compilerOptions: {} },
   );
 }

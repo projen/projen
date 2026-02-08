@@ -60,15 +60,15 @@ class Command implements yargs.CommandModule {
     });
     args.example(
       "projen new awscdk-app-ts",
-      'Creates a new project of built-in type "awscdk-app-ts"'
+      'Creates a new project of built-in type "awscdk-app-ts"',
     );
     args.example(
       "projen new --from projen-vue@^2",
-      'Creates a new project from an external module "projen-vue" with the specified version'
+      'Creates a new project from an external module "projen-vue" with the specified version',
     );
     args.example(
       "projen new python --help",
-      'Shows all options available for the built-in project type "python"'
+      'Shows all options available for the built-in project type "python"',
     );
 
     for (const type of inventory.discover()) {
@@ -140,7 +140,7 @@ async function handler(args: any) {
         ...types.map((t) => `    ${t.pjid}`),
         "",
         `Please specify a project type.`,
-        `Example: npx projen new ${types[0].pjid}`
+        `Example: npx projen new ${types[0].pjid}`,
       );
     }
 
@@ -164,7 +164,7 @@ async function handler(args: any) {
  * Returns the yargs option type for a given project option
  */
 function argType(
-  option: inventory.ProjectOption
+  option: inventory.ProjectOption,
 ): "string" | "boolean" | "number" | "array" {
   if (option.kind === "enum") {
     return "string";
@@ -186,7 +186,7 @@ function argDesc(option: inventory.ProjectOption): string {
   const helpDefault = option.initialValue ?? option.default;
   if (option.optional && helpDefault) {
     desc.push(
-      `[default: ${helpDefault.replace(/^\ *-/, "").replace(/\.$/, "").trim()}]`
+      `[default: ${helpDefault.replace(/^\ *-/, "").replace(/\.$/, "").trim()}]`,
     );
   }
 
@@ -198,7 +198,7 @@ function argDesc(option: inventory.ProjectOption): string {
  */
 function argInitialValue(
   option: inventory.ProjectOption,
-  cwd = process.cwd()
+  cwd = process.cwd(),
 ): any {
   // if we have determined an initial value for the field
   // we can show that value in --help
@@ -229,11 +229,11 @@ function argTypeSupported(option: inventory.ProjectOption): boolean {
 function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
   return Boolean(
     option.jsonLike &&
-      option.fullType.collection?.kind === "array" &&
-      option.fullType.collection.elementtype.primitive &&
-      ["string", "number"].includes(
-        option.fullType.collection.elementtype.primitive
-      )
+    option.fullType.collection?.kind === "array" &&
+    option.fullType.collection.elementtype.primitive &&
+    ["string", "number"].includes(
+      option.fullType.collection.elementtype.primitive,
+    ),
   );
 }
 
@@ -255,7 +255,7 @@ function renderDefault(cwd: string, value: string) {
 function commandLineToProps(
   cwd: string,
   type: inventory.ProjectType,
-  argv: Record<string, unknown>
+  argv: Record<string, unknown>,
 ): Record<string, any> {
   const props: Record<string, any> = {};
 
@@ -298,7 +298,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   const projenVersion = args.projenVersion ?? "latest";
   const installCommand = renderInstallCommand(
     baseDir,
-    `projen@${projenVersion}`
+    `projen@${projenVersion}`,
   );
   if (args.projenVersion) {
     exec(installCommand, { cwd: baseDir });
@@ -306,7 +306,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     // do not overwrite existing installation
     exec(
       `npm ls --prefix="${baseDir}" --depth=0 --pattern projen || ${installCommand}`,
-      { cwd: baseDir }
+      { cwd: baseDir },
     );
   }
 
@@ -321,7 +321,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       if (isLocal || isRegistry) {
         const moduleSource = isLocal ? "path" : "registry";
         throw new CliError(
-          `Could not find '${s}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`
+          `Could not find '${s}' in this ${moduleSource}. Please ensure that the package exists, you have access it and try again.`,
         );
       }
 
@@ -337,7 +337,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   if (!moduleDir) {
     throw new CliError(
-      `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`
+      `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`,
     );
   }
 
@@ -348,7 +348,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 
   if (projects.length < 1) {
     throw new CliError(
-      `No project types found after installing "${spec}". The module must export at least one class which extends "projen.Project".`
+      `No project types found after installing "${spec}". The module must export at least one class which extends "projen.Project".`,
     );
   }
 
@@ -362,7 +362,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       ...types.map((t) => `    ${t}`),
       "",
       `Please specify a project type.`,
-      `Example: npx projen new --from ${spec} ${types[0]}`
+      `Example: npx projen new --from ${spec} ${types[0]}`,
     );
   }
 
@@ -376,7 +376,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       ...types.map((t) => `    ${t}`),
       "",
       `Please specify a valid project type.`,
-      `Example: npx projen new --from ${spec} ${types[0]}`
+      `Example: npx projen new --from ${spec} ${types[0]}`,
     );
   }
 
@@ -405,7 +405,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     // Required option, but we could not find a value
     if (!option.optional && !args[option.name]) {
       missingOptions.push(
-        `--${option.switch} [${argType(option)}] ${argDesc(option)}`
+        `--${option.switch} [${argType(option)}] ${argDesc(option)}`,
       );
     }
   }
@@ -416,7 +416,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       `Cannot create "${type.fqn}". Missing required option${
         missingOptions.length > 1 ? "s" : ""
       }:`,
-      ...missingOptions.map((m) => `    ${m}`)
+      ...missingOptions.map((m) => `    ${m}`),
     );
   }
 
@@ -433,7 +433,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 function parseArg(
   value: any,
   type: string,
-  option?: inventory.ProjectOption
+  option?: inventory.ProjectOption,
 ): any {
   switch (type) {
     case "number":
@@ -447,8 +447,8 @@ function parseArg(
       return value.map((v: any) =>
         parseArg(
           v,
-          option?.fullType.collection?.elementtype.primitive || "string"
-        )
+          option?.fullType.collection?.elementtype.primitive || "string",
+        ),
       );
     // return value unchanged
     case "string":
@@ -470,7 +470,7 @@ function parseArg(
 async function initProject(
   baseDir: string,
   type: inventory.ProjectType,
-  args: any
+  args: any,
 ) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(baseDir, type, args);
@@ -493,7 +493,7 @@ async function initProject(
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
     const gitversion: string = getGitVersion(
-      execCapture("git --version", { cwd: baseDir }).toString()
+      execCapture("git --version", { cwd: baseDir }).toString(),
     );
     logging.debug("system using git version ", gitversion);
     // `git config init.defaultBranch` and `git init -b` are only available since git 2.28.0
@@ -511,7 +511,7 @@ async function initProject(
       git("add .");
       git('commit --allow-empty -m "chore: project created with projen"');
       logging.debug(
-        "older version of git detected, changed default branch name to main"
+        "older version of git detected, changed default branch name to main",
       );
       git("branch -M main");
     }

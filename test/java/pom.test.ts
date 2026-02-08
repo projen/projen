@@ -47,14 +47,14 @@ test("addDependency()", () => {
   // dependencies are managed at the project level
   pom.project.deps.addDependency(
     "org.assertj/assertj-core@^3.18.1",
-    DependencyType.TEST
+    DependencyType.TEST,
   );
 
   expect(actualPom(pom)).toMatchSnapshot();
 
   // check that pom.addDependency() updates the project
   expect(
-    pom.project.deps.getDependency("software.amazon.awscdk/core")
+    pom.project.deps.getDependency("software.amazon.awscdk/core"),
   ).toStrictEqual({
     name: "software.amazon.awscdk/core",
     type: "runtime",
@@ -93,7 +93,7 @@ test("addPlugin()", () => {
       configuration: {
         mainClass: "com.myorg.Play202101050157App",
       },
-    }
+    },
   );
 
   expect(actualPom(pom)).toMatchSnapshot();
@@ -185,7 +185,7 @@ class TestPom extends Pom {
         groupId: "org.acme",
         artifactId: "my-artifact",
         version: "1.2.3",
-      }
+      },
     );
   }
 }

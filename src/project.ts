@@ -272,7 +272,7 @@ export class Project extends Construct {
   constructor(options: ProjectOptions) {
     const outdir = determineOutdir(options.parent, options.outdir);
     const autoId = `${new.target.name}#${options.name}@${path.normalize(
-      options.outdir ?? "<root>"
+      options.outdir ?? "<root>",
     )}`;
 
     if (options.parent?.subprojects.find((p) => p.outdir === outdir)) {
@@ -315,7 +315,7 @@ export class Project extends Construct {
           "filter=lfs",
           "diff=lfs",
           "merge=lfs",
-          "-text"
+          "-text",
         );
       }
     }
@@ -323,7 +323,7 @@ export class Project extends Construct {
     this.gitignore = new IgnoreFile(
       this,
       ".gitignore",
-      options.gitIgnoreOptions
+      options.gitIgnoreOptions,
     );
     this.gitignore.exclude("node_modules/"); // created by running `npx projen`
     this.gitignore.include(`/${this.gitattributes.path}`);
@@ -408,7 +408,7 @@ export class Project extends Construct {
       .findAll()
       .filter(
         (c): c is Component =>
-          isComponent(c) && c.project.node.path === this.node.path
+          isComponent(c) && c.project.node.path === this.node.path,
       );
   }
   /**
@@ -485,7 +485,7 @@ export class Project extends Construct {
       .findAll()
       .find(
         (c): c is FileBase =>
-          isComponent(c) && isFile(c) && c.absolutePath === absolute
+          isComponent(c) && isFile(c) && c.absolutePath === absolute,
       );
 
     return candidate;
@@ -504,7 +504,7 @@ export class Project extends Construct {
 
     if (!(file instanceof JsonFile)) {
       throw new Error(
-        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`
+        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`,
       );
     }
 
@@ -523,7 +523,7 @@ export class Project extends Construct {
 
     if (!(file instanceof ObjectFile)) {
       throw new Error(
-        `found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`
+        `found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`,
       );
     }
 
@@ -640,7 +640,7 @@ export class Project extends Construct {
     cleanup(
       outdir,
       this.files.map((f) => normalizePersistedPath(f.path)),
-      this.excludeFromCleanup
+      this.excludeFromCleanup,
     );
 
     for (const subproject of this.subprojects) {

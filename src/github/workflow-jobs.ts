@@ -19,7 +19,7 @@ export class WorkflowJobs {
    * @returns Job
    */
   public static pullRequestFromPatch(
-    options: PullRequestFromPatchOptions
+    options: PullRequestFromPatchOptions,
   ): Job {
     const jobName = options.jobName ?? "Create Pull Request";
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;

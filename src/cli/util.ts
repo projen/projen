@@ -11,7 +11,7 @@ import { exec } from "../util";
 export function installPackage(
   baseDir: string,
   spec: string,
-  isProjen = false
+  isProjen = false,
 ): string {
   const packageJsonPath = path.join(baseDir, "package.json");
   const packageJsonExisted = fs.existsSync(packageJsonPath);
@@ -27,7 +27,7 @@ export function installPackage(
   // Get the true installed package name
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
   const packageName = Object.keys(packageJson.devDependencies).find((name) =>
-    isProjen ? name === "projen" : name !== "projen"
+    isProjen ? name === "projen" : name !== "projen",
   );
 
   if (!packageName) {
@@ -64,13 +64,13 @@ export function renderInstallCommand(dir: string, module: string): string {
 
 export function findJsiiFilePath(
   baseDir: string,
-  moduleName: string
+  moduleName: string,
 ): string | undefined {
   try {
     return path.dirname(
       require.resolve(`${moduleName}/.jsii`, {
         paths: [baseDir],
-      })
+      }),
     );
   } catch (error: unknown) {
     if (

@@ -418,7 +418,7 @@ export class Release extends Component {
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error(
-        '"releaseBranches" is no longer an array. See type annotations'
+        '"releaseBranches" is no longer an array. See type annotations',
       );
     }
 
@@ -431,7 +431,7 @@ export class Release extends Component {
       this.buildTasks = [options.task];
     } else {
       throw new Error(
-        "Either 'tasks' or 'task' must be provided, but not both."
+        "Either 'tasks' or 'task' must be provided, but not both.",
       );
     }
 
@@ -485,7 +485,7 @@ export class Release extends Component {
     });
 
     this.releaseTagFilePath = posixPath.normalize(
-      posixPath.join(this.artifactsDirectory, this.version.releaseTagFileName)
+      posixPath.join(this.artifactsDirectory, this.version.releaseTagFileName),
     );
 
     this.publisher = new Publisher(this.project, {
@@ -497,7 +497,7 @@ export class Release extends Component {
       failureIssueLabel: options.releaseFailureIssueLabel,
       ...filteredWorkflowRunsOnOptions(
         options.workflowRunsOn,
-        options.workflowRunsOnGroup
+        options.workflowRunsOnGroup,
       ),
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
@@ -510,15 +510,15 @@ export class Release extends Component {
       this.publisher.publishToGitHubReleases({
         changelogFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.changelogFileName
+          this.version.changelogFileName,
         ),
         versionFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.versionFileName
+          this.version.versionFileName,
         ),
         releaseTagFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.releaseTagFileName
+          this.version.releaseTagFileName,
         ),
       });
     }
@@ -587,7 +587,7 @@ export class Release extends Component {
    */
   private _addBranch(
     branch: string,
-    options: Partial<BranchOptions>
+    options: Partial<BranchOptions>,
   ): ReleaseBranch {
     if (this._branches.find((b) => b.name === branch)) {
       throw new Error(`The release branch ${branch} is already defined`);
@@ -601,7 +601,7 @@ export class Release extends Component {
       this.defaultBranch.majorVersion === undefined
     ) {
       throw new Error(
-        'you must specify "majorVersion" for the default branch when adding multiple release branches'
+        'you must specify "majorVersion" for the default branch when adding multiple release branches',
       );
     }
 
@@ -623,7 +623,7 @@ export class Release extends Component {
       }
 
       branch.workflow.addJobs(
-        this.publisher._renderJobsForBranch(branch.name, branch)
+        this.publisher._renderJobsForBranch(branch.name, branch),
       );
       branch.workflow.addJobs(this.jobs);
     }
@@ -651,7 +651,7 @@ export class Release extends Component {
    */
   private createWorkflow(
     branchName: string,
-    branch: Partial<BranchOptions>
+    branch: Partial<BranchOptions>,
   ): GithubWorkflow | undefined {
     const workflowName =
       branch.workflowName ??
@@ -709,15 +709,15 @@ export class Release extends Component {
       const publishTask = this.publisher.publishToGit({
         changelogFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.changelogFileName
+          this.version.changelogFileName,
         ),
         versionFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.versionFileName
+          this.version.versionFileName,
         ),
         releaseTagFile: posixPath.join(
           this.artifactsDirectory,
-          this.version.releaseTagFileName
+          this.version.releaseTagFileName,
         ),
         projectChangelogFile: this.releaseTrigger.changelogPath,
         gitBranch: branchName,
@@ -735,7 +735,7 @@ export class Release extends Component {
       WorkflowSteps.tagExists(`$(cat ${this.releaseTagFilePath})`, {
         name: "Check if version has already been tagged",
         id: TAG_EXISTS_STEPID,
-      })
+      }),
     );
 
     // check if new commits were pushed to the repo while we were building.
@@ -751,7 +751,7 @@ export class Release extends Component {
     });
 
     const projectPathRelativeToRoot = projectPathRelativeToRepoRoot(
-      this.project
+      this.project,
     );
 
     postBuildSteps.push(
@@ -769,7 +769,7 @@ export class Release extends Component {
             ? posixPath.join(projectPathRelativeToRoot, this.artifactsDirectory)
             : this.artifactsDirectory,
         },
-      })
+      }),
     );
 
     if (this.github && !this.releaseTrigger.isManual) {

@@ -87,11 +87,11 @@ function resolveModulePath(moduleName: string) {
     return path.dirname(
       require.resolve(path.join(moduleName, "package.json"), {
         paths: [process.cwd()],
-      })
+      }),
     );
   } catch (err) {
     throw new Error(
-      `External project module '${moduleName}' could not be resolved.`
+      `External project module '${moduleName}' could not be resolved.`,
     );
   }
 }
@@ -128,7 +128,7 @@ function createProject(opts: CreateProjectOptions) {
   // errors if this isn't unique
   const varName = "project" + Math.random().toString(36).slice(2);
   initProjectCode.push(
-    `const ${varName} = new ${projectType.typename}(${renderedOptions});`
+    `const ${varName} = new ${projectType.typename}(${renderedOptions});`,
   );
 
   if (opts.synth ?? true) {
@@ -146,7 +146,7 @@ function createProject(opts: CreateProjectOptions) {
           // eslint-disable-next-line @typescript-eslint/no-require-imports
           [currentModule]: require(resolveModulePath(currentModule)),
         }),
-        {}
+        {},
       ),
     },
   });

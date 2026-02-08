@@ -64,17 +64,17 @@ export class LicenseChecker extends Component {
 
     if (!production && !development) {
       throw new Error(
-        "LicenseChecker: At least one of `production` or `development` must be enabled."
+        "LicenseChecker: At least one of `production` or `development` must be enabled.",
       );
     }
     if (!allowedLicenses.length && !prohibitedLicenses.length) {
       throw new Error(
-        "LicenseChecker: Neither `allow` nor `deny` found. Exactly one must be provided and not empty."
+        "LicenseChecker: Neither `allow` nor `deny` found. Exactly one must be provided and not empty.",
       );
     }
     if (allowedLicenses.length && prohibitedLicenses.length) {
       throw new Error(
-        "LicenseChecker: `allow` and `deny` can not be used at the same time. Choose one or the other."
+        "LicenseChecker: `allow` and `deny` can not be used at the same time. Choose one or the other.",
       );
     }
 

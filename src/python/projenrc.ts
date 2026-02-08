@@ -55,7 +55,7 @@ export class Projenrc extends ProjenrcFile {
     this.pythonExec = options.pythonExec ?? "python";
     project.deps.addDependency(
       `projen@${projenVersion}`,
-      DependencyType.DEVENV
+      DependencyType.DEVENV,
     );
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
@@ -76,7 +76,7 @@ export class Projenrc extends ProjenrcFile {
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
       this.project.logger.warn(
-        "cannot determine jsii type for project options"
+        "cannot determine jsii type for project options",
       );
       return;
     }
@@ -106,7 +106,7 @@ export class Projenrc extends ProjenrcFile {
     const { renderedOptions, imports } = renderPythonOptions(
       indent,
       optionFqns,
-      bootstrap.args
+      bootstrap.args,
     );
 
     const importName = resolvePythonImportName(jsiiFqn, jsiiManifest);
@@ -124,7 +124,7 @@ export class Projenrc extends ProjenrcFile {
     writeFileSync(pythonFile, lines.join("\n"));
 
     this.project.logger.info(
-      `Project definition file was created at ${pythonFile}`
+      `Project definition file was created at ${pythonFile}`,
     );
   }
 }
@@ -141,7 +141,7 @@ export function resolvePythonImportName(jsiiFqn: string, jsiiManifest: any) {
 function renderPythonOptions(
   indent: number,
   optionFqns: Record<string, string>,
-  initOptions?: Record<string, any>
+  initOptions?: Record<string, any>,
 ) {
   const imports = new Set<string>();
   if (!initOptions || Object.keys(initOptions).length === 0) {
@@ -170,7 +170,7 @@ function toPythonProperty(prop: string) {
 function toPythonValue(
   value: any,
   name: string,
-  optionFqns: Record<string, string>
+  optionFqns: Record<string, string>,
 ) {
   if (typeof value === "boolean") {
     return { pythonValue: value ? "True" : "False" };

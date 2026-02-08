@@ -281,7 +281,7 @@ test("bump fails due to crossing major version", async () => {
   });
 
   await expect(promise).rejects.toThrow(
-    /bump failed: this branch is configured to only publish v1 releases - bump resulted in 2.0.0/
+    /bump failed: this branch is configured to only publish v1 releases - bump resulted in 2.0.0/,
   );
 });
 
@@ -302,7 +302,7 @@ test("bump fails due to crossing minor version", async () => {
   });
 
   await expect(promise).rejects.toThrow(
-    /bump failed: this branch is configured to only publish v1.1 releases - bump resulted in 1.2/
+    /bump failed: this branch is configured to only publish v1.1 releases - bump resulted in 1.2/,
   );
 });
 
@@ -357,7 +357,7 @@ test("minMajorVersion throws if set together with majorVersion", async () => {
     testBump({
       options: { minMajorVersion: 1, majorVersion: 1 },
       commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
-    })
+    }),
   ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
 });
 
@@ -366,7 +366,7 @@ test("minorVersion throws if used without majorVersion", async () => {
     testBump({
       options: { minorVersion: 1 },
       commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
-    })
+    }),
   ).rejects.toThrow(/minorVersion and majorVersion must be used together/);
 });
 
@@ -572,7 +572,7 @@ describe("newline at the end of version file", () => {
 
     const file = await fs.readFile(
       join(result.workdir, "version.json"),
-      "utf-8"
+      "utf-8",
     );
     expect(file.endsWith("\n")).toBe(true);
   });
@@ -606,7 +606,7 @@ async function testBump(
   opts: {
     options?: Partial<BumpOptions>;
     commits?: { message: string; tag?: string; path?: string }[];
-  } = {}
+  } = {},
 ) {
   const workdir = mkdtempSync(join(tmpdir(), "bump-test-"));
 
@@ -651,7 +651,7 @@ async function testBump(
 
   return {
     version: JSON.parse(
-      await fs.readFile(join(workdir, "version.json"), "utf-8")
+      await fs.readFile(join(workdir, "version.json"), "utf-8"),
     ).version,
     changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
     bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),

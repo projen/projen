@@ -88,7 +88,7 @@ export class GithubCredentials {
    * @default - a secret named "PROJEN_GITHUB_TOKEN"
    */
   public static fromPersonalAccessToken(
-    options: GithubCredentialsPersonalAccessTokenOptions = {}
+    options: GithubCredentialsPersonalAccessTokenOptions = {},
   ) {
     return new GithubCredentials({
       setupSteps: [],

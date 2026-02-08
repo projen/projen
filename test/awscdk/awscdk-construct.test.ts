@@ -22,10 +22,10 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "^3.1337.0-ultimate"
+      "^3.1337.0-ultimate",
     );
     expect(
-      snapshot["package.json"]?.devDependencies?.constructs
+      snapshot["package.json"]?.devDependencies?.constructs,
     ).toBeUndefined();
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
@@ -39,16 +39,16 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toMatch(
-      /^\^3\./
+      /^\^3\./,
     );
     expect(
-      snapshot["package.json"]?.devDependencies?.constructs
+      snapshot["package.json"]?.devDependencies?.constructs,
     ).toBeUndefined();
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"],
     ).toStrictEqual("^1.112.0");
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"],
     ).toStrictEqual("^1.112.0");
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
@@ -63,10 +63,10 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"],
     ).toBeUndefined();
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"],
     ).toStrictEqual("^1.110.0");
   });
 
@@ -79,19 +79,19 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toMatch(
-      /^\^10./
+      /^\^10./,
     );
     expect(snapshot["package.json"]?.peerDependencies["aws-cdk-lib"]).toMatch(
-      /^\^2./
+      /^\^2./,
     );
     expect(snapshot["package.json"]?.devDependencies?.constructs).toMatch(
-      /^10./
+      /^10./,
     );
     expect(snapshot["package.json"]?.devDependencies["aws-cdk-lib"]).toMatch(
-      /^2./
+      /^2./,
     );
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"],
     ).toBeUndefined();
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
@@ -102,7 +102,7 @@ describe("constructs dependency selection", () => {
         new TestProject({
           cdkVersion: "2.0.0-alpha.5",
           constructsVersion: "3.2.27",
-        })
+        }),
     ).toThrow(/CDK 2.x requires constructs 10.x/);
   });
 
@@ -112,9 +112,9 @@ describe("constructs dependency selection", () => {
         new TestProject({
           cdkVersion: "2.0.0-alpha.5",
           cdkDependencies: ["@aws-cdk/aws-lambda"],
-        })
+        }),
     ).toThrow(
-      /cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead/
+      /cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead/,
     );
   });
 
@@ -124,9 +124,9 @@ describe("constructs dependency selection", () => {
         new TestProject({
           cdkVersion: "2.0.0-alpha.5",
           cdkTestDependencies: ["@aws-cdk/aws-lambda"],
-        })
+        }),
     ).toThrow(
-      /cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead/
+      /cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead/,
     );
   });
 
@@ -136,7 +136,7 @@ describe("constructs dependency selection", () => {
         new TestProject({
           cdkVersion: "2.0.0-alpha.5",
           cdkDependenciesAsDeps: true,
-        })
+        }),
     ).toThrow(/cdkDependenciesAsDeps is not used for CDK 2.x/);
   });
 
@@ -146,16 +146,16 @@ describe("constructs dependency selection", () => {
         new TestProject({
           cdkVersion: "2.0.0-alpha.5",
           cdkAssert: true,
-        })
+        }),
     ).toThrow(
-      /cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib/
+      /cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib/,
     );
   });
 
   test("for cdk 3.x (does not exist yet)", () => {
     // GIVEN
     expect(() => new TestProject({ cdkVersion: "3.1337.42" })).toThrow(
-      /Unsupported AWS CDK major version 3\.x/
+      /Unsupported AWS CDK major version 3\.x/,
     );
   });
 });
@@ -187,7 +187,7 @@ describe("lambda functions", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot["src/my-function.ts"]).not.toBeUndefined();
     expect(
-      snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
+      snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps,
     ).toStrictEqual([
       {
         exec: 'esbuild --bundle src/my.lambda.ts --target="node22" --platform="node" --outfile="resources/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar --sourcemap',
@@ -206,7 +206,7 @@ describe("lambda functions", () => {
     mkdirSync(join(project.outdir, project.srcdir));
     writeFileSync(
       join(project.outdir, project.srcdir, "my.lambda.ts"),
-      "// dummy"
+      "// dummy",
     );
 
     // THEN
@@ -230,7 +230,7 @@ describe("node version in workflow", () => {
             "node-version": "lts/*",
           },
         }),
-      ])
+      ]),
     );
   });
 
@@ -250,7 +250,7 @@ describe("node version in workflow", () => {
             "node-version": "18.0.0",
           },
         }),
-      ])
+      ]),
     );
   });
 
@@ -271,7 +271,7 @@ describe("node version in workflow", () => {
             "node-version": "20.17.0",
           },
         }),
-      ])
+      ]),
     );
   });
 });
@@ -299,7 +299,7 @@ describe("workflow container image", () => {
     const snapshot = synthSnapshot(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
-      "my-custom-image"
+      "my-custom-image",
     );
   });
 });
@@ -314,10 +314,10 @@ describe("integ-runner", () => {
     const snapshot = synthSnapshot(project);
 
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-runner"],
     ).toStrictEqual("latest");
     expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"]
+      snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"],
     ).toStrictEqual("latest");
     expect(project.tasks.tryFind("integ")?.steps).toEqual([
       { exec: "integ-runner $@ --language typescript", receiveArgs: true },
@@ -329,7 +329,7 @@ describe("integ-runner", () => {
       },
     ]);
     expect(project.testTask.steps).toEqual(
-      expect.arrayContaining([{ spawn: "integ" }])
+      expect.arrayContaining([{ spawn: "integ" }]),
     );
   });
 });
@@ -356,8 +356,8 @@ it("warns the user if they add CDK v1 dependencies to a CDK v2 project", () => {
   // THEN
   expect(console.error).toHaveBeenCalledWith(
     expect.stringContaining(
-      `WARNING: Found CDK v1 deps in your project, even though your "cdkVersion" is 2.x: [@aws-cdk/aws-s3, @aws-cdk/core].`
-    )
+      `WARNING: Found CDK v1 deps in your project, even though your "cdkVersion" is 2.x: [@aws-cdk/aws-s3, @aws-cdk/core].`,
+    ),
   );
 });
 
@@ -374,7 +374,7 @@ const defaultOptions = {
 
 class TestProject extends AwsCdkConstructLibrary {
   constructor(
-    options: Omit<AwsCdkConstructLibraryOptions, keyof typeof defaultOptions>
+    options: Omit<AwsCdkConstructLibraryOptions, keyof typeof defaultOptions>,
   ) {
     super({
       ...defaultOptions,

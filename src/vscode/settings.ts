@@ -44,17 +44,17 @@ export class VsCodeSettings extends Component {
    */
   public addSettings(
     settings: Record<string, unknown>,
-    languages?: string | string[]
+    languages?: string | string[],
   ) {
     if (Array.isArray(languages)) {
       languages.forEach((language) => {
         Object.entries(settings).forEach(([setting, value]) =>
-          this.addSetting(setting, value, language)
+          this.addSetting(setting, value, language),
         );
       });
     } else {
       Object.entries(settings).forEach(([setting, value]) =>
-        this.addSetting(setting, value, languages)
+        this.addSetting(setting, value, languages),
       );
     }
   }

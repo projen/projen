@@ -72,7 +72,7 @@ test('if include() is called with "!", then strip it', () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["!*.js"]);
 });
 
@@ -91,7 +91,7 @@ test("removePatters() can be used to remove previously added patters", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["my_file", "*.zz", "boom/bam"]);
 });
 
@@ -108,7 +108,7 @@ test("comments are filtered out by default", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["*.js", "!foo", "bar"]);
 });
 
@@ -127,7 +127,7 @@ test("comments are included when option specified", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["*.js", "#comment", "!foo", "# hello world", "bar"]);
 });
 
@@ -146,7 +146,7 @@ test("empty lines are included when option specified", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["*.js", "", "bar"]);
 });
 
@@ -163,7 +163,7 @@ test("included directories are removed when a parent directory is excluded", () 
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["bloop/", "!floop/", "!src/"]);
 });
 
@@ -180,7 +180,7 @@ test("excluded directories are removed when a parent directory is included", () 
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"]),
   ).toStrictEqual(["bloop/", "!floop/", "src/"]);
 });
 

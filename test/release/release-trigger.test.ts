@@ -47,7 +47,7 @@ describe("manual release", () => {
       });
 
       expect(releaseTrigger.gitPushCommand).toEqual(
-        "git push --follow-tags -o ci.skip origin main"
+        "git push --follow-tags -o ci.skip origin main",
       );
     });
   });

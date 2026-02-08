@@ -26,7 +26,7 @@ describe("createProject", () => {
         });
         expect(snapshot[".projenrc.js"]).toMatchSnapshot();
       },
-      { chdir: true }
+      { chdir: true },
     );
   });
 
@@ -60,7 +60,7 @@ describe("createProject", () => {
         });
         expect(snapshot[".projenrc.js"]).toMatchSnapshot();
       },
-      { chdir: true }
+      { chdir: true },
     );
   });
 
@@ -91,10 +91,10 @@ describe("createProject", () => {
         });
         expect(snapshot[".projenrc.js"]).toMatchSnapshot();
         expect(snapshot[".projenrc.js"]).toContain(
-          "javascript.NodePackageManager.NPM"
+          "javascript.NodePackageManager.NPM",
         );
       },
-      { chdir: true }
+      { chdir: true },
     );
   });
 });

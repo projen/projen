@@ -65,7 +65,7 @@ export class SampleFile extends Component {
     this.writeOnceFileContents(
       this.project.outdir,
       this.filePath,
-      contents ?? ""
+      contents ?? "",
     );
   }
 
@@ -160,7 +160,7 @@ export class SampleDir extends Component {
         fs.copyFileSync(sourcePath, targetPath);
         fs.chmodSync(
           targetPath,
-          getFilePermissions({ readonly: false, executable: false })
+          getFilePermissions({ readonly: false, executable: false }),
         );
       }
     }

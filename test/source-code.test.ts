@@ -9,7 +9,7 @@ test("lines", () => {
   hello.line("last line");
 
   expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
-    ["this is my first source file", "", "last line"].join("\n")
+    ["this is my first source file", "", "last line"].join("\n"),
   );
 });
 
@@ -26,7 +26,7 @@ test("open/close", () => {
   hello.close();
   hello.line("level0");
   expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
-    ["level0", "  level1", "    level2", "  level1", "level0"].join("\n")
+    ["level0", "  level1", "    level2", "  level1", "level0"].join("\n"),
   );
 });
 
@@ -39,7 +39,7 @@ test("indent", () => {
   hello.close();
   hello.line("level0");
   expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
-    ["level0", "    level1", "level0"].join("\n")
+    ["level0", "    level1", "level0"].join("\n"),
   );
 });
 
@@ -54,7 +54,7 @@ test("trailing whitespace is trimmed", () => {
   hello.close();
 
   expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
-    ["", "        hello, world."].join("\n")
+    ["", "        hello, world."].join("\n"),
   );
 });
 

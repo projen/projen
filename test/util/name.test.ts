@@ -11,8 +11,8 @@ describe("workflowNameForProject", () => {
     expect(
       workflowNameForProject(
         "base",
-        new TestProject({ parent, outdir: "child" })
-      )
+        new TestProject({ parent, outdir: "child" }),
+      ),
     ).toEqual("base_my-project");
   });
 });

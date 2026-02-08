@@ -115,6 +115,6 @@ export interface IDockerComposeNetworkConfig {
    */
   addNetworkConfiguration(
     networkName: string,
-    configuration: DockerComposeNetworkConfig
+    configuration: DockerComposeNetworkConfig,
   ): void;
 }

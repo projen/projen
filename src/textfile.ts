@@ -29,7 +29,7 @@ export class TextFile extends FileBase {
   constructor(
     scope: IConstruct,
     filePath: string,
-    options: TextFileOptions = {}
+    options: TextFileOptions = {},
   ) {
     super(scope, filePath, options);
 

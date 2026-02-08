@@ -67,7 +67,7 @@ describe("merge-queue", () => {
     const autoQueue = snapshot[`.github/workflows/auto-queue.yml`];
 
     expect(autoQueue).toContain(
-      "if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo')"
+      "if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo')",
     );
     expect(autoQueue).toContain("merge-method: merge");
     expect(autoQueue).toContain("token: ${{ secrets.shh }}");
@@ -156,7 +156,7 @@ describe("merge-queue", () => {
               },
             },
           },
-        })
+        }),
     ).toThrow(/must be a subset/);
   });
 });

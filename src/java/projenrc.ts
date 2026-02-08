@@ -74,14 +74,14 @@ export class Projenrc extends ProjenrcFile {
 
     project.deps.addDependency(
       `io.github.cdklabs/projen@${projenVersion}`,
-      depType
+      depType,
     );
     pom.addPlugin("org.codehaus.mojo/exec-maven-plugin@3.0.0");
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
     project.defaultTask?.exec(`mvn ${compileGoal} --quiet`);
     project.defaultTask?.exec(
-      `mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`
+      `mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`,
     );
 
     // if this is a new project, generate a skeleton for projenrc.java
@@ -114,7 +114,7 @@ export class Projenrc extends ProjenrcFile {
       this.project.outdir,
       dir,
       ...this.javaPackage,
-      this.javaClass + ".java"
+      this.javaClass + ".java",
     );
 
     const relativePath = relative(this.project.outdir, javaFile);
@@ -134,14 +134,14 @@ export class Projenrc extends ProjenrcFile {
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
       this.project.logger.warn(
-        "cannot determine jsii type for project options"
+        "cannot determine jsii type for project options",
       );
       return;
     }
     const jsiiOptionsType = jsiiManifest.types[optionsTypeFqn];
     if (!jsiiOptionsType) {
       this.project.logger.warn(
-        `cannot find jsii type for project options: ${optionsTypeFqn}`
+        `cannot find jsii type for project options: ${optionsTypeFqn}`,
       );
       return;
     }
@@ -166,7 +166,7 @@ export class Projenrc extends ProjenrcFile {
 
     const optionFqns: Record<string, string> = generateJavaOptionNames(
       bootstrap.type.options,
-      jsiiManifest
+      jsiiManifest,
     );
 
     if (this.javaPackage.length > 0) {
@@ -178,7 +178,7 @@ export class Projenrc extends ProjenrcFile {
       2,
       jsiiOptionsType.name,
       optionFqns,
-      bootstrap.args
+      bootstrap.args,
     );
 
     emit(`import ${getJavaImport(jsiiType, jsiiManifest)};`);
@@ -190,7 +190,7 @@ export class Projenrc extends ProjenrcFile {
     openBlock(`public class ${this.javaClass}`);
     openBlock("public static void main(String[] args)");
     emit(
-      `${jsiiType.name} project = new ${jsiiType.name}(${renderedOptions});`
+      `${jsiiType.name} project = new ${jsiiType.name}(${renderedOptions});`,
     );
     emit("project.synth();");
     closeBlock();
@@ -201,20 +201,20 @@ export class Projenrc extends ProjenrcFile {
     writeFileSync(filePath, lines.join("\n"));
 
     this.project.logger.info(
-      `Project definition file was created at ${this.filePath}`
+      `Project definition file was created at ${this.filePath}`,
     );
   }
 }
 
 export function generateJavaOptionNames(
   options: ProjectOption[],
-  jsiiManifest: any
+  jsiiManifest: any,
 ) {
   const optionFqns: Record<string, string> = {};
   for (const option of options) {
     if (option.fqn && jsiiManifest.types[option.fqn]) {
       optionFqns[option.name] = toJavaFullTypeName(
-        jsiiManifest.types[option.fqn]
+        jsiiManifest.types[option.fqn],
       );
     }
   }
@@ -226,7 +226,7 @@ function renderJavaOptions(
   indent: number,
   optionsTypeName: string,
   optionFqns: Record<string, string>,
-  initOptions?: Record<string, any>
+  initOptions?: Record<string, any>,
 ) {
   const imports = new Set<string>();
   if (!initOptions || Object.keys(initOptions).length === 0) {
@@ -254,7 +254,7 @@ function toJavaProperty(prop: string) {
 function toJavaValue(
   value: any,
   name: string,
-  optionFqns: Record<string, string>
+  optionFqns: Record<string, string>,
 ) {
   if (typeof value === "string" && optionFqns[name] !== undefined) {
     const parts = optionFqns[name].split(".");

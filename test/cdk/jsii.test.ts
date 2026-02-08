@@ -187,7 +187,7 @@ describe("maven repository options", () => {
     const workflow = outdir[".github/workflows/release.yml"];
     expect(workflow).toContain("MAVEN_SERVER_ID: github");
     expect(workflow).toContain(
-      "MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb"
+      "MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb",
     );
     expect(workflow).toContain("MAVEN_USERNAME: ${{ github.actor }}");
     expect(workflow).toContain("MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}");
@@ -212,9 +212,9 @@ describe("maven repository options", () => {
           },
           defaultReleaseBranch: "master",
           publishTasks: true,
-        })
+        }),
     ).toThrow(
-      'publishing to GitHub Packages requires the "mavenServerId" to be "github"'
+      'publishing to GitHub Packages requires the "mavenServerId" to be "github"',
     );
   });
 });
@@ -290,7 +290,7 @@ describe("publish to go", () => {
 
     const output = synthSnapshot(project);
     expect(output[".github/workflows/release.yml"]).not.toContain(
-      "release_npm"
+      "release_npm",
     );
   });
 
@@ -320,7 +320,7 @@ describe("publish to go", () => {
     expect(build.jobs.build.steps).toContainEqual(workflowBootstrapStep);
     expect(release.jobs.release.steps).toContainEqual(workflowBootstrapStep);
     expect(release.jobs.release_npm.steps).toContainEqual(
-      workflowBootstrapStep
+      workflowBootstrapStep,
     );
   });
 
@@ -430,7 +430,7 @@ describe("docgen", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec,
     ).toStrictEqual("jsii-docgen -o API.md");
   });
 
@@ -448,7 +448,7 @@ describe("docgen", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec,
     ).toStrictEqual("jsii-docgen -o docs.md");
   });
 });
@@ -465,7 +465,7 @@ describe("compile options", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec,
     ).toStrictEqual("jsii --silence-warnings=reserved-word");
   });
 
@@ -481,9 +481,9 @@ describe("compile options", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec,
     ).toStrictEqual(
-      "jsii --silence-warnings=reserved-word --compress-assembly"
+      "jsii --silence-warnings=reserved-word --compress-assembly",
     );
   });
 });
@@ -529,14 +529,14 @@ describe("language bindings", () => {
     "snapshot %s",
     (language) => {
       expect(build.jobs[`package-${language}`]).toMatchSnapshot();
-    }
+    },
   );
 
   test.each(["js", "java", "python", "dotnet", "go"])(
     "package:%s task",
     (language) => {
       expect(tasks[`package:${language}`]).toMatchSnapshot();
-    }
+    },
   );
 
   test("package creates all bindings", () => {
@@ -550,7 +550,7 @@ describe("language bindings", () => {
       const job = release.jobs[`release_${language}`];
       expect(job).toBeDefined();
       expect(job).toMatchSnapshot();
-    }
+    },
   );
 });
 
@@ -589,9 +589,9 @@ describe("workflows use global workflowRunsOn option", () => {
     (language) => {
       expect(build).toHaveProperty(
         `jobs.package-${language}.runs-on`,
-        EXPECTED_RUNS_ON
+        EXPECTED_RUNS_ON,
       );
-    }
+    },
   );
 
   test.each(["pypi", "nuget", "npm", "maven", "golang"])(
@@ -599,9 +599,9 @@ describe("workflows use global workflowRunsOn option", () => {
     (language) => {
       expect(release).toHaveProperty(
         `jobs.release_${language}.runs-on`,
-        EXPECTED_RUNS_ON
+        EXPECTED_RUNS_ON,
       );
-    }
+    },
   );
 });
 
@@ -652,7 +652,7 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
   const prLint = yaml.parse(output[".github/workflows/pull-request-lint.yml"]);
 
   const EXPECTED_RUNS_ON = JSON.parse(
-    '{"group":"Default","labels":["self-hosted", "linux", "x64"]}'
+    '{"group":"Default","labels":["self-hosted", "linux", "x64"]}',
   );
 
   expect(build).toHaveProperty("jobs.build.runs-on.group", "Default");
@@ -693,9 +693,9 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
     (language) => {
       expect(build).toHaveProperty(
         `jobs.package-${language}.runs-on`,
-        EXPECTED_RUNS_ON
+        EXPECTED_RUNS_ON,
       );
-    }
+    },
   );
 
   test.each(["pypi", "nuget", "npm", "maven", "golang"])(
@@ -703,9 +703,9 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
     (language) => {
       expect(release).toHaveProperty(
         `jobs.release_${language}.runs-on`,
-        EXPECTED_RUNS_ON
+        EXPECTED_RUNS_ON,
       );
-    }
+    },
   );
 });
 
@@ -743,9 +743,9 @@ describe("workflows use global workflowContainerImage option", () => {
     (language) => {
       expect(build).toHaveProperty(
         `jobs.package-${language}.container`,
-        EXPECTED_CONTAINER
+        EXPECTED_CONTAINER,
       );
-    }
+    },
   );
 
   test.each(["pypi", "nuget", "npm", "maven", "golang"])(
@@ -753,9 +753,9 @@ describe("workflows use global workflowContainerImage option", () => {
     (language) => {
       expect(release).toHaveProperty(
         `jobs.release_${language}.container`,
-        EXPECTED_CONTAINER
+        EXPECTED_CONTAINER,
       );
-    }
+    },
   );
 });
 
@@ -794,8 +794,8 @@ describe("release workflow use packageManager option", () => {
           expect.objectContaining({
             uses: expect.stringContaining(EXPECTED_STEP),
           }),
-        ])
+        ]),
       );
-    }
+    },
   );
 });

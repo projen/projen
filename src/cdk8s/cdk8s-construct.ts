@@ -89,7 +89,7 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     const cdk8sVersion = semver.parse(options.cdk8sVersion);
     if (!cdk8sVersion) {
       throw new Error(
-        `"cdk8sVersion" cannot be parsed as a semver version: ${options.cdk8sVersion}`
+        `"cdk8sVersion" cannot be parsed as a semver version: ${options.cdk8sVersion}`,
       );
     }
 
@@ -102,12 +102,12 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     const resolvedConstructsVersion =
       options.constructsVersion ?? defaultConstructsVersion;
     const resolvedMajorConstructVersion = semver.parse(
-      resolvedConstructsVersion
+      resolvedConstructsVersion,
     )?.major;
 
     if (!resolvedMajorConstructVersion) {
       throw new Error(
-        `"constructsVersion" cannot be parsed as a semver version: ${options.constructsVersion}`
+        `"constructsVersion" cannot be parsed as a semver version: ${options.constructsVersion}`,
       );
     }
 
@@ -130,7 +130,7 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
 
     this.addPeerDeps(
       `constructs@${this.constructsVersion}`,
-      `cdk8s@${this.cdk8sVersion}`
+      `cdk8s@${this.cdk8sVersion}`,
     );
 
     new AutoDiscover(this, {

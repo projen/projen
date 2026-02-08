@@ -410,7 +410,7 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
     expect(command).toMatch(/ --log-level=info( |$)/);
     expect(command).toMatch(/ --keep-names( |$)/);
     expect(command).toMatch(
-      `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`
+      `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`,
     );
     expect(command).toMatch('--banner:js="/* \\"banner\\" */"');
     expect(command).toMatch("--footer:js=\"/* 'footer' */\"");
@@ -492,7 +492,7 @@ test.each([
     } else {
       expect(postCompilationSteps).toBeUndefined();
     }
-  }
+  },
 );
 
 test.each([true, false])(
@@ -526,5 +526,5 @@ test.each([true, false])(
         exec: expect.stringContaining("chmod +x"),
       });
     }
-  }
+  },
 );

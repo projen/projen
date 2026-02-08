@@ -129,7 +129,7 @@ describe("prettier", () => {
     // THEN
     expect(synthSnapshot(project)[".prettierrc.json"]).toHaveProperty(
       "overrides",
-      [override]
+      [override],
     );
   });
 

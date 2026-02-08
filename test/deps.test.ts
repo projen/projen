@@ -137,7 +137,7 @@ describe("removeDependency()", () => {
 
     // THEN
     expect(() => p.deps.removeDependency("foo")).toThrow(
-      /"foo" is defined for multiple dependency types\: build\,runtime/
+      /"foo" is defined for multiple dependency types\: build\,runtime/,
     );
   });
 
@@ -216,7 +216,7 @@ describe("getDependency()", () => {
 
     // THEN
     expect(() => p.deps.getDependency("test")).toThrow(
-      /there is no dependency defined on \"test\"/
+      /there is no dependency defined on \"test\"/,
     );
   });
 
@@ -230,7 +230,7 @@ describe("getDependency()", () => {
 
     // THEN
     expect(() => p.deps.getDependency("zoo")).toThrow(
-      /\"zoo\" is defined for multiple dependency types: runtime,devenv. Please specify dependency type/
+      /\"zoo\" is defined for multiple dependency types: runtime,devenv. Please specify dependency type/,
     );
   });
 
@@ -243,7 +243,7 @@ describe("getDependency()", () => {
 
     // THEN
     expect(() => p.deps.getDependency("zoo", DependencyType.BUILD)).toThrow(
-      /there is no build dependency defined on \"zoo\"/
+      /there is no build dependency defined on \"zoo\"/,
     );
   });
 });
@@ -293,7 +293,7 @@ test("it is possible to have local file dependencies", () => {
   p.deps.addDependency("lolcat@file:../path/to/lolcat", DependencyType.BUILD);
   p.deps.addDependency(
     "fortune@file:../../path/to/fortune",
-    DependencyType.PEER
+    DependencyType.PEER,
   );
 
   // THEN
@@ -325,9 +325,9 @@ describe("isDependencySatisfied", () => {
 
       // THEN
       expect(
-        p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, range)
+        p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, range),
       ).toBe(expected);
-    }
+    },
   );
 
   test("non existing dependency does not satisfy", () => {
@@ -339,8 +339,8 @@ describe("isDependencySatisfied", () => {
       p.deps.isDependencySatisfied(
         "@projen/does-not-exist",
         DependencyType.RUNTIME,
-        "*"
-      )
+        "*",
+      ),
     ).toBe(false);
   });
 
@@ -351,12 +351,12 @@ describe("isDependencySatisfied", () => {
     // WHEN
     const d = p.deps.addDependency(
       "@projen/does-not-exist",
-      DependencyType.RUNTIME
+      DependencyType.RUNTIME,
     );
 
     // THEN
     expect(
-      p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, "*")
+      p.deps.isDependencySatisfied(d.name, DependencyType.RUNTIME, "*"),
     ).toBe(false);
   });
 });

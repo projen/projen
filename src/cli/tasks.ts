@@ -19,7 +19,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
     return (args: yargs.Argv) => {
       const taskReceivesArgs = task.steps?.reduce(
         (receiveArgs, step) => receiveArgs || (step.receiveArgs ?? false),
-        false
+        false,
       );
       let taskArgs: Array<string | number> = [];
       if (taskReceivesArgs) {

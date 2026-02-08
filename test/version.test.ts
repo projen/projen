@@ -159,7 +159,7 @@ describe("bump task", () => {
       commitMessage,
       expectedVersion,
       releasable: "all" | "featsFixes",
-      expectedBump
+      expectedBump,
     ) => {
       withProjectDir((projectdir) => {
         const project = new TestProject({
@@ -191,7 +191,7 @@ describe("bump task", () => {
 
         expect(result.version).toEqual(expectedVersion);
       });
-    }
+    },
   );
 
   test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
@@ -243,7 +243,7 @@ describe("bump task", () => {
             { message: "chore(release): v0.1.0", tag: "v0.1.0" },
             { message: "new change" },
           ],
-        })
+        }),
       ).toThrow(/Command failed/);
     });
   });
@@ -253,7 +253,7 @@ function testBumpTask(
   opts: {
     workdir?: string;
     commits?: { message: string; tag?: string; path?: string }[];
-  } = {}
+  } = {},
 ) {
   const workdir = opts.workdir ?? mkdtempSync(join(tmpdir(), "bump-test-"));
 

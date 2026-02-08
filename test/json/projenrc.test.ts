@@ -28,7 +28,7 @@ test("projenrc.json with typed options", () => {
       },
       name: "@example/foo", // string
       npmAccess: "public", // enum provided as string
-    })
+    }),
   );
 
   // WHEN
@@ -44,7 +44,7 @@ test("projenrc.json new project in outdir", () => {
     const project = new TestProject(
       renderProjenInitOptions("projen.typescript.TypeScriptProject", {
         outdir: newOutDir,
-      })
+      }),
     );
     const projen = new Projenrc(project);
 

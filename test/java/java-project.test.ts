@@ -77,7 +77,7 @@ class TestJavaProject extends JavaProject {
         projenrcJavaOptions: {
           projenVersion: "^1.2.3",
         },
-      })
+      }),
     );
   }
 }

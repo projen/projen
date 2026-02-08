@@ -15,7 +15,7 @@ describe("license checker", () => {
           },
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"LicenseChecker: At least one of \`production\` or \`development\` must be enabled."`
+        `"LicenseChecker: At least one of \`production\` or \`development\` must be enabled."`,
       );
     });
 
@@ -30,7 +30,7 @@ describe("license checker", () => {
           },
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"LicenseChecker: Neither \`allow\` nor \`deny\` found. Exactly one must be provided and not empty."`
+        `"LicenseChecker: Neither \`allow\` nor \`deny\` found. Exactly one must be provided and not empty."`,
       );
     });
 
@@ -45,7 +45,7 @@ describe("license checker", () => {
           },
         });
       }).toThrowErrorMatchingInlineSnapshot(
-        `"LicenseChecker: \`allow\` and \`deny\` can not be used at the same time. Choose one or the other."`
+        `"LicenseChecker: \`allow\` and \`deny\` can not be used at the same time. Choose one or the other."`,
       );
     });
   });
@@ -65,9 +65,9 @@ describe("license checker", () => {
     project.synth();
 
     // THEN
-    expect(() =>
-      execProjenCLI(project.outdir, ["check-licenses"])
-    ).toThrowError(`Found license defined by the --failOn flag: "Apache-2.0"`);
+    expect(() => execProjenCLI(project.outdir, ["check-licenses"])).toThrow(
+      `Found license defined by the --failOn flag: "Apache-2.0"`,
+    );
   });
 
   test("will pass if only allowed licenses are found", () => {

@@ -21,7 +21,7 @@ export enum TargetName {
  */
 export function toMavenVersionRange(
   semverRange: string,
-  suffix?: string
+  suffix?: string,
 ): string {
   return toBracketNotation(semverRange, suffix, {
     semver: false,
@@ -57,7 +57,7 @@ export function toPythonVersionRange(semverRange: string): string {
         .map((comp) => {
           const versionId = toReleaseVersion(
             comp.semver.raw?.replace(/-0$/, "") ?? "0.0.0",
-            TargetName.PYTHON
+            TargetName.PYTHON,
           );
           switch (comp.operator) {
             case "":
@@ -70,7 +70,7 @@ export function toPythonVersionRange(semverRange: string): string {
               return `${comp.operator}${versionId}`;
           }
         })
-        .join(", ")
+        .join(", "),
     )
     .join(", ");
 }
@@ -88,12 +88,12 @@ export function toPythonVersionRange(semverRange: string): string {
  */
 export function toReleaseVersion(
   assemblyVersion: string,
-  target: TargetName
+  target: TargetName,
 ): string {
   const version = parse(assemblyVersion);
   if (version == null) {
     throw new Error(
-      `Unable to parse the provided assembly version: "${assemblyVersion}"`
+      `Unable to parse the provided assembly version: "${assemblyVersion}"`,
     );
   }
   if (version.prerelease.length === 0) {
@@ -123,13 +123,13 @@ export function toReleaseVersion(
           if (!Object.keys(releaseLabels).includes(elem)) {
             validationErrors.push(
               `Label ${elem} is not one of ${Object.keys(releaseLabels).join(
-                ","
-              )}`
+                ",",
+              )}`,
             );
           }
           if (next === undefined || !Number.isInteger(next)) {
             validationErrors.push(
-              `Label ${elem} must be followed by a positive integer`
+              `Label ${elem} must be followed by a positive integer`,
             );
           }
         }
@@ -138,10 +138,10 @@ export function toReleaseVersion(
       if (validationErrors.length > 0) {
         throw new Error(
           `Unable to map prerelease identifier (in: ${assemblyVersion}) components to python: ${inspect(
-            version.prerelease
+            version.prerelease,
           )}. The format should be 'X.Y.Z-[label.sequence][.post.sequence][.(dev|pre).sequence]', where sequence is a positive integer and label is one of ${inspect(
-            Object.keys(releaseLabels)
-          )}. Validation errors encountered: ${validationErrors.join(", ")}`
+            Object.keys(releaseLabels),
+          )}. Validation errors encountered: ${validationErrors.join(", ")}`,
         );
       }
 
@@ -150,13 +150,13 @@ export function toReleaseVersion(
       // possible from the given prerelease input
       // e.g. 1.2.3-rc.123.dev.456.post.789 => 1.2.3.rc123.dev456.post789
       const postIdx = version.prerelease.findIndex(
-        (v) => v.toString() === "post"
+        (v) => v.toString() === "post",
       );
       const devIdx = version.prerelease.findIndex((v) =>
-        ["dev", "pre"].includes(v.toString())
+        ["dev", "pre"].includes(v.toString()),
       );
       const preReleaseIdx = version.prerelease.findIndex((v) =>
-        ["alpha", "beta", "rc"].includes(v.toString())
+        ["alpha", "beta", "rc"].includes(v.toString()),
       );
       const prereleaseVersion = [
         preReleaseIdx > -1
@@ -202,7 +202,7 @@ function toBracketNotation(
   {
     semver = true,
     target = TargetName.JAVASCRIPT,
-  }: { semver?: boolean; target?: TargetName } = {}
+  }: { semver?: boolean; target?: TargetName } = {},
 ): string {
   if (semverRange === "*") {
     semverRange = ">=0.0.0";
@@ -247,14 +247,14 @@ function toBracketNotation(
       throw new Error(
         `Unsupported SemVer range set in ${semverRange}: ${set
           .map((comp) => comp.value)
-          .join(", ")}`
+          .join(", ")}`,
       );
     })
     .join(", ");
 
   function toBracketRange(
     left: Comparator,
-    right: Comparator
+    right: Comparator,
   ): string | undefined {
     if (left.operator.startsWith("<") && right.operator.startsWith(">")) {
       // Order isn't ideal, swap around..
@@ -275,7 +275,7 @@ function toBracketNotation(
     const rightBrace = right.operator.endsWith("=") ? "]" : ")";
     return `${leftBrace}${addSuffix(left.semver.raw)},${addSuffix(
       right.semver.raw,
-      right.operator === "<" && !semver
+      right.operator === "<" && !semver,
     )}${rightBrace}`;
   }
 

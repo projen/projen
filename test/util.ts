@@ -45,7 +45,7 @@ export function execProjenCLI(
   workdir: string,
   args: string[] = [],
   env?: Record<string, string>,
-  { preInstallProjen = true }: ProjenCLIExecOptions = {}
+  { preInstallProjen = true }: ProjenCLIExecOptions = {},
 ) {
   const command = [process.execPath, PROJEN_CLI, ...args];
 
@@ -56,7 +56,7 @@ export function execProjenCLI(
     installPackage(
       workdir,
       `file:${path.normalize(path.join(__dirname, ".."))}`,
-      true
+      true,
     );
   }
 
@@ -82,7 +82,7 @@ afterAll((done) => {
 
 export function mkdtemp(opts: { cleanup?: boolean; dir?: string } = {}) {
   const tmpdir = fs.mkdtempSync(
-    path.join(opts.dir ?? os.tmpdir(), "projen-test-")
+    path.join(opts.dir ?? os.tmpdir(), "projen-test-"),
   );
   if (opts.cleanup ?? true) {
     autoRemove.add(tmpdir);
@@ -101,7 +101,7 @@ export function synthSnapshotWithPost(project: Project) {
 
 export function withProjectDir(
   code: (workdir: string) => void,
-  options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {}
+  options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {},
 ) {
   const origDir = process.cwd();
   const outdir = options.tmpdir ?? mkdtemp();
@@ -123,10 +123,10 @@ export function withProjectDir(
       // if "git" is set to "false", we still want to make sure global user is defined
       // (relevant in CI context)
       shell(
-        'git config user.name || git config --global user.name "My User Name"'
+        'git config user.name || git config --global user.name "My User Name"',
       );
       shell(
-        'git config user.email || git config --global user.email "my@user.email.com"'
+        'git config user.email || git config --global user.email "my@user.email.com"',
       );
     }
 
@@ -151,7 +151,7 @@ export function sanitizeOutput(dir: string) {
   const prev = pkg.devDependencies.projen;
   if (!prev) {
     throw new Error(
-      `expecting "${filepath}" to include a devDependency on "projen"`
+      `expecting "${filepath}" to include a devDependency on "projen"`,
     );
   }
 

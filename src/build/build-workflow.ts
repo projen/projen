@@ -158,7 +158,7 @@ export class BuildWorkflow extends Component {
     const github = GitHub.of(this.project.root);
     if (!github) {
       throw new Error(
-        "BuildWorkflow is currently only supported for GitHub projects"
+        "BuildWorkflow is currently only supported for GitHub projects",
       );
     }
 
@@ -178,7 +178,7 @@ export class BuildWorkflow extends Component {
       options.workflowTriggers ?? {
         pullRequest: {},
         workflowDispatch: {}, // allow manual triggering
-      }
+      },
     );
 
     this.addBuildJob(options);
@@ -194,7 +194,7 @@ export class BuildWorkflow extends Component {
 
   private addBuildJob(options: BuildWorkflowOptions) {
     const projectPathRelativeToRoot = projectPathRelativeToRepoRoot(
-      this.project
+      this.project,
     );
     const jobConfig: workflows.Job = {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
@@ -272,7 +272,7 @@ export class BuildWorkflow extends Component {
         run: [
           `cd ${this.artifactsDirectory} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
         ].join("\n"),
-      }
+      },
     );
 
     steps.push(...(job.steps ?? []));
@@ -304,7 +304,7 @@ export class BuildWorkflow extends Component {
    */
   public addPostBuildJobTask(
     task: Task,
-    options: AddPostBuildJobTaskOptions = {}
+    options: AddPostBuildJobTaskOptions = {},
   ) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
@@ -314,7 +314,7 @@ export class BuildWorkflow extends Component {
         installDeps: true,
         tools: options.tools,
         ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
-      }
+      },
     );
   }
 
@@ -331,7 +331,7 @@ export class BuildWorkflow extends Component {
   public addPostBuildJobCommands(
     id: string,
     commands: string[],
-    options?: AddPostBuildJobCommandsOptions
+    options?: AddPostBuildJobCommandsOptions,
   ) {
     const steps = [];
 
@@ -343,7 +343,7 @@ export class BuildWorkflow extends Component {
             repository: PULL_REQUEST_REPOSITORY,
             ...(this.github.downloadLfs ? { lfs: true } : {}),
           },
-        })
+        }),
       );
     }
 
@@ -450,7 +450,7 @@ export class BuildWorkflow extends Component {
                 path: this.project.parent
                   ? posixPath.join(
                       projectPathRelativeToRoot,
-                      this.artifactsDirectory
+                      this.artifactsDirectory,
                     )
                   : this.artifactsDirectory,
               },

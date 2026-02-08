@@ -761,8 +761,8 @@ export class NodePackage extends Component {
     if (Object.keys(deps).length && !this.allowLibraryDependencies) {
       throw new Error(
         `cannot add peer dependencies to an APP project: ${Object.keys(
-          deps
-        ).join(",")}`
+          deps,
+        ).join(",")}`,
       );
     }
 
@@ -786,7 +786,7 @@ export class NodePackage extends Component {
   public addBundledDeps(...deps: string[]) {
     if (deps.length && !this.allowLibraryDependencies) {
       throw new Error(
-        `cannot add bundled dependencies to an APP project: ${deps.join(",")}`
+        `cannot add bundled dependencies to an APP project: ${deps.join(",")}`,
       );
     }
 
@@ -908,7 +908,7 @@ export class NodePackage extends Component {
    * @param dependencyName Dependency to resolve for.
    */
   public tryResolveDependencyVersion(
-    dependencyName: string
+    dependencyName: string,
   ): string | undefined {
     try {
       const fromDeps = this.project.deps.tryGetDependency(dependencyName);
@@ -984,7 +984,7 @@ export class NodePackage extends Component {
     if (options.npmRegistry) {
       if (npmRegistryUrl) {
         throw new Error(
-          'cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.'
+          'cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.',
         );
       }
 
@@ -994,14 +994,14 @@ export class NodePackage extends Component {
     const npmr = new URL(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
     if (!npmr || !npmr.hostname || !npmr.href) {
       throw new Error(
-        `unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`
+        `unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`,
       );
     }
 
     const npmAccess = options.npmAccess ?? defaultNpmAccess(this.packageName);
     if (!isScoped(this.packageName) && npmAccess === NpmAccess.RESTRICTED) {
       throw new Error(
-        `"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`
+        `"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`,
       );
     }
 
@@ -1009,7 +1009,7 @@ export class NodePackage extends Component {
       options.npmProvenance ?? npmAccess === NpmAccess.PUBLIC;
     if (npmProvenance && npmAccess !== NpmAccess.PUBLIC) {
       throw new Error(
-        `"npmProvenance" can only be enabled for public packages`
+        `"npmProvenance" can only be enabled for public packages`,
       );
     }
 
@@ -1021,7 +1021,7 @@ export class NodePackage extends Component {
     if (isAwsCodeArtifact) {
       if (options.npmTokenSecret) {
         throw new Error(
-          '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.'
+          '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.',
         );
       } else if (
         options.codeArtifactOptions?.authProvider ===
@@ -1032,11 +1032,11 @@ export class NodePackage extends Component {
           options.codeArtifactOptions.secretAccessKeySecret
         ) {
           throw new Error(
-            "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+            "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact",
           );
         } else if (!options.codeArtifactOptions.roleToAssume) {
           throw new Error(
-            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options',
           );
         }
       }
@@ -1048,7 +1048,7 @@ export class NodePackage extends Component {
         !hasScopedPackage
       ) {
         throw new Error(
-          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
+          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages.",
         );
       }
     }
@@ -1082,14 +1082,14 @@ export class NodePackage extends Component {
         : defaultNpmToken(options.npmTokenSecret, npmr.hostname),
       codeArtifactOptions,
       scopedPackagesOptions: this.parseScopedPackagesOptions(
-        options.scopedPackagesOptions
+        options.scopedPackagesOptions,
       ),
       npmProvenance,
     };
   }
 
   private parseScopedPackagesOptions(
-    scopedPackagesOptions?: ScopedPackagesOptions[]
+    scopedPackagesOptions?: ScopedPackagesOptions[],
   ): ScopedPackagesOptions[] | undefined {
     if (!scopedPackagesOptions) {
       return undefined;
@@ -1098,13 +1098,13 @@ export class NodePackage extends Component {
     return scopedPackagesOptions.map((option): ScopedPackagesOptions => {
       if (!isScoped(option.scope)) {
         throw new Error(
-          `Scope must start with "@" in options, found ${option.scope}`
+          `Scope must start with "@" in options, found ${option.scope}`,
         );
       }
 
       if (!isAwsCodeArtifactRegistry(option.registryUrl)) {
         throw new Error(
-          `Only AWS Code artifact scoped registry is supported for now, found ${option.registryUrl}`
+          `Only AWS Code artifact scoped registry is supported for now, found ${option.registryUrl}`,
         );
       }
 
@@ -1192,7 +1192,7 @@ export class NodePackage extends Component {
           : "pnpm i --no-frozen-lockfile";
       case NodePackageManager.BUN:
         return ["bun install", ...(frozen ? ["--frozen-lockfile"] : [])].join(
-          " "
+          " ",
         );
 
       default:
@@ -1217,7 +1217,7 @@ export class NodePackage extends Component {
     // testing against the minimum requirement of the peer.
     if (this.peerDependencyOptions.pinnedDevDependency) {
       for (const dep of this.project.deps.all.filter(
-        (d) => d.type === DependencyType.PEER
+        (d) => d.type === DependencyType.PEER,
       )) {
         let req = dep.name;
 
@@ -1226,7 +1226,7 @@ export class NodePackage extends Component {
         if (
           this.project.deps.tryGetDependency(
             dep.name,
-            DependencyType.RUNTIME
+            DependencyType.RUNTIME,
           ) &&
           !this.project.deps.tryGetDependency(dep.name, DependencyType.BUILD)
         ) {
@@ -1237,7 +1237,7 @@ export class NodePackage extends Component {
           const ver = minVersion(dep.version);
           if (!ver) {
             throw new Error(
-              `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
+              `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`,
             );
           }
 
@@ -1256,7 +1256,7 @@ export class NodePackage extends Component {
         const depPackageJson = resolve(
           this.project.outdir,
           localDependencyPath,
-          "package.json"
+          "package.json",
         );
         const pkgFile = readFileSync(depPackageJson, "utf8");
         const pkg = JSON.parse(pkgFile);
@@ -1271,7 +1271,7 @@ export class NodePackage extends Component {
           const depDecls = this.project.deps.all.filter((d) => d.name === name);
           if (depDecls.some((d) => d.type === DependencyType.PEER)) {
             throw new Error(
-              `unable to bundle "${name}": it cannot appear as a peer dependency (bundled would always take precedence over peer)`
+              `unable to bundle "${name}": it cannot appear as a peer dependency (bundled would always take precedence over peer)`,
             );
           }
 
@@ -1280,7 +1280,7 @@ export class NodePackage extends Component {
           // `dependencies` and `dependencies` only.
           if (depDecls.some((d) => d.type === DependencyType.BUILD)) {
             throw new Error(
-              `unable to bundle "${name}": it cannot appear as a devDependency (only prod dependencies are bundled, and any dependency appearing as a devDependency is considered to be not a prod dependency)`
+              `unable to bundle "${name}": it cannot appear as a devDependency (only prod dependencies are bundled, and any dependency appearing as a devDependency is considered to be not a prod dependency)`,
             );
           }
 
@@ -1320,7 +1320,7 @@ export class NodePackage extends Component {
 
     const readDeps = (
       user: Record<string, string>,
-      current: Record<string, string> = {}
+      current: Record<string, string> = {},
     ) => {
       for (const [name, userVersion] of Object.entries(user)) {
         const currentVersion = current[name];
@@ -1364,7 +1364,7 @@ export class NodePackage extends Component {
 
     const resolveDeps = (
       current: { [name: string]: string },
-      user: Record<string, string>
+      user: Record<string, string>,
     ) => {
       const result: Record<string, string> = {};
       current = current ?? {};
@@ -1382,7 +1382,7 @@ export class NodePackage extends Component {
           });
           if (!resolvedVersion) {
             this.project.logger.warn(
-              `unable to resolve version for ${name} from installed modules`
+              `unable to resolve version for ${name} from installed modules`,
             );
             continue;
           }
@@ -1391,7 +1391,7 @@ export class NodePackage extends Component {
 
         if (currentDefinition !== desiredVersion) {
           this.project.logger.verbose(
-            `${name}: ${currentDefinition} => ${desiredVersion}`
+            `${name}: ${currentDefinition} => ${desiredVersion}`,
           );
         }
 
@@ -1417,7 +1417,7 @@ export class NodePackage extends Component {
     const devDeps = resolveDeps(pkg.devDependencies, rendered.devDependencies);
     const peerDeps = resolveDeps(
       pkg.peerDependencies,
-      rendered.peerDependencies
+      rendered.peerDependencies,
     );
 
     if (this.peerDependencyOptions.pinnedDevDependency) {
@@ -1433,7 +1433,7 @@ export class NodePackage extends Component {
         const ver = minVersion(version);
         if (!ver) {
           throw new Error(
-            `unable to determine minimum semver for peer dependency ${name}@${version}`
+            `unable to determine minimum semver for peer dependency ${name}@${version}`,
           );
         }
 
@@ -1458,14 +1458,17 @@ export class NodePackage extends Component {
   private renderPackageResolutions() {
     const render = () => {
       const overridingDependencies = this.project.deps.all.filter(
-        (dep) => dep.type === DependencyType.OVERRIDE
+        (dep) => dep.type === DependencyType.OVERRIDE,
       );
       if (!overridingDependencies.length) {
         return undefined;
       }
 
       return Object.fromEntries(
-        overridingDependencies.map(({ name, version = "*" }) => [name, version])
+        overridingDependencies.map(({ name, version = "*" }) => [
+          name,
+          version,
+        ]),
       );
     };
 
@@ -1502,7 +1505,7 @@ export class NodePackage extends Component {
             : undefined,
         access: shouldOmitAccess ? undefined : this.npmAccess,
       },
-      { omitEmpty: true }
+      { omitEmpty: true },
     );
   }
 
@@ -1550,7 +1553,7 @@ export class NodePackage extends Component {
         options.authorOrganization !== undefined
       ) {
         throw new Error(
-          '"authorName" is required if specifying "authorEmail" or "authorUrl"'
+          '"authorName" is required if specifying "authorEmail" or "authorUrl"',
         );
       }
     }
@@ -1567,7 +1570,8 @@ export class NodePackage extends Component {
       .filter(
         (t) =>
           // Must remove to prevent overriding built-in npm command (which would loop)
-          t.name !== this.installTask.name && t.name !== this.installCiTask.name
+          t.name !== this.installTask.name &&
+          t.name !== this.installCiTask.name,
       )
       .sort((x, y) => x.name.localeCompare(y.name));
 
@@ -1629,7 +1633,7 @@ export class NodePackage extends Component {
       this.npmAccess.toString() !== yarnRcOptions.npmPublishAccess.toString()
     ) {
       throw new Error(
-        `Cannot set npmAccess (${this.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`
+        `Cannot set npmAccess (${this.npmAccess}) and yarnRcOptions.npmPublishAccess (${yarnRcOptions.npmPublishAccess}) to different values.`,
       );
     }
 
@@ -1639,7 +1643,7 @@ export class NodePackage extends Component {
       this.npmRegistryUrl !== yarnRcOptions.npmRegistryServer
     ) {
       throw new Error(
-        `Cannot set npmRegistryUrl (${this.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`
+        `Cannot set npmRegistryUrl (${this.npmRegistryUrl}) and yarnRcOptions.npmRegistryServer (${yarnRcOptions.npmRegistryServer}) to different values.`,
       );
     }
   }
@@ -1655,7 +1659,7 @@ export class NodePackage extends Component {
       ".yarn/plugins",
       ".yarn/releases",
       ".yarn/sdks",
-      ".yarn/versions"
+      ".yarn/versions",
     );
 
     if (zeroInstalls) {
@@ -1779,7 +1783,7 @@ function defaultNpmAccess(packageName: string) {
 
 export function defaultNpmToken(
   npmToken: string | undefined,
-  registry: string | undefined
+  registry: string | undefined,
 ) {
   // if we are publishing to AWS CodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
   if (isAwsCodeArtifactRegistry(registry)) {

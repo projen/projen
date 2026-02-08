@@ -204,7 +204,7 @@ export class UpgradeDependencies extends Component {
       (!Number.isInteger(options.cooldown) || options.cooldown < 0)
     ) {
       throw new Error(
-        "The 'cooldown' option must be a non-negative integer representing days"
+        "The 'cooldown' option must be a non-negative integer representing days",
       );
     }
 
@@ -212,7 +212,7 @@ export class UpgradeDependencies extends Component {
     if (options.cooldown && isYarnClassic(project.package.packageManager)) {
       throw new Error(
         "The 'cooldown' option is not supported with yarn classic. " +
-          "Consider using npm, pnpm, bun, or yarn berry instead."
+          "Consider using npm, pnpm, bun, or yarn berry instead.",
       );
     }
 
@@ -250,14 +250,14 @@ export class UpgradeDependencies extends Component {
     // Set yarn berry cooldown via environment variable, expects minutes
     if (options.cooldown && isYarnBerry(project.package.packageManager)) {
       taskEnv.YARN_NPM_MINIMAL_AGE_GATE = String(
-        daysToMinutes(options.cooldown)
+        daysToMinutes(options.cooldown),
       );
     }
 
     // Set npm cooldown date via environment variable (calculated at runtime), expects a date in ISO format
     if (options.cooldown && isNpm(project.package.packageManager)) {
       taskEnv.NPM_CONFIG_BEFORE = `$(node -p "new Date(Date.now()-${daysToMilliseconds(
-        options.cooldown
+        options.cooldown,
       )}).toISOString()")`;
     }
 
@@ -277,14 +277,14 @@ export class UpgradeDependencies extends Component {
       if (options.workflowOptions?.branches) {
         for (const branch of options.workflowOptions.branches) {
           this.workflows.push(
-            this.createWorkflow(this.upgradeTask, github, branch)
+            this.createWorkflow(this.upgradeTask, github, branch),
           );
         }
       } else if (Release.of(project)) {
         const release = Release.of(project)!;
         release._forEachBranch((branch: string) => {
           this.workflows.push(
-            this.createWorkflow(this.upgradeTask, github, branch)
+            this.createWorkflow(this.upgradeTask, github, branch),
           );
         });
       } else {
@@ -292,7 +292,7 @@ export class UpgradeDependencies extends Component {
         // just like not specifying anything.
         const defaultBranch = undefined;
         this.workflows.push(
-          this.createWorkflow(this.upgradeTask, github, defaultBranch)
+          this.createWorkflow(this.upgradeTask, github, defaultBranch),
         );
       }
     }
@@ -354,7 +354,7 @@ export class UpgradeDependencies extends Component {
       target?: string;
       format?: string;
       removeRange?: boolean;
-    } = {}
+    } = {},
   ): string {
     function executeCommand(packageManager: NodePackageManager): string {
       switch (packageManager) {
@@ -374,7 +374,7 @@ export class UpgradeDependencies extends Component {
 
     const command = [
       `${executeCommand(
-        this.project.package.packageManager
+        this.project.package.packageManager,
       )} npm-check-updates@18`,
     ];
 
@@ -396,7 +396,7 @@ export class UpgradeDependencies extends Component {
 
     command.push(`--${this.satisfyPeerDependencies ? "peer" : "no-peer"}`);
     command.push(
-      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`
+      `--${this.includeDeprecatedVersions ? "deprecated" : "no-deprecated"}`,
     );
     command.push(`--dep=${this.renderNcuDependencyTypes(this.depTypes)}`);
     command.push(`--filter=${includePackages.join(",")}`);
@@ -430,8 +430,8 @@ export class UpgradeDependencies extends Component {
                 return false;
             }
           })
-          .filter((type) => Boolean(type))
-      )
+          .filter((type) => Boolean(type)),
+      ),
     ).join(",");
   }
 
@@ -473,7 +473,7 @@ export class UpgradeDependencies extends Component {
           "pnpm update",
           cooldown !== undefined
             ? `--config.minimum-release-age=${daysToMinutes(cooldown)}`
-            : undefined
+            : undefined,
         );
         break;
       case NodePackageManager.BUN:
@@ -482,7 +482,7 @@ export class UpgradeDependencies extends Component {
           "bun update",
           cooldown
             ? `--minimum-release-age=${daysToSeconds(cooldown)}`
-            : undefined
+            : undefined,
         );
         break;
       default:
@@ -498,8 +498,8 @@ export class UpgradeDependencies extends Component {
     return Array.from(
       new Set(
         this.options.include ??
-          this.filterDependencies(includeDependenciesWithConstraint)
-      )
+          this.filterDependencies(includeDependenciesWithConstraint),
+      ),
     );
   }
 
@@ -510,7 +510,8 @@ export class UpgradeDependencies extends Component {
       // remove those that have a constraint version (unless includeConstraint is true)
       .filter(
         (d) =>
-          includeConstraint || this.packageCanBeUpgradedInPackageJson(d.version)
+          includeConstraint ||
+          this.packageCanBeUpgradedInPackageJson(d.version),
       )
       // remove override dependencies
       .filter((d) => d.type !== DependencyType.OVERRIDE);
@@ -519,7 +520,7 @@ export class UpgradeDependencies extends Component {
       dependencies.push(
         ...deps
           .filter((d) => d.type === type)
-          .filter((d) => !(this.options.exclude ?? []).includes(d.name))
+          .filter((d) => !(this.options.exclude ?? []).includes(d.name)),
       );
     }
 
@@ -535,7 +536,7 @@ export class UpgradeDependencies extends Component {
    * @returns whether the version is the default versioning behavior
    */
   private packageCanBeUpgradedInPackageJson(
-    version: string | undefined
+    version: string | undefined,
   ): boolean {
     // No version means "latest"
     return !version || version === "*";
@@ -544,7 +545,7 @@ export class UpgradeDependencies extends Component {
   private createWorkflow(
     task: Task,
     github: GitHub,
-    branch?: string
+    branch?: string,
   ): GithubWorkflow {
     const schedule =
       this.options.workflowOptions?.schedule ??
@@ -599,7 +600,7 @@ export class UpgradeDependencies extends Component {
       ...WorkflowActions.uploadGitPatch({
         stepId: CREATE_PATCH_STEP_ID,
         outputName: PATCH_CREATED_OUTPUT,
-      })
+      }),
     );
 
     return {
@@ -610,7 +611,7 @@ export class UpgradeDependencies extends Component {
         env: this.options.workflowOptions?.env,
         ...filteredRunsOnOptions(
           this.options.workflowOptions?.runsOn,
-          this.options.workflowOptions?.runsOnGroup
+          this.options.workflowOptions?.runsOnGroup,
         ),
         steps: steps,
         outputs: {
@@ -643,7 +644,7 @@ export class UpgradeDependencies extends Component {
         credentials,
         ...filteredRunsOnOptions(
           this.options.workflowOptions?.runsOn,
-          this.options.workflowOptions?.runsOnGroup
+          this.options.workflowOptions?.runsOnGroup,
         ),
         pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",

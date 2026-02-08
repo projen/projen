@@ -82,7 +82,7 @@ test("upgrade command includes only dependencies of configured types", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(
-    `yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dev-dep`
+    `yarn upgrade commit-and-tag-version constructs jest jest-junit projen some-dev-dep`,
   );
 });
 
@@ -275,7 +275,7 @@ test("upgrades command includes only included packages", () => {
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toMatchInlineSnapshot(
-    `"npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1"`
+    `"npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1"`,
   );
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade dep1`);
 });
@@ -534,7 +534,7 @@ test("empty upgrade list", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(
-    "echo No dependencies to upgrade."
+    "echo No dependencies to upgrade.",
   );
 });
 
@@ -617,7 +617,7 @@ test("subprojects can have custom upgrade workflows", () => {
   // THEN
   const snapshot = synthSnapshot(parent);
   const wf = yaml.parse(
-    snapshot[".github/workflows/upgrade-something_child.yml"]
+    snapshot[".github/workflows/upgrade-something_child.yml"],
   );
 
   expect(wf.jobs.upgrade.steps[2]["working-directory"]).toBe("./asdf/xyz");
@@ -635,7 +635,7 @@ test("cooldown adds flags to npm-check-updates and npm", () => {
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
   expect(tasks.upgrade.env?.NPM_CONFIG_BEFORE).toContain(
-    'node -p "new Date(Date.now()-259200000).toISOString()"'
+    'node -p "new Date(Date.now()-259200000).toISOString()"',
   );
 });
 
@@ -651,7 +651,7 @@ test("cooldown adds flags to npm-check-updates and pnpm", () => {
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toContain("--cooldown=3");
   expect(tasks.upgrade.steps[2].exec).toContain(
-    "--config.minimum-release-age=4320"
+    "--config.minimum-release-age=4320",
   );
 });
 
@@ -691,7 +691,7 @@ test("throws error when using cooldown with yarn", () => {
       depsUpgradeOptions: {
         cooldown: 3,
       },
-    })
+    }),
   ).toThrow("The 'cooldown' option is not supported with yarn classic");
 });
 
@@ -703,7 +703,7 @@ test("throws error when using cooldown with yarn classic", () => {
       depsUpgradeOptions: {
         cooldown: 3,
       },
-    })
+    }),
   ).toThrow("The 'cooldown' option is not supported with yarn classic");
 });
 
@@ -715,7 +715,7 @@ test("throws error when cooldown is negative", () => {
       depsUpgradeOptions: {
         cooldown: -1,
       },
-    })
+    }),
   ).toThrow("The 'cooldown' option must be a non-negative integer");
 });
 
@@ -727,7 +727,7 @@ test("throws error when cooldown is not an integer", () => {
       depsUpgradeOptions: {
         cooldown: 3.5,
       },
-    })
+    }),
   ).toThrow("The 'cooldown' option must be a non-negative integer");
 });
 
@@ -735,7 +735,7 @@ function createProject(
   options: Omit<
     Partial<NodeProjectOptions>,
     "defaultReleaseBranch" | "dependenciesUpgrade"
-  > = {}
+  > = {},
 ): NodeProject {
   return new NodeProject({
     defaultReleaseBranch: "main",

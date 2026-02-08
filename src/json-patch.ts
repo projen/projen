@@ -55,7 +55,7 @@ export class JsonPatch {
     try {
       const result = applyPatch(
         document,
-        deepClone(ops.map((o) => o._toJson()))
+        deepClone(ops.map((o) => o._toJson())),
       );
       return result.newDocument;
     } catch (e) {
@@ -138,7 +138,7 @@ export class JsonPatch {
   public static test(
     path: string,
     value: any,
-    failureBehavior: TestFailureBehavior = TestFailureBehavior.SKIP
+    failureBehavior: TestFailureBehavior = TestFailureBehavior.SKIP,
   ) {
     const patch = new JsonPatch({
       op: "test",

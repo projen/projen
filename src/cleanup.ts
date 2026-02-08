@@ -60,7 +60,7 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
 function findOrphanedFiles(
   dir: string,
   oldFiles: string[],
-  newFiles: string[]
+  newFiles: string[],
 ) {
   return oldFiles
     .filter((old) => !newFiles.includes(old))
@@ -72,7 +72,7 @@ function getFilesFromManifest(dir: string): string[] {
     const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
     if (fs.existsSync(fileManifestPath)) {
       const fileManifest = JSON.parse(
-        fs.readFileSync(fileManifestPath, "utf-8")
+        fs.readFileSync(fileManifestPath, "utf-8"),
       );
       if (fileManifest.files) {
         return fileManifest.files;
@@ -80,7 +80,7 @@ function getFilesFromManifest(dir: string): string[] {
     }
   } catch (e: any) {
     logging.warn(
-      `warning: unable to get files to clean from file manifest: ${e.stack}`
+      `warning: unable to get files to clean from file manifest: ${e.stack}`,
     );
   }
 

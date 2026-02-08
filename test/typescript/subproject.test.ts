@@ -16,7 +16,7 @@ test("typescript subprojects do not add a Projenrc component", () => {
 
   // THEN
   const rcFiles = child.components.filter((o: Component) =>
-    o.constructor.name.toLowerCase().includes("projenrc")
+    o.constructor.name.toLowerCase().includes("projenrc"),
   );
   expect(rcFiles.length).toBe(0);
 });

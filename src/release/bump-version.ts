@@ -159,12 +159,12 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   if (major && minMajorVersion) {
     throw new Error(
-      `minMajorVersion and majorVersion cannot be used together.`
+      `minMajorVersion and majorVersion cannot be used together.`,
     );
   }
   if (options.nextVersionCommand && minMajorVersion) {
     throw new Error(
-      `minMajorVersion and nextVersionCommand cannot be used together.`
+      `minMajorVersion and nextVersionCommand cannot be used together.`,
     );
   }
   if (minor && !major) {
@@ -187,11 +187,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   const { contents, newline } = await tryReadVersionFile(versionFile);
   contents.version = latestVersion;
   logging.info(
-    `Update ${versionFile} to latest resolved version: ${latestVersion}`
+    `Update ${versionFile} to latest resolved version: ${latestVersion}`,
   );
   await fs.writeFile(
     versionFile,
-    JSON.stringify(contents, undefined, 2) + (newline ? "\n" : "")
+    JSON.stringify(contents, undefined, 2) + (newline ? "\n" : ""),
   );
 
   // Determine the initial bump status. CATV will always do a patch even if
@@ -240,11 +240,11 @@ export async function bump(cwd: string, options: BumpOptions) {
       try {
         bumpType = parseBumpType(nextVersion);
         logging.info(
-          `Bump from nextVersionCommand: ${renderBumpType(bumpType)}`
+          `Bump from nextVersionCommand: ${renderBumpType(bumpType)}`,
         );
       } catch (e) {
         throw new Error(
-          `nextVersionCommand "${options.nextVersionCommand}" returned invalid output: ${e}`
+          `nextVersionCommand "${options.nextVersionCommand}" returned invalid output: ${e}`,
         );
       }
     }
@@ -286,14 +286,14 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (major) {
     if (!newVersion.startsWith(`${major}.`)) {
       throw new Error(
-        `bump failed: this branch is configured to only publish v${major} releases - bump resulted in ${newVersion}`
+        `bump failed: this branch is configured to only publish v${major} releases - bump resulted in ${newVersion}`,
       );
     }
   }
   if (minor) {
     if (!newVersion.startsWith(`${major}.${minor}`)) {
       throw new Error(
-        `bump failed: this branch is configured to only publish v${major}.${minor} releases - bump resulted in ${newVersion}`
+        `bump failed: this branch is configured to only publish v${major}.${minor} releases - bump resulted in ${newVersion}`,
       );
     }
   }
@@ -321,7 +321,7 @@ function hasNewInterestingCommits(options: {
   })?.split("\n");
   const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
   logging.info(
-    `Number of commits since ${options.latestTag}: ${numCommitsSinceLastTag}`
+    `Number of commits since ${options.latestTag}: ${numCommitsSinceLastTag}`,
   );
 
   // Nothing to release right now
@@ -334,7 +334,7 @@ function hasNewInterestingCommits(options: {
 }
 
 async function tryReadVersionFile(
-  versionFile: string
+  versionFile: string,
 ): Promise<{ contents: any; version?: string; newline: boolean }> {
   if (!existsSync(versionFile)) {
     return { contents: {}, newline: true };
@@ -410,7 +410,7 @@ function determineLatestTag(options: LatestTagOptions): {
 
   // if prerelease is set and there are existing prerelease tags, filter versions that end with "-PRE.ddd".
   const prereleaseTags = tags.filter((x) =>
-    new RegExp(`-${prerelease}\\.[0-9]+$`).test(x)
+    new RegExp(`-${prerelease}\\.[0-9]+$`).test(x),
   );
   if (prerelease && prereleaseTags.length > 0) {
     let prereleaseTag = prereleaseTags[0];
@@ -425,7 +425,7 @@ function determineLatestTag(options: LatestTagOptions): {
      *    by setting the latestTag as v1.0.1 instead of v1.0.1-beta.1
      */
     const releaseTags = tags.filter((x) =>
-      new RegExp(`^${prefix}v([0-9]+)\\.([0-9]+)\\.([0-9]+)$`).test(x)
+      new RegExp(`^${prefix}v([0-9]+)\\.([0-9]+)\\.([0-9]+)$`).test(x),
     );
 
     let releaseTag: string | undefined;

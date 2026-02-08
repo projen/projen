@@ -13,7 +13,7 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     expect(
-      JSON.stringify(snapshot["test-project/.projen/tasks.json"])
+      JSON.stringify(snapshot["test-project/.projen/tasks.json"]),
     ).not.toContain("audit");
   });
 
@@ -47,7 +47,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high"
+      "npm audit --audit-level=high",
     );
   });
 
@@ -65,7 +65,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "node -e \"const { execSync } = require('child_process'); try { execSync('yarn audit --level high', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }\""
+      "node -e \"const { execSync } = require('child_process'); try { execSync('yarn audit --level high', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }\"",
     );
   });
 
@@ -83,7 +83,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "yarn npm audit --recursive --severity high"
+      "yarn npm audit --recursive --severity high",
     );
   });
 
@@ -101,7 +101,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "bun audit --audit-level high"
+      "bun audit --audit-level high",
     );
   });
 
@@ -119,7 +119,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "pnpm audit --audit-level high"
+      "pnpm audit --audit-level high",
     );
   });
 
@@ -138,7 +138,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=critical"
+      "npm audit --audit-level=critical",
     );
   });
 
@@ -157,7 +157,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high"
+      "npm audit --audit-level=high",
     );
   });
 
@@ -176,7 +176,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high --omit=dev"
+      "npm audit --audit-level=high --omit=dev",
     );
   });
 
@@ -282,7 +282,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "yarn npm audit --recursive --severity high"
+      "yarn npm audit --recursive --severity high",
     );
   });
 
@@ -300,7 +300,7 @@ describe("NodeProject audit", () => {
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
     expect(tasks.tasks.audit.steps[0].exec).toContain(
-      "yarn audit --level high"
+      "yarn audit --level high",
     );
   });
 
@@ -354,7 +354,7 @@ describe("NodeProject audit", () => {
       const snapshot = synthSnapshot(project);
       const tasks = snapshot["test-project/.projen/tasks.json"];
       expect(tasks.tasks.audit.steps[0].exec).toContain(
-        `--audit-level=${level}`
+        `--audit-level=${level}`,
       );
     }
   });

@@ -15,7 +15,8 @@ import { PythonProject, PythonProjectOptions } from "../python/python-project";
  * Options for `AwsCdkPythonApp`
  */
 export interface AwsCdkPythonAppOptions
-  extends PythonProjectOptions,
+  extends
+    PythonProjectOptions,
     CdkConfigCommonOptions,
     AwsCdkDepsCommonOptions {
   /**
@@ -165,7 +166,7 @@ class MyStackCode extends Component {
     appFile.push("");
     appFile.push("class MyStack(Stack):");
     appFile.push(
-      "  def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:"
+      "  def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:",
     );
     appFile.push("    super().__init__(scope, construct_id, **kwargs)");
     appFile.push("");

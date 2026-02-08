@@ -37,7 +37,8 @@ export interface PythonExecutableOptions {
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions
-  extends GitHubProjectOptions,
+  extends
+    GitHubProjectOptions,
     PythonPackagingOptions,
     PythonExecutableOptions {
   // -- required options --
@@ -255,7 +256,7 @@ export class PythonProject extends GitHubProject {
 
     if (!PYTHON_PROJECT_NAME_REGEX.test(options.name)) {
       throw new Error(
-        "Python projects must only consist of alphanumeric characters, hyphens, and underscores."
+        "Python projects must only consist of alphanumeric characters, hyphens, and underscores.",
       );
     }
 
@@ -272,7 +273,7 @@ export class PythonProject extends GitHubProject {
 
     if (multipleSelected(rcFileTypeOptions)) {
       throw new Error(
-        "Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected."
+        "Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected.",
       );
     }
 
@@ -401,37 +402,37 @@ export class PythonProject extends GitHubProject {
 
     if (!this.envManager) {
       throw new Error(
-        "At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry)."
+        "At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry).",
       );
     }
 
     if (!this.depsManager) {
       throw new Error(
-        "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry)."
+        "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).",
       );
     }
 
     if (!this.packagingManager && this.projectType === ProjectType.LIB) {
       throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry)."
+        "At least one tool must be chosen for managing packaging (setuptools or poetry).",
       );
     }
 
     if (Number(venv) + Number(poetry) > 1) {
       throw new Error(
-        "More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)"
+        "More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)",
       );
     }
 
     if (Number(pip) + Number(poetry) > 1) {
       throw new Error(
-        "More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)"
+        "More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)",
       );
     }
 
     if (Number(setuptools) + Number(poetry) > 1) {
       throw new Error(
-        "More than one component has been chosen for managing packaging (setuptools or poetry)"
+        "More than one component has been chosen for managing packaging (setuptools or poetry)",
       );
     }
 
@@ -464,7 +465,7 @@ export class PythonProject extends GitHubProject {
 
   private checkToolConflicts(
     activeToolName: string,
-    tools: Record<string, boolean>
+    tools: Record<string, boolean>,
   ) {
     if (tools[activeToolName]) {
       // Collect names of other enabled tools excluding the active tool itself
@@ -475,8 +476,8 @@ export class PythonProject extends GitHubProject {
       if (conflicts.length) {
         throw new Error(
           `${activeToolName} cannot be used together with other tools, found the following incompatible tools enabled: ${conflicts.join(
-            ", "
-          )}`
+            ", ",
+          )}`,
         );
       }
     }
@@ -613,7 +614,7 @@ export class PythonProject extends GitHubProject {
       ".pytype/",
       "",
       "# Cython debug symbols",
-      "cython_debug/"
+      "cython_debug/",
     );
   }
 

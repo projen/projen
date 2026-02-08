@@ -36,7 +36,7 @@ describe("semantic titles", () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(
-      snapshot[".github/workflows/pull-request-lint.yml"]
+      snapshot[".github/workflows/pull-request-lint.yml"],
     ).toMatchSnapshot();
   });
 
@@ -55,7 +55,7 @@ describe("semantic titles", () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(
-      snapshot[".github/workflows/pull-request-lint.yml"]
+      snapshot[".github/workflows/pull-request-lint.yml"],
     ).toMatchSnapshot();
   });
 
@@ -74,7 +74,7 @@ describe("semantic titles", () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(
-      snapshot[".github/workflows/pull-request-lint.yml"]
+      snapshot[".github/workflows/pull-request-lint.yml"],
     ).toMatchSnapshot();
   });
 });
@@ -92,7 +92,7 @@ describe("contributor statement", () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(
-      snapshot[".github/workflows/pull-request-lint.yml"]
+      snapshot[".github/workflows/pull-request-lint.yml"],
     ).toMatchSnapshot();
   });
 
@@ -112,7 +112,7 @@ describe("contributor statement", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot[".github/pull_request_template.md"]).toMatchSnapshot();
     expect(snapshot[".github/pull_request_template.md"]).toContain(
-      contributorStatement
+      contributorStatement,
     );
   });
 
@@ -134,7 +134,7 @@ describe("contributor statement", () => {
     expect(snapshot[".github/pull_request_template.md"]).toMatchSnapshot();
     expect(snapshot[".github/pull_request_template.md"]).toContain("Foobar #");
     expect(snapshot[".github/pull_request_template.md"]).toContain(
-      contributorStatement
+      contributorStatement,
     );
   });
 
@@ -155,13 +155,13 @@ describe("contributor statement", () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(
-      snapshot[".github/workflows/pull-request-lint.yml"]
+      snapshot[".github/workflows/pull-request-lint.yml"],
     ).toMatchSnapshot();
     expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-      "github.event.pull_request.user.login == 'github-bot[bot]'"
+      "github.event.pull_request.user.login == 'github-bot[bot]'",
     );
     expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-      "contains(github.event.pull_request.labels.*.name, 'automation')"
+      "contains(github.event.pull_request.labels.*.name, 'automation')",
     );
   });
 });
@@ -178,7 +178,7 @@ test("with custom runner", () => {
   // THEN
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
-    "runs-on: self-hosted"
+    "runs-on: self-hosted",
   );
 });
 

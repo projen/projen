@@ -7,7 +7,7 @@ describe("ensureRelativePathStartsWithDot", () => {
 
   test("add dot to path beginning with folder", () => {
     expect(() => ensureRelativePathStartsWithDot("/foo")).toThrow(
-      "Path /foo must be relative"
+      "Path /foo must be relative",
     );
   });
 

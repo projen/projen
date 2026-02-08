@@ -18,7 +18,7 @@ test("fails for MIT with no owner because substitution is required", () => {
     () =>
       new License(project, {
         spdx: "MIT",
-      })
+      }),
   ).toThrow(/The MIT license requires \"copyrightOwner\" to be specified/);
 });
 
@@ -52,7 +52,7 @@ test("fails for MIT-0 with no owner because substitution is required", () => {
     () =>
       new License(project, {
         spdx: "MIT-0",
-      })
+      }),
   ).toThrow(/The MIT-0 license requires \"copyrightOwner\" to be specified/);
 });
 

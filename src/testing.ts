@@ -15,7 +15,7 @@ export class Testing {
    */
   public static synth(
     project: Project,
-    options: SnapshotOptions = {}
+    options: SnapshotOptions = {},
   ): Record<string, any> {
     return synthSnapshot(project, options);
   }

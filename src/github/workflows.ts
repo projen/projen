@@ -155,7 +155,7 @@ export class GithubWorkflow extends Component {
   constructor(
     github: GitHub,
     name: string,
-    options: GithubWorkflowOptions = {}
+    options: GithubWorkflowOptions = {},
   ) {
     super(github.project, `${new.target.name}#${name}`);
 
@@ -184,7 +184,7 @@ export class GithubWorkflow extends Component {
 
       if (![".yml", ".yaml"].includes(extension)) {
         throw new Error(
-          `GitHub Workflow files must have either a .yml or .yaml file extension, got: ${fileName}`
+          `GitHub Workflow files must have either a .yml or .yaml file extension, got: ${fileName}`,
         );
       }
 
@@ -215,7 +215,7 @@ export class GithubWorkflow extends Component {
    */
   public addJob(
     id: string,
-    job: workflows.Job | workflows.JobCallingReusableWorkflow
+    job: workflows.Job | workflows.JobCallingReusableWorkflow,
   ): void {
     this.addJobs({ [id]: job });
   }
@@ -226,7 +226,7 @@ export class GithubWorkflow extends Component {
    * @param jobs Jobs to add.
    */
   public addJobs(
-    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
     Object.assign(this._jobs, { ...jobs });
@@ -237,7 +237,7 @@ export class GithubWorkflow extends Component {
    * @param id The job name (unique within the workflow)
    */
   public getJob(
-    id: string
+    id: string,
   ): workflows.Job | workflows.JobCallingReusableWorkflow {
     return this._jobs[id];
   }
@@ -248,7 +248,7 @@ export class GithubWorkflow extends Component {
    */
   public updateJob(
     id: string,
-    job: workflows.Job | workflows.JobCallingReusableWorkflow
+    job: workflows.Job | workflows.JobCallingReusableWorkflow,
   ) {
     this.updateJobs({ [id]: job });
   }
@@ -260,7 +260,7 @@ export class GithubWorkflow extends Component {
    * @param jobs Jobs to update.
    */
   public updateJobs(
-    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
     Object.assign(this._jobs, { ...jobs });
@@ -312,7 +312,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
 
 function renderJobs(
   jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
-  actions: GitHubActionsProvider
+  actions: GitHubActionsProvider,
 ) {
   const result: Record<string, unknown> = {};
   for (const [name, job] of Object.entries(jobs)) {
@@ -322,7 +322,7 @@ function renderJobs(
 
   /** @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions */
   function renderJob(
-    job: workflows.Job | workflows.JobCallingReusableWorkflow
+    job: workflows.Job | workflows.JobCallingReusableWorkflow,
   ) {
     const steps = new Array<workflows.JobStep>();
 
@@ -396,7 +396,7 @@ function renderJobs(
         exclude: strategy.matrix.exclude,
       };
       for (const [key, values] of Object.entries(
-        strategy.matrix.domain ?? {}
+        strategy.matrix.domain ?? {},
       )) {
         if (key in matrix) {
           // A domain key was set to `include`, or `exclude`:
@@ -482,14 +482,14 @@ function setupTools(tools: workflows.Tools) {
 }
 
 function verifyJobConstraints(
-  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
 ) {
   // verify that job has a "permissions" statement to ensure workflow can
   // operate in repos with default tokens set to readonly
   for (const [id, job] of Object.entries(jobs)) {
     if (!job.permissions) {
       throw new Error(
-        `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
+        `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`,
       );
     }
   }

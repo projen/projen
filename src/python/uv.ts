@@ -136,12 +136,12 @@ export class Uv
     return (
       this.project.deps.all
         .filter(
-          (pkg) => dependencyTypes.includes(pkg.type) && pkg.name !== "python"
+          (pkg) => dependencyTypes.includes(pkg.type) && pkg.name !== "python",
         )
         // remove duplicate versions of the same dependency
         .filter(
           (dep, index, self) =>
-            index === self.findIndex((d) => d.name === dep.name)
+            index === self.findIndex((d) => d.name === dep.name),
         )
         .map((pkg) => this.formatDependency(pkg))
     );
@@ -178,7 +178,7 @@ export class Uv
     });
     if (!result) {
       this.project.logger.info(
-        "Unable to setup an environment since uv is not installed. Please install uv (https://github.com/astral-sh/uv) or use a different component for managing environments."
+        "Unable to setup an environment since uv is not installed. Please install uv (https://github.com/astral-sh/uv) or use a different component for managing environments.",
       );
       return;
     }
@@ -189,7 +189,7 @@ export class Uv
       cwd: this.project.outdir,
     });
     this.project.logger.info(
-      `Environment successfully created in .venv directory with Python ${this.venvPython}.`
+      `Environment successfully created in .venv directory with Python ${this.venvPython}.`,
     );
   }
 

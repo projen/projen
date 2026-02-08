@@ -144,7 +144,7 @@ export class Version extends Component {
         !node.project.deps.isDependencySatisfied(
           bumpName,
           DependencyType.BUILD,
-          bumpVersion ?? "*"
+          bumpVersion ?? "*",
         )
       ) {
         node.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
@@ -155,15 +155,15 @@ export class Version extends Component {
 
     const changelogFile = posix.join(
       options.artifactsDirectory,
-      this.changelogFileName
+      this.changelogFileName,
     );
     const bumpFile = posix.join(
       options.artifactsDirectory,
-      this.versionFileName
+      this.versionFileName,
     );
     const releaseTagFile = posix.join(
       options.artifactsDirectory,
-      this.releaseTagFileName
+      this.releaseTagFileName,
     );
 
     const commonEnv: Record<string, string> = {
@@ -215,11 +215,11 @@ export class Version extends Component {
    * control versions do conflict with the use of a `nextVersionCommand`).
    */
   public envForBranch(
-    branchOptions: VersionBranchOptions
+    branchOptions: VersionBranchOptions,
   ): Record<string, string> {
     if (this.nextVersionCommand && branchOptions.minMajorVersion) {
       throw new Error(
-        "minMajorVersion and nextVersionCommand cannot be used together."
+        "minMajorVersion and nextVersionCommand cannot be used together.",
       );
     }
 
@@ -231,7 +231,7 @@ export class Version extends Component {
     if (branchOptions.minMajorVersion !== undefined) {
       if (branchOptions.majorVersion !== undefined) {
         throw new Error(
-          `minMajorVersion and majorVersion cannot be used together.`
+          `minMajorVersion and majorVersion cannot be used together.`,
         );
       }
 

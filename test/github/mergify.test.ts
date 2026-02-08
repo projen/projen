@@ -27,7 +27,7 @@ describe("mergify", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toContain(
-      "- -label~=(do-not-merge|missing-tests)"
+      "- -label~=(do-not-merge|missing-tests)",
     );
     expect(snapshot[".mergify.yml"]).toContain('- "#approved-reviews-by>=3"');
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();

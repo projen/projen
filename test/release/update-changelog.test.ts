@@ -67,12 +67,12 @@ test("different version types do not conflict", async () => {
   // write new version to version file
   await fs.writeFile(
     join(beta_version_result.cwd, DEFAULT_VERSION_FILE),
-    version
+    version,
   );
   // write new changelog to input-changelog file
   await fs.writeFile(
     join(beta_version_result.cwd, DEFAULT_INPUT_CHANGELOG),
-    `### [${version}](https://examplerepourl.com/diff/path) (2024-01-08)`
+    `### [${version}](https://examplerepourl.com/diff/path) (2024-01-08)`,
   );
 
   const default_version_result = await testUpdateChangelog({
@@ -82,10 +82,10 @@ test("different version types do not conflict", async () => {
   });
 
   expect(default_version_result.projectChangelogContent).toMatch(
-    `### [${beta_version}]`
+    `### [${beta_version}]`,
   );
   expect(default_version_result.projectChangelogContent).toMatch(
-    `### [${version}]`
+    `### [${version}]`,
   );
 });
 
@@ -97,12 +97,12 @@ test("duplicate release tag update is idempotent", async () => {
     },
   });
   const commitsForVersion = result2.commits.filter((commit) =>
-    commit.includes(DEFAULT_VERSION)
+    commit.includes(DEFAULT_VERSION),
   );
 
   expect(commitsForVersion.length).toEqual(1);
   expect(
-    result2.projectChangelogContent.match(DEFAULT_VERSION)?.length
+    result2.projectChangelogContent.match(DEFAULT_VERSION)?.length,
   ).toEqual(1);
 });
 
@@ -112,7 +112,7 @@ test("missing release tag throws an error", async () => {
       testOptions: {
         version: "",
       },
-    })
+    }),
   ).rejects.toThrow();
 });
 
@@ -126,7 +126,7 @@ test("mismatched release tag and input changelog release tag throws an error", a
         version: version,
         inputChangelogContent: `### [${inputChangelogVersion}](https://examplerepourl.com/diff/path) (2021-09-04)`,
       },
-    })
+    }),
   ).rejects.toThrow();
 });
 
@@ -191,7 +191,7 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     .split("\n");
   const lastCommitContent = execCapture(
     "git diff-tree --no-commit-id --name-only -r HEAD",
-    { cwd: workdir }
+    { cwd: workdir },
   ).toString();
   const projectChangelogContent = await tryReadFile(outputChangelogFullPath);
 

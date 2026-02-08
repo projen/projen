@@ -40,7 +40,7 @@ test("makefile synthesizes correctly", () => {
       "clean:",
       "\trm -f one two three",
       "", // new line at end of file
-    ].join("\n")
+    ].join("\n"),
   );
 });
 
@@ -63,7 +63,7 @@ test("makefile synthesizes correctly using imperative API", () => {
         targets: ["clean"],
         recipe: ["rm -f one two three"],
         phony: true,
-      }
+      },
     )
     .addAll("one")
     .addAlls("two", "three");
@@ -83,6 +83,6 @@ test("makefile synthesizes correctly using imperative API", () => {
       "clean:",
       "\trm -f one two three",
       "", // new line at end of file
-    ].join("\n")
+    ].join("\n"),
   );
 });

@@ -19,7 +19,8 @@ import { IntegRunner } from "./integ-runner";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
 
 export interface AwsCdkTypeScriptAppOptions
-  extends TypeScriptProjectOptions,
+  extends
+    TypeScriptProjectOptions,
     CdkConfigCommonOptions,
     AwsCdkDepsCommonOptions {
   /**
@@ -145,7 +146,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       // Deep merge user's `compilerOptions` onto CDK-specific defaults.
       finalCompilerOptions = deepMerge(
         [cdkDefaultCompilerOptions, options.tsconfig.compilerOptions],
-        { destructive: true }
+        { destructive: true },
       );
     }
 
@@ -326,7 +327,7 @@ class SampleCode extends Component {
 
   constructor(
     project: AwsCdkTypeScriptApp,
-    private readonly cdkMajorVersion: number
+    private readonly cdkMajorVersion: number,
   ) {
     super(project);
     this.appProject = project;
@@ -345,7 +346,7 @@ class SampleCode extends Component {
     const srcImports = new Array<string>();
     if (this.cdkMajorVersion < 2) {
       srcImports.push(
-        "import { App, Construct, Stack, StackProps } from '@aws-cdk/core';"
+        "import { App, Construct, Stack, StackProps } from '@aws-cdk/core';",
       );
     } else {
       srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
@@ -397,7 +398,7 @@ app.synth();`;
 
     const appEntrypointName = path.basename(
       this.appProject.appEntrypoint,
-      ".ts"
+      ".ts",
     );
     const testCode = `${testImports.join("\n")}
 import { MyStack } from '../${this.appProject.srcdir}/${appEntrypointName}';
@@ -413,7 +414,7 @@ test('Snapshot', () => {
     fs.mkdirSync(testdir, { recursive: true });
     fs.writeFileSync(
       path.join(testdir, `${appEntrypointName}.test.ts`),
-      testCode
+      testCode,
     );
   }
 }

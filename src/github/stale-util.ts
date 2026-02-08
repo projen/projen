@@ -8,7 +8,7 @@ interface Options {
 
 export function renderBehavior(
   behavior: StaleBehavior | undefined,
-  opts: Options
+  opts: Options,
 ): Partial<StaleBehavior> {
   const enabled = behavior?.enabled ?? true;
   if (!enabled) {

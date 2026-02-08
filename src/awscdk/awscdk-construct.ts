@@ -11,8 +11,7 @@ import { DependencyType } from "../dependencies";
  * Options for `AwsCdkConstructLibrary`.
  */
 export interface AwsCdkConstructLibraryOptions
-  extends ConstructLibraryOptions,
-    AwsCdkDepsCommonOptions {
+  extends ConstructLibraryOptions, AwsCdkDepsCommonOptions {
   /**
    * Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you either need to explicitly
@@ -152,8 +151,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
 }
 
 /** @deprecated use `AwsCdkConstructLibraryOptions` */
-export interface ConstructLibraryAwsOptions
-  extends AwsCdkConstructLibraryOptions {}
+export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions {}
 
 /** @deprecated use `AwsCdkConstructLibrary` */
 export class ConstructLibraryAws extends AwsCdkConstructLibrary {}

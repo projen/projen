@@ -132,7 +132,7 @@ export class LambdaFunction extends Component {
     const bundler = Bundler.of(project);
     if (!bundler) {
       throw new Error(
-        "No bundler found. Please add a Bundler component to your project."
+        "No bundler found. Please add a Bundler component to your project.",
       );
     }
 
@@ -151,7 +151,7 @@ export class LambdaFunction extends Component {
       !entrypoint.endsWith(TYPESCRIPT_EDGE_LAMBDA_EXT)
     ) {
       throw new Error(
-        `${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} or ${TYPESCRIPT_EDGE_LAMBDA_EXT} extension`
+        `${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} or ${TYPESCRIPT_EDGE_LAMBDA_EXT} extension`,
       );
     }
 
@@ -159,14 +159,14 @@ export class LambdaFunction extends Component {
       path.dirname(entrypoint),
       path.basename(
         entrypoint,
-        options.edgeLambda ? TYPESCRIPT_EDGE_LAMBDA_EXT : TYPESCRIPT_LAMBDA_EXT
-      )
+        options.edgeLambda ? TYPESCRIPT_EDGE_LAMBDA_EXT : TYPESCRIPT_LAMBDA_EXT,
+      ),
     );
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
 
     if (path.extname(constructFile) !== ".ts") {
       throw new Error(
-        `Construct file name "${constructFile}" must have a .ts extension`
+        `Construct file name "${constructFile}" must have a .ts extension`,
       );
     }
 
@@ -193,7 +193,7 @@ export class LambdaFunction extends Component {
     const constructAbs = path.join(project.outdir, constructFile);
     const relativeOutfile = path.relative(
       path.dirname(constructAbs),
-      path.dirname(outfileAbs)
+      path.dirname(outfileAbs),
     );
 
     const src = new SourceCode(project, constructFile);
@@ -219,7 +219,7 @@ export class LambdaFunction extends Component {
       // Import determineLatestNodeRuntime if using NODEJS_REGIONAL_LATEST
       if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
         src.line(
-          "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';"
+          "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';",
         );
       }
       src.line("import { Construct } from 'constructs';");
@@ -231,11 +231,11 @@ export class LambdaFunction extends Component {
     src.line(" */");
     if (options.edgeLambda) {
       src.open(
-        `export interface ${propsType} extends cloudfront.experimental.EdgeFunctionProps {`
+        `export interface ${propsType} extends cloudfront.experimental.EdgeFunctionProps {`,
       );
     } else {
       src.open(
-        `export interface ${propsType} extends lambda.FunctionOptions {`
+        `export interface ${propsType} extends lambda.FunctionOptions {`,
       );
     }
     // Add runtime prop to interface only when runtime is not explicitly set
@@ -244,7 +244,7 @@ export class LambdaFunction extends Component {
       src.line("/**");
       src.line(" * The Lambda runtime to use.");
       src.line(
-        " * @default - Latest Node.js runtime available in the deployment region"
+        " * @default - Latest Node.js runtime available in the deployment region",
       );
       src.line(" */");
       src.line("readonly runtime?: lambda.Runtime;");
@@ -254,19 +254,19 @@ export class LambdaFunction extends Component {
     src.line("/**");
     src.line(
       ` * An AWS Lambda function which executes ${convertToPosixPath(
-        basePath
-      )}.`
+        basePath,
+      )}.`,
     );
     src.line(" */");
     if (options.edgeLambda) {
       src.open(
-        `export class ${constructName} extends cloudfront.experimental.EdgeFunction {`
+        `export class ${constructName} extends cloudfront.experimental.EdgeFunction {`,
       );
     } else {
       src.open(`export class ${constructName} extends lambda.Function {`);
     }
     src.open(
-      `constructor(scope: Construct, id: string, props?: ${propsType}) {`
+      `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
     );
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
@@ -278,7 +278,7 @@ export class LambdaFunction extends Component {
       if (!options.runtime) {
         // Default (not explicitly set) - allow consumer override
         src.line(
-          "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),"
+          "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
         );
       } else {
         // Explicitly set - no override
@@ -287,34 +287,34 @@ export class LambdaFunction extends Component {
     } else {
       // Explicit runtime - hardcoded, no override
       src.line(
-        `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+        `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
       );
     }
 
     src.line("handler: 'index.handler',");
     src.line(
       `code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(
-        relativeOutfile
-      )}')),`
+        relativeOutfile,
+      )}')),`,
     );
     src.close("});");
     if ((options.awsSdkConnectionReuse ?? true) && !options.edgeLambda) {
       src.line(
-        "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+        "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });",
       );
     }
     src.close("}");
     src.close("}");
 
     this.project.logger.verbose(
-      `${basePath}: construct "${constructName}" generated under "${constructFile}"`
+      `${basePath}: construct "${constructName}" generated under "${constructFile}"`,
     );
     this.project.logger.verbose(
-      `${basePath}: bundle task "${bundle.bundleTask.name}"`
+      `${basePath}: bundle task "${bundle.bundleTask.name}"`,
     );
     if (bundle.watchTask) {
       this.project.logger.verbose(
-        `${basePath}: bundle watch task "${bundle.watchTask.name}"`
+        `${basePath}: bundle watch task "${bundle.watchTask.name}"`,
       );
     }
   }
@@ -343,7 +343,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",
     "node10",
-    { defaultExternals: ["aws-sdk"] }
+    { defaultExternals: ["aws-sdk"] },
   );
 
   /**
@@ -353,7 +353,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
     "node12",
-    { defaultExternals: ["aws-sdk"] }
+    { defaultExternals: ["aws-sdk"] },
   );
 
   /**
@@ -363,7 +363,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",
     "node14",
-    { defaultExternals: ["aws-sdk"] }
+    { defaultExternals: ["aws-sdk"] },
   );
 
   /**
@@ -373,7 +373,7 @@ export class LambdaRuntime {
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",
     "node16",
-    { defaultExternals: ["aws-sdk"] }
+    { defaultExternals: ["aws-sdk"] },
   );
 
   /**
@@ -383,7 +383,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_18_X = new LambdaRuntime(
     "nodejs18.x",
-    "node18"
+    "node18",
   );
 
   /**
@@ -391,7 +391,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_20_X = new LambdaRuntime(
     "nodejs20.x",
-    "node20"
+    "node20",
   );
 
   /**
@@ -399,7 +399,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_22_X = new LambdaRuntime(
     "nodejs22.x",
-    "node22"
+    "node22",
   );
 
   /**
@@ -407,7 +407,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_24_X = new LambdaRuntime(
     "nodejs24.x",
-    "node24"
+    "node24",
   );
 
   /**
@@ -422,7 +422,7 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_REGIONAL_LATEST = new LambdaRuntime(
     "NODEJS_REGIONAL_LATEST", // Marker value
-    "node22" // esbuild target (current LTS)
+    "node22", // esbuild target (current LTS)
   );
 
   public readonly esbuildPlatform = "node";
@@ -443,7 +443,7 @@ export class LambdaRuntime {
     /**
      * Options for this runtime.
      */
-    options?: LambdaRuntimeOptions
+    options?: LambdaRuntimeOptions,
   ) {
     this.defaultExternals = options?.defaultExternals ?? ["@aws-sdk/*"];
   }

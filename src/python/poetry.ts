@@ -14,8 +14,7 @@ import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
 
 export interface PoetryOptions
-  extends PythonPackagingOptions,
-    PythonExecutableOptions {}
+  extends PythonPackagingOptions, PythonExecutableOptions {}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -73,11 +72,11 @@ export class Poetry
     this.project.tasks.addEnvironment(
       "VIRTUAL_ENV",
       // Create .venv on the first run if it doesn't already exist
-      "$(poetry env info -p || poetry run poetry env info -p)"
+      "$(poetry env info -p || poetry run poetry env info -p)",
     );
     this.project.tasks.addEnvironment(
       "PATH",
-      "$(echo $(poetry env info -p)/bin:$PATH)"
+      "$(echo $(poetry env info -p)/bin:$PATH)",
     );
 
     project.packageTask.exec("poetry build");
@@ -189,7 +188,7 @@ export class Poetry
     return Object.fromEntries(
       Object.entries(dependencies).map(([dependencyKey, dependencyValue]) => {
         return [dependencyKey, parseTomlInlineTable(dependencyValue)];
-      })
+      }),
     );
   }
 
@@ -220,7 +219,7 @@ export class Poetry
     });
     if (!result) {
       this.project.logger.info(
-        "Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as 'venv'."
+        "Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as 'venv'.",
       );
     }
 
@@ -234,7 +233,7 @@ export class Poetry
         cwd: this.project.outdir,
       });
       this.project.logger.info(
-        `Environment successfully created (located in ${envPath}}).`
+        `Environment successfully created (located in ${envPath}}).`,
       );
     }
   }
@@ -381,8 +380,7 @@ export interface PoetryPyprojectOptionsWithoutDeps {
  * Poetry-specific options.
  * @see https://python-poetry.org/docs/pyproject/
  */
-export interface PoetryPyprojectOptions
-  extends PoetryPyprojectOptionsWithoutDeps {
+export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of dependencies for the project.
    *

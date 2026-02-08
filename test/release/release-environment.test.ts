@@ -49,14 +49,14 @@ describe("Release Environment Support", () => {
     const outdir = synthSnapshot(project);
     const mainWorkflow = YAML.parse(outdir[".github/workflows/release.yml"]);
     const stagingWorkflow = YAML.parse(
-      outdir[".github/workflows/release-staging.yml"]
+      outdir[".github/workflows/release-staging.yml"],
     );
 
     // The release job should NOT get environment - only publish jobs should
     expect(mainWorkflow.jobs.release.environment).toBeUndefined();
     expect(stagingWorkflow.jobs.release.environment).toBeUndefined();
     expect(mainWorkflow.jobs.release_npm.environment).toBe(
-      "default-release-env"
+      "default-release-env",
     );
     expect(stagingWorkflow.jobs.release_npm.environment).toBe("staging-env");
   });
