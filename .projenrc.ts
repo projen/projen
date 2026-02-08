@@ -1,6 +1,5 @@
 import * as path from "path";
 import {
-  setupAllContributors,
   setupProjenBootstrap,
   setupBundleTaskRunner,
   setupCheckLicenses,
@@ -92,7 +91,6 @@ const project = new JsiiProject({
     "@types/parse-conflict-json",
     "markmac",
     "esbuild",
-    "all-contributors-cli",
     "json2jsii",
     // Needed to generate biome config
     "@biomejs/biome@^2",
@@ -219,8 +217,6 @@ setupVscode(project);
 setupGitpod(project);
 
 setupDevcontainer(project);
-
-setupAllContributors(project);
 
 setupNpmignore(project);
 

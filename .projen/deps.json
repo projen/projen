@@ -49,10 +49,6 @@
       "type": "build"
     },
     {
-      "name": "all-contributors-cli",
-      "type": "build"
-    },
-    {
       "name": "aws-cdk-lib",
       "type": "build"
     },
