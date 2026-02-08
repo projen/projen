@@ -92,7 +92,6 @@ const project = new JsiiProject({
     "@types/parse-conflict-json",
     "markmac",
     "esbuild",
-    "all-contributors-cli",
     "json2jsii",
     // Needed to generate biome config
     "@biomejs/biome@^2",
