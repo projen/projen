@@ -271,18 +271,6 @@ export function setupDevcontainer(project: NodeProject) {
 }
 
 /**
- * Setup all-contributors
- *
- * @param project The project to add the configuration to
- */
-export function setupAllContributors(project: NodeProject) {
-  project.addTask("contributors:update", {
-    exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | grep -v "projen-automation" | xargs -n1 -I{} all-contributors add {} code',
-  });
-  project.npmignore?.exclude("/.all-contributorsrc");
-}
-
-/**
  * Add the npmignore rules that are not related to other tools
  *
  * @param project The project to add the rules to
