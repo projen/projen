@@ -31,7 +31,6 @@ build/Release
 node_modules/
 jspm_packages/
 *.tsbuildinfo
-.eslintcache
 *.tgz
 .yarn-integrity
 .cache
@@ -52,7 +51,8 @@ codecov.*
 !/src/
 /lib
 /dist/
-!/.eslintrc.json
+.eslintcache
+!/eslint.config.mjs
 .jsii
 tsconfig.json
 !/API.md

@@ -4,7 +4,6 @@ import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import {
-  Eslint,
   EslintOptions,
   Jest,
   NodeProject,
@@ -25,6 +24,7 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
+import { EslintLegacy } from "../javascript/eslint/legacy";
 
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
@@ -372,7 +372,7 @@ export class TypeScriptProject extends NodeProject {
 
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
-  public readonly eslint?: Eslint;
+  public readonly eslint?: EslintLegacy;
   public readonly tsconfigEslint?: TypescriptConfig;
   public readonly tsconfig?: TypescriptConfig;
 
@@ -544,14 +544,14 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (eslintEnabled) {
-      this.eslint = new Eslint(this, {
+      this.eslint = new EslintLegacy(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
         dirs: [this.srcdir],
         devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
         lintProjenRc: false,
         ...options.eslintOptions,
-      });
+      })
 
       this.tsconfigEslint = this.tsconfigDev;
     }

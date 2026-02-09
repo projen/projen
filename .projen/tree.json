@@ -341,17 +341,25 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId21": {
+      "EslintLegacy#AutoId21": {
         "metadata": {
           "type": "component",
-          "construct": "Eslint"
+          "construct": "EslintLegacy"
+        },
+        "nodes": {
+          "ESLint#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "ESLint"
+            }
+          }
         }
       },
-      "JsonFile@.eslintrc.json": {
+      "ESLintConfigFile@eslint.config.mjs": {
         "metadata": {
           "type": "file",
-          "construct": "JsonFile",
-          "path": ".eslintrc.json"
+          "construct": "ESLintConfigFile",
+          "path": "eslint.config.mjs"
         }
       },
       "Projenrc#AutoId22": {
