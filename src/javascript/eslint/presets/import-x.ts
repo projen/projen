@@ -6,10 +6,13 @@ import { SharedConfig } from "../shared-config";
 class ImportXPlugin extends Plugin {
   public constructor() {
     super("eslint-plugin-import-x", "import-x");
-  } 
-  
+  }
+
   public resolveImports(imports: IImportResolver): void {
-    imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
+    imports.project.deps.addDependency(
+      "eslint-import-resolver-typescript",
+      DependencyType.BUILD,
+    );
     return super.resolveImports?.(imports);
   }
 }
@@ -41,20 +44,23 @@ export class ImportX extends SharedConfig {
         module: "eslint-plugin-import-x",
         name: "importX",
         path: `flatConfigs.${path}`,
-      }))
+      })),
     );
   }
 
   public toJSON(): any {
     const code = this.createCode();
-    return new class extends CodeResolvable {
+    return new (class extends CodeResolvable {
       public render(): string {
         return code.render();
       }
       public resolveImports(imports: IImportResolver): void {
-        imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
+        imports.project.deps.addDependency(
+          "eslint-import-resolver-typescript",
+          DependencyType.BUILD,
+        );
         return code.resolveImports?.(imports);
       }
-    }();
-  }   
+    })();
+  }
 }

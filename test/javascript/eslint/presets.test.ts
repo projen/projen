@@ -28,7 +28,9 @@ describe("ESLint Configs", () => {
     test("RECOMMENDED config", () => {
       const config = Tseslint.RECOMMENDED;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("tseslint.configs.recommended");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "tseslint.configs.recommended",
+      );
     });
 
     test("STRICT config", () => {
@@ -40,7 +42,9 @@ describe("ESLint Configs", () => {
     test("STYLISTIC config", () => {
       const config = Tseslint.STYLISTIC;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("tseslint.configs.stylistic");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "tseslint.configs.stylistic",
+      );
     });
   });
 
@@ -48,7 +52,9 @@ describe("ESLint Configs", () => {
     test("RECOMMENDED config", () => {
       const config = Stylistic.RECOMMENDED;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("stylistic.configs.recommended");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "stylistic.configs.recommended",
+      );
     });
   });
 
@@ -56,15 +62,19 @@ describe("ESLint Configs", () => {
     test("RECOMMENDED config", () => {
       const config = ImportPlugin.RECOMMENDED;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("importPlugin.flatConfigs.recommended");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "importPlugin.flatConfigs.recommended",
+      );
     });
   });
-  
+
   describe("ImportX", () => {
     test("RECOMMENDED config", () => {
       const config = ImportX.RECOMMENDED;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("importX.flatConfigs.recommended");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "importX.flatConfigs.recommended",
+      );
     });
   });
 
@@ -72,7 +82,9 @@ describe("ESLint Configs", () => {
     test("RECOMMENDED config", () => {
       const config = Prettier.RECOMMENDED;
       expect(config).toBeInstanceOf(SharedConfig);
-      expect(synthJsCode(config.toJSON())).toContain("prettier.configs.recommended");
+      expect(synthJsCode(config.toJSON())).toContain(
+        "prettier.configs.recommended",
+      );
     });
   });
 });

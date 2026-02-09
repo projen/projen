@@ -262,7 +262,7 @@ describe("ESLint (flat config)", () => {
       eslint.addConfigs(
         new ESLintConfig({
           extends: [Extends.fromName("additionalConfig")],
-        })
+        }),
       );
 
       const output = synthSnapshot(project);

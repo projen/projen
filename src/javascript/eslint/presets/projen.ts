@@ -1,12 +1,12 @@
-import { ESLintConfig, IESLintConfig } from "../config";
-import { ConfigWithExtends, Extends } from "../config-object";
-import { Tseslint } from "./tseslint";
-import { from, js } from "../../private/code-template";
-import { IResolvable } from "../../../file";
-import { isResolvable } from "../../../_private/data-resolver";
 import { ImportPlugin } from "./import-plugin";
 import { Prettier } from "./prettier";
 import { Stylistic } from "./stylistic";
+import { Tseslint } from "./tseslint";
+import { isResolvable } from "../../../_private/data-resolver";
+import { IResolvable } from "../../../file";
+import { from, js } from "../../private/code-template";
+import { ESLintConfig, IESLintConfig } from "../config";
+import { ConfigWithExtends, Extends } from "../config-object";
 
 export interface ProjenEslintPresetOptions {
   /**
@@ -17,7 +17,7 @@ export interface ProjenEslintPresetOptions {
 
   /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
-   * 
+   *
    * @default - all files in the project
    */
   readonly dirs?: string[];
@@ -91,9 +91,16 @@ export class ProjenEslintPreset implements IESLintConfig, IResolvable {
   private constructor(options: ProjenEslintPresetOptions = {}) {
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
+    const dirs = new Set([...(options.dirs ?? []), ...(options.devdirs ?? [])]);
+    const allowDevDeps = new Set(
+      (options.devdirs ?? []).map((dir) => `**/${dir}/**`),
+    );
+
     this.configs = [
-      ESLintConfig.files((options.fileExtensions ?? [".ts"]).map(ext => `**/*${ext}`)),
-      ESLintConfig.files(options.dirs ?? []),
+      ESLintConfig.files(
+        (options.fileExtensions ?? [".ts"]).map((ext) => `**/*${ext}`),
+      ),
+      ESLintConfig.files(Array.from(dirs)),
       ESLintConfig.ignores(options.ignorePatterns ?? ["lib/"]),
       Tseslint.BASE,
       {
@@ -136,7 +143,7 @@ export class ProjenEslintPreset implements IESLintConfig, IResolvable {
           "import/no-extraneous-dependencies": [
             "error",
             {
-              devDependencies: false,
+              devDependencies: Array.from(allowDevDeps),
               optionalDependencies: false,
               peerDependencies: true,
             },
@@ -175,78 +182,84 @@ export class ProjenEslintPreset implements IESLintConfig, IResolvable {
           ],
         },
       },
-      ...this.formatterConfigs(options.prettier ?? false)
+      ...this.formatterConfigs(options.prettier ?? false),
     ];
   }
 
   private formatterConfigs(userPrettier: boolean): IESLintConfig[] {
     if (userPrettier) {
-      return [Prettier.RECOMMENDED as any]
+      return [Prettier.RECOMMENDED as any];
     }
 
-    return [new ESLintConfig({
-      plugins: {
-        "@stylistic": Stylistic.PLUGIN,
-      },
-      rules: {
-        // Style
-        "@stylistic/indent": ["error", 2],
-        "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
-        "@stylistic/comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-        "@stylistic/comma-spacing": ["error", { before: false, after: true }], // space after, no space before
-        "@stylistic/no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
-        "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
-        "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
-        "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
-        "@stylistic/object-curly-newline": [
-          "error",
-          { multiline: true, consistent: true },
-        ], // enforce consistent line breaks between braces
-        "@stylistic/object-property-newline": [
-          "error",
-          { allowAllPropertiesOnSameLine: true },
-        ], // enforce "same line" or "multiple line" on object properties
-        "@stylistic/keyword-spacing": ["error"], // require a space before & after keywords
-        "@stylistic/brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
-        "@stylistic/space-before-blocks": ["error"], // require space before blocks
-        // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
-        "@stylistic/member-delimiter-style": ["error"],
+    return [
+      new ESLintConfig({
+        plugins: {
+          "@stylistic": Stylistic.PLUGIN,
+        },
+        rules: {
+          // Style
+          "@stylistic/indent": ["error", 2],
+          "@stylistic/quotes": ["error", "single", { avoidEscape: true }],
+          "@stylistic/comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+          "@stylistic/comma-spacing": ["error", { before: false, after: true }], // space after, no space before
+          "@stylistic/no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
+          "@stylistic/array-bracket-spacing": ["error", "never"], // [1, 2, 3]
+          "@stylistic/array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
+          "@stylistic/object-curly-spacing": ["error", "always"], // { key: 'value' }
+          "@stylistic/object-curly-newline": [
+            "error",
+            { multiline: true, consistent: true },
+          ], // enforce consistent line breaks between braces
+          "@stylistic/object-property-newline": [
+            "error",
+            { allowAllPropertiesOnSameLine: true },
+          ], // enforce "same line" or "multiple line" on object properties
+          "@stylistic/keyword-spacing": ["error"], // require a space before & after keywords
+          "@stylistic/brace-style": [
+            "error",
+            "1tbs",
+            { allowSingleLine: true },
+          ], // enforce one true brace style
+          "@stylistic/space-before-blocks": ["error"], // require space before blocks
+          // @see https://github.com/typescript-eslint/typescript-eslint/issues/8072
+          "@stylistic/member-delimiter-style": ["error"],
 
-        // Require semicolons
-        "@stylistic/semi": ["error", "always"],
+          // Require semicolons
+          "@stylistic/semi": ["error", "always"],
 
-        // Max line lengths
-        "@stylistic/max-len": [
-          "error",
-          {
-            code: 150,
-            ignoreUrls: true, // Most common reason to disable it
-            ignoreStrings: true, // These are not fantastic but necessary for error messages
-            ignoreTemplateLiterals: true,
-            ignoreComments: true,
-            ignoreRegExpLiterals: true,
-          },
-        ],
+          // Max line lengths
+          "@stylistic/max-len": [
+            "error",
+            {
+              code: 150,
+              ignoreUrls: true, // Most common reason to disable it
+              ignoreStrings: true, // These are not fantastic but necessary for error messages
+              ignoreTemplateLiterals: true,
+              ignoreComments: true,
+              ignoreRegExpLiterals: true,
+            },
+          ],
 
-        // Don't unnecessarily quote properties
-        "@stylistic/quote-props": ["error", "consistent-as-needed"],
+          // Don't unnecessarily quote properties
+          "@stylistic/quote-props": ["error", "consistent-as-needed"],
 
-        // Required spacing in property declarations (copied from TSLint, defaults are good)
-        "@stylistic/key-spacing": ["error"],
+          // Required spacing in property declarations (copied from TSLint, defaults are good)
+          "@stylistic/key-spacing": ["error"],
 
-        // No multiple empty lines
-        "@stylistic/no-multiple-empty-lines": ["error"],
+          // No multiple empty lines
+          "@stylistic/no-multiple-empty-lines": ["error"],
 
-        // Useless diff results
-        "@stylistic/no-trailing-spaces": ["error"],
-      }
-    })];
+          // Useless diff results
+          "@stylistic/no-trailing-spaces": ["error"],
+        },
+      }),
+    ];
   }
 
   public toJSON(): any {
     return this.configs.flatMap((config: any) => {
       if (isResolvable(config)) {
-        return config.toJSON(); 
+        return config.toJSON();
       }
       return config;
     });

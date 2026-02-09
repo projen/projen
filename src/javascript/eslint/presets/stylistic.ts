@@ -10,8 +10,8 @@ export class Stylistic extends SharedConfig {
   /**
    * As ESLint Plugin
    */
-  public static readonly PLUGIN: Plugin = Plugin.fromName('@stylistic');
-  
+  public static readonly PLUGIN: Plugin = Plugin.fromName("@stylistic");
+
   /**
    * Enable all rules
    */

@@ -145,7 +145,7 @@ export class ESLint extends Component {
     // try to guess if this is a typescript project
     const isTypeScript = Boolean(
       this.project instanceof TypeScriptProject ||
-        this.project.components.find((c) => c instanceof TypescriptConfig)
+      this.project.components.find((c) => c instanceof TypescriptConfig),
     );
 
     // Defaults

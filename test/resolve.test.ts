@@ -1,7 +1,8 @@
 import { DataResolver } from "../src/_private/data-resolver";
 import { IResolvable, ResolveOptions } from "../src/file";
 
-const resolve = (obj: any, opt?: ResolveOptions) => new DataResolver().resolve(obj, opt); 
+const resolve = (obj: any, opt?: ResolveOptions) =>
+  new DataResolver().resolve(obj, opt);
 
 test("null", () => {
   expect(resolve(null)).toStrictEqual(null);

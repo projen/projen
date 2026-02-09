@@ -17,7 +17,9 @@ export default defineConfig([
   },
   {
     "files": [
-      "src"
+      "src",
+      "test",
+      "build-tools"
     ]
   },
   globalIgnores(["lib/"]),
@@ -66,7 +68,10 @@ export default defineConfig([
       "import/no-extraneous-dependencies": [
         "error",
         {
-          "devDependencies": false,
+          "devDependencies": [
+            "**/test/**",
+            "**/build-tools/**"
+          ],
           "optionalDependencies": false,
           "peerDependencies": true
         }

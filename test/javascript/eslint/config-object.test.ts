@@ -16,7 +16,7 @@ describe("flat-config", () => {
       expect(ext.config).toBe(config);
     });
   });
-  
+
   describe("Severity", () => {
     test("has correct values", () => {
       expect(Severity.OFF).toBe("off");

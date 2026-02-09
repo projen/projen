@@ -12,7 +12,7 @@ export class Prettier extends SharedConfig {
   /**
    * The default recommended rules
    */
-    public static readonly RECOMMENDED = new Prettier("recommended");
+  public static readonly RECOMMENDED = new Prettier("recommended");
 
   private constructor(preset: string) {
     super({
@@ -23,15 +23,18 @@ export class Prettier extends SharedConfig {
 
   public toJSON(): any {
     const code = this.createCode();
-    return new class extends CodeResolvable {
+    return new (class extends CodeResolvable {
       public render(): string {
         return code.render();
       }
       public resolveImports(imports: IImportResolver): void {
         imports.project.deps.addDependency("prettier", DependencyType.BUILD);
-        imports.project.deps.addDependency("eslint-config-prettier", DependencyType.BUILD);
+        imports.project.deps.addDependency(
+          "eslint-config-prettier",
+          DependencyType.BUILD,
+        );
         return code.resolveImports?.(imports);
       }
-    }();
-  } 
+    })();
+  }
 }

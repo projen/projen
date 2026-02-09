@@ -6,10 +6,13 @@ import { SharedConfig } from "../shared-config";
 class ImportPluginPlugin extends Plugin {
   public constructor() {
     super("eslint-plugin-import", "import");
-  } 
-  
+  }
+
   public resolveImports(imports: IImportResolver): void {
-    imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
+    imports.project.deps.addDependency(
+      "eslint-import-resolver-typescript",
+      DependencyType.BUILD,
+    );
     return super.resolveImports?.(imports);
   }
 }
@@ -33,7 +36,10 @@ export class ImportPlugin extends SharedConfig {
   /**
    * Recommended typescript rules
    */
-  public static readonly TYPESCRIPT = new ImportPlugin("recommended", "typescript");
+  public static readonly TYPESCRIPT = new ImportPlugin(
+    "recommended",
+    "typescript",
+  );
 
   private constructor(...paths: string[]) {
     super(
@@ -41,20 +47,23 @@ export class ImportPlugin extends SharedConfig {
         module: "eslint-plugin-import",
         name: "importPlugin",
         path: `flatConfigs.${path}`,
-      }))
+      })),
     );
   }
 
   public toJSON(): any {
     const code = this.createCode();
-    return new class extends CodeResolvable {
+    return new (class extends CodeResolvable {
       public render(): string {
         return code.render();
       }
       public resolveImports(imports: IImportResolver): void {
-        imports.project.deps.addDependency("eslint-import-resolver-typescript", DependencyType.BUILD);
+        imports.project.deps.addDependency(
+          "eslint-import-resolver-typescript",
+          DependencyType.BUILD,
+        );
         return code.resolveImports?.(imports);
       }
-    }();
-  } 
+    })();
+  }
 }

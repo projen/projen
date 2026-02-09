@@ -42,10 +42,10 @@ describe("ModuleType", () => {
 
     test("handles multiple dots in filename", () => {
       expect(ModuleType.ESM._fileWithExt("eslint.config.js")).toBe(
-        "eslint.config.mjs"
+        "eslint.config.mjs",
       );
       expect(ModuleType.COMMON_JS._fileWithExt("eslint.config.js")).toBe(
-        "eslint.config.cjs"
+        "eslint.config.cjs",
       );
     });
   });

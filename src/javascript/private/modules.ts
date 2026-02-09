@@ -1,8 +1,8 @@
-import { ICodeResolvable, IImportResolver } from '../../code-resolvable';
-import { Code } from '../../_private/code';
-import { RESERVED_KEYWORDS } from './reserved-words';
-import { ModuleType } from '../module-type';
-import { Project } from '../../project';
+import { RESERVED_KEYWORDS } from "./reserved-words";
+import { Code } from "../../_private/code";
+import { ICodeResolvable, IImportResolver } from "../../code-resolvable";
+import { Project } from "../../project";
+import { ModuleType } from "../module-type";
 
 type NamedImport = [string, string?];
 
@@ -14,7 +14,11 @@ export class ModuleImports {
   /**
    * Adds a named import from a module
    */
-  public from(moduleName: string, importName?: string, as?: string): ICodeResolvable {
+  public from(
+    moduleName: string,
+    importName?: string,
+    as?: string,
+  ): ICodeResolvable {
     return this.add(moduleName, importName ?? DEFAULT, as);
   }
 
@@ -39,31 +43,42 @@ export class ModuleImports {
   /**
    * Adds an import
    */
-  private add(moduleName: string, importName: string, as?: string): ICodeResolvable {
+  private add(
+    moduleName: string,
+    importName: string,
+    as?: string,
+  ): ICodeResolvable {
     const name = renderName(importName);
     const moduleImports = this.namedImports.get(moduleName) ?? new Map();
-    
+
     // Check for exact duplicate first
     const existingName = this.checkForDuplicate(moduleImports, name, as);
     if (existingName) {
       return Code.literal(existingName);
     }
-    
+
     // Resolve the final name (handling reserved keywords and conflicts)
     const resolvedName = this.resolveName(name, as);
     const finalImportKey = `${name}:${resolvedName === name ? "" : resolvedName}`;
-    
+
     // Add the import
-    moduleImports.set(finalImportKey, [importName, resolvedName === name ? undefined : resolvedName]);
+    moduleImports.set(finalImportKey, [
+      importName,
+      resolvedName === name ? undefined : resolvedName,
+    ]);
     this.namedImports.set(moduleName, moduleImports);
-    
+
     return Code.literal(resolvedName);
   }
 
   /**
    * Checks if an import already exists and returns the existing name if found
    */
-  private checkForDuplicate(moduleImports: Map<string, NamedImport>, name: string, as?: string): string | null {
+  private checkForDuplicate(
+    moduleImports: Map<string, NamedImport>,
+    name: string,
+    as?: string,
+  ): string | null {
     const importKey = `${name}:${as || ""}`;
     if (moduleImports.has(importKey)) {
       const existingImport = moduleImports.get(importKey)!;
@@ -78,12 +93,12 @@ export class ModuleImports {
   private resolveName(importName: string, alias?: string): string {
     // Start with the desired name (alias if provided, otherwise import name)
     let desiredName = alias || importName;
-    
+
     // Handle reserved keywords by appending underscore
     if (RESERVED_KEYWORDS.includes(desiredName)) {
       desiredName = `${desiredName}_`;
     }
-    
+
     // Collect all currently used names across all modules
     const allUsedNames = new Set<string>();
     for (const moduleImports of this.namedImports.values()) {
@@ -92,16 +107,16 @@ export class ModuleImports {
         allUsedNames.add(usedName);
       }
     }
-    
+
     // Find a unique name if there's a conflict
     let candidateName = desiredName;
     let counter = 1;
-    
+
     while (allUsedNames.has(candidateName)) {
       candidateName = `${desiredName}${counter}`;
       counter++;
     }
-    
+
     return candidateName;
   }
 
@@ -131,9 +146,9 @@ export class ModuleImports {
    */
   public asCode(moduleType: ModuleType): ICodeResolvable {
     if (moduleType === ModuleType.COMMON_JS) {
-      return Code.literal(this.asCjsRequire().join('\n'));
+      return Code.literal(this.asCjsRequire().join("\n"));
     }
-    return Code.literal(this.asEsmImports().join('\n'));
+    return Code.literal(this.asEsmImports().join("\n"));
   }
 
   /**
@@ -144,7 +159,7 @@ export class ModuleImports {
       ([moduleName, namedImports]) =>
         `import { ${namedImports
           .map(renderEsmImport)
-          .join(", ")} } from "${moduleName}";`
+          .join(", ")} } from "${moduleName}";`,
     );
   }
 
@@ -164,7 +179,7 @@ export class ModuleImports {
           result.push(
             `const { ${otherImports.map(renderCjsImport).join(", ")} } = ${
               defaultImport[1]
-            };`
+            };`,
           );
         }
         return result;
@@ -192,8 +207,10 @@ export class ModuleImports {
   }
 }
 
-
-export class JavaScriptImportResolver extends ModuleImports implements IImportResolver {
+export class JavaScriptImportResolver
+  extends ModuleImports
+  implements IImportResolver
+{
   public readonly project: Project;
 
   public constructor(project: Project) {

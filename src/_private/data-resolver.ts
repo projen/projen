@@ -5,15 +5,19 @@ export function isResolvable(obj: any): obj is IResolvable {
   return (obj as IResolvable).toJSON !== undefined;
 }
 
-type DataTypeHandler = (resolver: (val: any, opts?: DataResolverOptions) => any, value: any, options: DataResolverOptions) => any;
+type DataTypeHandler = (
+  resolver: (val: any, opts?: DataResolverOptions) => any,
+  value: any,
+  options: DataResolverOptions,
+) => any;
 type DataTypePredicate = (value: any) => boolean;
 
 interface DataResolverOptions extends ResolveOptions {
   /**
    * Custom data type handlers.
-   * 
+   *
    * Handlers may use the provided resolver to resolver nested values.
-   * They must ensure that the returned value is serializable. 
+   * They must ensure that the returned value is serializable.
    */
   readonly handlers?: Array<[DataTypePredicate, DataTypeHandler]>;
 }
@@ -27,7 +31,10 @@ export class DataResolver implements IResolver {
   /**
    * Register a custom handler for a type.
    */
-  public registerHandler(predicate: DataTypePredicate, handler: DataTypeHandler): void {
+  public registerHandler(
+    predicate: DataTypePredicate,
+    handler: DataTypeHandler,
+  ): void {
     this.handlers.push([predicate, handler]);
   }
 
@@ -69,7 +76,6 @@ function resolve(value: any, options: DataResolverOptions = {}): any {
     const resolved = value.toJSON();
     return resolve(resolved, options);
   }
-
 
   // Special resolution for few JavaScript built-in types
   // that by default would be stringified as empty objects ('{}')

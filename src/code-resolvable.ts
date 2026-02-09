@@ -1,6 +1,6 @@
 import { Project } from "./project";
 
-const CODE_RESOLVABLE_SYMBOL = Symbol.for('projen.CodeResolvable');
+const CODE_RESOLVABLE_SYMBOL = Symbol.for("projen.CodeResolvable");
 
 export interface IImportResolver {
   /**
@@ -9,7 +9,7 @@ export interface IImportResolver {
   readonly project: Project;
   /**
    * Adds a named import from a module
-   */  
+   */
   from(moduleName: string, importName?: string, as?: string): ICodeResolvable;
 }
 
@@ -22,7 +22,7 @@ export interface ICodeResolvable {
    * @returns The rendered code
    */
   render(): string;
-  
+
   /**
    * Resolves imports needed by this code resolvable.
    * @param resolver - The IImportsResolver instance to resolve imports into
@@ -40,7 +40,9 @@ export abstract class CodeResolvable implements ICodeResolvable {
    * @returns True if the object is CodeResolvable
    */
   public static isCodeResolvable(obj: any): obj is ICodeResolvable {
-    return obj && typeof obj === 'object' && obj[CODE_RESOLVABLE_SYMBOL] === true;
+    return (
+      obj && typeof obj === "object" && obj[CODE_RESOLVABLE_SYMBOL] === true
+    );
   }
 
   /**

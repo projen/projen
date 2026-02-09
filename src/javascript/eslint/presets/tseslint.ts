@@ -11,7 +11,7 @@ export class Tseslint extends SharedConfig {
    * As ESLint Plugin
    */
   public static readonly PLUGIN: Plugin = Plugin.fromName("@typescript-eslint");
-  
+
   /**
    * Enables each the rules provided as a part of typescript-eslint. Note that many rules are not applicable in all codebases, or are meant to be configured.
    * @see {@link https://typescript-eslint.io/users/configs#all}
@@ -29,7 +29,9 @@ export class Tseslint extends SharedConfig {
    * A utility ruleset that will disable type-aware linting and all type-aware rules available in our project.
    * @see {@link https://typescript-eslint.io/users/configs#disable-type-checked}
    */
-  public static readonly DISABLE_TYPE_CHECKED = new Tseslint("disableTypeChecked");
+  public static readonly DISABLE_TYPE_CHECKED = new Tseslint(
+    "disableTypeChecked",
+  );
 
   /**
    * This is a compatibility ruleset that:
@@ -50,7 +52,7 @@ export class Tseslint extends SharedConfig {
    * @see {@link https://typescript-eslint.io/users/configs#recommended-type-checked}
    */
   public static readonly RECOMMENDED_TYPE_CHECKED = new Tseslint(
-    "recommendedTypeChecked"
+    "recommendedTypeChecked",
   );
 
   /**
@@ -58,7 +60,7 @@ export class Tseslint extends SharedConfig {
    * @see {@link https://typescript-eslint.io/users/configs#recommended-type-checked-only}
    */
   public static readonly RECOMMENDED_TYPE_CHECKED_ONLY = new Tseslint(
-    "recommendedTypeCheckedOnly"
+    "recommendedTypeCheckedOnly",
   );
 
   /**
@@ -71,14 +73,16 @@ export class Tseslint extends SharedConfig {
    * Contains all of `recommended`, `recommended-type-checked`, and `strict`, along with additional strict rules that require type information.
    * @see {@link https://typescript-eslint.io/users/configs#strict-type-checked}
    */
-  public static readonly STRICT_TYPE_CHECKED = new Tseslint("strictTypeChecked");
+  public static readonly STRICT_TYPE_CHECKED = new Tseslint(
+    "strictTypeChecked",
+  );
 
   /**
    * A version of `strict` that only contains type-checked rules and disables of any corresponding core ESLint rules.
    * @see {@link https://typescript-eslint.io/users/configs#strict-type-checked-only}
    */
   public static readonly STRICT_TYPE_CHECKED_ONLY = new Tseslint(
-    "strictTypeCheckedOnly"
+    "strictTypeCheckedOnly",
   );
 
   /**
@@ -91,14 +95,16 @@ export class Tseslint extends SharedConfig {
    * Contains all of `stylistic`, along with additional stylistic rules that require type information.
    * @see {@link https://typescript-eslint.io/users/configs#stylistic-type-checked}
    */
-  public static readonly STYLISTIC_TYPE_CHECKED = new Tseslint("stylisticTypeChecked");
+  public static readonly STYLISTIC_TYPE_CHECKED = new Tseslint(
+    "stylisticTypeChecked",
+  );
 
   /**
    * A version of `stylistic` that only contains type-checked rules and disables of any corresponding core ESLint rules.
    * @see {@link https://typescript-eslint.io/users/configs#stylistic-type-checked-only}
    */
   public static readonly STYLISTIC_TYPE_CHECKED_ONLY = new Tseslint(
-    "stylisticTypeCheckedOnly"
+    "stylisticTypeCheckedOnly",
   );
 
   private constructor(path: string) {

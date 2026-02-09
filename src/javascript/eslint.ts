@@ -19,7 +19,7 @@ export interface EslintOptions {
 
   /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
-   * 
+   *
    * @default - all files in the projet
    */
   readonly dirs?: string[];

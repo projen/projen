@@ -1,7 +1,7 @@
+import { ConfigWithExtends } from "./config-object";
 import { IResolvable } from "../../file";
 import { Project } from "../../project";
 import { from, js } from "../private/code-template";
-import { ConfigWithExtends } from "./config-object";
 
 export interface IESLintConfig {}
 
@@ -21,7 +21,7 @@ export class ESLintConfig implements IESLintConfig, IResolvable {
   public static ignores(patterns: string[]): IESLintConfig {
     const globalIgnores = from("eslint/config").globalIgnores;
     const template = js`${globalIgnores}(${JSON.stringify(patterns)})`;
-    
+
     return template as any;
   }
 
@@ -30,7 +30,8 @@ export class ESLintConfig implements IESLintConfig, IResolvable {
    */
   public static useIgnoreFile(): IESLintConfig {
     const globalIgnores = from("eslint/config").globalIgnores;
-    const convertIgnorePatternToMinimatch = from("@eslint/compat").convertIgnorePatternToMinimatch;
+    const convertIgnorePatternToMinimatch =
+      from("@eslint/compat").convertIgnorePatternToMinimatch;
 
     return ((project: Project) => {
       const patterns = JSON.stringify(project.gitignore.patterns);
@@ -51,13 +52,13 @@ export class ESLintConfig implements IESLintConfig, IResolvable {
       const patterns = JSON.stringify(
         project.files
           .filter((file) => file.readonly && file.marker)
-          .map((file) => file.path)
+          .map((file) => file.path),
       );
       return js`${globalIgnores}(${patterns}, "Ignore projen generated files")`;
     }) as any;
   }
 
-  public constructor(private readonly config: ConfigWithExtends) {};
+  public constructor(private readonly config: ConfigWithExtends) {}
 
   public toJSON(): any {
     return this.config;

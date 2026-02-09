@@ -1,7 +1,7 @@
 import { camel } from "case";
-import { from, ImportReference } from "../private/code-template";
 import { CodeResolvable } from "../../code-resolvable";
 import { IResolvable } from "../../file";
+import { from, ImportReference } from "../private/code-template";
 
 /**
  * The configuration for a set of files.
@@ -124,7 +124,6 @@ export class Extends implements IResolvable {
   }
 }
 
-
 /**
  * A plugin is an object that contains rules.
  * It can be a local plugin or a shared plugin.
@@ -169,7 +168,7 @@ export class Plugin extends CodeResolvable {
 
   public constructor(pkg: string, name: string) {
     super();
-    
+
     this.name = name;
     this.pkg = pkg;
     this.ref = from(this.pkg).default.as(camel(this.name));

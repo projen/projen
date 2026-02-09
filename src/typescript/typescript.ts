@@ -14,6 +14,7 @@ import {
   TypescriptConfig,
   TypescriptConfigOptions,
 } from "../javascript";
+import { EslintLegacy } from "../javascript/eslint/legacy";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
 import { Task } from "../task";
@@ -24,7 +25,6 @@ import {
   TypedocDocgen,
 } from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
-import { EslintLegacy } from "../javascript/eslint/legacy";
 
 /**
  * @see https://kulshekhar.github.io/ts-jest/docs/getting-started/options/babelConfig/
@@ -551,7 +551,7 @@ export class TypeScriptProject extends NodeProject {
         fileExtensions: [".ts", ".tsx"],
         lintProjenRc: false,
         ...options.eslintOptions,
-      })
+      });
 
       this.tsconfigEslint = this.tsconfigDev;
     }

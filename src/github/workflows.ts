@@ -345,7 +345,10 @@ function renderJobs(
       steps.push(...setupTools(job.tools));
     }
 
-    const userDefinedSteps = kebabCaseKeys(new DataResolver().resolve(job.steps), false);
+    const userDefinedSteps = kebabCaseKeys(
+      new DataResolver().resolve(job.steps),
+      false,
+    );
     steps.push(...userDefinedSteps);
 
     return {

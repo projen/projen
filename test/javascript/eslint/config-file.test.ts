@@ -49,7 +49,7 @@ describe("ESLintConfigFile", () => {
     const content = output["eslint.config.cjs"];
 
     expect(content).toContain(
-      'const { defineConfig } = require("eslint/config");'
+      'const { defineConfig } = require("eslint/config");',
     );
     expect(content).toContain("module.exports = defineConfig(");
     expect(content).toContain(");");
@@ -93,7 +93,7 @@ describe("ESLintConfigFile", () => {
     config.addConfig(
       new ESLintConfig({
         extends: [Extends.fromName("additionalConfig")],
-      })
+      }),
     );
 
     const output = synthSnapshot(project);

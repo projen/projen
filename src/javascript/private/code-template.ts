@@ -1,4 +1,8 @@
-import { CodeResolvable, ICodeResolvable, IImportResolver } from '../../code-resolvable';
+import {
+  CodeResolvable,
+  ICodeResolvable,
+  IImportResolver,
+} from "../../code-resolvable";
 
 /**
  * Custom error that suppresses the normal stack trace
@@ -6,7 +10,7 @@ import { CodeResolvable, ICodeResolvable, IImportResolver } from '../../code-res
 class ImportReferenceError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'ImportReferenceError';
+    this.name = "ImportReferenceError";
     // Keep the stack trace for debugging
     this.stack = undefined;
   }
@@ -27,27 +31,28 @@ function captureStackTrace(): string {
  * Cleans up a stack trace to show only the first relevant user code line
  */
 function cleanStackTrace(stack?: string): string {
-  if (!stack) return 'Unknown location';
-  
-  const lines = stack.split('\n');
-  
+  if (!stack) return "Unknown location";
+
+  const lines = stack.split("\n");
+
   // Find first line that's not internal code after skipping Error frame
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
-    if (line && 
-        (line.includes('.ts:') || line.includes('.js:')) && 
-        !line.includes('node:internal') && 
-        !line.includes('node_modules') &&
-        !line.includes('Module._compile') &&
-        !line.includes('require.extensions') &&
-        !line.includes('/projen/lib/javascript/private/code-template') &&
-        !line.includes('/projen/src/javascript/private/code-template')
-      ) {
+    if (
+      line &&
+      (line.includes(".ts:") || line.includes(".js:")) &&
+      !line.includes("node:internal") &&
+      !line.includes("node_modules") &&
+      !line.includes("Module._compile") &&
+      !line.includes("require.extensions") &&
+      !line.includes("/projen/lib/javascript/private/code-template") &&
+      !line.includes("/projen/src/javascript/private/code-template")
+    ) {
       return line.trim();
     }
   }
-  
-  return lines[1]?.trim() || 'Unknown location';
+
+  return lines[1]?.trim() || "Unknown location";
 }
 
 /**
@@ -104,9 +109,9 @@ export class CodeReference extends CodeResolvable {
       const currentStack = captureStackTrace();
       throw new ImportReferenceError(
         `Code reference already used. Create a new reference for reuse.\n\n` +
-        `Reference created:\n    ${this.creationStack}\n` +
-        `First use:\n    ${this.firstUsageStack}\n` +
-        `Second use:\n    ${currentStack}\n`
+          `Reference created:\n    ${this.creationStack}\n` +
+          `First use:\n    ${this.firstUsageStack}\n` +
+          `Second use:\n    ${currentStack}\n`,
       );
     }
 
@@ -129,8 +134,8 @@ export class ImportReference extends CodeReference {
   protected get refName(): string {
     if (!this._importsResolved) {
       throw new ImportReferenceError(
-        'ImportReference must have resolveImports() called before use. ' +
-        'This usually happens automatically during code generation.'
+        "ImportReference must have resolveImports() called before use. " +
+          "This usually happens automatically during code generation.",
       );
     }
     return this._refName;
@@ -148,11 +153,9 @@ export class ImportReference extends CodeReference {
     return this._refName;
   }
 
-
-
   /**
    * Creates a proxy that generates import references for any property access.
-   * 
+   *
    * @example
    * ```typescript
    * const { Component, useState } = from("react");
@@ -161,24 +164,28 @@ export class ImportReference extends CodeReference {
    * ```
    */
   public static from(moduleName: string): any {
-    return new Proxy({}, {
-      get: (_, prop: string) => {
-        const ref = ImportReference.createWithProxy(moduleName, prop);
-        
-        // Add as() method for aliasing
-        if (prop === ImportReference.DEFAULT) {
-          (ref as any).as = (alias: string) => ImportReference.createWithProxy(moduleName, prop, alias);
-        }
-        
-        return ref;
-      }
-    });
+    return new Proxy(
+      {},
+      {
+        get: (_, prop: string) => {
+          const ref = ImportReference.createWithProxy(moduleName, prop);
+
+          // Add as() method for aliasing
+          if (prop === ImportReference.DEFAULT) {
+            (ref as any).as = (alias: string) =>
+              ImportReference.createWithProxy(moduleName, prop, alias);
+          }
+
+          return ref;
+        },
+      },
+    );
   }
 
   private constructor(
     private moduleName: string,
     private importName: string,
-    private alias?: string
+    private alias?: string,
   ) {
     super(alias || importName);
   }
@@ -188,7 +195,11 @@ export class ImportReference extends CodeReference {
    */
   protected static DEFAULT = "default";
 
-  private static createWithProxy(moduleName: string, importName: string, alias?: string): ImportReference {
+  private static createWithProxy(
+    moduleName: string,
+    importName: string,
+    alias?: string,
+  ): ImportReference {
     const ref = new ImportReference(moduleName, importName, alias);
     return ref.createProxy(ref);
   }
@@ -204,13 +215,13 @@ export class ImportReference extends CodeReference {
         // If the property exists on the target, return it (bound if it's a function)
         if (prop in proxyTarget) {
           const value = (proxyTarget as any)[prop];
-          return typeof value === 'function' ? value.bind(proxyTarget) : value;
+          return typeof value === "function" ? value.bind(proxyTarget) : value;
         }
-        
+
         // For nested property access, create a path reference and wrap it in a proxy
         const pathRef = proxyTarget.path(prop);
         return this.createProxy(pathRef);
-      }
+      },
     });
   }
 
@@ -234,14 +245,15 @@ export class ImportReference extends CodeReference {
 
     if (this.importName === ImportReference.DEFAULT) {
       // For default imports, we need an alias. If none provided, use module name
-      const alias = this.alias || this.moduleName.split('/').pop() || this.importName;
+      const alias =
+        this.alias || this.moduleName.split("/").pop() || this.importName;
       const ref = imports.from(this.moduleName, this.importName, alias);
       this.refName = ref.render();
     } else {
       const ref = imports.from(this.moduleName, this.importName, this.alias);
       this.refName = ref.render();
     }
-    
+
     this._importsResolved = true;
   }
 }
@@ -258,7 +270,7 @@ export class ImportPathReference extends CodeReference {
    */
   constructor(
     private parentImport: ImportReference,
-    private propertyPath: string
+    private propertyPath: string,
   ) {
     super(parentImport.getResolvedName());
   }
@@ -278,13 +290,16 @@ export class ImportPathReference extends CodeReference {
    * @returns A new ImportPathReference for the deeper nested property
    */
   public path(propertyPath: string): ImportPathReference {
-    return new ImportPathReference(this.parentImport, `${this.propertyPath}.${propertyPath}`);
+    return new ImportPathReference(
+      this.parentImport,
+      `${this.propertyPath}.${propertyPath}`,
+    );
   }
 }
 
 /**
  * Creates a proxy that generates import references for any property access.
- * 
+ *
  * @example
  * ```typescript
  * const { Component, useState } = from("react");
@@ -309,7 +324,7 @@ export class CodeTemplate extends CodeResolvable {
    */
   constructor(
     private strings: TemplateStringsArray,
-    private values: (string | ICodeResolvable)[]
+    private values: (string | ICodeResolvable)[],
   ) {
     super();
   }
@@ -332,22 +347,27 @@ export class CodeTemplate extends CodeResolvable {
    */
   public render(): string {
     return this.strings.reduce((result, str, i) => {
-      const val =  CodeResolvable.isCodeResolvable(this.values[i]) ? this.values[i].render() : this.values[i];
-      return  result + str + (val || '')
-    }, '');
+      const val = CodeResolvable.isCodeResolvable(this.values[i])
+        ? this.values[i].render()
+        : this.values[i];
+      return result + str + (val || "");
+    }, "");
   }
 }
 
 /**
  * Tagged template function for creating code with embedded import references.
- * 
+ *
  * @example
  * ```typescript
  * const Component = from("react").Component;
  * const code = js`const comp = ${Component};`;
  * ```
  */
-export function js(strings: TemplateStringsArray, ...values: (string | ICodeResolvable)[]): CodeTemplate {
+export function js(
+  strings: TemplateStringsArray,
+  ...values: (string | ICodeResolvable)[]
+): CodeTemplate {
   return new CodeTemplate(strings, values);
 }
 
@@ -376,9 +396,11 @@ class JsonTemplate extends CodeResolvable {
     if (CodeResolvable.isCodeResolvable(value) && value?.resolveImports) {
       value.resolveImports(imports);
     } else if (Array.isArray(value)) {
-      value.forEach(item => this.resolveImportsFromValue(item, imports));
-    } else if (value && typeof value === 'object') {
-      Object.values(value).forEach(val => this.resolveImportsFromValue(val, imports));
+      value.forEach((item) => this.resolveImportsFromValue(item, imports));
+    } else if (value && typeof value === "object") {
+      Object.values(value).forEach((val) =>
+        this.resolveImportsFromValue(val, imports),
+      );
     }
   }
 
@@ -393,7 +415,7 @@ class JsonTemplate extends CodeResolvable {
 
 /**
  * Creates a JSON template that can contain embedded import references.
- * 
+ *
  * @example
  * ```typescript
  * const config = json({
@@ -408,36 +430,45 @@ export function json(data: any): JsonTemplate {
 
 /**
  * Stringifies a value to JSON, but renders ICodeResolvable objects as raw code.
- * 
+ *
  * @param value - The value to stringify
  * @param indentation - Number of spaces for indentation
  */
 function stringifyWithCode(value: any, indentation = 2): string {
   const serialize = (val: any, depth = 0): string => {
-    if (val?.render && typeof val.render === 'function') {
+    if (val?.render && typeof val.render === "function") {
       const code = val.render();
-      const lines = code.split('\n');
+      const lines = code.split("\n");
       if (lines.length === 1) return code;
       const [first, ...rest] = lines;
-      const indentedRest = rest.map((line: string) => ' '.repeat(depth * indentation) + line);
-      return [first, ...indentedRest].join('\n');
+      const indentedRest = rest.map(
+        (line: string) => " ".repeat(depth * indentation) + line,
+      );
+      return [first, ...indentedRest].join("\n");
     }
 
     if (Array.isArray(val)) {
-      if (val.length === 0) return '[]';
-      const nextIndent = ' '.repeat((depth + 1) * indentation);
-      const items = val.map(item => nextIndent + serialize(item, depth + 1)).join(',\n');
-      return `[\n${items}\n${' '.repeat(depth * indentation)}]`;
+      if (val.length === 0) return "[]";
+      const nextIndent = " ".repeat((depth + 1) * indentation);
+      const items = val
+        .map((item) => nextIndent + serialize(item, depth + 1))
+        .join(",\n");
+      return `[\n${items}\n${" ".repeat(depth * indentation)}]`;
     }
-    
-    if (val && typeof val === 'object') {
+
+    if (val && typeof val === "object") {
       const entries = Object.entries(val);
-      if (entries.length === 0) return '{}';
-      const nextIndent = ' '.repeat((depth + 1) * indentation);
-      const props = entries.map(([k, v]) => `${nextIndent}${JSON.stringify(k)}: ${serialize(v, depth + 1)}`).join(',\n');
-      return `{\n${props}\n${' '.repeat(depth * indentation)}}`;
+      if (entries.length === 0) return "{}";
+      const nextIndent = " ".repeat((depth + 1) * indentation);
+      const props = entries
+        .map(
+          ([k, v]) =>
+            `${nextIndent}${JSON.stringify(k)}: ${serialize(v, depth + 1)}`,
+        )
+        .join(",\n");
+      return `{\n${props}\n${" ".repeat(depth * indentation)}}`;
     }
-    
+
     return JSON.stringify(val);
   };
   return serialize(value);

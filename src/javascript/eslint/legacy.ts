@@ -1,10 +1,10 @@
 import { IConstruct } from "constructs";
 import { ESLint } from "./eslint";
 import { EslintOptions, EslintOverride } from "../eslint";
+import { ESLintConfig } from "./config";
+import { ConfigWithExtends, Plugin } from "./config-object";
 import { ProjenEslintPreset } from "./presets/projen";
 import { isResolvable } from "../../_private/data-resolver";
-import { ConfigWithExtends, Plugin } from "./config-object";
-import { ESLintConfig } from "./config";
 import { Component } from "../../component";
 import { Prettier } from "../prettier";
 
@@ -22,8 +22,8 @@ export class EslintLegacy extends Component {
       configs: [
         ProjenEslintPreset.configure({
           prettier: options.prettier || Boolean(Prettier.of(this.project)),
-          ...options
-        })
+          ...options,
+        }),
       ],
     });
   }
@@ -34,7 +34,7 @@ export class EslintLegacy extends Component {
    */
   public get lintPatterns(): string[] {
     return this.eslint.configs
-      .flatMap(config => isResolvable(config) ? config.toJSON() : config)
+      .flatMap((config) => (isResolvable(config) ? config.toJSON() : config))
       .flatMap((config: ConfigWithExtends) => config.files ?? []);
   }
 
@@ -60,9 +60,13 @@ export class EslintLegacy extends Component {
    * @deprecated use `addConfigs()`
    */
   public addPlugins(...plugins: string[]) {
-    this.eslint.addConfigs(new ESLintConfig({
-      plugins: Object.fromEntries(plugins.map(p => [p, Plugin.fromName(p)])),
-    }));
+    this.eslint.addConfigs(
+      new ESLintConfig({
+        plugins: Object.fromEntries(
+          plugins.map((p) => [p, Plugin.fromName(p)]),
+        ),
+      }),
+    );
   }
 
   /**
@@ -70,9 +74,7 @@ export class EslintLegacy extends Component {
    * @deprecated use `addConfigs()`
    */
   public addOverride(_override: EslintOverride) {
-    this.eslint.addConfigs(new ESLintConfig({
-      
-    }));
+    this.eslint.addConfigs(new ESLintConfig({}));
   }
 
   /**
@@ -90,7 +92,7 @@ export class EslintLegacy extends Component {
    */
   public addExtends(...extendList: string[]) {
     this.eslint.addConfigs({
-      extends: extendList
+      extends: extendList,
     });
   }
 

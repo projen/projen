@@ -1,6 +1,6 @@
+import { IESLintConfig } from "./config";
 import { ICodeResolvable } from "../../code-resolvable";
 import { CodeTemplate, from, js, json } from "../private/code-template";
-import { IESLintConfig } from "./config";
 
 /**
  * A shared configuration definition.
@@ -17,7 +17,7 @@ export interface SharedConfigDefinition {
 export class SharedConfig implements IESLintConfig {
   private readonly defs: SharedConfigDefinition[];
 
-  public constructor(...defs: SharedConfigDefinition[]) {  
+  public constructor(...defs: SharedConfigDefinition[]) {
     this.defs = defs;
   }
 
@@ -26,12 +26,12 @@ export class SharedConfig implements IESLintConfig {
       const def = this.defs[0];
       const alias = from(def.module).default.as(def.name);
       return variable(alias, def.path);
-    } 
+    }
     return json({
-      extends: this.defs.map(def => {
+      extends: this.defs.map((def) => {
         const alias = from(def.module).default.as(def.name);
         return variable(alias, def.path);
-      })
+      }),
     });
   }
 

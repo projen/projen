@@ -1,4 +1,8 @@
-import { CodeResolvable, ICodeResolvable, IImportResolver } from '../code-resolvable';
+import {
+  CodeResolvable,
+  ICodeResolvable,
+  IImportResolver,
+} from "../code-resolvable";
 
 /**
  * Utility class for creating code resolvables.
@@ -16,12 +20,12 @@ export class Code {
   /**
    * JSII-compatible code builder that doesn't rely on template literals.
    * Supports method chaining and function argument syntax.
-   * 
+   *
    * @returns A new CodeLiteral instance
-   * 
+   *
    * @example
    * const Component = from("react").Component;
-   * const template = Code.for("const comp = ", Component, ";"); 
+   * const template = Code.for("const comp = ", Component, ";");
    */
   public static for(...parts: (string | ICodeResolvable)[]): CodeBuilder {
     return CodeBuilder.of(...parts);
@@ -67,7 +71,7 @@ class CodeBuilder extends CodeResolvable {
    * @returns This builder for method chaining
    */
   public line(...parts: (string | ICodeResolvable)[]): this {
-    return this.add(...parts, '\n');
+    return this.add(...parts, "\n");
   }
 
   /**
@@ -75,8 +79,8 @@ class CodeBuilder extends CodeResolvable {
    * @param imports - The ModuleImports instance to resolve imports into
    */
   public resolveImports(imports: IImportResolver): void {
-    this.parts.forEach(part => {
-      if (typeof part === 'object' && part.resolveImports) {
+    this.parts.forEach((part) => {
+      if (typeof part === "object" && part.resolveImports) {
         part.resolveImports(imports);
       }
     });
@@ -87,12 +91,11 @@ class CodeBuilder extends CodeResolvable {
    * @returns The rendered code string
    */
   public render(): string {
-    return this.parts.map(part => 
-      typeof part === 'string' ? part : part.render()
-    ).join('');
+    return this.parts
+      .map((part) => (typeof part === "string" ? part : part.render()))
+      .join("");
   }
 }
-
 
 /**
  * A literal code reference that renders exactly as provided.
@@ -120,4 +123,3 @@ class CodeLiteral extends CodeResolvable {
     return this.code;
   }
 }
-
