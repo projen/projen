@@ -4,7 +4,7 @@ import { GitHubActionsProvider } from "./actions-provider";
 import { GitHub } from "./github";
 import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
-import { resolve } from "../_resolve";
+import { DataResolver } from "../_private/data-resolver";
 import { Component } from "../component";
 import { deepMerge, kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
@@ -345,7 +345,7 @@ function renderJobs(
       steps.push(...setupTools(job.tools));
     }
 
-    const userDefinedSteps = kebabCaseKeys(resolve(job.steps), false);
+    const userDefinedSteps = kebabCaseKeys(new DataResolver().resolve(job.steps), false);
     steps.push(...userDefinedSteps);
 
     return {

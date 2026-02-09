@@ -11,4 +11,6 @@ export * from "./typescript-config";
 export * from "./upgrade-dependencies";
 export * from "./yarnrc";
 export * from "./biome/biome";
+export * from "./module-type";
 export * as biome_config from "./biome/biome-config";
+export * as eslint from "./eslint/index";
