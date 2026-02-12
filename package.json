@@ -63,7 +63,7 @@
     "@types/yargs": "^16.0.11",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
-    "aws-cdk-lib": "^2.237.1",
+    "aws-cdk-lib": "^2.238.0",
     "commit-and-tag-version": "^12",
     "esbuild": "^0.27.3",
     "eslint": "^9",
