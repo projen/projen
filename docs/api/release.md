@@ -4633,6 +4633,36 @@ Only defined if this is a scheduled release.
 ```
 
 
+### TagReleaseOptions <a name="TagReleaseOptions" id="projen.release.TagReleaseOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.release.TagReleaseOptions.Initializer"></a>
+
+```typescript
+import { release } from 'projen'
+
+const tagReleaseOptions: release.TagReleaseOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.release.TagReleaseOptions.property.tags">tags</a></code> | <code>string[]</code> | Tag patterns for which pushes should trigger a release. |
+
+---
+
+##### `tags`<sup>Optional</sup> <a name="tags" id="projen.release.TagReleaseOptions.property.tags"></a>
+
+```typescript
+public readonly tags: string[];
+```
+
+- *Type:* string[]
+
+Tag patterns for which pushes should trigger a release.
+
+---
+
 ## Classes <a name="Classes" id="Classes"></a>
 
 ### ReleaseTrigger <a name="ReleaseTrigger" id="projen.release.ReleaseTrigger"></a>
@@ -4650,6 +4680,7 @@ and release artifact automation
 | <code><a href="#projen.release.ReleaseTrigger.continuous">continuous</a></code> | Creates a continuous release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.manual">manual</a></code> | Creates a manual release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.scheduled">scheduled</a></code> | Creates a scheduled release trigger. |
+| <code><a href="#projen.release.ReleaseTrigger.tagged">tagged</a></code> | Creates a tag-based release trigger. |
 | <code><a href="#projen.release.ReleaseTrigger.workflowDispatch">workflowDispatch</a></code> | The release can only be triggered using the GitHub UI. |
 
 ---
@@ -4722,6 +4753,24 @@ release options.
 
 ---
 
+##### `tagged` <a name="tagged" id="projen.release.ReleaseTrigger.tagged"></a>
+
+```typescript
+import { release } from 'projen'
+
+release.ReleaseTrigger.tagged(options?: TagReleaseOptions)
+```
+
+Creates a tag-based release trigger.
+
+Automated releases will occur on every new tag matching the provided patterns.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.release.ReleaseTrigger.tagged.parameter.options"></a>
+
+- *Type:* <a href="#projen.release.TagReleaseOptions">TagReleaseOptions</a>
+
+---
+
 ##### `workflowDispatch` <a name="workflowDispatch" id="projen.release.ReleaseTrigger.workflowDispatch"></a>
 
 ```typescript
@@ -4742,6 +4791,7 @@ The release can only be triggered using the GitHub UI.
 | <code><a href="#projen.release.ReleaseTrigger.property.gitPushCommand">gitPushCommand</a></code> | <code>string</code> | Override git-push command used when releasing manually. |
 | <code><a href="#projen.release.ReleaseTrigger.property.paths">paths</a></code> | <code>string[]</code> | Paths for which pushes will trigger a release when `isContinuous` is `true`. |
 | <code><a href="#projen.release.ReleaseTrigger.property.schedule">schedule</a></code> | <code>string</code> | Cron schedule for releases. |
+| <code><a href="#projen.release.ReleaseTrigger.property.tags">tags</a></code> | <code>string[]</code> | Tag patterns for which pushes will trigger a release. |
 
 ---
 
@@ -4829,6 +4879,18 @@ Only defined if this is a scheduled release.
 '0 17 * * *' - every day at 5 pm
 ```
 
+
+##### `tags`<sup>Optional</sup> <a name="tags" id="projen.release.ReleaseTrigger.property.tags"></a>
+
+```typescript
+public readonly tags: string[];
+```
+
+- *Type:* string[]
+
+Tag patterns for which pushes will trigger a release.
+
+---
 
 
 
