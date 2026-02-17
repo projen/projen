@@ -545,23 +545,23 @@ test("uses the proper yarn berry upgrade command", () => {
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
-    [
-      {
-        "exec": "yarn dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
-      },
-      {
-        "exec": "yarn install",
-      },
-      {
-        "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
-      },
-      {
-        "exec": "npx projen",
-      },
-      {
-        "spawn": "post-upgrade",
-      },
-    ]
+   [
+     {
+       "exec": "yarn dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+     },
+     {
+       "exec": "yarn install --no-immutable",
+     },
+     {
+       "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
+     },
+     {
+       "exec": "npx projen",
+     },
+     {
+       "spawn": "post-upgrade",
+     },
+   ]
   `);
 });
 
