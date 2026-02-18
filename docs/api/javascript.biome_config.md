@@ -472,6 +472,7 @@ const cssFormatterConfiguration: javascript.biome_config.CssFormatterConfigurati
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to CSS (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to CSS (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in CSS code. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -558,6 +559,28 @@ Defaults to double.
 
 ---
 
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.CssFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
+
+---
+
 ### CssLinterConfiguration <a name="CssLinterConfiguration" id="projen.javascript.biome_config.CssLinterConfiguration"></a>
 
 Options that changes how the CSS linter behaves.
@@ -633,6 +656,9 @@ public readonly cssModules: boolean;
 - *Type:* boolean
 
 Enables parsing of CSS Modules specific features.
+
+Enable this feature only
+when your files don't end in `.module.css`.
 
 ---
 
@@ -756,6 +782,7 @@ const formatterConfiguration: javascript.biome_config.FormatterConfiguration = {
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.useEditorconfig">useEditorconfig</a></code> | <code>boolean</code> | Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration. |
 
 ---
@@ -909,6 +936,28 @@ Defaults to 80.
 
 ---
 
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.FormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
+
+---
+
 ##### `useEditorconfig`<sup>Optional</sup> <a name="useEditorconfig" id="projen.javascript.biome_config.FormatterConfiguration.property.useEditorconfig"></a>
 
 ```typescript
@@ -1034,6 +1083,7 @@ const graphqlFormatterConfiguration: javascript.biome_config.GraphqlFormatterCon
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to GraphQL files. |
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to GraphQL files. |
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in GraphQL code. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -1132,6 +1182,28 @@ public readonly quoteStyle: QuoteStyle;
 The type of quotes used in GraphQL code.
 
 Defaults to double.
+
+---
+
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.GraphqlFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
 
 ---
 
@@ -1274,6 +1346,7 @@ const gritFormatterConfiguration: javascript.biome_config.GritFormatterConfigura
 | <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to Grit files. |
 | <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to Grit files. |
 | <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to Grit files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -1340,6 +1413,28 @@ public readonly lineWidth: number;
 What's the max width of a line applied to Grit files.
 
 Defaults to 80.
+
+---
+
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.GritFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
 
 ---
 
@@ -1512,6 +1607,7 @@ const htmlFormatterConfiguration: javascript.biome_config.HtmlFormatterConfigura
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to HTML (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to HTML (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.selfCloseVoidElements">selfCloseVoidElements</a></code> | <code>projen.javascript.biome_config.SelfCloseVoidElements</code> | Whether void elements should be self-closed. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.whitespaceSensitivity">whitespaceSensitivity</a></code> | <code>projen.javascript.biome_config.WhitespaceSensitivity</code> | Whether to account for whitespace sensitivity when formatting HTML (and its super languages). |
 
 ---
@@ -1644,6 +1740,28 @@ Defaults to never.
 
 ---
 
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.HtmlFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
+
+---
+
 ##### `whitespaceSensitivity`<sup>Optional</sup> <a name="whitespaceSensitivity" id="projen.javascript.biome_config.HtmlFormatterConfiguration.property.whitespaceSensitivity"></a>
 
 ```typescript
@@ -1772,6 +1890,7 @@ const jsConfiguration: javascript.biome_config.JsConfiguration = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.JsAssistConfiguration</code> | Assist options. |
+| <code><a href="#projen.javascript.biome_config.JsConfiguration.property.experimentalEmbeddedSnippetsEnabled">experimentalEmbeddedSnippetsEnabled</a></code> | <code>boolean</code> | Enables support for embedding snippets. |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.JsFormatterConfiguration</code> | Formatting options. |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.globals">globals</a></code> | <code>string[]</code> | A list of global bindings that should be ignored by the analyzers. |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.jsxRuntime">jsxRuntime</a></code> | <code>projen.javascript.biome_config.JsxRuntime</code> | Indicates the type of runtime or transformation used for interpreting JSX. |
@@ -1789,6 +1908,18 @@ public readonly assist: JsAssistConfiguration;
 - *Type:* projen.javascript.biome_config.JsAssistConfiguration
 
 Assist options.
+
+---
+
+##### `experimentalEmbeddedSnippetsEnabled`<sup>Optional</sup> <a name="experimentalEmbeddedSnippetsEnabled" id="projen.javascript.biome_config.JsConfiguration.property.experimentalEmbeddedSnippetsEnabled"></a>
+
+```typescript
+public readonly experimentalEmbeddedSnippetsEnabled: boolean;
+```
+
+- *Type:* boolean
+
+Enables support for embedding snippets.
 
 ---
 
@@ -1886,6 +2017,7 @@ const jsFormatterConfiguration: javascript.biome_config.JsFormatterConfiguration
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JavaScript code. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.semicolons">semicolons</a></code> | <code>projen.javascript.biome_config.Semicolons</code> | Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -2123,6 +2255,28 @@ Defaults to "all".
 
 ---
 
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.JsFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
+
+---
+
 ### JsLinterConfiguration <a name="JsLinterConfiguration" id="projen.javascript.biome_config.JsLinterConfiguration"></a>
 
 Linter options specific to the JavaScript linter.
@@ -2280,6 +2434,7 @@ const jsonFormatterConfiguration: javascript.biome_config.JsonFormatterConfigura
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to JSON (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to JSON (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsonTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -2397,6 +2552,28 @@ public readonly trailingCommas: JsonTrailingCommas;
 Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
 
 Defaults to "none".
+
+---
+
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
 
 ---
 
@@ -2717,6 +2894,7 @@ const overrideFormatterConfiguration: javascript.biome_config.OverrideFormatterC
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
 
@@ -2860,6 +3038,28 @@ public readonly lineWidth: number;
 What's the max width of a line.
 
 Defaults to 80.
+
+---
+
+##### `trailingNewline`<sup>Optional</sup> <a name="trailingNewline" id="projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingNewline"></a>
+
+```typescript
+public readonly trailingNewline: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true.
+
+Whether to add a trailing newline at the end of the file.
+
+Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+- <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+- <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+- <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+
+Disable the option at your own risk.
+
+Defaults to true.
 
 ---
 
@@ -3233,11 +3433,27 @@ const source: javascript.biome_config.Source = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.Source.property.noDuplicateClasses">noDuplicateClasses</a></code> | <code>any</code> | Remove duplicate CSS classes. |
 | <code><a href="#projen.javascript.biome_config.Source.property.organizeImports">organizeImports</a></code> | <code>any</code> | Provides a code action to sort the imports and exports in the file using a built-in or custom order. |
 | <code><a href="#projen.javascript.biome_config.Source.property.recommended">recommended</a></code> | <code>boolean</code> | Enables the recommended rules for this group. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedAttributes">useSortedAttributes</a></code> | <code>any</code> | Enforce attribute sorting in JSX elements. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedInterfaceMembers">useSortedInterfaceMembers</a></code> | <code>any</code> | Sort interface members by key. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedKeys">useSortedKeys</a></code> | <code>any</code> | Sort the keys of a JSON object in natural order. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedProperties">useSortedProperties</a></code> | <code>any</code> | Enforce ordering of CSS properties and nested rules. |
+
+---
+
+##### `noDuplicateClasses`<sup>Optional</sup> <a name="noDuplicateClasses" id="projen.javascript.biome_config.Source.property.noDuplicateClasses"></a>
+
+```typescript
+public readonly noDuplicateClasses: any;
+```
+
+- *Type:* any
+
+Remove duplicate CSS classes.
+
+See https://biomejs.dev/assist/actions/no-duplicate-classes
 
 ---
 
@@ -3278,6 +3494,20 @@ public readonly useSortedAttributes: any;
 Enforce attribute sorting in JSX elements.
 
 See https://biomejs.dev/assist/actions/use-sorted-attributes
+
+---
+
+##### `useSortedInterfaceMembers`<sup>Optional</sup> <a name="useSortedInterfaceMembers" id="projen.javascript.biome_config.Source.property.useSortedInterfaceMembers"></a>
+
+```typescript
+public readonly useSortedInterfaceMembers: any;
+```
+
+- *Type:* any
+
+Sort interface members by key.
+
+See https://biomejs.dev/assist/actions/use-sorted-interface-members
 
 ---
 
