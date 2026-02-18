@@ -407,6 +407,23 @@ export interface FormatterConfiguration {
   readonly lineWidth?: number;
 
   /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema FormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
+
+  /**
    * Use any `.editorconfig` files to configure the formatter. Configuration
    * in `biome.json` will override `.editorconfig` configuration.
    *
@@ -436,6 +453,7 @@ export function toJson_FormatterConfiguration(obj: FormatterConfiguration | unde
     'indentWidth': obj.indentWidth,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'trailingNewline': obj.trailingNewline,
     'useEditorconfig': obj.useEditorconfig,
   };
   // filter undefined values
@@ -604,6 +622,13 @@ export interface JsConfiguration {
   readonly assist?: JsAssistConfiguration;
 
   /**
+   * Enables support for embedding snippets.
+   *
+   * @schema JsConfiguration#experimentalEmbeddedSnippetsEnabled
+   */
+  readonly experimentalEmbeddedSnippetsEnabled?: boolean;
+
+  /**
    * Formatting options
    *
    * @schema JsConfiguration#formatter
@@ -650,6 +675,7 @@ export function toJson_JsConfiguration(obj: JsConfiguration | undefined): Record
   if (obj === undefined) { return undefined; }
   const result = {
     'assist': toJson_JsAssistConfiguration(obj.assist),
+    'experimentalEmbeddedSnippetsEnabled': obj.experimentalEmbeddedSnippetsEnabled,
     'formatter': toJson_JsFormatterConfiguration(obj.formatter),
     'globals': obj.globals?.map(y => y),
     'jsxRuntime': obj.jsxRuntime,
@@ -1061,6 +1087,23 @@ export interface CssFormatterConfiguration {
    * @schema CssFormatterConfiguration#quoteStyle
    */
   readonly quoteStyle?: QuoteStyle;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema CssFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -1077,6 +1120,7 @@ export function toJson_CssFormatterConfiguration(obj: CssFormatterConfiguration 
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
     'quoteStyle': obj.quoteStyle,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1126,7 +1170,8 @@ export interface CssParserConfiguration {
   readonly allowWrongLineComments?: boolean;
 
   /**
-   * Enables parsing of CSS Modules specific features.
+   * Enables parsing of CSS Modules specific features. Enable this feature only
+   * when your files don't end in `.module.css`.
    *
    * @schema CssParserConfiguration#cssModules
    */
@@ -1291,6 +1336,23 @@ export interface GraphqlFormatterConfiguration {
    * @schema GraphqlFormatterConfiguration#quoteStyle
    */
   readonly quoteStyle?: QuoteStyle;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema GraphqlFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -1308,6 +1370,7 @@ export function toJson_GraphqlFormatterConfiguration(obj: GraphqlFormatterConfig
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
     'quoteStyle': obj.quoteStyle,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1410,6 +1473,23 @@ export interface GritFormatterConfiguration {
    * @schema GritFormatterConfiguration#lineWidth
    */
   readonly lineWidth?: number;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema GritFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -1425,6 +1505,7 @@ export function toJson_GritFormatterConfiguration(obj: GritFormatterConfiguratio
     'indentWidth': obj.indentWidth,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1563,6 +1644,23 @@ export interface HtmlFormatterConfiguration {
   readonly selfCloseVoidElements?: SelfCloseVoidElements;
 
   /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema HtmlFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
+
+  /**
    * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
    *
    * @default css".
@@ -1588,6 +1686,7 @@ export function toJson_HtmlFormatterConfiguration(obj: HtmlFormatterConfiguratio
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
     'selfCloseVoidElements': obj.selfCloseVoidElements,
+    'trailingNewline': obj.trailingNewline,
     'whitespaceSensitivity': obj.whitespaceSensitivity,
   };
   // filter undefined values
@@ -1816,6 +1915,23 @@ export interface JsFormatterConfiguration {
    * @schema JsFormatterConfiguration#trailingCommas
    */
   readonly trailingCommas?: JsTrailingCommas;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema JsFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -1842,6 +1958,7 @@ export function toJson_JsFormatterConfiguration(obj: JsFormatterConfiguration | 
     'quoteStyle': obj.quoteStyle,
     'semicolons': obj.semicolons,
     'trailingCommas': obj.trailingCommas,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -2048,6 +2165,23 @@ export interface JsonFormatterConfiguration {
    * @schema JsonFormatterConfiguration#trailingCommas
    */
   readonly trailingCommas?: JsonTrailingCommas;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema JsonFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -2066,6 +2200,7 @@ export function toJson_JsonFormatterConfiguration(obj: JsonFormatterConfiguratio
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
     'trailingCommas': obj.trailingCommas,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -2374,6 +2509,23 @@ export interface OverrideFormatterConfiguration {
    * @schema OverrideFormatterConfiguration#lineWidth
    */
   readonly lineWidth?: number;
+
+  /**
+   * Whether to add a trailing newline at the end of the file.
+   *
+   * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+   * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
+   * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
+   * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+   *
+   * Disable the option at your own risk.
+   *
+   * Defaults to true.
+   *
+   * @default true.
+   * @schema OverrideFormatterConfiguration#trailingNewline
+   */
+  readonly trailingNewline?: boolean;
 }
 
 /**
@@ -2395,6 +2547,7 @@ export function toJson_OverrideFormatterConfiguration(obj: OverrideFormatterConf
     'indentWidth': obj.indentWidth,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -2461,6 +2614,14 @@ export enum VcsClientKind {
  */
 export interface Source {
   /**
+   * Remove duplicate CSS classes.
+   * See https://biomejs.dev/assist/actions/no-duplicate-classes
+   *
+   * @schema Source#noDuplicateClasses
+   */
+  readonly noDuplicateClasses?: any;
+
+  /**
    * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
    * See https://biomejs.dev/assist/actions/organize-imports
    *
@@ -2482,6 +2643,14 @@ export interface Source {
    * @schema Source#useSortedAttributes
    */
   readonly useSortedAttributes?: any;
+
+  /**
+   * Sort interface members by key.
+   * See https://biomejs.dev/assist/actions/use-sorted-interface-members
+   *
+   * @schema Source#useSortedInterfaceMembers
+   */
+  readonly useSortedInterfaceMembers?: any;
 
   /**
    * Sort the keys of a JSON object in natural order.
@@ -2508,9 +2677,11 @@ export interface Source {
 export function toJson_Source(obj: Source | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'noDuplicateClasses': obj.noDuplicateClasses,
     'organizeImports': obj.organizeImports,
     'recommended': obj.recommended,
     'useSortedAttributes': obj.useSortedAttributes,
+    'useSortedInterfaceMembers': obj.useSortedInterfaceMembers,
     'useSortedKeys': obj.useSortedKeys,
     'useSortedProperties': obj.useSortedProperties,
   };
