@@ -7340,7 +7340,7 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.8.0"",
+        "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
@@ -15011,7 +15011,7 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.8.0"",
+        "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
@@ -18170,7 +18170,7 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.8.0"",
+        "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {
@@ -22148,7 +22148,7 @@ exports[`inventory 1`] = `
         "switch": "jsii-release-version",
       },
       {
-        "default": ""~5.8.0"",
+        "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
         "fullType": {

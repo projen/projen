@@ -794,12 +794,12 @@ tsconfig.tsbuildinfo
       {
         "name": "jsii-rosetta",
         "type": "build",
-        "version": "~5.8.0",
+        "version": "~5.9.0",
       },
       {
         "name": "jsii",
         "type": "build",
-        "version": "~5.8.0",
+        "version": "~5.9.0",
       },
       {
         "name": "projen",
@@ -1371,7 +1371,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "jsii-diff": "*",
       "jsii-docgen": "^10.5.0",
       "jsii-pacmak": "*",
-      "jsii-rosetta": "~5.8.0",
+      "jsii-rosetta": "~5.9.0",
       "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
