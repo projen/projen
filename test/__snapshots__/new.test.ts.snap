@@ -82,7 +82,7 @@ project.synth();"
 
 exports[`projen new --from project options projenrc-json creates external project type 1`] = `
 {
-  "cdkVersion": "2.1.0",
+  "cdkVersion": "2.189.1",
   "defaultReleaseBranch": "main",
   "devDeps": [
     "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -126,7 +126,7 @@ exports[`projen new --from using registry existing package 1`] = `
     "url": "https://www.pepperize.com",
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.1.0",
+    "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.5.1",
   },
   "devDependencies": {
@@ -234,7 +234,7 @@ exports[`projen new --from using registry existing package 1`] = `
 exports[`projen new --from using registry existing package 2`] = `
 "import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
   name: "my-project",
@@ -257,7 +257,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "url": "https://www.pepperize.com",
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.1.0",
+    "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.5.1",
   },
   "devDependencies": {
@@ -365,7 +365,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
 exports[`projen new --from using tarball projen new --from named tarball  2`] = `
 "import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
@@ -388,7 +388,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "url": "https://www.pepperize.com",
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.1.0",
+    "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.5.1",
   },
   "devDependencies": {
@@ -496,7 +496,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
 exports[`projen new --from using tarball projen new --from relative path  2`] = `
 "import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
@@ -519,7 +519,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "url": "https://www.pepperize.com",
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.1.0",
+    "aws-cdk-lib": "^2.189.1",
     "constructs": "^10.5.1",
   },
   "devDependencies": {
@@ -627,7 +627,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
 exports[`projen new --from using tarball projen new --from tarball  2`] = `
 "import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
@@ -649,7 +649,7 @@ public class projenrc {
     public static void main(String[] args) {
         AwsCdkJavaApp project = new AwsCdkJavaApp(AwsCdkJavaAppOptions.builder()
             .artifactId("my-app")
-            .cdkVersion("2.1.0")
+            .cdkVersion("2.189.1")
             .groupId("org.acme")
             .mainClass("org.acme.MyApp")
             .name("my-project")
@@ -668,7 +668,7 @@ exports[`projen new awscdk-app-py 1`] = `
 project = AwsCdkPythonApp(
     author_email="my@user.email.com",
     author_name="My User Name",
-    cdk_version="2.1.0",
+    cdk_version="2.189.1",
     module_name="my_project",
     name="my-project",
     version="0.1.0",
@@ -682,7 +682,7 @@ exports[`projen new awscdk-app-ts 1`] = `
 {
   ".projenrc.ts": "import { awscdk } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   name: "my-project",
   projenrcTs: true,
@@ -702,7 +702,7 @@ exports[`projen new awscdk-construct 1`] = `
 const project = new awscdk.AwsCdkConstructLibrary({
   author: "My User Name",
   authorAddress: "my@user.email.com",
-  cdkVersion: "2.1.0",
+  cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.9.0",
   name: "my-project",
