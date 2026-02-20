@@ -127,7 +127,7 @@ exports[`projen new --from using registry existing package 1`] = `
   },
   "dependencies": {
     "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5",
+    "constructs": "^10.5.1",
   },
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
@@ -258,7 +258,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
   },
   "dependencies": {
     "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5",
+    "constructs": "^10.5.1",
   },
   "devDependencies": {
     "@pepperize/projen-awscdk-app-ts": "file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
@@ -389,7 +389,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
   },
   "dependencies": {
     "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5",
+    "constructs": "^10.5.1",
   },
   "devDependencies": {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
@@ -520,7 +520,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
   },
   "dependencies": {
     "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5",
+    "constructs": "^10.5.1",
   },
   "devDependencies": {
     "@types/jest": "*",

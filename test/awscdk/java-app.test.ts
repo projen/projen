@@ -156,7 +156,7 @@ test("deps cdkv2", () => {
     {
       artifactId: "constructs",
       groupId: "software.constructs",
-      version: "[10.0.5,11.0.0)",
+      version: "[10.5.1,11.0.0)",
     },
   ]);
 });
