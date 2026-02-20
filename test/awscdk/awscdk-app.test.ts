@@ -305,7 +305,7 @@ describe("CDK v2", () => {
   });
   it("has a constructs runtime depdendency", () => {
     expect(snapshot["package.json"].dependencies).toMatchObject({
-      constructs: "^10.0.5",
+      constructs: "^10.5.1",
     });
   });
   it("has the correct import for the sample file", () => {

@@ -10,7 +10,7 @@ export interface AwsCdkDepsCommonOptions {
   /**
    * Minimum version of the AWS CDK to depend on.
    *
-   * @default "2.1.0"
+   * @default "2.189.1"
    */
   readonly cdkVersion: string;
 
@@ -30,7 +30,7 @@ export interface AwsCdkDepsCommonOptions {
    * Minimum version of the `constructs` library to depend on.
    *
    * @default - for CDK 1.x the default is "3.2.27", for CDK 2.x the default is
-   * "10.0.5".
+   * "10.5.1".
    */
   readonly constructsVersion?: string;
 
@@ -264,7 +264,7 @@ export abstract class AwsCdkDeps extends Component {
       );
     }
 
-    const defaultVersion = this.cdkMajorVersion === 1 ? "3.2.27" : "10.0.5";
+    const defaultVersion = this.cdkMajorVersion === 1 ? "3.2.27" : "10.5.1";
     const versionRequirement = `^${requestedVersion ?? defaultVersion}`;
 
     const constructsMajorVersion = semver.minVersion(versionRequirement)?.major;
