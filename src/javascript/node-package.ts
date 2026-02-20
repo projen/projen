@@ -1183,7 +1183,10 @@ export class NodePackage extends Component {
         ].join(" ");
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
-        return ["yarn install", ...(frozen ? ["--immutable"] : [])].join(" ");
+        return [
+          "yarn install",
+          ...(frozen ? ["--immutable"] : ["--no-immutable"]),
+        ].join(" ");
       case NodePackageManager.NPM:
         return frozen ? "npm ci" : "npm install";
       case NodePackageManager.PNPM:
