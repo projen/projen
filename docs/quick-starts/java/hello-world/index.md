@@ -7,7 +7,7 @@ sidebar_position: 1
 To create a new Java project, use `npx projen new java`:
 
 ```shell
-$ npx projen new java --group-id org.acme --artifact-id hello-maven
+npx projen new java --group-id org.acme --artifact-id hello-maven
 ```
 
 This will synthesize a standard Maven project directory structure with a
@@ -26,7 +26,7 @@ At this point, you should be able to now simply run `npx projen build` to build 
 project:
 
 ```shell
-$ projen build
+projen build
 [INFO] BUILD SUCCESS
 ```
 
@@ -130,7 +130,7 @@ the default for Java projects, but at the moment this needs to be enabled when
 the project is created:
 
 ```shell
-$ npx projen new java --projenrc-java
+npx projen new java --projenrc-java
 ```
 
 Or set through:

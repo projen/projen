@@ -24,7 +24,7 @@ All projen projects are [jsii](https://github.com/aws/jsii) projects, and you ca
 You start by creating a new jsii project:
 
 ```shell
-$ npx projen new jsii
+npx projen new jsii
 ```
 
 This will create a new jsii project in the current directory. 
@@ -77,7 +77,7 @@ project.synth();
 Since we've changed the contents of the .projenrc.ts file, go ahead and re-run projen:
 
 ```shell
-$ npx projen
+npx projen
 ```
 
 ## Creating the project type
@@ -180,7 +180,7 @@ Then, the `package.json` file is extracted from the snapshot and the `name` prop
 Run the test to make sure it passes:
 
 ```shell
-$ npx projen test
+npx projen test
 ```
 
 You should get some results showing you the test passed as well as some code coverage numbers:
@@ -441,7 +441,7 @@ export class MyMicroserviceProject extends TypeScriptProject {
 And to make sure we didn't break anything after this refactor, let's run the tests again:
 
 ```shell
-$ npx projen test
+npx projen test
 ```
 
 ![all the tests are passing](all-test-passing.png)

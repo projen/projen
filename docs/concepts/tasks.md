@@ -19,7 +19,7 @@ hello.exec("echo hello, world!");
 Run `npx projen` and the task will be available in the CLI:
 
 ```shell
-$ npx projen hello
+npx projen hello
 🤖 hello | echo hello, world!
 hello, world!
 ```
@@ -50,7 +50,7 @@ hello.exec("echo foo bar", { name: 'print the text "foo bar"' });
 The `--inspect` option can be used to display the contents of a task:
 
 ```shell
-$ projen hello --inspect
+projen hello --inspect
 echo hello, world!
 echo step number 2
 echo foo bar
@@ -70,7 +70,7 @@ hello.prepend("echo world");
 Then:
 
 ```shell
-$ projen hello 2> /dev/null
+projen hello 2> /dev/null
 world
 hello
 ```
@@ -91,13 +91,13 @@ hello.spawn(world);
 The output will be:
 
 ```shell
-$ projen hello
+projen hello
 🤖 hello | echo hello
 hello
 🤖 hello » world | echo world!
 world!
 
-$ projen hello --inspect
+projen hello --inspect
 echo hello
 world:
    echo world!
@@ -118,7 +118,7 @@ hello.exec("echo $FOO, $BAR $BAZ!", { env: { BAZ: "world" } });
 Then:
 
 ```shell
-$ projen hello
+projen hello
 🤖 hello | echo $FOO, $BAR $BAZ!
 hello, beautiful world!
 ```
@@ -134,7 +134,7 @@ hello.exec("echo current time is $TIME");
 Then:
 
 ```shell
-$ projen hello
+projen hello
 🤖 hello | echo current time is $TIME
 current time is Tue Dec 1 09:32:33 IST 2020
 ```
@@ -155,11 +155,11 @@ const hello = project.addTask("hello", {
 Then:
 
 ```shell
-$ projen hello
+projen hello
 🤖 hello | condition: [ -n "$CI" ]
 🤖 hello | condition exited with non-zero - skipping
 
-$ CI=1 projen hello
+CI=1 projen hello
 🤖 hello | condition: [ -n "$CI" ]
 🤖 hello | echo running in a CI environment
 running in a CI environment
@@ -180,14 +180,14 @@ const hello = project.addTask("hello", {
 Then:
 
 ```shell
-$ projen hello
+projen hello
 🤖 hello | condition: [ -n "$CI" ]
 🤖 hello | condition exited with non-zero - skipping
 🤖 hello | condition: [ ! -n "$CI" ]
 🤖 hello | echo not running in a CI environment
 not running in a CI environment
 
-$ CI=1 projen hello
+CI=1 projen hello
 🤖 hello | condition: [ -n "$CI" ]
 🤖 hello | echo running in a CI environment
 running in a CI environment

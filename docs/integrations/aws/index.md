@@ -31,7 +31,7 @@ export async function handler(event: any) {
 Now run:
 
 ```sh
-$ npx projen
+npx projen
 ```
 
 You'll notice that a new file `src/resize-image-function.ts` has been added to
