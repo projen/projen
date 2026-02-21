@@ -9,7 +9,7 @@ In this example, we'll guide you through create a Node.js API using [express](ht
 Start by creating a new directory for your project and then using projen to create a new project:
 
 ```shell
-$ npx projen new node
+npx projen new node
 ```
 
 Open the project in your favorite editor. You'll see a number of files and directories have been created:
@@ -69,7 +69,7 @@ project.synth();
 Now, re-run projen:
 
 ```shell
-$ npx projen
+npx projen
 ```
 
 projen regenerates all files, and the only change we see is the "name" in the package.json is now updated:
@@ -102,14 +102,14 @@ project.synth();
 Since we've made a change to the .projenrc.js file, we need to re-run projen:
 
 ```shell
-$ npx projen
+npx projen
 ```
 
 :::tip
 If you know you're going to be making a lot of changes to the .projenrc.js file, you can use the `--watch` option to have projen automatically:
 
 ```shell
-$ npx projen --watch
+npx projen --watch
 ```
 :::
 
@@ -135,7 +135,7 @@ app.listen(port, () => {
 We can start the app now using node:
 
 ```shell
-$ node src/index.js
+node src/index.js
 ```
 
 However, this isn't very convenient and doesn't align with standard practices in Node.js. 
@@ -172,15 +172,15 @@ From here on out, we're going to assume that you know that you need to re-run pr
 Now, we can run our app using the new task:
 
 ```shell
-$ pj start
+pj start
 ```
 
 For Node.js projects, tasks are standard package.json scripts, so you can also use npm, pnpm, or yarn to run the task:
 
 ```shell
-$ npm run start
-$ pnpm start
-$ yarn start
+npm run start
+pnpm start
+yarn start
 ```
 
 Once we have the task running, the website should load in your browser at [http://localhost:3001](http://localhost:3001).

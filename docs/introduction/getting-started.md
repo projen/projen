@@ -287,7 +287,7 @@ project.gitignore.addPatterns('dist/', 'node_modules/');
 To simplify using projen, consider creating an alias:
 
 ```shell
-$ alias pj="npx projen"
+alias pj="npx projen"
 ```
 Add this line to your shell's startup script (e.g., `~/.bashrc` or `~/.zshrc`) for it to persist across sessions. This 
 documentation will always spell out commands fully in case you prefer not to use aliases.
@@ -298,7 +298,7 @@ If you are making frequent changes to your `.projenrc` file, you can use the `--
 automatically re-run whenever the file changes:
 
 ```shell
-$ npx projen --watch
+npx projen --watch
 ```
 
 This will help streamline your workflow by ensuring that projen updates are applied immediately as you make changes 

@@ -14,7 +14,7 @@ want to use.
 To create a new Python project, use `projen new python`:
 
 ```shell
-$ projen new python --name=my-project
+projen new python --name=my-project
 ```
 
 This will synthesize a standard project directory structure with some sample
