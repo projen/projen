@@ -31,6 +31,7 @@ new java.JavaProject(options: JavaProjectOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.JavaProject.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.JavaProject.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.JavaProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.java.JavaProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.java.JavaProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
@@ -59,6 +60,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.JavaProject.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.JavaProject.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.java.JavaProject.addExcludeFromCleanup"></a>
 
@@ -1000,6 +1022,7 @@ new java.Junit(project: Project, options: JunitOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.Junit.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.Junit.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.Junit.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.Junit.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.Junit.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1013,6 +1036,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.Junit.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.Junit.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.Junit.postSynthesize"></a>
 
@@ -1172,6 +1216,7 @@ new java.MavenCompile(project: Project, pom: Pom, options?: MavenCompileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.MavenCompile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.MavenCompile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.MavenCompile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.MavenCompile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.MavenCompile.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1185,6 +1230,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.MavenCompile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.MavenCompile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.MavenCompile.postSynthesize"></a>
 
@@ -1344,6 +1410,7 @@ new java.MavenPackaging(project: Project, pom: Pom, options?: MavenPackagingOpti
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.MavenPackaging.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.MavenPackaging.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.MavenPackaging.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.MavenPackaging.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.MavenPackaging.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1357,6 +1424,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.MavenPackaging.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.MavenPackaging.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.MavenPackaging.postSynthesize"></a>
 
@@ -1522,6 +1610,7 @@ new java.MavenSample(project: Project, options: MavenSampleOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.MavenSample.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.MavenSample.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.MavenSample.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.MavenSample.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.MavenSample.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1535,6 +1624,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.MavenSample.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.MavenSample.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.MavenSample.postSynthesize"></a>
 
@@ -1691,6 +1801,7 @@ new java.Pom(project: Project, options: PomOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.Pom.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.Pom.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.Pom.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.Pom.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.Pom.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1710,6 +1821,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.Pom.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.Pom.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.Pom.postSynthesize"></a>
 
@@ -2087,6 +2219,7 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.java.Projenrc.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.java.Projenrc.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.java.Projenrc.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.java.Projenrc.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.java.Projenrc.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -2100,6 +2233,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.java.Projenrc.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.java.Projenrc.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.java.Projenrc.postSynthesize"></a>
 

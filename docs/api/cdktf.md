@@ -35,6 +35,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktf.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -74,6 +75,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdktf.ConstructLibraryCdktf.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdktf.ConstructLibraryCdktf.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdktf.ConstructLibraryCdktf.addExcludeFromCleanup"></a>
 

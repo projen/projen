@@ -38,6 +38,7 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.AutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.AutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.AutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.AutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.cdk8s.AutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -51,6 +52,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.AutoDiscover.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.AutoDiscover.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.AutoDiscover.postSynthesize"></a>
 
@@ -203,6 +225,7 @@ new cdk8s.Cdk8sDeps(project: Project, options: Cdk8sDepsOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sDeps.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -216,6 +239,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.Cdk8sDeps.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.Cdk8sDeps.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.Cdk8sDeps.postSynthesize"></a>
 
@@ -405,6 +449,7 @@ new cdk8s.Cdk8sDepsPy(project: Project, options: Cdk8sDepsOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sDepsPy.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -418,6 +463,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.Cdk8sDepsPy.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.Cdk8sDepsPy.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.Cdk8sDepsPy.postSynthesize"></a>
 
@@ -602,6 +668,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
@@ -629,6 +696,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.Cdk8sPythonApp.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.Cdk8sPythonApp.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk8s.Cdk8sPythonApp.addExcludeFromCleanup"></a>
 
@@ -1577,6 +1665,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -1616,6 +1705,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.Cdk8sTypeScriptApp.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.Cdk8sTypeScriptApp.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk8s.Cdk8sTypeScriptApp.addExcludeFromCleanup"></a>
 
@@ -3123,6 +3233,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -3162,6 +3273,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.ConstructLibraryCdk8s.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.ConstructLibraryCdk8s.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdk8s.ConstructLibraryCdk8s.addExcludeFromCleanup"></a>
 
@@ -4674,6 +4806,7 @@ new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.IntegrationTest.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.IntegrationTest.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.IntegrationTest.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -4687,6 +4820,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.IntegrationTest.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.IntegrationTest.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.IntegrationTest.postSynthesize"></a>
 
@@ -4878,6 +5032,7 @@ new cdk8s.IntegrationTestAutoDiscover(project: Project, options: IntegrationTest
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -4891,6 +5046,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.cdk8s.IntegrationTestAutoDiscover.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.cdk8s.IntegrationTestAutoDiscover.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.IntegrationTestAutoDiscover.postSynthesize"></a>
 

@@ -43,6 +43,7 @@ new vscode.DevContainer(project: Project, options?: DevContainerOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.vscode.DevContainer.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.vscode.DevContainer.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.vscode.DevContainer.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.DevContainer.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.vscode.DevContainer.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -61,6 +62,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.vscode.DevContainer.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.vscode.DevContainer.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.DevContainer.postSynthesize"></a>
 
@@ -297,6 +319,7 @@ new vscode.VsCode(project: Project)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.vscode.VsCode.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.vscode.VsCode.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.vscode.VsCode.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCode.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.vscode.VsCode.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -310,6 +333,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.vscode.VsCode.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.vscode.VsCode.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCode.postSynthesize"></a>
 
@@ -488,6 +532,7 @@ new vscode.VsCodeLaunchConfig(vscode: VsCode)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.vscode.VsCodeLaunchConfig.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -505,6 +550,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.vscode.VsCodeLaunchConfig.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.vscode.VsCodeLaunchConfig.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeLaunchConfig.postSynthesize"></a>
 
@@ -731,6 +797,7 @@ new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.vscode.VsCodeRecommendedExtensions.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -746,6 +813,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.vscode.VsCodeRecommendedExtensions.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.vscode.VsCodeRecommendedExtensions.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeRecommendedExtensions.postSynthesize"></a>
 
@@ -936,6 +1024,7 @@ new vscode.VsCodeSettings(vscode: VsCode)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeSettings.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.vscode.VsCodeSettings.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.vscode.VsCodeSettings.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeSettings.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.vscode.VsCodeSettings.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -951,6 +1040,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.vscode.VsCodeSettings.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.vscode.VsCodeSettings.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeSettings.postSynthesize"></a>
 

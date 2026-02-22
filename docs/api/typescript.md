@@ -38,6 +38,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.Projenrc.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.Projenrc.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.typescript.Projenrc.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.typescript.Projenrc.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.typescript.Projenrc.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -51,6 +52,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.typescript.Projenrc.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.Projenrc.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.typescript.Projenrc.postSynthesize"></a>
 
@@ -240,6 +262,7 @@ new typescript.ProjenrcTs(project: Project, options?: ProjenrcTsOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcTs.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.ProjenrcTs.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.typescript.ProjenrcTs.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.typescript.ProjenrcTs.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.typescript.ProjenrcTs.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -253,6 +276,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.typescript.ProjenrcTs.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.ProjenrcTs.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.typescript.ProjenrcTs.postSynthesize"></a>
 
@@ -443,6 +487,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptAppProject.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -482,6 +527,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.typescript.TypeScriptAppProject.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.TypeScriptAppProject.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.typescript.TypeScriptAppProject.addExcludeFromCleanup"></a>
 
@@ -1959,6 +2025,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProject.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -1998,6 +2065,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### ~~`with`~~ <a name="with" id="projen.typescript.TypeScriptLibraryProject.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.TypeScriptLibraryProject.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### ~~`addExcludeFromCleanup`~~ <a name="addExcludeFromCleanup" id="projen.typescript.TypeScriptLibraryProject.addExcludeFromCleanup"></a>
 
@@ -3597,6 +3685,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.typescript.TypeScriptProject.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.TypeScriptProject.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.typescript.TypeScriptProject.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.typescript.TypeScriptProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.typescript.TypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
@@ -3636,6 +3725,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.typescript.TypeScriptProject.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.TypeScriptProject.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.typescript.TypeScriptProject.addExcludeFromCleanup"></a>
 
