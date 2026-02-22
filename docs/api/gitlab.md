@@ -49,6 +49,7 @@ new gitlab.CiConfiguration(project: Project, name: string, options?: CiConfigura
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.gitlab.CiConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.gitlab.CiConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.gitlab.CiConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.CiConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.CiConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -69,6 +70,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.gitlab.CiConfiguration.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.gitlab.CiConfiguration.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.CiConfiguration.postSynthesize"></a>
 
@@ -581,6 +603,7 @@ new gitlab.GitlabConfiguration(project: Project, options?: CiConfigurationOption
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.gitlab.GitlabConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.gitlab.GitlabConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -602,6 +625,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.gitlab.GitlabConfiguration.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.gitlab.GitlabConfiguration.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.GitlabConfiguration.postSynthesize"></a>
 
@@ -1161,6 +1205,7 @@ The name of the configuration.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.gitlab.NestedConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.gitlab.NestedConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.gitlab.NestedConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.NestedConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.gitlab.NestedConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1181,6 +1226,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.gitlab.NestedConfiguration.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.gitlab.NestedConfiguration.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.NestedConfiguration.postSynthesize"></a>
 

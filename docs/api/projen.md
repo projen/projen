@@ -91,6 +91,7 @@ new AiInstructions(project: Project, options?: AiInstructionsOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.AiInstructions.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.AiInstructions.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.AiInstructions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.AiInstructions.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -106,6 +107,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.AiInstructions.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.AiInstructions.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.AiInstructions.postSynthesize"></a>
 
@@ -354,6 +376,7 @@ new AiInstructionsFile(scope: IConstruct, filePath: string, options?: FileBaseOp
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.AiInstructionsFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.AiInstructionsFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.AiInstructionsFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructionsFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.AiInstructionsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -368,6 +391,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.AiInstructionsFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.AiInstructionsFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.AiInstructionsFile.postSynthesize"></a>
 
@@ -618,6 +662,7 @@ new Component(scope: IConstruct, id?: string)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Component.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Component.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Component.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Component.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Component.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -631,6 +676,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Component.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Component.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Component.postSynthesize"></a>
 
@@ -781,6 +847,7 @@ The parent project.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Dependencies.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Dependencies.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Dependencies.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Dependencies.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Dependencies.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -799,6 +866,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Dependencies.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Dependencies.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Dependencies.postSynthesize"></a>
 
@@ -1155,6 +1243,7 @@ new DockerCompose(project: Project, props?: DockerComposeProps)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.DockerCompose.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.DockerCompose.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.DockerCompose.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.DockerCompose.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.DockerCompose.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -1169,6 +1258,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.DockerCompose.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.DockerCompose.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.DockerCompose.postSynthesize"></a>
 
@@ -1512,6 +1622,7 @@ new FileBase(scope: IConstruct, filePath: string, options?: FileBaseOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.FileBase.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.FileBase.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.FileBase.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.FileBase.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.FileBase.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -1525,6 +1636,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.FileBase.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.FileBase.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.FileBase.postSynthesize"></a>
 
@@ -1763,6 +1895,7 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.GitAttributesFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.GitAttributesFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.GitAttributesFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.GitAttributesFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -1779,6 +1912,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.GitAttributesFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.GitAttributesFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.GitAttributesFile.postSynthesize"></a>
 
@@ -2107,6 +2261,7 @@ new Gitpod(project: Project, options?: GitpodOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Gitpod.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Gitpod.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Gitpod.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Gitpod.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Gitpod.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -2126,6 +2281,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Gitpod.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Gitpod.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Gitpod.postSynthesize"></a>
 
@@ -2413,6 +2589,7 @@ the relative path in the project to put the file.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.IgnoreFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.IgnoreFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.IgnoreFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IgnoreFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.IgnoreFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -2430,6 +2607,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.IgnoreFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.IgnoreFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.IgnoreFile.postSynthesize"></a>
 
@@ -2768,6 +2966,7 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.IniFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.IniFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.IniFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IniFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.IniFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -2785,6 +2984,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.IniFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.IniFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.IniFile.postSynthesize"></a>
 
@@ -3212,6 +3432,7 @@ new JsonFile(scope: IConstruct, filePath: string, options: JsonFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.JsonFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.JsonFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.JsonFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.JsonFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.JsonFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -3229,6 +3450,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.JsonFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.JsonFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.JsonFile.postSynthesize"></a>
 
@@ -3658,6 +3900,7 @@ new License(project: Project, options: LicenseOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.License.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.License.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.License.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.License.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.License.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -3671,6 +3914,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.License.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.License.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.License.postSynthesize"></a>
 
@@ -3907,6 +4171,7 @@ new Logger(scope: IConstruct, options?: LoggerOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Logger.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Logger.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Logger.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Logger.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Logger.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -3926,6 +4191,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Logger.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Logger.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Logger.postSynthesize"></a>
 
@@ -4192,6 +4478,7 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Makefile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Makefile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Makefile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Makefile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Makefile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -4209,6 +4496,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Makefile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Makefile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Makefile.postSynthesize"></a>
 
@@ -4521,6 +4829,7 @@ new ObjectFile(scope: IConstruct, filePath: string, options: ObjectFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.ObjectFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ObjectFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.ObjectFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ObjectFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ObjectFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -4538,6 +4847,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ObjectFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ObjectFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ObjectFile.postSynthesize"></a>
 
@@ -4951,6 +5281,7 @@ new Project(options: ProjectOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Project.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Project.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Project.addExcludeFromCleanup">addExcludeFromCleanup</a></code> | Exclude the matching files from pre-synth cleanup. |
 | <code><a href="#projen.Project.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.Project.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
@@ -4976,6 +5307,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Project.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Project.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.Project.addExcludeFromCleanup"></a>
 
@@ -5696,6 +6048,7 @@ new ProjectBuild(project: Project)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.ProjectBuild.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ProjectBuild.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.ProjectBuild.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjectBuild.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ProjectBuild.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -5709,6 +6062,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ProjectBuild.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ProjectBuild.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjectBuild.postSynthesize"></a>
 
@@ -5939,6 +6313,7 @@ new ProjectTree(project: Project)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.ProjectTree.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ProjectTree.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.ProjectTree.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjectTree.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ProjectTree.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -5952,6 +6327,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ProjectTree.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ProjectTree.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjectTree.postSynthesize"></a>
 
@@ -6113,6 +6509,7 @@ new Projenrc(project: Project, options?: ProjenrcJsonOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Projenrc.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Projenrc.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Projenrc.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Projenrc.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Projenrc.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -6126,6 +6523,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### ~~`with`~~ <a name="with" id="projen.Projenrc.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Projenrc.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### ~~`postSynthesize`~~ <a name="postSynthesize" id="projen.Projenrc.postSynthesize"></a>
 
@@ -6316,6 +6734,7 @@ new ProjenrcFile(scope: IConstruct, id?: string)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.ProjenrcFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ProjenrcFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.ProjenrcFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjenrcFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ProjenrcFile.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -6329,6 +6748,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ProjenrcFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ProjenrcFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjenrcFile.postSynthesize"></a>
 
@@ -6513,6 +6953,7 @@ new ProjenrcJson(project: Project, options?: ProjenrcJsonOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.ProjenrcJson.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ProjenrcJson.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.ProjenrcJson.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjenrcJson.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ProjenrcJson.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -6526,6 +6967,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ProjenrcJson.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ProjenrcJson.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjenrcJson.postSynthesize"></a>
 
@@ -6712,6 +7174,7 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Renovatebot.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Renovatebot.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Renovatebot.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Renovatebot.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Renovatebot.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -6725,6 +7188,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Renovatebot.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Renovatebot.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Renovatebot.postSynthesize"></a>
 
@@ -6907,6 +7391,7 @@ options for which files to create.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.SampleDir.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.SampleDir.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.SampleDir.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleDir.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.SampleDir.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -6920,6 +7405,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.SampleDir.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.SampleDir.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleDir.postSynthesize"></a>
 
@@ -7087,6 +7593,7 @@ the options for the file.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.SampleFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.SampleFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.SampleFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.SampleFile.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -7100,6 +7607,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.SampleFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.SampleFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleFile.postSynthesize"></a>
 
@@ -7252,6 +7780,7 @@ new SampleReadme(project: Project, props?: SampleReadmeProps)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.SampleReadme.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.SampleReadme.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.SampleReadme.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleReadme.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.SampleReadme.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -7265,6 +7794,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.SampleReadme.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.SampleReadme.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleReadme.postSynthesize"></a>
 
@@ -7424,6 +7974,7 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.SourceCode.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.SourceCode.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.SourceCode.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SourceCode.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.SourceCode.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -7440,6 +7991,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.SourceCode.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.SourceCode.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SourceCode.postSynthesize"></a>
 
@@ -7658,6 +8230,7 @@ new Tasks(project: Project)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Tasks.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Tasks.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Tasks.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Tasks.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Tasks.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -7675,6 +8248,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Tasks.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Tasks.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Tasks.postSynthesize"></a>
 
@@ -7946,6 +8540,7 @@ Options.
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.TextFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.TextFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.TextFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TextFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.TextFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -7960,6 +8555,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.TextFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.TextFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.TextFile.postSynthesize"></a>
 
@@ -8219,6 +8835,7 @@ new TomlFile(scope: IConstruct, filePath: string, options: TomlFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.TomlFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.TomlFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.TomlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TomlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.TomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -8236,6 +8853,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.TomlFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.TomlFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.TomlFile.postSynthesize"></a>
 
@@ -8654,6 +9292,7 @@ new Version(scope: IConstruct, options: VersionOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Version.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Version.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.Version.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Version.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Version.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
@@ -8668,6 +9307,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Version.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Version.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Version.postSynthesize"></a>
 
@@ -8946,6 +9606,7 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.XmlFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.XmlFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.XmlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.XmlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.XmlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -8963,6 +9624,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.XmlFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.XmlFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.XmlFile.postSynthesize"></a>
 
@@ -9390,6 +10072,7 @@ new YamlFile(scope: IConstruct, filePath: string, options: YamlFileOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.YamlFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.YamlFile.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#projen.YamlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.YamlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.YamlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
@@ -9407,6 +10090,27 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.YamlFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.YamlFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
 
 ##### `postSynthesize` <a name="postSynthesize" id="projen.YamlFile.postSynthesize"></a>
 
