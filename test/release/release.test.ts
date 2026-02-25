@@ -377,6 +377,33 @@ describe("Single Project", () => {
     });
   });
 
+  test("release on push of new tag", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.tagged({ tags: ["v*.*.*"] }),
+      publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow).toMatchObject({
+      on: {
+        push: {
+          tags: ["v*.*.*"],
+        },
+      },
+    });
+    expect(workflow.on.push.paths).toBeUndefined();
+  });
+
   test("workflowDispatch only leads to workflow dispatch trigger", () => {
     // GIVEN
     const project = new TestProject();
