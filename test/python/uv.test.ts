@@ -1,6 +1,7 @@
 import * as TOML from "@iarna/toml";
 import { TestPythonProject } from "./util";
 import { AnnotationStyle } from "../../src/python/uv-config";
+import * as util from "../../src/util";
 import { synthSnapshot } from "../util";
 
 test("uv enabled", () => {
@@ -240,4 +241,27 @@ test("generates correct pyproject.toml content", () => {
   };
 
   expect(actualContentObject).toEqual(expectedContentObject);
+});
+
+test("uv setupEnvironment creates venv with --clear", () => {
+  const whichUv = jest
+    .spyOn(util, "execOrUndefined")
+    .mockReturnValue("/usr/local/bin/uv");
+  const execSpy = jest.spyOn(util, "exec").mockImplementation(() => {});
+
+  const project = new TestPythonProject({
+    uv: true,
+    homepage: "http://www.example.com",
+    description: "a short project description",
+    license: "Apache-2.0",
+    classifiers: ["Development Status :: 4 - Beta"],
+  });
+
+  project.envManager.setupEnvironment();
+
+  expect(whichUv).toHaveBeenCalledWith("which uv", { cwd: project.outdir });
+  expect(execSpy).toHaveBeenCalledWith(
+    'uv venv --python ">=3.12,<4.0" --clear .venv',
+    { cwd: project.outdir },
+  );
 });
