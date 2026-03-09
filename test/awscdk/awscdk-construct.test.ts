@@ -6,6 +6,7 @@ import {
   AwsCdkConstructLibrary,
   AwsCdkConstructLibraryOptions,
 } from "../../src/awscdk";
+import { toDeterministicSingletonUuid } from "../../src/awscdk/internal";
 import { NpmAccess } from "../../src/javascript";
 import { mkdtemp, synthSnapshot } from "../util";
 
@@ -213,6 +214,29 @@ describe("lambda functions", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot["src/my-function.ts"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks["bundle:my"]).toBeUndefined();
+  });
+
+  test("singleton lambda auto-discover uses deterministic UUID", () => {
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src"));
+    writeFileSync(join(outdir, "src", "my.singleton-lambda.ts"), "// dummy");
+
+    const project = new TestProject({
+      cdkVersion: "1.100.0",
+      outdir,
+      lambdaAutoDiscover: false,
+      singletonLambdaAutoDiscover: true,
+    });
+
+    const snapshot = synthSnapshot(project);
+    const generatedSource = snapshot["src/my-function.ts"];
+
+    expect(generatedSource).toContain(
+      "export class MyFunction extends lambda.SingletonFunction {",
+    );
+    expect(generatedSource).toContain(
+      `uuid: "${toDeterministicSingletonUuid(project.name, "src/my.singleton-lambda.ts")}",`,
+    );
   });
 });
 

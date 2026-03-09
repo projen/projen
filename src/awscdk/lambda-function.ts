@@ -5,6 +5,7 @@ import {
   convertToPosixPath,
   TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
+  TYPESCRIPT_SINGLETON_LAMBDA_EXT,
 } from "./internal";
 import { Component } from "../component";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
@@ -169,10 +170,11 @@ export class LambdaFunction extends Component {
 
     if (
       !entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT) &&
-      !entrypoint.endsWith(TYPESCRIPT_EDGE_LAMBDA_EXT)
+      !entrypoint.endsWith(TYPESCRIPT_EDGE_LAMBDA_EXT) &&
+      !entrypoint.endsWith(TYPESCRIPT_SINGLETON_LAMBDA_EXT)
     ) {
       throw new Error(
-        `${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} or ${TYPESCRIPT_EDGE_LAMBDA_EXT} extension`,
+        `${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT}, ${TYPESCRIPT_EDGE_LAMBDA_EXT}, or ${TYPESCRIPT_SINGLETON_LAMBDA_EXT} extension`,
       );
     }
 
@@ -184,12 +186,15 @@ export class LambdaFunction extends Component {
       throw new Error("singletonUuid can only be used with singleton");
     }
 
+    const sourceExtension = entrypoint.endsWith(TYPESCRIPT_EDGE_LAMBDA_EXT)
+      ? TYPESCRIPT_EDGE_LAMBDA_EXT
+      : entrypoint.endsWith(TYPESCRIPT_SINGLETON_LAMBDA_EXT)
+        ? TYPESCRIPT_SINGLETON_LAMBDA_EXT
+        : TYPESCRIPT_LAMBDA_EXT;
+
     const basePath = path.posix.join(
       path.dirname(entrypoint),
-      path.basename(
-        entrypoint,
-        options.edgeLambda ? TYPESCRIPT_EDGE_LAMBDA_EXT : TYPESCRIPT_LAMBDA_EXT,
-      ),
+      path.basename(entrypoint, sourceExtension),
     );
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
 
@@ -302,9 +307,9 @@ export class LambdaFunction extends Component {
     } else {
       src.open(`export class ${constructName} extends lambda.Function {`);
     }
-      src.open(
-        `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
-      );
+    src.open(
+      `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
+    );
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
     src.line("...props,");
@@ -317,9 +322,9 @@ export class LambdaFunction extends Component {
       // Regional latest runtime
       if (!options.runtime) {
         // Default (not explicitly set) - allow consumer override
-            src.line(
-              "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
-            );
+        src.line(
+          "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
+        );
       } else {
         // Explicitly set - no override
         src.line("runtime: determineLatestNodeRuntime(scope),");

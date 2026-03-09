@@ -7,6 +7,8 @@ import {
   TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
+  TYPESCRIPT_SINGLETON_LAMBDA_EXT,
+  toDeterministicSingletonUuid,
 } from "./internal";
 import {
   LambdaExtension,
@@ -95,6 +97,46 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
         entrypoint,
         cdkDeps: options.cdkDeps,
         ...options.lambdaOptions,
+      });
+    }
+  }
+}
+
+/**
+ * Options for `SingletonLambdaAutoDiscover`
+ */
+export interface SingletonLambdaAutoDiscoverOptions extends AutoDiscoverCommonOptions {
+  /**
+   * Project source tree (relative to project output directory).
+   */
+  readonly srcdir: string;
+
+  /**
+   * Options for AWS Lambda functions.
+   */
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
+}
+
+/**
+ * Creates singleton lambdas from entry points discovered in the project's source tree.
+ */
+export class SingletonLambdaAutoDiscover extends AutoDiscoverBase {
+  constructor(project: Project, options: SingletonLambdaAutoDiscoverOptions) {
+    super(project, {
+      projectdir: options.srcdir,
+      extension: TYPESCRIPT_SINGLETON_LAMBDA_EXT,
+    });
+
+    for (const entrypoint of this.entrypoints) {
+      new LambdaFunction(this.project, {
+        entrypoint,
+        cdkDeps: options.cdkDeps,
+        singletonUuid: toDeterministicSingletonUuid(
+          this.project.name,
+          entrypoint,
+        ),
+        ...options.lambdaOptions,
+        singleton: true,
       });
     }
   }
@@ -195,6 +237,15 @@ export interface AutoDiscoverOptions
   readonly edgeLambdaAutoDiscover?: boolean;
 
   /**
+   * Auto-discover singleton lambda functions.
+   *
+   * UUID is deterministically derived from the project name and entrypoint path.
+   *
+   * @default true
+   */
+  readonly singletonLambdaAutoDiscover?: boolean;
+
+  /**
    * Auto-discover lambda extensions.
    *
    * @default true
@@ -228,6 +279,15 @@ export class AutoDiscover extends Component {
 
     if (options.edgeLambdaAutoDiscover ?? true) {
       new EdgeLambdaAutoDiscover(this.project, {
+        cdkDeps: options.cdkDeps,
+        tsconfigPath: options.tsconfigPath,
+        srcdir: options.srcdir,
+        lambdaOptions: options.lambdaOptions,
+      });
+    }
+
+    if (options.singletonLambdaAutoDiscover ?? true) {
+      new SingletonLambdaAutoDiscover(this.project, {
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
         srcdir: options.srcdir,

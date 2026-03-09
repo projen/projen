@@ -80,7 +80,7 @@ test("fails if entrypoint does not have the .lambda suffix", () => {
         cdkDeps: cdkDepsForProject(project),
       }),
   ).toThrow(
-    "hello-no-lambda.ts must have a .lambda.ts or .edge-lambda.ts extension",
+    "src/hello-no-lambda.ts must have a .lambda.ts, .edge-lambda.ts, or .singleton-lambda.ts extension",
   );
 });
 
@@ -300,10 +300,10 @@ test("Singleton function", () => {
     "export class HelloFunction extends lambda.SingletonFunction {",
   );
   expect(generatedSource).toContain(
-    "constructor(scope: Construct, id: string, props: HelloFunctionProps) {",
+    "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",
   );
   expect(generatedSource).toContain(
-    "runtime: props.runtime ?? determineLatestNodeRuntime(scope),",
+    "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
   );
 });
 
@@ -341,7 +341,7 @@ test("Singleton function accepts singletonUuid", () => {
   const generatedSource = snapshot["src/hello-function.ts"];
 
   expect(generatedSource).toContain(
-    "export interface HelloFunctionProps extends Omit<lambda.SingletonFunctionProps, 'uuid'> {",
+    "export interface HelloFunctionProps extends lambda.SingletonFunctionProps {",
   );
   expect(generatedSource).toContain(
     "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",
