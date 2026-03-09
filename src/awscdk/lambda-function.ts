@@ -59,6 +59,27 @@ export interface LambdaFunctionCommonOptions {
    * @default false
    */
   readonly edgeLambda?: boolean;
+
+  /**
+   * Whether to create a `lambda.SingletonFunction` instead of a
+   * `lambda.Function`.
+   *
+   * Not compatible with `edgeLambda`.
+   *
+   * @default false
+   */
+  readonly singleton?: boolean;
+
+  /**
+   * UUID to use for singleton lambda uniqueness.
+   *
+   * When specified, the generated singleton construct hardcodes this UUID.
+   *
+   * Only valid when `singleton` is set to `true`.
+   *
+   * @default - no UUID is hardcoded and consumers must provide one
+   */
+  readonly singletonUuid?: string;
 }
 
 /**
@@ -155,6 +176,14 @@ export class LambdaFunction extends Component {
       );
     }
 
+    if (options.edgeLambda && options.singleton) {
+      throw new Error("singleton cannot be used with edgeLambda");
+    }
+
+    if (options.singletonUuid && !options.singleton) {
+      throw new Error("singletonUuid can only be used with singleton");
+    }
+
     const basePath = path.posix.join(
       path.dirname(entrypoint),
       path.basename(
@@ -233,6 +262,10 @@ export class LambdaFunction extends Component {
       src.open(
         `export interface ${propsType} extends cloudfront.experimental.EdgeFunctionProps {`,
       );
+    } else if (options.singleton) {
+      src.open(
+        `export interface ${propsType} extends lambda.SingletonFunctionProps {`,
+      );
     } else {
       src.open(
         `export interface ${propsType} extends lambda.FunctionOptions {`,
@@ -262,24 +295,31 @@ export class LambdaFunction extends Component {
       src.open(
         `export class ${constructName} extends cloudfront.experimental.EdgeFunction {`,
       );
+    } else if (options.singleton) {
+      src.open(
+        `export class ${constructName} extends lambda.SingletonFunction {`,
+      );
     } else {
       src.open(`export class ${constructName} extends lambda.Function {`);
     }
-    src.open(
-      `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
-    );
+      src.open(
+        `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
+      );
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
     src.line("...props,");
+    if (options.singleton && options.singletonUuid) {
+      src.line(`uuid: ${JSON.stringify(options.singletonUuid)},`);
+    }
 
     // Generate runtime code
     if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
       // Regional latest runtime
       if (!options.runtime) {
         // Default (not explicitly set) - allow consumer override
-        src.line(
-          "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
-        );
+            src.line(
+              "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
+            );
       } else {
         // Explicitly set - no override
         src.line("runtime: determineLatestNodeRuntime(scope),");

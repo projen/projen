@@ -278,6 +278,98 @@ test("Edge function", () => {
   expect(generatedSource).toMatchSnapshot();
 });
 
+test("Singleton function", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+    singleton: true,
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+
+  expect(generatedSource).toContain(
+    "export interface HelloFunctionProps extends lambda.SingletonFunctionProps {",
+  );
+  expect(generatedSource).toContain(
+    "export class HelloFunction extends lambda.SingletonFunction {",
+  );
+  expect(generatedSource).toContain(
+    "constructor(scope: Construct, id: string, props: HelloFunctionProps) {",
+  );
+  expect(generatedSource).toContain(
+    "runtime: props.runtime ?? determineLatestNodeRuntime(scope),",
+  );
+});
+
+test("fails when singleton and edgeLambda are both enabled", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  expect(
+    () =>
+      new awscdk.LambdaFunction(project, {
+        entrypoint: join("src", "hello.edge-lambda.ts"),
+        cdkDeps: cdkDepsForProject(project),
+        edgeLambda: true,
+        singleton: true,
+      }),
+  ).toThrow("singleton cannot be used with edgeLambda");
+});
+
+test("Singleton function accepts singletonUuid", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+    singleton: true,
+    singletonUuid: "34426f5a-65f4-44ff-a380-c730f26b27f5",
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+
+  expect(generatedSource).toContain(
+    "export interface HelloFunctionProps extends Omit<lambda.SingletonFunctionProps, 'uuid'> {",
+  );
+  expect(generatedSource).toContain(
+    "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",
+  );
+  expect(generatedSource).toContain(
+    'uuid: "34426f5a-65f4-44ff-a380-c730f26b27f5",',
+  );
+  expect(generatedSource).toContain(
+    "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
+  );
+});
+
+test("fails when singletonUuid is set without singleton", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  expect(
+    () =>
+      new awscdk.LambdaFunction(project, {
+        entrypoint: join("src", "hello.lambda.ts"),
+        cdkDeps: cdkDepsForProject(project),
+        singletonUuid: "34426f5a-65f4-44ff-a380-c730f26b27f5",
+      }),
+  ).toThrow("singletonUuid can only be used with singleton");
+});
+
 test("eslint allows handlers to import dev dependencies", () => {
   const project = new TypeScriptProject({
     name: "hello",
