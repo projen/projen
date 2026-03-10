@@ -61,17 +61,6 @@ export function toDeterministicSingletonUuid(
   entrypoint: string,
 ): string {
   const input = `${projectName}:${entrypoint}`;
-  const hash = createHash("sha256").update(input).digest("hex").slice(0, 32);
-  const chars = hash.split("");
-
-  // UUID version field (RFC 9562, section 4.2) set to version 5.
-  chars[12] = "5";
-
-  // UUID variant field (RFC 9562, section 4.1) must be 10xx, so nibble 16
-  // must be one of 8, 9, a, b.
-  const variantNibble = parseInt(chars[16], 16);
-  chars[16] = ["8", "9", "a", "b"][variantNibble % 4];
-
-  const normalized = chars.join("");
-  return `${normalized.slice(0, 8)}-${normalized.slice(8, 12)}-${normalized.slice(12, 16)}-${normalized.slice(16, 20)}-${normalized.slice(20, 32)}`;
+  
+  return createHash("sha256").update(input).digest("hex").slice(0, 32);
 }
