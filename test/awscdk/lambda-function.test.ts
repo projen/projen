@@ -293,6 +293,8 @@ test("Singleton function", () => {
   const snapshot = Testing.synth(project);
   const generatedSource = snapshot["src/hello-function.ts"];
 
+  expect(generatedSource).toMatchSnapshot();
+
   expect(generatedSource).toContain(
     "export interface HelloFunctionProps extends lambda.SingletonFunctionProps {",
   );
