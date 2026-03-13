@@ -5481,6 +5481,23 @@ exports[`inventory 1`] = `
         "switch": "scripts",
       },
       {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.SingletonFunction\` for each \`.singleton-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "singletonLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": [
+          "singletonLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "singleton-lambda-auto-discover",
+      },
+      {
         "default": ""src"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -8917,6 +8934,23 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.SingletonFunction\` for each \`.singleton-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "singletonLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": [
+          "singletonLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "singleton-lambda-auto-discover",
       },
       {
         "default": ""src"",

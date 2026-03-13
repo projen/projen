@@ -11109,7 +11109,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
-| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -13834,7 +13834,7 @@ public readonly singletonLambdaAutoDiscover: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
 
 ---
 
@@ -16733,7 +16733,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
-| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -19339,7 +19339,7 @@ public readonly singletonLambdaAutoDiscover: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
 
 ---
 
@@ -19808,7 +19808,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
-| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -22875,7 +22875,7 @@ public readonly singletonLambdaAutoDiscover: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically adds an `awscdk.LambdaFunction` singleton for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
 
 ---
 
