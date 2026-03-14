@@ -6,7 +6,7 @@
 
 Implements GitHub jobs for publishing modules to package managers.
 
-Under the hood, it uses https://github.com/aws/publib
+Under the hood, it uses https://github.com/cdklabs/publib
 
 #### Initializers <a name="Initializers" id="projen.release.Publisher.Initializer"></a>
 
@@ -1880,7 +1880,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 
 This is used to sign your Maven packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -1900,7 +1900,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 This is used to sign your Maven
 packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -2767,7 +2767,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 
 This is used to sign your Maven packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -2785,7 +2785,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 This is used to sign your Maven
 packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -3272,7 +3272,7 @@ The artifact is expected to include a subdirectory for each release target:
 `go` (GitHub), `dotnet` (NuGet), `java` (Maven), `js` (npm), `python`
 (PyPI).
 
-> [https://github.com/aws/publib](https://github.com/aws/publib)
+> [https://github.com/cdklabs/publib](https://github.com/cdklabs/publib)
 
 ---
 
@@ -4969,4 +4969,3 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.
 https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 
 ---
-

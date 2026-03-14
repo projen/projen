@@ -7378,7 +7378,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 
 This is used to sign your Maven packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -7396,7 +7396,7 @@ GitHub secret name which contains the GPG private key or file that includes it.
 This is used to sign your Maven
 packages. See instructions.
 
-> [https://github.com/aws/publib#maven](https://github.com/aws/publib#maven)
+> [https://github.com/cdklabs/publib#maven](https://github.com/cdklabs/publib#maven)
 
 ---
 
@@ -10394,4 +10394,3 @@ public readonly module: string;
 ##### `DEPRECATED` <a name="DEPRECATED" id="projen.cdk.Stability.DEPRECATED"></a>
 
 ---
-
