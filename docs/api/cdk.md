@@ -10394,3 +10394,4 @@ public readonly module: string;
 ##### `DEPRECATED` <a name="DEPRECATED" id="projen.cdk.Stability.DEPRECATED"></a>
 
 ---
+
