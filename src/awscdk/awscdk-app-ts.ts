@@ -54,6 +54,15 @@ export interface AwsCdkTypeScriptAppOptions
   readonly edgeLambdaAutoDiscover?: boolean;
 
   /**
+   * Automatically adds an `awscdk.SingletonFunction` for each
+   * `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can
+   * manually add an `awscdk.AutoDiscover` component to your project.
+   *
+   * @default true
+   */
+  readonly singletonLambdaAutoDiscover?: boolean;
+
+  /**
    * Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts`
    * entrypoint in your source tree. If this is disabled, you can manually add an
    * `awscdk.AutoDiscover` component to your project
@@ -244,6 +253,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       cdkDeps: this.cdkDeps,
       lambdaAutoDiscover: options.lambdaAutoDiscover ?? true,
       edgeLambdaAutoDiscover: options.edgeLambdaAutoDiscover ?? true,
+      singletonLambdaAutoDiscover: options.singletonLambdaAutoDiscover ?? true,
       lambdaExtensionAutoDiscover: options.lambdaExtensionAutoDiscover ?? true,
       integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });

@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { posix, sep } from "path";
 import { default as CDK_V2_RECOMMENDED_FLAGS } from "./private/feature-flags-v2.const";
 
@@ -36,6 +37,11 @@ export const TYPESCRIPT_LAMBDA_EXT = ".lambda.ts";
 export const TYPESCRIPT_EDGE_LAMBDA_EXT = ".edge-lambda.ts";
 
 /**
+ * Suffix for AWS singleton Lambda handlers.
+ */
+export const TYPESCRIPT_SINGLETON_LAMBDA_EXT = ".singleton-lambda.ts";
+
+/**
  * Suffix for AWS Lambda Extensions.
  */
 export const TYPESCRIPT_LAMBDA_EXTENSION_EXT = ".lambda-extension.ts";
@@ -45,4 +51,16 @@ export const TYPESCRIPT_LAMBDA_EXTENSION_EXT = ".lambda-extension.ts";
  */
 export function convertToPosixPath(p: string) {
   return p.split(sep).join(posix.sep);
+}
+
+/**
+ * Creates a deterministic UUID from project name and lambda entrypoint.
+ */
+export function toDeterministicSingletonUuid(
+  projectName: string,
+  entrypoint: string,
+): string {
+  const input = `${projectName}:${entrypoint}`;
+  
+  return createHash("sha256").update(input).digest("hex").slice(0, 32);
 }

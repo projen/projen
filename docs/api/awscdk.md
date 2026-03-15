@@ -10476,6 +10476,206 @@ public readonly project: Project;
 ---
 
 
+### SingletonLambdaAutoDiscover <a name="SingletonLambdaAutoDiscover" id="projen.awscdk.SingletonLambdaAutoDiscover"></a>
+
+Creates singleton lambdas from entry points discovered in the project's source tree.
+
+#### Initializers <a name="Initializers" id="projen.awscdk.SingletonLambdaAutoDiscover.Initializer"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+new awscdk.SingletonLambdaAutoDiscover(project: Project, options: SingletonLambdaAutoDiscoverOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.Initializer.parameter.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.Initializer.parameter.options">options</a></code> | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions">SingletonLambdaAutoDiscoverOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.awscdk.SingletonLambdaAutoDiscover.Initializer.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.awscdk.SingletonLambdaAutoDiscover.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions">SingletonLambdaAutoDiscoverOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.awscdk.SingletonLambdaAutoDiscover.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.awscdk.SingletonLambdaAutoDiscover.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.awscdk.SingletonLambdaAutoDiscover.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.SingletonLambdaAutoDiscover.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.awscdk.SingletonLambdaAutoDiscover.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.awscdk.SingletonLambdaAutoDiscover.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.awscdk.SingletonLambdaAutoDiscover.isConstruct"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.SingletonLambdaAutoDiscover.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.awscdk.SingletonLambdaAutoDiscover.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.awscdk.SingletonLambdaAutoDiscover.isComponent"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+awscdk.SingletonLambdaAutoDiscover.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.awscdk.SingletonLambdaAutoDiscover.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.property.entrypoints">entrypoints</a></code> | <code>string[]</code> | Auto-discovered entry points with paths relative to the project directory. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.awscdk.SingletonLambdaAutoDiscover.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.awscdk.SingletonLambdaAutoDiscover.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `entrypoints`<sup>Required</sup> <a name="entrypoints" id="projen.awscdk.SingletonLambdaAutoDiscover.property.entrypoints"></a>
+
+```typescript
+public readonly entrypoints: string[];
+```
+
+- *Type:* string[]
+
+Auto-discovered entry points with paths relative to the project directory.
+
+---
+
+
 ## Structs <a name="Structs" id="Structs"></a>
 
 ### AutoDiscoverCommonOptions <a name="AutoDiscoverCommonOptions" id="projen.awscdk.AutoDiscoverCommonOptions"></a>
@@ -10550,6 +10750,7 @@ const autoDiscoverOptions: awscdk.AutoDiscoverOptions = { ... }
 | <code><a href="#projen.awscdk.AutoDiscoverOptions.property.integrationTestAutoDiscover">integrationTestAutoDiscover</a></code> | <code>boolean</code> | Auto-discover integration tests. |
 | <code><a href="#projen.awscdk.AutoDiscoverOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Auto-discover lambda functions. |
 | <code><a href="#projen.awscdk.AutoDiscoverOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Auto-discover lambda extensions. |
+| <code><a href="#projen.awscdk.AutoDiscoverOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Auto-discover singleton lambda functions. |
 
 ---
 
@@ -10686,6 +10887,21 @@ public readonly lambdaExtensionAutoDiscover: boolean;
 - *Default:* true
 
 Auto-discover lambda extensions.
+
+---
+
+##### `singletonLambdaAutoDiscover`<sup>Optional</sup> <a name="singletonLambdaAutoDiscover" id="projen.awscdk.AutoDiscoverOptions.property.singletonLambdaAutoDiscover"></a>
+
+```typescript
+public readonly singletonLambdaAutoDiscover: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Auto-discover singleton lambda functions.
+
+UUID is deterministically derived from the project name and entrypoint path.
 
 ---
 
@@ -10893,6 +11109,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -13605,6 +13822,19 @@ public readonly lambdaOptions: LambdaFunctionCommonOptions;
 - *Default:* default options
 
 Common options for all AWS Lambda functions.
+
+---
+
+##### `singletonLambdaAutoDiscover`<sup>Optional</sup> <a name="singletonLambdaAutoDiscover" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.singletonLambdaAutoDiscover"></a>
+
+```typescript
+public readonly singletonLambdaAutoDiscover: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
 
 ---
 
@@ -16503,6 +16733,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -19099,6 +19330,19 @@ Common options for all AWS Lambda functions.
 
 ---
 
+##### `singletonLambdaAutoDiscover`<sup>Optional</sup> <a name="singletonLambdaAutoDiscover" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.singletonLambdaAutoDiscover"></a>
+
+```typescript
+public readonly singletonLambdaAutoDiscover: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
+
+---
+
 ### CdkConfigCommonOptions <a name="CdkConfigCommonOptions" id="projen.awscdk.CdkConfigCommonOptions"></a>
 
 Common options for `cdk.json`.
@@ -19564,6 +19808,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.singletonLambdaAutoDiscover">singletonLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 
 ---
 
@@ -22619,6 +22864,21 @@ Common options for all AWS Lambda functions.
 
 ---
 
+##### ~~`singletonLambdaAutoDiscover`~~<sup>Optional</sup> <a name="singletonLambdaAutoDiscover" id="projen.awscdk.ConstructLibraryAwsOptions.property.singletonLambdaAutoDiscover"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly singletonLambdaAutoDiscover: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically adds an `awscdk.SingletonFunction` for each `.singleton-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.
+
+---
+
 ### EdgeLambdaAutoDiscoverOptions <a name="EdgeLambdaAutoDiscoverOptions" id="projen.awscdk.EdgeLambdaAutoDiscoverOptions"></a>
 
 Options for `EdgeLambdaAutoDiscover`.
@@ -23278,6 +23538,8 @@ const lambdaFunctionCommonOptions: awscdk.LambdaFunctionCommonOptions = { ... }
 | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions.property.bundlingOptions">bundlingOptions</a></code> | <code>projen.javascript.BundlingOptions</code> | Bundling options for this AWS Lambda function. |
 | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions.property.edgeLambda">edgeLambda</a></code> | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. |
 | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions.property.runtime">runtime</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | The node.js version to target. |
+| <code><a href="#projen.awscdk.LambdaFunctionCommonOptions.property.singleton">singleton</a></code> | <code>boolean</code> | Whether to create a `lambda.SingletonFunction` instead of a `lambda.Function`. |
+| <code><a href="#projen.awscdk.LambdaFunctionCommonOptions.property.singletonUuid">singletonUuid</a></code> | <code>string</code> | UUID to use for singleton lambda uniqueness. |
 
 ---
 
@@ -23344,6 +23606,38 @@ The node.js version to target.
 
 ---
 
+##### `singleton`<sup>Optional</sup> <a name="singleton" id="projen.awscdk.LambdaFunctionCommonOptions.property.singleton"></a>
+
+```typescript
+public readonly singleton: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to create a `lambda.SingletonFunction` instead of a `lambda.Function`.
+
+Not compatible with `edgeLambda`.
+
+---
+
+##### `singletonUuid`<sup>Optional</sup> <a name="singletonUuid" id="projen.awscdk.LambdaFunctionCommonOptions.property.singletonUuid"></a>
+
+```typescript
+public readonly singletonUuid: string;
+```
+
+- *Type:* string
+- *Default:* no UUID is hardcoded and consumers must provide one
+
+UUID to use for singleton lambda uniqueness.
+
+When specified, the generated singleton construct hardcodes this UUID.
+
+Only valid when `singleton` is set to `true`.
+
+---
+
 ### LambdaFunctionOptions <a name="LambdaFunctionOptions" id="projen.awscdk.LambdaFunctionOptions"></a>
 
 Options for `Function`.
@@ -23364,6 +23658,8 @@ const lambdaFunctionOptions: awscdk.LambdaFunctionOptions = { ... }
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.bundlingOptions">bundlingOptions</a></code> | <code>projen.javascript.BundlingOptions</code> | Bundling options for this AWS Lambda function. |
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.edgeLambda">edgeLambda</a></code> | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. |
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.runtime">runtime</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | The node.js version to target. |
+| <code><a href="#projen.awscdk.LambdaFunctionOptions.property.singleton">singleton</a></code> | <code>boolean</code> | Whether to create a `lambda.SingletonFunction` instead of a `lambda.Function`. |
+| <code><a href="#projen.awscdk.LambdaFunctionOptions.property.singletonUuid">singletonUuid</a></code> | <code>string</code> | UUID to use for singleton lambda uniqueness. |
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.cdkDeps">cdkDeps</a></code> | <code><a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a></code> | AWS CDK dependency manager. |
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). |
 | <code><a href="#projen.awscdk.LambdaFunctionOptions.property.constructFile">constructFile</a></code> | <code>string</code> | The name of the generated TypeScript source file. |
@@ -23431,6 +23727,38 @@ public readonly runtime: LambdaRuntime;
 - *Default:* LambdaRuntime.NODEJS_REGIONAL_LATEST - Uses the latest Node.js runtime available in the deployment region, determined at CDK synthesis time.
 
 The node.js version to target.
+
+---
+
+##### `singleton`<sup>Optional</sup> <a name="singleton" id="projen.awscdk.LambdaFunctionOptions.property.singleton"></a>
+
+```typescript
+public readonly singleton: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to create a `lambda.SingletonFunction` instead of a `lambda.Function`.
+
+Not compatible with `edgeLambda`.
+
+---
+
+##### `singletonUuid`<sup>Optional</sup> <a name="singletonUuid" id="projen.awscdk.LambdaFunctionOptions.property.singletonUuid"></a>
+
+```typescript
+public readonly singletonUuid: string;
+```
+
+- *Type:* string
+- *Default:* no UUID is hardcoded and consumers must provide one
+
+UUID to use for singleton lambda uniqueness.
+
+When specified, the generated singleton construct hardcodes this UUID.
+
+Only valid when `singleton` is set to `true`.
 
 ---
 
@@ -23526,6 +23854,77 @@ public readonly defaultExternals: string[];
 - *Default:* ['@aws-sdk/*']
 
 Packages that are considered externals by default when bundling.
+
+---
+
+### SingletonLambdaAutoDiscoverOptions <a name="SingletonLambdaAutoDiscoverOptions" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions"></a>
+
+Options for `SingletonLambdaAutoDiscover`.
+
+#### Initializer <a name="Initializer" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions.Initializer"></a>
+
+```typescript
+import { awscdk } from 'projen'
+
+const singletonLambdaAutoDiscoverOptions: awscdk.SingletonLambdaAutoDiscoverOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.cdkDeps">cdkDeps</a></code> | <code><a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a></code> | AWS CDK dependency manager. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to the tsconfig file to use for integration tests. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Project source tree (relative to project output directory). |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Options for AWS Lambda functions. |
+
+---
+
+##### `cdkDeps`<sup>Required</sup> <a name="cdkDeps" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.cdkDeps"></a>
+
+```typescript
+public readonly cdkDeps: AwsCdkDeps;
+```
+
+- *Type:* <a href="#projen.awscdk.AwsCdkDeps">AwsCdkDeps</a>
+
+AWS CDK dependency manager.
+
+---
+
+##### `tsconfigPath`<sup>Required</sup> <a name="tsconfigPath" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.tsconfigPath"></a>
+
+```typescript
+public readonly tsconfigPath: string;
+```
+
+- *Type:* string
+
+Path to the tsconfig file to use for integration tests.
+
+---
+
+##### `srcdir`<sup>Required</sup> <a name="srcdir" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.srcdir"></a>
+
+```typescript
+public readonly srcdir: string;
+```
+
+- *Type:* string
+
+Project source tree (relative to project output directory).
+
+---
+
+##### `lambdaOptions`<sup>Optional</sup> <a name="lambdaOptions" id="projen.awscdk.SingletonLambdaAutoDiscoverOptions.property.lambdaOptions"></a>
+
+```typescript
+public readonly lambdaOptions: LambdaFunctionCommonOptions;
+```
+
+- *Type:* <a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a>
+
+Options for AWS Lambda functions.
 
 ---
 
