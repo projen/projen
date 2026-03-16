@@ -61,6 +61,6 @@ export function toDeterministicSingletonUuid(
   entrypoint: string,
 ): string {
   const input = `${projectName}:${entrypoint}`;
-  
+
   return createHash("sha256").update(input).digest("hex").slice(0, 32);
 }
