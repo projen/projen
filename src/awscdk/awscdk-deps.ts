@@ -417,13 +417,24 @@ function cdkVersionOfPackage(packageName: string) {
  * both for v1 and v2.
  */
 const AWS_CDK_V1_V2_SCOPED_PACKAGES = [
-  "@aws-cdk/cfnspec",
+  // aws/aws-cdk
+  // @see https://github.com/aws/aws-cdk/tree/main/packages/%40aws-cdk
+  "@aws-cdk/assert", // deprecated
+  "@aws-cdk/cfn-property-mixins",
+  "@aws-cdk/cfnspec", // deprecated
   "@aws-cdk/cx-api",
+  "@aws-cdk/mixins-preview",
   "@aws-cdk/region-info",
+
+  // aws/aws-cdk-cli
+  // @see https://github.com/aws/aws-cdk-cli/tree/main/packages/%40aws-cdk
+  "@aws-cdk/cdk-assets-lib",
+  "@aws-cdk/cli-plugin-contract",
+  "@aws-cdk/cloud-assembly-api",
   "@aws-cdk/cloud-assembly-schema",
-  "@aws-cdk/assert",
   "@aws-cdk/cloudformation-diff",
   "@aws-cdk/integ-runner",
+  "@aws-cdk/toolkit-lib",
 ];
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
