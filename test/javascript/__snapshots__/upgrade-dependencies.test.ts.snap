@@ -34,7 +34,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -52,7 +52,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -127,7 +127,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -145,7 +145,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -220,7 +220,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -238,7 +238,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -313,7 +313,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -331,7 +331,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -406,7 +406,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -424,7 +424,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -499,7 +499,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -517,7 +517,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -592,7 +592,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -610,7 +610,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -685,7 +685,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -703,7 +703,7 @@ jobs:
         with:
           ref: branch1
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -778,7 +778,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -796,7 +796,7 @@ jobs:
         with:
           ref: branch2
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -871,7 +871,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -889,7 +889,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -964,7 +964,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -982,7 +982,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1055,7 +1055,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -1073,7 +1073,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1148,7 +1148,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -1167,7 +1167,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1242,7 +1242,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -1266,7 +1266,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1341,7 +1341,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: repo.patch
           path: repo.patch
@@ -1367,7 +1367,7 @@ jobs:
         with:
           ref: main
       - name: Download patch
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
