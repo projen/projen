@@ -110,7 +110,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v4.6.2",
+      uses: "actions/upload-artifact@v7",
       with: uploadArtifactWith,
     };
   }
@@ -139,7 +139,7 @@ export class WorkflowSteps {
         ...options,
         name: options?.name ?? "Download artifact",
       }),
-      uses: "actions/download-artifact@v5",
+      uses: "actions/download-artifact@v8",
       with: downloadArtifactWith,
     };
   }
