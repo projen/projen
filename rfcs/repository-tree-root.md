@@ -53,32 +53,33 @@ Repository (tree root)
 │   ├── PR templates
 │   ├── Dependabot / Mergify
 │   └── CODEOWNERS
-├── Project (root project)
-│   ├── Tasks
-│   ├── Dependencies
-│   ├── ProjectBuild
-│   ├── VSCode / Gitpod / DevContainer
-│   └── Source files
-└── Project (subproject, in monorepo)
+└── Project (root project)
     ├── Tasks
     ├── Dependencies
-    └── Source files
+    ├── ProjectBuild
+    ├── VSCode / Gitpod / DevContainer
+    ├── Source files
+    └── Project (subproject, in monorepo)
+        ├── Tasks
+        ├── Dependencies
+        └── Source files
 ```
 
 ### Class Hierarchy
 
 ```
 Construct
-└── Repository (new)
-    ├── GitRepository (new) — git-specific config
-    │   ├── GitHubRepository (new) — GitHub platform
-    │   └── GitLabRepository (new) — GitLab platform
-    └── Project (existing, modified)
-        ├── NodeProject
-        │   └── TypeScriptProject
-        ├── PythonProject
-        └── JavaProject
+├── Repository (new)
+│   ├── GitRepository (new) — git-specific config
+│   │   ├── GitHubRepository (new) — GitHub platform
+│   │   └── GitLabRepository (new) — GitLab platform
+└── Project (existing, modified)
+    ├── NodeProject
+    │   └── TypeScriptProject
+    ├── PythonProject
+    └── JavaProject
 ```
+
 
 ### Repository Base Class
 
@@ -181,11 +182,11 @@ export interface GitLabRepositoryOptions extends GitRepositoryOptions {
 }
 
 export class GitLabRepository extends GitRepository {
-  public readonly gitlab: GitlabConfiguration;
+  public readonly gitLab: GitlabConfiguration;
 
   constructor(options: GitLabRepositoryOptions) {
     super(options);
-    this.gitlab = new GitlabConfiguration(this, options.gitlabOptions);
+    this.gitLab = new GitlabConfiguration(this, options.gitlabOptions);
   }
 }
 ```
@@ -205,6 +206,14 @@ if (repo instanceof GitHubRepository) {
 ```
 
 This pattern mirrors `Stack.of(construct)` in the CDK. The tree traversal is the primary mechanism, with the result cached on first access.
+
+For convenience, `Project` also exposes a `repo` property that delegates to `Repository.of(this)`:
+
+```typescript
+// These are equivalent:
+const repo = Repository.of(this.project);
+const repo = this.project.repo;
+```
 
 ### Subproject Access to Repository
 
@@ -277,7 +286,7 @@ Repository-level files (workflows, .gitignore) are synthesized at the Repository
 
 **`GitHubProject` — removed in next major version.** The class currently serves as the bridge between Project and GitHub integration. In the new model, this bridge is the Repository. `GitHubProject` would be deprecated first, then removed.
 
-**`Project` — simplified.** Git-related properties (`.gitignore`, `.gitattributes`) move to `GitRepository`. The `parent` property for monorepo setups is replaced by the natural construct tree relationship through the Repository.
+**`Project` — simplified.** Git-related properties (`.gitignore`, `.gitattributes`) move to `GitRepository`. The `parent` property for monorepo setups is replaced by the natural construct tree relationship through the Repository. Existing helper properties on `Project` that delegate to repository-level concerns (e.g., `project.gitignore`) will be preserved as pass-through accessors with deprecation warnings, giving users time to migrate to `Repository.of(this)` or `project.repo`.
 
 **`GitHub` component — unchanged in API.** The `GitHub` component keeps its current API but its scope changes from "component on root project" to "component on Repository". This is mostly an internal change.
 
@@ -299,18 +308,15 @@ Repository-level files (workflows, .gitignore) are synthesized at the Repository
 ### Explicitly Out of Scope (Future Work)
 
 - **Workflow portability** — Building workflows once and running them on any CI platform is a separate, larger effort. This RFC provides the structural foundation but does not address portable workflow definitions.
-- **Task system revamp / task dependencies** — Introducing formal task dependency graphs is complementary but separate. The Repository restructuring does not depend on it.
-- **Migration tooling** — Detailed migration guides and codemods will be developed alongside the implementation, not as part of this RFC.
+- **Monorepo CI divergence** — If a monorepo has projects that need different CI behaviors, how the Repository-level config accommodates that is left for a future RFC. The stake in the ground here is that repository-level CI config (like GitHub Actions workflows) must be owned by the Repository. It is up to future monorepo and workflow portability RFCs to address per-project CI customization.
 
 ## Open Questions
 
 1. **File ownership during transition.** During the deprecation period, both `Project.gitignore` and `GitRepository.gitignore` could exist. How do we handle the overlap? One option: `Project.gitignore` delegates to `Repository.of(this).gitignore` transparently.
 
-2. **CircleCI integration.** The current `Circleci` component is also repository-level. Should there be a `CircleCiRepository` subclass, or is CircleCI different enough to handle separately?
+2. **CI provider vs. repository host.** GitHub and GitLab are both repository hosts and CI providers, but CircleCI is only a CI provider. The current `Circleci` component is repository-level config, but it doesn't imply a repository host. How should standalone CI providers be modeled? One option: a `GitRepository` with a separate `CircleCi` component, rather than a dedicated `CircleCiRepository` subclass.
 
 3. **Projenrc location.** The `.projenrc.ts` file currently lives at the project root. In the new model, should it be a Repository concern? The projenrc instantiates both the Repository and its Projects, so it logically sits outside both.
-
-4. **Multi-project CI divergence.** If a monorepo has projects that need different CI behaviors (e.g., one project needs a specialized release workflow), how do we prevent the Repository-level config from being too rigid?
 
 ## Prior Art
 
