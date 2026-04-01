@@ -656,7 +656,10 @@ export class TypeScriptProject extends NodeProject {
    * for us. just run them directly from javascript.
    */
   private addJestCompiled(jest: Jest) {
-    this.addDevDeps(`@types/jest${jest.jestVersion}`);
+    // @types/jest@30 removed global type declarations; pin to ^29 for jest 30+.
+    const jestMajor = semver.coerce(jest.jestVersion)?.major ?? 30;
+    const typesJestVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
+    this.addDevDeps(`@types/jest${typesJestVersion}`);
 
     const testout = path.posix.relative(this.srcdir, this.testdir);
     const libtest = path.posix.join(this.libdir, testout);
@@ -716,12 +719,10 @@ export class TypeScriptProject extends NodeProject {
     // For some reason this is not the case with Jest 30 anymore.
     // When jestVersion is unspecified (empty string), semver.coerce returns null.
     // Default to 30 so that unversioned (i.e. "latest") jest still pins ts-jest to ^29.
+    // @types/jest@30 also removed global type declarations, so pin it to ^29 as well.
     const jestMajor = semver.coerce(jest.jestVersion)?.major ?? 30;
-    const tsJestVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
-    this.addDevDeps(
-      `@types/jest${jest.jestVersion}`,
-      `ts-jest${tsJestVersion}`,
-    );
+    const jestDepVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
+    this.addDevDeps(`@types/jest${jestDepVersion}`, `ts-jest${jestDepVersion}`);
 
     jest.discoverTestMatchPatternsForDirs([this.srcdir, this.testdir], {
       fileExtensionPattern: this.tsconfig?.compilerOptions?.allowJs
