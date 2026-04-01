@@ -129,7 +129,7 @@ export class WorkflowActions {
       {
         name: stepName,
         id: stepId,
-        uses: "peter-evans/create-pull-request@v7",
+        uses: "peter-evans/create-pull-request@v8",
         with: {
           token: options.credentials?.tokenRef,
           "commit-message": `${title}\n\n${description}`,
