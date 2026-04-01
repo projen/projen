@@ -2642,6 +2642,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -3492,6 +3509,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -3639,6 +3673,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -4544,13 +4596,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -5919,6 +5972,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -6784,6 +6854,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -6931,6 +7018,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -7891,13 +7996,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -10658,6 +10764,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -11446,6 +11569,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -11593,6 +11733,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -12426,13 +12584,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -13721,6 +13880,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -14506,6 +14682,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -14653,6 +14846,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -15526,13 +15737,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -16948,6 +17160,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -17682,6 +17911,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -17829,6 +18075,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -18685,13 +18949,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -20979,6 +21244,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -21660,6 +21942,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -21807,6 +22106,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -22663,13 +22980,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -24085,6 +24403,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -24698,6 +25033,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -24845,6 +25197,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": ""lib/index.js"",
@@ -25489,13 +25859,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -26658,6 +27029,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -27271,6 +27659,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -27418,6 +27823,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -28200,13 +28623,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -29512,6 +29936,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -30108,6 +30549,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -30255,6 +30713,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": ""lib/index.js"",
@@ -30899,13 +31375,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -33359,6 +33836,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -33955,6 +34449,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -34102,6 +34613,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": ""lib/index.js"",
@@ -34746,13 +35275,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -35920,6 +36450,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -36516,6 +37063,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -36663,6 +37227,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -37445,13 +38027,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -38762,6 +39345,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -39358,6 +39958,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -39505,6 +40122,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -40287,13 +40922,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",
@@ -41582,6 +42218,23 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "addPackageManagerToDevEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "addPackageManagerToDevEngines",
+        ],
+        "simpleType": "boolean",
+        "switch": "add-package-manager-to-dev-engines",
+      },
+      {
+        "default": "true",
         "docs": "Allow the project to include \`peerDependencies\` and \`bundledDependencies\`.",
         "featured": false,
         "fullType": {
@@ -42178,6 +42831,23 @@ exports[`inventory 1`] = `
         "switch": "default-release-branch",
       },
       {
+        "default": "true",
+        "docs": "Automatically delete lockfiles from package managers that are not the active one.",
+        "featured": false,
+        "fullType": {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "deleteOrphanedLockFiles",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "deleteOrphanedLockFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "delete-orphaned-lock-files",
+      },
+      {
         "default": "false",
         "docs": "Use dependabot to handle dependency upgrades.",
         "featured": false,
@@ -42325,6 +42995,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "unknown",
         "switch": "dev-deps",
+      },
+      {
+        "docs": "Configure the \`devEngines\` field in \`package.json\`.",
+        "featured": false,
+        "fqn": "projen.javascript.DevEngines",
+        "fullType": {
+          "fqn": "projen.javascript.DevEngines",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "devEngines",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "devEngines",
+        ],
+        "simpleType": "DevEngines",
+        "switch": "dev-engines",
       },
       {
         "default": "false",
@@ -43107,13 +43795,14 @@ exports[`inventory 1`] = `
         "switch": "package",
       },
       {
-        "default": "NodePackageManager.YARN_CLASSIC",
+        "default": "- Detected from the calling process or \`YARN_CLASSIC\` if detection fails.",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
         "fqn": "projen.javascript.NodePackageManager",
         "fullType": {
           "fqn": "projen.javascript.NodePackageManager",
         },
+        "initialValue": "$PACKAGE_MANAGER",
         "jsonLike": true,
         "kind": "enum",
         "name": "packageManager",

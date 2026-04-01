@@ -4,6 +4,7 @@ import {
   existsSync,
   readdirSync,
   readFileSync,
+  unlinkSync,
 } from "fs";
 import { join, resolve } from "path";
 import * as semver from "semver";
@@ -169,7 +170,8 @@ export interface NodePackageOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default NodePackageManager.YARN_CLASSIC
+   * @default - Detected from the calling process or `YARN_CLASSIC` if detection fails.
+   * @pjnew $PACKAGE_MANAGER
    */
   readonly packageManager?: NodePackageManager;
 
@@ -365,6 +367,92 @@ export interface NodePackageOptions {
    * @default - Yarn Berry v4 with all default options
    */
   readonly yarnBerryOptions?: YarnBerryOptions;
+
+  /**
+   * Configure the `devEngines` field in `package.json`.
+   *
+   * The `devEngines.packageManager` field is automatically populated based on
+   * the resolved `packageManager` value. Any fields provided here are merged
+   * with the auto-populated `packageManager` entry.
+   *
+   * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines
+   */
+  readonly devEngines?: DevEngines;
+
+  /**
+   * Automatically add the resolved `packageManager` to `devEngines.packageManager`
+   * in `package.json`.
+   *
+   * @default true
+   */
+  readonly addPackageManagerToDevEngines?: boolean;
+
+  /**
+   * Automatically delete lockfiles from package managers that are not the
+   * active one. Only triggered when the lockfile for the configured package
+   * manager already exists.
+   *
+   * This is useful when migrating between package managers to avoid conflicts.
+   *
+   * @default true
+   */
+  readonly deleteOrphanedLockFiles?: boolean;
+}
+
+/**
+ * A dependency entry for the `devEngines` field in `package.json`.
+ */
+export interface DevEngineDependency {
+  /**
+   * The name of the dependency.
+   */
+  readonly name: string;
+
+  /**
+   * The version range for the dependency.
+   *
+   * @default "*"
+   */
+  readonly version?: string;
+
+  /**
+   * What action to take if validation fails.
+   *
+   * @default "error"
+   */
+  readonly onFail?: "ignore" | "warn" | "error" | "download";
+}
+
+/**
+ * The `devEngines` field in `package.json`.
+ *
+ * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines
+ */
+export interface DevEngines {
+  /**
+   * Supported operating systems.
+   */
+  readonly os?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported CPU architectures.
+   */
+  readonly cpu?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported C standard libraries.
+   */
+  readonly libc?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported JavaScript runtimes.
+   */
+  readonly runtime?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported package managers.
+   */
+  readonly packageManager?: DevEngineDependency | DevEngineDependency[];
 }
 
 /**
@@ -582,6 +670,7 @@ export class NodePackage extends Component {
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
+  private readonly _packageManagerExplicit: boolean;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
@@ -592,10 +681,38 @@ export class NodePackage extends Component {
       ...options.peerDependencyOptions,
     };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
-    this.packageManager =
-      options.packageManager ?? NodePackageManager.YARN_CLASSIC;
+
+    // Read previous package.json early so we can use it for inference
+    this._prev = this.readPackageJson();
+
+    // Resolve package manager: explicit > inferred from package.json > fallback
+    if (options.packageManager) {
+      this.packageManager = options.packageManager;
+      this._packageManagerExplicit = true;
+    } else {
+      this._packageManagerExplicit = false;
+      const fromPkgJson = inferPackageManagerFromPkgJson(
+        this._prev,
+        project.outdir,
+      );
+      if (fromPkgJson) {
+        this.packageManager = fromPkgJson;
+      } else {
+        this.project.logger.warn(
+          `[DEPRECATED] "packageManager" is not set in projenrc, defaulting to "${NodePackageManager.YARN_CLASSIC}". ` +
+            `This will become a required option in a future version. Please set it explicitly.`,
+        );
+        this.packageManager = NodePackageManager.YARN_CLASSIC;
+      }
+    }
+
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
+
+    // Clean up lockfiles from other package managers during migration
+    if (options.deleteOrphanedLockFiles !== false) {
+      this.deleteOrphanedLockFiles();
+    }
 
     this.project.annotateGenerated(`/${this.lockFile}`);
 
@@ -618,8 +735,6 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
-    this._prev = this.readPackageJson();
-
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
       name: this.packageName,
@@ -641,6 +756,7 @@ export class NodePackage extends Component {
       ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
+      devEngines: () => this.renderDevEngines(options),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
@@ -1521,6 +1637,50 @@ export class NodePackage extends Component {
     return sorted(this.engines);
   }
 
+  private renderDevEngines(
+    options: NodePackageOptions,
+  ): DevEngines | undefined {
+    const autoAdd =
+      options.addPackageManagerToDevEngines !== false &&
+      this._packageManagerExplicit;
+
+    const base: DevEngines = autoAdd
+      ? {
+          packageManager: packageManagerToDevEngine(
+            this.packageManager,
+            options,
+          ),
+        }
+      : {};
+
+    const merged = { ...base, ...options.devEngines };
+    return Object.keys(merged).length > 0 ? merged : undefined;
+  }
+
+  private deleteOrphanedLockFiles() {
+    const ownLockFile = join(this.project.outdir, this.lockFile);
+    if (!existsSync(ownLockFile)) {
+      return;
+    }
+
+    const allLockFiles = [
+      "yarn.lock",
+      "package-lock.json",
+      "pnpm-lock.yaml",
+      "bun.lockb",
+    ];
+    for (const lf of allLockFiles) {
+      if (lf === this.lockFile) {
+        continue;
+      }
+      const path = join(this.project.outdir, lf);
+      if (existsSync(path)) {
+        this.project.logger.info(`Deleting orphaned lockfile: ${lf}`);
+        unlinkSync(path);
+      }
+    }
+  }
+
   private autoDiscoverBinaries() {
     const binrel = "bin";
     const bindir = join(this.project.outdir, binrel);
@@ -1817,4 +1977,129 @@ function determineLockfile(packageManager: NodePackageManager) {
     default:
       throw new Error(`unsupported package manager ${packageManager}`);
   }
+}
+
+/**
+ * Maps a package manager name (as used in package.json `packageManager` and
+ * `devEngines.packageManager` fields) to a `NodePackageManager` enum value.
+ */
+function packageManagerNameToEnum(
+  name: string,
+  majorVersion?: number,
+): NodePackageManager | undefined {
+  switch (name) {
+    case "npm":
+      return NodePackageManager.NPM;
+    case "pnpm":
+      return NodePackageManager.PNPM;
+    case "bun":
+      return NodePackageManager.BUN;
+    case "yarn":
+      if (majorVersion !== undefined && majorVersion >= 2) {
+        return NodePackageManager.YARN_BERRY;
+      }
+      return NodePackageManager.YARN_CLASSIC;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Maps a `NodePackageManager` to a `DevEngineDependency` with appropriate
+ * version constraints. Yarn classic and berry get version ranges to
+ * distinguish them.
+ */
+function packageManagerToDevEngine(
+  pm: NodePackageManager,
+  options: NodePackageOptions = {},
+): DevEngineDependency {
+  switch (pm) {
+    case NodePackageManager.YARN:
+    case NodePackageManager.YARN_CLASSIC:
+      return { name: "yarn", version: "<2.0.0" };
+    case NodePackageManager.YARN2:
+    case NodePackageManager.YARN_BERRY: {
+      const version = options.yarnBerryOptions?.version ?? "4.0.1";
+      return { name: "yarn", version: `>=${version}` };
+    }
+    case NodePackageManager.NPM:
+      return { name: "npm" };
+    case NodePackageManager.PNPM:
+      return { name: "pnpm" };
+    case NodePackageManager.BUN:
+      return { name: "bun" };
+  }
+}
+
+/**
+ * Infers the `NodePackageManager` from an existing `package.json`.
+ *
+ * Checks in order:
+ * 1. `packageManager` field (corepack, e.g. `"yarn@4.1.0"`)
+ * 2. `devEngines.packageManager` field (single entry only; arrays are
+ *    ambiguous and skipped unless a lockfile disambiguates)
+ *
+ * @returns the inferred package manager, or `undefined`
+ */
+function inferPackageManagerFromPkgJson(
+  prev: Record<string, any> | undefined,
+  outdir: string,
+): NodePackageManager | undefined {
+  if (!prev) {
+    return undefined;
+  }
+
+  // 1. Corepack packageManager field: "yarn@4.1.0"
+  const corepack: string | undefined = prev.packageManager;
+  if (corepack) {
+    const match = corepack.match(/^(\w+)@(\d+)/);
+    if (match) {
+      const result = packageManagerNameToEnum(match[1], Number(match[2]));
+      if (result) {
+        return result;
+      }
+    }
+  }
+
+  // 2. devEngines.packageManager
+  const devEnginesPm = prev.devEngines?.packageManager;
+  if (devEnginesPm) {
+    if (!Array.isArray(devEnginesPm)) {
+      // Single entry
+      return packageManagerNameToEnum(devEnginesPm.name);
+    }
+    if (devEnginesPm.length === 1) {
+      return packageManagerNameToEnum(devEnginesPm[0].name);
+    }
+    // Multiple entries — try to disambiguate with lockfile
+    if (devEnginesPm.length > 1) {
+      const fromLockfile = inferPackageManagerFromLockfile(outdir);
+      if (fromLockfile) {
+        return fromLockfile;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Infers the `NodePackageManager` from the presence of a lockfile.
+ */
+function inferPackageManagerFromLockfile(
+  outdir: string,
+): NodePackageManager | undefined {
+  if (existsSync(join(outdir, "pnpm-lock.yaml"))) {
+    return NodePackageManager.PNPM;
+  }
+  if (existsSync(join(outdir, "bun.lockb"))) {
+    return NodePackageManager.BUN;
+  }
+  if (existsSync(join(outdir, "yarn.lock"))) {
+    return NodePackageManager.YARN_CLASSIC;
+  }
+  if (existsSync(join(outdir, "package-lock.json"))) {
+    return NodePackageManager.NPM;
+  }
+  return undefined;
 }

@@ -6541,6 +6541,152 @@ public readonly statements: number;
 
 ---
 
+### DevEngineDependency <a name="DevEngineDependency" id="projen.javascript.DevEngineDependency"></a>
+
+A dependency entry for the `devEngines` field in `package.json`.
+
+#### Initializer <a name="Initializer" id="projen.javascript.DevEngineDependency.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const devEngineDependency: javascript.DevEngineDependency = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DevEngineDependency.property.name">name</a></code> | <code>string</code> | The name of the dependency. |
+| <code><a href="#projen.javascript.DevEngineDependency.property.onFail">onFail</a></code> | <code>string</code> | What action to take if validation fails. |
+| <code><a href="#projen.javascript.DevEngineDependency.property.version">version</a></code> | <code>string</code> | The version range for the dependency. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.DevEngineDependency.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the dependency.
+
+---
+
+##### `onFail`<sup>Optional</sup> <a name="onFail" id="projen.javascript.DevEngineDependency.property.onFail"></a>
+
+```typescript
+public readonly onFail: string;
+```
+
+- *Type:* string
+- *Default:* "error"
+
+What action to take if validation fails.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.DevEngineDependency.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "*"
+
+The version range for the dependency.
+
+---
+
+### DevEngines <a name="DevEngines" id="projen.javascript.DevEngines"></a>
+
+The `devEngines` field in `package.json`.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+#### Initializer <a name="Initializer" id="projen.javascript.DevEngines.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const devEngines: javascript.DevEngines = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DevEngines.property.cpu">cpu</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported CPU architectures. |
+| <code><a href="#projen.javascript.DevEngines.property.libc">libc</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported C standard libraries. |
+| <code><a href="#projen.javascript.DevEngines.property.os">os</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported operating systems. |
+| <code><a href="#projen.javascript.DevEngines.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported package managers. |
+| <code><a href="#projen.javascript.DevEngines.property.runtime">runtime</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported JavaScript runtimes. |
+
+---
+
+##### `cpu`<sup>Optional</sup> <a name="cpu" id="projen.javascript.DevEngines.property.cpu"></a>
+
+```typescript
+public readonly cpu: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported CPU architectures.
+
+---
+
+##### `libc`<sup>Optional</sup> <a name="libc" id="projen.javascript.DevEngines.property.libc"></a>
+
+```typescript
+public readonly libc: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported C standard libraries.
+
+---
+
+##### `os`<sup>Optional</sup> <a name="os" id="projen.javascript.DevEngines.property.os"></a>
+
+```typescript
+public readonly os: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported operating systems.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.javascript.DevEngines.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported package managers.
+
+---
+
+##### `runtime`<sup>Optional</sup> <a name="runtime" id="projen.javascript.DevEngines.property.runtime"></a>
+
+```typescript
+public readonly runtime: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported JavaScript runtimes.
+
+---
+
 ### EslintCommandOptions <a name="EslintCommandOptions" id="projen.javascript.EslintCommandOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.EslintCommandOptions.Initializer"></a>
@@ -8371,6 +8517,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.NodePackageOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -8383,9 +8530,11 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.devEngines">devEngines</a></code> | <code><a href="#projen.javascript.DevEngines">DevEngines</a></code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -8410,6 +8559,19 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | npm scripts to include. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code><a href="#projen.javascript.YarnBerryOptions">YarnBerryOptions</a></code> | Options for Yarn Berry. |
+
+---
+
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.javascript.NodePackageOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
 
 ---
 
@@ -8581,6 +8743,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.javascript.NodePackageOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.javascript.NodePackageOptions.property.deps"></a>
 
 ```typescript
@@ -8653,6 +8833,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.javascript.NodePackageOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* <a href="#projen.javascript.DevEngines">DevEngines</a>
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.javascript.NodePackageOptions.property.entrypoint"></a>
 
@@ -8862,7 +9060,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* <a href="#projen.javascript.NodePackageManager">NodePackageManager</a>
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -9060,6 +9258,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9072,9 +9271,11 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.devEngines">devEngines</a></code> | <code><a href="#projen.javascript.DevEngines">DevEngines</a></code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -9598,6 +9799,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.javascript.NodeProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.javascript.NodeProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -9766,6 +9980,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.javascript.NodeProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.javascript.NodeProjectOptions.property.deps"></a>
 
 ```typescript
@@ -9838,6 +10070,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.javascript.NodeProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* <a href="#projen.javascript.DevEngines">DevEngines</a>
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.javascript.NodeProjectOptions.property.entrypoint"></a>
 
@@ -10047,7 +10297,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* <a href="#projen.javascript.NodePackageManager">NodePackageManager</a>
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 

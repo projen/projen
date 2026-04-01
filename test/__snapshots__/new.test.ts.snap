@@ -5,6 +5,7 @@ exports[`projen new --from project options --outdir path/to/mydir 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -71,6 +72,7 @@ exports[`projen new --from project options projen new with unknown option works 
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -88,6 +90,7 @@ exports[`projen new --from project options projenrc-json creates external projec
     "@pepperize/projen-awscdk-app-ts@0.0.333",
   ],
   "name": "my-project",
+  "packageManager": "npm",
   "projenrcJson": true,
   "projenrcTs": true,
   "type": "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
@@ -111,6 +114,7 @@ exports[`projen new --from project options projenrc-json creates node-project 1`
 {
   "defaultReleaseBranch": "main",
   "name": "my-project",
+  "packageManager": "npm",
   "projenrcJson": true,
   "type": "projen.javascript.NodeProject",
 }
@@ -150,6 +154,11 @@ exports[`projen new --from using registry existing package 1`] = `
     "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+    },
   },
   "jest": {
     "clearMocks": true,
@@ -232,12 +241,14 @@ exports[`projen new --from using registry existing package 1`] = `
 `;
 
 exports[`projen new --from using registry existing package 2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -281,6 +292,11 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+    },
   },
   "jest": {
     "clearMocks": true,
@@ -363,12 +379,14 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
 `;
 
 exports[`projen new --from using tarball projen new --from named tarball  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -412,6 +430,11 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+    },
   },
   "jest": {
     "clearMocks": true,
@@ -494,12 +517,14 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
 `;
 
 exports[`projen new --from using tarball projen new --from relative path  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -543,6 +568,11 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "ts-jest": "*",
     "ts-node": "*",
     "typescript": "*",
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+    },
   },
   "jest": {
     "clearMocks": true,
@@ -625,12 +655,14 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
 `;
 
 exports[`projen new --from using tarball projen new --from tarball  2`] = `
-"import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
+"import { javascript } from "projen";
+import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -680,11 +712,12 @@ project.synth()",
 
 exports[`projen new awscdk-app-ts 1`] = `
 {
-  ".projenrc.ts": "import { awscdk } from "projen";
+  ".projenrc.ts": "import { awscdk, javascript } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -698,7 +731,7 @@ project.synth();",
 
 exports[`projen new awscdk-construct 1`] = `
 {
-  ".projenrc.ts": "import { awscdk } from "projen";
+  ".projenrc.ts": "import { awscdk, javascript } from "projen";
 const project = new awscdk.AwsCdkConstructLibrary({
   author: "My User Name",
   authorAddress: "my@user.email.com",
@@ -706,6 +739,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.9.0",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -737,11 +771,12 @@ project.synth()",
 
 exports[`projen new cdk8s-app-ts 1`] = `
 {
-  ".projenrc.ts": "import { cdk8s } from "projen";
+  ".projenrc.ts": "import { cdk8s, javascript } from "projen";
 const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -755,7 +790,7 @@ project.synth();",
 
 exports[`projen new cdk8s-construct 1`] = `
 {
-  ".projenrc.ts": "import { cdk8s } from "projen";
+  ".projenrc.ts": "import { cdk8s, javascript } from "projen";
 const project = new cdk8s.ConstructLibraryCdk8s({
   author: "My User Name",
   authorAddress: "my@user.email.com",
@@ -763,6 +798,7 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.9.0",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -777,7 +813,7 @@ project.synth();",
 
 exports[`projen new cdktf-construct 1`] = `
 {
-  ".projenrc.ts": "import { cdktf } from "projen";
+  ".projenrc.ts": "import { cdktf, javascript } from "projen";
 const project = new cdktf.ConstructLibraryCdktf({
   author: "My User Name",
   authorAddress: "my@user.email.com",
@@ -785,6 +821,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.9.0",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -818,13 +855,14 @@ public class projenrc {
 
 exports[`projen new jsii 1`] = `
 {
-  ".projenrc.ts": "import { cdk } from "projen";
+  ".projenrc.ts": "import { cdk, javascript } from "projen";
 const project = new cdk.JsiiProject({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.9.0",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
@@ -839,10 +877,11 @@ project.synth();",
 
 exports[`projen new nextjs 1`] = `
 {
-  ".projenrc.js": "const { web } = require("projen");
+  ".projenrc.js": "const { javascript, web } = require("projen");
 const project = new web.NextJsProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -856,10 +895,11 @@ project.synth();",
 
 exports[`projen new nextjs-ts 1`] = `
 {
-  ".projenrc.ts": "import { web } from "projen";
+  ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -878,6 +918,7 @@ exports[`projen new node 1`] = `
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -908,10 +949,11 @@ project.synth()",
 
 exports[`projen new react 1`] = `
 {
-  ".projenrc.js": "const { web } = require("projen");
+  ".projenrc.js": "const { javascript, web } = require("projen");
 const project = new web.ReactProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -924,10 +966,11 @@ project.synth();",
 
 exports[`projen new react-ts 1`] = `
 {
-  ".projenrc.ts": "import { web } from "projen";
+  ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -941,10 +984,11 @@ project.synth();",
 
 exports[`projen new typescript 1`] = `
 {
-  ".projenrc.ts": "import { typescript } from "projen";
+  ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -958,10 +1002,11 @@ project.synth();",
 
 exports[`projen new typescript-app 1`] = `
 {
-  ".projenrc.ts": "import { typescript } from "projen";
+  ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -974,10 +1019,11 @@ project.synth();",
 `;
 
 exports[`typescript project projenrc-ts creates typescript projenrc 1`] = `
-"import { typescript } from "projen";
+"import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "my-project",
+  packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */

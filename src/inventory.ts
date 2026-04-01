@@ -471,17 +471,17 @@ function checkDefaultIsParsable(
   value: string,
   type?: JsiiPropertyType,
 ) {
+  // macros are pass-through
+  if (value.startsWith("$")) {
+    return;
+  }
+
   if (!(type && isPrimitiveOrPrimitiveArray(type))) {
     throw new Error(
       `required option "${prop}" with a @default must use primitive types (string, number and boolean) or a primitive array. type found is: ${JSON.stringify(
         type,
       )}`,
     );
-  }
-
-  // macros are pass-through
-  if (value.startsWith("$")) {
-    return;
   }
 
   try {

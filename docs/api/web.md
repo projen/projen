@@ -6787,6 +6787,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -6799,9 +6800,11 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.devEngines">devEngines</a></code> | <code>projen.javascript.DevEngines</code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.web.NextJsProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -7355,6 +7358,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.web.NextJsProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.NextJsProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -7523,6 +7539,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.web.NextJsProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.web.NextJsProjectOptions.property.deps"></a>
 
 ```typescript
@@ -7595,6 +7629,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.web.NextJsProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* projen.javascript.DevEngines
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.web.NextJsProjectOptions.property.entrypoint"></a>
 
@@ -7804,7 +7856,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* projen.javascript.NodePackageManager
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -9009,6 +9061,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9021,9 +9074,11 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.devEngines">devEngines</a></code> | <code>projen.javascript.DevEngines</code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -9593,6 +9648,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.web.NextJsTypeScriptProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -9761,6 +9829,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.web.NextJsTypeScriptProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.web.NextJsTypeScriptProjectOptions.property.deps"></a>
 
 ```typescript
@@ -9833,6 +9919,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.web.NextJsTypeScriptProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* projen.javascript.DevEngines
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.web.NextJsTypeScriptProjectOptions.property.entrypoint"></a>
 
@@ -10042,7 +10146,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* projen.javascript.NodePackageManager
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -11586,6 +11690,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.ReactProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -11598,9 +11703,11 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.web.ReactProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.web.ReactProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.web.ReactProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.web.ReactProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.web.ReactProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.web.ReactProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.web.ReactProjectOptions.property.devEngines">devEngines</a></code> | <code>projen.javascript.DevEngines</code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.web.ReactProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.web.ReactProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -12127,6 +12234,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.web.ReactProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.ReactProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -12295,6 +12415,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.web.ReactProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.web.ReactProjectOptions.property.deps"></a>
 
 ```typescript
@@ -12367,6 +12505,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.web.ReactProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* projen.javascript.DevEngines
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.web.ReactProjectOptions.property.entrypoint"></a>
 
@@ -12576,7 +12732,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* projen.javascript.NodePackageManager
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -13976,6 +14132,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -13988,9 +14145,11 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.devEngines">devEngines</a></code> | <code>projen.javascript.DevEngines</code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -14533,6 +14692,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.web.ReactTypeScriptProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -14701,6 +14873,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.web.ReactTypeScriptProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.web.ReactTypeScriptProjectOptions.property.deps"></a>
 
 ```typescript
@@ -14773,6 +14963,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.web.ReactTypeScriptProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* projen.javascript.DevEngines
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.web.ReactTypeScriptProjectOptions.property.entrypoint"></a>
 
@@ -14982,7 +15190,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* projen.javascript.NodePackageManager
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
