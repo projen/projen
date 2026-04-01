@@ -714,7 +714,9 @@ export class TypeScriptProject extends NodeProject {
   ) {
     // Ts-jest doesn't follow semver, but major should match to Jest's major.
     // For some reason this is not the case with Jest 30 anymore.
-    const jestMajor = semver.coerce(jest.jestVersion)?.major ?? 0;
+    // When jestVersion is unspecified (empty string), semver.coerce returns null.
+    // Default to 30 so that unversioned (i.e. "latest") jest still pins ts-jest to ^29.
+    const jestMajor = semver.coerce(jest.jestVersion)?.major ?? 30;
     const tsJestVersion = jestMajor > 29 ? "@^29" : jest.jestVersion;
     this.addDevDeps(
       `@types/jest${jest.jestVersion}`,

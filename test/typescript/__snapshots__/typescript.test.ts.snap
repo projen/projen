@@ -694,6 +694,7 @@ tsconfig.tsbuildinfo
       {
         "name": "ts-jest",
         "type": "build",
+        "version": "^29",
       },
       {
         "name": "typescript",
@@ -959,7 +960,7 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -1206,7 +1207,7 @@ tsconfig.tsbuildinfo
       "jest": "*",
       "jest-junit": "^16",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^29",
       "typescript": "*",
     },
     "jest": {
