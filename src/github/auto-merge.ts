@@ -59,8 +59,6 @@ export class AutoMerge extends Component {
       : [];
 
     const mergeAction = {
-      delete_head_branch: {},
-
       queue: {
         name: "default",
       },
