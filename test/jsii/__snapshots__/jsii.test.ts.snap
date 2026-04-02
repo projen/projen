@@ -686,7 +686,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -2206,7 +2205,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -3724,7 +3722,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
