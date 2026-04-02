@@ -39,11 +39,11 @@ To create a new TypeScript project, navigate to your desired directory and run:
 ```bash
 mkdir demo
 cd demo
-npx projen new typescript
+pnpm dlx projen new typescript
 ```
 
-Replace `typescript` with the type of project you want to create, such as `node` for a Node.js project or `python` for 
-a Python project. You can get a complete list of available project types by running `npx projen new --help`.
+Replace `typescript` with the type of project you want to create, such as `node` for a Node.js project or `python` for
+a Python project. You can get a complete list of available project types by running `pnpm dlx projen new --help`.
 
 ## Project Configuration
 
@@ -55,7 +55,7 @@ import { typescript } from 'projen';
 const project = new typescript.TypeScriptProject({
   name: 'my-projen-project',
   defaultReleaseBranch: 'main',
-  packageManager: NodePackageManager.NPM,
+  packageManager: NodePackageManager.PNPM,
   srcdir: 'src',
   testdir: 'test',
 });
@@ -101,7 +101,7 @@ import { TypeScriptProject } from 'projen';
 const project = new TypeScriptProject({
   name: 'my-projen-project',
   defaultReleaseBranch: 'main',
-  packageManager: NodePackageManager.NPM,
+  packageManager: NodePackageManager.PNPM,
   srcdir: 'src',
   testdir: 'test',
   deps: ['axios'], // Configure your runtime dependencies
@@ -219,12 +219,13 @@ Add Docker support by generating a Dockerfile.
 ```ts
 project.addFile('Dockerfile', {
   contents: `
-    FROM node:14
+    FROM node:24
+    RUN corepack enable && corepack prepare pnpm@latest --activate
     WORKDIR /app
-    COPY package*.json ./
-    RUN npm install
+    COPY package.json pnpm-lock.yaml ./
+    RUN pnpm install --frozen-lockfile
     COPY . .
-    CMD ["npm", "start"]
+    CMD ["pnpm", "start"]
   `,
 });
 ```
@@ -240,17 +241,23 @@ new YamlFile(project, '.gitlab-ci.yml', {
       'build',
       'test',
     ],
+    default: {
+      before_script: [
+        'corepack enable',
+        'corepack prepare pnpm@latest --activate',
+      ],
+    },
     build: {
       stage: 'build',
       script: [
-        'npm install',
-        'npm run build',
+        'pnpm install --frozen-lockfile',
+        'pnpm run build',
       ],
     },
     test: {
       stage: 'test',
       script: [
-        'npm test',
+        'pnpm test',
       ],
     },
   },
@@ -287,7 +294,7 @@ project.gitignore.addPatterns('dist/', 'node_modules/');
 To simplify using projen, consider creating an alias:
 
 ```shell
-alias pj="npx projen"
+alias pj="pnpm dlx projen"
 ```
 Add this line to your shell's startup script (e.g., `~/.bashrc` or `~/.zshrc`) for it to persist across sessions. This 
 documentation will always spell out commands fully in case you prefer not to use aliases.
@@ -298,7 +305,7 @@ If you are making frequent changes to your `.projenrc` file, you can use the `--
 automatically re-run whenever the file changes:
 
 ```shell
-npx projen --watch
+pnpm dlx projen --watch
 ```
 
 This will help streamline your workflow by ensuring that projen updates are applied immediately as you make changes 

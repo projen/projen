@@ -32,7 +32,7 @@ default, every Node.js project includes a `Dependencies` component which will
 manage the dependencies in `package.json`.
 
 When a dependency is managed by projen, it gets added to `package.json` and will
-automatically installed after running `npx projen`. Packages will be installed
+automatically installed after running `pnpm dlx projen`. Packages will be installed
 according to the package manager being used. This can be configured:
 
 ```ts

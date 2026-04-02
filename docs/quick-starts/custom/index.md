@@ -11,7 +11,7 @@ tell you.
 The basic format to install a custom project is as follows:
 
 ```shell
-npx projen new $PROJECT_TYPE --from $PACKAGE
+pnpm dlx projen new $PROJECT_TYPE --from $PACKAGE
 ```
 
 ## Project Type
@@ -40,7 +40,7 @@ Let's look at a specific example. There is a
 To install it, we would use the following command:
 
 ```shell
-npx projen new cdktf_provider --from @cdktf/provider-project
+pnpm dlx projen new cdktf_provider --from @cdktf/provider-project
 ```
 
 We would infer that it's `cdktfprovider` because the name of the exported class in `src/main.ts`
@@ -52,14 +52,14 @@ is `CdkTfProviderProject`. However, when we try installing that, we get an error
     cdktf_provider
 
 Please specify a valid project type.
-Example: npx projen new --from @cdktf/provider-project cdktf_provider
+Example: pnpm dlx projen new --from @cdktf/provider-project cdktf_provider
 ```
 
 In this case the error message is very helpful. It tells us the project type and we can easily
 adjust. When we execute the correct command, we get the following output:
 
 ```shell
-❯ npx projen new cdktf_provider --from @cdktf/provider-project
+❯ pnpm dlx projen new cdktf_provider --from @cdktf/provider-project
 blank@ /Users/defiance/cdktf-provider-project
 └── projen@0.75.1
 
@@ -83,7 +83,7 @@ the command line. It tells us the options and the syntax to pass them. We can no
 project with the following command:
 
 ```shell
-npx projen new cdktf_provider --from @cdktf/provider-project \
+pnpm dlx projen new cdktf_provider --from @cdktf/provider-project \
 --cdktf-version 0.18.0 \
 --constructs-version 10.3.0 \
 --terraform-provider aws@5.21.0

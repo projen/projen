@@ -13,16 +13,16 @@ should print the path to the NodeJS version you want to use. [`nvm`](https://git
 is a popular tool for managing multiple versions of Node on a single machine.
 To select a version, run `nvm use <version>`.
 
-To create a new React project, use `npx projen new react`:
+To create a new React project, use `pnpm dlx projen new react`:
 
 ```shell
-npx projen new react
+pnpm dlx projen new react
 ```
 
-or `npx projen new react-ts` for the TypeScript version:
+or `pnpm dlx projen new react-ts` for the TypeScript version:
 
 ```shell
-npx projen new react-ts
+pnpm dlx projen new react-ts
 ```
 
 A React project will be generated with a basic folder structure and placeholder static files.

@@ -1269,9 +1269,9 @@ export class NodeProject extends GitHubProject {
    * Defines normal dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDeps(...deps: string[]) {
@@ -1282,9 +1282,9 @@ export class NodeProject extends GitHubProject {
    * Defines development/test dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDevDeps(...deps: string[]) {
@@ -1299,9 +1299,9 @@ export class NodeProject extends GitHubProject {
    * your code against the minimum version required from your consumers.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addPeerDeps(...deps: string[]) {
@@ -1315,9 +1315,9 @@ export class NodeProject extends GitHubProject {
    * `bundledDependencies` section of your `package.json`.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addBundledDeps(...deps: string[]) {
@@ -1401,7 +1401,7 @@ export class NodeProject extends GitHubProject {
 
   /**
    * Returns the shell command to execute in order to run a task. This will
-   * typically be `npx projen TASK`.
+   * typically be `pnpm projen TASK`.
    *
    * @param task The task for which the command is required
    */

@@ -140,7 +140,7 @@ async function handler(args: any) {
         ...types.map((t) => `    ${t.pjid}`),
         "",
         `Please specify a project type.`,
-        `Example: npx projen new ${types[0].pjid}`,
+        `Example: pnpm dlx projen new ${types[0].pjid}`,
       );
     }
 
@@ -362,7 +362,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       ...types.map((t) => `    ${t}`),
       "",
       `Please specify a project type.`,
-      `Example: npx projen new --from ${spec} ${types[0]}`,
+      `Example: pnpm dlx projen new --from ${spec} ${types[0]}`,
     );
   }
 
@@ -376,7 +376,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       ...types.map((t) => `    ${t}`),
       "",
       `Please specify a valid project type.`,
-      `Example: npx projen new --from ${spec} ${types[0]}`,
+      `Example: pnpm dlx projen new --from ${spec} ${types[0]}`,
     );
   }
 

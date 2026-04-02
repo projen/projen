@@ -9,7 +9,7 @@ In this example, we'll guide you through create a Node.js API using [express](ht
 Start by creating a new directory for your project and then using projen to create a new project:
 
 ```shell
-npx projen new node
+pnpm dlx projen new node
 ```
 
 Open the project in your favorite editor. You'll see a number of files and directories have been created:
@@ -69,7 +69,7 @@ project.synth();
 Now, re-run projen:
 
 ```shell
-npx projen
+pnpm projen
 ```
 
 projen regenerates all files, and the only change we see is the "name" in the package.json is now updated:
@@ -102,18 +102,18 @@ project.synth();
 Since we've made a change to the .projenrc.js file, we need to re-run projen:
 
 ```shell
-npx projen
+pnpm dlx projen
 ```
 
 :::tip
 If you know you're going to be making a lot of changes to the .projenrc.js file, you can use the `--watch` option to have projen automatically:
 
 ```shell
-npx projen --watch
+pnpm dlx projen --watch
 ```
 :::
 
-This will update the package.json file with the new `express` dependency and then run the package manager ([yarn](https://yarnpkg.com/) by default)
+This will update the package.json file with the new `express` dependency and then run the package manager ([pnpm](https://pnpm.io/) by default)
 to install it.
 
 Now, let's add some code to our project. We'll start by creating a new directory called `src` and a new file called `index.js`:
@@ -175,11 +175,11 @@ Now, we can run our app using the new task:
 pj start
 ```
 
-For Node.js projects, tasks are standard package.json scripts, so you can also use npm, pnpm, or yarn to run the task:
+For Node.js projects, tasks are standard package.json scripts, so you can also use pnpm, npm, or yarn to run the task:
 
 ```shell
-npm run start
 pnpm start
+npm run start
 yarn start
 ```
 
@@ -190,4 +190,4 @@ Once we have the task running, the website should load in your browser at [http:
 That's it! Real simple, but should cover the main workflow for creating a new project. 
 Try exploring some of the options of the NodeProject type to see what else you can do.
 There are plenty there and the documentation on each field will tell you what it does. 
-Try setting the `license` option to 'MIT' and see what happens when you run `npx projen`.
+Try setting the `license` option to 'MIT' and see what happens when you run `pnpm dlx projen`.

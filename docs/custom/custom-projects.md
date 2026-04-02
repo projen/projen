@@ -103,7 +103,7 @@ the project is synthesized. For example, your deployment software may require
 a YAML file that is mostly boilerplate with some values that need to be filled
 in per repository. The benefit projen provides is that these values can be
 passed in as parameters to your project and the file will be updated
-the next time you run `npx projen`. The file contents and defaults can also be version
+the next time you run `pnpm dlx projen`. The file contents and defaults can also be version
 controlled. For example, as an infrastructure team makes changes to the file, your
 projen project can be updated to reflect those changes without needing to
 manually edit anything.
@@ -422,9 +422,9 @@ added after the command specified in `exec` would cause an error. Some
 commands you will want to set `receiveArgs` to `true`. For more information,
 [see the docs on tasks](/docs/concepts/tasks).
 
-These tasks can be executed using `npx projen` or your package manager's
-default for executing scripts. For example, if you use `npm`, you can
-run `npm run docker-build` to execute the `docker-build` task.
+These tasks can be executed using `pnpm dlx projen` or your package manager's
+default for executing scripts. For example, you can run `pnpm docker-build`,
+`npm run docker-build`, or `yarn docker-build` to execute the `docker-build` task.
 
 ## Making small changes to published projects
 
@@ -510,5 +510,5 @@ Now, you can run the following to create a new project using your published
 package:
 
 ```sh
-npx projen new myproject --from "@githubuser/my-project"
+pnpm dlx projen new myproject --from "@githubuser/my-project"
 ```

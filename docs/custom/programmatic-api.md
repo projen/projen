@@ -5,7 +5,7 @@ sidebar_position: 3
 # Programmatic API
 
 Projen exposes a programmatic API that allows you to create new projects through
-code instead of the regular CLI command `npx projen new`. This allows projen to
+code instead of the regular CLI command `pnpm dlx projen new`. This allows projen to
 be used to create new projects within scripts and other contexts.
 
 ## Example

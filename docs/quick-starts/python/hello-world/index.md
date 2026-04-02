@@ -9,10 +9,10 @@ to use set up in your terminal. Running `which python` in bash/zsh/other POSIX s
 `Get-Command python` in Powershell, should print the path to the Python version you
 want to use.
 
-To create a new Python project, use `npx projen new python`:
+To create a new Python project, use `pnpm dlx projen new python`:
 
 ```shell
-npx projen new python --name=my-project
+pnpm dlx projen new python --name=my-project
 ```
 
 This will synthesize a standard project directory structure with some sample
@@ -31,7 +31,7 @@ code.
 The default options will setup a Python environment using `venv`, and will
 create a `requirements.txt` file for installing dependencies via `pip`.
 
-The `npx projen new` command will also generate a `.projenrc.py` file which includes
+The `pnpm dlx projen new` command will also generate a `.projenrc.py` file which includes
 the definition of your project with any options you specified in the command
 line:
 
@@ -49,7 +49,7 @@ project = PythonProject(
 project.synth()
 ```
 
-To modify your project definitions, edit `.projenrc.py` and run `npx projen` again
+To modify your project definitions, edit `.projenrc.py` and run `pnpm projen` again
 to re-synthesize your project. The following sections describe the various features of Python projects.
 
 ## Managing environments, dependencies, and packaging
@@ -155,7 +155,7 @@ The `Pytest` component adds support for writing Python tests with
 [pytest](https://pytest.org/). The component will add the required test
 dependencies to your project.
 
-Test sources are placed under `tests` and can be executed via `npx projen test`.
+Test sources are placed under `tests` and can be executed via `pnpm projen test`.
 
 To disable pytest tests, set `pytest: false` when you define the
 `PythonProject`.
@@ -169,5 +169,5 @@ component. `Setuptools` records package metadata within a traditional `setup.py`
 script, while `Poetry` stores metadata in the more-recent `pyproject.toml` file
 format as introduced in PEP 518.
 
-Run `npx projen package` to generate a source distribution and wheel, and run
-`npx projen upload` to upload the package to PyPI.
+Run `pnpm projen package` to generate a source distribution and wheel, and run
+`pnpm projen upload` to upload the package to PyPI.

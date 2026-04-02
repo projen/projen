@@ -25,7 +25,7 @@ By default, for every commit to the default branch, a new version is released
 Start like all projen projects:
 
 ```sh
-npx projen new awscdk-construct
+pnpm dlx projen new awscdk-construct
 ```
 
 Review the resulting .projenrc.js file and make changes as needed. The following are some specific areas

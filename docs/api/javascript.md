@@ -1761,9 +1761,9 @@ Bundled dependencies will be added as normal dependencies as well as to the
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1783,9 +1783,9 @@ Defines normal dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1805,9 +1805,9 @@ Defines development/test dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1915,9 +1915,9 @@ your code against the minimum version required from your consumers.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2095,7 +2095,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow project to take library dependencies. |
 | <code><a href="#projen.javascript.NodePackage.property.entrypoint">entrypoint</a></code> | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`). |
 | <code><a href="#projen.javascript.NodePackage.property.file">file</a></code> | <code>projen.JsonFile</code> | The package.json file. |
-| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `yarn install` or `npm install` with lockfile update (not frozen). |
+| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `pnpm install` or `npm install` with lockfile update (not frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCommand">installCommand</a></code> | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installTask">installTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (non-frozen). |
@@ -2185,7 +2185,7 @@ public readonly installAndUpdateLockfileCommand: string;
 
 - *Type:* string
 
-Renders `yarn install` or `npm install` with lockfile update (not frozen).
+Renders `pnpm install` or `npm install` with lockfile update (not frozen).
 
 ---
 
@@ -2692,7 +2692,7 @@ public runTaskCommand(task: Task): string
 Returns the shell command to execute in order to run a task.
 
 This will
-typically be `npx projen TASK`.
+typically be `pnpm projen TASK`.
 
 ###### `task`<sup>Required</sup> <a name="task" id="projen.javascript.NodeProject.runTaskCommand.parameter.task"></a>
 
@@ -2817,9 +2817,9 @@ Bundled dependencies will be added as normal dependencies as well as to the
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2853,9 +2853,9 @@ Defines normal dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2875,9 +2875,9 @@ Defines development/test dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2933,9 +2933,9 @@ your code against the minimum version required from your consumers.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -8707,11 +8707,11 @@ added both to the `dependencies` section and `bundledDependencies` section of
 your `package.json`.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -8773,11 +8773,11 @@ public readonly deps: string[];
 Runtime dependencies of this module.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -8819,11 +8819,11 @@ available in your build environment but will not be fetched when this
 module is consumed.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -9944,11 +9944,11 @@ added both to the `dependencies` section and `bundledDependencies` section of
 your `package.json`.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -10010,11 +10010,11 @@ public readonly deps: string[];
 Runtime dependencies of this module.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -10056,11 +10056,11 @@ available in your build environment but will not be fetched when this
 module is consumed.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 

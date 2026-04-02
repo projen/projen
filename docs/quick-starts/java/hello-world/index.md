@@ -4,10 +4,10 @@ sidebar_position: 1
 
 # Hello World with Java
 
-To create a new Java project, use `npx projen new java`:
+To create a new Java project, use `pnpm dlx projen new java`:
 
 ```shell
-npx projen new java --group-id org.acme --artifact-id hello-maven
+pnpm dlx projen new java --group-id org.acme --artifact-id hello-maven
 ```
 
 This will synthesize a standard Maven project directory structure with a
@@ -22,7 +22,7 @@ This will synthesize a standard Maven project directory structure with a
          └── MyTest.java
 ```
 
-At this point, you should be able to now simply run `npx projen build` to build your
+At this point, you should be able to now simply run `pnpm dlx projen build` to build your
 project:
 
 ```shell
@@ -33,7 +33,7 @@ projen build
 > Since this is a standard Maven project, so you can also use `mvn package`,
 > `mvn test`, etc. IDEs should also feel at home with this project.
 
-The `npx projen new` command will also generate a `.projenrc.js` file which includes
+The `pnpm dlx projen new` command will also generate a `.projenrc.js` file which includes
 the definition of your project with any options you specified in the command
 line:
 
@@ -54,7 +54,7 @@ It is possible to create your projenrc file in java. In the future, this will be
 the default, but at the moment you need to add some configuration. See the
 [`projenrc.java`](#projenrcjava) section for details.
 
-To modify your project definitions, edit `.projenrc.js` and run `npx projen` again
+To modify your project definitions, edit `.projenrc.js` and run `pnpm projen` again
 to re-synthesize your project.
 
 The following sections describe the various features of Java projects.
@@ -130,7 +130,7 @@ the default for Java projects, but at the moment this needs to be enabled when
 the project is created:
 
 ```shell
-npx projen new java --projenrc-java
+pnpm dlx projen new java --projenrc-java
 ```
 
 Or set through:
@@ -162,7 +162,7 @@ public class projenrc {
 }
 ```
 
-In order to synthesize, run: `npx projen synth`, which will compile your test code and
+In order to synthesize, run: `pnpm projen synth`, which will compile your test code and
 execute this program.
 
 By default, `projenrc.java` is placed under the `test` scope (and
@@ -190,7 +190,7 @@ The `JUnit` component adds support for writing Java tests with
 dependencies to your POM file.
 
 Test sources are placed under `src/test` and can be executed via `mvn test` or
-`npx projen test` (same).
+`pnpm projen test` (same).
 
 To disable JUnit tests, set `junit: false` when you define the `MavenProject`.
 

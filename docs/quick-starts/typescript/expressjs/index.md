@@ -14,10 +14,10 @@ should print the path to the NodeJS version you want to use. [`nvm`](https://git
 is a popular tool for managing multiple versions of Node on a single machine.
 To select a version, run `nvm use <version>`.
 
-To create a new TypeScript project, use `npx projen new typescript`:
+To create a new TypeScript project, use `pnpm dlx projen new typescript`:
 
 ```shell
-npx projen new typescript --name=express-project
+pnpm dlx projen new typescript --name=express-project
 ```
 
 projen does not officially maintain a project for Express.js, so we need to install the dependencies
@@ -39,7 +39,7 @@ const project = new TypeScriptProject({
 });
 ```
 
-Then re-run `npx projen` to install the library.
+Then re-run `pnpm projen` to install the library.
 
 ## Code
 
@@ -72,7 +72,7 @@ project.tasks.addTask("start", {
 });
 ```
 
-This will run the `ts-node src/index.ts` command when you run `npx projen start`. It also makes it
+This will run the `ts-node src/index.ts` command when you run `pnpm projen start`. It also makes it
 possible to run `npm start`, `pnpm start` or `yarn start`, since projen updates `package.json`.
 The `receiveArgs` parameter allows you to pass additional arguments to the command.
 
@@ -124,7 +124,7 @@ describe("GET /", () => {
 });
 ```
 
-projen's TypeScript project comes with a `test` task already, so we just need to run `npx projen test`.
+projen's TypeScript project comes with a `test` task already, so we just need to run `pnpm projen test`.
 
 ```shell
  PASS  test/index.test.ts

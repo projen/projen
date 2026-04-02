@@ -24,7 +24,7 @@ For very simple projects that don't need a full `.projenrc` file in a supported 
 a `.projenrc.json` file can be used that contains the same configuration as the other formats.
 
 A usage example can be found for [the skill project for OpenVoiceOS (OVOS), an open source voice assistant](https://github.com/mikejgray/ovos-skill-projen#create-a-new-skill-template). The managed project files can
-be updated by running `npx projen`, and the `.projenrc.json` file can be
+be updated by running `pnpm dlx projen`, and the `.projenrc.json` file can be
 updated by hand.
 
 :::info
@@ -34,16 +34,16 @@ updated manually.
 
 ## How do I specify parameters when I create a project?
 
-projen supports boolean parameters as flags when executing `npx projen new`
+projen supports boolean parameters as flags when executing `pnpm dlx projen new`
 commands. For example, to create a new `TypeScriptProject` with the `stale`
 option set to `true`, you can run:
 
 ```sh
-npx projen new typescript --stale
+pnpm dlx projen new typescript --stale
 ```
 
 String parameters or falsy values can be set as follows:
 
 ```sh
-npx projen new typescript --mergify=false --authorName="Elad Ben-Israel"
+pnpm dlx projen new typescript --mergify=false --authorName="Elad Ben-Israel"
 ```

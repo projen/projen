@@ -14,11 +14,13 @@ The following tools need to be installed to develop on projen locally.
 
 - [Node]
 - [Yarn]
+- [pnpm]
 - [Maven]
 - [Go]
 - [git] >= 2.28
 
 [node]: https://nodejs.org/en/download/
+[pnpm]: https://pnpm.io/installation
 [maven]: https://maven.apache.org/install
 [go]: https://go.dev/doc/install
 [git]: https://git-scm.com/downloads
@@ -30,8 +32,8 @@ The basic commands to get the repository cloned and built locally follow:
 ```console
 $ git clone git@github.com:projen/projen
 $ cd projen
-$ npm ci # install dependencies
-$ npm run build # build projen
+$ pnpm install --frozen-lockfile # install dependencies
+$ pnpm run build # build projen
 ```
 
 Attention Windows users: It has been noted that there are compatibility issues between Git Bash and the Projen build script when running on Windows.
@@ -53,13 +55,13 @@ The projen package has the following scripts:
 - `package` - emits publishable artifacts to `dist`.
 - `eslint` - run linter against source code
 
-Each of these scripts can be executed using `npm run <script>` or `npx projen <script>`.
+Each of these scripts can be executed using `pnpm run <script>` or `npx projen <script>`.
 
 Tests are located under `src/__tests__` and executed from javascript code, so
 make sure to compile once before running any tests.
 
-One trick for quickly iterating is to run `npm run watch` in one terminal, and
-`npm run test:watch` in another. Then, when you change your unit tests the code
+One trick for quickly iterating is to run `pnpm run watch` in one terminal, and
+`pnpm run test:watch` in another. Then, when you change your unit tests the code
 will automatically recompile, thus triggering the tests to automatically re-run.
 
 #### Linting & Formatting
