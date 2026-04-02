@@ -1966,6 +1966,280 @@ Indicates if the file should be read-only or read-write.
 ---
 
 
+### FutureComponent <a name="FutureComponent" id="projen.FutureComponent"></a>
+
+A {@link Component} that is created *detached* from any project and attached to one later via {@link FutureComponent.attach}.
+
+Like a regular component, but constructed without a project. It improves on a
+naive deferred component in three ways:
+
+- Use-before-attach is an error, not a silent footgun. The constructor hands
+  the caller a guard proxy; touching `project`, `node`, `synthesize()` or any
+  subclass feature before `attach()` throws.
+- No global shadow-tree leak. Each instance gets its own throwaway shadow
+  root, so detached components never share an id counter and the root becomes
+  garbage once the component is reparented on attach.
+- `attach()` returns the unwrapped component, so callers can opt out of the
+  proxy entirely.
+
+The constructor takes no arguments (`super()`). A subclass that needs options
+captures them itself, reading the local parameter inside its constructor - NOT
+`this.options`, which the guard blocks until attach.
+
+```ts
+class Worker extends FutureComponent {
+  private readonly options: WorkerOptions;
+  constructor(options: WorkerOptions = {}) {
+    super();
+    this.options = options; // set: allowed
+  }
+  protected init() {
+    // this.project is available here
+  }
+}
+
+const w = new Worker({ retries: 3 });
+// w.project;                  // throws: not attached yet
+const real = w.attach(project); // reparents, runs init(), returns the bare instance
+```
+
+#### Initializers <a name="Initializers" id="projen.FutureComponent.Initializer"></a>
+
+```typescript
+import { FutureComponent } from 'projen'
+
+new FutureComponent()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.FutureComponent.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.FutureComponent.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.FutureComponent.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.FutureComponent.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.FutureComponent.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.FutureComponent.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
+| <code><a href="#projen.FutureComponent.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
+
+---
+
+##### `toString` <a name="toString" id="projen.FutureComponent.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.FutureComponent.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.FutureComponent.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.FutureComponent.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.FutureComponent.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.FutureComponent.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `attach` <a name="attach" id="projen.FutureComponent.attach"></a>
+
+```typescript
+public attach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component to a scope. Only now does it become usable.
+
+Returns the real, unwrapped component (not the proxy). A component may be
+attached exactly once; attaching an already-attached component throws (copy
+it first to attach a variant elsewhere). Use `tryAttach()` if you don't care
+whether it has already been attached.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.FutureComponent.attach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.FutureComponent.attach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `tryAttach` <a name="tryAttach" id="projen.FutureComponent.tryAttach"></a>
+
+```typescript
+public tryAttach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component if it isn't already, without caring *where*.
+
+Unlike `attach()`, never throws on an already-attached component: if attached
+anywhere at all, the existing instance is returned and `scope` is ignored.
+Use `attach()` when attaching to a specific scope is part of your contract
+and a pre-existing attachment elsewhere would be a bug.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.FutureComponent.tryAttach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.FutureComponent.tryAttach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.FutureComponent.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.FutureComponent.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.FutureComponent.isConstruct"></a>
+
+```typescript
+import { FutureComponent } from 'projen'
+
+FutureComponent.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.FutureComponent.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.FutureComponent.isComponent"></a>
+
+```typescript
+import { FutureComponent } from 'projen'
+
+FutureComponent.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.FutureComponent.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.FutureComponent.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.FutureComponent.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.FutureComponent.property.attached">attached</a></code> | <code>boolean</code> | Whether `attach()` has been called. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.FutureComponent.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.FutureComponent.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `attached`<sup>Required</sup> <a name="attached" id="projen.FutureComponent.property.attached"></a>
+
+```typescript
+public readonly attached: boolean;
+```
+
+- *Type:* boolean
+
+Whether `attach()` has been called.
+
+A convenience for tests/introspection;
+prefer `tryAttach()` over reading this and branching.
+
+---
+
+
 ### GitAttributesFile <a name="GitAttributesFile" id="projen.GitAttributesFile"></a>
 
 Assign attributes to file names in a git repository.
@@ -8082,6 +8356,267 @@ public readonly project: Project;
 ```
 
 - *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+
+### ScriptRunner <a name="ScriptRunner" id="projen.ScriptRunner"></a>
+
+- *Implements:* <a href="#projen.IScriptRunner">IScriptRunner</a>
+
+A script runner that executes the entrypoint file directly.
+
+A runner is a {@link FutureComponent}: it can be created standalone (e.g. in
+`.projenrc.ts`) and is attached to a project by whoever consumes it.
+
+#### Initializers <a name="Initializers" id="projen.ScriptRunner.Initializer"></a>
+
+```typescript
+import { ScriptRunner } from 'projen'
+
+new ScriptRunner()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ScriptRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ScriptRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ScriptRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.ScriptRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ScriptRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.ScriptRunner.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
+| <code><a href="#projen.ScriptRunner.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
+| <code><a href="#projen.ScriptRunner.configFor">configFor</a></code> | Produce the configuration to run the given entrypoint. |
+
+---
+
+##### `toString` <a name="toString" id="projen.ScriptRunner.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ScriptRunner.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ScriptRunner.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.ScriptRunner.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.ScriptRunner.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.ScriptRunner.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `attach` <a name="attach" id="projen.ScriptRunner.attach"></a>
+
+```typescript
+public attach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component to a scope. Only now does it become usable.
+
+Returns the real, unwrapped component (not the proxy). A component may be
+attached exactly once; attaching an already-attached component throws (copy
+it first to attach a variant elsewhere). Use `tryAttach()` if you don't care
+whether it has already been attached.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.ScriptRunner.attach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.ScriptRunner.attach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `tryAttach` <a name="tryAttach" id="projen.ScriptRunner.tryAttach"></a>
+
+```typescript
+public tryAttach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component if it isn't already, without caring *where*.
+
+Unlike `attach()`, never throws on an already-attached component: if attached
+anywhere at all, the existing instance is returned and `scope` is ignored.
+Use `attach()` when attaching to a specific scope is part of your contract
+and a pre-existing attachment elsewhere would be a bug.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.ScriptRunner.tryAttach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.ScriptRunner.tryAttach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `configFor` <a name="configFor" id="projen.ScriptRunner.configFor"></a>
+
+```typescript
+public configFor(entrypoint: string): RunScriptConfig
+```
+
+Produce the configuration to run the given entrypoint.
+
+###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.ScriptRunner.configFor.parameter.entrypoint"></a>
+
+- *Type:* string
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ScriptRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.ScriptRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.ScriptRunner.isConstruct"></a>
+
+```typescript
+import { ScriptRunner } from 'projen'
+
+ScriptRunner.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ScriptRunner.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.ScriptRunner.isComponent"></a>
+
+```typescript
+import { ScriptRunner } from 'projen'
+
+ScriptRunner.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ScriptRunner.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ScriptRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.ScriptRunner.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.ScriptRunner.property.attached">attached</a></code> | <code>boolean</code> | Whether `attach()` has been called. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.ScriptRunner.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.ScriptRunner.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `attached`<sup>Required</sup> <a name="attached" id="projen.ScriptRunner.property.attached"></a>
+
+```typescript
+public readonly attached: boolean;
+```
+
+- *Type:* boolean
+
+Whether `attach()` has been called.
+
+A convenience for tests/introspection;
+prefer `tryAttach()` over reading this and branching.
 
 ---
 
@@ -14331,6 +14866,51 @@ Commands that are run (using prerequisites as inputs) to create a target.
 
 ---
 
+### RunScriptConfig <a name="RunScriptConfig" id="projen.RunScriptConfig"></a>
+
+The resolved configuration for running a script.
+
+#### Initializer <a name="Initializer" id="projen.RunScriptConfig.Initializer"></a>
+
+```typescript
+import { RunScriptConfig } from 'projen'
+
+const runScriptConfig: RunScriptConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RunScriptConfig.property.dependencies">dependencies</a></code> | <code><a href="#projen.DependencyRequest">DependencyRequest</a>[]</code> | Dependencies required to run the script. |
+| <code><a href="#projen.RunScriptConfig.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | The task steps to execute the script. |
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.RunScriptConfig.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: DependencyRequest[];
+```
+
+- *Type:* <a href="#projen.DependencyRequest">DependencyRequest</a>[]
+
+Dependencies required to run the script.
+
+---
+
+##### `steps`<sup>Required</sup> <a name="steps" id="projen.RunScriptConfig.property.steps"></a>
+
+```typescript
+public readonly steps: TaskStep[];
+```
+
+- *Type:* <a href="#projen.TaskStep">TaskStep</a>[]
+
+The task steps to execute the script.
+
+---
+
 ### SampleDirOptions <a name="SampleDirOptions" id="projen.SampleDirOptions"></a>
 
 SampleDir options.
@@ -18158,6 +18738,35 @@ The value to resolve.
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.IResolver.resolve.parameter.options"></a>
 
 - *Type:* <a href="#projen.ResolveOptions">ResolveOptions</a>
+
+---
+
+
+### IScriptRunner <a name="IScriptRunner" id="projen.IScriptRunner"></a>
+
+- *Implemented By:* projen.typescript.TypeScriptRunner, <a href="#projen.ScriptRunner">ScriptRunner</a>, <a href="#projen.IScriptRunner">IScriptRunner</a>
+
+A script runner that can produce the configuration to execute a file of a particular type.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.IScriptRunner.configFor">configFor</a></code> | Produce the configuration to run the given entrypoint. |
+
+---
+
+##### `configFor` <a name="configFor" id="projen.IScriptRunner.configFor"></a>
+
+```typescript
+public configFor(entrypoint: string): RunScriptConfig
+```
+
+Produce the configuration to run the given entrypoint.
+
+###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.IScriptRunner.configFor.parameter.entrypoint"></a>
+
+- *Type:* string
 
 ---
 

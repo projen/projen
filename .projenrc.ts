@@ -25,7 +25,7 @@ import {
 } from "./src";
 import { JsiiBuild } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
-import { TypeScriptProject } from "./src/typescript";
+import { TypeScriptProject, TypeScriptRunner } from "./src/typescript";
 
 const AUTOMATION_USER = "projen-automation";
 const BOOTSTRAP_SCRIPT = "projen.js";
@@ -125,6 +125,7 @@ const project = new TypeScriptProject({
   projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
   projectTree: true,
+  runner: TypeScriptRunner.tsx(),
 
   tsconfig: {
     compilerOptions: {

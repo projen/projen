@@ -4804,6 +4804,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -7946,6 +7965,25 @@ exports[`inventory 1`] = `
         "switch": "rootdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
         },
       },
       {
@@ -12123,6 +12161,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -15137,6 +15194,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -18099,6 +18175,25 @@ exports[`inventory 1`] = `
         "switch": "rootdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
         },
       },
       {
@@ -21807,6 +21902,25 @@ exports[`inventory 1`] = `
         "switch": "rootdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
         },
       },
       {
@@ -26882,6 +26996,25 @@ exports[`inventory 1`] = `
         "switch": "repository-directory",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
         },
       },
       {
@@ -35545,6 +35678,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -38188,6 +38340,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -40828,6 +40999,25 @@ exports[`inventory 1`] = `
         "switch": "repository-directory",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
         },
       },
       {

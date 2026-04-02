@@ -7,6 +7,7 @@ import {
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
+import type { TypeScriptProject } from "../src/typescript";
 
 export * from "./windows-build";
 export * from "./json2jsii";
@@ -50,9 +51,14 @@ export function setupBundleTaskRunner(project: Project) {
  * @param bootstrapScriptFile The path to the bootstrap script
  */
 export function setupProjenBootstrap(
-  project: NodeProject,
+  project: TypeScriptProject,
   bootstrapScriptFile: string,
 ) {
+  const deps = project.runner.configFor(bootstrapScriptFile);
+  const checkDeps = deps.dependencies
+    .map((d) => `existsSync("node_modules/${d.name}")`)
+    .join(" && ");
+
   // this script is what we use as the projen command in this project
   // it will compile the project if needed and then run the cli.
   const bootstrapScript = new TextFile(project, bootstrapScriptFile, {
@@ -75,8 +81,8 @@ function execCommand(command) {
 
 const isBuild = existsSync("lib/cli/index.js");
 const hasJsii = existsSync("node_modules/.bin/jsii");
-const hasTsNode = existsSync("node_modules/.bin/ts-node");
-const needsBootstrapping = !isBuild || !hasTsNode;
+const hasDeps = ${checkDeps};
+const needsBootstrapping = !isBuild || !hasDeps;
 
 const installCommand = "${project.package.installCommand}";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
@@ -84,7 +90,7 @@ const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-de
 function bootstrap() {
   console.info("bootstrapping...");
 
-  if (!hasTsNode || !hasJsii) {
+  if (!hasDeps || !hasJsii) {
     execCommand(installCommand);
   }
 
