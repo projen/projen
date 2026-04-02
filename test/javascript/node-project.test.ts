@@ -1933,11 +1933,11 @@ describe("package manager env", () => {
     },
     {
       packageManager: NodePackageManager.PNPM,
-      cmd: "$(pnpm exec node --print process.env.PATH)",
+      cmd: '$(pnpm -c exec "node --print process.env.PATH")',
     },
     {
       packageManager: NodePackageManager.BUN,
-      cmd: "$(bun run node --print process.env.PATH)",
+      cmd: '$(bun --eval "console.log(process.env.PATH)")',
     },
   ].forEach((testCase) => {
     test(testCase.packageManager, () => {

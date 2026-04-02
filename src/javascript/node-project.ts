@@ -615,9 +615,9 @@ export class NodeProject extends GitHubProject {
         case NodePackageManager.YARN2:
           return "$(yarn exec node --print process.env.PATH)";
         case NodePackageManager.PNPM:
-          return "$(pnpm exec node --print process.env.PATH)";
+          return '$(pnpm -c exec "node --print process.env.PATH")';
         case NodePackageManager.BUN:
-          return "$(bun run node --print process.env.PATH)";
+          return '$(bun --eval "console.log(process.env.PATH)")';
         default:
           return '$(npx -c "node --print process.env.PATH")';
       }
