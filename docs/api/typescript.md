@@ -5541,7 +5541,7 @@ const typeScriptLibraryProjectOptions: typescript.TypeScriptLibraryProjectOption
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.typescript.TypeScriptLibraryProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -6163,7 +6163,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -8309,7 +8309,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -8877,7 +8877,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 

@@ -2642,7 +2642,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -5972,7 +5972,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -10764,7 +10764,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -13880,7 +13880,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -17160,7 +17160,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -21244,7 +21244,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -24403,7 +24403,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -27029,7 +27029,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -29936,7 +29936,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -33836,7 +33836,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -36450,7 +36450,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -39345,7 +39345,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",
@@ -42218,7 +42218,7 @@ exports[`inventory 1`] = `
     "options": [
       {
         "default": "true",
-        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`.",
+        "docs": "Automatically add the resolved \`packageManager\` to \`devEngines.packageManager\` in \`package.json\`, setting \`onFail\` to \`ignore\`.",
         "featured": false,
         "fullType": {
           "primitive": "boolean",

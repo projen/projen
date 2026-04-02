@@ -1592,7 +1592,7 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -2179,7 +2179,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 

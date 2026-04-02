@@ -381,7 +381,7 @@ export interface NodePackageOptions {
 
   /**
    * Automatically add the resolved `packageManager` to `devEngines.packageManager`
-   * in `package.json`.
+   * in `package.json`, setting `onFail` to `ignore`.
    *
    * @default true
    */
@@ -2013,7 +2013,7 @@ function packageManagerToDevEngine(
   pm: NodePackageManager,
   options: NodePackageOptions = {},
 ): DevEngineDependency {
-  const onFail = "warn";
+  const onFail = "ignore";
   switch (pm) {
     case NodePackageManager.YARN:
     case NodePackageManager.YARN_CLASSIC:

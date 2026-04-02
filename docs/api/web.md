@@ -6787,7 +6787,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.web.NextJsProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -7367,7 +7367,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -9061,7 +9061,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9657,7 +9657,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -11690,7 +11690,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.web.ReactProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.web.ReactProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -12243,7 +12243,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -14132,7 +14132,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -14701,7 +14701,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 

@@ -6863,7 +6863,7 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -7445,7 +7445,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -9545,7 +9545,7 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
-| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -10136,7 +10136,7 @@ public readonly addPackageManagerToDevEngines: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`.
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 

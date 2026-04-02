@@ -136,7 +136,7 @@
   "devEngines": {
     "packageManager": {
       "name": "npm",
-      "onFail": "warn"
+      "onFail": "ignore"
     }
   },
   "main": "lib/index.js",

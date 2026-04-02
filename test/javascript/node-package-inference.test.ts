@@ -212,7 +212,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "npm", onFail: "warn" },
+      packageManager: { name: "npm", onFail: "ignore" },
     });
   });
 
@@ -224,7 +224,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: expectedName, onFail: "warn" },
+      packageManager: { name: expectedName, onFail: "ignore" },
     });
   });
 
@@ -236,7 +236,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version, onFail: "warn" },
+      packageManager: { name: "yarn", version, onFail: "ignore" },
     });
   });
 
@@ -248,7 +248,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version, onFail: "warn" },
+      packageManager: { name: "yarn", version, onFail: "ignore" },
     });
   });
 
@@ -260,7 +260,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version: ">=3.5.0", onFail: "warn" },
+      packageManager: { name: "yarn", version: ">=3.5.0", onFail: "ignore" },
     });
   });
 
@@ -290,7 +290,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "npm", onFail: "warn" },
+      packageManager: { name: "npm", onFail: "ignore" },
       runtime: { name: "node", version: ">=20" },
     });
   });
