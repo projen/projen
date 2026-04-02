@@ -1287,7 +1287,8 @@ tsconfig.tsbuildinfo
     return 'hello, world!';
   }
 }",
-  "test/hello.test.ts": "import { Hello } from '../src';
+  "test/hello.test.ts": "import { expect, test } from '@jest/globals';
+import { Hello } from '../src';
 
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');

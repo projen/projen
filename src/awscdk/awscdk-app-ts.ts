@@ -410,7 +410,8 @@ app.synth();`;
       this.appProject.appEntrypoint,
       ".ts",
     );
-    const testCode = `${testImports.join("\n")}
+    const testCode = `import { expect, test } from '@jest/globals';
+${testImports.join("\n")}
 import { MyStack } from '../${this.appProject.srcdir}/${appEntrypointName}';
 
 test('Snapshot', () => {

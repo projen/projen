@@ -810,6 +810,7 @@ class SampleCode extends Component {
     ].join("\n");
 
     const testCode = [
+      "import { expect, test } from '@jest/globals';",
       "import { Hello } from '../src';",
       "",
       "test('hello', () => {",
