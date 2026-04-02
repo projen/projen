@@ -13,6 +13,7 @@ exports[`bun overrides 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "bun",
+      "onFail": "warn",
     },
   },
   "license": "Apache-2.0",
@@ -47,6 +48,7 @@ exports[`npm overrides 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "npm",
+      "onFail": "warn",
     },
   },
   "license": "Apache-2.0",
@@ -79,6 +81,7 @@ exports[`pnpm overrides 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
+      "onFail": "warn",
     },
   },
   "license": "Apache-2.0",
@@ -113,6 +116,7 @@ exports[`pnpm overrides in root project only, not subprojects 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
+      "onFail": "warn",
     },
   },
   "license": "Apache-2.0",
@@ -142,6 +146,7 @@ exports[`pnpm overrides in root project only, not subprojects 2`] = `
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
+      "onFail": "warn",
     },
   },
   "license": "Apache-2.0",
@@ -175,6 +180,7 @@ exports[`yarn resolutions 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "yarn",
+      "onFail": "warn",
       "version": "<2.0.0",
     },
   },
@@ -208,6 +214,7 @@ exports[`yarn_berry resolutions 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "yarn",
+      "onFail": "warn",
       "version": ">=4.0.1",
     },
   },
@@ -242,6 +249,7 @@ exports[`yarn_classic resolutions 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "yarn",
+      "onFail": "warn",
       "version": "<2.0.0",
     },
   },
@@ -275,6 +283,7 @@ exports[`yarn2 resolutions 1`] = `
   "devEngines": {
     "packageManager": {
       "name": "yarn",
+      "onFail": "warn",
       "version": ">=4.0.1",
     },
   },
