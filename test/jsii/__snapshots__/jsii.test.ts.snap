@@ -1500,6 +1500,10 @@ test('hello', () => {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "ES2020",
+      "types": [
+        "jest",
+        "node",
+      ],
     },
     "exclude": [
       "node_modules",
@@ -3011,6 +3015,10 @@ test('hello', () => {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "ES2020",
+      "types": [
+        "jest",
+        "node",
+      ],
     },
     "exclude": [
       "node_modules",
@@ -4524,6 +4532,10 @@ test('hello', () => {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "ES2020",
+      "types": [
+        "jest",
+        "node",
+      ],
     },
     "exclude": [
       "node_modules",

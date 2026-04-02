@@ -1564,7 +1564,11 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -2763,7 +2767,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "follow-redirects",
+      "jest",
+      "json-stable-stringify",
+      "node",
+      "yaml"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -3861,7 +3872,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "fs-extra",
+      "jest",
+      "json-schema",
+      "node",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -3900,7 +3918,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "fs-extra",
+      "jest",
+      "json-schema",
+      "node",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"

@@ -1105,6 +1105,11 @@ export default function Home() {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "es5",
+      "types": [
+        "node",
+        "react",
+        "react-dom",
+      ],
     },
     "exclude": [
       "node_modules",
@@ -1166,6 +1171,11 @@ export default function Home() {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "es5",
+      "types": [
+        "node",
+        "react",
+        "react-dom",
+      ],
     },
     "exclude": [],
     "include": [

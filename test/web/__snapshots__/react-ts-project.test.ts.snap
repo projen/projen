@@ -1346,6 +1346,14 @@ import '@testing-library/jest-dom';
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "es5",
+      "types": [
+        "jest",
+        "node",
+        "react",
+        "react-dom",
+        "express-serve-static-core",
+        "express",
+      ],
     },
     "exclude": [
       "node_modules",
@@ -1394,6 +1402,14 @@ import '@testing-library/jest-dom';
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "es5",
+      "types": [
+        "jest",
+        "node",
+        "react",
+        "react-dom",
+        "express-serve-static-core",
+        "express",
+      ],
     },
     "exclude": [],
     "include": [

@@ -617,6 +617,7 @@ export class TypeScriptProject extends NodeProject {
       strictPropertyInitialization: true,
       stripInternal: true,
       target: "ES2020",
+      types: (() => this.resolveInstalledTypes()) as any, // TS6.0 compat, @see https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/#up-front-adjustments
     };
   }
 
@@ -649,6 +650,16 @@ export class TypeScriptProject extends NodeProject {
     }
 
     this.addDevDeps(name);
+  }
+
+  /**
+   * Resolve the `types` compiler option from all installed `@types` dependencies.
+   * Called lazily at synth time so all deps are available.
+   */
+  private resolveInstalledTypes(): string[] {
+    return this.deps.all
+      .filter((d) => d.name.startsWith("@types/"))
+      .map((d) => d.name.replace("@types/", ""));
   }
 
   /**

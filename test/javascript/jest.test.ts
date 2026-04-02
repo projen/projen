@@ -27,6 +27,7 @@ const compilerOptionDefaults = {
   strictPropertyInitialization: true,
   stripInternal: true,
   target: "ES2020",
+  types: ["jest", "node"],
 };
 
 test("Node Project Jest Defaults Configured", () => {
