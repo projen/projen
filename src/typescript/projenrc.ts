@@ -1,8 +1,9 @@
-import { existsSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
-import type { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "./typescript";
+import { TypeScriptRunner } from "./typescript-runner";
 
 export interface ProjenrcOptions {
   /**
@@ -23,20 +24,29 @@ export interface ProjenrcOptions {
    * Whether to use `SWC` for ts-node.
    *
    * @default false
+   * @deprecated Use `runner: TypeScriptRunner.tsNode({ swc: true })` instead.
    */
   readonly swc?: boolean;
+
+  /**
+   * The runner to use for executing TypeScript files.
+   *
+   * @default - the project's runner
+   */
+  readonly runner?: TypeScriptRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * A projenrc file written in TypeScript
+ *
+ * This component is used within TypeScriptProject.
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
-  private readonly _swc: boolean;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
@@ -44,31 +54,30 @@ export class Projenrc extends ProjenrcFile {
 
     this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
-    this._swc = options.swc ?? false;
 
-    this.addDefaultTask();
+    this.addDefaultTask(options);
 
     this.generateProjenrc();
   }
 
-  private addDefaultTask() {
-    const deps = ["ts-node"];
-    if (this._swc) {
-      deps.push("@swc/core");
+  private addDefaultTask(options: ProjenrcOptions) {
+    // swc implies ts-node runner for backwards compatibility
+    const runner =
+      options.runner ??
+      (options.swc
+        ? TypeScriptRunner.tsNode({ swc: true })
+        : this._tsProject.runner);
+
+    // Bind runner to project and entrypoint
+    const { dependencies, steps } = runner.bind(this._tsProject, this.filePath);
+
+    // Request runner dependencies
+    for (const dep of dependencies) {
+      this._tsProject.deps.requestDependency(dep);
     }
 
-    // this is the task projen executes when running `projen` without a
-    // specific task (if this task is not defined, projen falls back to
-    // running "node .projenrc.js").
-    this._tsProject.addDevDeps(...deps);
-
-    const tsNode = this._swc ? "ts-node --swc" : "ts-node";
-
-    // we use "tsconfig.dev.json" here to allow projen source files to reside
-    // anywhere in the project tree.
-    this._tsProject.defaultTask?.exec(
-      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`,
-    );
+    // Add runner steps
+    this._tsProject.defaultTask?.addSteps(...steps);
   }
 
   public override preSynthesize(): void {

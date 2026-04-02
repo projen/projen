@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Creating rc file within a non-TypeScript project works with defaults 1`] = `
+exports[`Creating rc file within a non-TypeScript project defaults to ts-node 1`] = `
 {
   "compilerOptions": {},
   "exclude": [

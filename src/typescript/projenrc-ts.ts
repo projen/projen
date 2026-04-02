@@ -4,6 +4,7 @@ import { TypescriptConfig } from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
+import { TypeScriptRunner } from "./typescript-runner";
 
 export interface ProjenrcTsOptions {
   /**
@@ -21,12 +22,20 @@ export interface ProjenrcTsOptions {
   readonly projenCodeDir?: string;
 
   /**
-   * The name of the tsconfig file that will be used by ts-node
+   * The name of the tsconfig file that will be used by the runner
    * when compiling projen source files.
    *
    * @default "tsconfig.projen.json"
+   * @deprecated Use `runner` to configure the tsconfigFileName directly.
    */
   readonly tsconfigFileName?: string;
+
+  /**
+   * The runner to use for executing TypeScript files.
+   *
+   * @default TypeScriptRunner.tsNode()
+   */
+  readonly runner?: TypeScriptRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
@@ -36,8 +45,6 @@ const DEFAULT_FILENAME = ".projenrc.ts";
  *
  * This component can be instantiated in any type of project
  * and has no expectations around the project's main language.
- *
- * Requires that `npx` is available.
  */
 export class ProjenrcTs extends ProjenrcFile {
   /**
@@ -61,10 +68,36 @@ export class ProjenrcTs extends ProjenrcFile {
       compilerOptions: {},
     });
 
-    // Use npx since project's deps manager is not guaranteed to be JS-based
-    project.defaultTask?.exec(
-      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.filePath}`,
-    );
+    // Default runner uses the projen tsconfig
+    const runner =
+      options.runner ??
+      TypeScriptRunner.tsNode({ tsconfig: this.tsconfig.fileName });
+
+    // Build the run config
+    const { dependencies, steps } = runner.bind(project, this.filePath);
+
+    // If the runner has dependencies, wrap each exec step with
+    // npx -y -p <deps> -c "<command>" to make them available without install.
+    if (dependencies.length > 0) {
+      const packages = dependencies
+        .map((d) => (d.version ? `${d.name}@${d.version}` : d.name))
+        .map((p) => `-p ${p}`)
+        .join(" ");
+      for (const step of steps) {
+        if (step.exec) {
+          project.defaultTask?.addSteps({
+            ...step,
+            exec: `npx -y ${packages} -c "${step.exec}"`,
+          });
+        } else {
+          project.defaultTask?.addSteps(step);
+        }
+      }
+    } else {
+      for (const step of steps) {
+        project.defaultTask?.addSteps(step);
+      }
+    }
 
     this.generateProjenrc();
   }
