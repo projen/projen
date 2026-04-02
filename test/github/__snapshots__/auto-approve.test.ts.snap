@@ -19,9 +19,9 @@ jobs:
       pull-requests: write
     if: contains(github.event.pull_request.labels.*.name, 'auto-approve')
     steps:
-      - uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363
-        with:
-          github-token: \${{ secrets.MY_SECRET }}
+      - env:
+          GH_TOKEN: \${{ secrets.MY_SECRET }}
+        run: gh pr review --approve "\${{ github.event.pull_request.number }}"
 "
 `;
 
@@ -44,9 +44,9 @@ jobs:
       pull-requests: write
     if: contains(github.event.pull_request.labels.*.name, 'my-approve') && (github.event.pull_request.user.login == 'bot-1' || github.event.pull_request.user.login == 'bot-2')
     steps:
-      - uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363
-        with:
-          github-token: \${{ secrets.MY_SECRET }}
+      - env:
+          GH_TOKEN: \${{ secrets.MY_SECRET }}
+        run: gh pr review --approve "\${{ github.event.pull_request.number }}"
 "
 `;
 
@@ -69,8 +69,8 @@ jobs:
       pull-requests: write
     if: contains(github.event.pull_request.labels.*.name, 'auto-approve') && (github.event.pull_request.user.login == 'github-actions[bot]')
     steps:
-      - uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363
-        with:
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+      - env:
+          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: gh pr review --approve "\${{ github.event.pull_request.number }}"
 "
 `;

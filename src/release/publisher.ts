@@ -816,14 +816,12 @@ export class Publisher extends Component {
             {
               name: "Create Issue",
               if: "${{ failure() }}",
-              uses: "imjohnbo/issue-bot@v3",
-              with: {
-                labels: this.failureIssueLabel,
-                title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
-                body: "See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              },
+              run: `gh issue create --title "Publishing v$VERSION to ${opts.registryName} failed" --body "See $RUN_URL" --label "${this.failureIssueLabel}"`,
               env: {
-                GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
+                GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
+                VERSION: "${{ steps.extract-version.outputs.VERSION }}",
+                RUN_URL:
+                  "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               },
             },
           ],

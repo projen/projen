@@ -2933,13 +2933,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: \${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: custom-label
-          title: Publishing v\${{ steps.extract-version.outputs.VERSION }} to GitHub Releases failed
-          body: See https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          VERSION: \${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to GitHub Releases failed" --body "See $RUN_URL" --label "custom-label"
   release_npm:
     name: Publish to npm
     needs: release
@@ -2974,13 +2972,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: \${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: custom-label
-          title: Publishing v\${{ steps.extract-version.outputs.VERSION }} to npm failed
-          body: See https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          VERSION: \${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to npm failed" --body "See $RUN_URL" --label "custom-label"
 "
 `;
 
