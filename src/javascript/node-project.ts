@@ -1199,7 +1199,12 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
-    if (this.package.packageManager === NodePackageManager.PNPM) {
+    if (isYarnBerry(this.package.packageManager)) {
+      install.push({
+        name: "Enable corepack",
+        run: "corepack enable",
+      });
+    } else if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v5",

@@ -334,6 +334,178 @@ permissions-backup.acl
 "
 `;
 
+exports[`package manager build job steps bun build job steps 1`] = `
+[
+  {
+    "name": "Checkout",
+    "uses": "actions/checkout@v6",
+    "with": {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
+  },
+  {
+    "name": "Setup bun",
+    "uses": "oven-sh/setup-bun@v2",
+    "with": {
+      "bun-version": "latest",
+    },
+  },
+  {
+    "name": "Install dependencies",
+    "run": "bun install",
+  },
+  {
+    "name": "build",
+    "run": "npx projen build",
+  },
+  {
+    "id": "self_mutation",
+    "name": "Find mutations",
+    "run": "git add .
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
+    "working-directory": "./",
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v7",
+    "with": {
+      "name": "repo.patch",
+      "overwrite": true,
+      "path": "repo.patch",
+    },
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Fail build on mutation",
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+cat repo.patch
+exit 1",
+  },
+]
+`;
+
+exports[`package manager build job steps pnpm build job steps 1`] = `
+[
+  {
+    "name": "Checkout",
+    "uses": "actions/checkout@v6",
+    "with": {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
+  },
+  {
+    "name": "Setup pnpm",
+    "uses": "pnpm/action-setup@v5",
+    "with": {
+      "version": "10",
+    },
+  },
+  {
+    "name": "Setup Node.js",
+    "uses": "actions/setup-node@v6",
+    "with": {
+      "cache": "pnpm",
+      "package-manager-cache": true,
+    },
+  },
+  {
+    "name": "Install dependencies",
+    "run": "pnpm i --no-frozen-lockfile",
+  },
+  {
+    "name": "build",
+    "run": "npx projen build",
+  },
+  {
+    "id": "self_mutation",
+    "name": "Find mutations",
+    "run": "git add .
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
+    "working-directory": "./",
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v7",
+    "with": {
+      "name": "repo.patch",
+      "overwrite": true,
+      "path": "repo.patch",
+    },
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Fail build on mutation",
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+cat repo.patch
+exit 1",
+  },
+]
+`;
+
+exports[`package manager build job steps yarn berry build job steps 1`] = `
+[
+  {
+    "name": "Checkout",
+    "uses": "actions/checkout@v6",
+    "with": {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
+  },
+  {
+    "name": "Enable corepack",
+    "run": "corepack enable",
+  },
+  {
+    "name": "Setup Node.js",
+    "uses": "actions/setup-node@v6",
+    "with": {
+      "cache": "yarn",
+      "package-manager-cache": true,
+    },
+  },
+  {
+    "name": "Install dependencies",
+    "run": "yarn install --no-immutable",
+  },
+  {
+    "name": "build",
+    "run": "npx projen build",
+  },
+  {
+    "id": "self_mutation",
+    "name": "Find mutations",
+    "run": "git add .
+git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happened=true" >> $GITHUB_OUTPUT",
+    "shell": "bash",
+    "working-directory": "./",
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v7",
+    "with": {
+      "name": "repo.patch",
+      "overwrite": true,
+      "path": "repo.patch",
+    },
+  },
+  {
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "name": "Fail build on mutation",
+    "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+cat repo.patch
+exit 1",
+  },
+]
+`;
+
 exports[`provided preBuildSteps for build workflow get combined with setup steps 1`] = `
 [
   {

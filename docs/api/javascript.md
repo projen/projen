@@ -13412,7 +13412,7 @@ public readonly version: string;
 ```
 
 - *Type:* string
-- *Default:* 4.0.1
+- *Default:* 4.13.0
 
 A fully specified version to use for yarn (e.g., x.x.x).
 

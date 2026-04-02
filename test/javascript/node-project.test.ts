@@ -1196,6 +1196,68 @@ describe("Setup pnpm", () => {
   });
 });
 
+describe("Setup corepack for Yarn Berry", () => {
+  const enableCorepackIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Enable corepack");
+  const setupNodeIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup Node.js");
+
+  test("Enable corepack should not run without yarn berry", () => {
+    const project = new TestNodeProject({});
+
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(enableCorepackIndex(buildWorkflow.jobs.build)).toEqual(-1);
+  });
+
+  test("Enable corepack should run before Setup Node.js", () => {
+    const project = new TestNodeProject({
+      workflowPackageCache: true,
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    const output = synthSnapshot(project);
+    const buildJob = yaml.parse(output[".github/workflows/build.yml"]).jobs
+      .build;
+    expect(enableCorepackIndex(buildJob)).toBeGreaterThanOrEqual(0);
+    expect(enableCorepackIndex(buildJob)).toBeLessThan(
+      setupNodeIndex(buildJob),
+    );
+  });
+});
+
+describe("package manager build job steps", () => {
+  test.each([
+    {
+      name: "bun",
+      options: {
+        packageManager: NodePackageManager.BUN,
+        workflowPackageCache: true,
+      },
+    },
+    {
+      name: "pnpm",
+      options: {
+        packageManager: NodePackageManager.PNPM,
+        workflowPackageCache: true,
+      },
+    },
+    {
+      name: "yarn berry",
+      options: {
+        packageManager: NodePackageManager.YARN_BERRY,
+        workflowPackageCache: true,
+      },
+    },
+  ])("$name build job steps", ({ options }) => {
+    const project = new TestNodeProject(options);
+    const output = synthSnapshot(project);
+    const buildJob = yaml.parse(output[".github/workflows/build.yml"]).jobs
+      .build;
+    expect(buildJob.steps).toMatchSnapshot();
+  });
+});
+
 describe("workflowPackageCache", () => {
   const cache = (job: any) =>
     job.steps.find((step: any) => step.name === "Setup Node.js")?.with?.cache;

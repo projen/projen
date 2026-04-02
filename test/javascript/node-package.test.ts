@@ -801,6 +801,15 @@ describe("yarn berry", () => {
     expect(yarnrcLines).toContain("nodeLinker: node-modules");
   });
 
+  test(".yarnrc.yml is not readonly", () => {
+    const project = new TestProject();
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    expect(project.tryFindFile(".yarnrc.yml")?.readonly).toBe(false);
+  });
+
   describe("gitignore", () => {
     test("produces the expected gitignore for zero-installs", () => {
       const project = new TestProject();
@@ -898,7 +907,7 @@ describe("yarn berry", () => {
             new NodePackage(project, {
               packageManager: NodePackageManager.YARN_BERRY,
               yarnBerryOptions: {
-                version: "4.0.1",
+                version: "4.13.0",
                 yarnRcOptions: {
                   ignoreCwd: true,
                   lockfileFilename: "something-else.lock",

@@ -364,6 +364,7 @@ export class Yarnrc extends Component {
 
     new YamlFile(project, ".yarnrc.yml", {
       obj: options,
+      readonly: false,
     });
   }
 

@@ -1615,7 +1615,7 @@ export class NodePackage extends Component {
 
   private configureYarnBerry(project: Project, options: NodePackageOptions) {
     const {
-      version = "4.0.1",
+      version = "4.13.0",
       yarnRcOptions = {},
       zeroInstalls = false,
     } = options.yarnBerryOptions || {};
@@ -1747,7 +1747,7 @@ export interface YarnBerryOptions {
   /**
    * A fully specified version to use for yarn (e.g., x.x.x)
    *
-   * @default - 4.0.1
+   * @default - 4.13.0
    */
   readonly version?: string;
 
