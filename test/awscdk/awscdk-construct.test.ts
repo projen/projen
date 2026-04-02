@@ -252,6 +252,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "lts/*",
+            "package-manager-cache": false,
           },
         }),
       ]),
@@ -272,6 +273,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "18.0.0",
+            "package-manager-cache": false,
           },
         }),
       ]),
@@ -293,6 +295,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "20.17.0",
+            "package-manager-cache": false,
           },
         }),
       ]),
