@@ -1925,19 +1925,19 @@ describe("package manager env", () => {
     },
     {
       packageManager: NodePackageManager.YARN2,
-      cmd: '$(npx -c "node --print process.env.PATH")',
+      cmd: "$(yarn exec node --print process.env.PATH)",
     },
     {
       packageManager: NodePackageManager.YARN_BERRY,
-      cmd: '$(npx -c "node --print process.env.PATH")',
+      cmd: "$(yarn exec node --print process.env.PATH)",
     },
     {
       packageManager: NodePackageManager.PNPM,
-      cmd: '$(pnpm -c exec "node --print process.env.PATH")',
+      cmd: "$(pnpm exec node --print process.env.PATH)",
     },
     {
       packageManager: NodePackageManager.BUN,
-      cmd: '$(bun --eval "console.log(process.env.PATH)")',
+      cmd: "$(bun run node --print process.env.PATH)",
     },
   ].forEach((testCase) => {
     test(testCase.packageManager, () => {
