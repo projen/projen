@@ -12,7 +12,7 @@ exports[`deps upgrade commit can be signed 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "ref": "main",
       },
@@ -71,7 +71,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v5",
+    "uses": "actions/checkout@v6",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -155,7 +155,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v5",
+    "uses": "actions/checkout@v6",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -201,7 +201,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v5",
+    "uses": "actions/checkout@v6",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -338,7 +338,7 @@ exports[`provided preBuildSteps for build workflow get combined with setup steps
 [
   {
     "name": "Checkout",
-    "uses": "actions/checkout@v5",
+    "uses": "actions/checkout@v6",
     "with": {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",

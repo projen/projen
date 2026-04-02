@@ -172,7 +172,7 @@ export class PullRequestBackport extends Component {
         },
         {
           name: "Backport Action",
-          uses: "sqren/backport-github-action@v9.5.1",
+          uses: "sqren/backport-github-action@v11.0.0",
           // only run this step if we have found matching labels in the previous step
           // this is to prevent workflow failures because the action fails when pre-conditions are not met
           // and causes any PR to be marked with a red X, leading to error blindness.

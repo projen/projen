@@ -381,7 +381,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: "aws-actions/configure-aws-credentials@v5",
+        uses: "aws-actions/configure-aws-credentials@v6",
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -610,7 +610,7 @@ export class Publisher extends Component {
         permissions = { ...permissions, idToken: JobPermission.WRITE };
         prePublishSteps.push({
           name: "Configure AWS Credentials via GitHub OIDC Provider",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "role-to-assume": roleToAssume,
             "aws-region": region,

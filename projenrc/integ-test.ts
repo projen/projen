@@ -236,9 +236,10 @@ export class IntegrationTests extends Component {
    */
   private setupNodeStep(version: string): JobStep {
     return {
-      uses: "actions/setup-node@v4",
+      uses: "actions/setup-node@v6",
       with: {
         "node-version": version,
+        "package-manager-cache": false,
       },
     };
   }

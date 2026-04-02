@@ -137,7 +137,7 @@ export class GithubCredentials {
         {
           name: "Generate token",
           id: "generate_token",
-          uses: "actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5",
+          uses: "actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859",
           with: {
             ...actionConfig,
             ...permissions,

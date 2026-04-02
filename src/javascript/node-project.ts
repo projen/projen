@@ -1009,7 +1009,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v5",
+          uses: "codecov/codecov-action@v6",
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1130,7 +1130,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1148,7 +1148,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret,
@@ -1224,7 +1224,7 @@ export class NodeProject extends GitHubProject {
               : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v5",
+          uses: "actions/setup-node@v6",
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
@@ -1232,6 +1232,7 @@ export class NodeProject extends GitHubProject {
             ...(this.workflowPackageCache && {
               cache,
             }),
+            "package-manager-cache": this.workflowPackageCache,
           },
         });
       }

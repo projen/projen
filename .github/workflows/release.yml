@@ -22,7 +22,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -30,15 +30,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: release
         run: node ./projen.js release
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           directory: coverage
           use_oidc: true
@@ -80,9 +81,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -120,9 +122,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 24.x
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -132,7 +135,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -180,9 +183,10 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -192,7 +196,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -239,9 +243,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -254,7 +259,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -295,9 +300,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
@@ -310,7 +316,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies

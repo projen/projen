@@ -452,8 +452,11 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v5",
-      with: { "node-version": tools.node.version },
+      uses: "actions/setup-node@v6",
+      with: {
+        "node-version": tools.node.version,
+        "package-manager-cache": "false",
+      },
     });
   }
 
