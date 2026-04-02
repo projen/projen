@@ -1,4 +1,5 @@
 import { relative, posix } from "path";
+import * as semver from "semver";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
@@ -951,10 +952,13 @@ export class NodeProject extends GitHubProject {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
 
-    // For PNPM, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
+    // For PNPM < 10, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
     // resolved to the lowest available version, which is unlikely to be expected behaviour for users. We set resolution
-    // mode to "highest" to match the behaviour of yarn and npm.
-    if (this.package.packageManager === NodePackageManager.PNPM) {
+    // mode to "highest" to match the behaviour of yarn and npm. PNPM 10+ defaults to "highest" already.
+    if (
+      this.package.packageManager === NodePackageManager.PNPM &&
+      semver.lt(semver.coerce(this.package.pnpmVersion) ?? "0.0.0", "10.0.0")
+    ) {
       this.npmrc.addConfig("resolution-mode", "highest");
     }
 

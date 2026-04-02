@@ -1889,18 +1889,30 @@ describe("scoped private packages", () => {
   });
 });
 
-test("sets resolution-mode to highest by default for pnpm", () => {
+test("sets resolution-mode to highest by default for pnpm < 10", () => {
   const project = new TestNodeProject({
     packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9",
   });
 
   const output = synthSnapshot(project);
   expect(output[".npmrc"]).toContain("resolution-mode=highest");
 });
 
+test("does not set resolution-mode for pnpm 10+", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "10",
+  });
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"] ?? "").not.toContain("resolution-mode");
+});
+
 test("can override resolution-mode to lowest for pnpm", () => {
   const project = new TestNodeProject({
     packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9",
   });
   project.npmrc.addConfig("resolution-mode", "lowest");
 
