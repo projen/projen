@@ -2013,21 +2013,22 @@ function packageManagerToDevEngine(
   pm: NodePackageManager,
   options: NodePackageOptions = {},
 ): DevEngineDependency {
+  const onFail = "warn";
   switch (pm) {
     case NodePackageManager.YARN:
     case NodePackageManager.YARN_CLASSIC:
-      return { name: "yarn", version: "<2.0.0" };
+      return { name: "yarn", version: "<2.0.0", onFail };
     case NodePackageManager.YARN2:
     case NodePackageManager.YARN_BERRY: {
       const version = options.yarnBerryOptions?.version ?? "4.0.1";
-      return { name: "yarn", version: `>=${version}` };
+      return { name: "yarn", version: `>=${version}`, onFail };
     }
     case NodePackageManager.NPM:
-      return { name: "npm" };
+      return { name: "npm", onFail };
     case NodePackageManager.PNPM:
-      return { name: "pnpm" };
+      return { name: "pnpm", onFail };
     case NodePackageManager.BUN:
-      return { name: "bun" };
+      return { name: "bun", onFail };
   }
 }
 

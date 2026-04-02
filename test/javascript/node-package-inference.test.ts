@@ -212,7 +212,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "npm" },
+      packageManager: { name: "npm", onFail: "warn" },
     });
   });
 
@@ -224,7 +224,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: expectedName },
+      packageManager: { name: expectedName, onFail: "warn" },
     });
   });
 
@@ -236,7 +236,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version },
+      packageManager: { name: "yarn", version, onFail: "warn" },
     });
   });
 
@@ -248,7 +248,7 @@ describe("devEngines rendering", () => {
     new NodePackage(project, { packageManager: pm });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version },
+      packageManager: { name: "yarn", version, onFail: "warn" },
     });
   });
 
@@ -260,7 +260,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version: ">=3.5.0" },
+      packageManager: { name: "yarn", version: ">=3.5.0", onFail: "warn" },
     });
   });
 
@@ -290,7 +290,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "npm" },
+      packageManager: { name: "npm", onFail: "warn" },
       runtime: { name: "node", version: ">=20" },
     });
   });
