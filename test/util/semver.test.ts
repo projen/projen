@@ -1,4 +1,10 @@
-import { toReleaseVersion, TargetName } from "../../src/util/semver";
+import {
+  toReleaseVersion,
+  toMavenVersionRange,
+  toNuGetVersionRange,
+  toPythonVersionRange,
+  TargetName,
+} from "../../src/util/semver";
 
 describe(`toReleaseVersion (${TargetName.PYTHON})`, () => {
   test("supports standard versions", () => {
@@ -31,5 +37,63 @@ describe(`toReleaseVersion (${TargetName.PYTHON})`, () => {
         TargetName.PYTHON,
       ),
     ).toBe("1.2.3.rc123.post456.dev789+foobar");
+  });
+});
+
+describe("toMavenVersionRange", () => {
+  test("converts caret range", () => {
+    expect(toMavenVersionRange("^1.2.3")).toBe("[1.2.3,2.0.0)");
+  });
+
+  test("converts tilde range", () => {
+    expect(toMavenVersionRange("~1.2.3")).toBe("[1.2.3,1.3.0)");
+  });
+
+  test("passes through exact version", () => {
+    expect(toMavenVersionRange("1.2.3")).toBe("1.2.3");
+  });
+
+  test("passes through >= range", () => {
+    expect(toMavenVersionRange(">=2.0.0")).toBe(">=2.0.0");
+  });
+
+  test("converts wildcard", () => {
+    expect(toMavenVersionRange("*")).toBe("[0.0.0,)");
+  });
+});
+
+describe("toNuGetVersionRange", () => {
+  test("converts caret range", () => {
+    expect(toNuGetVersionRange("^1.2.3")).toBe("[1.2.3,2.0.0)");
+  });
+
+  test("converts tilde range", () => {
+    expect(toNuGetVersionRange("~1.2.3")).toBe("[1.2.3,1.3.0)");
+  });
+
+  test("passes through exact version", () => {
+    expect(toNuGetVersionRange("1.2.3")).toBe("1.2.3");
+  });
+
+  test("passes through >= range", () => {
+    expect(toNuGetVersionRange(">=2.0.0")).toBe(">=2.0.0");
+  });
+});
+
+describe("toPythonVersionRange", () => {
+  test("converts caret range", () => {
+    expect(toPythonVersionRange("^1.2.3")).toBe(">=1.2.3, <2.0.0");
+  });
+
+  test("converts tilde range", () => {
+    expect(toPythonVersionRange("~1.2.3")).toBe(">=1.2.3, <1.3.0");
+  });
+
+  test("converts exact version", () => {
+    expect(toPythonVersionRange("1.2.3")).toBe("==1.2.3");
+  });
+
+  test("converts >= range", () => {
+    expect(toPythonVersionRange(">=2.0.0")).toBe(">=2.0.0");
   });
 });
