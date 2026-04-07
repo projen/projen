@@ -82,7 +82,7 @@ export class AutoApprove extends Component {
       if: condition,
       steps: [
         {
-          run: 'gh pr review --approve "${{ github.event.pull_request.number }}"',
+          run: 'gh pr review --approve "${{ github.event.pull_request.number }}" --repo "${{ github.repository }}"',
           env: {
             GH_TOKEN: `\${{ secrets.${secret} }}`,
           },
