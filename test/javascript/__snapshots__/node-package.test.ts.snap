@@ -181,7 +181,7 @@ exports[`yarn resolutions 1`] = `
     "packageManager": {
       "name": "yarn",
       "onFail": "ignore",
-      "version": "<2.0.0",
+      "version": "1.22.22",
     },
   },
   "license": "Apache-2.0",
@@ -250,7 +250,7 @@ exports[`yarn_classic resolutions 1`] = `
     "packageManager": {
       "name": "yarn",
       "onFail": "ignore",
-      "version": "<2.0.0",
+      "version": "1.22.22",
     },
   },
   "license": "Apache-2.0",
