@@ -1350,8 +1350,6 @@ import '@testing-library/jest-dom';
         "node",
         "react",
         "react-dom",
-        "express-serve-static-core",
-        "express",
       ],
     },
     "exclude": [
@@ -1406,8 +1404,6 @@ import '@testing-library/jest-dom';
         "node",
         "react",
         "react-dom",
-        "express-serve-static-core",
-        "express",
       ],
     },
     "exclude": [],
