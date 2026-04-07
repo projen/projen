@@ -722,6 +722,21 @@ describe("tsconfigDev", () => {
   });
 });
 
+describe("tsconfig types resolution", () => {
+  test("excludes override dependencies from tsconfig types", () => {
+    const project = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    project.package.addPackageResolutions("@types/responselike@1.0.0");
+
+    const snapshot = synthSnapshot(project);
+    const tsconfig = snapshot["tsconfig.json"];
+    expect(tsconfig.compilerOptions.types).not.toContain("responselike");
+  });
+});
+
 describe("only one of components can be enabled", () => {
   test("eslint and biome", () => {
     expect(

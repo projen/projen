@@ -658,7 +658,10 @@ export class TypeScriptProject extends NodeProject {
    */
   private resolveInstalledTypes(): string[] {
     return this.deps.all
-      .filter((d) => d.name.startsWith("@types/"))
+      .filter(
+        (d) =>
+          d.name.startsWith("@types/") && d.type !== DependencyType.OVERRIDE,
+      )
       .map((d) => d.name.replace("@types/", ""));
   }
 
