@@ -1724,6 +1724,23 @@ export class NodePackage extends Component {
   }
 
   private renderBin() {
+    const entries = Object.entries(this.bin);
+
+    // Yarn Berry rewrites `"bin": {"name": "./path"}` to `"bin": "./path"`
+    // when the key matches the package name, causing anti-tamper failures.
+    // Render the string form directly to avoid this.
+    // See: https://github.com/yarnpkg/berry/issues/6184
+    const isYarnBerry =
+      this.packageManager === NodePackageManager.YARN_BERRY ||
+      this.packageManager === NodePackageManager.YARN2;
+    if (
+      isYarnBerry &&
+      entries.length === 1 &&
+      entries[0][0] === this.packageName
+    ) {
+      return entries[0][1];
+    }
+
     return sorted(this.bin);
   }
 

@@ -810,6 +810,48 @@ describe("yarn berry", () => {
     expect(project.tryFindFile(".yarnrc.yml")?.readonly).toBe(false);
   });
 
+  test("renders bin as string when single bin matches package name", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "my-project": "bin/my-project" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toBe("bin/my-project");
+  });
+
+  test("renders bin as object when single bin does not match package name", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "other-cmd": "bin/other-cmd" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toEqual({ "other-cmd": "bin/other-cmd" });
+  });
+
+  test("renders bin as object when multiple bins exist", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({
+      "my-project": "bin/my-project",
+      "other-cmd": "bin/other-cmd",
+    });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toEqual({
+      "my-project": "bin/my-project",
+      "other-cmd": "bin/other-cmd",
+    });
+  });
+
   describe("gitignore", () => {
     test("produces the expected gitignore for zero-installs", () => {
       const project = new TestProject();
