@@ -229,8 +229,8 @@ describe("devEngines rendering", () => {
   });
 
   test.each([
-    [NodePackageManager.YARN_CLASSIC, "<2.0.0"],
-    [NodePackageManager.YARN, "<2.0.0"],
+    [NodePackageManager.YARN_CLASSIC, "1.22.22"],
+    [NodePackageManager.YARN, "1.22.22"],
   ])("writes devEngines with version constraint for %s", (pm, version) => {
     const project = new Project({ name: "test" });
     new NodePackage(project, { packageManager: pm });

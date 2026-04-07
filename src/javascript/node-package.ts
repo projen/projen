@@ -2017,7 +2017,7 @@ function packageManagerToDevEngine(
   switch (pm) {
     case NodePackageManager.YARN:
     case NodePackageManager.YARN_CLASSIC:
-      return { name: "yarn", version: "<2.0.0", onFail };
+      return { name: "yarn", version: "1.22.22", onFail };
     case NodePackageManager.YARN2:
     case NodePackageManager.YARN_BERRY: {
       const version = options.yarnBerryOptions?.version ?? "4.0.1";
