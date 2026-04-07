@@ -15,7 +15,7 @@ test("test if cdk8s synth is possible", () => {
   const output = synthSnapshot(project);
 
   // expect a synth script
-  expect(output["package.json"].scripts.synth).toContain("npx projen synth");
+  expect(output["package.json"].scripts.synth).toContain("projen synth");
 
   // expect a synth task
   expect(output[".projen/tasks.json"].tasks.synth.steps).toStrictEqual([

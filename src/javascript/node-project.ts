@@ -27,7 +27,7 @@ import type {
 import { AutoMerge, GitHub, GitHubProject } from "../github";
 import type { BiomeOptions } from "./biome/biome";
 import { Biome } from "./biome/biome";
-import { isYarnBerry, isYarnClassic } from "./util";
+import { execCommand, isYarnBerry, isYarnClassic } from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import type {
@@ -576,8 +576,8 @@ export class NodeProject extends GitHubProject {
   constructor(options: NodeProjectOptions) {
     super({
       ...options,
-      // Node projects have the specific projen version locked via lockfile, so we can skip the @<VERSION> part of the top-level project
-      projenCommand: options.projenCommand ?? "npx projen",
+      projenCommand:
+        options.projenCommand ?? execCommand(options.packageManager, "projen"),
     });
 
     this.package = new NodePackage(this, options);
@@ -665,7 +665,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (!this.ejected) {
-      this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+      this.setScript(PROJEN_SCRIPT, options.projenCommand ?? "projen");
     }
 
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
@@ -1414,7 +1414,7 @@ export class NodeProject extends GitHubProject {
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    return `${this.package.projenCommand} ${task.name}`;
+    return `${this.projenCommand} ${task.name}`;
   }
 
   /**
