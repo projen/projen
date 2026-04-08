@@ -231,6 +231,36 @@ describe("environment variables", () => {
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
   });
 
+  test("warns and skips env var when $() command fails", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env:fail", {
+      exec: `node -e "console.log(process.env.VALUE || 'undefined')"`,
+      env: { VALUE: "$(exit 1)" },
+    });
+
+    // THEN - should not throw, env var is just not set
+    expect(executeTask(p, "test:env:fail")).toEqual(["undefined"]);
+  });
+
+  test("warns with stdout when $() command writes error to stdout", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env:fail:stdout", {
+      exec: `node -e "console.log(process.env.VALUE || 'undefined')"`,
+      env: {
+        VALUE: `$(node -e "console.log('something went wrong'); process.exit(1)")`,
+      },
+    });
+
+    // THEN - should not throw, env var is just not set
+    expect(executeTask(p, "test:env:fail:stdout")).toEqual(["undefined"]);
+  });
+
   test("spawn env params are respected", () => {
     // GIVEN
     const p = new TestProject();
