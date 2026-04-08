@@ -2094,6 +2094,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.NodePackage.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow project to take library dependencies. |
 | <code><a href="#projen.javascript.NodePackage.property.entrypoint">entrypoint</a></code> | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`). |
+| <code><a href="#projen.javascript.NodePackage.property.execCommand">execCommand</a></code> | <code>string</code> | The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`). |
 | <code><a href="#projen.javascript.NodePackage.property.file">file</a></code> | <code>projen.JsonFile</code> | The package.json file. |
 | <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `pnpm install` or `npm install` with lockfile update (not frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (frozen). |
@@ -2162,6 +2163,18 @@ public readonly entrypoint: string;
 - *Type:* string
 
 The module's entrypoint (e.g. `lib/index.js`).
+
+---
+
+##### `execCommand`<sup>Required</sup> <a name="execCommand" id="projen.javascript.NodePackage.property.execCommand"></a>
+
+```typescript
+public readonly execCommand: string;
+```
+
+- *Type:* string
+
+The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`).
 
 ---
 

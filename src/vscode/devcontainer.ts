@@ -162,7 +162,7 @@ export class DevContainer
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
       return this.postCreateTasks
-        .map((task) => `( npx projen ${task.name} )`)
+        .map((task) => `( ${this.project.projenCommand} ${task.name} )`)
         .join(" && ");
     } else {
       return undefined;
