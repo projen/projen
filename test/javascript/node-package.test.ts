@@ -822,6 +822,19 @@ describe("yarn berry", () => {
     expect(snps["package.json"].bin).toBe("bin/my-project");
   });
 
+  test("renders bin as string when single bin matches scoped package second part", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageName: "@aws-cdk/integ-runner",
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "integ-runner": "bin/integ-runner" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toBe("bin/integ-runner");
+  });
+
   test("renders bin as object when single bin does not match package name", () => {
     const project = new TestProject();
     const pkg = new NodePackage(project, {

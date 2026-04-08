@@ -10,6 +10,7 @@ import { join, resolve } from "path";
 import * as semver from "semver";
 import {
   extractCodeArtifactDetails,
+  isYarnBerry,
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
@@ -1730,15 +1731,12 @@ export class NodePackage extends Component {
     // when the key matches the package name, causing anti-tamper failures.
     // Render the string form directly to avoid this.
     // See: https://github.com/yarnpkg/berry/issues/6184
-    const isYarnBerry =
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2;
-    if (
-      isYarnBerry &&
-      entries.length === 1 &&
-      entries[0][0] === this.packageName
-    ) {
-      return entries[0][1];
+    const { name: binName } = parsePackageName(this.packageName);
+    if (isYarnBerry(this.packageManager) && entries.length === 1) {
+      const [key, value] = entries[0];
+      if (key === binName) {
+        return value;
+      }
     }
 
     return sorted(this.bin);
@@ -1954,7 +1952,18 @@ interface NpmDependencies {
  * Determines if an npm package is "scoped" (i.e. it starts with "xxx@").
  */
 function isScoped(packageName: string) {
-  return packageName.includes("@");
+  return packageName.startsWith("@");
+}
+
+function parsePackageName(packageName: string): {
+  scope?: string;
+  name: string;
+} {
+  if (isScoped(packageName)) {
+    const [scope, name] = packageName.split("/");
+    return { scope, name };
+  }
+  return { name: packageName };
 }
 
 function defaultNpmAccess(packageName: string) {

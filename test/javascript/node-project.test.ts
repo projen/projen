@@ -401,7 +401,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@scoped/my-package",
       });
 
       // THEN
@@ -444,7 +444,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@scoped/my-package",
         npmRegistryUrl: "https://foo.bar",
         npmAccess: NpmAccess.PUBLIC,
         npmTokenSecret: "GITHUB_TOKEN",
@@ -721,7 +721,7 @@ describe("npm publishing options", () => {
 
     // WHEN
     const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
+      packageName: "@scoped/my-package",
       npmRegistry: "foo.bar.com",
     });
 
