@@ -140,15 +140,11 @@ export class Version extends Component {
     if (node) {
       const { name: bumpName, version: bumpVersion } =
         Dependencies.parseDependency(this.bumpPackage);
-      if (
-        !node.project.deps.isDependencySatisfied(
-          bumpName,
-          DependencyType.BUILD,
-          bumpVersion ?? "*",
-        )
-      ) {
-        node.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
-      }
+      node.project.deps.requestDependency({
+        name: bumpName,
+        version: bumpVersion,
+        type: DependencyType.BUILD,
+      });
     }
 
     const versionInputFile = options.versionInputFile;

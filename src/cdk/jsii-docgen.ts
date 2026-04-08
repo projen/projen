@@ -31,18 +31,11 @@ export class JsiiDocgen extends Component {
     super(scope);
 
     const version = options.version ?? "*";
-    if (
-      !this.project.deps.isDependencySatisfied(
-        "jsii-docgen",
-        DependencyType.BUILD,
-        version,
-      )
-    ) {
-      this.project.deps.addDependency(
-        `jsii-docgen@${version}`,
-        DependencyType.BUILD,
-      );
-    }
+    this.project.deps.requestDependency({
+      name: "jsii-docgen",
+      version,
+      type: DependencyType.BUILD,
+    });
 
     const filePath = options.filePath ?? "API.md";
 

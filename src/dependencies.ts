@@ -192,6 +192,81 @@ export class Dependencies extends Component {
     return dep?.version != null && semver.subset(dep.version, expectedRange);
   }
 
+  /**
+   * Request a dependency. Unlike `addDependency`, this merges intelligently
+   * with existing dependencies of the same name:
+   *
+   * - If the dep exists at a stronger type (e.g. RUNTIME), it is not
+   *   downgraded to a weaker type (e.g. BUILD).
+   * - If the dep exists with a version that already satisfies the request,
+   *   the version is not changed.
+   * - If the dep doesn't exist, it is added with the requested type/version.
+   * - If the dep exists but the versions don't intersect, an error is thrown.
+   *
+   * @param request The dependency request.
+   * @returns The resulting dependency after merging.
+   */
+  public requestDependency(request: DependencyRequest): Dependency {
+    const requestedType = request.type ?? DependencyType.BUILD;
+
+    // Find the strongest existing dep by name across all types
+    const strongest = this.findStrongestByName(request.name);
+
+    if (!strongest) {
+      const spec = request.version
+        ? `${request.name}@${request.version}`
+        : request.name;
+      return this.addDependency(spec, requestedType, request.metadata ?? {});
+    }
+
+    // Don't downgrade the type
+    const effectiveType =
+      TYPE_STRENGTH[strongest.type] >= TYPE_STRENGTH[requestedType]
+        ? strongest.type
+        : requestedType;
+
+    // Version merging: check if existing already satisfies
+    let effectiveVersion: string | undefined;
+
+    if (!request.version) {
+      effectiveVersion = strongest.version;
+    } else if (
+      this.isDependencySatisfied(request.name, strongest.type, request.version)
+    ) {
+      effectiveVersion = strongest.version;
+    } else if (!strongest.version) {
+      effectiveVersion = request.version;
+    } else if (semver.intersects(strongest.version, request.version)) {
+      effectiveVersion = request.version;
+    } else {
+      throw new Error(
+        `Dependency "${request.name}" version conflict: existing "${strongest.version}" ` +
+          `does not intersect with requested "${request.version}"`,
+      );
+    }
+
+    const spec = effectiveVersion
+      ? `${request.name}@${effectiveVersion}`
+      : request.name;
+    return this.addDependency(spec, effectiveType, {
+      ...strongest.metadata,
+      ...request.metadata,
+    });
+  }
+
+  /**
+   * Finds the strongest existing dependency by name across all types.
+   */
+  private findStrongestByName(name: string): Dependency | undefined {
+    const deps = this._deps.filter((d) => d.name === name);
+    if (deps.length === 0) {
+      return undefined;
+    }
+    return deps.reduce((a, b) =>
+      TYPE_STRENGTH[a.type] >= TYPE_STRENGTH[b.type] ? a : b,
+    );
+  }
+
   private tryGetDependencyIndex(name: string, type?: DependencyType): number {
     const deps = this._deps.filter((d) => d.name === name);
     if (deps.length === 0) {
@@ -348,3 +423,48 @@ export enum DependencyType {
    */
   OPTIONAL = "optional",
 }
+
+/**
+ * A request for a dependency. Unlike adding a dependency directly,
+ * requesting a dependency will intelligently merge with existing
+ * dependencies of the same name.
+ */
+export interface DependencyRequest {
+  /**
+   * The package name.
+   */
+  readonly name: string;
+
+  /**
+   * Semantic version constraint.
+   * @default - any version
+   */
+  readonly version?: string;
+
+  /**
+   * Suggested dependency type.
+   * @default DependencyType.BUILD
+   */
+  readonly type?: DependencyType;
+
+  /**
+   * Additional metadata.
+   * @default - none
+   */
+  readonly metadata?: Record<string, any>;
+}
+
+/**
+ * Dependency types ordered by "strength". A dependency at a stronger type
+ * already satisfies a request for a weaker type.
+ */
+const TYPE_STRENGTH: Record<string, number> = {
+  [DependencyType.RUNTIME]: 100,
+  [DependencyType.PEER]: 90,
+  [DependencyType.BUNDLED]: 80,
+  [DependencyType.OPTIONAL]: 70,
+  [DependencyType.BUILD]: 50,
+  [DependencyType.TEST]: 40,
+  [DependencyType.DEVENV]: 30,
+  [DependencyType.OVERRIDE]: 10,
+};

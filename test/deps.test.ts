@@ -361,6 +361,120 @@ describe("isDependencySatisfied", () => {
   });
 });
 
+describe("requestDependency", () => {
+  test("adds dep when none exists", () => {
+    const p = new TestProject();
+
+    const dep = p.deps.requestDependency({ name: "foo" });
+
+    expect(dep.name).toBe("foo");
+    expect(dep.type).toBe(DependencyType.BUILD);
+    expect(dep.version).toBeUndefined();
+  });
+
+  test("adds dep with version and type", () => {
+    const p = new TestProject();
+
+    const dep = p.deps.requestDependency({
+      name: "foo",
+      version: "^2.0.0",
+      type: DependencyType.RUNTIME,
+    });
+
+    expect(dep.name).toBe("foo");
+    expect(dep.version).toBe("^2.0.0");
+    expect(dep.type).toBe(DependencyType.RUNTIME);
+  });
+
+  test("does not downgrade type from RUNTIME to BUILD", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@^1.0.0", DependencyType.RUNTIME);
+
+    p.deps.requestDependency({ name: "foo", type: DependencyType.BUILD });
+
+    expect(p.deps.getDependency("foo", DependencyType.RUNTIME)).toBeDefined();
+  });
+
+  test("promotes type from BUILD to RUNTIME", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@^1.0.0", DependencyType.BUILD);
+
+    p.deps.requestDependency({
+      name: "foo",
+      type: DependencyType.RUNTIME,
+    });
+
+    expect(
+      p.deps.tryGetDependency("foo", DependencyType.RUNTIME),
+    ).toBeDefined();
+  });
+
+  test("keeps existing version when it satisfies request", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@^1.2.0", DependencyType.BUILD);
+
+    p.deps.requestDependency({ name: "foo", version: "^1.0.0" });
+
+    expect(p.deps.getDependency("foo", DependencyType.BUILD).version).toBe(
+      "^1.2.0",
+    );
+  });
+
+  test("narrows version when ranges intersect", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@>=1.0.0", DependencyType.BUILD);
+
+    p.deps.requestDependency({ name: "foo", version: "^2.0.0" });
+
+    expect(p.deps.getDependency("foo", DependencyType.BUILD).version).toBe(
+      "^2.0.0",
+    );
+  });
+
+  test("throws on non-intersecting versions", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@^1.0.0", DependencyType.BUILD);
+
+    expect(() =>
+      p.deps.requestDependency({ name: "foo", version: "^3.0.0" }),
+    ).toThrow(/version conflict/);
+  });
+
+  test("no-op when requesting without version and dep exists", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo@^1.0.0", DependencyType.BUILD);
+
+    p.deps.requestDependency({ name: "foo" });
+
+    expect(p.deps.getDependency("foo", DependencyType.BUILD).version).toBe(
+      "^1.0.0",
+    );
+  });
+
+  test("sets version when existing has none", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo", DependencyType.BUILD);
+
+    p.deps.requestDependency({ name: "foo", version: "^2.0.0" });
+
+    expect(p.deps.getDependency("foo", DependencyType.BUILD).version).toBe(
+      "^2.0.0",
+    );
+  });
+
+  test("merges metadata", () => {
+    const p = new TestProject();
+    p.deps.addDependency("foo", DependencyType.BUILD, { a: 1 });
+
+    const dep = p.deps.requestDependency({
+      name: "foo",
+      metadata: { b: 2 },
+    });
+
+    expect(dep.metadata).toStrictEqual({ a: 1, b: 2 });
+  });
+});
+
 function depsManifest(p: Project) {
   p.synth();
   const filepath = join(p.outdir, Dependencies.MANIFEST_FILE);

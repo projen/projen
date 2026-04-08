@@ -675,15 +675,11 @@ export class NodeProject extends GitHubProject {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
 
-      if (
-        !this.deps.isDependencySatisfied(
-          "constructs",
-          DependencyType.BUILD,
-          "^10.0.0",
-        )
-      ) {
-        this.addDevDeps(`constructs@^10.0.0`);
-      }
+      this.deps.requestDependency({
+        name: "constructs",
+        version: "^10.0.0",
+        type: DependencyType.BUILD,
+      });
     }
 
     if (!options.defaultReleaseBranch) {

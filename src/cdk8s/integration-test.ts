@@ -16,13 +16,15 @@ export class IntegrationTest extends IntegrationTestBase {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project, options);
 
-    if (!project.deps.tryGetDependency("cdk8s-cli")) {
-      project.deps.addDependency(`cdk8s-cli`, DependencyType.BUILD);
-    }
+    project.deps.requestDependency({
+      name: "cdk8s-cli",
+      type: DependencyType.BUILD,
+    });
 
-    if (!project.deps.tryGetDependency("ts-node")) {
-      project.deps.addDependency("ts-node", DependencyType.BUILD);
-    }
+    project.deps.requestDependency({
+      name: "ts-node",
+      type: DependencyType.BUILD,
+    });
 
     const deployDir = join(this.tmpDir, "deploy.cdk.out");
     const assertDir = join(this.tmpDir, "assert.cdk.out");
