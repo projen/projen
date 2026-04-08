@@ -855,6 +855,7 @@ The parent project.
 | <code><a href="#projen.Dependencies.getDependency">getDependency</a></code> | Returns a dependency by name. |
 | <code><a href="#projen.Dependencies.isDependencySatisfied">isDependencySatisfied</a></code> | Checks if an existing dependency satisfies a dependency requirement. |
 | <code><a href="#projen.Dependencies.removeDependency">removeDependency</a></code> | Removes a dependency. |
+| <code><a href="#projen.Dependencies.requestDependency">requestDependency</a></code> | Request a dependency. Unlike `addDependency`, this merges intelligently with existing dependencies of the same name and type:. |
 | <code><a href="#projen.Dependencies.tryGetDependency">tryGetDependency</a></code> | Returns a dependency by name. |
 
 ---
@@ -1030,6 +1031,29 @@ The dependency type.
 
 This is only required if there the
 dependency is defined for multiple types.
+
+---
+
+##### `requestDependency` <a name="requestDependency" id="projen.Dependencies.requestDependency"></a>
+
+```typescript
+public requestDependency(request: DependencyRequest): Dependency
+```
+
+Request a dependency. Unlike `addDependency`, this merges intelligently with existing dependencies of the same name and type:.
+
+If the dep exists with a version that already satisfies the request,
+  the version is not changed.
+- If the dep doesn't exist, it is added with the requested type/version.
+- If the dep exists but the versions don't intersect, an error is thrown.
+- If no type is provided, an existing dependency of any type will satisfy
+  the request. If none exists, it is added as BUILD.
+
+###### `request`<sup>Required</sup> <a name="request" id="projen.Dependencies.requestDependency.parameter.request"></a>
+
+- *Type:* <a href="#projen.DependencyRequest">DependencyRequest</a>
+
+The dependency request.
 
 ---
 
@@ -10842,6 +10866,87 @@ public readonly version: string;
 - *Default:* requirement is managed by the package manager (e.g. npm/yarn).
 
 Semantic version version requirement.
+
+---
+
+### DependencyRequest <a name="DependencyRequest" id="projen.DependencyRequest"></a>
+
+A request for a dependency.
+
+Unlike adding a dependency directly,
+requesting a dependency will intelligently merge with existing
+dependencies of the same name and type.
+
+#### Initializer <a name="Initializer" id="projen.DependencyRequest.Initializer"></a>
+
+```typescript
+import { DependencyRequest } from 'projen'
+
+const dependencyRequest: DependencyRequest = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.DependencyRequest.property.name">name</a></code> | <code>string</code> | The package name. |
+| <code><a href="#projen.DependencyRequest.property.metadata">metadata</a></code> | <code>{[ key: string ]: any}</code> | Additional metadata. |
+| <code><a href="#projen.DependencyRequest.property.type">type</a></code> | <code><a href="#projen.DependencyType">DependencyType</a></code> | Dependency type. |
+| <code><a href="#projen.DependencyRequest.property.version">version</a></code> | <code>string</code> | Semantic version constraint. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.DependencyRequest.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The package name.
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="metadata" id="projen.DependencyRequest.property.metadata"></a>
+
+```typescript
+public readonly metadata: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* none
+
+Additional metadata.
+
+---
+
+##### `type`<sup>Optional</sup> <a name="type" id="projen.DependencyRequest.property.type"></a>
+
+```typescript
+public readonly type: DependencyType;
+```
+
+- *Type:* <a href="#projen.DependencyType">DependencyType</a>
+- *Default:* any existing type, or DependencyType.BUILD
+
+Dependency type.
+
+If not provided, an existing dependency of any type
+will satisfy the request. If none exists, it is added as BUILD.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.DependencyRequest.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* any version
+
+Semantic version constraint.
 
 ---
 
