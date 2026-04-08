@@ -59,7 +59,7 @@ export class IntegrationTest extends IntegrationTestBase {
 
     project.deps.requestDependency({
       name: "aws-cdk",
-      version: `^${options.cdkDeps.cdkMajorVersion}`,
+      version: options.cdkDeps.cdkCliVersion,
       type: DependencyType.BUILD,
     });
 
