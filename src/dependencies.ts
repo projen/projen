@@ -200,12 +200,18 @@ export class Dependencies extends Component {
    *   the version is not changed.
    * - If the dep doesn't exist, it is added with the requested type/version.
    * - If the dep exists but the versions don't intersect, an error is thrown.
+   * - If no type is provided, an existing dependency of any type will satisfy
+   *   the request. If none exists, it is added as BUILD.
    *
    * @param request The dependency request.
    * @returns The resulting dependency after merging.
    */
   public requestDependency(request: DependencyRequest): Dependency {
-    const requestedType = request.type ?? DependencyType.BUILD;
+    // When type is not specified, find any existing dep with this name
+    const requestedType =
+      request.type ??
+      this.findExistingInstallableType(request.name) ??
+      DependencyType.BUILD;
     const existing = this.tryGetDependency(request.name, requestedType);
 
     if (!existing) {
@@ -242,6 +248,23 @@ export class Dependencies extends Component {
       ...existing.metadata,
       ...request.metadata,
     });
+  }
+
+  /**
+   * Finds the type of an existing installable dependency by name.
+   * Excludes PEER, OVERRIDE, and OPTIONAL types.
+   * Returns undefined if no dependency with this name exists.
+   */
+  private findExistingInstallableType(
+    name: string,
+  ): DependencyType | undefined {
+    return this._deps.find(
+      (d) =>
+        d.name === name &&
+        d.type !== DependencyType.PEER &&
+        d.type !== DependencyType.OVERRIDE &&
+        d.type !== DependencyType.OPTIONAL,
+    )?.type;
   }
 
   private tryGetDependencyIndex(name: string, type?: DependencyType): number {
@@ -419,8 +442,9 @@ export interface DependencyRequest {
   readonly version?: string;
 
   /**
-   * Dependency type.
-   * @default DependencyType.BUILD
+   * Dependency type. If not provided, an existing dependency of any type
+   * will satisfy the request. If none exists, it is added as BUILD.
+   * @default - any existing type, or DependencyType.BUILD
    */
   readonly type?: DependencyType;
 
