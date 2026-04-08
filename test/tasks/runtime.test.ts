@@ -233,32 +233,54 @@ describe("environment variables", () => {
 
   test("warns and skips env var when $() command fails", () => {
     // GIVEN
+    const warn = jest.spyOn(logging, "warn");
     const p = new TestProject();
 
     // WHEN
     p.addTask("test:env:fail", {
-      exec: `node -e "console.log(process.env.VALUE || 'undefined')"`,
+      exec: "echo ok",
       env: { VALUE: "$(exit 1)" },
     });
+    p.synth();
 
-    // THEN - should not throw, env var is just not set
-    expect(executeTask(p, "test:env:fail")).toEqual(["undefined"]);
+    const rt = new TaskRuntime(p.outdir);
+    rt.runTask("test:env:fail");
+
+    // THEN
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("unable to evaluate"),
+    );
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("command exited with code"),
+    );
+    warn.mockRestore();
   });
 
   test("warns with stdout when $() command writes error to stdout", () => {
     // GIVEN
+    const warn = jest.spyOn(logging, "warn");
     const p = new TestProject();
 
     // WHEN
     p.addTask("test:env:fail:stdout", {
-      exec: `node -e "console.log(process.env.VALUE || 'undefined')"`,
+      exec: "echo ok",
       env: {
         VALUE: `$(node -e "console.log('something went wrong'); process.exit(1)")`,
       },
     });
+    p.synth();
 
-    // THEN - should not throw, env var is just not set
-    expect(executeTask(p, "test:env:fail:stdout")).toEqual(["undefined"]);
+    const rt = new TaskRuntime(p.outdir);
+    rt.runTask("test:env:fail:stdout");
+
+    // THEN
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("unable to evaluate"),
+    );
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("something went wrong"),
+    );
+    warn.mockRestore();
   });
 
   test("spawn env params are respected", () => {
