@@ -614,6 +614,56 @@ test("pnpm overrides in root project only, not subprojects", () => {
   expect(snps["packages/sub-project/package.json"]).toMatchSnapshot();
 });
 
+describe("yarnVersion", () => {
+  test("returns yarn berry version for yarn berry", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: { version: "3.6.4" },
+    });
+    expect(pkg.yarnVersion).toBe("3.6.4");
+  });
+
+  test("returns default yarn classic version for yarn classic", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+    expect(pkg.yarnVersion).toBe("1.22.22");
+  });
+
+  test("returns undefined for non-yarn package manager", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+    expect(pkg.yarnVersion).toBeUndefined();
+  });
+});
+
+test("pnpm adds packageManager field to package.json with default version", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"]).toHaveProperty("packageManager", "pnpm@10.33.0");
+});
+
+test("pnpm adds packageManager field to package.json with custom version", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9.15.4",
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"]).toHaveProperty("packageManager", "pnpm@9.15.4");
+});
+
 test("typesVersions is not managed by projen, but can be manipulated", () => {
   // ARRANGE
   const outdir = mkdtemp();

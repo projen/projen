@@ -2117,6 +2117,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackage.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.scopedPackagesOptions">scopedPackagesOptions</a></code> | <code><a href="#projen.javascript.ScopedPackagesOptions">ScopedPackagesOptions</a>[]</code> | Options for privately hosted scoped packages. |
+| <code><a href="#projen.javascript.NodePackage.property.yarnVersion">yarnVersion</a></code> | <code>string</code> | The version of Yarn to use if using Yarn as a package manager. |
 
 ---
 
@@ -2451,6 +2452,18 @@ public readonly scopedPackagesOptions: ScopedPackagesOptions[];
 - *Default:* undefined
 
 Options for privately hosted scoped packages.
+
+---
+
+##### `yarnVersion`<sup>Optional</sup> <a name="yarnVersion" id="projen.javascript.NodePackage.property.yarnVersion"></a>
+
+```typescript
+public readonly yarnVersion: string;
+```
+
+- *Type:* string
+
+The version of Yarn to use if using Yarn as a package manager.
 
 ---
 
@@ -9138,7 +9151,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 
@@ -10375,7 +10388,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 

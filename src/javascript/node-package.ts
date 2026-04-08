@@ -12,6 +12,7 @@ import {
   execCommand,
   extractCodeArtifactDetails,
   isYarnBerry,
+  isYarnClassic,
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
@@ -32,6 +33,9 @@ const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
+const DEFAULT_PNPM_VERSION = "10.33.0";
+const DEFAULT_YARN_BERRY_VERSION = "4.13.0";
+const DEFAULT_YARN_CLASSIC_VERSION = "1.22.22";
 
 export interface NodePackageOptions {
   /**
@@ -256,7 +260,7 @@ export interface NodePackageOptions {
   /**
    * The version of PNPM to use if using PNPM as a package manager.
    *
-   * @default "9"
+   * @default "10.33.0"
    */
   readonly pnpmVersion?: string;
 
@@ -592,13 +596,45 @@ export class NodePackage extends Component {
 
   /**
    * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @returns `undefined` if the package manager is not PNPM.
    */
-  public readonly pnpmVersion?: string;
+  public get pnpmVersion(): string | undefined {
+    return this.packageManager === NodePackageManager.PNPM
+      ? this._pnpmVersion
+      : undefined;
+  }
 
   /**
    * The version of Bun to use if using Bun as a package manager.
+   *
+   * @returns `undefined` if the package manager is not Bun.
    */
-  public readonly bunVersion?: string;
+  public get bunVersion(): string | undefined {
+    return this.packageManager === NodePackageManager.BUN
+      ? this._bunVersion
+      : undefined;
+  }
+
+  /**
+   * The version of Yarn to use if using Yarn as a package manager.
+   *
+   * @returns `undefined` if the package manager is not Yarn.
+   */
+  public get yarnVersion(): string | undefined {
+    if (isYarnBerry(this.packageManager)) {
+      return this._yarnBerryVersion;
+    }
+    if (isYarnClassic(this.packageManager)) {
+      return DEFAULT_YARN_CLASSIC_VERSION;
+    }
+    return undefined;
+  }
+
+  private readonly _pnpmVersion: string;
+  private readonly _bunVersion: string;
+  private readonly _yarnBerryVersion: string;
+  private readonly _options: NodePackageOptions;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -759,7 +795,7 @@ export class NodePackage extends Component {
       ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
-      devEngines: () => this.renderDevEngines(options),
+      devEngines: () => this.renderDevEngines(),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
@@ -777,6 +813,13 @@ export class NodePackage extends Component {
             }
           : undefined,
     };
+
+    // Resolve package manager versions
+    this._options = options;
+    this._pnpmVersion = options.pnpmVersion ?? DEFAULT_PNPM_VERSION;
+    this._bunVersion = options.bunVersion ?? "latest";
+    this._yarnBerryVersion =
+      options.yarnBerryOptions?.version ?? DEFAULT_YARN_BERRY_VERSION;
 
     // Configure Yarn Berry if using
     if (isYarnBerry(this.packageManager)) {
@@ -807,9 +850,9 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this.pnpmVersion = options.pnpmVersion ?? "10";
-    this.bunVersion = options.bunVersion ?? "latest";
     this.addNodeEngine();
+
+    this.configureCorepack();
 
     this.addCodeArtifactLoginScript();
 
@@ -1645,23 +1688,16 @@ export class NodePackage extends Component {
     return sorted(this.engines);
   }
 
-  private renderDevEngines(
-    options: NodePackageOptions,
-  ): DevEngines | undefined {
+  private renderDevEngines(): DevEngines | undefined {
     const autoAdd =
-      options.addPackageManagerToDevEngines !== false &&
+      this._options.addPackageManagerToDevEngines !== false &&
       this._packageManagerExplicit;
 
     const base: DevEngines = autoAdd
-      ? {
-          packageManager: packageManagerToDevEngine(
-            this.packageManager,
-            options,
-          ),
-        }
+      ? { packageManager: this.packageManagerToDevEngine() }
       : {};
 
-    const merged = { ...base, ...options.devEngines };
+    const merged = { ...base, ...this._options.devEngines };
     return Object.keys(merged).length > 0 ? merged : undefined;
   }
 
@@ -1809,20 +1845,62 @@ export class NodePackage extends Component {
     runtime.runTask(taskToRun.name);
   }
 
+  /**
+   * Sets the `packageManager` field in `package.json` for corepack-managed
+   * package managers (yarn berry and pnpm).
+   */
+  private configureCorepack() {
+    if (isYarnBerry(this.packageManager)) {
+      this.addField("packageManager", `yarn@${this._yarnBerryVersion}`);
+    } else if (this.packageManager === NodePackageManager.PNPM) {
+      this.addField("packageManager", `pnpm@${this._pnpmVersion}`);
+    }
+  }
+
+  /**
+   * Maps the current package manager to a `DevEngineDependency`.
+   */
+  private packageManagerToDevEngine(): DevEngineDependency {
+    const onFail = "ignore";
+    switch (this.packageManager) {
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        return {
+          name: "yarn",
+          version: DEFAULT_YARN_CLASSIC_VERSION,
+          onFail,
+        };
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        return {
+          name: "yarn",
+          version:
+            this._options.yarnBerryOptions?.version ??
+            `>=${semver.major(this._yarnBerryVersion)}`,
+          onFail,
+        };
+      case NodePackageManager.NPM:
+        return { name: "npm", onFail };
+      case NodePackageManager.PNPM:
+        return {
+          name: "pnpm",
+          version:
+            this._options.pnpmVersion ?? `>=${semver.major(this._pnpmVersion)}`,
+          onFail,
+        };
+      case NodePackageManager.BUN:
+        return { name: "bun", onFail };
+    }
+  }
+
   private configureYarnBerry(project: Project, options: NodePackageOptions) {
-    const {
-      version = "4.13.0",
-      yarnRcOptions = {},
-      zeroInstalls = false,
-    } = options.yarnBerryOptions || {};
+    const { yarnRcOptions = {}, zeroInstalls = false } =
+      options.yarnBerryOptions || {};
     this.checkForConflictingYarnOptions(yarnRcOptions);
 
-    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
-    // of `yarn` to use.
-    this.addField("packageManager", `yarn@${version}`);
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, version, yarnRcOptions);
+    new Yarnrc(project, this._yarnBerryVersion, yarnRcOptions);
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
@@ -2048,34 +2126,6 @@ function packageManagerNameToEnum(
       return NodePackageManager.YARN_CLASSIC;
     default:
       return undefined;
-  }
-}
-
-/**
- * Maps a `NodePackageManager` to a `DevEngineDependency` with appropriate
- * version constraints. Yarn classic and berry get version ranges to
- * distinguish them.
- */
-function packageManagerToDevEngine(
-  pm: NodePackageManager,
-  options: NodePackageOptions = {},
-): DevEngineDependency {
-  const onFail = "ignore";
-  switch (pm) {
-    case NodePackageManager.YARN:
-    case NodePackageManager.YARN_CLASSIC:
-      return { name: "yarn", version: "1.22.22", onFail };
-    case NodePackageManager.YARN2:
-    case NodePackageManager.YARN_BERRY: {
-      const version = options.yarnBerryOptions?.version ?? "4.0.1";
-      return { name: "yarn", version: `>=${version}`, onFail };
-    }
-    case NodePackageManager.NPM:
-      return { name: "npm", onFail };
-    case NodePackageManager.PNPM:
-      return { name: "pnpm", onFail };
-    case NodePackageManager.BUN:
-      return { name: "bun", onFail };
   }
 }
 

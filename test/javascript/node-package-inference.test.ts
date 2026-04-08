@@ -216,15 +216,40 @@ describe("devEngines rendering", () => {
     });
   });
 
-  test.each([
-    [NodePackageManager.PNPM, "pnpm"],
-    [NodePackageManager.BUN, "bun"],
-  ])("writes devEngines.packageManager for %s", (pm, expectedName) => {
+  test.each([[NodePackageManager.BUN, "bun"]])(
+    "writes devEngines.packageManager for %s",
+    (pm, expectedName) => {
+      const project = new Project({ name: "test" });
+      new NodePackage(project, { packageManager: pm });
+      const snap = synthSnapshot(project);
+      expect(snap["package.json"].devEngines).toEqual({
+        packageManager: { name: expectedName, onFail: "ignore" },
+      });
+    },
+  );
+
+  test("writes devEngines with version constraint for pnpm", () => {
     const project = new Project({ name: "test" });
-    new NodePackage(project, { packageManager: pm });
+    new NodePackage(project, { packageManager: NodePackageManager.PNPM });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: expectedName, onFail: "ignore" },
+      packageManager: { name: "pnpm", version: ">=10", onFail: "ignore" },
+    });
+  });
+
+  test("writes devEngines with custom pnpmVersion", () => {
+    const project = new Project({ name: "test" });
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      pnpmVersion: "9.15.4",
+    });
+    const snap = synthSnapshot(project);
+    expect(snap["package.json"].devEngines).toEqual({
+      packageManager: {
+        name: "pnpm",
+        version: "9.15.4",
+        onFail: "ignore",
+      },
     });
   });
 
@@ -241,8 +266,8 @@ describe("devEngines rendering", () => {
   });
 
   test.each([
-    [NodePackageManager.YARN_BERRY, ">=4.0.1"],
-    [NodePackageManager.YARN2, ">=4.0.1"],
+    [NodePackageManager.YARN_BERRY, ">=4"],
+    [NodePackageManager.YARN2, ">=4"],
   ])("writes devEngines with version constraint for %s", (pm, version) => {
     const project = new Project({ name: "test" });
     new NodePackage(project, { packageManager: pm });
@@ -260,7 +285,7 @@ describe("devEngines rendering", () => {
     });
     const snap = synthSnapshot(project);
     expect(snap["package.json"].devEngines).toEqual({
-      packageManager: { name: "yarn", version: ">=3.5.0", onFail: "ignore" },
+      packageManager: { name: "yarn", version: "3.5.0", onFail: "ignore" },
     });
   });
 

@@ -82,11 +82,13 @@ exports[`pnpm overrides 1`] = `
     "packageManager": {
       "name": "pnpm",
       "onFail": "ignore",
+      "version": ">=10",
     },
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
       "other-dep": "*",
@@ -117,11 +119,13 @@ exports[`pnpm overrides in root project only, not subprojects 1`] = `
     "packageManager": {
       "name": "pnpm",
       "onFail": "ignore",
+      "version": ">=10",
     },
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "my-project",
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {},
   "publishConfig": {
     "access": "public",
@@ -147,11 +151,13 @@ exports[`pnpm overrides in root project only, not subprojects 2`] = `
     "packageManager": {
       "name": "pnpm",
       "onFail": "ignore",
+      "version": ">=10",
     },
   },
   "license": "Apache-2.0",
   "main": "lib/index.js",
   "name": "sub-project",
+  "packageManager": "pnpm@10.33.0",
   "publishConfig": {
     "access": "public",
   },
@@ -215,7 +221,7 @@ exports[`yarn_berry resolutions 1`] = `
     "packageManager": {
       "name": "yarn",
       "onFail": "ignore",
-      "version": ">=4.0.1",
+      "version": ">=4",
     },
   },
   "license": "Apache-2.0",
@@ -284,7 +290,7 @@ exports[`yarn2 resolutions 1`] = `
     "packageManager": {
       "name": "yarn",
       "onFail": "ignore",
-      "version": ">=4.0.1",
+      "version": ">=4",
     },
   },
   "license": "Apache-2.0",
