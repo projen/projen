@@ -87,8 +87,8 @@ export class AutoApprove extends Component {
           run: 'gh pr review --approve "${{ PR_NUMBER }}" --repo "${{ GH_REPO }}"',
           env: {
             GH_TOKEN: `\${{ secrets.${secret} }}`,
-            GH_REPO: "${{ github.event.pull_request.number }}",
-            PR_NUMBER: "${{ github.repository }}",
+            GH_REPO: "${{ github.repository }}",
+            PR_NUMBER: "${{ github.event.pull_request.number }}",
           },
         },
       ],
