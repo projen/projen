@@ -169,9 +169,5 @@ export function sanitizeOutput(dir: string) {
   fs.writeFileSync(depsPath, JSON.stringify(deps));
 }
 
-export {
-  DirectorySnapshotOptions,
-  SynthOutput,
-  directorySnapshot,
-  synthSnapshot,
-} from "../src/util/synth";
+export type { DirectorySnapshotOptions, SynthOutput } from "../src/util/synth";
+export { directorySnapshot, synthSnapshot } from "../src/util/synth";

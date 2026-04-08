@@ -24,4 +24,4 @@ export class Testing {
   private constructor() {} // utility
 }
 
-export { SnapshotOptions } from "./util/synth";
+export type { SnapshotOptions } from "./util/synth";
