@@ -386,27 +386,28 @@ describe("requestDependency", () => {
     expect(dep.type).toBe(DependencyType.RUNTIME);
   });
 
-  test("does not downgrade type from RUNTIME to BUILD", () => {
+  test("adds dep at requested type even if different type exists", () => {
     const p = new TestProject();
     p.deps.addDependency("foo@^1.0.0", DependencyType.RUNTIME);
 
     p.deps.requestDependency({ name: "foo", type: DependencyType.BUILD });
 
     expect(p.deps.getDependency("foo", DependencyType.RUNTIME)).toBeDefined();
+    expect(p.deps.getDependency("foo", DependencyType.BUILD)).toBeDefined();
   });
 
-  test("promotes type from BUILD to RUNTIME", () => {
+  test("merges with existing dep of same type", () => {
     const p = new TestProject();
     p.deps.addDependency("foo@^1.0.0", DependencyType.BUILD);
 
     p.deps.requestDependency({
       name: "foo",
-      type: DependencyType.RUNTIME,
+      type: DependencyType.BUILD,
     });
 
-    expect(
-      p.deps.tryGetDependency("foo", DependencyType.RUNTIME),
-    ).toBeDefined();
+    expect(p.deps.getDependency("foo", DependencyType.BUILD).version).toBe(
+      "^1.0.0",
+    );
   });
 
   test("keeps existing version when it satisfies request", () => {
