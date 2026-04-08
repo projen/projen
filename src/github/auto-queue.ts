@@ -1,6 +1,8 @@
 import type { IConstruct } from "constructs";
+import { GitHub } from "./github";
+import type { GithubCredentials } from "./github-credentials";
+import * as workflows from "./workflows-model";
 import { Component } from "../component";
-import * as gh from "../github";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -39,7 +41,7 @@ export interface AutoQueueOptions {
    * @see https://projen.io/docs/integrations/github/
    * @default - uses credentials from the GitHub component
    */
-  readonly projenCredentials?: gh.GithubCredentials;
+  readonly projenCredentials?: GithubCredentials;
 
   /**
    * The method used to add the PR to the merge queue
@@ -95,7 +97,7 @@ export class AutoQueue extends Component {
   constructor(scope: IConstruct, options: AutoQueueOptions = {}) {
     super(scope);
 
-    const workflowEngine = gh.GitHub.of(this.project);
+    const workflowEngine = GitHub.of(this.project);
     if (!workflowEngine) {
       throw new Error(
         `Cannot add ${
@@ -148,12 +150,12 @@ export class AutoQueue extends Component {
       options.projenCredentials ?? workflowEngine.projenCredentials;
     const mergeMethod = options.mergeMethod ?? MergeMethod.SQUASH;
 
-    const autoQueueJob: gh.workflows.Job = {
+    const autoQueueJob: workflows.Job = {
       name: "Set AutoQueue on PR #${{ github.event.number }}",
       runsOn: options.runsOn ?? ["ubuntu-latest"],
       permissions: {
-        pullRequests: gh.workflows.JobPermission.WRITE,
-        contents: gh.workflows.JobPermission.WRITE,
+        pullRequests: workflows.JobPermission.WRITE,
+        contents: workflows.JobPermission.WRITE,
       },
       if: conditions.length ? conditions.join(" && ") : undefined,
       environment: credentials.environment,

@@ -357,7 +357,7 @@ exports[`package manager build job steps bun build job steps 1`] = `
   },
   {
     "name": "build",
-    "run": "npx projen build",
+    "run": "bunx projen build",
   },
   {
     "id": "self_mutation",
@@ -418,7 +418,7 @@ exports[`package manager build job steps pnpm build job steps 1`] = `
   },
   {
     "name": "build",
-    "run": "npx projen build",
+    "run": "pnpm exec projen build",
   },
   {
     "id": "self_mutation",
@@ -476,7 +476,7 @@ exports[`package manager build job steps yarn berry build job steps 1`] = `
   },
   {
     "name": "build",
-    "run": "npx projen build",
+    "run": "yarn projen build",
   },
   {
     "id": "self_mutation",

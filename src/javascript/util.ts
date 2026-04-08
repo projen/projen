@@ -33,6 +33,36 @@ export function isNpm(packageManager: NodePackageManager): boolean {
 }
 
 /**
+ * Returns the exec command prefix for the given package manager, or defaults to npx if non provided.
+ * Optionally followed by a binary name.
+ */
+export function execCommand(
+  packageManager?: NodePackageManager,
+  bin?: string,
+): string {
+  let cmd: string;
+  switch (packageManager) {
+    case NodePackageManager.PNPM:
+      cmd = "pnpm exec";
+      break;
+    case NodePackageManager.YARN2:
+    case NodePackageManager.YARN_BERRY:
+      cmd = "yarn";
+      break;
+    case NodePackageManager.BUN:
+      cmd = "bunx";
+      break;
+    case NodePackageManager.NPM:
+    case NodePackageManager.YARN:
+    case NodePackageManager.YARN_CLASSIC:
+    default:
+      cmd = "npx";
+      break;
+  }
+  return bin ? `${cmd} ${bin}` : cmd;
+}
+
+/**
  * Basic interface for `package.json`.
  */
 interface PackageManifest {
