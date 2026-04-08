@@ -556,7 +556,7 @@ test("uses the proper yarn berry upgrade command", () => {
        "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
      },
      {
-       "exec": "npx projen",
+       "exec": "yarn projen",
      },
      {
        "spawn": "post-upgrade",

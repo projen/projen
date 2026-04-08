@@ -349,7 +349,7 @@ export class Gitpod extends Component implements IDevEnvironment {
     this.tasks.push(
       ...tasks.map((task) => ({
         name: task.name,
-        command: `npx projen ${task.name}`,
+        command: `${this.project.projenCommand} ${task.name}`,
       })),
     );
   }

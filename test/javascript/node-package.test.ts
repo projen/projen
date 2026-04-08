@@ -216,14 +216,14 @@ test("no install if package.json did not change at all", () => {
   const orig = {
     name: "@projen/test",
     scripts: {
-      build: "npx projen build",
-      compile: "npx projen compile",
-      default: "npx projen default",
-      eject: "npx projen eject",
-      package: "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "pre-compile": "npx projen pre-compile",
-      test: "npx projen test",
+      build: "projen build",
+      compile: "projen compile",
+      default: "projen default",
+      eject: "projen eject",
+      package: "projen package",
+      "post-compile": "projen post-compile",
+      "pre-compile": "projen pre-compile",
+      test: "projen test",
     },
     dependencies: {
       ms: "^2",
@@ -820,6 +820,19 @@ describe("yarn berry", () => {
     const snps = synthSnapshot(project);
 
     expect(snps["package.json"].bin).toBe("bin/my-project");
+  });
+
+  test("renders bin as string when single bin matches scoped package second part", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageName: "@aws-cdk/integ-runner",
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "integ-runner": "bin/integ-runner" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toBe("bin/integ-runner");
   });
 
   test("renders bin as object when single bin does not match package name", () => {

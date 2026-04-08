@@ -266,12 +266,19 @@ class RunTask {
         if (result.status !== 0) {
           const error = result.error
             ? result.error.stack
-            : (result.stderr?.toString() ?? "unknown error");
-          throw new Error(
-            `unable to evaluate environment variable ${key}=${value}: ${error}`,
+            : result.stderr?.toString().trim() ||
+              result.stdout?.toString().trim() ||
+              `command exited with code ${result.status}`;
+
+          logging.warn(
+            this.fmtLog(
+              `${underline(key)}: unable to evaluate "${query}". Environment variable will be skipped. Check that the command exists and runs successfully.`,
+            ),
           );
+          logging.warn(this.fmtLog(`${underline(key)}: ${error}`));
+        } else {
+          output[key] = result.stdout.toString("utf-8").trim();
         }
-        output[key] = result.stdout.toString("utf-8").trim();
       } else {
         output[key] = value;
       }
@@ -371,7 +378,7 @@ class RunTask {
       quiet: true,
       ...options,
       spawnOptions: {
-        stdio: ["inherit", "pipe", "inherit"],
+        stdio: ["inherit", "pipe", "pipe"],
       },
     });
   }

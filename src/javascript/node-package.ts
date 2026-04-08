@@ -9,7 +9,9 @@ import {
 import { join, resolve } from "path";
 import * as semver from "semver";
 import {
+  execCommand,
   extractCodeArtifactDetails,
+  isYarnBerry,
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
@@ -777,10 +779,7 @@ export class NodePackage extends Component {
     };
 
     // Configure Yarn Berry if using
-    if (
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2
-    ) {
+    if (isYarnBerry(this.packageManager)) {
       this.configureYarnBerry(project, options);
     }
 
@@ -1062,6 +1061,14 @@ export class NodePackage extends Component {
     if (this.resolveDepsAndWritePackageJson()) {
       this.installDependencies();
     }
+  }
+
+  /**
+   * The command prefix to use when executing binary commands for this package
+   * manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`).
+   */
+  public get execCommand(): string {
+    return execCommand(this.packageManager);
   }
 
   /**
@@ -1731,15 +1738,12 @@ export class NodePackage extends Component {
     // when the key matches the package name, causing anti-tamper failures.
     // Render the string form directly to avoid this.
     // See: https://github.com/yarnpkg/berry/issues/6184
-    const isYarnBerry =
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2;
-    if (
-      isYarnBerry &&
-      entries.length === 1 &&
-      entries[0][0] === this.packageName
-    ) {
-      return entries[0][1];
+    const { name: binName } = parsePackageName(this.packageName);
+    if (isYarnBerry(this.packageManager) && entries.length === 1) {
+      const [key, value] = entries[0];
+      if (key === binName) {
+        return value;
+      }
     }
 
     return sorted(this.bin);
@@ -1756,11 +1760,12 @@ export class NodePackage extends Component {
       )
       .sort((x, y) => x.name.localeCompare(y.name));
 
+    const scriptCommand = this.resolveScriptCommand();
     for (const task of tasks) {
       if (this.scriptsToBeRemoved.has(task.name)) {
         continue;
       }
-      result[task.name] = this.npmScriptForTask(task);
+      result[task.name] = `${scriptCommand} ${task.name}`;
     }
 
     return {
@@ -1769,8 +1774,21 @@ export class NodePackage extends Component {
     };
   }
 
-  private npmScriptForTask(task: Task) {
-    return `${this.project.projenCommand} ${task.name}`;
+  /**
+   * Determines the command to use for projen in package.json scripts.
+   *
+   * Since `node_modules/.bin` is always on PATH in npm scripts, we can use
+   * bare `projen` unless the user has set a custom `projenCommand`.
+   */
+  private resolveScriptCommand(): string {
+    const cmd = this.project.projenCommand;
+    const isDefault = [
+      // NodeProject sets projenCommand based on the package manager
+      execCommand(this.packageManager, "projen"),
+      // Plain Project always defaults to "npx projen" regardless of package manager
+      "npx projen",
+    ].includes(cmd);
+    return isDefault ? "projen" : cmd;
   }
 
   private readPackageJson() {
@@ -1955,7 +1973,18 @@ interface NpmDependencies {
  * Determines if an npm package is "scoped" (i.e. it starts with "xxx@").
  */
 function isScoped(packageName: string) {
-  return packageName.includes("@");
+  return packageName.startsWith("@");
+}
+
+function parsePackageName(packageName: string): {
+  scope?: string;
+  name: string;
+} {
+  if (isScoped(packageName)) {
+    const [scope, name] = packageName.split("/");
+    return { scope, name };
+  }
+  return { name: packageName };
 }
 
 function defaultNpmAccess(packageName: string) {
