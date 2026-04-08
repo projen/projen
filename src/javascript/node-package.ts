@@ -13,14 +13,15 @@ import {
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
-import { Yarnrc, YarnrcOptions } from "./yarnrc";
+import type { YarnrcOptions } from "./yarnrc";
+import { Yarnrc } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 

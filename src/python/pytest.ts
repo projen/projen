@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 export interface PytestOptions {
   /**

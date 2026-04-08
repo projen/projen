@@ -1,4 +1,5 @@
-import { SpawnOptions, spawnSync } from "child_process";
+import type { SpawnOptions } from "child_process";
+import { spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
@@ -6,7 +7,7 @@ import { format } from "util";
 import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
-import { TasksManifest, TaskSpec, TaskStep } from "./task-model";
+import type { TasksManifest, TaskSpec, TaskStep } from "./task-model";
 import { makeCrossPlatform } from "./util/tasks";
 
 // avoids a (false positive) esbuild warning about incorrect imports

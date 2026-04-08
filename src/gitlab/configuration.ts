@@ -1,6 +1,6 @@
 import * as path from "path";
 import { snake } from "case";
-import {
+import type {
   Artifacts,
   Cache,
   Default,
@@ -15,7 +15,7 @@ import {
   Workflow,
 } from "./configuration-model";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 /**

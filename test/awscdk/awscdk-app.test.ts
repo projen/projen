@@ -11,7 +11,8 @@ import {
   toDeterministicSingletonUuid,
 } from "../../src/awscdk/internal";
 import { NodePackageManager } from "../../src/javascript";
-import { mkdtemp, SynthOutput, synthSnapshot } from "../util";
+import type { SynthOutput } from "../util";
+import { mkdtemp, synthSnapshot } from "../util";
 
 describe("cdk.json", () => {
   it("app fully overridden", () => {

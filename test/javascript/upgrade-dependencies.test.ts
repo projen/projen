@@ -1,10 +1,10 @@
 import * as yaml from "yaml";
 import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";

@@ -1,5 +1,6 @@
 import { DependencyType } from "../../src/dependencies";
-import { ChecksumPolicy, Pom, PomOptions, UpdatePolicy } from "../../src/java";
+import type { PomOptions } from "../../src/java";
+import { ChecksumPolicy, Pom, UpdatePolicy } from "../../src/java";
 import { synthSnapshot, TestProject } from "../util";
 
 test("group/artifact/version", () => {

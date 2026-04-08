@@ -3,8 +3,8 @@ import { join as pathJoin } from "path";
 import { renderBundleName } from "./util";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 // Parts of this file inspired by @aws-cdk-lib/aws-lambda-nodejs
 //   https://github.com/aws/aws-cdk/blob/c3c771c6f6f6790f2298a85a549bded640d2e35b/packages/aws-cdk-lib/aws-lambda-nodejs/lib/bundling.ts#L195

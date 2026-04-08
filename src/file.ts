@@ -1,6 +1,6 @@
 import { rmSync } from "fs";
 import * as path from "path";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, DEFAULT_PROJEN_RC_JS_FILENAME } from "./common";
 import { Component } from "./component";

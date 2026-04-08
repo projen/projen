@@ -1,8 +1,8 @@
 import { join } from "path";
+import type { BundlerOptions } from "../../src/javascript";
 import {
   BundleLogLevel,
   Bundler,
-  BundlerOptions,
   NodeProject,
   RunBundleTask,
   SourceMapMode,

@@ -1,5 +1,5 @@
-import { GitIdentity } from "./task-workflow";
-import { JobStepConfiguration, JobStep } from "./workflows-model";
+import type { GitIdentity } from "./task-workflow";
+import type { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
 
 /**

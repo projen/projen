@@ -1,10 +1,6 @@
 import { DependencyType, Testing } from "../../src";
-import {
-  AwsCdkDeps,
-  AwsCdkDepsJs,
-  LambdaExtension,
-  LambdaRuntime,
-} from "../../src/awscdk";
+import type { AwsCdkDeps } from "../../src/awscdk";
+import { AwsCdkDepsJs, LambdaExtension, LambdaRuntime } from "../../src/awscdk";
 import { TypeScriptProject } from "../../src/typescript";
 
 test("simplest LambdaExtension cdk v2", () => {

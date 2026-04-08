@@ -5,7 +5,7 @@ import * as JSONC from "comment-json";
 import { CommentArray } from "comment-json";
 import * as glob from "fast-glob";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for the Snapshot synthesis

@@ -1,4 +1,4 @@
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Generate workflow name with suffix based on if project is subproject or not

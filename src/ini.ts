@@ -1,7 +1,8 @@
 import * as INI from "ini";
-import { IResolver } from "./file";
-import { ObjectFile, ObjectFileOptions } from "./object-file";
-import { Project } from "./project";
+import type { IResolver } from "./file";
+import type { ObjectFileOptions } from "./object-file";
+import { ObjectFile } from "./object-file";
+import type { Project } from "./project";
 
 /**
  * Options for `IniFile`.

@@ -1,4 +1,4 @@
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
 test("no workflow", () => {

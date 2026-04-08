@@ -1,20 +1,21 @@
-import { BranchOptions } from "./release";
+import type { BranchOptions } from "./release";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import {
+import type {
   Job,
-  JobPermission,
   JobPermissions,
   JobStep,
   Tools,
 } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
-import { Project } from "../project";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";

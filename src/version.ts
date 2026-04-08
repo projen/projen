@@ -1,9 +1,9 @@
 import { posix } from "path";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "./component";
 import { Dependencies, DependencyType } from "./dependencies";
 import { NodePackage } from "./javascript/node-package";
-import { Task } from "./task";
+import type { Task } from "./task";
 
 /**
  * This command determines if there were any changes since the last release in a cross-platform compatible way.

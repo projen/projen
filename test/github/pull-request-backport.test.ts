@@ -1,6 +1,7 @@
 // import * as yaml from "yaml";
 import { GithubCredentials, PullRequestBackport } from "../../src/github";
-import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import type { NodeProjectOptions } from "../../src/javascript";
+import { NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 test("default", () => {

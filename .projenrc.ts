@@ -190,6 +190,10 @@ const project = new JsiiProject({
   },
 });
 
+javascript.Eslint.of(project)?.addRules({
+  "@typescript-eslint/consistent-type-imports": "error",
+});
+
 // Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")

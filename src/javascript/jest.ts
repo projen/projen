@@ -1,9 +1,9 @@
 import * as path from "path";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { normalizePersistedPath } from "../util";
 import { closestProjectMustBe } from "../util/constructs";
 

@@ -2,7 +2,7 @@ import { spawnSync } from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
-import { Project } from "../../src";
+import type { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
 import { makeCrossPlatform } from "../../src/util/tasks";

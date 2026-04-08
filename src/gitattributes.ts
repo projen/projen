@@ -1,5 +1,6 @@
-import { IConstruct } from "constructs";
-import { IResolver, FileBase } from "./file";
+import type { IConstruct } from "constructs";
+import type { IResolver } from "./file";
+import { FileBase } from "./file";
 
 /**
  * The end of line characters supported by git.

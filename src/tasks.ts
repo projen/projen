@@ -3,9 +3,10 @@ import * as path from "path";
 import { Component } from "./component";
 import { JsonFile } from "./json";
 import { warn } from "./logging";
-import { Project } from "./project";
-import { Task, TaskOptions } from "./task";
-import { TasksManifest, TaskSpec } from "./task-model";
+import type { Project } from "./project";
+import type { TaskOptions } from "./task";
+import { Task } from "./task";
+import type { TasksManifest, TaskSpec } from "./task-model";
 import { TaskRuntime } from "./task-runtime";
 
 /**

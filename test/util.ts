@@ -2,14 +2,12 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { Project } from "../src";
+import type { Project } from "../src";
 import { installPackage } from "../src/cli/util";
-import {
-  GitHubProject,
-  GitHubProjectOptions,
-} from "../src/github/github-project";
+import type { GitHubProjectOptions } from "../src/github/github-project";
+import { GitHubProject } from "../src/github/github-project";
 import * as logging from "../src/logging";
-import { Task } from "../src/task";
+import type { Task } from "../src/task";
 import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
 

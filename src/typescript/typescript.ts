@@ -3,27 +3,26 @@ import * as semver from "semver";
 import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import {
-  Eslint,
+import type {
   EslintOptions,
   Jest,
-  NodeProject,
   NodeProjectOptions,
+  TypeScriptCompilerOptions,
+  TypescriptConfigOptions,
+} from "../javascript";
+import {
+  Eslint,
+  NodeProject,
   Projenrc as NodeProjectProjenrc,
   Transform,
-  TypeScriptCompilerOptions,
   TypescriptConfig,
-  TypescriptConfigOptions,
 } from "../javascript";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { TextFile } from "../textfile";
-import {
-  Projenrc as ProjenrcTs,
-  ProjenrcOptions as ProjenrcTsOptions,
-  TypedocDocgen,
-} from "../typescript";
+import type { ProjenrcOptions as ProjenrcTsOptions } from "../typescript";
+import { Projenrc as ProjenrcTs, TypedocDocgen } from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 
 /**

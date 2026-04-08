@@ -1,29 +1,29 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import {
+import type {
   GithubCredentials,
-  GitHub,
   GithubWorkflow,
   GitIdentity,
   workflows,
-  WorkflowJobs,
-  WorkflowSteps,
 } from "../github";
+import { GitHub, WorkflowJobs, WorkflowSteps } from "../github";
 import { isYarnClassic, isYarnBerry, isNpm } from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
-import {
+import type {
   ContainerOptions,
   JobStep,
-  JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
-import { NodePackageManager, NodeProject } from "../javascript";
+import { JobPermission } from "../github/workflows-model";
+import type { NodeProject } from "../javascript";
+import { NodePackageManager } from "../javascript";
 import { Release } from "../release";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
-import { TaskStep } from "../task-model";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
+import type { Task } from "../task";
+import type { TaskStep } from "../task-model";
 import { workflowNameForProject } from "../util/name";
 
 const CREATE_PATCH_STEP_ID = "create_patch";

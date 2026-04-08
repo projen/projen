@@ -1,7 +1,7 @@
-import { CiConfigurationOptions } from ".";
+import type { CiConfigurationOptions } from ".";
 import { CiConfiguration } from "./configuration";
-import { GitlabConfiguration } from "./gitlab-configuration";
-import { Project } from "../project";
+import type { GitlabConfiguration } from "./gitlab-configuration";
+import type { Project } from "../project";
 
 /**
  * A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.

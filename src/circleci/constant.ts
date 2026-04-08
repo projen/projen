@@ -1,4 +1,4 @@
-import { Filter } from "./model";
+import type { Filter } from "./model";
 
 /**
  * constant to create a filter to make a job or workflow only run on master

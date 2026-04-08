@@ -1,13 +1,16 @@
 import * as TOML from "@iarna/toml";
-import { IConstruct } from "constructs";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonExecutableOptions } from "./python-project";
+import type { IConstruct } from "constructs";
+import type { IPythonDeps } from "./python-deps";
+import type { IPythonEnv } from "./python-env";
+import type {
+  IPythonPackaging,
+  PythonPackagingOptions,
+} from "./python-packaging";
+import type { PythonExecutableOptions } from "./python-project";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";

@@ -1,7 +1,5 @@
-import {
-  ConstructLibraryCdktf,
-  ConstructLibraryCdktfOptions,
-} from "../../src/cdktf";
+import type { ConstructLibraryCdktfOptions } from "../../src/cdktf";
+import { ConstructLibraryCdktf } from "../../src/cdktf";
 import { NpmAccess } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 

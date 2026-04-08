@@ -1,7 +1,8 @@
 import { join } from "path/posix";
-import { IntegrationTestBaseOptions, IntegrationTestBase } from "../cdk";
+import type { IntegrationTestBaseOptions } from "../cdk";
+import { IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for IntegrationTest

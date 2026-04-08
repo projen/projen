@@ -1,8 +1,9 @@
-import { GitIdentity, GithubCredentials } from ".";
+import type { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { context, isHiddenPath } from "./private/util";
-import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
-import { JobStep } from "./workflows-model";
+import type { CheckoutWith } from "./workflow-steps";
+import { WorkflowSteps } from "./workflow-steps";
+import type { JobStep } from "./workflows-model";
 
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");

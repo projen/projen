@@ -1,27 +1,27 @@
-import {
+import type {
   DockerComposeNetworkConfig,
   IDockerComposeNetworkBinding,
   IDockerComposeNetworkConfig,
 } from "./docker-compose-network";
-import {
+import type {
   DockerComposePortMappingOptions,
-  DockerComposeProtocol,
   DockerComposeServicePort,
 } from "./docker-compose-port";
+import { DockerComposeProtocol } from "./docker-compose-port";
 import { renderDockerComposeFile } from "./docker-compose-render";
-import {
-  DockerComposeService,
+import type {
   DockerComposeServiceDescription,
   IDockerComposeServiceName,
 } from "./docker-compose-service";
-import {
+import { DockerComposeService } from "./docker-compose-service";
+import type {
   DockerComposeVolumeConfig,
   DockerComposeVolumeMount,
   IDockerComposeVolumeBinding,
   IDockerComposeVolumeConfig,
 } from "./docker-compose-volume";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 /**

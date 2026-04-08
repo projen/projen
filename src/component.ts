@@ -1,5 +1,6 @@
-import { Construct, IConstruct } from "constructs";
-import { Project } from "./project";
+import type { IConstruct } from "constructs";
+import { Construct } from "constructs";
+import type { Project } from "./project";
 import {
   isComponent,
   findClosestProject,

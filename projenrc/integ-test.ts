@@ -1,12 +1,11 @@
-import { Component, Task } from "../src";
-import {
-  INTEG_TEST_VERSIONS,
-  JavaVersion,
-  LanguageVersions,
-} from "./integ-versions";
+import type { Task } from "../src";
+import { Component } from "../src";
+import type { JavaVersion, LanguageVersions } from "./integ-versions";
+import { INTEG_TEST_VERSIONS } from "./integ-versions";
 import { GithubWorkflow, WorkflowSteps } from "../src/github";
-import { Job, JobPermission, JobStep } from "../src/github/workflows-model";
-import { NodeProject } from "../src/javascript";
+import type { Job, JobStep } from "../src/github/workflows-model";
+import { JobPermission } from "../src/github/workflows-model";
+import type { NodeProject } from "../src/javascript";
 
 /**
  * Options for IntegrationTests component

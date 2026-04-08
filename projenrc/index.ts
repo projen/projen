@@ -1,8 +1,9 @@
-import { DependencyType, JsonFile, Project, TextFile } from "../src";
+import type { Project } from "../src";
+import { DependencyType, JsonFile, TextFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 import { TaskWorkflow } from "../src/github";
+import type { NodeProject } from "../src/javascript";
 import {
-  NodeProject,
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";

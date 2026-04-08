@@ -1,4 +1,4 @@
-import { Tools } from "../github/workflows-model";
+import type { Tools } from "../github/workflows-model";
 
 export type JsiiPacmakTarget = "js" | "go" | "java" | "python" | "dotnet";
 

@@ -1,11 +1,11 @@
 import { Component } from "./component";
-import {
+import type {
   IDevEnvironment,
   DevEnvironmentOptions,
   DevEnvironmentDockerImage,
 } from "./dev-env";
-import { Project } from "./project";
-import { Task } from "./task";
+import type { Project } from "./project";
+import type { Task } from "./task";
 import { YamlFile } from "./yaml";
 
 /**

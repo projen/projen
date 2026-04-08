@@ -3,7 +3,7 @@
  */
 import { promises as fs } from "fs";
 import * as path from "node:path";
-import { Config } from "conventional-changelog-config-spec";
+import type { Config } from "conventional-changelog-config-spec";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 

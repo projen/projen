@@ -1,21 +1,21 @@
 import * as yaml from "yaml";
-import { Component } from "../../src";
+import type { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   CodeArtifactAuthProvider,
   NodePackage,
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   NpmAccess,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot, TestProject } from "../util";

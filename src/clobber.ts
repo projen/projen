@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { Project } from "./project";
+import type { Project } from "./project";
 
 export class Clobber extends Component {
   constructor(project: Project) {

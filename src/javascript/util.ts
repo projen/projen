@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
 import { NodePackage, NodePackageManager } from "./node-package";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { findUp } from "../util";
 
 /**

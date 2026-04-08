@@ -1,5 +1,5 @@
 import * as chalk from "chalk";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { IS_TEST_RUN } from "./common";
 import { Component } from "./component";
 import { ICON } from "./logging";

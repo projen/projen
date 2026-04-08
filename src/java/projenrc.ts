@@ -1,10 +1,11 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, join, relative } from "path";
-import { Pom } from "./pom";
+import type { Pom } from "./pom";
 import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
-import { ProjectOption, readJsiiManifest } from "../inventory";
-import { Project } from "../project";
+import type { ProjectOption } from "../inventory";
+import { readJsiiManifest } from "../inventory";
+import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 import { normalizePersistedPath } from "../util";
 

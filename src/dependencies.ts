@@ -3,7 +3,7 @@ import * as semver from "semver";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
 import { JsonFile } from "./json";
-import { Project } from "./project";
+import type { Project } from "./project";
 
 /**
  * The `Dependencies` component is responsible to track the list of dependencies

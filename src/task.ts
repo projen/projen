@@ -1,5 +1,5 @@
 import { warn } from "./logging";
-import {
+import type {
   TaskCommonOptions,
   TaskSpec,
   TaskStep,

@@ -3,7 +3,8 @@ import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import * as logging from "../../src/logging";
-import { tag, TagOptions } from "../../src/release/tag-version";
+import type { TagOptions } from "../../src/release/tag-version";
+import { tag } from "../../src/release/tag-version";
 import { execCapture } from "../../src/util";
 
 logging.disable();

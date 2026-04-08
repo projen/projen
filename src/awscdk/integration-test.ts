@@ -1,10 +1,11 @@
 import { join } from "path/posix";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import { FEATURE_FLAGS_V1 } from "./internal";
-import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
+import type { IntegrationTestBaseOptions } from "../cdk";
+import { IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 export interface IntegrationTestCommonOptions {
   /**

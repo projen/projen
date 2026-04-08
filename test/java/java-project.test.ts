@@ -1,4 +1,5 @@
-import { JavaProject, JavaProjectOptions } from "../../src/java/java-project";
+import type { JavaProjectOptions } from "../../src/java/java-project";
+import { JavaProject } from "../../src/java/java-project";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { synthSnapshot } from "../util";
 

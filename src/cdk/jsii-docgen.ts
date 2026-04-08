@@ -1,4 +1,4 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 

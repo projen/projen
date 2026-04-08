@@ -1,8 +1,6 @@
-import { AwsCdkDeps } from "./awscdk-deps";
-import {
-  IntegrationTest,
-  IntegrationTestCommonOptions,
-} from "./integration-test";
+import type { AwsCdkDeps } from "./awscdk-deps";
+import type { IntegrationTestCommonOptions } from "./integration-test";
+import { IntegrationTest } from "./integration-test";
 import {
   TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
@@ -10,18 +8,14 @@ import {
   TYPESCRIPT_SINGLETON_LAMBDA_EXT,
   toDeterministicSingletonUuid,
 } from "./internal";
-import {
-  LambdaExtension,
-  LambdaExtensionCommonOptions,
-} from "./lambda-extension";
-import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
-import {
-  AutoDiscoverBase,
-  IntegrationTestAutoDiscoverBase,
-  IntegrationTestAutoDiscoverBaseOptions,
-} from "../cdk";
+import type { LambdaExtensionCommonOptions } from "./lambda-extension";
+import { LambdaExtension } from "./lambda-extension";
+import type { LambdaFunctionCommonOptions } from "./lambda-function";
+import { LambdaFunction } from "./lambda-function";
+import type { IntegrationTestAutoDiscoverBaseOptions } from "../cdk";
+import { AutoDiscoverBase, IntegrationTestAutoDiscoverBase } from "../cdk";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Common options for auto discovering project subcomponents.

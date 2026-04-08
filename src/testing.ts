@@ -1,5 +1,6 @@
-import { Project } from "./project";
-import { SnapshotOptions, synthSnapshot } from "./util/synth";
+import type { Project } from "./project";
+import type { SnapshotOptions } from "./util/synth";
+import { synthSnapshot } from "./util/synth";
 
 /**
  * A Testing static class with a .synth helper for getting a snapshots of construct outputs.

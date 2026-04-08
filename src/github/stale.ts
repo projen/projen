@@ -1,8 +1,9 @@
-import { GitHub } from "./github";
+import type { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for `Stale`.

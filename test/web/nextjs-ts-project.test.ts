@@ -1,7 +1,5 @@
-import {
-  NextJsTypeScriptProject,
-  NextJsTypeScriptProjectOptions,
-} from "../../src/web";
+import type { NextJsTypeScriptProjectOptions } from "../../src/web";
+import { NextJsTypeScriptProject } from "../../src/web";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {

@@ -1,5 +1,5 @@
 import { Component, SampleDir } from "..";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for python test code sample.

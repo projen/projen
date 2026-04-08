@@ -1,9 +1,10 @@
-import { IPackageProvider, IPythonDeps } from "./python-deps";
+import type { IPackageProvider, IPythonDeps } from "./python-deps";
 import { RequirementsFile } from "./requirements-file";
 import { Component } from "../component";
-import { Dependency, DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Dependency } from "../dependencies";
+import { DependencyType } from "../dependencies";
+import type { Project } from "../project";
+import type { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 
 /**

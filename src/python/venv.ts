@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
-import { IPythonEnv } from "./python-env";
+import type { IPythonEnv } from "./python-env";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { exec } from "../util";
 
 /**

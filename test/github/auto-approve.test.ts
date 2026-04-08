@@ -1,6 +1,7 @@
 import * as YAML from "yaml";
 import { AutoApprove } from "../../src/github/auto-approve";
-import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import type { NodeProjectOptions } from "../../src/javascript";
+import { NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 describe("auto-approve", () => {

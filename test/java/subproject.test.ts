@@ -1,4 +1,5 @@
-import { Component, Project } from "../../src";
+import type { Component } from "../../src";
+import { Project } from "../../src";
 import { JavaProject } from "../../src/java";
 
 test("java subprojects do not add a Projenrc component", () => {

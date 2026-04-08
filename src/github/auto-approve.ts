@@ -1,7 +1,9 @@
-import { GitHub } from "./github";
-import { Job, JobPermission } from "./workflows-model";
+import type { GitHub } from "./github";
+import type { Job } from "./workflows-model";
+import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for 'AutoApprove'

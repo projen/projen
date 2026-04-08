@@ -1,7 +1,8 @@
-import { IConstruct } from "constructs";
-import { AutoQueue, AutoQueueOptions } from "./auto-queue";
+import type { IConstruct } from "constructs";
+import type { AutoQueueOptions } from "./auto-queue";
+import { AutoQueue } from "./auto-queue";
 import { Component } from "../component";
-import { MergeGroupOptions } from "./workflows-model";
+import type { MergeGroupOptions } from "./workflows-model";
 import * as gh from "../github";
 import { GitHub } from "../github";
 

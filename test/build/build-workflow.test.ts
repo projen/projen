@@ -1,5 +1,5 @@
 import { BuildWorkflow } from "../../src/build";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
 describe("name", () => {
