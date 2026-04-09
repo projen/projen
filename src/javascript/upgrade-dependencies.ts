@@ -375,7 +375,7 @@ export class UpgradeDependencies extends Component {
     const command = [
       `${executeCommand(
         this.project.package.packageManager,
-      )} npm-check-updates@18`,
+      )} npm-check-updates@20`,
     ];
 
     if (options.upgrade) {
