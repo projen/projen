@@ -105,6 +105,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly mutableBuild?: boolean;
 
   /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
+
+  /**
    * Steps to execute after build.
    * @default []
    */

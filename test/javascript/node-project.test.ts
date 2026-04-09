@@ -854,6 +854,36 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
 });
 
+test("mutableInstall defaults to mutableBuild value", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual("yarn install --check-files");
+});
+
+test("mutableInstall can be disabled independently of mutableBuild", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true, mutableInstall: false },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual(
+    "yarn install --check-files --frozen-lockfile",
+  );
+  // self-mutation job should still exist
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
+});
+
 test("provided preBuildSteps for build workflow get combined with setup steps", () => {
   // WHEN
   const project = new TestNodeProject({

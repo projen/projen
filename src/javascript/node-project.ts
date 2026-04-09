@@ -421,6 +421,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
 }
 
 /**
@@ -718,7 +728,10 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable:
-            buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
+            buildWorkflowOptions.mutableInstall ??
+            buildWorkflowOptions.mutableBuild ??
+            options.mutableBuild ??
+            true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
         postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
