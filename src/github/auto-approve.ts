@@ -84,7 +84,7 @@ export class AutoApprove extends Component {
       if: condition,
       steps: [
         {
-          run: 'gh pr review --approve "${{ PR_NUMBER }}" --repo "${{ GH_REPO }}"',
+          run: 'gh pr review --approve "$PR_NUMBER" --repo "$GH_REPO"',
           env: {
             GH_TOKEN: `\${{ secrets.${secret} }}`,
             GH_REPO: "${{ github.repository }}",
