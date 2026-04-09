@@ -6097,6 +6097,7 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 
 ---
 
@@ -6180,6 +6181,24 @@ This means that any files synthesized by projen or e.g. test snapshots will
 always be up-to-date before a PR is merged.
 
 Implies that PR builds do not have anti-tamper checks.
+
+---
+
+##### `mutableInstall`<sup>Optional</sup> <a name="mutableInstall" id="projen.javascript.BuildWorkflowOptions.property.mutableInstall"></a>
+
+```typescript
+public readonly mutableInstall: boolean;
+```
+
+- *Type:* boolean
+- *Default:* value of `mutableBuild`
+
+Perform a mutable (non-frozen) install during builds.
+
+This will update the
+package lockfile during installs, which is useful when build steps modify
+dependencies. Set to `false` to use frozen lockfile installs even when
+`mutableBuild` is enabled.
 
 ---
 
