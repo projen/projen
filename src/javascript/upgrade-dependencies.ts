@@ -247,6 +247,13 @@ export class UpgradeDependencies extends Component {
 
     const taskEnv: Record<string, string> = { CI: "0" };
 
+    // Yarn berry treats any non-empty CI value as truthy and auto-enables
+    // immutable installs. Explicitly disable it so yarn dlx/up can modify
+    // the lockfile during upgrades.
+    if (isYarnBerry(project.package.packageManager)) {
+      taskEnv.YARN_ENABLE_IMMUTABLE_INSTALLS = "false";
+    }
+
     // Set yarn berry cooldown via environment variable, expects minutes
     if (options.cooldown && isYarnBerry(project.package.packageManager)) {
       taskEnv.YARN_NPM_MINIMAL_AGE_GATE = String(

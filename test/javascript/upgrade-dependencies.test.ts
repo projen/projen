@@ -544,6 +544,10 @@ test("uses the proper yarn berry upgrade command", () => {
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.env).toStrictEqual({
+    CI: "0",
+    YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+  });
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
    [
      {
