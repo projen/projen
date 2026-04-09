@@ -10,6 +10,7 @@ import { WorkflowSteps } from "../github/workflow-steps";
 import type { Job, Step, Tools } from "../github/workflows-model";
 import { JobPermission } from "../github/workflows-model";
 import { NodePackageManager } from "../javascript";
+import { isYarnBerry } from "../javascript/util";
 import type {
   CommonPublishOptions,
   GoPublishOptions,
@@ -541,6 +542,11 @@ export class JsiiProject extends TypeScriptProject {
         name: "Setup bun",
         uses: "oven-sh/setup-bun@v2",
         with: { "bun-version": this.package.bunVersion },
+      });
+    } else if (isYarnBerry(this.package.packageManager)) {
+      bootstrapSteps.push({
+        name: "Enable corepack",
+        run: "corepack enable",
       });
     }
 
