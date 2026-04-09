@@ -153,19 +153,22 @@ export class Task {
   }
 
   /**
+   * Adds steps to this task. This is a generic method that accepts any
+   * task step (exec, spawn, say, builtin).
+   *
+   * @param steps The steps to add.
+   */
+  public addSteps(...steps: TaskStep[]) {
+    this._pushSteps("addSteps", steps);
+  }
+
+  /**
    * Executes a shell command
    * @param command Shell command
    * @param options Options
    */
   public exec(command: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add exec to");
-      return;
-    }
-
-    this._steps.push({ exec: command, ...options });
+    this._pushSteps("exec", [{ exec: command, ...options }]);
   }
 
   /**
@@ -180,14 +183,7 @@ export class Task {
    * `release/resolve-version`).
    */
   public builtin(name: string) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add builtin to");
-      return;
-    }
-
-    this._steps.push({ builtin: name });
+    this._pushSteps("builtin", [{ builtin: name }]);
   }
 
   /**
@@ -196,14 +192,7 @@ export class Task {
    * @param options Options
    */
   public say(message: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add say to");
-      return;
-    }
-
-    this._steps.push({ say: message, ...options });
+    this._pushSteps("say", [{ say: message, ...options }]);
   }
 
   /**
@@ -213,7 +202,6 @@ export class Task {
    * @deprecated use `prependExec()`
    */
   public prepend(shell: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
     this.prependExec(shell, options);
   }
 
@@ -222,14 +210,16 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
+    this._pushSteps("spawn", [{ spawn: subtask.name, ...options }]);
+  }
 
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add spawn to");
-      return;
-    }
-
-    this._steps.push({ spawn: subtask.name, ...options });
+  /**
+   * Adds steps at the beginning of this task.
+   *
+   * @param steps The steps to add.
+   */
+  public prependSteps(...steps: TaskStep[]) {
+    this._unshiftSteps("prependSteps", steps);
   }
 
   /**
@@ -237,17 +227,7 @@ export class Task {
    * @param shell The command to add.
    */
   public prependExec(shell: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependExec to");
-      return;
-    }
-
-    this._steps.unshift({
-      exec: shell,
-      ...options,
-    });
+    this._unshiftSteps("prependExec", [{ exec: shell, ...options }]);
   }
 
   /**
@@ -255,17 +235,7 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependSpawn to");
-      return;
-    }
-
-    this._steps.unshift({
-      spawn: subtask.name,
-      ...options,
-    });
+    this._unshiftSteps("prependSpawn", [{ spawn: subtask.name, ...options }]);
   }
 
   /**
@@ -273,17 +243,29 @@ export class Task {
    * @param message Your message
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
+    this._unshiftSteps("prependSay", [{ say: message, ...options }]);
+  }
+
+  private _pushSteps(method: string, steps: TaskStep[]) {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependSay to");
+      this.warnForLazyValue(`${method} to`);
       return;
     }
 
-    this._steps.unshift({
-      say: message,
-      ...options,
-    });
+    this._steps.push(...steps);
+  }
+
+  private _unshiftSteps(method: string, steps: TaskStep[]) {
+    this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue(`${method} to`);
+      return;
+    }
+
+    this._steps.unshift(...steps);
   }
 
   /**

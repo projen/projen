@@ -16632,6 +16632,7 @@ new Task(name: string, props?: TaskOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Task.addCondition">addCondition</a></code> | Add a command to execute which determines if the task should be skipped. |
+| <code><a href="#projen.Task.addSteps">addSteps</a></code> | Adds steps to this task. |
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
@@ -16641,6 +16642,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
+| <code><a href="#projen.Task.prependSteps">prependSteps</a></code> | Adds steps at the beginning of this task. |
 | <code><a href="#projen.Task.removeStep">removeStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.reset">reset</a></code> | Reset the task so it no longer has any commands. |
 | <code><a href="#projen.Task.say">say</a></code> | Say something. |
@@ -16666,6 +16668,25 @@ If a condition already exists, the new condition will be appended with ` && ` de
 - *Type:* ...string[]
 
 The command to execute.
+
+---
+
+##### `addSteps` <a name="addSteps" id="projen.Task.addSteps"></a>
+
+```typescript
+public addSteps(steps: ...TaskStep[]): void
+```
+
+Adds steps to this task.
+
+This is a generic method that accepts any
+task step (exec, spawn, say, builtin).
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.addSteps.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to add.
 
 ---
 
@@ -16862,6 +16883,22 @@ The subtask to execute.
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.prependSpawn.parameter.options"></a>
 
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
+
+---
+
+##### `prependSteps` <a name="prependSteps" id="projen.Task.prependSteps"></a>
+
+```typescript
+public prependSteps(steps: ...TaskStep[]): void
+```
+
+Adds steps at the beginning of this task.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.prependSteps.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to add.
 
 ---
 

@@ -1,5 +1,6 @@
 import type { Project } from "../../src";
 import { TaskRuntime } from "../../src";
+import * as logging from "../../src/logging";
 import type { TasksManifest, TaskStep } from "../../src/task-model";
 import { TestProject, synthSnapshot } from "../util";
 
@@ -579,6 +580,166 @@ test("allows setting the cwd for the task", () => {
         cwd: "bar",
       },
     },
+  });
+});
+
+describe("addSteps", () => {
+  test("adds an exec step", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({ exec: "echo hello" });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [{ exec: "echo hello" }],
+        },
+      },
+    });
+  });
+
+  test("adds a spawn step", () => {
+    const p = new TestProject();
+    p.addTask("other");
+    const task = p.addTask("my-task");
+
+    task.addSteps({ spawn: "other" });
+
+    expectManifest(p, {
+      tasks: {
+        other: { name: "other" },
+        "my-task": {
+          name: "my-task",
+          steps: [{ spawn: "other" }],
+        },
+      },
+    });
+  });
+
+  test("adds a step with options", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({
+      exec: "echo hello",
+      name: "greet",
+      cwd: "/tmp",
+      condition: "test -f foo",
+    });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [
+            {
+              exec: "echo hello",
+              name: "greet",
+              cwd: "/tmp",
+              condition: "test -f foo",
+            },
+          ],
+        },
+      },
+    });
+  });
+
+  test("adds multiple steps in order", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({ exec: "step1" });
+    task.addSteps({ say: "hello" });
+    task.addSteps({ exec: "step2" });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [{ exec: "step1" }, { say: "hello" }, { exec: "step2" }],
+        },
+      },
+    });
+  });
+
+  test("prependSteps adds a step at the beginning", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({ exec: "second" });
+    task.prependSteps({ exec: "first" });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [{ exec: "first" }, { exec: "second" }],
+        },
+      },
+    });
+  });
+
+  test("prependSteps adds multiple steps preserving order", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({ exec: "third" });
+    task.prependSteps({ exec: "first" }, { exec: "second" });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [{ exec: "first" }, { exec: "second" }, { exec: "third" }],
+        },
+      },
+    });
+  });
+
+  test("addSteps adds multiple steps in one call", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+
+    task.addSteps({ exec: "first" }, { say: "hello" }, { exec: "second" });
+
+    expectManifest(p, {
+      tasks: {
+        "my-task": {
+          name: "my-task",
+          steps: [{ exec: "first" }, { say: "hello" }, { exec: "second" }],
+        },
+      },
+    });
+  });
+
+  test("addSteps warns when steps is a lazy value", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+    (task as any)._steps = "not-an-array"; // fake lazy
+
+    const spy = jest.spyOn(logging, "warn");
+    task.addSteps({ exec: "hello" });
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.stringContaining('Cannot addSteps to task "my-task"'),
+    );
+    spy.mockRestore();
+  });
+
+  test("prependSteps warns when steps is a lazy value", () => {
+    const p = new TestProject();
+    const task = p.addTask("my-task");
+    (task as any)._steps = "not-an-array"; // fake lazy
+
+    const spy = jest.spyOn(logging, "warn");
+    task.prependSteps({ exec: "hello" });
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.stringContaining('Cannot prependSteps to task "my-task"'),
+    );
+    spy.mockRestore();
   });
 });
 
