@@ -375,6 +375,65 @@ describe("dependabot", () => {
     });
   });
 
+  describe("cooldown", () => {
+    test("no cooldown by default", () => {
+      const project = createProject();
+      new Dependabot(project.github!);
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).not.toContain("cooldown");
+    });
+
+    test("cooldown with default-days only", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        cooldown: { defaultDays: 3 },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toContain("cooldown:");
+      expect(dependabot).toContain("default-days: 3");
+    });
+
+    test("cooldown with all semver options", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        cooldown: {
+          defaultDays: 1,
+          semverMajorDays: 7,
+          semverMinorDays: 3,
+          semverPatchDays: 1,
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toContain("cooldown:");
+      expect(dependabot).toContain("default-days: 1");
+      expect(dependabot).toContain("semver-major-days: 7");
+      expect(dependabot).toContain("semver-minor-days: 3");
+      expect(dependabot).toContain("semver-patch-days: 1");
+    });
+
+    test("cooldown with include and exclude", () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        cooldown: {
+          defaultDays: 5,
+          include: ["@types/*"],
+          exclude: ["@types/node"],
+        },
+      });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toContain("cooldown:");
+      expect(dependabot).toContain("default-days: 5");
+      expect(dependabot).toContain("include:");
+      expect(dependabot).toContain("@types/*");
+      expect(dependabot).toContain("exclude:");
+      expect(dependabot).toContain("@types/node");
+    });
+  });
+
   describe("target branch", () => {
     test("empty target branch", () => {
       const project = createProject();

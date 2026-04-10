@@ -97,6 +97,61 @@ export interface DependabotOptions {
    * You can configure the target branch for raising pull requests for version updates against
    */
   readonly targetBranch?: string;
+
+  /**
+   * Defines a cooldown period for dependency version updates.
+   *
+   * During the cooldown, Dependabot will not propose updates for a dependency.
+   * This only applies to version updates, not security updates.
+   *
+   * @see https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-
+   * @default - no cooldown
+   */
+  readonly cooldown?: DependabotCooldown;
+}
+
+/**
+ * Defines a cooldown period for dependency version updates.
+ *
+ * @see https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-
+ */
+export interface DependabotCooldown {
+  /**
+   * Default cooldown period (in days) for all dependencies without specific semver rules.
+   * @default - no default cooldown
+   */
+  readonly defaultDays?: number;
+
+  /**
+   * Cooldown period (in days) for major version updates.
+   * @default - uses defaultDays
+   */
+  readonly semverMajorDays?: number;
+
+  /**
+   * Cooldown period (in days) for minor version updates.
+   * @default - uses defaultDays
+   */
+  readonly semverMinorDays?: number;
+
+  /**
+   * Cooldown period (in days) for patch version updates.
+   * @default - uses defaultDays
+   */
+  readonly semverPatchDays?: number;
+
+  /**
+   * List of dependencies to apply cooldown to. Supports wildcards.
+   * @default - all dependencies
+   */
+  readonly include?: string[];
+
+  /**
+   * List of dependencies excluded from cooldown. Supports wildcards.
+   * Takes precedence over `include`.
+   * @default - no exclusions
+   */
+  readonly exclude?: string[];
 }
 
 /**
@@ -474,6 +529,9 @@ export class Dependabot extends Component {
               ? options.openPullRequestsLimit
               : undefined,
           "target-branch": options.targetBranch,
+          cooldown: options.cooldown
+            ? kebabCaseKeys(options.cooldown)
+            : undefined,
         },
       ],
     };
