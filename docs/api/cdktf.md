@@ -2733,7 +2733,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 

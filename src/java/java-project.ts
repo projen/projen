@@ -1,10 +1,16 @@
-import { Junit, JunitOptions } from "./junit";
-import { MavenCompile, MavenCompileOptions } from "./maven-compile";
-import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
+import type { JunitOptions } from "./junit";
+import { Junit } from "./junit";
+import type { MavenCompileOptions } from "./maven-compile";
+import { MavenCompile } from "./maven-compile";
+import type { MavenPackagingOptions } from "./maven-packaging";
+import { MavenPackaging } from "./maven-packaging";
 import { MavenSample } from "./maven-sample";
-import { PluginOptions, Pom, PomOptions } from "./pom";
-import { Projenrc as ProjenrcJava, ProjenrcOptions } from "./projenrc";
-import { GitHubProject, GitHubProjectOptions } from "../github";
+import type { PluginOptions, PomOptions } from "./pom";
+import { Pom } from "./pom";
+import type { ProjenrcOptions } from "./projenrc";
+import { Projenrc as ProjenrcJava } from "./projenrc";
+import type { GitHubProjectOptions } from "../github";
+import { GitHubProject } from "../github";
 import { anySelected, multipleSelected } from "../util";
 
 /**

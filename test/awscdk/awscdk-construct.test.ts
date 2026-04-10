@@ -2,10 +2,8 @@ import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as YAML from "yaml";
 import { awscdk, LogLevel, Testing } from "../../src";
-import {
-  AwsCdkConstructLibrary,
-  AwsCdkConstructLibraryOptions,
-} from "../../src/awscdk";
+import type { AwsCdkConstructLibraryOptions } from "../../src/awscdk";
+import { AwsCdkConstructLibrary } from "../../src/awscdk";
 import { toDeterministicSingletonUuid } from "../../src/awscdk/internal";
 import { NpmAccess } from "../../src/javascript";
 import { mkdtemp, synthSnapshot } from "../util";

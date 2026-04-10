@@ -1,4 +1,5 @@
-import { AwsCdkPythonApp, AwsCdkPythonAppOptions } from "../../src/awscdk";
+import type { AwsCdkPythonAppOptions } from "../../src/awscdk";
+import { AwsCdkPythonApp } from "../../src/awscdk";
 import { synthSnapshot } from "../util";
 
 test("create cdk python project", () => {

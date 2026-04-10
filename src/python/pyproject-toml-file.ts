@@ -1,7 +1,8 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { TomlFile } from "../toml";
-import { PyprojectToml, toJson_PyprojectToml } from "./pyproject-toml";
-import { IResolver } from "../file";
+import type { PyprojectToml } from "./pyproject-toml";
+import { toJson_PyprojectToml } from "./pyproject-toml";
+import type { IResolver } from "../file";
 
 /**
  * Represents configuration of a pyproject.toml file

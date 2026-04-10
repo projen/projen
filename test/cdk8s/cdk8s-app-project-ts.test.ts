@@ -15,7 +15,7 @@ test("test if cdk8s synth is possible", () => {
   const output = synthSnapshot(project);
 
   // expect a synth script
-  expect(output["package.json"].scripts.synth).toContain("npx projen synth");
+  expect(output["package.json"].scripts.synth).toContain("projen synth");
 
   // expect a synth task
   expect(output[".projen/tasks.json"].tasks.synth.steps).toStrictEqual([
@@ -186,7 +186,7 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
       },
       {
         "exec": "yarn install --check-files",

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { TypeGenerator } from "json2jsii";
-import { FileBaseOptions, IResolver, Project, TextFile } from "../src";
+import type { FileBaseOptions, IResolver, Project } from "../src";
+import { TextFile } from "../src";
 import { Biome, Eslint, Jest } from "../src/javascript";
 
 export interface JsiiFromJsonSchemaProps extends FileBaseOptions {

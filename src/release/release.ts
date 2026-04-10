@@ -1,5 +1,5 @@
 import * as posixPath from "node:path/posix";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
@@ -18,21 +18,18 @@ import {
   ensureNotHiddenPath,
   projectPathRelativeToRepoRoot,
 } from "../github/private/util";
+import type { Job, JobPermissions, JobStep } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
 import {
-  Job,
-  JobPermission,
-  JobPermissions,
-  JobStep,
-} from "../github/workflows-model";
-import { Project } from "../project";
-import {
-  GroupRunnerOptions,
   filteredRunsOnOptions,
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { workflowNameForProject } from "../util/name";
-import { ReleasableCommits, Version } from "../version";
+import type { ReleasableCommits } from "../version";
+import { Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";

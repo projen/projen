@@ -1,6 +1,6 @@
 import * as semver from "semver";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */

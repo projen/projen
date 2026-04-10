@@ -1,6 +1,7 @@
 import * as YAML from "yaml";
 import { Project } from "../../src";
-import { JobPermission, JobStep } from "../../src/github/workflows-model";
+import type { JobStep } from "../../src/github/workflows-model";
+import { JobPermission } from "../../src/github/workflows-model";
 import { NodeProject } from "../../src/javascript";
 import {
   Publisher,

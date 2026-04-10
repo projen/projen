@@ -1,6 +1,6 @@
 import * as path from "path";
 import { pascal } from "case";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
   TYPESCRIPT_EDGE_LAMBDA_EXT,
@@ -8,10 +8,11 @@ import {
   TYPESCRIPT_SINGLETON_LAMBDA_EXT,
 } from "./internal";
 import { Component } from "../component";
-import { Bundler, BundlingOptions, Eslint } from "../javascript";
-import { Project } from "../project";
+import type { BundlingOptions } from "../javascript";
+import { Bundler, Eslint } from "../javascript";
+import type { Project } from "../project";
 import { SourceCode } from "../source-code";
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 import { normalizePersistedPath } from "../util";
 
 /**

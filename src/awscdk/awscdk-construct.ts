@@ -1,10 +1,11 @@
 import * as semver from "semver";
 import { AutoDiscover } from "./auto-discover";
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import type { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
 import { IntegRunner } from "./integ-runner";
-import { LambdaFunctionCommonOptions } from "./lambda-function";
-import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import type { LambdaFunctionCommonOptions } from "./lambda-function";
+import type { ConstructLibraryOptions } from "../cdk";
+import { ConstructLibrary } from "../cdk";
 import { DependencyType } from "../dependencies";
 
 /**

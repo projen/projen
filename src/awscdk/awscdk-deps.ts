@@ -1,7 +1,7 @@
 import * as semver from "semver";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for `AwsCdkDeps`

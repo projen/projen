@@ -1,21 +1,21 @@
 import * as yaml from "yaml";
-import { Component } from "../../src";
+import type { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   CodeArtifactAuthProvider,
   NodePackage,
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   NpmAccess,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot, TestProject } from "../util";
@@ -401,7 +401,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
       });
 
       // THEN
@@ -444,7 +444,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
         npmRegistryUrl: "https://foo.bar",
         npmAccess: NpmAccess.PUBLIC,
         npmTokenSecret: "GITHUB_TOKEN",
@@ -721,7 +721,7 @@ describe("npm publishing options", () => {
 
     // WHEN
     const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
+      packageName: "@projen/my-package",
       npmRegistry: "foo.bar.com",
     });
 
@@ -852,6 +852,36 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
+});
+
+test("mutableInstall defaults to mutableBuild value", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual("yarn install --check-files");
+});
+
+test("mutableInstall can be disabled independently of mutableBuild", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true, mutableInstall: false },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual(
+    "yarn install --check-files --frozen-lockfile",
+  );
+  // self-mutation job should still exist
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
 });
 
 test("provided preBuildSteps for build workflow get combined with setup steps", () => {

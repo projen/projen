@@ -1,9 +1,9 @@
 import * as chalk from "chalk";
-import * as yargs from "yargs";
+import type * as yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as logging from "../logging";
-import { TaskSpec } from "../task-model";
-import { TaskRuntime } from "../task-runtime";
+import type { TaskSpec } from "../task-model";
+import type { TaskRuntime } from "../task-runtime";
 
 /**
  * Reads .projen/tasks.json and adds CLI commands for all tasks.

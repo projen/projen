@@ -4,7 +4,7 @@ import { snake } from "case";
 import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 
 /**

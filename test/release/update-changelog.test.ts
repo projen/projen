@@ -3,10 +3,8 @@ import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import * as logging from "../../src/logging";
-import {
-  updateChangelog,
-  UpdateChangelogOptions,
-} from "../../src/release/update-changelog";
+import type { UpdateChangelogOptions } from "../../src/release/update-changelog";
+import { updateChangelog } from "../../src/release/update-changelog";
 import { execCapture, tryReadFile } from "../../src/util";
 
 logging.disable();

@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 
 /**
  * This component adds support for using `integ-runner` and `integ-tests`

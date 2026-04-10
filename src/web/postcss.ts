@@ -1,5 +1,6 @@
-import { TailwindConfig, TailwindConfigOptions } from "./tailwind";
-import { NodeProject } from "../javascript";
+import type { TailwindConfigOptions } from "./tailwind";
+import { TailwindConfig } from "./tailwind";
+import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 
 export interface PostCssOptions {

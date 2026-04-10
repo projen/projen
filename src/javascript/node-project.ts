@@ -1,60 +1,64 @@
 import { relative, posix } from "path";
 import * as semver from "semver";
-import { Bundler, BundlerOptions } from "./bundler";
-import { Jest, JestOptions } from "./jest";
-import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
+import type { BundlerOptions } from "./bundler";
+import { Bundler } from "./bundler";
+import type { JestOptions } from "./jest";
+import { Jest } from "./jest";
+import type { LicenseCheckerOptions } from "./license-checker";
+import { LicenseChecker } from "./license-checker";
+import type { CodeArtifactOptions, NodePackageOptions } from "./node-package";
 import {
   CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
-  CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
-  NodePackageOptions,
 } from "./node-package";
-import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
+import type { ProjenrcOptions } from "./projenrc";
+import { Projenrc } from "./projenrc";
+import type { BuildWorkflowCommonOptions } from "../build";
+import { BuildWorkflow } from "../build";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
-import {
-  AutoMerge,
+import type {
   DependabotOptions,
-  GitHub,
-  GitHubProject,
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
-import { Biome, BiomeOptions } from "./biome/biome";
-import { isYarnBerry, isYarnClassic } from "./util";
+import { AutoMerge, GitHub, GitHubProject } from "../github";
+import type { BiomeOptions } from "./biome/biome";
+import { Biome } from "./biome/biome";
+import { execCommand, isYarnBerry, isYarnClassic } from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
-import {
-  JobPermission,
+import type {
   JobPermissions,
   JobStep,
   JobStepConfiguration,
   Triggers,
 } from "../github/workflows-model";
-import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
-import {
-  NpmConfig,
-  Prettier,
+import { JobPermission } from "../github/workflows-model";
+import type { IgnoreFileOptions } from "../ignore-file";
+import { IgnoreFile } from "../ignore-file";
+import type {
   PrettierOptions,
-  UpgradeDependencies,
   UpgradeDependenciesOptions,
 } from "../javascript";
+import { NpmConfig, Prettier, UpgradeDependencies } from "../javascript";
 import { License } from "../license";
 import { ProjenrcJson } from "../projenrc-json";
+import type {
+  NpmPublishOptions,
+  Publisher,
+  ReleaseProjectOptions,
+} from "../release";
 import {
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
   CodeArtifactAuthProvider,
   isAwsCodeArtifactRegistry,
-  NpmPublishOptions,
-  Publisher,
   Release,
-  ReleaseProjectOptions,
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 
@@ -417,6 +421,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
 }
 
 /**
@@ -572,8 +586,8 @@ export class NodeProject extends GitHubProject {
   constructor(options: NodeProjectOptions) {
     super({
       ...options,
-      // Node projects have the specific projen version locked via lockfile, so we can skip the @<VERSION> part of the top-level project
-      projenCommand: options.projenCommand ?? "npx projen",
+      projenCommand:
+        options.projenCommand ?? execCommand(options.packageManager, "projen"),
     });
 
     this.package = new NodePackage(this, options);
@@ -661,7 +675,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (!this.ejected) {
-      this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+      this.setScript(PROJEN_SCRIPT, options.projenCommand ?? "projen");
     }
 
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
@@ -671,15 +685,11 @@ export class NodeProject extends GitHubProject {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
 
-      if (
-        !this.deps.isDependencySatisfied(
-          "constructs",
-          DependencyType.BUILD,
-          "^10.0.0",
-        )
-      ) {
-        this.addDevDeps(`constructs@^10.0.0`);
-      }
+      this.deps.requestDependency({
+        name: "constructs",
+        version: "^10.0.0",
+        type: DependencyType.BUILD,
+      });
     }
 
     if (!options.defaultReleaseBranch) {
@@ -718,7 +728,10 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable:
-            buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
+            buildWorkflowOptions.mutableInstall ??
+            buildWorkflowOptions.mutableBuild ??
+            options.mutableBuild ??
+            true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
         postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
@@ -1410,7 +1423,7 @@ export class NodeProject extends GitHubProject {
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    return `${this.package.projenCommand} ${task.name}`;
+    return `${this.projenCommand} ${task.name}`;
   }
 
   /**

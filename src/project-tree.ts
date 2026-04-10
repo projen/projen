@@ -1,7 +1,7 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "./component";
 import { JsonFile } from "./json";
-import { Project } from "./project";
+import type { Project } from "./project";
 
 /**
  * Generates a `.projen/tree.json` file that provides a snapshot of your

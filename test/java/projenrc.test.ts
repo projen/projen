@@ -1,5 +1,5 @@
 import * as path from "path";
-import { ProjectOption } from "../../lib/inventory";
+import type { ProjectOption } from "../../lib/inventory";
 import { generateJavaOptionNames } from "../../lib/java";
 import { Pom } from "../../src/java";
 import { Projenrc, getJavaImport } from "../../src/java/projenrc";

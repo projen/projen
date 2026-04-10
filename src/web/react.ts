@@ -1,15 +1,17 @@
 import * as path from "path";
 import { Component } from "../component";
-import { FileBase, FileBaseOptions, IResolver } from "../file";
+import type { FileBaseOptions, IResolver } from "../file";
+import { FileBase } from "../file";
+import type { NodeProjectOptions } from "../javascript";
 import {
   NodeProject,
-  NodeProjectOptions,
   TypeScriptJsxMode,
   TypeScriptModuleResolution,
 } from "../javascript";
 import { SampleDir } from "../sample-file";
 import { SourceCode } from "../source-code";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import type { TypeScriptProjectOptions } from "../typescript";
+import { TypeScriptAppProject } from "../typescript";
 import { deepMerge } from "../util";
 
 export interface ReactRewireOptions {

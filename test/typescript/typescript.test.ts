@@ -264,7 +264,7 @@ test("upgrade task ignores pinned versions", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
       },
       {
         "exec": "yarn install --check-files",
@@ -719,6 +719,21 @@ describe("tsconfigDev", () => {
 
     const packageJson = synthSnapshot(project)["package.json"];
     expect(packageJson.devDependencies["@types/node"]).toBe("ts4.8");
+  });
+});
+
+describe("tsconfig types resolution", () => {
+  test("excludes override dependencies from tsconfig types", () => {
+    const project = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    project.package.addPackageResolutions("@types/responselike@1.0.0");
+
+    const snapshot = synthSnapshot(project);
+    const tsconfig = snapshot["tsconfig.json"];
+    expect(tsconfig.compilerOptions.types).not.toContain("responselike");
   });
 });
 

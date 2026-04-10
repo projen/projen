@@ -1,4 +1,5 @@
-import { JsiiProject, JsiiProjectOptions } from "./jsii-project";
+import type { JsiiProjectOptions } from "./jsii-project";
+import { JsiiProject } from "./jsii-project";
 
 export interface ConstructLibraryOptions extends JsiiProjectOptions {
   /**

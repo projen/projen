@@ -12,7 +12,8 @@
  * - PROJECT_CHANGELOG_FILE: Project-level changelog
  *
  */
-import { updateChangelog, UpdateChangelogOptions } from "./update-changelog";
+import type { UpdateChangelogOptions } from "./update-changelog";
+import { updateChangelog } from "./update-changelog";
 
 const inputChangelog = process.env.CHANGELOG;
 const outputChangelog = process.env.PROJECT_CHANGELOG_FILE;

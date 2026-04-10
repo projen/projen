@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as glob from "fast-glob";
 import { Component } from "./component";
-import { Project } from "./project";
+import type { Project } from "./project";
 import { getFilePermissions, writeFile } from "./util";
 
 /**

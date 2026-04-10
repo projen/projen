@@ -1,4 +1,4 @@
-import { NodeProject } from "../javascript";
+import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 
 export interface TailwindConfigOptions {

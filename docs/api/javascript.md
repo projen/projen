@@ -2094,6 +2094,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.NodePackage.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow project to take library dependencies. |
 | <code><a href="#projen.javascript.NodePackage.property.entrypoint">entrypoint</a></code> | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`). |
+| <code><a href="#projen.javascript.NodePackage.property.execCommand">execCommand</a></code> | <code>string</code> | The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`). |
 | <code><a href="#projen.javascript.NodePackage.property.file">file</a></code> | <code>projen.JsonFile</code> | The package.json file. |
 | <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `pnpm install` or `npm install` with lockfile update (not frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (frozen). |
@@ -2116,6 +2117,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackage.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.scopedPackagesOptions">scopedPackagesOptions</a></code> | <code><a href="#projen.javascript.ScopedPackagesOptions">ScopedPackagesOptions</a>[]</code> | Options for privately hosted scoped packages. |
+| <code><a href="#projen.javascript.NodePackage.property.yarnVersion">yarnVersion</a></code> | <code>string</code> | The version of Yarn to use if using Yarn as a package manager. |
 
 ---
 
@@ -2162,6 +2164,18 @@ public readonly entrypoint: string;
 - *Type:* string
 
 The module's entrypoint (e.g. `lib/index.js`).
+
+---
+
+##### `execCommand`<sup>Required</sup> <a name="execCommand" id="projen.javascript.NodePackage.property.execCommand"></a>
+
+```typescript
+public readonly execCommand: string;
+```
+
+- *Type:* string
+
+The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`).
 
 ---
 
@@ -2438,6 +2452,18 @@ public readonly scopedPackagesOptions: ScopedPackagesOptions[];
 - *Default:* undefined
 
 Options for privately hosted scoped packages.
+
+---
+
+##### `yarnVersion`<sup>Optional</sup> <a name="yarnVersion" id="projen.javascript.NodePackage.property.yarnVersion"></a>
+
+```typescript
+public readonly yarnVersion: string;
+```
+
+- *Type:* string
+
+The version of Yarn to use if using Yarn as a package manager.
 
 ---
 
@@ -6071,6 +6097,7 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 
 ---
 
@@ -6154,6 +6181,24 @@ This means that any files synthesized by projen or e.g. test snapshots will
 always be up-to-date before a PR is merged.
 
 Implies that PR builds do not have anti-tamper checks.
+
+---
+
+##### `mutableInstall`<sup>Optional</sup> <a name="mutableInstall" id="projen.javascript.BuildWorkflowOptions.property.mutableInstall"></a>
+
+```typescript
+public readonly mutableInstall: boolean;
+```
+
+- *Type:* boolean
+- *Default:* value of `mutableBuild`
+
+Perform a mutable (non-frozen) install during builds.
+
+This will update the
+package lockfile during installs, which is useful when build steps modify
+dependencies. Set to `false` to use frozen lockfile installs even when
+`mutableBuild` is enabled.
 
 ---
 
@@ -9125,7 +9170,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 
@@ -10362,7 +10407,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 

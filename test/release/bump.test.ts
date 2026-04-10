@@ -4,7 +4,8 @@ import { tmpdir } from "os";
 import { dirname, join } from "path";
 import { ReleasableCommits } from "../../src";
 import * as logging from "../../src/logging";
-import { bump, BumpOptions } from "../../src/release/bump-version";
+import type { BumpOptions } from "../../src/release/bump-version";
+import { bump } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
 import { execProjenCLI, withProjectDir } from "../util";
 

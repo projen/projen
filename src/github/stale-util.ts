@@ -1,4 +1,4 @@
-import { StaleBehavior } from "./stale";
+import type { StaleBehavior } from "./stale";
 
 interface Options {
   readonly stale: number;

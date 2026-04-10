@@ -1,12 +1,12 @@
 import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
-import { Config } from "conventional-changelog-config-spec";
+import type { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
 import * as logging from "../logging";
 import { execCapture, execOrUndefined } from "../util";
 import { ReleasableCommits } from "../version";
+import type { BumpType } from "./bump-type";
 import {
-  BumpType,
   parseBumpType,
   performBump,
   relativeBumpType,

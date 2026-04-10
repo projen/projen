@@ -216,14 +216,14 @@ test("no install if package.json did not change at all", () => {
   const orig = {
     name: "@projen/test",
     scripts: {
-      build: "npx projen build",
-      compile: "npx projen compile",
-      default: "npx projen default",
-      eject: "npx projen eject",
-      package: "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "pre-compile": "npx projen pre-compile",
-      test: "npx projen test",
+      build: "projen build",
+      compile: "projen compile",
+      default: "projen default",
+      eject: "projen eject",
+      package: "projen package",
+      "post-compile": "projen post-compile",
+      "pre-compile": "projen pre-compile",
+      test: "projen test",
     },
     dependencies: {
       ms: "^2",
@@ -614,6 +614,56 @@ test("pnpm overrides in root project only, not subprojects", () => {
   expect(snps["packages/sub-project/package.json"]).toMatchSnapshot();
 });
 
+describe("yarnVersion", () => {
+  test("returns yarn berry version for yarn berry", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      yarnBerryOptions: { version: "3.6.4" },
+    });
+    expect(pkg.yarnVersion).toBe("3.6.4");
+  });
+
+  test("returns default yarn classic version for yarn classic", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+    expect(pkg.yarnVersion).toBe("1.22.22");
+  });
+
+  test("returns undefined for non-yarn package manager", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+    expect(pkg.yarnVersion).toBeUndefined();
+  });
+});
+
+test("pnpm adds packageManager field to package.json with default version", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"]).toHaveProperty("packageManager", "pnpm@10.33.0");
+});
+
+test("pnpm adds packageManager field to package.json with custom version", () => {
+  const project = new TestProject();
+  new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9.15.4",
+  });
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"]).toHaveProperty("packageManager", "pnpm@9.15.4");
+});
+
 test("typesVersions is not managed by projen, but can be manipulated", () => {
   // ARRANGE
   const outdir = mkdtemp();
@@ -808,6 +858,61 @@ describe("yarn berry", () => {
     });
 
     expect(project.tryFindFile(".yarnrc.yml")?.readonly).toBe(false);
+  });
+
+  test("renders bin as string when single bin matches package name", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "my-project": "bin/my-project" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toBe("bin/my-project");
+  });
+
+  test("renders bin as string when single bin matches scoped package second part", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageName: "@aws-cdk/integ-runner",
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "integ-runner": "bin/integ-runner" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toBe("bin/integ-runner");
+  });
+
+  test("renders bin as object when single bin does not match package name", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({ "other-cmd": "bin/other-cmd" });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toEqual({ "other-cmd": "bin/other-cmd" });
+  });
+
+  test("renders bin as object when multiple bins exist", () => {
+    const project = new TestProject();
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addBin({
+      "my-project": "bin/my-project",
+      "other-cmd": "bin/other-cmd",
+    });
+
+    const snps = synthSnapshot(project);
+
+    expect(snps["package.json"].bin).toEqual({
+      "my-project": "bin/my-project",
+      "other-cmd": "bin/other-cmd",
+    });
   });
 
   describe("gitignore", () => {

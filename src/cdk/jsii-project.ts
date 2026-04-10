@@ -1,14 +1,17 @@
-import { Task } from "..";
-import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
+import type { Task } from "..";
+import type { JsiiPacmakTarget } from "./consts";
+import { JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import {
   PULL_REQUEST_REF,
   PULL_REQUEST_REPOSITORY,
 } from "../build/private/consts";
 import { WorkflowSteps } from "../github/workflow-steps";
-import { Job, JobPermission, Step, Tools } from "../github/workflows-model";
+import type { Job, Step, Tools } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { NodePackageManager } from "../javascript";
-import {
+import { isYarnBerry } from "../javascript/util";
+import type {
   CommonPublishOptions,
   GoPublishOptions,
   MavenPublishOptions,
@@ -18,7 +21,8 @@ import {
   PyPiPublishOptions,
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
-import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
+import type { TypeScriptProjectOptions } from "../typescript";
+import { TypeScriptProject } from "../typescript";
 import { deepMerge } from "../util";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+$/;
@@ -538,6 +542,11 @@ export class JsiiProject extends TypeScriptProject {
         name: "Setup bun",
         uses: "oven-sh/setup-bun@v2",
         with: { "bun-version": this.package.bunVersion },
+      });
+    } else if (isYarnBerry(this.package.packageManager)) {
+      bootstrapSteps.push({
+        name: "Enable corepack",
+        run: "corepack enable",
       });
     }
 

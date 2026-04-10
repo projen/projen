@@ -1,5 +1,5 @@
 import * as Case from "case";
-import { JobStep, AppPermissions } from "./workflows-model";
+import type { JobStep, AppPermissions } from "./workflows-model";
 
 /**
  * Options for `GithubCredentials.fromPersonalAccessToken`

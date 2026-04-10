@@ -1,8 +1,8 @@
 import * as YAML from "yaml";
-import { WorkflowJob } from "../../lib/circleci";
+import type { WorkflowJob } from "../../lib/circleci";
+import type { CircleCiProps } from "../../src/circleci";
 import {
   Circleci,
-  CircleCiProps,
   isObjectContainingFieldExactly,
   PipelineParameterType,
 } from "../../src/circleci";

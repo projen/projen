@@ -2,21 +2,23 @@ import * as fs from "fs";
 import * as path from "path";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import type { TypescriptConfigOptions } from "../javascript";
 import {
   NodePackageManager,
   RunBundleTask,
   TypeScriptModuleResolution,
-  TypescriptConfigOptions,
 } from "../javascript";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import type { TypeScriptProjectOptions } from "../typescript";
+import { TypeScriptAppProject } from "../typescript";
 import { deepMerge } from "../util";
 import { AutoDiscover } from "./auto-discover";
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import type { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
-import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
+import type { CdkConfigCommonOptions } from "./cdk-config";
+import { CdkConfig } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
-import { LambdaFunctionCommonOptions } from "./lambda-function";
+import type { LambdaFunctionCommonOptions } from "./lambda-function";
 
 export interface AwsCdkTypeScriptAppOptions
   extends

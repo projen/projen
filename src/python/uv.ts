@@ -1,16 +1,18 @@
-import { IConstruct } from "constructs";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging } from "./python-packaging";
+import type { IConstruct } from "constructs";
+import type { IPythonDeps } from "./python-deps";
+import type { IPythonEnv } from "./python-env";
+import type { IPythonPackaging } from "./python-packaging";
 import { Component } from "../component";
-import { toJson_UvConfiguration, UvConfiguration } from "./uv-config";
-import { Dependency, DependencyType } from "../dependencies";
-import { Task } from "../task";
+import type { UvConfiguration } from "./uv-config";
+import { toJson_UvConfiguration } from "./uv-config";
+import type { Dependency } from "../dependencies";
+import { DependencyType } from "../dependencies";
+import type { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { exec, execOrUndefined } from "../util";
-import { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
+import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
-import { PythonExecutableOptions } from "./python-project";
+import type { PythonExecutableOptions } from "./python-project";
 
 /**
  * Options for UV project

@@ -1,14 +1,15 @@
 import { basename, dirname, join, relative } from "path";
 import { pascal } from "case";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
 } from "./internal";
 import { LambdaRuntime } from "./lambda-function";
 import { Component } from "../component";
-import { Bundler, BundlingOptions, Eslint } from "../javascript";
-import { Project } from "../project";
+import type { BundlingOptions } from "../javascript";
+import { Bundler, Eslint } from "../javascript";
+import type { Project } from "../project";
 import { SourceCode } from "../source-code";
 
 /**

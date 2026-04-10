@@ -1,5 +1,5 @@
 import { resolve } from "../src/_resolve";
-import { IResolvable } from "../src/file";
+import type { IResolvable } from "../src/file";
 
 test("null", () => {
   expect(resolve(null)).toStrictEqual(null);

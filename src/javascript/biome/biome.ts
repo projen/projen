@@ -2,14 +2,14 @@ import * as path from "node:path";
 import { deepClone } from "fast-json-patch";
 import {
   IndentStyle,
-  OverridePattern,
   QuoteStyle,
-  Rules,
   toJson_BiomeConfiguration,
   toJson_OverridePattern,
   toJson_Rules,
   VcsClientKind,
   type BiomeConfiguration,
+  type OverridePattern,
+  type Rules,
 } from "./biome-config";
 import { Component } from "../../component";
 import type { NodeProject } from "../../javascript/node-project";

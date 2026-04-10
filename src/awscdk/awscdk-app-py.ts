@@ -1,15 +1,15 @@
-import {
+import type {
   AwsCdkDeps,
   AwsCdkDepsCommonOptions,
-  CdkConfig,
   CdkConfigCommonOptions,
-  CdkTasks,
 } from ".";
+import { CdkConfig, CdkTasks } from ".";
 import { Component, DependencyType, SampleDir, SampleFile } from "..";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 import { Pytest } from "../python/pytest";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import type { PythonProjectOptions } from "../python/python-project";
+import { PythonProject } from "../python/python-project";
 
 /**
  * Options for `AwsCdkPythonApp`

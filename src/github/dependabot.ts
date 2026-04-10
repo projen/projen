@@ -1,4 +1,4 @@
-import { GitHub } from "./github";
+import type { GitHub } from "./github";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";

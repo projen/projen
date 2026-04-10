@@ -1,7 +1,7 @@
 import { deepClone } from "fast-json-patch";
 import { Component } from "../component";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { tryReadFileSync } from "../util";
 import { FEATURE_FLAGS_V1, FEATURE_FLAGS_V2 } from "./internal";
 

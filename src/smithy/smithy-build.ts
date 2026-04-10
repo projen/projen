@@ -1,7 +1,7 @@
 import { Component } from "../component";
-import { MavenRepository } from "../java";
+import type { MavenRepository } from "../java";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 type Transform = {
   name: string;
