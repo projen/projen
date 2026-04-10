@@ -13564,6 +13564,8 @@ const renovatebotOptions: RenovatebotOptions = { ... }
 | <code><a href="#projen.RenovatebotOptions.property.ignoreProjen">ignoreProjen</a></code> | <code>boolean</code> | Ignores updates to `projen`. |
 | <code><a href="#projen.RenovatebotOptions.property.labels">labels</a></code> | <code>string[]</code> | List of labels to apply to the created PR's. |
 | <code><a href="#projen.RenovatebotOptions.property.marker">marker</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.RenovatebotOptions.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>string</code> | Minimum release age for packages before Renovate will propose an update. |
+| <code><a href="#projen.RenovatebotOptions.property.minimumReleaseAgeBehaviour">minimumReleaseAgeBehaviour</a></code> | <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour">RenovatebotMinimumReleaseAgeBehaviour</a></code> | Controls whether a release timestamp is required when using `minimumReleaseAge`. |
 | <code><a href="#projen.RenovatebotOptions.property.overrideConfig">overrideConfig</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.RenovatebotOptions.property.scheduleInterval">scheduleInterval</a></code> | <code>string[]</code> | How often to check for new versions and raise pull requests. |
 
@@ -13621,6 +13623,39 @@ public readonly marker: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+##### `minimumReleaseAge`<sup>Optional</sup> <a name="minimumReleaseAge" id="projen.RenovatebotOptions.property.minimumReleaseAge"></a>
+
+```typescript
+public readonly minimumReleaseAge: string;
+```
+
+- *Type:* string
+- *Default:* no minimum release age
+
+Minimum release age for packages before Renovate will propose an update.
+
+This is a supply chain security feature to avoid updating to newly published,
+potentially malicious versions.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseage](https://docs.renovatebot.com/configuration-options/#minimumreleaseage)
+
+---
+
+##### `minimumReleaseAgeBehaviour`<sup>Optional</sup> <a name="minimumReleaseAgeBehaviour" id="projen.RenovatebotOptions.property.minimumReleaseAgeBehaviour"></a>
+
+```typescript
+public readonly minimumReleaseAgeBehaviour: RenovatebotMinimumReleaseAgeBehaviour;
+```
+
+- *Type:* <a href="#projen.RenovatebotMinimumReleaseAgeBehaviour">RenovatebotMinimumReleaseAgeBehaviour</a>
+- *Default:* RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED
+
+Controls whether a release timestamp is required when using `minimumReleaseAge`.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour](https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour)
 
 ---
 
@@ -18136,6 +18171,35 @@ This is an app (service, tool, website, etc).
 
 Its artifacts are intended to
 be deployed or published for end-user consumption.
+
+---
+
+
+### RenovatebotMinimumReleaseAgeBehaviour <a name="RenovatebotMinimumReleaseAgeBehaviour" id="projen.RenovatebotMinimumReleaseAgeBehaviour"></a>
+
+Behaviour when a release timestamp is missing for `minimumReleaseAge`.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour](https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED">TIMESTAMP_REQUIRED</a></code> | A release without a timestamp is not treated as stable. |
+| <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_OPTIONAL">TIMESTAMP_OPTIONAL</a></code> | A release without a timestamp is treated as stable. |
+
+---
+
+##### `TIMESTAMP_REQUIRED` <a name="TIMESTAMP_REQUIRED" id="projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED"></a>
+
+A release without a timestamp is not treated as stable.
+
+---
+
+
+##### `TIMESTAMP_OPTIONAL` <a name="TIMESTAMP_OPTIONAL" id="projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_OPTIONAL"></a>
+
+A release without a timestamp is treated as stable.
 
 ---
 

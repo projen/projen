@@ -5884,6 +5884,116 @@ For Java dependencies, the format of the dependency-name attribute is:
 
 ---
 
+### DependabotCooldown <a name="DependabotCooldown" id="projen.github.DependabotCooldown"></a>
+
+Defines a cooldown period for dependency version updates.
+
+> [https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-)
+
+#### Initializer <a name="Initializer" id="projen.github.DependabotCooldown.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const dependabotCooldown: github.DependabotCooldown = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependabotCooldown.property.defaultDays">defaultDays</a></code> | <code>number</code> | Default cooldown period (in days) for all dependencies without specific semver rules. |
+| <code><a href="#projen.github.DependabotCooldown.property.exclude">exclude</a></code> | <code>string[]</code> | List of dependencies excluded from cooldown. |
+| <code><a href="#projen.github.DependabotCooldown.property.include">include</a></code> | <code>string[]</code> | List of dependencies to apply cooldown to. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverMajorDays">semverMajorDays</a></code> | <code>number</code> | Cooldown period (in days) for major version updates. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverMinorDays">semverMinorDays</a></code> | <code>number</code> | Cooldown period (in days) for minor version updates. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverPatchDays">semverPatchDays</a></code> | <code>number</code> | Cooldown period (in days) for patch version updates. |
+
+---
+
+##### `defaultDays`<sup>Optional</sup> <a name="defaultDays" id="projen.github.DependabotCooldown.property.defaultDays"></a>
+
+```typescript
+public readonly defaultDays: number;
+```
+
+- *Type:* number
+- *Default:* no default cooldown
+
+Default cooldown period (in days) for all dependencies without specific semver rules.
+
+---
+
+##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.github.DependabotCooldown.property.exclude"></a>
+
+```typescript
+public readonly exclude: string[];
+```
+
+- *Type:* string[]
+- *Default:* no exclusions
+
+List of dependencies excluded from cooldown.
+
+Supports wildcards.
+Takes precedence over `include`.
+
+---
+
+##### `include`<sup>Optional</sup> <a name="include" id="projen.github.DependabotCooldown.property.include"></a>
+
+```typescript
+public readonly include: string[];
+```
+
+- *Type:* string[]
+- *Default:* all dependencies
+
+List of dependencies to apply cooldown to.
+
+Supports wildcards.
+
+---
+
+##### `semverMajorDays`<sup>Optional</sup> <a name="semverMajorDays" id="projen.github.DependabotCooldown.property.semverMajorDays"></a>
+
+```typescript
+public readonly semverMajorDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for major version updates.
+
+---
+
+##### `semverMinorDays`<sup>Optional</sup> <a name="semverMinorDays" id="projen.github.DependabotCooldown.property.semverMinorDays"></a>
+
+```typescript
+public readonly semverMinorDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for minor version updates.
+
+---
+
+##### `semverPatchDays`<sup>Optional</sup> <a name="semverPatchDays" id="projen.github.DependabotCooldown.property.semverPatchDays"></a>
+
+```typescript
+public readonly semverPatchDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for patch version updates.
+
+---
+
 ### DependabotGroup <a name="DependabotGroup" id="projen.github.DependabotGroup"></a>
 
 Defines a single group for dependency updates.
@@ -6049,6 +6159,7 @@ const dependabotOptions: github.DependabotOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.DependabotOptions.property.allow">allow</a></code> | <code><a href="#projen.github.DependabotAllow">DependabotAllow</a>[]</code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow. |
 | <code><a href="#projen.github.DependabotOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Specify individual assignees or teams of assignees for all pull requests raised for a package manager. |
+| <code><a href="#projen.github.DependabotOptions.property.cooldown">cooldown</a></code> | <code><a href="#projen.github.DependabotCooldown">DependabotCooldown</a></code> | Defines a cooldown period for dependency version updates. |
 | <code><a href="#projen.github.DependabotOptions.property.groups">groups</a></code> | <code>{[ key: string ]: <a href="#projen.github.DependabotGroup">DependabotGroup</a>}</code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups. |
 | <code><a href="#projen.github.DependabotOptions.property.ignore">ignore</a></code> | <code><a href="#projen.github.DependabotIgnore">DependabotIgnore</a>[]</code> | You can use the `ignore` option to customize which dependencies are updated. |
 | <code><a href="#projen.github.DependabotOptions.property.ignoreProjen">ignoreProjen</a></code> | <code>boolean</code> | Ignores updates to `projen`. |
@@ -6088,6 +6199,24 @@ public readonly assignees: string[];
 - *Default:* []
 
 Specify individual assignees or teams of assignees for all pull requests raised for a package manager.
+
+---
+
+##### `cooldown`<sup>Optional</sup> <a name="cooldown" id="projen.github.DependabotOptions.property.cooldown"></a>
+
+```typescript
+public readonly cooldown: DependabotCooldown;
+```
+
+- *Type:* <a href="#projen.github.DependabotCooldown">DependabotCooldown</a>
+- *Default:* no cooldown
+
+Defines a cooldown period for dependency version updates.
+
+During the cooldown, Dependabot will not propose updates for a dependency.
+This only applies to version updates, not security updates.
+
+> [https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-)
 
 ---
 
