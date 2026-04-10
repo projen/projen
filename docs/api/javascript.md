@@ -7170,6 +7170,66 @@ public readonly throwOnModuleCollision: boolean;
 
 ---
 
+### InstallTrigger <a name="InstallTrigger" id="projen.javascript.InstallTrigger"></a>
+
+Describes why dependencies need to be installed.
+
+#### Initializer <a name="Initializer" id="projen.javascript.InstallTrigger.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const installTrigger: javascript.InstallTrigger = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.InstallTrigger.property.reason">reason</a></code> | <code><a href="#projen.javascript.InstallReason">InstallReason</a></code> | The reason for the install. |
+| <code><a href="#projen.javascript.InstallTrigger.property.diff">diff</a></code> | <code>string[]</code> | A unified diff of the package.json changes. Only present when reason is `PACKAGE_JSON_CHANGED`. |
+| <code><a href="#projen.javascript.InstallTrigger.property.resolutions">resolutions</a></code> | <code>string[]</code> | Human-readable descriptions of resolved dependency version changes. |
+
+---
+
+##### `reason`<sup>Required</sup> <a name="reason" id="projen.javascript.InstallTrigger.property.reason"></a>
+
+```typescript
+public readonly reason: InstallReason;
+```
+
+- *Type:* <a href="#projen.javascript.InstallReason">InstallReason</a>
+
+The reason for the install.
+
+---
+
+##### `diff`<sup>Optional</sup> <a name="diff" id="projen.javascript.InstallTrigger.property.diff"></a>
+
+```typescript
+public readonly diff: string[];
+```
+
+- *Type:* string[]
+
+A unified diff of the package.json changes. Only present when reason is `PACKAGE_JSON_CHANGED`.
+
+---
+
+##### `resolutions`<sup>Optional</sup> <a name="resolutions" id="projen.javascript.InstallTrigger.property.resolutions"></a>
+
+```typescript
+public readonly resolutions: string[];
+```
+
+- *Type:* string[]
+
+Human-readable descriptions of resolved dependency version changes.
+
+Only present when reason is `DEPS_RESOLVED`.
+
+---
+
 ### JestConfigOptions <a name="JestConfigOptions" id="projen.javascript.JestConfigOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.JestConfigOptions.Initializer"></a>
@@ -15945,6 +16005,41 @@ Whitespaces are considered insignificant.
 ##### `STRICT` <a name="STRICT" id="projen.javascript.HTMLWhitespaceSensitivity.STRICT"></a>
 
 Whitespaces are considered significant.
+
+---
+
+
+### InstallReason <a name="InstallReason" id="projen.javascript.InstallReason"></a>
+
+Why a dependency install was triggered during synthesis.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.InstallReason.NO_NODE_MODULES">NO_NODE_MODULES</a></code> | The node_modules directory does not exist. |
+| <code><a href="#projen.javascript.InstallReason.PACKAGE_JSON_CHANGED">PACKAGE_JSON_CHANGED</a></code> | The package.json file was modified during synthesis. |
+| <code><a href="#projen.javascript.InstallReason.DEPS_RESOLVED">DEPS_RESOLVED</a></code> | Wildcard dependency versions were resolved to concrete ranges. |
+
+---
+
+##### `NO_NODE_MODULES` <a name="NO_NODE_MODULES" id="projen.javascript.InstallReason.NO_NODE_MODULES"></a>
+
+The node_modules directory does not exist.
+
+---
+
+
+##### `PACKAGE_JSON_CHANGED` <a name="PACKAGE_JSON_CHANGED" id="projen.javascript.InstallReason.PACKAGE_JSON_CHANGED"></a>
+
+The package.json file was modified during synthesis.
+
+---
+
+
+##### `DEPS_RESOLVED` <a name="DEPS_RESOLVED" id="projen.javascript.InstallReason.DEPS_RESOLVED"></a>
+
+Wildcard dependency versions were resolved to concrete ranges.
 
 ---
 

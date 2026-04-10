@@ -1,4 +1,5 @@
 import * as path from "path";
+import { underline } from "chalk";
 import * as semver from "semver";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
@@ -137,7 +138,9 @@ export class Dependencies extends Component {
     type: DependencyType,
     metadata: { [key: string]: any } = {},
   ): Dependency {
-    this.project.logger.debug(`${type}-dep ${spec}`);
+    this.project.logger.verbose(
+      `${underline("Dependency")} | Adding ${type}-dep \`${spec}\``,
+    );
 
     const dep: Dependency = {
       ...Dependencies.parseDependency(spec),
@@ -149,7 +152,7 @@ export class Dependencies extends Component {
 
     if (existingDepIndex !== -1) {
       this.project.logger.debug(
-        `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`,
+        `${underline("Dependency")} | Updating existing ${dep.type}-dep \`${dep.name}\` with more specific request.`,
       );
       this._deps[existingDepIndex] = dep;
     } else {

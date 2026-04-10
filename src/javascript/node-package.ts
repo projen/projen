@@ -1090,19 +1090,71 @@ export class NodePackage extends Component {
   public postSynthesize() {
     super.postSynthesize();
 
-    // only run "install" if package.json has changed or if we don't have a
-    // `node_modules` directory.
-    if (
-      this.file.changed ||
-      !existsSync(join(this.project.outdir, "node_modules"))
-    ) {
-      this.installDependencies();
+    // Phase 1: install if package.json changed or node_modules is missing
+    const initialTrigger = this.determineInitialInstallTrigger();
+    if (initialTrigger) {
+      this.logInstallTrigger(initialTrigger);
+      this.installDependencies(initialTrigger);
     }
 
-    // resolve "*" deps in package.json and update it. if it was changed,
-    // install deps again so that lockfile is updated.
-    if (this.resolveDepsAndWritePackageJson()) {
-      this.installDependencies();
+    // Phase 2: resolve "*" deps and install again if versions changed
+    const resolutions = this.resolveDepsAndWritePackageJson();
+    if (resolutions?.length) {
+      const trigger: InstallTrigger = {
+        reason: InstallReason.DEPS_RESOLVED,
+        resolutions,
+      };
+      this.logInstallTrigger(trigger);
+      this.installDependencies(trigger);
+    }
+  }
+
+  /**
+   * Checks whether dependencies need to be installed before dependency
+   * resolution.
+   *
+   * @returns a structured trigger describing the reason, or `undefined` if
+   * no install is needed.
+   */
+  private determineInitialInstallTrigger(): InstallTrigger | undefined {
+    const hasNodeModules = existsSync(
+      join(this.project.outdir, "node_modules"),
+    );
+
+    if (this.file.changed) {
+      return {
+        reason: InstallReason.PACKAGE_JSON_CHANGED,
+        diff: this.file.diff(true),
+      };
+    }
+
+    if (!hasNodeModules) {
+      return { reason: InstallReason.NO_NODE_MODULES };
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Logs user-facing information about why dependencies are being installed.
+   * Emits an info-level summary and debug-level details (reason, diff, resolutions).
+   */
+  private logInstallTrigger(trigger: InstallTrigger) {
+    this.project.logger.info(
+      "Installing dependencies... (use --debug for details)",
+    );
+    this.project.logger.debug(`Install reason: ${trigger.reason}`);
+
+    if (trigger.diff) {
+      this.project.logger.debug(
+        `package.json diff:\n${trigger.diff.join("\n")}`,
+      );
+    }
+
+    if (trigger.resolutions?.length) {
+      this.project.logger.info(
+        `Resolved dependency versions:\n${trigger.resolutions.map((r) => `  ${r}`).join("\n")}`,
+      );
     }
   }
 
@@ -1521,16 +1573,19 @@ export class NodePackage extends Component {
 
   /**
    * Resolves any deps that do not have a specified version (e.g. `*`) and
-   * update `package.json` if needed.
+   * updates `package.json` if needed. Does not log or install — the caller
+   * is responsible for acting on the returned changes.
    *
-   * @returns `true` if package.json was updated or `false` if not.
+   * @returns list of human-readable resolution changes, or `undefined` if
+   * `package.json` does not exist. An empty array means no changes were made.
    */
-  private resolveDepsAndWritePackageJson(): boolean {
+  private resolveDepsAndWritePackageJson(): string[] | undefined {
     const outdir = this.project.outdir;
     const rootPackageJson = join(outdir, "package.json");
 
     const original = readFileSync(rootPackageJson, "utf8");
     const pkg = JSON.parse(original);
+    const changes: string[] = [];
 
     const resolveDeps = (
       current: { [name: string]: string },
@@ -1560,18 +1615,16 @@ export class NodePackage extends Component {
         }
 
         if (currentDefinition !== desiredVersion) {
-          this.project.logger.verbose(
-            `${name}: ${currentDefinition} => ${desiredVersion}`,
-          );
+          changes.push(`${name}: ${currentDefinition} => ${desiredVersion}`);
         }
 
         result[name] = desiredVersion;
       }
 
-      // print removed packages
+      // collect removed packages
       for (const name of Object.keys(current)) {
         if (!result[name]) {
-          this.project.logger.verbose(`${name} removed`);
+          changes.push(`${name}: removed`);
         }
       }
 
@@ -1618,11 +1671,11 @@ export class NodePackage extends Component {
     const updated = JSON.stringify(pkg, undefined, 2) + "\n";
 
     if (original === updated) {
-      return false;
+      return [];
     }
 
     writeFile(rootPackageJson, updated);
-    return true;
+    return changes;
   }
 
   private renderPackageResolutions() {
@@ -1836,8 +1889,13 @@ export class NodePackage extends Component {
     return JSON.parse(readFileSync(file, "utf-8"));
   }
 
-  private installDependencies() {
-    this.project.logger.info("Installing dependencies...");
+  /**
+   * Runs the install or install:ci task. Does not log — the caller is
+   * responsible for informing the user before calling this method.
+   *
+   * @param _trigger the reason for the install, available for subclasses to act on.
+   */
+  protected installDependencies(_trigger: InstallTrigger) {
     const runtime = new TaskRuntime(this.project.outdir);
     const taskToRun = this.isAutomatedBuild
       ? this.installCiTask
@@ -2045,6 +2103,38 @@ interface NpmDependencies {
   readonly dependencies: Record<string, string>;
   readonly devDependencies: Record<string, string>;
   readonly peerDependencies: Record<string, string>;
+}
+
+/**
+ * Why a dependency install was triggered during synthesis.
+ */
+export enum InstallReason {
+  /** The node_modules directory does not exist. */
+  NO_NODE_MODULES = "node_modules is missing",
+  /** The package.json file was modified during synthesis. */
+  PACKAGE_JSON_CHANGED = "package.json has changed",
+  /** Wildcard dependency versions were resolved to concrete ranges. */
+  DEPS_RESOLVED = "resolved dependency versions changed",
+}
+
+/**
+ * Describes why dependencies need to be installed.
+ */
+export interface InstallTrigger {
+  /** The reason for the install. */
+  readonly reason: InstallReason;
+
+  /**
+   * A unified diff of the package.json changes.
+   * Only present when reason is `PACKAGE_JSON_CHANGED`.
+   */
+  readonly diff?: string[];
+
+  /**
+   * Human-readable descriptions of resolved dependency version changes.
+   * Only present when reason is `DEPS_RESOLVED`.
+   */
+  readonly resolutions?: string[];
 }
 
 /**

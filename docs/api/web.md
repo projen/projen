@@ -4858,6 +4858,7 @@ new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?
 | <code><a href="#projen.web.ReactTypeDef.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.web.ReactTypeDef.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.web.ReactTypeDef.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.web.ReactTypeDef.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
 ---
 
@@ -4915,6 +4916,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### ~~`diff`~~ <a name="diff" id="projen.web.ReactTypeDef.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.web.ReactTypeDef.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.web.ReactTypeDef.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 

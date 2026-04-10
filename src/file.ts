@@ -13,6 +13,7 @@ import {
   writeFile,
 } from "./util";
 import { findClosestProject } from "./util/constructs";
+import { unifiedDiff } from "./util/diff";
 
 export interface FileBaseOptions {
   /**
@@ -74,6 +75,8 @@ export abstract class FileBase extends Component {
   public readonly absolutePath: string;
 
   private _changed?: boolean;
+  private _previousContent?: string;
+  private _newContent?: string;
   private shouldAddMarker: boolean;
 
   /**
@@ -166,6 +169,8 @@ export abstract class FileBase extends Component {
 
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
+    this._previousContent = prev;
+    this._newContent = content;
     const prevReadonly = !isWritable(filePath);
     const successfulExecutableAssertion = assertExecutablePermissions(
       filePath,
@@ -177,7 +182,7 @@ export abstract class FileBase extends Component {
       prevReadonly === this.readonly &&
       successfulExecutableAssertion
     ) {
-      this.project.logger.debug(`no change in ${filePath}`);
+      this.project.logger.verbose(`no change in ${filePath}`);
       this._changed = false;
       return;
     }
@@ -220,6 +225,31 @@ export abstract class FileBase extends Component {
    */
   public get changed(): boolean | undefined {
     return this._changed;
+  }
+
+  /**
+   * Returns a unified diff of the old and new file contents with context lines
+   * and hunk headers. Only available after synthesis.
+   *
+   * This is an expensive operation and should only be used on non time-critical
+   * code paths, like debug output.
+   *
+   * @param colorize Whether to colorize the diff output. @default false
+   * @param contextLines Number of context lines around changes. @default 3
+   * @returns the diff as an array of lines, or `undefined` if the file was
+   * not changed or has not been synthesized yet.
+   */
+  public diff(colorize = false, contextLines = 3): string[] | undefined {
+    if (!this._changed) {
+      return undefined;
+    }
+
+    return unifiedDiff(
+      this._previousContent ?? "",
+      this._newContent ?? "",
+      colorize,
+      contextLines,
+    );
   }
 }
 

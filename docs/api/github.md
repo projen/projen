@@ -3560,6 +3560,7 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 | <code><a href="#projen.github.PullRequestTemplate.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.PullRequestTemplate.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.github.PullRequestTemplate.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.github.PullRequestTemplate.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.github.PullRequestTemplate.addLine">addLine</a></code> | Adds a line to the text file. |
 
 ---
@@ -3618,6 +3619,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.github.PullRequestTemplate.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.github.PullRequestTemplate.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.github.PullRequestTemplate.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addLine` <a name="addLine" id="projen.github.PullRequestTemplate.addLine"></a>
 
