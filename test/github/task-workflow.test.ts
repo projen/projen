@@ -115,6 +115,46 @@ describe("task-workflow", () => {
     expect(snapshot[".gitattributes"]).toContain("*.bin filter=lfs");
   });
 
+  test("enabling submodule download adds the submodules property to workflows", () => {
+    const project = new TestProject({
+      githubOptions: {
+        downloadSubmodules: true,
+      },
+    });
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
+      "submodules: true",
+    );
+  });
+
+  test("downloadSubmodules: 'recursive' is preserved in the workflow", () => {
+    const project = new TestProject({
+      githubOptions: {
+        downloadSubmodules: "recursive",
+      },
+    });
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
+      "submodules: recursive",
+    );
+  });
+
   test("with custom runner, multiple labels", () => {
     const project = new TestProject();
 

@@ -117,6 +117,15 @@ export interface TaskWorkflowJobOptions {
   readonly downloadLfs?: boolean;
 
   /**
+   * Whether to checkout Git submodules for this workflow. Pass `true` to
+   * clone only the top-level submodules, or `"recursive"` for nested
+   * submodules.
+   *
+   * @default - Use the setting on the corresponding GitHub project
+   */
+  readonly downloadSubmodules?: boolean | "recursive";
+
+  /**
    * Default settings for all steps in the TaskWorkflow Job.
    */
   readonly jobDefaults?: JobDefaults;
@@ -163,11 +172,15 @@ export class TaskWorkflowJob extends Component {
     super(scope, `${new.target.name}#${task.name}`);
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
-    const checkoutWith: { lfs?: boolean } = {};
+    const checkoutWith: { lfs?: boolean; submodules?: boolean | "recursive" } =
+      {};
     if (options.downloadLfs) {
       checkoutWith.lfs = true;
     }
-    // 'checkoutWith' can override 'lfs'
+    if (options.downloadSubmodules) {
+      checkoutWith.submodules = options.downloadSubmodules;
+    }
+    // 'checkoutWith' can override 'lfs' and 'submodules'
     Object.assign(checkoutWith, options.checkoutWith ?? {});
 
     const preBuildSteps = options.preBuildSteps ?? [];

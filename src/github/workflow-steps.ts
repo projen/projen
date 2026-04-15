@@ -20,6 +20,9 @@ export class WorkflowSteps {
       repository: options?.with?.repository,
       path: options?.with?.path,
       ...(options?.with?.lfs ? { lfs: true } : {}),
+      ...(options?.with?.submodules
+        ? { submodules: options.with.submodules }
+        : {}),
     });
 
     return {
@@ -184,6 +187,14 @@ export interface CheckoutWith {
    * @default false
    */
   readonly lfs?: boolean;
+
+  /**
+   * Whether to checkout Git submodules. Pass `true` to clone only the
+   * top-level submodules, or `"recursive"` to clone submodules recursively.
+   *
+   * @default false
+   */
+  readonly submodules?: boolean | "recursive";
 
   /**
    * Branch or tag name.

@@ -130,6 +130,15 @@ export interface GitHubOptions {
    * @default - default options
    */
   readonly dependencyReviewOptions?: DependencyReviewOptions;
+
+  /**
+   * Whether to checkout Git submodules in workflows. Pass `true` to clone
+   * only the top-level submodules, or `"recursive"` to clone submodules
+   * recursively.
+   *
+   * @default false
+   */
+  readonly downloadSubmodules?: boolean | "recursive";
 }
 
 export class GitHub extends Component {
@@ -170,6 +179,7 @@ export class GitHub extends Component {
   public readonly actions: GitHubActionsProvider;
 
   private readonly _downloadLfs?: boolean;
+  private readonly _downloadSubmodules?: boolean | "recursive";
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
@@ -179,6 +189,7 @@ export class GitHub extends Component {
     this.workflowsEnabled = options.workflows ?? true;
 
     this._downloadLfs = options.downloadLfs;
+    this._downloadSubmodules = options.downloadSubmodules;
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
@@ -268,5 +279,13 @@ export class GitHub extends Component {
    */
   public get downloadLfs() {
     return this._downloadLfs ?? this.project.gitattributes.hasLfsPatterns;
+  }
+
+  /**
+   * Whether checking out Git submodules is enabled for this GitHub project.
+   * Returns `false` (default), `true` (top-level submodules), or `"recursive"`.
+   */
+  public get downloadSubmodules(): boolean | "recursive" {
+    return this._downloadSubmodules ?? false;
   }
 }

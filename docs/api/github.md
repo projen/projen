@@ -1317,6 +1317,7 @@ Returns the `GitHub` component of a project or `undefined` if the project does n
 | <code><a href="#projen.github.GitHub.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.GitHub.property.actions">actions</a></code> | <code><a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a></code> | The GitHub Actions provider used to manage the versions of actions used in steps. |
 | <code><a href="#projen.github.GitHub.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether downloading from LFS is enabled for this GitHub project. |
+| <code><a href="#projen.github.GitHub.property.downloadSubmodules">downloadSubmodules</a></code> | <code>boolean \| string</code> | Whether checking out Git submodules is enabled for this GitHub project. |
 | <code><a href="#projen.github.GitHub.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GitHub.property.workflows">workflows</a></code> | <code><a href="#projen.github.GithubWorkflow">GithubWorkflow</a>[]</code> | All workflows. |
 | <code><a href="#projen.github.GitHub.property.workflowsEnabled">workflowsEnabled</a></code> | <code>boolean</code> | Are workflows enabled? |
@@ -1368,6 +1369,20 @@ public readonly downloadLfs: boolean;
 - *Type:* boolean
 
 Whether downloading from LFS is enabled for this GitHub project.
+
+---
+
+##### `downloadSubmodules`<sup>Required</sup> <a name="downloadSubmodules" id="projen.github.GitHub.property.downloadSubmodules"></a>
+
+```typescript
+public readonly downloadSubmodules: boolean | string;
+```
+
+- *Type:* boolean | string
+
+Whether checking out Git submodules is enabled for this GitHub project.
+
+Returns `false` (default), `true` (top-level submodules), or `"recursive"`.
 
 ---
 
@@ -5574,6 +5589,7 @@ const checkoutWith: github.CheckoutWith = { ... }
 | <code><a href="#projen.github.CheckoutWith.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWith.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWith.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.CheckoutWith.property.submodules">submodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWith.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 
 ---
@@ -5645,6 +5661,22 @@ The repository (owner/repo) to use.
 
 ---
 
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.CheckoutWith.property.submodules"></a>
+
+```typescript
+public readonly submodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* false
+
+Whether to checkout Git submodules.
+
+Pass `true` to clone only the
+top-level submodules, or `"recursive"` to clone submodules recursively.
+
+---
+
 ##### `token`<sup>Optional</sup> <a name="token" id="projen.github.CheckoutWith.property.token"></a>
 
 ```typescript
@@ -5682,6 +5714,7 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.CheckoutWithPatchOptions.property.submodules">submodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 
@@ -5751,6 +5784,22 @@ public readonly repository: string;
 - *Default:* the default repository is implicitly used
 
 The repository (owner/repo) to use.
+
+---
+
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.CheckoutWithPatchOptions.property.submodules"></a>
+
+```typescript
+public readonly submodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* false
+
+Whether to checkout Git submodules.
+
+Pass `true` to clone only the
+top-level submodules, or `"recursive"` to clone submodules recursively.
 
 ---
 
@@ -7369,6 +7418,7 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable the dependency-review-action workflow on pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | Options for the dependency review workflow. |
 | <code><a href="#projen.github.GitHubOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Download files in LFS in workflows. |
+| <code><a href="#projen.github.GitHubOptions.property.downloadSubmodules">downloadSubmodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules in workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueue">mergeQueue</a></code> | <code>boolean</code> | Whether a merge queue should be used on this repository to merge pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueueOptions">mergeQueueOptions</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | Options for MergeQueue. |
 | <code><a href="#projen.github.GitHubOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
@@ -7425,6 +7475,23 @@ public readonly downloadLfs: boolean;
 - *Default:* true if the associated project has `lfsPatterns`, `false` otherwise
 
 Download files in LFS in workflows.
+
+---
+
+##### `downloadSubmodules`<sup>Optional</sup> <a name="downloadSubmodules" id="projen.github.GitHubOptions.property.downloadSubmodules"></a>
+
+```typescript
+public readonly downloadSubmodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* false
+
+Whether to checkout Git submodules in workflows.
+
+Pass `true` to clone
+only the top-level submodules, or `"recursive"` to clone submodules
+recursively.
 
 ---
 
@@ -9048,6 +9115,7 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 | <code><a href="#projen.github.PullRequestPatchSource.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.PullRequestPatchSource.property.submodules">submodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.jobId">jobId</a></code> | <code>string</code> | The id of the job that created the patch file. |
@@ -9119,6 +9187,22 @@ public readonly repository: string;
 - *Default:* the default repository is implicitly used
 
 The repository (owner/repo) to use.
+
+---
+
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.PullRequestPatchSource.property.submodules"></a>
+
+```typescript
+public readonly submodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* false
+
+Whether to checkout Git submodules.
+
+Pass `true` to clone only the
+top-level submodules, or `"recursive"` to clone submodules recursively.
 
 ---
 
@@ -9649,6 +9733,7 @@ const taskWorkflowJobOptions: github.TaskWorkflowJobOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.downloadSubmodules">downloadSubmodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
@@ -9733,6 +9818,23 @@ public readonly downloadLfs: boolean;
 - *Default:* Use the setting on the corresponding GitHub project
 
 Whether to download files from Git LFS for this workflow.
+
+---
+
+##### `downloadSubmodules`<sup>Optional</sup> <a name="downloadSubmodules" id="projen.github.TaskWorkflowJobOptions.property.downloadSubmodules"></a>
+
+```typescript
+public readonly downloadSubmodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* Use the setting on the corresponding GitHub project
+
+Whether to checkout Git submodules for this workflow.
+
+Pass `true` to
+clone only the top-level submodules, or `"recursive"` for nested
+submodules.
 
 ---
 
@@ -9886,6 +9988,7 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 | <code><a href="#projen.github.TaskWorkflowOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether to download files from Git LFS for this workflow. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.downloadSubmodules">downloadSubmodules</a></code> | <code>boolean \| string</code> | Whether to checkout Git submodules for this workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Workflow environment variables. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity to use in this workflow. |
@@ -9974,6 +10077,23 @@ public readonly downloadLfs: boolean;
 - *Default:* Use the setting on the corresponding GitHub project
 
 Whether to download files from Git LFS for this workflow.
+
+---
+
+##### `downloadSubmodules`<sup>Optional</sup> <a name="downloadSubmodules" id="projen.github.TaskWorkflowOptions.property.downloadSubmodules"></a>
+
+```typescript
+public readonly downloadSubmodules: boolean | string;
+```
+
+- *Type:* boolean | string
+- *Default:* Use the setting on the corresponding GitHub project
+
+Whether to checkout Git submodules for this workflow.
+
+Pass `true` to
+clone only the top-level submodules, or `"recursive"` for nested
+submodules.
 
 ---
 
