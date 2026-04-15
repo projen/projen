@@ -1,13 +1,18 @@
-import { AutoApprove, AutoApproveOptions } from "./auto-approve";
-import { AutoMergeOptions } from "./auto-merge";
-import { GitHub, GitHubOptions } from "./github";
-import { GithubCredentials } from "./github-credentials";
-import { MergifyOptions } from "./mergify";
-import { Stale, StaleOptions } from "./stale";
+import type { AutoApproveOptions } from "./auto-approve";
+import { AutoApprove } from "./auto-approve";
+import type { AutoMergeOptions } from "./auto-merge";
+import type { GitHubOptions } from "./github";
+import { GitHub } from "./github";
+import type { GithubCredentials } from "./github-credentials";
+import type { MergifyOptions } from "./mergify";
+import type { StaleOptions } from "./stale";
+import { Stale } from "./stale";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
-import { Project, ProjectOptions, ProjectType } from "../project";
-import { SampleReadme, SampleReadmeProps } from "../readme";
+import type { ProjectOptions } from "../project";
+import { Project, ProjectType } from "../project";
+import type { SampleReadmeProps } from "../readme";
+import { SampleReadme } from "../readme";
 import { normalizePersistedPath } from "../util";
 import { DevContainer, VsCode } from "../vscode";
 

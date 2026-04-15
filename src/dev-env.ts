@@ -1,4 +1,4 @@
-import { Task } from "./task";
+import type { Task } from "./task";
 
 /**
  * Base options for configuring a container-based development environment.

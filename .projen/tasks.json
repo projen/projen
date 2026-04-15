@@ -442,7 +442,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
         },
         {
           "exec": "npm install"
@@ -467,7 +467,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
         },
         {
           "exec": "npm install"

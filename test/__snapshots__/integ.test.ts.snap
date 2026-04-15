@@ -266,14 +266,15 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
@@ -315,7 +316,7 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -345,9 +346,10 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -357,7 +359,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -383,9 +385,10 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -395,7 +398,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -417,9 +420,10 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -432,7 +436,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -502,7 +506,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -510,9 +514,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
@@ -552,9 +557,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -576,9 +582,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -588,7 +595,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -620,9 +627,10 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -632,7 +640,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -662,9 +670,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: "false"
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -677,7 +686,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -713,13 +722,14 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: master
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -747,7 +757,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: master
       - name: Download patch
@@ -763,7 +773,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -867,7 +877,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -1227,7 +1236,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
         },
         {
           "exec": "yarn install --check-files"
@@ -1528,7 +1537,7 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": "{"name":"cdk-watchful","description":"Watching your CDK apps since 2019","repository":{"type":"git","url":"https://github.com/eladb/cdk-watchful.git"},"scripts":{"build":"npx projen build","bump":"npx projen bump","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","release":"npx projen release","test":"npx projen test","test:watch":"npx projen test:watch","unbump":"npx projen unbump","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Elad Ben-Israel","email":"elad.benisrael@gmail.com","organization":false},"devDependencies":{"@aws-cdk/assert":"^1.75.0","@stylistic/eslint-plugin":"^2","@types/jest":"*","@types/node":"^16","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","aws-sdk":"*","commit-and-tag-version":"^12","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.9.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.9.0","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0","constructs":"^3.2.27"},"dependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0"},"keywords":["cdk","cloudwatch","monitoring"],"engines":{"node":">= 16.0.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"stable","jsii":{"outdir":"dist","targets":{"java":{"package":"com.github.eladb.watchful","maven":{"groupId":"com.github.eladb","artifactId":"cdk-watchful"}},"python":{"distName":"cdk-watchful","module":"cdk_watchful"}},"tsc":{"outDir":"lib","rootDir":"src"}},"awscdkio":{"twitter":"emeshbi"},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"cdk-watchful","description":"Watching your CDK apps since 2019","repository":{"type":"git","url":"https://github.com/eladb/cdk-watchful.git"},"scripts":{"build":"projen build","bump":"projen bump","clobber":"projen clobber","compat":"projen compat","compile":"projen compile","default":"projen default","docgen":"projen docgen","eject":"projen eject","eslint":"projen eslint","package":"projen package","package-all":"projen package-all","package:java":"projen package:java","package:js":"projen package:js","package:python":"projen package:python","post-compile":"projen post-compile","post-upgrade":"projen post-upgrade","pre-compile":"projen pre-compile","release":"projen release","test":"projen test","test:watch":"projen test:watch","unbump":"projen unbump","upgrade":"projen upgrade","watch":"projen watch","projen":"projen"},"author":{"name":"Elad Ben-Israel","email":"elad.benisrael@gmail.com","organization":false},"devDependencies":{"@aws-cdk/assert":"^1.75.0","@stylistic/eslint-plugin":"^2","@types/jest":"*","@types/node":"^16","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","aws-sdk":"*","commit-and-tag-version":"^12","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.9.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.9.0","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0","constructs":"^3.2.27"},"dependencies":{"@aws-cdk/aws-apigateway":"^1.75.0","@aws-cdk/aws-cloudwatch":"^1.75.0","@aws-cdk/aws-cloudwatch-actions":"^1.75.0","@aws-cdk/aws-dynamodb":"^1.75.0","@aws-cdk/aws-ecs":"^1.75.0","@aws-cdk/aws-ecs-patterns":"^1.75.0","@aws-cdk/aws-elasticloadbalancingv2":"^1.75.0","@aws-cdk/aws-events":"^1.75.0","@aws-cdk/aws-events-targets":"^1.75.0","@aws-cdk/aws-lambda":"^1.75.0","@aws-cdk/aws-rds":"^1.75.0","@aws-cdk/aws-sns":"^1.75.0","@aws-cdk/aws-sns-subscriptions":"^1.75.0","@aws-cdk/aws-sqs":"^1.75.0","@aws-cdk/core":"^1.75.0"},"keywords":["cdk","cloudwatch","monitoring"],"engines":{"node":">= 16.0.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"stable","jsii":{"outdir":"dist","targets":{"java":{"package":"com.github.eladb.watchful","maven":{"groupId":"com.github.eladb","artifactId":"cdk-watchful"}},"python":{"distName":"cdk-watchful","module":"cdk_watchful"}},"tsc":{"outDir":"lib","rootDir":"src"}},"awscdkio":{"twitter":"emeshbi"},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -1564,7 +1573,11 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -1871,11 +1884,12 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 12.7.0
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -1903,7 +1917,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Download patch
         uses: actions/download-artifact@v8
         with:
@@ -1917,7 +1931,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -2290,7 +2304,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
         },
         {
           "exec": "yarn install --check-files"
@@ -2727,7 +2741,7 @@ project.addCompileCommand('cp src/_loadurl.js lib/');
 
 project.synth();
 ",
-  "package.json": "{"name":"cdk8s","description":"Cloud Development Kit for Kubernetes","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"scripts":{"build":"yarn compile","clobber":"npx projen clobber","compat":"npx projen compat","compile":"npx projen compile","default":"npx projen default","docgen":"npx projen docgen","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","package-all":"npx projen package-all","package:dotnet":"npx projen package:dotnet","package:java":"npx projen package:java","package:js":"npx projen package:js","package:python":"npx projen package:python","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","test":"npx projen test","test:watch":"npx projen test:watch","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/follow-redirects":"*","@types/jest":"*","@types/json-stable-stringify":"*","@types/node":"^12","@types/yaml":"*","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.9.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.9.0","json-schema-to-typescript":"*","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"constructs":"*"},"dependencies":{"fast-json-patch":"*","follow-redirects":"*","json-stable-stringify":"*","yaml":"*"},"bundledDependencies":["fast-json-patch","follow-redirects","json-stable-stringify","yaml"],"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"experimental","jsii":{"outdir":"dist","targets":{"java":{"package":"org.cdk8s","maven":{"groupId":"org.cdk8s","artifactId":"cdk8s"}},"python":{"distName":"cdk8s","module":"cdk8s"},"dotnet":{"namespace":"Org.Cdk8s","packageId":"Org.Cdk8s"}},"tsc":{"outDir":"lib","rootDir":"src"}},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"cdk8s","description":"Cloud Development Kit for Kubernetes","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"scripts":{"build":"yarn compile","clobber":"projen clobber","compat":"projen compat","compile":"projen compile","default":"projen default","docgen":"projen docgen","eject":"projen eject","eslint":"projen eslint","package":"projen package","package-all":"projen package-all","package:dotnet":"projen package:dotnet","package:java":"projen package:java","package:js":"projen package:js","package:python":"projen package:python","post-compile":"projen post-compile","post-upgrade":"projen post-upgrade","pre-compile":"projen pre-compile","test":"projen test","test:watch":"projen test:watch","upgrade":"projen upgrade","watch":"projen watch","projen":"projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/follow-redirects":"*","@types/jest":"*","@types/json-stable-stringify":"*","@types/node":"^12","@types/yaml":"*","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","jsii":"~5.9.0","jsii-diff":"*","jsii-docgen":"^10.5.0","jsii-pacmak":"*","jsii-rosetta":"~5.9.0","json-schema-to-typescript":"*","projen":"*","ts-jest":"*","typescript":"*"},"peerDependencies":{"constructs":"*"},"dependencies":{"fast-json-patch":"*","follow-redirects":"*","json-stable-stringify":"*","yaml":"*"},"bundledDependencies":["fast-json-patch","follow-redirects","json-stable-stringify","yaml"],"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","stability":"experimental","jsii":{"outdir":"dist","targets":{"java":{"package":"org.cdk8s","maven":{"groupId":"org.cdk8s","artifactId":"cdk8s"}},"python":{"distName":"cdk8s","module":"cdk8s"},"dotnet":{"namespace":"Org.Cdk8s","packageId":"Org.Cdk8s"}},"tsc":{"outDir":"lib","rootDir":"src"}},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -2763,7 +2777,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "follow-redirects",
+      "jest",
+      "json-stable-stringify",
+      "node",
+      "yaml"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -3071,11 +3092,12 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 12.7.0
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -3103,7 +3125,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Download patch
         uses: actions/download-artifact@v8
         with:
@@ -3117,7 +3139,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -3406,7 +3428,7 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
         },
         {
           "exec": "yarn install --check-files"
@@ -3825,7 +3847,7 @@ project.addCompileCommand('cp src/_loadurl.js lib/');
 
 project.synth();
 ",
-  "package.json": "{"name":"cdk8s-cli","description":"CDK for Kubernetes CLI","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"bin":{"cdk8s":"bin/cdk8s"},"scripts":{"build":"yarn compile","clobber":"npx projen clobber","compile":"npx projen compile","default":"npx projen default","eject":"npx projen eject","eslint":"npx projen eslint","package":"npx projen package","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","test":"npx projen test","test:watch":"npx projen test:watch","upgrade":"npx projen upgrade","watch":"npx projen watch","projen":"npx projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/fs-extra":"*","@types/jest":"*","@types/json-schema":"*","@types/node":"^12","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","projen":"*","ts-jest":"*","typescript":"*"},"dependencies":{"@types/node":"*","cdk8s":"^0.0.0","codemaker":"*","colors":"*","constructs":"*","fs-extra":"*","jsii-pacmak":"*","jsii-srcmak":"*","json2jsii":"*","sscaff":"*","yaml":"*","yargs":"*"},"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/","/templates/"],"testPathIgnorePatterns":["/node_modules/","/templates/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"cdk8s-cli","description":"CDK for Kubernetes CLI","repository":{"type":"git","url":"https://github.com/awslabs/cdk8s.git"},"bin":{"cdk8s":"bin/cdk8s"},"scripts":{"build":"yarn compile","clobber":"projen clobber","compile":"projen compile","default":"projen default","eject":"projen eject","eslint":"projen eslint","package":"projen package","post-compile":"projen post-compile","post-upgrade":"projen post-upgrade","pre-compile":"projen pre-compile","test":"projen test","test:watch":"projen test:watch","upgrade":"projen upgrade","watch":"projen watch","projen":"projen"},"author":{"name":"Amazon Web Services","url":"https://aws.amazon.com","organization":true},"devDependencies":{"@stylistic/eslint-plugin":"^2","@types/fs-extra":"*","@types/jest":"*","@types/json-schema":"*","@types/node":"^12","@typescript-eslint/eslint-plugin":"^8","@typescript-eslint/parser":"^8","constructs":"^10.0.0","eslint":"^9","eslint-import-resolver-typescript":"*","eslint-plugin-import":"*","jest":"*","jest-junit":"^16","projen":"*","ts-jest":"*","typescript":"*"},"dependencies":{"@types/node":"*","cdk8s":"^0.0.0","codemaker":"*","colors":"*","constructs":"*","fs-extra":"*","jsii-pacmak":"*","jsii-srcmak":"*","json2jsii":"*","sscaff":"*","yaml":"*","yargs":"*"},"keywords":["cdk","constructs","k8s","kubernetes"],"engines":{"node":">= 12.7.0"},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","testMatch":["<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)","<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)"],"clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/","/templates/"],"testPathIgnorePatterns":["/node_modules/","/templates/"],"watchPathIgnorePatterns":["/node_modules/"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]],"transform":{"^.+\\\\.[t]sx?$":["ts-jest",{"tsconfig":"tsconfig.dev.json"}]}},"types":"lib/index.d.ts","//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -3861,7 +3883,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "fs-extra",
+      "jest",
+      "json-schema",
+      "node",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -3900,7 +3929,14 @@ test('hello', () => {
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "stripInternal": true,
-    "target": "ES2020"
+    "target": "ES2020",
+    "types": [
+      "fs-extra",
+      "jest",
+      "json-schema",
+      "node",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"
@@ -3913,7 +3949,7 @@ test('hello', () => {
 
 exports[`pnpm 1`] = `
 {
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 * text=auto eol=lf
 *.snap linguist-generated
@@ -3926,7 +3962,6 @@ exports[`pnpm 1`] = `
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
 /.npmignore linguist-generated
-/.npmrc linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
@@ -3935,7 +3970,7 @@ exports[`pnpm 1`] = `
 /package.json linguist-generated
 /pnpm-lock.yaml linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
-  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 name: build
 on:
@@ -3952,18 +3987,18 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
-          version: "10"
+          version: 10.33.0
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
       - name: build
-        run: npx projen build
+        run: pnpm exec projen build
       - name: Find mutations
         id: self_mutation
         run: |-
@@ -3992,7 +4027,7 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -4016,7 +4051,7 @@ jobs:
           git commit -s -m "chore: self mutation"
           git push origin "HEAD:$PULL_REQUEST_REF"
 ",
-  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 name: pull-request-lint
 on:
@@ -4047,7 +4082,7 @@ jobs:
             chore
           requireScope: false
 ",
-  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".github/workflows/release.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 name: release
 on:
@@ -4070,7 +4105,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -4078,13 +4113,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
-          version: "10"
+          version: 10.33.0
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
-        run: npx projen release
+        run: pnpm exec projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
         run: |-
@@ -4116,9 +4151,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -4132,7 +4168,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
 ",
-  ".github/workflows/upgrade-master.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".github/workflows/upgrade-master.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 name: upgrade-master
 on:
@@ -4149,17 +4185,17 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: master
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
-          version: "10"
+          version: 10.33.0
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
-        run: npx projen upgrade
+        run: pnpm exec projen upgrade
       - name: Find mutations
         id: create_patch
         run: |-
@@ -4183,7 +4219,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: master
       - name: Download patch
@@ -4199,7 +4235,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -4226,7 +4262,7 @@ jobs:
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           signoff: true
 ",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
@@ -4268,10 +4304,9 @@ junit.xml
 !/.mergify.yml
 !/.github/workflows/upgrade-master.yml
 !/.github/pull_request_template.md
-!/.npmrc
 !/.projenrc.js
 ",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
 queue_rules:
   - name: default
@@ -4288,7 +4323,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -4298,7 +4332,7 @@ pull_request_rules:
 merge_queue:
   max_parallel_checks: 1
 ",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 /.projen/
 /test-reports/
 junit.xml
@@ -4310,11 +4344,7 @@ permissions-backup.acl
 /.projenrc.js
 /.gitattributes
 ",
-  ".npmrc": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
-
-resolution-mode=highest
-",
-  ".projen/deps.json": "{"dependencies":[{"name":"aws-sdk","type":"build"},{"name":"commit-and-tag-version","version":"^12","type":"build"},{"name":"constructs","version":"^10.0.0","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"projen","type":"build"},{"name":"esbuild","type":"runtime"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  ".projen/deps.json": "{"dependencies":[{"name":"aws-sdk","type":"build"},{"name":"commit-and-tag-version","version":"^12","type":"build"},{"name":"constructs","version":"^10.0.0","type":"build"},{"name":"jest","type":"build"},{"name":"jest-junit","version":"^16","type":"build"},{"name":"projen","type":"build"},{"name":"esbuild","type":"runtime"}],"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"pnpm exec projen\\"."}",
   ".projen/files.json": "{
   "files": [
     ".gitattributes",
@@ -4326,13 +4356,12 @@ resolution-mode=highest
     ".gitignore",
     ".mergify.yml",
     ".npmignore",
-    ".npmrc",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
     "LICENSE"
   ],
-  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."
+  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"pnpm exec projen\\"."
 }
 ",
   ".projen/tasks.json": "{
@@ -4546,7 +4575,7 @@ resolution-mode=highest
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=aws-sdk,jest,projen,esbuild"
+          "exec": "pnpm dlx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=aws-sdk,jest,projen,esbuild"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
@@ -4555,7 +4584,7 @@ resolution-mode=highest
           "exec": "pnpm update aws-sdk commit-and-tag-version constructs jest jest-junit projen esbuild"
         },
         {
-          "exec": "npx projen"
+          "exec": "pnpm exec projen"
         },
         {
           "spawn": "post-upgrade"
@@ -4566,7 +4595,7 @@ resolution-mode=highest
   "env": {
     "PATH": "$(pnpm -c exec \\"node --print process.env.PATH\\")"
   },
-  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."
+  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"pnpm exec projen\\"."
 }
 ",
   ".projenrc.js": "const { javascript } = require("projen");
@@ -4788,6 +4817,6 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": "{"name":"pnpm-project","scripts":{"build":"npx projen build","bump":"npx projen bump","clobber":"npx projen clobber","compile":"npx projen compile","default":"npx projen default","eject":"npx projen eject","package":"npx projen package","post-compile":"npx projen post-compile","post-upgrade":"npx projen post-upgrade","pre-compile":"npx projen pre-compile","release":"npx projen release","test":"npx projen test","test:watch":"npx projen test:watch","unbump":"npx projen unbump","upgrade":"npx projen upgrade","projen":"npx projen"},"devDependencies":{"aws-sdk":"*","commit-and-tag-version":"^12","constructs":"^10.0.0","jest":"*","jest-junit":"^16","projen":"*"},"dependencies":{"esbuild":"*"},"pnpm":{},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","jest":{"coverageProvider":"v8","clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"testMatch":["**/__tests__/**/*.[jt]s?(x)","**/*(*.)@(spec|test).[jt]s?(x)"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]]},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\"."}",
+  "package.json": "{"name":"pnpm-project","scripts":{"build":"projen build","bump":"projen bump","clobber":"projen clobber","compile":"projen compile","default":"projen default","eject":"projen eject","package":"projen package","post-compile":"projen post-compile","post-upgrade":"projen post-upgrade","pre-compile":"projen pre-compile","release":"projen release","test":"projen test","test:watch":"projen test:watch","unbump":"projen unbump","upgrade":"projen upgrade","projen":"projen"},"devDependencies":{"aws-sdk":"*","commit-and-tag-version":"^12","constructs":"^10.0.0","jest":"*","jest-junit":"^16","projen":"*"},"dependencies":{"esbuild":"*"},"pnpm":{},"devEngines":{"packageManager":{"name":"pnpm","version":">=10","onFail":"ignore"}},"main":"lib/index.js","license":"Apache-2.0","publishConfig":{"access":"public"},"version":"0.0.0","packageManager":"pnpm@10.33.0","jest":{"coverageProvider":"v8","clearMocks":true,"collectCoverage":true,"coverageReporters":["json","lcov","clover","cobertura","text"],"coverageDirectory":"coverage","coveragePathIgnorePatterns":["/node_modules/"],"testPathIgnorePatterns":["/node_modules/"],"watchPathIgnorePatterns":["/node_modules/"],"testMatch":["**/__tests__/**/*.[jt]s?(x)","**/*(*.)@(spec|test).[jt]s?(x)"],"reporters":["default",["jest-junit",{"outputDirectory":"test-reports"}]]},"//":"~~ Generated by projen. To modify, edit .projenrc.js and run \\"pnpm exec projen\\"."}",
 }
 `;

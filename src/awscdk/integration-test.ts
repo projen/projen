@@ -1,10 +1,11 @@
 import { join } from "path/posix";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import { FEATURE_FLAGS_V1 } from "./internal";
-import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
+import type { IntegrationTestBaseOptions } from "../cdk";
+import { IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 export interface IntegrationTestCommonOptions {
   /**
@@ -56,16 +57,16 @@ export class IntegrationTest extends IntegrationTestBase {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project, options);
 
-    if (!project.deps.tryGetDependency("aws-cdk")) {
-      project.deps.addDependency(
-        `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
-        DependencyType.BUILD,
-      );
-    }
+    project.deps.requestDependency({
+      name: "aws-cdk",
+      version: options.cdkDeps.cdkCliVersion,
+      type: DependencyType.BUILD,
+    });
 
-    if (!project.deps.tryGetDependency("ts-node")) {
-      project.deps.addDependency("ts-node", DependencyType.BUILD);
-    }
+    project.deps.requestDependency({
+      name: "ts-node",
+      type: DependencyType.BUILD,
+    });
 
     const deployDir = join(this.tmpDir, "deploy.cdk.out");
     const assertDir = join(this.tmpDir, "assert.cdk.out");

@@ -8,7 +8,7 @@ error message, or if you're just curious!
 
 ### Bird's eye view
 
-When `npx projen` is run, the command-line process executes the project's
+When `pnpm dlx projen` is run, the command-line process executes the project's
 projenrc file. This is usually a file like `.projenrc.js` or `projenrc.java`.
 
 > The "rc" in the name is a common convention for configuration files - see

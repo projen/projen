@@ -1,9 +1,5 @@
-import {
-  SynthOutput,
-  synthSnapshot,
-  TestProject,
-  withProjectDir,
-} from "./util";
+import type { SynthOutput } from "./util";
+import { synthSnapshot, TestProject, withProjectDir } from "./util";
 import { EndOfLine } from "../src/gitattributes";
 
 describe("GitAttributesFile", () => {

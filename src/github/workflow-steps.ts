@@ -1,5 +1,5 @@
-import { GitIdentity } from "./task-workflow";
-import { JobStepConfiguration, JobStep } from "./workflows-model";
+import type { GitIdentity } from "./task-workflow";
+import type { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
 
 /**
@@ -27,7 +27,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Checkout",
       }),
-      uses: "actions/checkout@v5",
+      uses: "actions/checkout@v6",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
   }

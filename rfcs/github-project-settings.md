@@ -44,14 +44,14 @@ const project = new projen.JsiiProject({
 
 > NOTE: not sure I like the union-like API, but we can debate that later.
 
-Now, as usual, execute `npx projen`.
+Now, as usual, execute `pnpm projen`.
 
 Under the hood, projen uses `gh secret list` to check if your repo has the
 desired secrets. If not, it will retrieve them from AWS Secrets Manager and
 store them in your repository via the GitHub API.
 
 ```shell
-$ npx projen
+$ pnpm projen
 Synthesizing project...
 Storing TWINE_USERNAME from arn:aws:secretsmanager:us-east-1:111111111111:secret:projen-publishing-tokens
 Storing TWINE_PASSWORD from arn:aws:secretsmanager:us-east-1:111111111111:secret:projen-publishing-tokens

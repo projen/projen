@@ -1,20 +1,21 @@
-import { BranchOptions } from "./release";
+import type { BranchOptions } from "./release";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import {
+import type {
   Job,
-  JobPermission,
   JobPermissions,
   JobStep,
   Tools,
 } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
-import { Project } from "../project";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
@@ -381,7 +382,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: "aws-actions/configure-aws-credentials@v5",
+        uses: "aws-actions/configure-aws-credentials@v6",
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -610,7 +611,7 @@ export class Publisher extends Component {
         permissions = { ...permissions, idToken: JobPermission.WRITE };
         prePublishSteps.push({
           name: "Configure AWS Credentials via GitHub OIDC Provider",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "role-to-assume": roleToAssume,
             "aws-region": region,
@@ -816,14 +817,12 @@ export class Publisher extends Component {
             {
               name: "Create Issue",
               if: "${{ failure() }}",
-              uses: "imjohnbo/issue-bot@v3",
-              with: {
-                labels: this.failureIssueLabel,
-                title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
-                body: "See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              },
+              run: `gh issue create --title "Publishing v$VERSION to ${opts.registryName} failed" --body "See $RUN_URL" --label "${this.failureIssueLabel}"`,
               env: {
-                GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
+                GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
+                VERSION: "${{ steps.extract-version.outputs.VERSION }}",
+                RUN_URL:
+                  "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
               },
             },
           ],

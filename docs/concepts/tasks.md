@@ -16,10 +16,10 @@ const hello = project.addTask("hello");
 hello.exec("echo hello, world!");
 ```
 
-Run `npx projen` and the task will be available in the CLI:
+Run `pnpm dlx projen` and the task will be available in the CLI:
 
 ```shell
-npx projen hello
+pnpm dlx projen hello
 🤖 hello | echo hello, world!
 hello, world!
 ```
@@ -203,7 +203,7 @@ command to the projen CLI:
 ```json
 {
   "scripts": {
-    "compile": "npx projen compile"
+    "compile": "pnpm dlx projen compile"
   }
 }
 ```

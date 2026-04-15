@@ -264,7 +264,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -309,7 +309,7 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -339,9 +339,10 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -351,7 +352,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -421,7 +422,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -465,9 +466,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -489,9 +491,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -501,7 +504,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -539,7 +542,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
       - name: Install dependencies
@@ -569,7 +572,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
       - name: Download patch
@@ -585,7 +588,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -683,7 +686,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -1116,7 +1118,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript",
+            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript",
           },
           {
             "exec": "yarn install --check-files",
@@ -1438,28 +1440,28 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "url": "https://github.com/foo/bar.git",
     },
     "scripts": {
-      "build": "npx projen build",
-      "bump": "npx projen bump",
-      "clobber": "npx projen clobber",
-      "compat": "npx projen compat",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "docgen": "npx projen docgen",
-      "eject": "npx projen eject",
-      "eslint": "npx projen eslint",
-      "package": "npx projen package",
-      "package-all": "npx projen package-all",
-      "package:js": "npx projen package:js",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "release": "npx projen release",
-      "test": "npx projen test",
-      "test:watch": "npx projen test:watch",
-      "unbump": "npx projen unbump",
-      "upgrade": "npx projen upgrade",
-      "watch": "npx projen watch",
+      "build": "projen build",
+      "bump": "projen bump",
+      "clobber": "projen clobber",
+      "compat": "projen compat",
+      "compile": "projen compile",
+      "default": "projen default",
+      "docgen": "projen docgen",
+      "eject": "projen eject",
+      "eslint": "projen eslint",
+      "package": "projen package",
+      "package-all": "projen package-all",
+      "package:js": "projen package:js",
+      "post-compile": "projen post-compile",
+      "post-upgrade": "projen post-upgrade",
+      "pre-compile": "projen pre-compile",
+      "projen": "projen",
+      "release": "projen release",
+      "test": "projen test",
+      "test:watch": "projen test:watch",
+      "unbump": "projen unbump",
+      "upgrade": "projen upgrade",
+      "watch": "projen watch",
     },
     "stability": "stable",
     "types": "lib/index.d.ts",
@@ -1500,6 +1502,10 @@ test('hello', () => {
       "strictPropertyInitialization": true,
       "stripInternal": true,
       "target": "ES2020",
+      "types": [
+        "jest",
+        "node",
+      ],
     },
     "exclude": [
       "node_modules",
@@ -1601,9 +1607,10 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1627,7 +1634,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
       },
@@ -1683,9 +1690,10 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1703,7 +1711,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
       },
@@ -1756,9 +1764,10 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1776,7 +1785,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
       },
@@ -1826,9 +1835,10 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1852,7 +1862,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
       },
@@ -1899,9 +1909,10 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1925,7 +1936,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
       },
@@ -1972,9 +1983,10 @@ exports[`language bindings snapshot dotnet 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -1998,7 +2010,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.ref }}",
@@ -2039,9 +2051,10 @@ exports[`language bindings snapshot go 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -2065,7 +2078,7 @@ exports[`language bindings snapshot go 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.ref }}",
@@ -2113,9 +2126,10 @@ exports[`language bindings snapshot java 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -2133,7 +2147,7 @@ exports[`language bindings snapshot java 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.ref }}",
@@ -2174,9 +2188,10 @@ exports[`language bindings snapshot js 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -2194,7 +2209,7 @@ exports[`language bindings snapshot js 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.ref }}",
@@ -2235,9 +2250,10 @@ exports[`language bindings snapshot python 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": "false",
       },
     },
     {
@@ -2261,7 +2277,7 @@ exports[`language bindings snapshot python 1`] = `
     },
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.ref }}",
@@ -2316,7 +2332,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2361,9 +2377,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2385,9 +2402,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2397,7 +2415,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2425,9 +2443,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
@@ -2440,7 +2459,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2488,7 +2507,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2533,9 +2552,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2557,9 +2577,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2569,7 +2590,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2597,9 +2618,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
@@ -2612,7 +2634,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2658,7 +2680,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2703,9 +2725,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2727,9 +2750,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2739,7 +2763,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2767,9 +2791,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 6.x
@@ -2782,7 +2807,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2826,7 +2851,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2871,9 +2896,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2895,9 +2921,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -2907,7 +2934,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -2935,9 +2962,10 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 6.x
@@ -2950,7 +2978,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies

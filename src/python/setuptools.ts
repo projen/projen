@@ -1,10 +1,13 @@
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonExecutableOptions } from "./python-project";
+import type {
+  IPythonPackaging,
+  PythonPackagingOptions,
+} from "./python-packaging";
+import type { PythonExecutableOptions } from "./python-project";
 import { SetupPy } from "./setuppy";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 export interface SetuptoolsOptions
   extends PythonPackagingOptions, PythonExecutableOptions {}

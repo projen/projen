@@ -1,8 +1,9 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
-import { GitIdentity } from "./task-workflow";
-import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
-import {
+import type { GitIdentity } from "./task-workflow";
+import type { CheckoutWith } from "./workflow-steps";
+import { WorkflowSteps } from "./workflow-steps";
+import type {
   ContainerOptions,
   Job,
   JobDefaults,
@@ -13,8 +14,9 @@ import {
   Tools,
 } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
+import type { Task } from "../task";
 import { ensureNotHiddenPath } from "./private/util";
 
 /**

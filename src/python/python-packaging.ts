@@ -1,6 +1,6 @@
-import { PoetryPyprojectOptionsWithoutDeps } from "./poetry";
-import { Task } from "../task";
-import { UvOptions } from "./uv";
+import type { PoetryPyprojectOptionsWithoutDeps } from "./poetry";
+import type { Task } from "../task";
+import type { UvOptions } from "./uv";
 
 export interface IPythonPackaging {
   /**

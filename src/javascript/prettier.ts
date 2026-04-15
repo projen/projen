@@ -1,8 +1,9 @@
 import { Component } from "../component";
-import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
-import { NodeProject } from "../javascript";
+import type { IgnoreFileOptions } from "../ignore-file";
+import { IgnoreFile } from "../ignore-file";
+import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { SourceCode } from "../source-code";
 import { YamlFile } from "../yaml";
 /**

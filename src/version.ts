@@ -1,9 +1,9 @@
 import { posix } from "path";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "./component";
 import { Dependencies, DependencyType } from "./dependencies";
 import { NodePackage } from "./javascript/node-package";
-import { Task } from "./task";
+import type { Task } from "./task";
 
 /**
  * This command determines if there were any changes since the last release in a cross-platform compatible way.
@@ -140,15 +140,11 @@ export class Version extends Component {
     if (node) {
       const { name: bumpName, version: bumpVersion } =
         Dependencies.parseDependency(this.bumpPackage);
-      if (
-        !node.project.deps.isDependencySatisfied(
-          bumpName,
-          DependencyType.BUILD,
-          bumpVersion ?? "*",
-        )
-      ) {
-        node.project.deps.addDependency(this.bumpPackage, DependencyType.BUILD);
-      }
+      node.project.deps.requestDependency({
+        name: bumpName,
+        version: bumpVersion,
+        type: DependencyType.BUILD,
+      });
     }
 
     const versionInputFile = options.versionInputFile;

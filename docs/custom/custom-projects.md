@@ -103,7 +103,7 @@ the project is synthesized. For example, your deployment software may require
 a YAML file that is mostly boilerplate with some values that need to be filled
 in per repository. The benefit projen provides is that these values can be
 passed in as parameters to your project and the file will be updated
-the next time you run `npx projen`. The file contents and defaults can also be version
+the next time you run `pnpm dlx projen`. The file contents and defaults can also be version
 controlled. For example, as an infrastructure team makes changes to the file, your
 projen project can be updated to reflect those changes without needing to
 manually edit anything.
@@ -214,6 +214,95 @@ the `licensed` parameter, we could do so by adding it to the interface
 `MyProjectProps` and giving it a default value, similar to how we did with
 `createPrecommitHook`.
 :::
+
+## Controlling the generated projenrc with JSDoc tags
+
+When a user runs `projen new`, projen generates a `projenrc.ts` file pre-populated with
+values for their project's options. Three JSDoc tags control how your option appears in
+that generated file.
+
+### `@default`
+
+The `@default` tag serves two purposes: it documents the runtime default value to readers
+of your API, **and** it is used as the initial value in the generated projenrc for any
+**mandatory** (non-optional) options.
+
+```ts
+export interface MyProjectOptions extends GitHubProjectOptions {
+  /**
+   * The name of the team that owns this project.
+   * @default "platform"
+   */
+  owningTeam: string; // mandatory — "platform" will appear in the generated projenrc
+}
+```
+
+For **optional** options (`?:`), the `@default` tag is documentation only and will **not**
+cause a value to be rendered in the generated projenrc. Use `@pjnew` for that.
+
+:::note
+The value must be valid JSON and match the property's primitive type (`string`, `number`,
+`boolean`, or a primitive array). Strings must be quoted: `@default "my-value"`, not
+`@default my-value`. Values starting with `$` are treated as pass-through macros (e.g.
+`@default $GIT_REMOTE`).
+:::
+
+### `@pjnew`
+
+The `@pjnew` tag forces a value to appear in the generated projenrc **even for optional
+options**. Use it when you want to show the user a sensible starting value, nudging them
+to fill it in rather than leaving it absent.
+
+```ts
+export interface MyProjectOptions extends GitHubProjectOptions {
+  /**
+   * The Slack channel to notify on deployment.
+   * @default "#deployments"
+   * @pjnew "#deployments"
+   */
+  slackChannel?: string; // optional, but "#deployments" will appear in the generated projenrc
+}
+```
+
+When `@pjnew` is present it takes priority over `@default` as the rendered initial value,
+regardless of whether the option is mandatory or optional.
+
+### `@featured`
+
+The `@featured` tag causes an option to be rendered as a **commented-out hint** in
+the generated projenrc. When a user runs `projen new`, all featured options that were not explicitly provided on the command line are
+written as comments so the user can see them and fill them in.
+
+The comment shows the `@default` value. If no `@default` is provided, the comment will show `undefined`.
+
+```ts
+export interface MyProjectOptions extends GitHubProjectOptions {
+  /**
+   * The AWS region to deploy into.
+   * @default "us-east-1"
+   * @featured
+   */
+  deployRegion?: string;
+}
+```
+
+This produces the following in the generated projenrc:
+
+```ts
+const project = new MyProject({
+  // deployRegion: "us-east-1",
+});
+```
+
+Users can suppress these comments by passing `--no-comments` to `projen new`.
+
+### Summary
+
+| Tag | Behavior |
+|---|---|
+| `@default "value"` | Documents runtime default; also used as initial value in projenrc for **mandatory** options |
+| `@pjnew "value"` | Forces the value into the generated projenrc for both optional and mandatory options (overrides `@default`) |
+| `@featured` | Renders the option as a commented-out hint in the generated projenrc (showing the `@default` value, or `undefined`) |
 
 ## Setting default .gitignore values
 
@@ -422,9 +511,9 @@ added after the command specified in `exec` would cause an error. Some
 commands you will want to set `receiveArgs` to `true`. For more information,
 [see the docs on tasks](/docs/concepts/tasks).
 
-These tasks can be executed using `npx projen` or your package manager's
-default for executing scripts. For example, if you use `npm`, you can
-run `npm run docker-build` to execute the `docker-build` task.
+These tasks can be executed using `pnpm dlx projen` or your package manager's
+default for executing scripts. For example, you can run `pnpm docker-build`,
+`npm run docker-build`, or `yarn docker-build` to execute the `docker-build` task.
 
 ## Making small changes to published projects
 
@@ -510,5 +599,5 @@ Now, you can run the following to create a new project using your published
 package:
 
 ```sh
-npx projen new myproject --from "@githubuser/my-project"
+pnpm dlx projen new myproject --from "@githubuser/my-project"
 ```

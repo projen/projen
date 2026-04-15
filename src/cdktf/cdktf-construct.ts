@@ -1,5 +1,6 @@
 import * as semver from "semver";
-import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import type { ConstructLibraryOptions } from "../cdk";
+import { ConstructLibrary } from "../cdk";
 
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**

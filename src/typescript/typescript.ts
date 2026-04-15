@@ -3,27 +3,26 @@ import * as semver from "semver";
 import { PROJEN_DIR } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import {
-  Eslint,
+import type {
   EslintOptions,
   Jest,
-  NodeProject,
   NodeProjectOptions,
+  TypeScriptCompilerOptions,
+  TypescriptConfigOptions,
+} from "../javascript";
+import {
+  Eslint,
+  NodeProject,
   Projenrc as NodeProjectProjenrc,
   Transform,
-  TypeScriptCompilerOptions,
   TypescriptConfig,
-  TypescriptConfigOptions,
 } from "../javascript";
 import { hasDependencyVersion } from "../javascript/util";
 import { SampleDir } from "../sample-file";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { TextFile } from "../textfile";
-import {
-  Projenrc as ProjenrcTs,
-  ProjenrcOptions as ProjenrcTsOptions,
-  TypedocDocgen,
-} from "../typescript";
+import type { ProjenrcOptions as ProjenrcTsOptions } from "../typescript";
+import { Projenrc as ProjenrcTs, TypedocDocgen } from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 
 /**
@@ -617,6 +616,7 @@ export class TypeScriptProject extends NodeProject {
       strictPropertyInitialization: true,
       stripInternal: true,
       target: "ES2020",
+      types: (() => this.resolveInstalledTypes()) as any, // TS6.0 compat, @see https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/#up-front-adjustments
     };
   }
 
@@ -649,6 +649,19 @@ export class TypeScriptProject extends NodeProject {
     }
 
     this.addDevDeps(name);
+  }
+
+  /**
+   * Resolve the `types` compiler option from all installed `@types` dependencies.
+   * Called lazily at synth time so all deps are available.
+   */
+  private resolveInstalledTypes(): string[] {
+    return this.deps.all
+      .filter(
+        (d) =>
+          d.name.startsWith("@types/") && d.type !== DependencyType.OVERRIDE,
+      )
+      .map((d) => d.name.replace("@types/", ""));
   }
 
   /**

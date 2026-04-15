@@ -1,4 +1,4 @@
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 
 /**
   Adds a simple Typescript documentation generator

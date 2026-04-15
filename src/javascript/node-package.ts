@@ -4,22 +4,27 @@ import {
   existsSync,
   readdirSync,
   readFileSync,
+  unlinkSync,
 } from "fs";
 import { join, resolve } from "path";
 import * as semver from "semver";
 import {
+  execCommand,
   extractCodeArtifactDetails,
+  isYarnBerry,
+  isYarnClassic,
   minVersion,
   tryResolveDependencyVersion,
 } from "./util";
-import { Yarnrc, YarnrcOptions } from "./yarnrc";
+import type { YarnrcOptions } from "./yarnrc";
+import { Yarnrc } from "./yarnrc";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 
@@ -28,6 +33,9 @@ const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
 const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
+const DEFAULT_PNPM_VERSION = "10.33.0";
+const DEFAULT_YARN_BERRY_VERSION = "4.13.0";
+const DEFAULT_YARN_CLASSIC_VERSION = "1.22.22";
 
 export interface NodePackageOptions {
   /**
@@ -48,11 +56,11 @@ export interface NodePackageOptions {
    * Runtime dependencies of this module.
    *
    * The recommendation is to only specify the module name here (e.g.
-   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * `express`). This will behave similar to `pnpm add` or `npm install` in the
    * sense that it will add the module as a dependency to your `package.json`
    * file with the latest version (`^`). You can specify semver requirements in
-   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-   * this will be what you `package.json` will eventually include.
+   * the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+   * this will be what your `package.json` will eventually include.
    *
    * @example [ 'express', 'lodash', 'foo@^2' ]
    * @default []
@@ -66,11 +74,11 @@ export interface NodePackageOptions {
    * module is consumed.
    *
    * The recommendation is to only specify the module name here (e.g.
-   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * `express`). This will behave similar to `pnpm add` or `npm install` in the
    * sense that it will add the module as a dependency to your `package.json`
    * file with the latest version (`^`). You can specify semver requirements in
-   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-   * this will be what you `package.json` will eventually include.
+   * the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+   * this will be what your `package.json` will eventually include.
    *
    * @example [ 'typescript', '@types/express' ]
    * @default []
@@ -103,11 +111,11 @@ export interface NodePackageOptions {
    * your `package.json`.
    *
    * The recommendation is to only specify the module name here (e.g.
-   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * `express`). This will behave similar to `pnpm add` or `npm install` in the
    * sense that it will add the module as a dependency to your `package.json`
    * file with the latest version (`^`). You can specify semver requirements in
-   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-   * this will be what you `package.json` will eventually include.
+   * the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+   * this will be what your `package.json` will eventually include.
    */
   readonly bundledDeps?: string[];
 
@@ -169,7 +177,8 @@ export interface NodePackageOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default NodePackageManager.YARN_CLASSIC
+   * @default - Detected from the calling process or `YARN_CLASSIC` if detection fails.
+   * @pjnew $PACKAGE_MANAGER
    */
   readonly packageManager?: NodePackageManager;
 
@@ -251,7 +260,7 @@ export interface NodePackageOptions {
   /**
    * The version of PNPM to use if using PNPM as a package manager.
    *
-   * @default "9"
+   * @default "10.33.0"
    */
   readonly pnpmVersion?: string;
 
@@ -365,6 +374,92 @@ export interface NodePackageOptions {
    * @default - Yarn Berry v4 with all default options
    */
   readonly yarnBerryOptions?: YarnBerryOptions;
+
+  /**
+   * Configure the `devEngines` field in `package.json`.
+   *
+   * The `devEngines.packageManager` field is automatically populated based on
+   * the resolved `packageManager` value. Any fields provided here are merged
+   * with the auto-populated `packageManager` entry.
+   *
+   * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines
+   */
+  readonly devEngines?: DevEngines;
+
+  /**
+   * Automatically add the resolved `packageManager` to `devEngines.packageManager`
+   * in `package.json`, setting `onFail` to `ignore`.
+   *
+   * @default true
+   */
+  readonly addPackageManagerToDevEngines?: boolean;
+
+  /**
+   * Automatically delete lockfiles from package managers that are not the
+   * active one. Only triggered when the lockfile for the configured package
+   * manager already exists.
+   *
+   * This is useful when migrating between package managers to avoid conflicts.
+   *
+   * @default true
+   */
+  readonly deleteOrphanedLockFiles?: boolean;
+}
+
+/**
+ * A dependency entry for the `devEngines` field in `package.json`.
+ */
+export interface DevEngineDependency {
+  /**
+   * The name of the dependency.
+   */
+  readonly name: string;
+
+  /**
+   * The version range for the dependency.
+   *
+   * @default "*"
+   */
+  readonly version?: string;
+
+  /**
+   * What action to take if validation fails.
+   *
+   * @default "error"
+   */
+  readonly onFail?: "ignore" | "warn" | "error" | "download";
+}
+
+/**
+ * The `devEngines` field in `package.json`.
+ *
+ * @see https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines
+ */
+export interface DevEngines {
+  /**
+   * Supported operating systems.
+   */
+  readonly os?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported CPU architectures.
+   */
+  readonly cpu?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported C standard libraries.
+   */
+  readonly libc?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported JavaScript runtimes.
+   */
+  readonly runtime?: DevEngineDependency | DevEngineDependency[];
+
+  /**
+   * Supported package managers.
+   */
+  readonly packageManager?: DevEngineDependency | DevEngineDependency[];
 }
 
 /**
@@ -501,13 +596,45 @@ export class NodePackage extends Component {
 
   /**
    * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @returns `undefined` if the package manager is not PNPM.
    */
-  public readonly pnpmVersion?: string;
+  public get pnpmVersion(): string | undefined {
+    return this.packageManager === NodePackageManager.PNPM
+      ? this._pnpmVersion
+      : undefined;
+  }
 
   /**
    * The version of Bun to use if using Bun as a package manager.
+   *
+   * @returns `undefined` if the package manager is not Bun.
    */
-  public readonly bunVersion?: string;
+  public get bunVersion(): string | undefined {
+    return this.packageManager === NodePackageManager.BUN
+      ? this._bunVersion
+      : undefined;
+  }
+
+  /**
+   * The version of Yarn to use if using Yarn as a package manager.
+   *
+   * @returns `undefined` if the package manager is not Yarn.
+   */
+  public get yarnVersion(): string | undefined {
+    if (isYarnBerry(this.packageManager)) {
+      return this._yarnBerryVersion;
+    }
+    if (isYarnClassic(this.packageManager)) {
+      return DEFAULT_YARN_CLASSIC_VERSION;
+    }
+    return undefined;
+  }
+
+  private readonly _pnpmVersion: string;
+  private readonly _bunVersion: string;
+  private readonly _yarnBerryVersion: string;
+  private readonly _options: NodePackageOptions;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -582,6 +709,7 @@ export class NodePackage extends Component {
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
+  private readonly _packageManagerExplicit: boolean;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
@@ -592,10 +720,38 @@ export class NodePackage extends Component {
       ...options.peerDependencyOptions,
     };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
-    this.packageManager =
-      options.packageManager ?? NodePackageManager.YARN_CLASSIC;
+
+    // Read previous package.json early so we can use it for inference
+    this._prev = this.readPackageJson();
+
+    // Resolve package manager: explicit > inferred from package.json > fallback
+    if (options.packageManager) {
+      this.packageManager = options.packageManager;
+      this._packageManagerExplicit = true;
+    } else {
+      this._packageManagerExplicit = false;
+      const fromPkgJson = inferPackageManagerFromPkgJson(
+        this._prev,
+        project.outdir,
+      );
+      if (fromPkgJson) {
+        this.packageManager = fromPkgJson;
+      } else {
+        this.project.logger.warn(
+          `[DEPRECATED] "packageManager" is not set in projenrc, defaulting to "${NodePackageManager.YARN_CLASSIC}". ` +
+            `This will become a required option in a future version. Please set it explicitly.`,
+        );
+        this.packageManager = NodePackageManager.YARN_CLASSIC;
+      }
+    }
+
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
+
+    // Clean up lockfiles from other package managers during migration
+    if (options.deleteOrphanedLockFiles !== false) {
+      this.deleteOrphanedLockFiles();
+    }
 
     this.project.annotateGenerated(`/${this.lockFile}`);
 
@@ -618,8 +774,6 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
-    this._prev = this.readPackageJson();
-
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
       name: this.packageName,
@@ -641,6 +795,7 @@ export class NodePackage extends Component {
       ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
+      devEngines: () => this.renderDevEngines(),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
@@ -659,11 +814,15 @@ export class NodePackage extends Component {
           : undefined,
     };
 
+    // Resolve package manager versions
+    this._options = options;
+    this._pnpmVersion = options.pnpmVersion ?? DEFAULT_PNPM_VERSION;
+    this._bunVersion = options.bunVersion ?? "latest";
+    this._yarnBerryVersion =
+      options.yarnBerryOptions?.version ?? DEFAULT_YARN_BERRY_VERSION;
+
     // Configure Yarn Berry if using
-    if (
-      this.packageManager === NodePackageManager.YARN_BERRY ||
-      this.packageManager === NodePackageManager.YARN2
-    ) {
+    if (isYarnBerry(this.packageManager)) {
       this.configureYarnBerry(project, options);
     }
 
@@ -691,9 +850,9 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this.pnpmVersion = options.pnpmVersion ?? "10";
-    this.bunVersion = options.bunVersion ?? "latest";
     this.addNodeEngine();
+
+    this.configureCorepack();
 
     this.addCodeArtifactLoginScript();
 
@@ -718,9 +877,9 @@ export class NodePackage extends Component {
    * Defines normal dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDeps(...deps: string[]) {
@@ -733,9 +892,9 @@ export class NodePackage extends Component {
    * Defines development/test dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDevDeps(...deps: string[]) {
@@ -752,9 +911,9 @@ export class NodePackage extends Component {
    * your code against the minimum version required from your consumers.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addPeerDeps(...deps: string[]) {
@@ -778,9 +937,9 @@ export class NodePackage extends Component {
    * `bundledDependencies` section of your `package.json`.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addBundledDeps(...deps: string[]) {
@@ -890,7 +1049,7 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Renders `yarn install` or `npm install` with lockfile update (not frozen)
+   * Renders `pnpm install` or `npm install` with lockfile update (not frozen)
    */
   public get installAndUpdateLockfileCommand() {
     return this.renderInstallCommand(false);
@@ -931,20 +1090,80 @@ export class NodePackage extends Component {
   public postSynthesize() {
     super.postSynthesize();
 
-    // only run "install" if package.json has changed or if we don't have a
-    // `node_modules` directory.
-    if (
-      this.file.changed ||
-      !existsSync(join(this.project.outdir, "node_modules"))
-    ) {
-      this.installDependencies();
+    // Phase 1: install if package.json changed or node_modules is missing
+    const initialTrigger = this.determineInitialInstallTrigger();
+    if (initialTrigger) {
+      this.logInstallTrigger(initialTrigger);
+      this.installDependencies(initialTrigger);
     }
 
-    // resolve "*" deps in package.json and update it. if it was changed,
-    // install deps again so that lockfile is updated.
-    if (this.resolveDepsAndWritePackageJson()) {
-      this.installDependencies();
+    // Phase 2: resolve "*" deps and install again if versions changed
+    const resolutions = this.resolveDepsAndWritePackageJson();
+    if (resolutions?.length) {
+      const trigger: InstallTrigger = {
+        reason: InstallReason.DEPS_RESOLVED,
+        resolutions,
+      };
+      this.logInstallTrigger(trigger);
+      this.installDependencies(trigger);
     }
+  }
+
+  /**
+   * Checks whether dependencies need to be installed before dependency
+   * resolution.
+   *
+   * @returns a structured trigger describing the reason, or `undefined` if
+   * no install is needed.
+   */
+  private determineInitialInstallTrigger(): InstallTrigger | undefined {
+    const hasNodeModules = existsSync(
+      join(this.project.outdir, "node_modules"),
+    );
+
+    if (this.file.changed) {
+      return {
+        reason: InstallReason.PACKAGE_JSON_CHANGED,
+        diff: this.file.diff(true),
+      };
+    }
+
+    if (!hasNodeModules) {
+      return { reason: InstallReason.NO_NODE_MODULES };
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Logs user-facing information about why dependencies are being installed.
+   * Emits an info-level summary and debug-level details (reason, diff, resolutions).
+   */
+  private logInstallTrigger(trigger: InstallTrigger) {
+    this.project.logger.info(
+      "Installing dependencies... (use --debug for details)",
+    );
+    this.project.logger.debug(`Install reason: ${trigger.reason}`);
+
+    if (trigger.diff) {
+      this.project.logger.debug(
+        `package.json diff:\n${trigger.diff.join("\n")}`,
+      );
+    }
+
+    if (trigger.resolutions?.length) {
+      this.project.logger.info(
+        `Resolved dependency versions:\n${trigger.resolutions.map((r) => `  ${r}`).join("\n")}`,
+      );
+    }
+  }
+
+  /**
+   * The command prefix to use when executing binary commands for this package
+   * manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`).
+   */
+  public get execCommand(): string {
+    return execCommand(this.packageManager);
   }
 
   /**
@@ -1354,16 +1573,19 @@ export class NodePackage extends Component {
 
   /**
    * Resolves any deps that do not have a specified version (e.g. `*`) and
-   * update `package.json` if needed.
+   * updates `package.json` if needed. Does not log or install — the caller
+   * is responsible for acting on the returned changes.
    *
-   * @returns `true` if package.json was updated or `false` if not.
+   * @returns list of human-readable resolution changes, or `undefined` if
+   * `package.json` does not exist. An empty array means no changes were made.
    */
-  private resolveDepsAndWritePackageJson(): boolean {
+  private resolveDepsAndWritePackageJson(): string[] | undefined {
     const outdir = this.project.outdir;
     const rootPackageJson = join(outdir, "package.json");
 
     const original = readFileSync(rootPackageJson, "utf8");
     const pkg = JSON.parse(original);
+    const changes: string[] = [];
 
     const resolveDeps = (
       current: { [name: string]: string },
@@ -1393,18 +1615,16 @@ export class NodePackage extends Component {
         }
 
         if (currentDefinition !== desiredVersion) {
-          this.project.logger.verbose(
-            `${name}: ${currentDefinition} => ${desiredVersion}`,
-          );
+          changes.push(`${name}: ${currentDefinition} => ${desiredVersion}`);
         }
 
         result[name] = desiredVersion;
       }
 
-      // print removed packages
+      // collect removed packages
       for (const name of Object.keys(current)) {
         if (!result[name]) {
-          this.project.logger.verbose(`${name} removed`);
+          changes.push(`${name}: removed`);
         }
       }
 
@@ -1451,11 +1671,11 @@ export class NodePackage extends Component {
     const updated = JSON.stringify(pkg, undefined, 2) + "\n";
 
     if (original === updated) {
-      return false;
+      return [];
     }
 
     writeFile(rootPackageJson, updated);
-    return true;
+    return changes;
   }
 
   private renderPackageResolutions() {
@@ -1521,6 +1741,43 @@ export class NodePackage extends Component {
     return sorted(this.engines);
   }
 
+  private renderDevEngines(): DevEngines | undefined {
+    const autoAdd =
+      this._options.addPackageManagerToDevEngines !== false &&
+      this._packageManagerExplicit;
+
+    const base: DevEngines = autoAdd
+      ? { packageManager: this.packageManagerToDevEngine() }
+      : {};
+
+    const merged = { ...base, ...this._options.devEngines };
+    return Object.keys(merged).length > 0 ? merged : undefined;
+  }
+
+  private deleteOrphanedLockFiles() {
+    const ownLockFile = join(this.project.outdir, this.lockFile);
+    if (!existsSync(ownLockFile)) {
+      return;
+    }
+
+    const allLockFiles = [
+      "yarn.lock",
+      "package-lock.json",
+      "pnpm-lock.yaml",
+      "bun.lockb",
+    ];
+    for (const lf of allLockFiles) {
+      if (lf === this.lockFile) {
+        continue;
+      }
+      const path = join(this.project.outdir, lf);
+      if (existsSync(path)) {
+        this.project.logger.info(`Deleting orphaned lockfile: ${lf}`);
+        unlinkSync(path);
+      }
+    }
+  }
+
   private autoDiscoverBinaries() {
     const binrel = "bin";
     const bindir = join(this.project.outdir, binrel);
@@ -1564,6 +1821,20 @@ export class NodePackage extends Component {
   }
 
   private renderBin() {
+    const entries = Object.entries(this.bin);
+
+    // Yarn Berry rewrites `"bin": {"name": "./path"}` to `"bin": "./path"`
+    // when the key matches the package name, causing anti-tamper failures.
+    // Render the string form directly to avoid this.
+    // See: https://github.com/yarnpkg/berry/issues/6184
+    const { name: binName } = parsePackageName(this.packageName);
+    if (isYarnBerry(this.packageManager) && entries.length === 1) {
+      const [key, value] = entries[0];
+      if (key === binName) {
+        return value;
+      }
+    }
+
     return sorted(this.bin);
   }
 
@@ -1578,11 +1849,12 @@ export class NodePackage extends Component {
       )
       .sort((x, y) => x.name.localeCompare(y.name));
 
+    const scriptCommand = this.resolveScriptCommand();
     for (const task of tasks) {
       if (this.scriptsToBeRemoved.has(task.name)) {
         continue;
       }
-      result[task.name] = this.npmScriptForTask(task);
+      result[task.name] = `${scriptCommand} ${task.name}`;
     }
 
     return {
@@ -1591,8 +1863,21 @@ export class NodePackage extends Component {
     };
   }
 
-  private npmScriptForTask(task: Task) {
-    return `${this.project.projenCommand} ${task.name}`;
+  /**
+   * Determines the command to use for projen in package.json scripts.
+   *
+   * Since `node_modules/.bin` is always on PATH in npm scripts, we can use
+   * bare `projen` unless the user has set a custom `projenCommand`.
+   */
+  private resolveScriptCommand(): string {
+    const cmd = this.project.projenCommand;
+    const isDefault = [
+      // NodeProject sets projenCommand based on the package manager
+      execCommand(this.packageManager, "projen"),
+      // Plain Project always defaults to "npx projen" regardless of package manager
+      "npx projen",
+    ].includes(cmd);
+    return isDefault ? "projen" : cmd;
   }
 
   private readPackageJson() {
@@ -1604,8 +1889,13 @@ export class NodePackage extends Component {
     return JSON.parse(readFileSync(file, "utf-8"));
   }
 
-  private installDependencies() {
-    this.project.logger.info("Installing dependencies...");
+  /**
+   * Runs the install or install:ci task. Does not log — the caller is
+   * responsible for informing the user before calling this method.
+   *
+   * @param _trigger the reason for the install, available for subclasses to act on.
+   */
+  protected installDependencies(_trigger: InstallTrigger) {
     const runtime = new TaskRuntime(this.project.outdir);
     const taskToRun = this.isAutomatedBuild
       ? this.installCiTask
@@ -1613,20 +1903,62 @@ export class NodePackage extends Component {
     runtime.runTask(taskToRun.name);
   }
 
+  /**
+   * Sets the `packageManager` field in `package.json` for corepack-managed
+   * package managers (yarn berry and pnpm).
+   */
+  private configureCorepack() {
+    if (isYarnBerry(this.packageManager)) {
+      this.addField("packageManager", `yarn@${this._yarnBerryVersion}`);
+    } else if (this.packageManager === NodePackageManager.PNPM) {
+      this.addField("packageManager", `pnpm@${this._pnpmVersion}`);
+    }
+  }
+
+  /**
+   * Maps the current package manager to a `DevEngineDependency`.
+   */
+  private packageManagerToDevEngine(): DevEngineDependency {
+    const onFail = "ignore";
+    switch (this.packageManager) {
+      case NodePackageManager.YARN:
+      case NodePackageManager.YARN_CLASSIC:
+        return {
+          name: "yarn",
+          version: DEFAULT_YARN_CLASSIC_VERSION,
+          onFail,
+        };
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        return {
+          name: "yarn",
+          version:
+            this._options.yarnBerryOptions?.version ??
+            `>=${semver.major(this._yarnBerryVersion)}`,
+          onFail,
+        };
+      case NodePackageManager.NPM:
+        return { name: "npm", onFail };
+      case NodePackageManager.PNPM:
+        return {
+          name: "pnpm",
+          version:
+            this._options.pnpmVersion ?? `>=${semver.major(this._pnpmVersion)}`,
+          onFail,
+        };
+      case NodePackageManager.BUN:
+        return { name: "bun", onFail };
+    }
+  }
+
   private configureYarnBerry(project: Project, options: NodePackageOptions) {
-    const {
-      version = "4.0.1",
-      yarnRcOptions = {},
-      zeroInstalls = false,
-    } = options.yarnBerryOptions || {};
+    const { yarnRcOptions = {}, zeroInstalls = false } =
+      options.yarnBerryOptions || {};
     this.checkForConflictingYarnOptions(yarnRcOptions);
 
-    // Set the `packageManager` field in `package.json` to the version specified. This tells `corepack` which version
-    // of `yarn` to use.
-    this.addField("packageManager", `yarn@${version}`);
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, version, yarnRcOptions);
+    new Yarnrc(project, this._yarnBerryVersion, yarnRcOptions);
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
@@ -1747,7 +2079,7 @@ export interface YarnBerryOptions {
   /**
    * A fully specified version to use for yarn (e.g., x.x.x)
    *
-   * @default - 4.0.1
+   * @default - 4.13.0
    */
   readonly version?: string;
 
@@ -1774,10 +2106,53 @@ interface NpmDependencies {
 }
 
 /**
+ * Why a dependency install was triggered during synthesis.
+ */
+export enum InstallReason {
+  /** The node_modules directory does not exist. */
+  NO_NODE_MODULES = "node_modules is missing",
+  /** The package.json file was modified during synthesis. */
+  PACKAGE_JSON_CHANGED = "package.json has changed",
+  /** Wildcard dependency versions were resolved to concrete ranges. */
+  DEPS_RESOLVED = "resolved dependency versions changed",
+}
+
+/**
+ * Describes why dependencies need to be installed.
+ */
+export interface InstallTrigger {
+  /** The reason for the install. */
+  readonly reason: InstallReason;
+
+  /**
+   * A unified diff of the package.json changes.
+   * Only present when reason is `PACKAGE_JSON_CHANGED`.
+   */
+  readonly diff?: string[];
+
+  /**
+   * Human-readable descriptions of resolved dependency version changes.
+   * Only present when reason is `DEPS_RESOLVED`.
+   */
+  readonly resolutions?: string[];
+}
+
+/**
  * Determines if an npm package is "scoped" (i.e. it starts with "xxx@").
  */
 function isScoped(packageName: string) {
-  return packageName.includes("@");
+  return packageName.startsWith("@");
+}
+
+function parsePackageName(packageName: string): {
+  scope?: string;
+  name: string;
+} {
+  if (isScoped(packageName)) {
+    const [scope, name] = packageName.split("/");
+    return { scope, name };
+  }
+  return { name: packageName };
 }
 
 function defaultNpmAccess(packageName: string) {
@@ -1817,4 +2192,102 @@ function determineLockfile(packageManager: NodePackageManager) {
     default:
       throw new Error(`unsupported package manager ${packageManager}`);
   }
+}
+
+/**
+ * Maps a package manager name (as used in package.json `packageManager` and
+ * `devEngines.packageManager` fields) to a `NodePackageManager` enum value.
+ */
+function packageManagerNameToEnum(
+  name: string,
+  majorVersion?: number,
+): NodePackageManager | undefined {
+  switch (name) {
+    case "npm":
+      return NodePackageManager.NPM;
+    case "pnpm":
+      return NodePackageManager.PNPM;
+    case "bun":
+      return NodePackageManager.BUN;
+    case "yarn":
+      if (majorVersion !== undefined && majorVersion >= 2) {
+        return NodePackageManager.YARN_BERRY;
+      }
+      return NodePackageManager.YARN_CLASSIC;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Infers the `NodePackageManager` from an existing `package.json`.
+ *
+ * Checks in order:
+ * 1. `packageManager` field (corepack, e.g. `"yarn@4.1.0"`)
+ * 2. `devEngines.packageManager` field (single entry only; arrays are
+ *    ambiguous and skipped unless a lockfile disambiguates)
+ *
+ * @returns the inferred package manager, or `undefined`
+ */
+function inferPackageManagerFromPkgJson(
+  prev: Record<string, any> | undefined,
+  outdir: string,
+): NodePackageManager | undefined {
+  if (!prev) {
+    return undefined;
+  }
+
+  // 1. Corepack packageManager field: "yarn@4.1.0"
+  const corepack: string | undefined = prev.packageManager;
+  if (corepack) {
+    const match = corepack.match(/^(\w+)@(\d+)/);
+    if (match) {
+      const result = packageManagerNameToEnum(match[1], Number(match[2]));
+      if (result) {
+        return result;
+      }
+    }
+  }
+
+  // 2. devEngines.packageManager
+  const devEnginesPm = prev.devEngines?.packageManager;
+  if (devEnginesPm) {
+    if (!Array.isArray(devEnginesPm)) {
+      // Single entry
+      return packageManagerNameToEnum(devEnginesPm.name);
+    }
+    if (devEnginesPm.length === 1) {
+      return packageManagerNameToEnum(devEnginesPm[0].name);
+    }
+    // Multiple entries — try to disambiguate with lockfile
+    if (devEnginesPm.length > 1) {
+      const fromLockfile = inferPackageManagerFromLockfile(outdir);
+      if (fromLockfile) {
+        return fromLockfile;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * Infers the `NodePackageManager` from the presence of a lockfile.
+ */
+function inferPackageManagerFromLockfile(
+  outdir: string,
+): NodePackageManager | undefined {
+  if (existsSync(join(outdir, "pnpm-lock.yaml"))) {
+    return NodePackageManager.PNPM;
+  }
+  if (existsSync(join(outdir, "bun.lockb"))) {
+    return NodePackageManager.BUN;
+  }
+  if (existsSync(join(outdir, "yarn.lock"))) {
+    return NodePackageManager.YARN_CLASSIC;
+  }
+  if (existsSync(join(outdir, "package-lock.json"))) {
+    return NodePackageManager.NPM;
+  }
+  return undefined;
 }

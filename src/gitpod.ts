@@ -1,11 +1,11 @@
 import { Component } from "./component";
-import {
+import type {
   IDevEnvironment,
   DevEnvironmentOptions,
   DevEnvironmentDockerImage,
 } from "./dev-env";
-import { Project } from "./project";
-import { Task } from "./task";
+import type { Project } from "./project";
+import type { Task } from "./task";
 import { YamlFile } from "./yaml";
 
 /**
@@ -349,7 +349,7 @@ export class Gitpod extends Component implements IDevEnvironment {
     this.tasks.push(
       ...tasks.map((task) => ({
         name: task.name,
-        command: `npx projen ${task.name}`,
+        command: `${this.project.projenCommand} ${task.name}`,
       })),
     );
   }

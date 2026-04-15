@@ -104,6 +104,7 @@ test("installs aws-cdk v1 if needed", () => {
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: new AwsCdkDepsJs(project, {
       cdkVersion: "1.0.0",
+      cdkCliVersion: "^1",
       dependencyType: DependencyType.RUNTIME,
     }),
   });

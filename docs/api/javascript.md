@@ -1761,9 +1761,9 @@ Bundled dependencies will be added as normal dependencies as well as to the
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1783,9 +1783,9 @@ Defines normal dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1805,9 +1805,9 @@ Defines development/test dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -1915,9 +1915,9 @@ your code against the minimum version required from your consumers.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2094,8 +2094,9 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.NodePackage.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow project to take library dependencies. |
 | <code><a href="#projen.javascript.NodePackage.property.entrypoint">entrypoint</a></code> | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`). |
+| <code><a href="#projen.javascript.NodePackage.property.execCommand">execCommand</a></code> | <code>string</code> | The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`). |
 | <code><a href="#projen.javascript.NodePackage.property.file">file</a></code> | <code>projen.JsonFile</code> | The package.json file. |
-| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `yarn install` or `npm install` with lockfile update (not frozen). |
+| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `pnpm install` or `npm install` with lockfile update (not frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installCommand">installCommand</a></code> | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.installTask">installTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (non-frozen). |
@@ -2116,6 +2117,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.javascript.NodePackage.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.scopedPackagesOptions">scopedPackagesOptions</a></code> | <code><a href="#projen.javascript.ScopedPackagesOptions">ScopedPackagesOptions</a>[]</code> | Options for privately hosted scoped packages. |
+| <code><a href="#projen.javascript.NodePackage.property.yarnVersion">yarnVersion</a></code> | <code>string</code> | The version of Yarn to use if using Yarn as a package manager. |
 
 ---
 
@@ -2165,6 +2167,18 @@ The module's entrypoint (e.g. `lib/index.js`).
 
 ---
 
+##### `execCommand`<sup>Required</sup> <a name="execCommand" id="projen.javascript.NodePackage.property.execCommand"></a>
+
+```typescript
+public readonly execCommand: string;
+```
+
+- *Type:* string
+
+The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`).
+
+---
+
 ##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.NodePackage.property.file"></a>
 
 ```typescript
@@ -2185,7 +2199,7 @@ public readonly installAndUpdateLockfileCommand: string;
 
 - *Type:* string
 
-Renders `yarn install` or `npm install` with lockfile update (not frozen).
+Renders `pnpm install` or `npm install` with lockfile update (not frozen).
 
 ---
 
@@ -2441,6 +2455,18 @@ Options for privately hosted scoped packages.
 
 ---
 
+##### `yarnVersion`<sup>Optional</sup> <a name="yarnVersion" id="projen.javascript.NodePackage.property.yarnVersion"></a>
+
+```typescript
+public readonly yarnVersion: string;
+```
+
+- *Type:* string
+
+The version of Yarn to use if using Yarn as a package manager.
+
+---
+
 
 ### NodeProject <a name="NodeProject" id="projen.javascript.NodeProject"></a>
 
@@ -2692,7 +2718,7 @@ public runTaskCommand(task: Task): string
 Returns the shell command to execute in order to run a task.
 
 This will
-typically be `npx projen TASK`.
+typically be `pnpm projen TASK`.
 
 ###### `task`<sup>Required</sup> <a name="task" id="projen.javascript.NodeProject.runTaskCommand.parameter.task"></a>
 
@@ -2817,9 +2843,9 @@ Bundled dependencies will be added as normal dependencies as well as to the
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2853,9 +2879,9 @@ Defines normal dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2875,9 +2901,9 @@ Defines development/test dependencies.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -2933,9 +2959,9 @@ your code against the minimum version required from your consumers.
 Names modules to install.
 
 By default, the the dependency will
-be installed in the next `npx projen` run and the version will be recorded
-in your `package.json` file. You can upgrade manually or using `yarn
-add/upgrade`. If you wish to specify a version range use this syntax:
+be installed in the next `pnpm projen` run and the version will be recorded
+in your `package.json` file. You can upgrade manually or using `pnpm
+add/update`. If you wish to specify a version range use this syntax:
 `module@^7`.
 
 ---
@@ -6071,6 +6097,7 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 
 ---
 
@@ -6154,6 +6181,24 @@ This means that any files synthesized by projen or e.g. test snapshots will
 always be up-to-date before a PR is merged.
 
 Implies that PR builds do not have anti-tamper checks.
+
+---
+
+##### `mutableInstall`<sup>Optional</sup> <a name="mutableInstall" id="projen.javascript.BuildWorkflowOptions.property.mutableInstall"></a>
+
+```typescript
+public readonly mutableInstall: boolean;
+```
+
+- *Type:* boolean
+- *Default:* value of `mutableBuild`
+
+Perform a mutable (non-frozen) install during builds.
+
+This will update the
+package lockfile during installs, which is useful when build steps modify
+dependencies. Set to `false` to use frozen lockfile installs even when
+`mutableBuild` is enabled.
 
 ---
 
@@ -6538,6 +6583,152 @@ public readonly statements: number;
 ```
 
 - *Type:* number
+
+---
+
+### DevEngineDependency <a name="DevEngineDependency" id="projen.javascript.DevEngineDependency"></a>
+
+A dependency entry for the `devEngines` field in `package.json`.
+
+#### Initializer <a name="Initializer" id="projen.javascript.DevEngineDependency.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const devEngineDependency: javascript.DevEngineDependency = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DevEngineDependency.property.name">name</a></code> | <code>string</code> | The name of the dependency. |
+| <code><a href="#projen.javascript.DevEngineDependency.property.onFail">onFail</a></code> | <code>string</code> | What action to take if validation fails. |
+| <code><a href="#projen.javascript.DevEngineDependency.property.version">version</a></code> | <code>string</code> | The version range for the dependency. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.DevEngineDependency.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the dependency.
+
+---
+
+##### `onFail`<sup>Optional</sup> <a name="onFail" id="projen.javascript.DevEngineDependency.property.onFail"></a>
+
+```typescript
+public readonly onFail: string;
+```
+
+- *Type:* string
+- *Default:* "error"
+
+What action to take if validation fails.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.javascript.DevEngineDependency.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* "*"
+
+The version range for the dependency.
+
+---
+
+### DevEngines <a name="DevEngines" id="projen.javascript.DevEngines"></a>
+
+The `devEngines` field in `package.json`.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+#### Initializer <a name="Initializer" id="projen.javascript.DevEngines.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const devEngines: javascript.DevEngines = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.DevEngines.property.cpu">cpu</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported CPU architectures. |
+| <code><a href="#projen.javascript.DevEngines.property.libc">libc</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported C standard libraries. |
+| <code><a href="#projen.javascript.DevEngines.property.os">os</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported operating systems. |
+| <code><a href="#projen.javascript.DevEngines.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported package managers. |
+| <code><a href="#projen.javascript.DevEngines.property.runtime">runtime</a></code> | <code><a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> \| <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]</code> | Supported JavaScript runtimes. |
+
+---
+
+##### `cpu`<sup>Optional</sup> <a name="cpu" id="projen.javascript.DevEngines.property.cpu"></a>
+
+```typescript
+public readonly cpu: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported CPU architectures.
+
+---
+
+##### `libc`<sup>Optional</sup> <a name="libc" id="projen.javascript.DevEngines.property.libc"></a>
+
+```typescript
+public readonly libc: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported C standard libraries.
+
+---
+
+##### `os`<sup>Optional</sup> <a name="os" id="projen.javascript.DevEngines.property.os"></a>
+
+```typescript
+public readonly os: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported operating systems.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.javascript.DevEngines.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported package managers.
+
+---
+
+##### `runtime`<sup>Optional</sup> <a name="runtime" id="projen.javascript.DevEngines.property.runtime"></a>
+
+```typescript
+public readonly runtime: DevEngineDependency | DevEngineDependency[];
+```
+
+- *Type:* <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a> | <a href="#projen.javascript.DevEngineDependency">DevEngineDependency</a>[]
+
+Supported JavaScript runtimes.
 
 ---
 
@@ -6976,6 +7167,66 @@ public readonly throwOnModuleCollision: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+### InstallTrigger <a name="InstallTrigger" id="projen.javascript.InstallTrigger"></a>
+
+Describes why dependencies need to be installed.
+
+#### Initializer <a name="Initializer" id="projen.javascript.InstallTrigger.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const installTrigger: javascript.InstallTrigger = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.InstallTrigger.property.reason">reason</a></code> | <code><a href="#projen.javascript.InstallReason">InstallReason</a></code> | The reason for the install. |
+| <code><a href="#projen.javascript.InstallTrigger.property.diff">diff</a></code> | <code>string[]</code> | A unified diff of the package.json changes. Only present when reason is `PACKAGE_JSON_CHANGED`. |
+| <code><a href="#projen.javascript.InstallTrigger.property.resolutions">resolutions</a></code> | <code>string[]</code> | Human-readable descriptions of resolved dependency version changes. |
+
+---
+
+##### `reason`<sup>Required</sup> <a name="reason" id="projen.javascript.InstallTrigger.property.reason"></a>
+
+```typescript
+public readonly reason: InstallReason;
+```
+
+- *Type:* <a href="#projen.javascript.InstallReason">InstallReason</a>
+
+The reason for the install.
+
+---
+
+##### `diff`<sup>Optional</sup> <a name="diff" id="projen.javascript.InstallTrigger.property.diff"></a>
+
+```typescript
+public readonly diff: string[];
+```
+
+- *Type:* string[]
+
+A unified diff of the package.json changes. Only present when reason is `PACKAGE_JSON_CHANGED`.
+
+---
+
+##### `resolutions`<sup>Optional</sup> <a name="resolutions" id="projen.javascript.InstallTrigger.property.resolutions"></a>
+
+```typescript
+public readonly resolutions: string[];
+```
+
+- *Type:* string[]
+
+Human-readable descriptions of resolved dependency version changes.
+
+Only present when reason is `DEPS_RESOLVED`.
 
 ---
 
@@ -8371,6 +8622,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.NodePackageOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -8383,9 +8635,11 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.devEngines">devEngines</a></code> | <code><a href="#projen.javascript.DevEngines">DevEngines</a></code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.javascript.NodePackageOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -8410,6 +8664,19 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.scripts">scripts</a></code> | <code>{[ key: string ]: string}</code> | npm scripts to include. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code><a href="#projen.javascript.YarnBerryOptions">YarnBerryOptions</a></code> | Options for Yarn Berry. |
+
+---
+
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.javascript.NodePackageOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
 
 ---
 
@@ -8545,11 +8812,11 @@ added both to the `dependencies` section and `bundledDependencies` section of
 your `package.json`.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -8581,6 +8848,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.javascript.NodePackageOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.javascript.NodePackageOptions.property.deps"></a>
 
 ```typescript
@@ -8593,11 +8878,11 @@ public readonly deps: string[];
 Runtime dependencies of this module.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -8639,11 +8924,11 @@ available in your build environment but will not be fetched when this
 module is consumed.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -8653,6 +8938,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.javascript.NodePackageOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* <a href="#projen.javascript.DevEngines">DevEngines</a>
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.javascript.NodePackageOptions.property.entrypoint"></a>
 
@@ -8862,7 +9165,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* <a href="#projen.javascript.NodePackageManager">NodePackageManager</a>
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -8927,7 +9230,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 
@@ -9060,6 +9363,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
@@ -9072,9 +9376,11 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.devDeps">devDeps</a></code> | <code>string[]</code> | Build dependencies for this module. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.devEngines">devEngines</a></code> | <code><a href="#projen.javascript.DevEngines">DevEngines</a></code> | Configure the `devEngines` field in `package.json`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.entrypoint">entrypoint</a></code> | <code>string</code> | Module entrypoint (`main` in `package.json`). |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.homepage">homepage</a></code> | <code>string</code> | Package's Homepage / Website. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.keywords">keywords</a></code> | <code>string[]</code> | Keywords to include in `package.json`. |
@@ -9598,6 +9904,19 @@ Enabled by default for root projects. Disabled for non-root projects.
 
 ---
 
+##### `addPackageManagerToDevEngines`<sup>Optional</sup> <a name="addPackageManagerToDevEngines" id="projen.javascript.NodeProjectOptions.property.addPackageManagerToDevEngines"></a>
+
+```typescript
+public readonly addPackageManagerToDevEngines: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`.
+
+---
+
 ##### `allowLibraryDependencies`<sup>Optional</sup> <a name="allowLibraryDependencies" id="projen.javascript.NodeProjectOptions.property.allowLibraryDependencies"></a>
 
 ```typescript
@@ -9730,11 +10049,11 @@ added both to the `dependencies` section and `bundledDependencies` section of
 your `package.json`.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -9766,6 +10085,24 @@ This is required if publishing packages to, or installing scoped packages from A
 
 ---
 
+##### `deleteOrphanedLockFiles`<sup>Optional</sup> <a name="deleteOrphanedLockFiles" id="projen.javascript.NodeProjectOptions.property.deleteOrphanedLockFiles"></a>
+
+```typescript
+public readonly deleteOrphanedLockFiles: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Automatically delete lockfiles from package managers that are not the active one.
+
+Only triggered when the lockfile for the configured package
+manager already exists.
+
+This is useful when migrating between package managers to avoid conflicts.
+
+---
+
 ##### `deps`<sup>Optional</sup> <a name="deps" id="projen.javascript.NodeProjectOptions.property.deps"></a>
 
 ```typescript
@@ -9778,11 +10115,11 @@ public readonly deps: string[];
 Runtime dependencies of this module.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -9824,11 +10161,11 @@ available in your build environment but will not be fetched when this
 module is consumed.
 
 The recommendation is to only specify the module name here (e.g.
-`express`). This will behave similar to `yarn add` or `npm install` in the
+`express`). This will behave similar to `pnpm add` or `npm install` in the
 sense that it will add the module as a dependency to your `package.json`
 file with the latest version (`^`). You can specify semver requirements in
-the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
-this will be what you `package.json` will eventually include.
+the same syntax passed to `pnpm add` or `npm i` (e.g. `express@^2`) and
+this will be what your `package.json` will eventually include.
 
 ---
 
@@ -9838,6 +10175,24 @@ this will be what you `package.json` will eventually include.
 [ 'typescript', '@types/express' ]
 ```
 
+
+##### `devEngines`<sup>Optional</sup> <a name="devEngines" id="projen.javascript.NodeProjectOptions.property.devEngines"></a>
+
+```typescript
+public readonly devEngines: DevEngines;
+```
+
+- *Type:* <a href="#projen.javascript.DevEngines">DevEngines</a>
+
+Configure the `devEngines` field in `package.json`.
+
+The `devEngines.packageManager` field is automatically populated based on
+the resolved `packageManager` value. Any fields provided here are merged
+with the auto-populated `packageManager` entry.
+
+> [https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#devengines)
+
+---
 
 ##### `entrypoint`<sup>Optional</sup> <a name="entrypoint" id="projen.javascript.NodeProjectOptions.property.entrypoint"></a>
 
@@ -10047,7 +10402,7 @@ public readonly packageManager: NodePackageManager;
 ```
 
 - *Type:* <a href="#projen.javascript.NodePackageManager">NodePackageManager</a>
-- *Default:* NodePackageManager.YARN_CLASSIC
+- *Default:* Detected from the calling process or `YARN_CLASSIC` if detection fails.
 
 The Node Package Manager used to execute scripts.
 
@@ -10112,7 +10467,7 @@ public readonly pnpmVersion: string;
 ```
 
 - *Type:* string
-- *Default:* "9"
+- *Default:* "10.33.0"
 
 The version of PNPM to use if using PNPM as a package manager.
 
@@ -13412,7 +13767,7 @@ public readonly version: string;
 ```
 
 - *Type:* string
-- *Default:* 4.0.1
+- *Default:* 4.13.0
 
 A fully specified version to use for yarn (e.g., x.x.x).
 
@@ -15650,6 +16005,41 @@ Whitespaces are considered insignificant.
 ##### `STRICT` <a name="STRICT" id="projen.javascript.HTMLWhitespaceSensitivity.STRICT"></a>
 
 Whitespaces are considered significant.
+
+---
+
+
+### InstallReason <a name="InstallReason" id="projen.javascript.InstallReason"></a>
+
+Why a dependency install was triggered during synthesis.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.InstallReason.NO_NODE_MODULES">NO_NODE_MODULES</a></code> | The node_modules directory does not exist. |
+| <code><a href="#projen.javascript.InstallReason.PACKAGE_JSON_CHANGED">PACKAGE_JSON_CHANGED</a></code> | The package.json file was modified during synthesis. |
+| <code><a href="#projen.javascript.InstallReason.DEPS_RESOLVED">DEPS_RESOLVED</a></code> | Wildcard dependency versions were resolved to concrete ranges. |
+
+---
+
+##### `NO_NODE_MODULES` <a name="NO_NODE_MODULES" id="projen.javascript.InstallReason.NO_NODE_MODULES"></a>
+
+The node_modules directory does not exist.
+
+---
+
+
+##### `PACKAGE_JSON_CHANGED` <a name="PACKAGE_JSON_CHANGED" id="projen.javascript.InstallReason.PACKAGE_JSON_CHANGED"></a>
+
+The package.json file was modified during synthesis.
+
+---
+
+
+##### `DEPS_RESOLVED` <a name="DEPS_RESOLVED" id="projen.javascript.InstallReason.DEPS_RESOLVED"></a>
+
+Wildcard dependency versions were resolved to concrete ranges.
 
 ---
 

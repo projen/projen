@@ -1,6 +1,6 @@
-import { GitHub } from "./github";
-import { Component } from "../component";
-import { Project } from "../project";
+import type { GitHub } from "./github";
+import type { Component } from "../component";
+import type { Project } from "../project";
 import { TextFile } from "../textfile";
 
 /**

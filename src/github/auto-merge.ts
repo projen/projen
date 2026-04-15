@@ -1,4 +1,4 @@
-import { GitHub } from "./github";
+import type { GitHub } from "./github";
 import { Component } from "../component";
 
 export interface AutoMergeOptions {
@@ -59,8 +59,6 @@ export class AutoMerge extends Component {
       : [];
 
     const mergeAction = {
-      delete_head_branch: {},
-
       queue: {
         name: "default",
       },

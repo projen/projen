@@ -1,6 +1,6 @@
 import { join } from "path";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { SampleDir } from "../sample-file";
 
 export interface MavenSampleOptions {

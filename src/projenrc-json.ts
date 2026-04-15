@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
-import { Project } from "./project";
+import type { Project } from "./project";
 import { ProjenrcFile } from "./projenrc";
 
 export interface ProjenrcJsonOptions {

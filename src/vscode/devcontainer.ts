@@ -1,12 +1,12 @@
 import { Component } from "../component";
-import {
+import type {
   DevEnvironmentDockerImage,
   DevEnvironmentOptions,
   IDevEnvironment,
 } from "../dev-env";
 import { JsonFile } from "../json";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 /**
  * Relative path of devcontainer file to generate
@@ -162,7 +162,7 @@ export class DevContainer
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
       return this.postCreateTasks
-        .map((task) => `( npx projen ${task.name} )`)
+        .map((task) => `( ${this.project.projenCommand} ${task.name} )`)
         .join(" && ");
     } else {
       return undefined;

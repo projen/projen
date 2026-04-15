@@ -1,10 +1,10 @@
 import * as yaml from "yaml";
 import { DependencyType } from "../../src";
 import { GithubCredentials, workflows } from "../../src/github";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";
@@ -22,7 +22,7 @@ test("allows including deprecated versions", () => {
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0]).toMatchInlineSnapshot(`
     {
-      "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+      "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
     }
   `);
 });
@@ -53,7 +53,7 @@ test("allows configuring specific dependency types", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=prod,dev --filter=some-dep,jest,projen",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=prod,dev --filter=some-dep,jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -95,7 +95,7 @@ test("upgrades command includes all dependencies", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -125,7 +125,7 @@ test("ncu upgrade command does not include dependencies with any version constra
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -155,7 +155,7 @@ test("ncu upgrade command should include dependencies with * versions, along wit
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -217,7 +217,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,some-dep",
       },
       {
         "exec": "yarn install --check-files",
@@ -247,7 +247,7 @@ test("upgrades command doesn't include ignored packages", () => {
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen,dep1",
       },
       {
         "exec": "yarn install --check-files",
@@ -275,7 +275,7 @@ test("upgrades command includes only included packages", () => {
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[0].exec).toMatchInlineSnapshot(
-    `"npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1"`,
+    `"npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=dep1"`,
   );
   expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade dep1`);
 });
@@ -501,7 +501,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
       },
       {
         "exec": "yarn install --check-files",
@@ -544,10 +544,14 @@ test("uses the proper yarn berry upgrade command", () => {
   });
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.env).toStrictEqual({
+    CI: "0",
+    YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+  });
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
    [
      {
-       "exec": "yarn dlx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
+       "exec": "yarn dlx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=jest,projen",
      },
      {
        "exec": "yarn install --no-immutable",
@@ -556,7 +560,7 @@ test("uses the proper yarn berry upgrade command", () => {
        "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
      },
      {
-       "exec": "npx projen",
+       "exec": "yarn projen",
      },
      {
        "spawn": "post-upgrade",

@@ -583,6 +583,7 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -724,6 +725,24 @@ Implies that PR builds do not have anti-tamper checks.
 This is enabled by default only if `githubTokenSecret` is set. Otherwise it
 is disabled, which implies that file changes that happen during build will
 not be pushed back to the branch.
+
+---
+
+##### `mutableInstall`<sup>Optional</sup> <a name="mutableInstall" id="projen.build.BuildWorkflowOptions.property.mutableInstall"></a>
+
+```typescript
+public readonly mutableInstall: boolean;
+```
+
+- *Type:* boolean
+- *Default:* value of `mutableBuild`
+
+Perform a mutable (non-frozen) install during builds.
+
+This will update the
+package lockfile during installs, which is useful when build steps modify
+dependencies. Set to `false` to use frozen lockfile installs even when
+`mutableBuild` is enabled.
 
 ---
 

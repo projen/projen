@@ -1,7 +1,9 @@
-import { GitHub } from "./github";
-import { Job, JobPermission } from "./workflows-model";
+import type { GitHub } from "./github";
+import type { Job } from "./workflows-model";
+import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for 'AutoApprove'
@@ -82,9 +84,11 @@ export class AutoApprove extends Component {
       if: condition,
       steps: [
         {
-          uses: "hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363",
-          with: {
-            "github-token": `\${{ secrets.${secret} }}`,
+          run: 'gh pr review --approve "$PR_NUMBER" --repo "$GH_REPO"',
+          env: {
+            GH_TOKEN: `\${{ secrets.${secret} }}`,
+            GH_REPO: "${{ github.repository }}",
+            PR_NUMBER: "${{ github.event.pull_request.number }}",
           },
         },
       ],

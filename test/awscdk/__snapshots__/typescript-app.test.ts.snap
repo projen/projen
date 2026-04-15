@@ -32,6 +32,10 @@ exports[`AwsCdkTypeScriptApp synthesizes with updated tsconfig defaults 1`] = `
     "typeRoots": [
       "./node_modules/@types",
     ],
+    "types": [
+      "jest",
+      "node",
+    ],
   },
   "exclude": [
     "node_modules",

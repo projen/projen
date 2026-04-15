@@ -1,29 +1,34 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import {
+import type {
   GithubCredentials,
-  GitHub,
   GithubWorkflow,
   GitIdentity,
   workflows,
-  WorkflowJobs,
-  WorkflowSteps,
 } from "../github";
-import { isYarnClassic, isYarnBerry, isNpm } from "./util";
+import { GitHub, WorkflowJobs, WorkflowSteps } from "../github";
+import {
+  isYarnClassic,
+  isYarnBerry,
+  isNpm,
+  executeCommandPriorInstallation,
+} from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
-import {
+import type {
   ContainerOptions,
   JobStep,
-  JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
-import { NodePackageManager, NodeProject } from "../javascript";
+import { JobPermission } from "../github/workflows-model";
+import type { NodeProject } from "../javascript";
+import { NodePackageManager } from "../javascript";
 import { Release } from "../release";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
-import { TaskStep } from "../task-model";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
+import type { Task } from "../task";
+import type { TaskStep } from "../task-model";
 import { workflowNameForProject } from "../util/name";
 
 const CREATE_PATCH_STEP_ID = "create_patch";
@@ -247,6 +252,13 @@ export class UpgradeDependencies extends Component {
 
     const taskEnv: Record<string, string> = { CI: "0" };
 
+    // Yarn berry treats any non-empty CI value as truthy and auto-enables
+    // immutable installs. Explicitly disable it so yarn dlx/up can modify
+    // the lockfile during upgrades.
+    if (isYarnBerry(project.package.packageManager)) {
+      taskEnv.YARN_ENABLE_IMMUTABLE_INSTALLS = "false";
+    }
+
     // Set yarn berry cooldown via environment variable, expects minutes
     if (options.cooldown && isYarnBerry(project.package.packageManager)) {
       taskEnv.YARN_NPM_MINIMAL_AGE_GATE = String(
@@ -356,26 +368,10 @@ export class UpgradeDependencies extends Component {
       removeRange?: boolean;
     } = {},
   ): string {
-    function executeCommand(packageManager: NodePackageManager): string {
-      switch (packageManager) {
-        case NodePackageManager.NPM:
-        case NodePackageManager.YARN:
-        case NodePackageManager.YARN_CLASSIC:
-          return "npx";
-        case NodePackageManager.PNPM:
-          return "pnpm dlx";
-        case NodePackageManager.YARN2:
-        case NodePackageManager.YARN_BERRY:
-          return "yarn dlx";
-        case NodePackageManager.BUN:
-          return "bunx";
-      }
-    }
-
     const command = [
-      `${executeCommand(
+      `${executeCommandPriorInstallation(
         this.project.package.packageManager,
-      )} npm-check-updates@18`,
+      )} npm-check-updates@20`,
     ];
 
     if (options.upgrade) {

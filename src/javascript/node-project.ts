@@ -1,59 +1,69 @@
 import { relative, posix } from "path";
-import { Bundler, BundlerOptions } from "./bundler";
-import { Jest, JestOptions } from "./jest";
-import { LicenseChecker, LicenseCheckerOptions } from "./license-checker";
+import * as semver from "semver";
+import type { BundlerOptions } from "./bundler";
+import { Bundler } from "./bundler";
+import type { JestOptions } from "./jest";
+import { Jest } from "./jest";
+import type { LicenseCheckerOptions } from "./license-checker";
+import { LicenseChecker } from "./license-checker";
+import type { CodeArtifactOptions, NodePackageOptions } from "./node-package";
 import {
   CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
-  CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
-  NodePackageOptions,
 } from "./node-package";
-import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { BuildWorkflow, BuildWorkflowCommonOptions } from "../build";
+import type { ProjenrcOptions } from "./projenrc";
+import { Projenrc } from "./projenrc";
+import type { BuildWorkflowCommonOptions } from "../build";
+import { BuildWorkflow } from "../build";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
-import {
-  AutoMerge,
+import type {
   DependabotOptions,
-  GitHub,
-  GitHubProject,
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
-import { Biome, BiomeOptions } from "./biome/biome";
-import { isYarnBerry, isYarnClassic } from "./util";
+import { AutoMerge, GitHub, GitHubProject } from "../github";
+import type { BiomeOptions } from "./biome/biome";
+import { Biome } from "./biome/biome";
+import {
+  execCommand,
+  executeCommandPriorInstallation,
+  isYarnBerry,
+  isYarnClassic,
+} from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
-import {
-  JobPermission,
+import type {
   JobPermissions,
   JobStep,
   JobStepConfiguration,
   Triggers,
 } from "../github/workflows-model";
-import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
-import {
-  NpmConfig,
-  Prettier,
+import { JobPermission } from "../github/workflows-model";
+import type { IgnoreFileOptions } from "../ignore-file";
+import { IgnoreFile } from "../ignore-file";
+import type {
   PrettierOptions,
-  UpgradeDependencies,
   UpgradeDependenciesOptions,
 } from "../javascript";
+import { NpmConfig, Prettier, UpgradeDependencies } from "../javascript";
 import { License } from "../license";
 import { ProjenrcJson } from "../projenrc-json";
+import type {
+  NpmPublishOptions,
+  Publisher,
+  ReleaseProjectOptions,
+} from "../release";
 import {
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
   CodeArtifactAuthProvider,
   isAwsCodeArtifactRegistry,
-  NpmPublishOptions,
-  Publisher,
   Release,
-  ReleaseProjectOptions,
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 import { ensureRelativePathStartsWithDot } from "../util/path";
 
@@ -416,6 +426,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
 }
 
 /**
@@ -571,8 +591,8 @@ export class NodeProject extends GitHubProject {
   constructor(options: NodeProjectOptions) {
     super({
       ...options,
-      // Node projects have the specific projen version locked via lockfile, so we can skip the @<VERSION> part of the top-level project
-      projenCommand: options.projenCommand ?? "npx projen",
+      projenCommand:
+        options.projenCommand ?? execCommand(options.packageManager, "projen"),
     });
 
     this.package = new NodePackage(this, options);
@@ -611,6 +631,9 @@ export class NodeProject extends GitHubProject {
 
     const envCommand = (() => {
       switch (this.packageManager) {
+        case NodePackageManager.YARN_BERRY:
+        case NodePackageManager.YARN2:
+          return "$(yarn exec node --print process.env.PATH)";
         case NodePackageManager.PNPM:
           return '$(pnpm -c exec "node --print process.env.PATH")';
         case NodePackageManager.BUN:
@@ -657,7 +680,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (!this.ejected) {
-      this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+      this.setScript(PROJEN_SCRIPT, options.projenCommand ?? "projen");
     }
 
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
@@ -667,15 +690,11 @@ export class NodeProject extends GitHubProject {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
 
-      if (
-        !this.deps.isDependencySatisfied(
-          "constructs",
-          DependencyType.BUILD,
-          "^10.0.0",
-        )
-      ) {
-        this.addDevDeps(`constructs@^10.0.0`);
-      }
+      this.deps.requestDependency({
+        name: "constructs",
+        version: "^10.0.0",
+        type: DependencyType.BUILD,
+      });
     }
 
     if (!options.defaultReleaseBranch) {
@@ -714,7 +733,10 @@ export class NodeProject extends GitHubProject {
             workingDirectory: this.determineInstallWorkingDirectory(),
           },
           mutable:
-            buildWorkflowOptions.mutableBuild ?? options.mutableBuild ?? true,
+            buildWorkflowOptions.mutableInstall ??
+            buildWorkflowOptions.mutableBuild ??
+            options.mutableBuild ??
+            true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
         postBuildSteps: [...(options.postBuildSteps ?? [])],
         ...filteredRunsOnOptions(
@@ -951,10 +973,13 @@ export class NodeProject extends GitHubProject {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
 
-    // For PNPM, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
+    // For PNPM < 10, the default resolution mode is "lowest", which leads to any non-versioned (ie '*') dependencies being
     // resolved to the lowest available version, which is unlikely to be expected behaviour for users. We set resolution
-    // mode to "highest" to match the behaviour of yarn and npm.
-    if (this.package.packageManager === NodePackageManager.PNPM) {
+    // mode to "highest" to match the behaviour of yarn and npm. PNPM 10+ defaults to "highest" already.
+    if (
+      this.package.packageManager === NodePackageManager.PNPM &&
+      semver.lt(semver.coerce(this.package.pnpmVersion) ?? "0.0.0", "10.0.0")
+    ) {
       this.npmrc.addConfig("resolution-mode", "highest");
     }
 
@@ -1009,7 +1034,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v5",
+          uses: "codecov/codecov-action@v6",
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1123,6 +1148,8 @@ export class NodeProject extends GitHubProject {
       authProvider: codeArtifactOptions?.authProvider,
     };
 
+    const executeProjenCommand = `${executeCommandPriorInstallation(this.packageManager)} projen`;
+
     if (
       parsedCodeArtifactOptions.authProvider ===
       NodePackageCodeArtifactAuthProvider.GITHUB_OIDC
@@ -1130,7 +1157,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1139,7 +1166,7 @@ export class NodeProject extends GitHubProject {
         },
         {
           name: "AWS CodeArtifact Login",
-          run: `${this.runScriptCommand} ca:login`,
+          run: `${executeProjenCommand} ca:login`,
         },
       ];
     }
@@ -1148,7 +1175,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v5",
+          uses: "aws-actions/configure-aws-credentials@v6",
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret,
@@ -1163,7 +1190,7 @@ export class NodeProject extends GitHubProject {
         },
         {
           name: "AWS CodeArtifact Login",
-          run: `${this.runScriptCommand} ca:login`,
+          run: `${executeProjenCommand} ca:login`,
         },
       ];
     }
@@ -1171,7 +1198,7 @@ export class NodeProject extends GitHubProject {
     return [
       {
         name: "AWS CodeArtifact Login",
-        run: `${this.runScriptCommand} ca:login`,
+        run: `${executeProjenCommand} ca:login`,
         env: {
           AWS_ACCESS_KEY_ID: secretToString(
             parsedCodeArtifactOptions.accessKeyIdSecret,
@@ -1199,10 +1226,15 @@ export class NodeProject extends GitHubProject {
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
-    if (this.package.packageManager === NodePackageManager.PNPM) {
+    if (isYarnBerry(this.package.packageManager)) {
+      install.push({
+        name: "Enable corepack",
+        run: "corepack enable",
+      });
+    } else if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v4",
+        uses: "pnpm/action-setup@v5",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
@@ -1224,7 +1256,7 @@ export class NodeProject extends GitHubProject {
               : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v5",
+          uses: "actions/setup-node@v6",
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
@@ -1232,6 +1264,7 @@ export class NodeProject extends GitHubProject {
             ...(this.workflowPackageCache && {
               cache,
             }),
+            "package-manager-cache": this.workflowPackageCache,
           },
         });
       }
@@ -1260,9 +1293,9 @@ export class NodeProject extends GitHubProject {
    * Defines normal dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDeps(...deps: string[]) {
@@ -1273,9 +1306,9 @@ export class NodeProject extends GitHubProject {
    * Defines development/test dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addDevDeps(...deps: string[]) {
@@ -1290,9 +1323,9 @@ export class NodeProject extends GitHubProject {
    * your code against the minimum version required from your consumers.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addPeerDeps(...deps: string[]) {
@@ -1306,9 +1339,9 @@ export class NodeProject extends GitHubProject {
    * `bundledDependencies` section of your `package.json`.
    *
    * @param deps Names modules to install. By default, the the dependency will
-   * be installed in the next `npx projen` run and the version will be recorded
-   * in your `package.json` file. You can upgrade manually or using `yarn
-   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * be installed in the next `pnpm projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `pnpm
+   * add/update`. If you wish to specify a version range use this syntax:
    * `module@^7`.
    */
   public addBundledDeps(...deps: string[]) {
@@ -1392,12 +1425,12 @@ export class NodeProject extends GitHubProject {
 
   /**
    * Returns the shell command to execute in order to run a task. This will
-   * typically be `npx projen TASK`.
+   * typically be `pnpm projen TASK`.
    *
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    return `${this.package.projenCommand} ${task.name}`;
+    return `${this.projenCommand} ${task.name}`;
   }
 
   /**

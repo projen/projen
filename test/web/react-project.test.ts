@@ -1,4 +1,5 @@
-import { ReactProject, ReactProjectOptions } from "../../src/web";
+import type { ReactProjectOptions } from "../../src/web";
+import { ReactProject } from "../../src/web";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {

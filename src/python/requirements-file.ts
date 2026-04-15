@@ -1,7 +1,9 @@
-import { IPackageProvider } from "./python-deps";
-import { Dependencies, DependencyCoordinates } from "../dependencies";
-import { FileBase, IResolver } from "../file";
-import { Project } from "../project";
+import type { IPackageProvider } from "./python-deps";
+import type { DependencyCoordinates } from "../dependencies";
+import { Dependencies } from "../dependencies";
+import type { IResolver } from "../file";
+import { FileBase } from "../file";
+import type { Project } from "../project";
 import { toPythonVersionRange } from "../util/semver";
 
 export interface RequirementsFileOptions {

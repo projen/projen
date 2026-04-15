@@ -1,4 +1,4 @@
-import { VsCode } from "./vscode";
+import type { VsCode } from "./vscode";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 

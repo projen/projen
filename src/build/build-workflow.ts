@@ -1,13 +1,8 @@
 import * as posixPath from "node:path/posix";
-import { Task } from "..";
+import type { Task } from "..";
 import { Component } from "../component";
-import {
-  GitHub,
-  GithubWorkflow,
-  GitIdentity,
-  workflows,
-  WorkflowSteps,
-} from "../github";
+import type { GitIdentity, workflows } from "../github";
+import { GitHub, GithubWorkflow, WorkflowSteps } from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -18,17 +13,18 @@ import {
   projectPathRelativeToRepoRoot,
 } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
-import {
+import type {
   Job,
-  JobPermission,
   JobPermissions,
   JobStep,
   Tools,
   Triggers,
 } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
-import { Project } from "../project";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import {
   BUILD_JOBID,
   DEFAULT_ARTIFACTS_DIRECTORY,
@@ -107,6 +103,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
 
   /**
    * Steps to execute after build.

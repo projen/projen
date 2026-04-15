@@ -5,7 +5,7 @@ import * as path from "path";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import * as logging from "../logging";
 import { Project } from "../project";
-import { TaskRuntime } from "../task-runtime";
+import type { TaskRuntime } from "../task-runtime";
 
 const projenModule = path.dirname(require.resolve("../../package.json"));
 

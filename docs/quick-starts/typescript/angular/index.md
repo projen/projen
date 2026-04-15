@@ -14,13 +14,13 @@ should print the path to the NodeJS version you want to use. [`nvm`](https://git
 is a popular tool for managing multiple versions of Node on a single machine.
 To select a version, run `nvm use <version>`.
 
-Run `npm i @angular/cli` to install the Angular CLI. Next, run
-`npx ng new --create-application true hello-world` to initialize the hello-world project.
+Run `pnpm add -g @angular/cli` to install the Angular CLI. Next, run
+`pnpm dlx @angular/cli new --create-application true hello-world` to initialize the hello-world project.
 Then run `cd hello-world` to enter the project directory.
 
 ```shell
-npm i @angular/cli
-npx ng new --create-application true hello-world
+pnpm add -g @angular/cli
+pnpm dlx @angular/cli new --create-application true hello-world
 cd hello-world
 ```
 
@@ -38,13 +38,13 @@ mv README.md README.md.bak
 mv .gitignore .gitignore.bak
 ```
 
-To create a new TypeScript project, use `npx projen new typescript`:
+To create a new TypeScript project, use `pnpm dlx projen new typescript`:
 
 ```shell
-npx projen new typescript
+pnpm dlx projen new typescript
 ```
 
-Most of the `npx projen default` command that runs after project initialization will work, but
+Most of the `pnpm dlx projen default` command that runs after project initialization will work, but
 it will fail when trying to reference packages that are no longer in `package.json`. We'll fix
 that next.
 
@@ -113,7 +113,7 @@ const project = new typescript.TypeScriptProject({
 project.synth();
 ```
 
-Run `npx projen` to install the Angular dependencies.
+Run `pnpm dlx projen` to install the Angular dependencies.
 
 ## Set up tasks
 
@@ -143,7 +143,7 @@ When you're adding an entirely new task, you'll use `project.addTask()`. This me
 arguments: the name of the task, and an object with the task's configuration. The `exec` property
 is the command that will be run when you run the task. The `receiveArgs` property tells projen
 whether to pass any arguments you provide to the task to the command. For example, if you run
-`npx projen start --port 3000`, projen will run `ng serve --port 3000`.
+`pnpm projen start --port 3000`, projen will run `ng serve --port 3000`.
 
 ### project.tasks.tryFind()?.reset()
 
@@ -213,7 +213,7 @@ Example:
   ],
 ```
 
-Run `npx projen` and you'll see the contents of `.gitignore` have been updated.
+Run `pnpm projen` and you'll see the contents of `.gitignore` have been updated.
 
 ## README.md
 
@@ -221,4 +221,4 @@ Run `npx projen` and you'll see the contents of `.gitignore` have been updated.
 worrying about projen overwriting it.
 
 That's it! You now have a working Angular application under projen management. Type
-`npx projen start` to see the application in your browser.
+`pnpm projen start` to see the application in your browser.

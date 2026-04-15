@@ -31,7 +31,7 @@ export async function handler(event: any) {
 Now run:
 
 ```sh
-npx projen
+pnpm dlx projen
 ```
 
 You'll notice that a new file `src/resize-image-function.ts` has been added to
@@ -121,7 +121,7 @@ To create an AWS Lambda Extension with Projen:
 
 - Create a file in your project's source tree called
   `my-extension.lambda-extension.ts`
-- Run `npx projen`
+- Run `pnpm dlx projen`
 - Projen will automatically discover this file, generating an AWS Lambda Layer
   Version named `MyExtensionLayerVersion` in a file named
   `my-extension-layer-version.ts`.
@@ -352,7 +352,7 @@ To start watching, set up your environment with AWS credentials and `AWS_REGION`
 pointing to your development AWS account and execute:
 
 ```sh
-npx projen watch
+pnpm dlx projen watch
 ```
 
 This will:

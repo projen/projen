@@ -4,15 +4,15 @@ sidebar_position: 1
 
 # Hello World with TypeScript
 
-To create a new TypeScript project, use `npx projen new typescript`:
+To create a new TypeScript project, use `pnpm dlx projen new typescript`:
 
 ```shell
-npx projen new typescript
+pnpm dlx projen new typescript
 ```
 
 This will create a `.projenrc.ts` file which defines your project.
 
-`npx projen new` will synthesize a standard project directory structure with some sample
+`pnpm dlx projen new` will synthesize a standard project directory structure with some sample
 code.
 
 ```shell
@@ -27,9 +27,9 @@ code.
 
 The default options will set up your `tsconfig` root directory as `src` and your
 out directory as `lib`. By default the `test` directory is not compiled to
-JavaScript and instead compiled when `npx projen test` is executed.
+JavaScript and instead compiled when `pnpm projen test` is executed.
 
-The `npx projen new` command will also generate a `.projenrc.js` file which includes
+The `pnpm dlx projen new` command will also generate a `.projenrc.js` file which includes
 the definition of your project with any options you specified in the command
 line:
 
@@ -52,10 +52,10 @@ You can specify dependencies in your project via the `deps`, `devDeps`, and
 `peerDeps` options similar to what you might expect in a `package.json` file.
 
 The recommendation is to only specify the module name here (e.g. `express`).
-This will behave similar to yarn add or npm install in the sense that it will
+This will behave similar to `pnpm add` or `npm install` in the sense that it will
 add the module as a dependency to your package.json file with the latest version
-(`^`). You can specify semver requirements in the same syntax passed to npm i or
-yarn add (e.g. `express@^2`) and this will be what your `package.json` will
+(`^`). You can specify semver requirements in the same syntax passed to `pnpm add`
+or `npm i` (e.g. `express@^2`) and this will be what your `package.json` will
 eventually include.
 
 ## Migrating your TypeScript Project to Projen
@@ -71,10 +71,10 @@ If you'd like to upgrade an existing project that was creating using a JS-based
 projen RC file (.projenrc.js) to a TS-based projen RC file (.projenrc.ts):
 
 1. Add `projenrcTs: true` to your project.
-2. Run `npx projen`.
+2. Run `pnpm projen`.
 3. Rename `.projenrc.js` to `.projenrc.ts`.
 4. Update `require`s to `import`s.
-5. Run `npx projen`.
+5. Run `pnpm projen`.
 
 ### Default Directory Structure
 

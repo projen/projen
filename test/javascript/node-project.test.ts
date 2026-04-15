@@ -1,21 +1,21 @@
 import * as yaml from "yaml";
-import { Component } from "../../src";
+import type { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   CodeArtifactAuthProvider,
   NodePackage,
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   NpmAccess,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
 import { TaskRuntime } from "../../src/task-runtime";
 import { synthSnapshot, TestProject } from "../util";
@@ -401,7 +401,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
       });
 
       // THEN
@@ -444,7 +444,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
         npmRegistryUrl: "https://foo.bar",
         npmAccess: NpmAccess.PUBLIC,
         npmTokenSecret: "GITHUB_TOKEN",
@@ -721,7 +721,7 @@ describe("npm publishing options", () => {
 
     // WHEN
     const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
+      packageName: "@projen/my-package",
       npmRegistry: "foo.bar.com",
     });
 
@@ -780,7 +780,7 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v5");
+  expect(workflow).toContain("uses: codecov/codecov-action@v");
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -789,7 +789,7 @@ test("codecov upload not added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).not.toContain("uses: codecov/codecov-action@v5");
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v");
 });
 
 describe("scripts", () => {
@@ -852,6 +852,36 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
+});
+
+test("mutableInstall defaults to mutableBuild value", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual("yarn install --check-files");
+});
+
+test("mutableInstall can be disabled independently of mutableBuild", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true, mutableInstall: false },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual(
+    "yarn install --check-files --frozen-lockfile",
+  );
+  // self-mutation job should still exist
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
 });
 
 test("provided preBuildSteps for build workflow get combined with setup steps", () => {
@@ -1196,6 +1226,68 @@ describe("Setup pnpm", () => {
   });
 });
 
+describe("Setup corepack for Yarn Berry", () => {
+  const enableCorepackIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Enable corepack");
+  const setupNodeIndex = (job: any) =>
+    job.steps.findIndex((step: any) => step.name === "Setup Node.js");
+
+  test("Enable corepack should not run without yarn berry", () => {
+    const project = new TestNodeProject({});
+
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(enableCorepackIndex(buildWorkflow.jobs.build)).toEqual(-1);
+  });
+
+  test("Enable corepack should run before Setup Node.js", () => {
+    const project = new TestNodeProject({
+      workflowPackageCache: true,
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    const output = synthSnapshot(project);
+    const buildJob = yaml.parse(output[".github/workflows/build.yml"]).jobs
+      .build;
+    expect(enableCorepackIndex(buildJob)).toBeGreaterThanOrEqual(0);
+    expect(enableCorepackIndex(buildJob)).toBeLessThan(
+      setupNodeIndex(buildJob),
+    );
+  });
+});
+
+describe("package manager build job steps", () => {
+  test.each([
+    {
+      name: "bun",
+      options: {
+        packageManager: NodePackageManager.BUN,
+        workflowPackageCache: true,
+      },
+    },
+    {
+      name: "pnpm",
+      options: {
+        packageManager: NodePackageManager.PNPM,
+        workflowPackageCache: true,
+      },
+    },
+    {
+      name: "yarn berry",
+      options: {
+        packageManager: NodePackageManager.YARN_BERRY,
+        workflowPackageCache: true,
+      },
+    },
+  ])("$name build job steps", ({ options }) => {
+    const project = new TestNodeProject(options);
+    const output = synthSnapshot(project);
+    const buildJob = yaml.parse(output[".github/workflows/build.yml"]).jobs
+      .build;
+    expect(buildJob.steps).toMatchSnapshot();
+  });
+});
+
 describe("workflowPackageCache", () => {
   const cache = (job: any) =>
     job.steps.find((step: any) => step.name === "Setup Node.js")?.with?.cache;
@@ -1431,7 +1523,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
@@ -1459,7 +1551,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
@@ -1522,7 +1614,7 @@ describe("scoped private packages", () => {
           },
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
           },
           {
             name: "Install dependencies",
@@ -1560,7 +1652,7 @@ describe("scoped private packages", () => {
           },
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
           },
           {
             name: "Install dependencies",
@@ -1615,7 +1707,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
           env: {
             AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
             AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
@@ -1650,7 +1742,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
           env: {
             AWS_ACCESS_KEY_ID: secretToString(accessKeyIdSecret),
             AWS_SECRET_ACCESS_KEY: secretToString(secretAccessKeySecret),
@@ -1697,7 +1789,7 @@ describe("scoped private packages", () => {
         },
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
         },
         {
           name: "Install dependencies",
@@ -1825,20 +1917,64 @@ describe("scoped private packages", () => {
       ],
     });
   });
+
+  test("adds AWS Code Artifact Login step prior to install to workflow with specific package manager command when package manager is pnpm", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      packageManager: NodePackageManager.PNPM,
+    });
+    const output = synthSnapshot(project);
+
+    const expectedSteps = [
+      {
+        name: "AWS CodeArtifact Login",
+        run: "pnpm dlx projen ca:login",
+        env: {
+          AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+          AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+        },
+      },
+    ];
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining(expectedSteps),
+    );
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining(expectedSteps),
+    );
+  });
 });
 
-test("sets resolution-mode to highest by default for pnpm", () => {
+test("sets resolution-mode to highest by default for pnpm < 10", () => {
   const project = new TestNodeProject({
     packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9",
   });
 
   const output = synthSnapshot(project);
   expect(output[".npmrc"]).toContain("resolution-mode=highest");
 });
 
+test("does not set resolution-mode for pnpm 10+", () => {
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "10",
+  });
+
+  const output = synthSnapshot(project);
+  expect(output[".npmrc"] ?? "").not.toContain("resolution-mode");
+});
+
 test("can override resolution-mode to lowest for pnpm", () => {
   const project = new TestNodeProject({
     packageManager: NodePackageManager.PNPM,
+    pnpmVersion: "9",
   });
   project.npmrc.addConfig("resolution-mode", "lowest");
 
@@ -1863,11 +1999,11 @@ describe("package manager env", () => {
     },
     {
       packageManager: NodePackageManager.YARN2,
-      cmd: '$(npx -c "node --print process.env.PATH")',
+      cmd: "$(yarn exec node --print process.env.PATH)",
     },
     {
       packageManager: NodePackageManager.YARN_BERRY,
-      cmd: '$(npx -c "node --print process.env.PATH")',
+      cmd: "$(yarn exec node --print process.env.PATH)",
     },
     {
       packageManager: NodePackageManager.PNPM,

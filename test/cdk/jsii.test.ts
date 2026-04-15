@@ -799,3 +799,43 @@ describe("release workflow use packageManager option", () => {
     },
   );
 });
+
+describe("release workflow use Yarn Berry packageManager option", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    packageManager: javascript.NodePackageManager.YARN_BERRY,
+  });
+
+  const output = synthSnapshot(project);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job with corepack enable step",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.steps`,
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: "Enable corepack",
+            run: "corepack enable",
+          }),
+        ]),
+      );
+    },
+  );
+});

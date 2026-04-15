@@ -6,21 +6,21 @@ sidebar_position: 2
 
 The projen workflow is very simple:
 
-1. Initialize a project type using the cli (`npx projen new`).
+1. Initialize a project type using the cli (`pnpm dlx projen new`).
 2. Edit configuration in the .projenrc(.ts/.js/.py/.json) file.
-3. Run `npx projen` to apply changes.
+3. Run `pnpm projen` to apply changes.
 
 ## Initializing a project
 
-Running `npx projen new` will initialize the current directory with the new project type specified.
+Running `pnpm dlx projen new` will initialize the current directory with the new project type specified.
 If the directory is empty, then the files under control by the project type will be created and
 the git repository will be initialized with a baseline commit.
 
 :::warning
-projen allows you to "take over" an existing project. 
-A directory does NOT need to be empty to run the `npx projen new` command and start a new project.
-However, it will overwrite any existing files that are managed by projen. 
-Make sure you have all your changes committed before running `npx projen new`.
+projen allows you to "take over" an existing project.
+A directory does NOT need to be empty to run the `pnpm dlx projen new` command and start a new project.
+However, it will overwrite any existing files that are managed by projen.
+Make sure you have all your changes committed before running `pnpm dlx projen new`.
 
 Once you do this, a new git commit will be in your history that shows you all the changes that were made.
 :::
@@ -43,5 +43,5 @@ never by editing the file directly.
 
 ## Applying changes
 
-After making changes, you will run `npx projen` to apply the changes. 
+After making changes, you will run `pnpm projen` to apply the changes.
 projen will then re-read the RC file and modify any of the files under its control to match the new configuration.

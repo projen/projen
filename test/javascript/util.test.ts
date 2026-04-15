@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import * as path from "path";
+import { NodePackageManager } from "../../src/javascript";
 import {
   tryResolveModule,
   tryResolveModuleManifestPath,
@@ -10,6 +11,7 @@ import {
   tryResolveDependencyVersion,
   installedVersionProbablyMatches,
   extractCodeArtifactDetails,
+  executeCommandPriorInstallation,
 } from "../../src/javascript/util";
 import { mkdtemp } from "../util";
 
@@ -188,3 +190,19 @@ test.each([
     extractCodeArtifactDetails(url);
   }).toThrow(/Could not get CodeArtifact details from npm Registry/);
 });
+
+test.each([
+  [NodePackageManager.NPM, "npx"],
+  [NodePackageManager.YARN, "npx"],
+  [NodePackageManager.YARN_CLASSIC, "npx"],
+  [NodePackageManager.YARN_BERRY, "yarn dlx"],
+  [NodePackageManager.YARN2, "yarn dlx"],
+  [NodePackageManager.PNPM, "pnpm dlx"],
+  [NodePackageManager.BUN, "bunx"],
+])(
+  "executeCommandPriorInstallation(%p) should return %p",
+  (packageManager: NodePackageManager, expectedCommand: string) => {
+    const result = executeCommandPriorInstallation(packageManager);
+    expect(result).toBe(expectedCommand);
+  },
+);

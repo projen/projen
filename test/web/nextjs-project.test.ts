@@ -1,4 +1,5 @@
-import { NextJsProject, NextJsProjectOptions } from "../../src/web";
+import type { NextJsProjectOptions } from "../../src/web";
+import { NextJsProject } from "../../src/web";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {

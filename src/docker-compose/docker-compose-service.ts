@@ -1,10 +1,11 @@
-import { DockerCompose, DockerComposeBuild } from "./docker-compose";
-import { IDockerComposeNetworkBinding } from "./docker-compose-network";
-import {
+import type { DockerComposeBuild } from "./docker-compose";
+import { DockerCompose } from "./docker-compose";
+import type { IDockerComposeNetworkBinding } from "./docker-compose-network";
+import type {
   DockerComposePortMappingOptions,
   DockerComposeServicePort,
 } from "./docker-compose-port";
-import { IDockerComposeVolumeBinding } from "./docker-compose-volume";
+import type { IDockerComposeVolumeBinding } from "./docker-compose-volume";
 
 /**
  * An interface providing the name of a docker compose service.

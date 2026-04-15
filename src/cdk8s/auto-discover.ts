@@ -1,10 +1,8 @@
 import { IntegrationTest } from "./integration-test";
-import {
-  IntegrationTestAutoDiscoverBase,
-  IntegrationTestAutoDiscoverBaseOptions,
-} from "../cdk";
+import type { IntegrationTestAutoDiscoverBaseOptions } from "../cdk";
+import { IntegrationTestAutoDiscoverBase } from "../cdk";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for `AutoDiscover`.

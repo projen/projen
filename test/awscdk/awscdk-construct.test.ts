@@ -2,10 +2,8 @@ import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as YAML from "yaml";
 import { awscdk, LogLevel, Testing } from "../../src";
-import {
-  AwsCdkConstructLibrary,
-  AwsCdkConstructLibraryOptions,
-} from "../../src/awscdk";
+import type { AwsCdkConstructLibraryOptions } from "../../src/awscdk";
+import { AwsCdkConstructLibrary } from "../../src/awscdk";
 import { toDeterministicSingletonUuid } from "../../src/awscdk/internal";
 import { NpmAccess } from "../../src/javascript";
 import { mkdtemp, synthSnapshot } from "../util";
@@ -252,6 +250,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "lts/*",
+            "package-manager-cache": false,
           },
         }),
       ]),
@@ -272,6 +271,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "18.0.0",
+            "package-manager-cache": false,
           },
         }),
       ]),
@@ -293,6 +293,7 @@ describe("node version in workflow", () => {
           uses: expect.stringContaining("actions/setup-node"),
           with: {
             "node-version": "20.17.0",
+            "package-manager-cache": false,
           },
         }),
       ]),

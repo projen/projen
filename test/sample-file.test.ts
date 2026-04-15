@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 import { mkdtemp, synthSnapshot } from "./util";
-import { Project, ProjectOptions } from "../src";
+import type { ProjectOptions } from "../src";
+import { Project } from "../src";
 import { SampleDir, SampleFile } from "../src/sample-file";
 
 test("sample file from text contents", () => {

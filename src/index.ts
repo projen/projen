@@ -1,5 +1,5 @@
 export * from "./ai-instructions";
-export * from "./compare";
+export type * from "./compare";
 export * from "./component";
 export * from "./dev-env";
 export * from "./dependencies";
@@ -30,7 +30,7 @@ export * from "./semver";
 export * from "./source-code";
 export * from "./task";
 export * from "./tasks";
-export * from "./task-model";
+export type * from "./task-model";
 export * from "./task-runtime";
 export * from "./testing";
 export * from "./textfile";

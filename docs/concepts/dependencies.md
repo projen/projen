@@ -27,7 +27,7 @@ const project = new cdk.JsiiProject({
 });
 ```
 
-By default, `npx projen` will automatically install dependencies in your
+By default, `pnpm dlx projen` will automatically install dependencies in your
 project if they are not already installed.
 
 ## Semantic Requirements

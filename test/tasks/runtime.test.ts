@@ -2,7 +2,7 @@ import { spawnSync } from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
-import { Project } from "../../src";
+import type { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
 import { makeCrossPlatform } from "../../src/util/tasks";
@@ -229,6 +229,58 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
+  });
+
+  test("warns and skips env var when $() command fails", () => {
+    // GIVEN
+    const warn = jest.spyOn(logging, "warn");
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env:fail", {
+      exec: "echo ok",
+      env: { VALUE: "$(exit 1)" },
+    });
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    rt.runTask("test:env:fail");
+
+    // THEN
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("unable to evaluate"),
+    );
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("command exited with code"),
+    );
+    warn.mockRestore();
+  });
+
+  test("warns with stdout when $() command writes error to stdout", () => {
+    // GIVEN
+    const warn = jest.spyOn(logging, "warn");
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env:fail:stdout", {
+      exec: "echo ok",
+      env: {
+        VALUE: `$(node -e "console.log('something went wrong'); process.exit(1)")`,
+      },
+    });
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    rt.runTask("test:env:fail:stdout");
+
+    // THEN
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("unable to evaluate"),
+    );
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("something went wrong"),
+    );
+    warn.mockRestore();
   });
 
   test("spawn env params are respected", () => {

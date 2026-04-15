@@ -1,4 +1,5 @@
-import { Component, Project } from "../../src";
+import type { Component } from "../../src";
+import { Project } from "../../src";
 import { TypeScriptProject } from "../../src/typescript";
 
 test("typescript subprojects do not add a Projenrc component", () => {

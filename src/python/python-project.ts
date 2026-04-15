@@ -1,25 +1,28 @@
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
-import {
-  Projenrc as ProjenrcPython,
-  ProjenrcOptions as ProjenrcPythonOptions,
-} from "./projenrc";
-import { Pytest, PytestOptions } from "./pytest";
+import type { ProjenrcOptions as ProjenrcPythonOptions } from "./projenrc";
+import { Projenrc as ProjenrcPython } from "./projenrc";
+import type { PytestOptions } from "./pytest";
+import { Pytest } from "./pytest";
 import { PytestSample } from "./pytest-sample";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import type { IPythonDeps } from "./python-deps";
+import type { IPythonEnv } from "./python-env";
+import type {
+  IPythonPackaging,
+  PythonPackagingOptions,
+} from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
 import { Uv } from "./uv";
-import { Venv, VenvOptions } from "./venv";
-import { GitHubProject, GitHubProjectOptions } from "../github";
-import {
-  Projenrc as ProjenrcJs,
-  ProjenrcOptions as ProjenrcJsOptions,
-} from "../javascript/projenrc";
+import type { VenvOptions } from "./venv";
+import { Venv } from "./venv";
+import type { GitHubProjectOptions } from "../github";
+import { GitHubProject } from "../github";
+import type { ProjenrcOptions as ProjenrcJsOptions } from "../javascript/projenrc";
+import { Projenrc as ProjenrcJs } from "../javascript/projenrc";
 import { ProjectType } from "../project";
-import { ProjenrcTs, ProjenrcTsOptions } from "../typescript";
+import type { ProjenrcTsOptions } from "../typescript";
+import { ProjenrcTs } from "../typescript";
 import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */

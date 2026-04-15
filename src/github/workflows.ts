@@ -1,9 +1,9 @@
 import { extname } from "node:path";
 import { snake } from "case";
-import { GitHubActionsProvider } from "./actions-provider";
-import { GitHub } from "./github";
-import { GithubCredentials } from "./github-credentials";
-import * as workflows from "./workflows-model";
+import type { GitHubActionsProvider } from "./actions-provider";
+import type { GitHub } from "./github";
+import type { GithubCredentials } from "./github-credentials";
+import type * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { deepMerge, kebabCaseKeys } from "../util";
@@ -452,8 +452,11 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v5",
-      with: { "node-version": tools.node.version },
+      uses: "actions/setup-node@v6",
+      with: {
+        "node-version": tools.node.version,
+        "package-manager-cache": "false",
+      },
     });
   }
 

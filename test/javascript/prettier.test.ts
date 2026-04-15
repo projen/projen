@@ -1,10 +1,6 @@
 import { SourceCode } from "../../src";
-import {
-  ArrowParens,
-  NodeProject,
-  PrettierOverride,
-  TrailingComma,
-} from "../../src/javascript";
+import type { PrettierOverride } from "../../src/javascript";
+import { ArrowParens, NodeProject, TrailingComma } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 describe("prettier", () => {

@@ -14,10 +14,11 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+        uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: Compile
@@ -41,13 +42,14 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: Compile
@@ -73,13 +75,14 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: Compile
@@ -102,14 +105,15 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java-version }}
           distribution: ${{ matrix.java-distribution }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: Compile

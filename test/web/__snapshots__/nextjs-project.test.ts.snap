@@ -41,14 +41,15 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
@@ -81,7 +82,7 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -159,7 +160,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -167,9 +168,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
@@ -205,9 +207,10 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -238,13 +241,14 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          package-manager-cache: false
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -272,7 +276,7 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: main
       - name: Download patch
@@ -288,7 +292,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: |-
@@ -376,7 +380,6 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
-      delete_head_branch: {}
       queue:
         name: default
     conditions:
@@ -670,7 +673,7 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=projen,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=projen,autoprefixer,next,postcss,react,react-dom,tailwindcss",
           },
           {
             "exec": "yarn install --check-files",
@@ -923,24 +926,24 @@ permissions-backup.acl
       "access": "public",
     },
     "scripts": {
-      "build": "npx projen build",
-      "bump": "npx projen bump",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "dev": "npx projen dev",
-      "eject": "npx projen eject",
-      "export": "npx projen export",
-      "package": "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "release": "npx projen release",
-      "server": "npx projen server",
-      "telemetry": "npx projen telemetry",
-      "test": "npx projen test",
-      "unbump": "npx projen unbump",
-      "upgrade": "npx projen upgrade",
+      "build": "projen build",
+      "bump": "projen bump",
+      "compile": "projen compile",
+      "default": "projen default",
+      "dev": "projen dev",
+      "eject": "projen eject",
+      "export": "projen export",
+      "package": "projen package",
+      "post-compile": "projen post-compile",
+      "post-upgrade": "projen post-upgrade",
+      "pre-compile": "projen pre-compile",
+      "projen": "projen",
+      "release": "projen release",
+      "server": "projen server",
+      "telemetry": "projen telemetry",
+      "test": "projen test",
+      "unbump": "projen unbump",
+      "upgrade": "projen upgrade",
     },
     "version": "0.0.0",
   },

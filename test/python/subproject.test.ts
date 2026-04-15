@@ -1,4 +1,5 @@
-import { Component, Project } from "../../src";
+import type { Component } from "../../src";
+import { Project } from "../../src";
 import { PythonProject } from "../../src/python";
 
 test("python subprojects do not add a Projenrc component", () => {

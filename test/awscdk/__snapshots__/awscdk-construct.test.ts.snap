@@ -15,7 +15,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -23,9 +23,10 @@ exports[`node version in workflow does setup a custom version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "20.17.0",
+        "package-manager-cache": false,
       },
     },
     {
@@ -94,7 +95,7 @@ exports[`node version in workflow does setup default version 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -102,9 +103,10 @@ exports[`node version in workflow does setup default version 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
+        "package-manager-cache": false,
       },
     },
     {
@@ -173,7 +175,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
   "steps": [
     {
       "name": "Checkout",
-      "uses": "actions/checkout@v5",
+      "uses": "actions/checkout@v6",
       "with": {
         "ref": "\${{ github.event.pull_request.head.ref }}",
         "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -181,9 +183,10 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
     },
     {
       "name": "Setup Node.js",
-      "uses": "actions/setup-node@v5",
+      "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "18.0.0",
+        "package-manager-cache": false,
       },
     },
     {

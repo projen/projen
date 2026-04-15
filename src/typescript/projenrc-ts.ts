@@ -2,7 +2,7 @@ import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { TypescriptConfig } from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 
 export interface ProjenrcTsOptions {

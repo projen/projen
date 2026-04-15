@@ -9,20 +9,20 @@ Obviously the underlying methodology of projen is quite different, but there is 
 
 Note: All prompts are assuming to be run from a TTY. We should check if in a TTY before a prompt is presented and error otherwise.
 
-`$ npx projen new`
+`$ pnpm dlx projen new`
 1. User is shown a list of base projen project types
 1. User selects the `typescript` project
 1. Project is synthesized
 
-`$ npx projen new typescript`
+`$ pnpm dlx projen new typescript`
 1. No prompts are shown because a project is selected and the `typescript` project type has no `@featured` required options that do not also have a default
 1. Project is synthesized
 
-`$ npx projen new typescript --prompt`
+`$ pnpm dlx projen new typescript --prompt`
 1. Prompts are shown for (currently) `packageName` and `description`, as those options are `@featured` and have no default value
 1. Project is synthesized
 
-`$ npx projen new typescript --prompt --package-name cool-name --description 'Terse but useful'`
+`$ pnpm dlx projen new typescript --prompt --package-name cool-name --description 'Terse but useful'`
 1. No prompts are shown because all `@featured` options have been given supplied values already
 1. Project is synthesized
 

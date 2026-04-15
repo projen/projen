@@ -1,6 +1,7 @@
 import { Component } from "./component";
-import { FileBase, IResolver } from "./file";
-import { Project } from "./project";
+import type { IResolver } from "./file";
+import { FileBase } from "./file";
+import type { Project } from "./project";
 
 /**
  * Supported AI coding assistants and their instruction file locations.

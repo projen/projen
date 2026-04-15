@@ -1,5 +1,6 @@
-import { FileBase, IResolver } from "../file";
-import { Project } from "../project";
+import type { IResolver } from "../file";
+import { FileBase } from "../file";
+import type { Project } from "../project";
 
 /**
  * Fields to pass in the setup() function of setup.py

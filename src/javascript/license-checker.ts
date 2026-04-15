@@ -1,7 +1,7 @@
-import { Construct } from "constructs";
+import type { Construct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Task } from "../task";
+import type { Task } from "../task";
 
 /**
  * Options to configure the license checker

@@ -12,7 +12,8 @@
  * - CHANGELOG_FILE: Changelog to be used for tag annotation
  *
  */
-import { tag, TagOptions } from "./tag-version";
+import type { TagOptions } from "./tag-version";
+import { tag } from "./tag-version";
 
 const changelog = process.env.CHANGELOG;
 const releaseTagFile = process.env.RELEASE_TAG_FILE;

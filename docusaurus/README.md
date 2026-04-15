@@ -11,8 +11,8 @@ All documentation should be in the project's root `/docs` folder, and not in thi
 ## Running the docusaurus server
 
 ```bash
-npm ci
-npm run start
+pnpm install --frozen-lockfile
+pnpm run start
 ```
 
 ## Builds API docs
@@ -21,7 +21,7 @@ Generated API docs are committed to the repo, but if you've been making changes 
 reflected in the docs, you can generate them:
 
 ```bash
-$ npm run docgen
+$ pnpm run docgen
 ```
 
 This will generate the API docs in `docs/api`.

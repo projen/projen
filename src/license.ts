@@ -1,6 +1,7 @@
 import * as fs from "fs";
-import { FileBase, IResolver } from "./file";
-import { Project } from "./project";
+import type { IResolver } from "./file";
+import { FileBase } from "./file";
+import type { Project } from "./project";
 
 export interface LicenseOptions {
   /**

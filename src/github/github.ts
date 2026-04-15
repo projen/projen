@@ -1,17 +1,19 @@
 import { GitHubActionsProvider } from "./actions-provider";
-import { Dependabot, DependabotOptions } from "./dependabot";
+import type { DependabotOptions } from "./dependabot";
+import { Dependabot } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
-import { MergeQueue, MergeQueueOptions } from "./merge-queue";
-import { Mergify, MergifyOptions } from "./mergify";
+import type { MergeQueueOptions } from "./merge-queue";
+import { MergeQueue } from "./merge-queue";
+import type { MergifyOptions } from "./mergify";
+import { Mergify } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
-import {
-  PullRequestBackport,
-  PullRequestBackportOptions,
-} from "./pull-request-backport";
-import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import type { PullRequestBackportOptions } from "./pull-request-backport";
+import { PullRequestBackport } from "./pull-request-backport";
+import type { PullRequestLintOptions } from "./pull-request-lint";
+import { PullRequestLint } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 export interface GitHubOptions {
   /**

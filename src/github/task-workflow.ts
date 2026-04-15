@@ -1,8 +1,9 @@
-import { GitHub } from "./github";
-import { TaskWorkflowJob, TaskWorkflowJobOptions } from "./task-workflow-job";
+import type { GitHub } from "./github";
+import type { TaskWorkflowJobOptions } from "./task-workflow-job";
+import { TaskWorkflowJob } from "./task-workflow-job";
 import { GithubWorkflow } from "./workflows";
-import { Triggers } from "./workflows-model";
-import { Task } from "../task";
+import type { Triggers } from "./workflows-model";
+import type { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
 

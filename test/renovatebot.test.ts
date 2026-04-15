@@ -1,5 +1,5 @@
 import { synthSnapshot, TestProject } from "./util";
-import { DependencyType } from "../src";
+import { DependencyType, RenovatebotMinimumReleaseAgeBehaviour } from "../src";
 
 describe("renovatebot", () => {
   test("renovatebot: true creates renovatebot configuration", () => {
@@ -156,6 +156,42 @@ describe("renovatebot", () => {
     // THEN
     expect(snapshot).toMatchSnapshot();
     expect(snapshot).toStrictEqual(overrideConfig);
+  });
+
+  test("renovatebot: no minimumReleaseAge by default", () => {
+    const p = new TestProject({ renovatebot: true });
+    const snapshot = synthSnapshot(p);
+    expect(snapshot["renovate.json5"]).not.toHaveProperty("minimumReleaseAge");
+  });
+
+  test("renovatebot: sets minimumReleaseAge", () => {
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        minimumReleaseAge: "3 days",
+      },
+    });
+    const snapshot = synthSnapshot(p);
+    expect(snapshot["renovate.json5"]).toHaveProperty(
+      "minimumReleaseAge",
+      "3 days",
+    );
+  });
+
+  test("renovatebot: sets minimumReleaseAgeBehaviour", () => {
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        minimumReleaseAge: "3 days",
+        minimumReleaseAgeBehaviour:
+          RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_OPTIONAL,
+      },
+    });
+    const snapshot = synthSnapshot(p);
+    expect(snapshot["renovate.json5"]).toHaveProperty(
+      "minimumReleaseAgeBehaviour",
+      "timestamp-optional",
+    );
   });
 
   test("renovatebot: can use file escape hatch", () => {

@@ -26,6 +26,8 @@ export function tryProcessMacro(cwd: string, macro: string) {
       return resolveEmail(cwd);
     case "$PYTHON_MODULE_NAME":
       return formatAsPythonModule(basedir);
+    case "$PACKAGE_MANAGER":
+      return detectPackageManager();
   }
 
   return undefined;
@@ -44,4 +46,46 @@ function getFromGitConfig(cwd: string, key: string): string | undefined {
 
 function resolveEmail(cwd: string): string {
   return getFromGitConfig(cwd, "user.email") ?? "user@domain.com";
+}
+
+/**
+ * Detects the package manager used to run `projen new`.
+ *
+ * Uses `npm_config_user_agent` (e.g. "yarn/4.1.0 npm/? node/v20.0.0") to
+ * identify the package manager and version. Falls back to `npm_execpath` if
+ * the user agent is not set. Defaults to `npm` when detection fails.
+ *
+ * For yarn, the version determines classic (1.x) vs berry (>=2).
+ */
+function detectPackageManager(): string {
+  const userAgent = process.env.npm_config_user_agent ?? "";
+  const match = userAgent.match(/^(\w+)\/(\d+)/);
+  if (match) {
+    const [, name, major] = match;
+    if (name === "yarn") {
+      return Number(major) >= 2 ? "yarn_berry" : "yarn_classic";
+    }
+    if (name === "pnpm") {
+      return "pnpm";
+    }
+    if (name === "bun") {
+      return "bun";
+    }
+    if (name === "npm") {
+      return "npm";
+    }
+  }
+
+  // Fallback: check npm_execpath
+  const execPath = process.env.npm_execpath ?? "";
+  if (execPath.includes("yarn")) {
+    return "yarn_classic";
+  }
+  if (execPath.includes("pnpm")) {
+    return "pnpm";
+  }
+  if (execPath.includes("bun")) {
+    return "bun";
+  }
+  return "npm";
 }

@@ -22,7 +22,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -30,15 +30,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: false
       - name: Install dependencies
         run: npm ci
       - name: release
         run: node ./projen.js release
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           directory: coverage
           use_oidc: true
@@ -80,9 +81,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -102,13 +104,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: ${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Releases failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to GitHub Releases failed" --body "See $RUN_URL" --label "failed-release"
   release_npm:
     name: Publish to npm
     needs: release
@@ -120,9 +120,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 24.x
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -132,7 +133,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -159,13 +160,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: ${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to npm failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to npm failed" --body "See $RUN_URL" --label "failed-release"
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -180,9 +179,10 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -192,7 +192,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -221,13 +221,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: ${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to Maven Central failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to Maven Central failed" --body "See $RUN_URL" --label "failed-release"
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -239,9 +237,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -254,7 +253,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -278,13 +277,11 @@ jobs:
         shell: bash
       - name: Create Issue
         if: ${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to PyPI failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to PyPI failed" --body "See $RUN_URL" --label "failed-release"
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -295,9 +292,10 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
+          package-manager-cache: "false"
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
@@ -310,7 +308,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
@@ -336,10 +334,8 @@ jobs:
         shell: bash
       - name: Create Issue
         if: ${{ failure() }}
-        uses: imjohnbo/issue-bot@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Go Module Repository failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue create --title "Publishing v$VERSION to GitHub Go Module Repository failed" --body "See $RUN_URL" --label "failed-release"

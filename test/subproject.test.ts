@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 import { synthSnapshot, TestProject } from "./util";
-import { Project, TextFile, ProjectOptions, JsonFile, Component } from "../src";
+import type { ProjectOptions, Component } from "../src";
+import { Project, TextFile, JsonFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 import { GitHubProject } from "../src/github";
 

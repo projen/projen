@@ -380,6 +380,7 @@ new AiInstructionsFile(scope: IConstruct, filePath: string, options?: FileBaseOp
 | <code><a href="#projen.AiInstructionsFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructionsFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.AiInstructionsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.AiInstructionsFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.AiInstructionsFile.addInstructions">addInstructions</a></code> | Adds instructions to the instruction file. |
 
 ---
@@ -438,6 +439,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.AiInstructionsFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.AiInstructionsFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.AiInstructionsFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addInstructions` <a name="addInstructions" id="projen.AiInstructionsFile.addInstructions"></a>
 
@@ -855,6 +885,7 @@ The parent project.
 | <code><a href="#projen.Dependencies.getDependency">getDependency</a></code> | Returns a dependency by name. |
 | <code><a href="#projen.Dependencies.isDependencySatisfied">isDependencySatisfied</a></code> | Checks if an existing dependency satisfies a dependency requirement. |
 | <code><a href="#projen.Dependencies.removeDependency">removeDependency</a></code> | Removes a dependency. |
+| <code><a href="#projen.Dependencies.requestDependency">requestDependency</a></code> | Request a dependency. Unlike `addDependency`, this merges intelligently with existing dependencies of the same name and type:. |
 | <code><a href="#projen.Dependencies.tryGetDependency">tryGetDependency</a></code> | Returns a dependency by name. |
 
 ---
@@ -1030,6 +1061,29 @@ The dependency type.
 
 This is only required if there the
 dependency is defined for multiple types.
+
+---
+
+##### `requestDependency` <a name="requestDependency" id="projen.Dependencies.requestDependency"></a>
+
+```typescript
+public requestDependency(request: DependencyRequest): Dependency
+```
+
+Request a dependency. Unlike `addDependency`, this merges intelligently with existing dependencies of the same name and type:.
+
+If the dep exists with a version that already satisfies the request,
+  the version is not changed.
+- If the dep doesn't exist, it is added with the requested type/version.
+- If the dep exists but the versions don't intersect, an error is thrown.
+- If no type is provided, an existing dependency of any type will satisfy
+  the request. If none exists, it is added as BUILD.
+
+###### `request`<sup>Required</sup> <a name="request" id="projen.Dependencies.requestDependency.parameter.request"></a>
+
+- *Type:* <a href="#projen.DependencyRequest">DependencyRequest</a>
+
+The dependency request.
 
 ---
 
@@ -1626,6 +1680,7 @@ new FileBase(scope: IConstruct, filePath: string, options?: FileBaseOptions)
 | <code><a href="#projen.FileBase.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.FileBase.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.FileBase.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.FileBase.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
 ---
 
@@ -1683,6 +1738,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.FileBase.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.FileBase.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.FileBase.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -1899,6 +1983,7 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | <code><a href="#projen.GitAttributesFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.GitAttributesFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.GitAttributesFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.GitAttributesFile.addAttributes">addAttributes</a></code> | Maps a set of attributes to a set of files. |
 | <code><a href="#projen.GitAttributesFile.addLfsPattern">addLfsPattern</a></code> | Add attributes necessary to mark these files as stored in LFS. |
 | <code><a href="#projen.GitAttributesFile.removeAttributes">removeAttributes</a></code> | Removes attributes from a set of files. |
@@ -1959,6 +2044,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.GitAttributesFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.GitAttributesFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.GitAttributesFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addAttributes` <a name="addAttributes" id="projen.GitAttributesFile.addAttributes"></a>
 
@@ -2593,6 +2707,7 @@ the relative path in the project to put the file.
 | <code><a href="#projen.IgnoreFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IgnoreFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.IgnoreFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.IgnoreFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.IgnoreFile.addPatterns">addPatterns</a></code> | Add ignore patterns. |
 | <code><a href="#projen.IgnoreFile.exclude">exclude</a></code> | Ignore the files that match these patterns. |
 | <code><a href="#projen.IgnoreFile.include">include</a></code> | Always include the specified file patterns. |
@@ -2654,6 +2769,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.IgnoreFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.IgnoreFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.IgnoreFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addPatterns` <a name="addPatterns" id="projen.IgnoreFile.addPatterns"></a>
 
@@ -2970,6 +3114,7 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 | <code><a href="#projen.IniFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IniFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.IniFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.IniFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.IniFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.IniFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.IniFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -3031,6 +3176,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.IniFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.IniFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.IniFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.IniFile.addDeletionOverride"></a>
 
@@ -3436,6 +3610,7 @@ new JsonFile(scope: IConstruct, filePath: string, options: JsonFileOptions)
 | <code><a href="#projen.JsonFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.JsonFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.JsonFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.JsonFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.JsonFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.JsonFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.JsonFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -3497,6 +3672,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.JsonFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.JsonFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.JsonFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.JsonFile.addDeletionOverride"></a>
 
@@ -3904,6 +4108,7 @@ new License(project: Project, options: LicenseOptions)
 | <code><a href="#projen.License.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.License.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.License.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.License.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
 ---
 
@@ -3961,6 +4166,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.License.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.License.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.License.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -4482,6 +4716,7 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 | <code><a href="#projen.Makefile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Makefile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.Makefile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.Makefile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.Makefile.addAll">addAll</a></code> | Add a target to all. |
 | <code><a href="#projen.Makefile.addAlls">addAlls</a></code> | Add multiple targets to all. |
 | <code><a href="#projen.Makefile.addRule">addRule</a></code> | Add a rule to the Makefile. |
@@ -4543,6 +4778,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.Makefile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.Makefile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.Makefile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addAll` <a name="addAll" id="projen.Makefile.addAll"></a>
 
@@ -4833,6 +5097,7 @@ new ObjectFile(scope: IConstruct, filePath: string, options: ObjectFileOptions)
 | <code><a href="#projen.ObjectFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ObjectFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.ObjectFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.ObjectFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.ObjectFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.ObjectFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.ObjectFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -4894,6 +5159,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.ObjectFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.ObjectFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.ObjectFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.ObjectFile.addDeletionOverride"></a>
 
@@ -8544,6 +8838,7 @@ Options.
 | <code><a href="#projen.TextFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TextFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.TextFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.TextFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.TextFile.addLine">addLine</a></code> | Adds a line to the text file. |
 
 ---
@@ -8602,6 +8897,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.TextFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.TextFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.TextFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addLine` <a name="addLine" id="projen.TextFile.addLine"></a>
 
@@ -8839,6 +9163,7 @@ new TomlFile(scope: IConstruct, filePath: string, options: TomlFileOptions)
 | <code><a href="#projen.TomlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TomlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.TomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.TomlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.TomlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.TomlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.TomlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -8900,6 +9225,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.TomlFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.TomlFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.TomlFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.TomlFile.addDeletionOverride"></a>
 
@@ -9610,6 +9964,7 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 | <code><a href="#projen.XmlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.XmlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.XmlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.XmlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.XmlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.XmlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.XmlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -9671,6 +10026,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.XmlFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.XmlFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.XmlFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.XmlFile.addDeletionOverride"></a>
 
@@ -10076,6 +10460,7 @@ new YamlFile(scope: IConstruct, filePath: string, options: YamlFileOptions)
 | <code><a href="#projen.YamlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.YamlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.YamlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.YamlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.YamlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.YamlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.YamlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -10137,6 +10522,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.YamlFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.YamlFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.YamlFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.YamlFile.addDeletionOverride"></a>
 
@@ -10842,6 +11256,87 @@ public readonly version: string;
 - *Default:* requirement is managed by the package manager (e.g. npm/yarn).
 
 Semantic version version requirement.
+
+---
+
+### DependencyRequest <a name="DependencyRequest" id="projen.DependencyRequest"></a>
+
+A request for a dependency.
+
+Unlike adding a dependency directly,
+requesting a dependency will intelligently merge with existing
+dependencies of the same name and type.
+
+#### Initializer <a name="Initializer" id="projen.DependencyRequest.Initializer"></a>
+
+```typescript
+import { DependencyRequest } from 'projen'
+
+const dependencyRequest: DependencyRequest = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.DependencyRequest.property.name">name</a></code> | <code>string</code> | The package name. |
+| <code><a href="#projen.DependencyRequest.property.metadata">metadata</a></code> | <code>{[ key: string ]: any}</code> | Additional metadata. |
+| <code><a href="#projen.DependencyRequest.property.type">type</a></code> | <code><a href="#projen.DependencyType">DependencyType</a></code> | Dependency type. |
+| <code><a href="#projen.DependencyRequest.property.version">version</a></code> | <code>string</code> | Semantic version constraint. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.DependencyRequest.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The package name.
+
+---
+
+##### `metadata`<sup>Optional</sup> <a name="metadata" id="projen.DependencyRequest.property.metadata"></a>
+
+```typescript
+public readonly metadata: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* none
+
+Additional metadata.
+
+---
+
+##### `type`<sup>Optional</sup> <a name="type" id="projen.DependencyRequest.property.type"></a>
+
+```typescript
+public readonly type: DependencyType;
+```
+
+- *Type:* <a href="#projen.DependencyType">DependencyType</a>
+- *Default:* any existing type, or DependencyType.BUILD
+
+Dependency type.
+
+If not provided, an existing dependency of any type
+will satisfy the request. If none exists, it is added as BUILD.
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.DependencyRequest.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+- *Default:* any version
+
+Semantic version constraint.
 
 ---
 
@@ -13459,6 +13954,8 @@ const renovatebotOptions: RenovatebotOptions = { ... }
 | <code><a href="#projen.RenovatebotOptions.property.ignoreProjen">ignoreProjen</a></code> | <code>boolean</code> | Ignores updates to `projen`. |
 | <code><a href="#projen.RenovatebotOptions.property.labels">labels</a></code> | <code>string[]</code> | List of labels to apply to the created PR's. |
 | <code><a href="#projen.RenovatebotOptions.property.marker">marker</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.RenovatebotOptions.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>string</code> | Minimum release age for packages before Renovate will propose an update. |
+| <code><a href="#projen.RenovatebotOptions.property.minimumReleaseAgeBehaviour">minimumReleaseAgeBehaviour</a></code> | <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour">RenovatebotMinimumReleaseAgeBehaviour</a></code> | Controls whether a release timestamp is required when using `minimumReleaseAge`. |
 | <code><a href="#projen.RenovatebotOptions.property.overrideConfig">overrideConfig</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.RenovatebotOptions.property.scheduleInterval">scheduleInterval</a></code> | <code>string[]</code> | How often to check for new versions and raise pull requests. |
 
@@ -13516,6 +14013,39 @@ public readonly marker: boolean;
 ```
 
 - *Type:* boolean
+
+---
+
+##### `minimumReleaseAge`<sup>Optional</sup> <a name="minimumReleaseAge" id="projen.RenovatebotOptions.property.minimumReleaseAge"></a>
+
+```typescript
+public readonly minimumReleaseAge: string;
+```
+
+- *Type:* string
+- *Default:* no minimum release age
+
+Minimum release age for packages before Renovate will propose an update.
+
+This is a supply chain security feature to avoid updating to newly published,
+potentially malicious versions.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseage](https://docs.renovatebot.com/configuration-options/#minimumreleaseage)
+
+---
+
+##### `minimumReleaseAgeBehaviour`<sup>Optional</sup> <a name="minimumReleaseAgeBehaviour" id="projen.RenovatebotOptions.property.minimumReleaseAgeBehaviour"></a>
+
+```typescript
+public readonly minimumReleaseAgeBehaviour: RenovatebotMinimumReleaseAgeBehaviour;
+```
+
+- *Type:* <a href="#projen.RenovatebotMinimumReleaseAgeBehaviour">RenovatebotMinimumReleaseAgeBehaviour</a>
+- *Default:* RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED
+
+Controls whether a release timestamp is required when using `minimumReleaseAge`.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour](https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour)
 
 ---
 
@@ -16527,6 +17057,7 @@ new Task(name: string, props?: TaskOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Task.addCondition">addCondition</a></code> | Add a command to execute which determines if the task should be skipped. |
+| <code><a href="#projen.Task.addSteps">addSteps</a></code> | Adds steps to this task. |
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
@@ -16536,6 +17067,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
+| <code><a href="#projen.Task.prependSteps">prependSteps</a></code> | Adds steps at the beginning of this task. |
 | <code><a href="#projen.Task.removeStep">removeStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.reset">reset</a></code> | Reset the task so it no longer has any commands. |
 | <code><a href="#projen.Task.say">say</a></code> | Say something. |
@@ -16561,6 +17093,25 @@ If a condition already exists, the new condition will be appended with ` && ` de
 - *Type:* ...string[]
 
 The command to execute.
+
+---
+
+##### `addSteps` <a name="addSteps" id="projen.Task.addSteps"></a>
+
+```typescript
+public addSteps(steps: ...TaskStep[]): void
+```
+
+Adds steps to this task.
+
+This is a generic method that accepts any
+task step (exec, spawn, say, builtin).
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.addSteps.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to add.
 
 ---
 
@@ -16757,6 +17308,22 @@ The subtask to execute.
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.prependSpawn.parameter.options"></a>
 
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
+
+---
+
+##### `prependSteps` <a name="prependSteps" id="projen.Task.prependSteps"></a>
+
+```typescript
+public prependSteps(steps: ...TaskStep[]): void
+```
+
+Adds steps at the beginning of this task.
+
+###### `steps`<sup>Required</sup> <a name="steps" id="projen.Task.prependSteps.parameter.steps"></a>
+
+- *Type:* ...<a href="#projen.TaskStep">TaskStep</a>[]
+
+The steps to add.
 
 ---
 
@@ -17994,6 +18561,35 @@ This is an app (service, tool, website, etc).
 
 Its artifacts are intended to
 be deployed or published for end-user consumption.
+
+---
+
+
+### RenovatebotMinimumReleaseAgeBehaviour <a name="RenovatebotMinimumReleaseAgeBehaviour" id="projen.RenovatebotMinimumReleaseAgeBehaviour"></a>
+
+Behaviour when a release timestamp is missing for `minimumReleaseAge`.
+
+> [https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour](https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour)
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED">TIMESTAMP_REQUIRED</a></code> | A release without a timestamp is not treated as stable. |
+| <code><a href="#projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_OPTIONAL">TIMESTAMP_OPTIONAL</a></code> | A release without a timestamp is treated as stable. |
+
+---
+
+##### `TIMESTAMP_REQUIRED` <a name="TIMESTAMP_REQUIRED" id="projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED"></a>
+
+A release without a timestamp is not treated as stable.
+
+---
+
+
+##### `TIMESTAMP_OPTIONAL` <a name="TIMESTAMP_OPTIONAL" id="projen.RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_OPTIONAL"></a>
+
+A release without a timestamp is treated as stable.
 
 ---
 
