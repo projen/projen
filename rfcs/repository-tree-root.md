@@ -157,6 +157,19 @@ export interface GitHubRepositoryOptions extends GitRepositoryOptions {
    * @default - default options
    */
   readonly githubOptions?: GitHubOptions;
+
+  /**
+   * Enable GitHub Actions
+   * 
+   * @default true
+   */
+  readonly githubActions?: boolean;
+
+  /**
+   * Options for GitHub Actions
+   * @default - default options
+   */
+  readonly githubActionsOptions?: GitHubActionsOptions;
 }
 
 export class GitHubRepository extends GitRepository {
@@ -167,7 +180,11 @@ export class GitHubRepository extends GitRepository {
 
   constructor(options: GitHubRepositoryOptions) {
     super(options);
-    this.github = new GitHub(this, options.githubOptions);
+    this.github = new GitHub(this, {
+      options: options.githubOptions,
+      actions: options.githubActions ?? true,
+      actionOptions: options.githubActionOptions,
+    });
   }
 }
 ```
