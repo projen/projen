@@ -118,7 +118,7 @@ describe("task-workflow", () => {
   test("enabling submodule download adds the submodules property to workflows", () => {
     const project = new TestProject({
       githubOptions: {
-        downloadSubmodules: true,
+        checkoutSubmodules: true,
       },
     });
 
@@ -135,10 +135,10 @@ describe("task-workflow", () => {
     );
   });
 
-  test("downloadSubmodules: 'recursive' is preserved in the workflow", () => {
+  test("checkoutSubmodules: 'recursive' is preserved in the workflow", () => {
     const project = new TestProject({
       githubOptions: {
-        downloadSubmodules: "recursive",
+        checkoutSubmodules: "recursive",
       },
     });
 

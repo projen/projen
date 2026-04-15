@@ -577,8 +577,8 @@ export class UpgradeDependencies extends Component {
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
-      ...(github.downloadSubmodules
-        ? { submodules: github.downloadSubmodules }
+      ...(github.checkoutSubmodules
+        ? { submodules: github.checkoutSubmodules }
         : {}),
     };
 

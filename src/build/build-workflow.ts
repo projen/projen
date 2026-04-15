@@ -352,8 +352,8 @@ export class BuildWorkflow extends Component {
             ref: PULL_REQUEST_REF,
             repository: PULL_REQUEST_REPOSITORY,
             ...(this.github.downloadLfs ? { lfs: true } : {}),
-            ...(this.github.downloadSubmodules
-              ? { submodules: this.github.downloadSubmodules }
+            ...(this.github.checkoutSubmodules
+              ? { submodules: this.github.checkoutSubmodules }
               : {}),
           },
         }),
@@ -428,8 +428,8 @@ export class BuildWorkflow extends Component {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           ...(this.github.downloadLfs ? { lfs: true } : {}),
-          ...(this.github.downloadSubmodules
-            ? { submodules: this.github.downloadSubmodules }
+          ...(this.github.checkoutSubmodules
+            ? { submodules: this.github.checkoutSubmodules }
             : {}),
         },
       }),

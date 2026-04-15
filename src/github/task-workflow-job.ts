@@ -123,7 +123,7 @@ export interface TaskWorkflowJobOptions {
    *
    * @default - Use the setting on the corresponding GitHub project
    */
-  readonly downloadSubmodules?: boolean | "recursive";
+  readonly checkoutSubmodules?: boolean | "recursive";
 
   /**
    * Default settings for all steps in the TaskWorkflow Job.
@@ -177,8 +177,8 @@ export class TaskWorkflowJob extends Component {
     if (options.downloadLfs) {
       checkoutWith.lfs = true;
     }
-    if (options.downloadSubmodules) {
-      checkoutWith.submodules = options.downloadSubmodules;
+    if (options.checkoutSubmodules) {
+      checkoutWith.submodules = options.checkoutSubmodules;
     }
     // 'checkoutWith' can override 'lfs' and 'submodules'
     Object.assign(checkoutWith, options.checkoutWith ?? {});
