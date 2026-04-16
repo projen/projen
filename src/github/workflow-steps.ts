@@ -189,8 +189,8 @@ export interface CheckoutWith {
   readonly lfs?: boolean;
 
   /**
-   * Whether to checkout Git submodules. Pass `true` to clone only the
-   * top-level submodules, or `"recursive"` to clone submodules recursively.
+   * Whether to checkout Git submodules. Pass `true` to checkout only the
+   * top-level submodules, or `"recursive"` to checkout submodules recursively.
    *
    * @default false
    */

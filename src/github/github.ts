@@ -132,9 +132,8 @@ export interface GitHubOptions {
   readonly dependencyReviewOptions?: DependencyReviewOptions;
 
   /**
-   * Whether to checkout Git submodules in workflows. Pass `true` to clone
-   * only the top-level submodules, or `"recursive"` to clone submodules
-   * recursively.
+   * Whether to checkout Git submodules. Pass `true` to checkout only the
+   * top-level submodules, or `"recursive"` to checkout submodules recursively.
    *
    * @default false
    */

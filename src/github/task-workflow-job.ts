@@ -117,9 +117,8 @@ export interface TaskWorkflowJobOptions {
   readonly downloadLfs?: boolean;
 
   /**
-   * Whether to checkout Git submodules for this workflow. Pass `true` to
-   * clone only the top-level submodules, or `"recursive"` for nested
-   * submodules.
+   * Whether to checkout Git submodules. Pass `true` to checkout only the
+   * top-level submodules, or `"recursive"` to checkout submodules recursively.
    *
    * @default - Use the setting on the corresponding GitHub project
    */
