@@ -591,6 +591,18 @@ export class NodeProject extends GitHubProject {
   constructor(options: NodeProjectOptions) {
     super({
       ...options,
+      githubOptions: {
+        ...options.githubOptions,
+        ...(options.githubOptions?.dependencyReview
+          ? {
+              dependencyReviewOptions: {
+                failOnSeverity: options.auditDepsOptions?.level,
+                allowLicenses: options.checkLicenses?.allow,
+                ...options.githubOptions?.dependencyReviewOptions,
+              },
+            }
+          : {}),
+      },
       projenCommand:
         options.projenCommand ?? execCommand(options.packageManager, "projen"),
     });

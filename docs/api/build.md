@@ -272,6 +272,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.build.BuildWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.build.BuildWorkflow.property.buildJobIds">buildJobIds</a></code> | <code>string[]</code> | Returns a list of job IDs that are part of the build. |
 | <code><a href="#projen.build.BuildWorkflow.property.name">name</a></code> | <code>string</code> | Name of generated github workflow. |
+| <code><a href="#projen.build.BuildWorkflow.property.workflow">workflow</a></code> | <code>projen.github.GithubWorkflow</code> | The underlying GitHub Actions workflow. |
 
 ---
 
@@ -318,6 +319,18 @@ public readonly name: string;
 - *Type:* string
 
 Name of generated github workflow.
+
+---
+
+##### `workflow`<sup>Required</sup> <a name="workflow" id="projen.build.BuildWorkflow.property.workflow"></a>
+
+```typescript
+public readonly workflow: GithubWorkflow;
+```
+
+- *Type:* projen.github.GithubWorkflow
+
+The underlying GitHub Actions workflow.
 
 ---
 
@@ -486,11 +499,51 @@ const buildWorkflowCommonOptions: build.BuildWorkflowCommonOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable GitHub's dependency-review-action on pull requests. |
+| <code><a href="#projen.build.BuildWorkflowCommonOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code>projen.github.DependencyReviewOptions</code> | Options for the dependency review action. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.build.BuildWorkflowCommonOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
+
+---
+
+##### `dependencyReview`<sup>Optional</sup> <a name="dependencyReview" id="projen.build.BuildWorkflowCommonOptions.property.dependencyReview"></a>
+
+```typescript
+public readonly dependencyReview: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable GitHub's dependency-review-action on pull requests.
+
+When enabled, adds a separate job to the build workflow that runs
+`actions/dependency-review-action` to scan pull requests for newly
+introduced vulnerable or non-compliant dependencies. The job runs
+independently of the build job (not as a post-build step) and will
+cause the workflow to fail if policy violations are detected.
+
+For `NodeProject`, `failOnSeverity` is automatically populated from
+`auditDepsOptions.level` and `allowLicenses` from `checkLicenses.allow`
+unless explicitly overridden in `dependencyReviewOptions`.
+
+---
+
+##### `dependencyReviewOptions`<sup>Optional</sup> <a name="dependencyReviewOptions" id="projen.build.BuildWorkflowCommonOptions.property.dependencyReviewOptions"></a>
+
+```typescript
+public readonly dependencyReviewOptions: DependencyReviewOptions;
+```
+
+- *Type:* projen.github.DependencyReviewOptions
+- *Default:* default options
+
+Options for the dependency review action.
+
+Only used when `dependencyReview` is `true`.
 
 ---
 
@@ -573,6 +626,8 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable GitHub's dependency-review-action on pull requests. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code>projen.github.DependencyReviewOptions</code> | Options for the dependency review action. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Build environment variables. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.name">name</a></code> | <code>string</code> | Name of the buildfile (e.g. "build" becomes "build.yml"). |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
@@ -587,6 +642,44 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+
+---
+
+##### `dependencyReview`<sup>Optional</sup> <a name="dependencyReview" id="projen.build.BuildWorkflowOptions.property.dependencyReview"></a>
+
+```typescript
+public readonly dependencyReview: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable GitHub's dependency-review-action on pull requests.
+
+When enabled, adds a separate job to the build workflow that runs
+`actions/dependency-review-action` to scan pull requests for newly
+introduced vulnerable or non-compliant dependencies. The job runs
+independently of the build job (not as a post-build step) and will
+cause the workflow to fail if policy violations are detected.
+
+For `NodeProject`, `failOnSeverity` is automatically populated from
+`auditDepsOptions.level` and `allowLicenses` from `checkLicenses.allow`
+unless explicitly overridden in `dependencyReviewOptions`.
+
+---
+
+##### `dependencyReviewOptions`<sup>Optional</sup> <a name="dependencyReviewOptions" id="projen.build.BuildWorkflowOptions.property.dependencyReviewOptions"></a>
+
+```typescript
+public readonly dependencyReviewOptions: DependencyReviewOptions;
+```
+
+- *Type:* projen.github.DependencyReviewOptions
+- *Default:* default options
+
+Options for the dependency review action.
+
+Only used when `dependencyReview` is `true`.
 
 ---
 

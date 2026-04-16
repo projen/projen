@@ -1,6 +1,8 @@
 import { GitHubActionsProvider } from "./actions-provider";
 import type { DependabotOptions } from "./dependabot";
 import { Dependabot } from "./dependabot";
+import type { DependencyReviewOptions } from "./dependency-review";
+import { DependencyReview } from "./dependency-review";
 import { GithubCredentials } from "./github-credentials";
 import type { MergeQueueOptions } from "./merge-queue";
 import { MergeQueue } from "./merge-queue";
@@ -108,6 +110,26 @@ export interface GitHubOptions {
    * @default true if the associated project has `lfsPatterns`, `false` otherwise
    */
   readonly downloadLfs?: boolean;
+
+  /**
+   * Enable the dependency-review-action workflow on pull requests.
+   *
+   * Adds a separate workflow that runs `actions/dependency-review-action`
+   * to scan pull requests for newly introduced vulnerable or non-compliant
+   * dependencies.
+   *
+   * @default false
+   */
+  readonly dependencyReview?: boolean;
+
+  /**
+   * Options for the dependency review workflow.
+   *
+   * Only used when `dependencyReview` is `true`.
+   *
+   * @default - default options
+   */
+  readonly dependencyReviewOptions?: DependencyReviewOptions;
 }
 
 export class GitHub extends Component {
@@ -197,6 +219,10 @@ export class GitHub extends Component {
         );
       }
       new PullRequestBackport(this, options.pullRequestBackportOptions);
+    }
+
+    if (options.dependencyReview ?? false) {
+      new DependencyReview(this, options.dependencyReviewOptions);
     }
   }
 

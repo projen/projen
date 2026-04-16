@@ -885,6 +885,207 @@ Whether or not projen is also upgraded in this config,.
 ---
 
 
+### DependencyReview <a name="DependencyReview" id="projen.github.DependencyReview"></a>
+
+Adds a GitHub Actions job that runs the dependency-review-action on PRs.
+
+This action scans pull requests for dependency changes and raises an error
+if any vulnerabilities or invalid licenses are introduced.
+
+When the project also uses `checkLicenses` or `auditDeps`, the relevant
+settings are automatically forwarded so that both local and PR-level checks
+stay in sync.
+
+#### Initializers <a name="Initializers" id="projen.github.DependencyReview.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.DependencyReview(github: GitHub, buildWorkflow: BuildWorkflow, options?: DependencyReviewOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReview.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
+| <code><a href="#projen.github.DependencyReview.Initializer.parameter.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | *No description.* |
+| <code><a href="#projen.github.DependencyReview.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | *No description.* |
+
+---
+
+##### `github`<sup>Required</sup> <a name="github" id="projen.github.DependencyReview.Initializer.parameter.github"></a>
+
+- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+
+---
+
+##### `buildWorkflow`<sup>Required</sup> <a name="buildWorkflow" id="projen.github.DependencyReview.Initializer.parameter.buildWorkflow"></a>
+
+- *Type:* projen.build.BuildWorkflow
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.DependencyReview.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependencyReview.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.DependencyReview.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.DependencyReview.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.DependencyReview.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.DependencyReview.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.DependencyReview.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.github.DependencyReview.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.github.DependencyReview.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.DependencyReview.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.DependencyReview.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.github.DependencyReview.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependencyReview.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.DependencyReview.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.DependencyReview.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.DependencyReview.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.DependencyReview.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.DependencyReview.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.DependencyReview.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.DependencyReview.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReview.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.DependencyReview.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.DependencyReview.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.DependencyReview.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+
 ### GitHub <a name="GitHub" id="projen.github.GitHub"></a>
 
 #### Initializers <a name="Initializers" id="projen.github.GitHub.Initializer"></a>
@@ -6520,6 +6721,220 @@ public readonly username: string;
 - *Default:* do not authenticate
 
 The username that Dependabot uses to access the registry.
+
+---
+
+### DependencyReviewOptions <a name="DependencyReviewOptions" id="projen.github.DependencyReviewOptions"></a>
+
+Options for the DependencyReview component.
+
+#### Initializer <a name="Initializer" id="projen.github.DependencyReviewOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const dependencyReviewOptions: github.DependencyReviewOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReviewOptions.property.allowGhsas">allowGhsas</a></code> | <code>string[]</code> | GitHub Advisory Database IDs that can be skipped during detection. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.allowLicenses">allowLicenses</a></code> | <code>string[]</code> | List of allowed SPDX license identifiers. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.commentSummaryInPr">commentSummaryInPr</a></code> | <code>string</code> | Whether to post a comment summary on the PR. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.configFile">configFile</a></code> | <code>string</code> | Path to an external configuration file. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.denyPackages">denyPackages</a></code> | <code>string[]</code> | Packages to block in a PR (in purl format). |
+| <code><a href="#projen.github.DependencyReviewOptions.property.failOnScopes">failOnScopes</a></code> | <code>string[]</code> | Scopes of dependencies to fail on. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.failOnSeverity">failOnSeverity</a></code> | <code>string</code> | The severity level at which the action will fail. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.licenseCheck">licenseCheck</a></code> | <code>boolean</code> | Enable or disable the license check. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.showOpenSSFScorecard">showOpenSSFScorecard</a></code> | <code>boolean</code> | Show OpenSSF Scorecard scores for dependencies. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.vulnerabilityCheck">vulnerabilityCheck</a></code> | <code>boolean</code> | Enable or disable the vulnerability check. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.warnOnly">warnOnly</a></code> | <code>boolean</code> | When true, the action will only warn and not fail. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.warnOnOpenSSFScorecardLevel">warnOnOpenSSFScorecardLevel</a></code> | <code>number</code> | Score threshold for OpenSSF Scorecard warnings. |
+
+---
+
+##### `allowGhsas`<sup>Optional</sup> <a name="allowGhsas" id="projen.github.DependencyReviewOptions.property.allowGhsas"></a>
+
+```typescript
+public readonly allowGhsas: string[];
+```
+
+- *Type:* string[]
+- *Default:* no advisories are skipped
+
+GitHub Advisory Database IDs that can be skipped during detection.
+
+---
+
+##### `allowLicenses`<sup>Optional</sup> <a name="allowLicenses" id="projen.github.DependencyReviewOptions.property.allowLicenses"></a>
+
+```typescript
+public readonly allowLicenses: string[];
+```
+
+- *Type:* string[]
+- *Default:* no license allow-list
+
+List of allowed SPDX license identifiers.
+
+---
+
+##### `commentSummaryInPr`<sup>Optional</sup> <a name="commentSummaryInPr" id="projen.github.DependencyReviewOptions.property.commentSummaryInPr"></a>
+
+```typescript
+public readonly commentSummaryInPr: string;
+```
+
+- *Type:* string
+- *Default:* "always"
+
+Whether to post a comment summary on the PR.
+
+---
+
+##### `configFile`<sup>Optional</sup> <a name="configFile" id="projen.github.DependencyReviewOptions.property.configFile"></a>
+
+```typescript
+public readonly configFile: string;
+```
+
+- *Type:* string
+- *Default:* no external config
+
+Path to an external configuration file.
+
+---
+
+##### `denyPackages`<sup>Optional</sup> <a name="denyPackages" id="projen.github.DependencyReviewOptions.property.denyPackages"></a>
+
+```typescript
+public readonly denyPackages: string[];
+```
+
+- *Type:* string[]
+- *Default:* no packages are denied
+
+Packages to block in a PR (in purl format).
+
+---
+
+##### `failOnScopes`<sup>Optional</sup> <a name="failOnScopes" id="projen.github.DependencyReviewOptions.property.failOnScopes"></a>
+
+```typescript
+public readonly failOnScopes: string[];
+```
+
+- *Type:* string[]
+- *Default:* no scopes filter (action default is "runtime")
+
+Scopes of dependencies to fail on.
+
+---
+
+##### `failOnSeverity`<sup>Optional</sup> <a name="failOnSeverity" id="projen.github.DependencyReviewOptions.property.failOnSeverity"></a>
+
+```typescript
+public readonly failOnSeverity: string;
+```
+
+- *Type:* string
+- *Default:* no minimum severity (action default is "low")
+
+The severity level at which the action will fail.
+
+---
+
+##### `licenseCheck`<sup>Optional</sup> <a name="licenseCheck" id="projen.github.DependencyReviewOptions.property.licenseCheck"></a>
+
+```typescript
+public readonly licenseCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable or disable the license check.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.DependencyReviewOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.DependencyReviewOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
+
+---
+
+##### `showOpenSSFScorecard`<sup>Optional</sup> <a name="showOpenSSFScorecard" id="projen.github.DependencyReviewOptions.property.showOpenSSFScorecard"></a>
+
+```typescript
+public readonly showOpenSSFScorecard: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Show OpenSSF Scorecard scores for dependencies.
+
+---
+
+##### `vulnerabilityCheck`<sup>Optional</sup> <a name="vulnerabilityCheck" id="projen.github.DependencyReviewOptions.property.vulnerabilityCheck"></a>
+
+```typescript
+public readonly vulnerabilityCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable or disable the vulnerability check.
+
+---
+
+##### `warnOnly`<sup>Optional</sup> <a name="warnOnly" id="projen.github.DependencyReviewOptions.property.warnOnly"></a>
+
+```typescript
+public readonly warnOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+When true, the action will only warn and not fail.
+
+---
+
+##### `warnOnOpenSSFScorecardLevel`<sup>Optional</sup> <a name="warnOnOpenSSFScorecardLevel" id="projen.github.DependencyReviewOptions.property.warnOnOpenSSFScorecardLevel"></a>
+
+```typescript
+public readonly warnOnOpenSSFScorecardLevel: number;
+```
+
+- *Type:* number
+- *Default:* 3
+
+Score threshold for OpenSSF Scorecard warnings.
 
 ---
 

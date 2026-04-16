@@ -148,12 +148,16 @@ export class BuildWorkflow extends Component {
    */
   public readonly name: string;
 
+  /**
+   * The underlying GitHub Actions workflow
+   */
+  public readonly workflow: GithubWorkflow;
+
   private readonly postBuildSteps: JobStep[];
   private readonly preBuildSteps: JobStep[];
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
   private readonly github: GitHub;
-  private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
 
   private readonly _postBuildJobs: string[] = [];

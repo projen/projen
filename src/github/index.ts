@@ -1,6 +1,7 @@
 export * from "./github";
 
 export * from "./dependabot";
+export * from "./dependency-review";
 export * from "./workflows";
 export * from "./actions-provider";
 export * from "./mergify";

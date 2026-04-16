@@ -133,13 +133,32 @@
           "path": ".github/workflows/pull-request-lint.yml"
         }
       },
-      "VsCode#AutoId6": {
+      "DependencyReview#AutoId6": {
+        "metadata": {
+          "type": "component",
+          "construct": "DependencyReview"
+        }
+      },
+      "GithubWorkflow#dependency-review": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--dependency-review.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/dependency-review.yml"
+        }
+      },
+      "VsCode#AutoId7": {
         "metadata": {
           "type": "component",
           "construct": "VsCode"
         }
       },
-      "Gitpod#AutoId7": {
+      "Gitpod#AutoId8": {
         "metadata": {
           "type": "component",
           "construct": "Gitpod"
@@ -152,7 +171,7 @@
           "path": ".gitpod.yml"
         }
       },
-      "DevContainer#AutoId8": {
+      "DevContainer#AutoId9": {
         "metadata": {
           "type": "component",
           "construct": "DevContainer"
@@ -165,19 +184,19 @@
           "path": ".devcontainer.json"
         }
       },
-      "Clobber#AutoId9": {
+      "Clobber#AutoId10": {
         "metadata": {
           "type": "component",
           "construct": "Clobber"
         }
       },
-      "SampleReadme#AutoId10": {
+      "SampleReadme#AutoId11": {
         "metadata": {
           "type": "component",
           "construct": "SampleReadme"
         }
       },
-      "AutoApprove#AutoId11": {
+      "AutoApprove#AutoId12": {
         "metadata": {
           "type": "component",
           "construct": "AutoApprove"
@@ -196,7 +215,7 @@
           "path": ".github/workflows/auto-approve.yml"
         }
       },
-      "NodePackage#AutoId12": {
+      "NodePackage#AutoId13": {
         "metadata": {
           "type": "component",
           "construct": "NodePackage"
@@ -225,13 +244,13 @@
           "path": ".npmignore"
         }
       },
-      "Jest#AutoId13": {
+      "Jest#AutoId14": {
         "metadata": {
           "type": "component",
           "construct": "Jest"
         }
       },
-      "BuildWorkflow#AutoId14": {
+      "BuildWorkflow#AutoId15": {
         "metadata": {
           "type": "component",
           "construct": "BuildWorkflow"
@@ -250,7 +269,7 @@
           "path": ".github/workflows/build.yml"
         }
       },
-      "Release#AutoId15": {
+      "Release#AutoId16": {
         "metadata": {
           "type": "component",
           "construct": "Release"
@@ -264,13 +283,13 @@
           }
         }
       },
-      "Version#AutoId16": {
+      "Version#AutoId17": {
         "metadata": {
           "type": "component",
           "construct": "Version"
         }
       },
-      "Publisher#AutoId17": {
+      "Publisher#AutoId18": {
         "metadata": {
           "type": "component",
           "construct": "Publisher"
@@ -296,13 +315,13 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Bundler#AutoId18": {
+      "Bundler#AutoId19": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId19": {
+      "Prettier#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -328,7 +347,7 @@
           "construct": "LicenseChecker"
         }
       },
-      "TypescriptConfig#AutoId20": {
+      "TypescriptConfig#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -341,7 +360,7 @@
           "path": "tsconfig.dev.json"
         }
       },
-      "Eslint#AutoId21": {
+      "Eslint#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -354,22 +373,16 @@
           "path": ".eslintrc.json"
         }
       },
-      "Projenrc#AutoId22": {
+      "Projenrc#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "SampleCode#AutoId23": {
+      "SampleCode#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
-        }
-      },
-      "SampleDir#AutoId24": {
-        "metadata": {
-          "type": "component",
-          "construct": "SampleDir"
         }
       },
       "SampleDir#AutoId25": {
@@ -378,7 +391,13 @@
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId26": {
+      "SampleDir#AutoId26": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleDir"
+        }
+      },
+      "JsiiDocgen#AutoId27": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -405,7 +424,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId27": {
+      "UpgradeDependencies#AutoId28": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -424,7 +443,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId28": {
+      "UpgradeDependencies#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -457,7 +476,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId29": {
+      "VsCodeLaunchConfig#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -470,7 +489,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId30": {
+      "IntegrationTests#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -523,7 +542,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId31": {
+      "AiInstructions#AutoId32": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"

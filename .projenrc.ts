@@ -57,6 +57,10 @@ const project = new JsiiProject({
         exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
       },
     },
+    dependencyReview: true,
+    dependencyReviewOptions: {
+      warnOnly: true,
+    },
   },
 
   jsiiVersion: "5.9.x",
@@ -181,7 +185,6 @@ const project = new JsiiProject({
     allow: [
       "MIT",
       "ISC",
-      "BSD",
       "BSD-2-Clause",
       "BSD-3-Clause",
       "Apache-2.0",

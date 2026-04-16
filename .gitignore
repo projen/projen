@@ -6,6 +6,7 @@
 !/.projen/files.json
 !/.github/workflows/auto-queue.yml
 !/.github/workflows/pull-request-lint.yml
+!/.github/workflows/dependency-review.yml
 !/.gitpod.yml
 !/.devcontainer.json
 !/.github/workflows/auto-approve.yml
