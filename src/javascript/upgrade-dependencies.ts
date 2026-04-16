@@ -457,7 +457,7 @@ export class UpgradeDependencies extends Component {
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
         // Yarn Berry cooldown set via task env
-        lazy = upgradePackages("yarn up");
+        lazy = upgradePackages("yarn up -R");
         break;
       case NodePackageManager.NPM:
         // npm cooldown set via NPM_CONFIG_BEFORE env

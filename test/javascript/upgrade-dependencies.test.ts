@@ -548,6 +548,10 @@ test("uses the proper yarn berry upgrade command", () => {
     CI: "0",
     YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
   });
+  // yarn berry must use -R flag, otherwise packages will be updated to latest regardless of what's in the package manifest
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(
+    "yarn up -R commit-and-tag-version constructs jest jest-junit projen",
+  );
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
    [
      {
@@ -557,7 +561,7 @@ test("uses the proper yarn berry upgrade command", () => {
        "exec": "yarn install --no-immutable",
      },
      {
-       "exec": "yarn up commit-and-tag-version constructs jest jest-junit projen",
+       "exec": "yarn up -R commit-and-tag-version constructs jest jest-junit projen",
      },
      {
        "exec": "yarn projen",
