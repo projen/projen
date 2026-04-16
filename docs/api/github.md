@@ -887,27 +887,24 @@ Whether or not projen is also upgraded in this config,.
 
 ### DependencyReview <a name="DependencyReview" id="projen.github.DependencyReview"></a>
 
-Adds a GitHub Actions job that runs the dependency-review-action on PRs.
+Adds a GitHub workflow that runs the dependency-review-action on pull requests.
 
 This action scans pull requests for dependency changes and raises an error
 if any vulnerabilities or invalid licenses are introduced.
 
-When the project also uses `checkLicenses` or `auditDeps`, the relevant
-settings are automatically forwarded so that both local and PR-level checks
-stay in sync.
+> [https://github.com/actions/dependency-review-action](https://github.com/actions/dependency-review-action)
 
 #### Initializers <a name="Initializers" id="projen.github.DependencyReview.Initializer"></a>
 
 ```typescript
 import { github } from 'projen'
 
-new github.DependencyReview(github: GitHub, buildWorkflow: BuildWorkflow, options?: DependencyReviewOptions)
+new github.DependencyReview(github: GitHub, options?: DependencyReviewOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.DependencyReview.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
-| <code><a href="#projen.github.DependencyReview.Initializer.parameter.buildWorkflow">buildWorkflow</a></code> | <code>projen.build.BuildWorkflow</code> | *No description.* |
 | <code><a href="#projen.github.DependencyReview.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | *No description.* |
 
 ---
@@ -915,12 +912,6 @@ new github.DependencyReview(github: GitHub, buildWorkflow: BuildWorkflow, option
 ##### `github`<sup>Required</sup> <a name="github" id="projen.github.DependencyReview.Initializer.parameter.github"></a>
 
 - *Type:* <a href="#projen.github.GitHub">GitHub</a>
-
----
-
-##### `buildWorkflow`<sup>Required</sup> <a name="buildWorkflow" id="projen.github.DependencyReview.Initializer.parameter.buildWorkflow"></a>
-
-- *Type:* projen.build.BuildWorkflow
 
 ---
 
@@ -7375,6 +7366,8 @@ const gitHubOptions: github.GitHubOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.GitHubOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable the dependency-review-action workflow on pull requests. |
+| <code><a href="#projen.github.GitHubOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | Options for the dependency review workflow. |
 | <code><a href="#projen.github.GitHubOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Download files in LFS in workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueue">mergeQueue</a></code> | <code>boolean</code> | Whether a merge queue should be used on this repository to merge pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueueOptions">mergeQueueOptions</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | Options for MergeQueue. |
@@ -7387,6 +7380,38 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLint">pullRequestLint</a></code> | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLintOptions">pullRequestLintOptions</a></code> | <code><a href="#projen.github.PullRequestLintOptions">PullRequestLintOptions</a></code> | Options for configuring a pull request linter. |
 | <code><a href="#projen.github.GitHubOptions.property.workflows">workflows</a></code> | <code>boolean</code> | Enables GitHub workflows. |
+
+---
+
+##### `dependencyReview`<sup>Optional</sup> <a name="dependencyReview" id="projen.github.GitHubOptions.property.dependencyReview"></a>
+
+```typescript
+public readonly dependencyReview: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable the dependency-review-action workflow on pull requests.
+
+Adds a separate workflow that runs `actions/dependency-review-action`
+to scan pull requests for newly introduced vulnerable or non-compliant
+dependencies.
+
+---
+
+##### `dependencyReviewOptions`<sup>Optional</sup> <a name="dependencyReviewOptions" id="projen.github.GitHubOptions.property.dependencyReviewOptions"></a>
+
+```typescript
+public readonly dependencyReviewOptions: DependencyReviewOptions;
+```
+
+- *Type:* <a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a>
+- *Default:* default options
+
+Options for the dependency review workflow.
+
+Only used when `dependencyReview` is `true`.
 
 ---
 
