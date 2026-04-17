@@ -13,6 +13,7 @@ import type { PullRequestBackportOptions } from "./pull-request-backport";
 import { PullRequestBackport } from "./pull-request-backport";
 import type { PullRequestLintOptions } from "./pull-request-lint";
 import { PullRequestLint } from "./pull-request-lint";
+import { CheckoutSubmodules } from "./workflow-steps";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
 import type { Project } from "../project";
@@ -132,12 +133,11 @@ export interface GitHubOptions {
   readonly dependencyReviewOptions?: DependencyReviewOptions;
 
   /**
-   * Whether to checkout Git submodules. Pass `true` to checkout only the
-   * top-level submodules, or `"recursive"` to checkout submodules recursively.
+   * Whether to checkout Git submodules.
    *
-   * @default false
+   * @default CheckoutSubmodules.DISABLED
    */
-  readonly checkoutSubmodules?: boolean | "recursive";
+  readonly checkoutSubmodules?: CheckoutSubmodules;
 }
 
 export class GitHub extends Component {
@@ -178,7 +178,7 @@ export class GitHub extends Component {
   public readonly actions: GitHubActionsProvider;
 
   private readonly _downloadLfs?: boolean;
-  private readonly _checkoutSubmodules?: boolean | "recursive";
+  private readonly _checkoutSubmodules?: CheckoutSubmodules;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
@@ -282,9 +282,8 @@ export class GitHub extends Component {
 
   /**
    * Whether checking out Git submodules is enabled for this GitHub project.
-   * Returns `false` (default), `true` (top-level submodules), or `"recursive"`.
    */
-  public get checkoutSubmodules(): boolean | "recursive" {
-    return this._checkoutSubmodules ?? false;
+  public get checkoutSubmodules(): CheckoutSubmodules {
+    return this._checkoutSubmodules ?? CheckoutSubmodules.DISABLED;
   }
 }

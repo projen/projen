@@ -2,7 +2,12 @@ import * as posixPath from "node:path/posix";
 import type { Task } from "..";
 import { Component } from "../component";
 import type { GitIdentity, workflows } from "../github";
-import { GitHub, GithubWorkflow, WorkflowSteps } from "../github";
+import {
+  CheckoutSubmodules,
+  GitHub,
+  GithubWorkflow,
+  WorkflowSteps,
+} from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -352,7 +357,7 @@ export class BuildWorkflow extends Component {
             ref: PULL_REQUEST_REF,
             repository: PULL_REQUEST_REPOSITORY,
             ...(this.github.downloadLfs ? { lfs: true } : {}),
-            ...(this.github.checkoutSubmodules
+            ...(this.github.checkoutSubmodules !== CheckoutSubmodules.DISABLED
               ? { submodules: this.github.checkoutSubmodules }
               : {}),
           },

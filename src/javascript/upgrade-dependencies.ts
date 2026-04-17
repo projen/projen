@@ -6,7 +6,12 @@ import type {
   GitIdentity,
   workflows,
 } from "../github";
-import { GitHub, WorkflowJobs, WorkflowSteps } from "../github";
+import {
+  CheckoutSubmodules,
+  GitHub,
+  WorkflowJobs,
+  WorkflowSteps,
+} from "../github";
 import {
   isYarnClassic,
   isYarnBerry,
@@ -577,7 +582,7 @@ export class UpgradeDependencies extends Component {
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
-      ...(github.checkoutSubmodules
+      ...(github.checkoutSubmodules !== CheckoutSubmodules.DISABLED
         ? { submodules: github.checkoutSubmodules }
         : {}),
     };

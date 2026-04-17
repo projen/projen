@@ -1,5 +1,6 @@
 import * as yaml from "yaml";
 import { TaskWorkflow } from "../../src/github/task-workflow";
+import { CheckoutSubmodules } from "../../src/github/workflow-steps";
 import { Task } from "../../src/task";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -118,7 +119,7 @@ describe("task-workflow", () => {
   test("enabling submodule download adds the submodules property to workflows", () => {
     const project = new TestProject({
       githubOptions: {
-        checkoutSubmodules: true,
+        checkoutSubmodules: CheckoutSubmodules.ENABLED,
       },
     });
 
@@ -138,7 +139,7 @@ describe("task-workflow", () => {
   test("checkoutSubmodules: 'recursive' is preserved in the workflow", () => {
     const project = new TestProject({
       githubOptions: {
-        checkoutSubmodules: "recursive",
+        checkoutSubmodules: CheckoutSubmodules.RECURSIVE,
       },
     });
 
