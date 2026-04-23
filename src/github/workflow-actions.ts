@@ -132,17 +132,19 @@ export class WorkflowActions {
         id: stepId,
         uses: "peter-evans/create-pull-request@v8",
         with: {
-          token: options.credentials?.tokenRef,
-          "commit-message": `${title}\n\n${description}`,
-          branch: branchName,
-          base: options.baseBranch,
-          title: title,
-          labels: options.labels?.join(",") || undefined,
+          "add-paths": options.addPaths?.join("\n") || undefined,
           assignees: options.assignees?.join(",") || undefined,
-          body: description,
           author: committer,
+          base: options.baseBranch,
+          body: description,
+          branch: branchName,
+          "commit-message": `${title}\n\n${description}`,
           committer: committer,
+          "delete-branch": options.deleteBranch ?? undefined,
+          labels: options.labels?.join(",") || undefined,
           signoff: options.signoff ?? true,
+          title: title,
+          token: options.credentials?.tokenRef,
         },
       },
     ];
@@ -256,6 +258,21 @@ export interface CreatePullRequestOptions {
    * @default `github-actions/${options.workflowName}`
    */
   readonly branchName?: string;
+
+  /**
+   * Paths to add to the commit, mapping to the action's `add-paths` input.
+   *
+   * @default - all paths
+   */
+  readonly addPaths?: string[];
+
+  /**
+   * Whether to delete the pull request branch when the pull request is closed,
+   * mapping to the action's `delete-branch` input.
+   *
+   * @default false
+   */
+  readonly deleteBranch?: boolean;
 
   /**
    * The git identity used to create the commit.
