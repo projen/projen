@@ -602,6 +602,15 @@ export class NodeProject extends GitHubProject {
               },
             }
           : {}),
+        pullRequestLintOptions: {
+          ...(options.workflowRunsOn
+            ? { runsOn: options.workflowRunsOn }
+            : {}),
+          ...(options.workflowRunsOnGroup
+            ? { runsOnGroup: options.workflowRunsOnGroup }
+            : {}),
+          ...options.githubOptions?.pullRequestLintOptions,
+        },
       },
       projenCommand:
         options.projenCommand ?? execCommand(options.packageManager, "projen"),
@@ -926,6 +935,8 @@ export class NodeProject extends GitHubProject {
           labels: autoApproveLabel(depsAutoApprove),
           gitIdentity: this.workflowGitIdentity,
           permissions: workflowPermissions,
+          runsOn: options.workflowRunsOn,
+          runsOnGroup: options.workflowRunsOnGroup,
         },
       };
       this.upgradeWorkflow = new UpgradeDependencies(

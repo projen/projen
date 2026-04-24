@@ -603,6 +603,19 @@ describe("workflows use global workflowRunsOn option", () => {
       );
     },
   );
+
+  test("upgrade workflow uses workflowRunsOn", () => {
+    const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+    expect(upgrade.jobs.upgrade["runs-on"]).toEqual(EXPECTED_RUNS_ON);
+    expect(upgrade.jobs.pr["runs-on"]).toEqual(EXPECTED_RUNS_ON);
+  });
+
+  test("pull-request-lint workflow uses workflowRunsOn", () => {
+    const prLint = yaml.parse(
+      output[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(prLint.jobs.validate["runs-on"]).toEqual(EXPECTED_RUNS_ON);
+  });
 });
 
 describe("workflows use global workflowRunsOn option - runner group extended", () => {

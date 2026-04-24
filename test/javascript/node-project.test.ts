@@ -1377,6 +1377,111 @@ describe("workflowRunsOn", () => {
     );
   });
 
+  test("workflowRunsOn propagates to upgrade workflow", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+    expect(upgrade.jobs.upgrade["runs-on"]).toEqual("self-hosted");
+    expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("workflowRunsOn propagates to pull-request-lint workflow", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const prLint = yaml.parse(
+      output[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(prLint.jobs.validate["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("workflowRunsOnGroup propagates to upgrade workflow", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux", "x64"],
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+    expect(upgrade.jobs.upgrade["runs-on"]).toHaveProperty("group", "Default");
+    expect(upgrade.jobs.upgrade["runs-on"]).toHaveProperty("labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+  });
+
+  test("workflowRunsOnGroup propagates to pull-request-lint workflow", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux", "x64"],
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const prLint = yaml.parse(
+      output[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(prLint.jobs.validate["runs-on"]).toHaveProperty("group", "Default");
+    expect(prLint.jobs.validate["runs-on"]).toHaveProperty("labels", [
+      "self-hosted",
+      "linux",
+      "x64",
+    ]);
+  });
+
+  test("explicit depsUpgradeOptions.workflowOptions.runsOn overrides workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+      depsUpgradeOptions: {
+        workflowOptions: {
+          runsOn: ["custom-runner"],
+        },
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+    expect(upgrade.jobs.upgrade["runs-on"]).toEqual("custom-runner");
+  });
+
+  test("explicit pullRequestLintOptions.runsOn overrides workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+      githubOptions: {
+        pullRequestLintOptions: {
+          runsOn: ["custom-runner"],
+        },
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const prLint = yaml.parse(
+      output[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(prLint.jobs.validate["runs-on"]).toEqual("custom-runner");
+  });
+
   test("use github runner group specified in workflowRunsOn", () => {
     // WHEN
     const project = new TestNodeProject({
