@@ -1294,6 +1294,7 @@ test('hello', () => {
   "tsconfig.dev.json": {
     "compilerOptions": {
       "alwaysStrict": true,
+      "composite": true,
       "declaration": true,
       "esModuleInterop": true,
       "experimentalDecorators": true,
@@ -1303,6 +1304,7 @@ test('hello', () => {
         "es2020",
       ],
       "module": "CommonJS",
+      "noEmit": true,
       "noEmitOnError": false,
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
@@ -1365,6 +1367,11 @@ test('hello', () => {
     "exclude": [],
     "include": [
       "src/**/*.ts",
+    ],
+    "references": [
+      {
+        "path": "./tsconfig.dev.json",
+      },
     ],
   },
 }

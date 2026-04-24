@@ -489,12 +489,23 @@ export class TypeScriptProject extends NodeProject {
             include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
 
             exclude: ["node_modules"],
-            compilerOptions: this.defaultTypeScriptCompilerOptions(),
+            compilerOptions: {
+              ...this.defaultTypeScriptCompilerOptions(),
+              noEmit: true,
+              composite: true,
+            },
           },
           options.tsconfig,
           options.tsconfigDev,
         ),
       );
+
+      // Add a project reference from tsconfig.json to tsconfigDev so that
+      // editors using the bundled TypeScript (e.g. VS Code >= 1.114 with TS 6)
+      // can discover dev/test files through tsconfig.json.
+      this.tsconfig?.addReference({
+        path: `./${this.tsconfigDev.fileName}`,
+      });
     }
 
     this.gitignore.include(`/${this.srcdir}/`);
