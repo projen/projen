@@ -420,11 +420,118 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
-  // include a dev dependency for the external module
-  args.devDeps = [spec];
-  args["dev-deps"] = [spec];
+  // include a dev dependency for the external module, resolving the
+  // correct package name for the target language (e.g. Python distName
+  // instead of the npm package name)
+  const devDepSpec = resolveExternalDevDep(moduleDir, type.fqn, spec);
+  args.devDeps = [devDepSpec];
+  args["dev-deps"] = [devDepSpec];
 
   await initProject(baseDir, type, args);
+}
+
+/**
+ * Resolves the correct dev dependency spec for an external module based on
+ * the target project type. For example, if the project type extends
+ * PythonProject, the Python package name (distName) from the jsii manifest
+ * is used instead of the npm package name.
+ *
+ * @param moduleDir Directory of the installed external module
+ * @param projectFqn Fully qualified name of the project type
+ * @param npmSpec The original npm package spec (used as fallback)
+ * @returns The resolved package spec for the target language
+ */
+function resolveExternalDevDep(
+  moduleDir: string,
+  projectFqn: string,
+  npmSpec: string,
+): string {
+  const manifest = inventory.readManifest(moduleDir);
+  if (!manifest?.targets) {
+    return npmSpec;
+  }
+
+  // Collect jsii types from the module and all its dependencies so we can
+  // walk the class hierarchy from the project type up to known base types.
+  const jsiiTypes: Record<string, { base?: string }> = {};
+  const collectTypes = (dir: string, visited = new Set<string>()) => {
+    const m = inventory.readManifest(dir);
+    if (!m || visited.has(m.fingerprint)) {
+      return;
+    }
+    visited.add(m.fingerprint);
+
+    if (m.types) {
+      for (const [fqn, type] of Object.entries(
+        m.types as Record<string, any>,
+      )) {
+        jsiiTypes[fqn] = { base: type.base };
+      }
+    }
+
+    // Recurse into dependencies to pick up projen's base types
+    if (m.dependencies) {
+      for (const dep of Object.keys(m.dependencies)) {
+        try {
+          const depDir = path.dirname(
+            require.resolve(`${dep}/package.json`, { paths: [dir] }),
+          );
+          collectTypes(depDir, visited);
+        } catch {
+          // dependency not resolvable, skip
+        }
+      }
+    }
+  };
+  collectTypes(moduleDir);
+
+  // Walk the type hierarchy to determine if the project extends a given base type
+  const extendsType = (fqn: string, targetFqn: string): boolean => {
+    let curr: string | undefined = fqn;
+    while (curr) {
+      if (curr === targetFqn) {
+        return true;
+      }
+      curr = jsiiTypes[curr]?.base;
+    }
+    return false;
+  };
+
+  // Read the installed module's version from package.json to use as the
+  // version constraint for the target language package
+  let version: string | undefined;
+  const pkgJsonPath = path.join(moduleDir, "package.json");
+  if (fs.existsSync(pkgJsonPath)) {
+    try {
+      const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf-8"));
+      version = pkgJson.version;
+    } catch {
+      // ignore
+    }
+  }
+
+  // Python: use targets.python.distName
+  if (
+    manifest.targets.python?.distName &&
+    extendsType(projectFqn, "projen.python.PythonProject")
+  ) {
+    const distName = manifest.targets.python.distName;
+    return version ? `${distName}@${version}` : distName;
+  }
+
+  // Java: use targets.java.maven groupId/artifactId
+  if (
+    manifest.targets.java?.maven &&
+    extendsType(projectFqn, "projen.java.JavaProject")
+  ) {
+    const { groupId, artifactId } = manifest.targets.java.maven;
+    if (groupId && artifactId) {
+      const mavenCoord = `${groupId}/${artifactId}`;
+      return version ? `${mavenCoord}@${version}` : mavenCoord;
+    }
+  }
+
+  return npmSpec;
 }
 
 /**
@@ -519,3 +626,8 @@ async function initProject(
 }
 
 export default new Command();
+
+/**
+ * @internal exported for testing only
+ */
+export { resolveExternalDevDep };
