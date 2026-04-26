@@ -2622,7 +2622,7 @@ export interface Source {
   readonly noDuplicateClasses?: any;
 
   /**
-   * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
+   * Sorts imports and exports in your JavaScript and TypeScript files.
    * See https://biomejs.dev/assist/actions/organize-imports
    *
    * @schema Source#organizeImports
