@@ -3434,7 +3434,7 @@ const source: javascript.biome_config.Source = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.Source.property.noDuplicateClasses">noDuplicateClasses</a></code> | <code>any</code> | Remove duplicate CSS classes. |
-| <code><a href="#projen.javascript.biome_config.Source.property.organizeImports">organizeImports</a></code> | <code>any</code> | Provides a code action to sort the imports and exports in the file using a built-in or custom order. |
+| <code><a href="#projen.javascript.biome_config.Source.property.organizeImports">organizeImports</a></code> | <code>any</code> | Sorts imports and exports in your JavaScript and TypeScript files. |
 | <code><a href="#projen.javascript.biome_config.Source.property.recommended">recommended</a></code> | <code>boolean</code> | Enables the recommended rules for this group. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedAttributes">useSortedAttributes</a></code> | <code>any</code> | Enforce attribute sorting in JSX elements. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedInterfaceMembers">useSortedInterfaceMembers</a></code> | <code>any</code> | Sort interface members by key. |
@@ -3465,7 +3465,7 @@ public readonly organizeImports: any;
 
 - *Type:* any
 
-Provides a code action to sort the imports and exports in the file using a built-in or custom order.
+Sorts imports and exports in your JavaScript and TypeScript files.
 
 See https://biomejs.dev/assist/actions/organize-imports
 
