@@ -1,16 +1,16 @@
 import type { AutoApproveOptions } from "./auto-approve";
 import { AutoApprove } from "./auto-approve";
 import type { AutoMergeOptions } from "./auto-merge";
-import type { GitHubOptions } from "./github";
-import { GitHub } from "./github";
+import type { GitHub, GitHubOptions } from "./github";
 import type { GithubCredentials } from "./github-credentials";
+import { GitHubRepository } from "./github-repository";
 import type { MergifyOptions } from "./mergify";
 import type { StaleOptions } from "./stale";
 import { Stale } from "./stale";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import type { ProjectOptions } from "../project";
-import { Project, ProjectType } from "../project";
+import { Project, ProjectType, _setPreCreatedRepository } from "../project";
 import type { SampleReadmeProps } from "../readme";
 import { SampleReadme } from "../readme";
 import { normalizePersistedPath } from "../util";
@@ -200,20 +200,14 @@ export class GitHubProject extends Project {
   public readonly autoApprove?: AutoApprove;
 
   constructor(options: GitHubProjectOptions) {
+    prepareGitHubRepository(options);
     super(options);
 
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
-    // we only allow these global services to be used in root projects
-    const github = options.github ?? !this.parent;
-    this.github = github
-      ? new GitHub(this, {
-          projenTokenSecret: options.projenTokenSecret,
-          projenCredentials: options.projenCredentials,
-          mergify: options.mergify,
-          mergifyOptions: options.mergifyOptions,
-          ...options.githubOptions,
-        })
-      : undefined;
+
+    const { github, autoApprove } = initGitHubComponents(this, options);
+    this.github = github;
+    this.autoApprove = autoApprove;
 
     const vscode = options.vscode ?? !this.parent;
     this.vscode = vscode ? new VsCode(this) : undefined;
@@ -228,18 +222,6 @@ export class GitHubProject extends Project {
     }
 
     new SampleReadme(this, options.readme);
-
-    if (options.autoApproveOptions && this.github) {
-      this.autoApprove = new AutoApprove(
-        this.github,
-        options.autoApproveOptions,
-      );
-    }
-
-    const stale = options.stale ?? false;
-    if (stale && this.github) {
-      new Stale(this.github, options.staleOptions);
-    }
   }
 
   /**
@@ -257,4 +239,77 @@ export class GitHubProject extends Project {
       "linguist-generated",
     );
   }
+}
+
+/**
+ * For root projects, create a GitHubRepository with the full GitHub options
+ * before the Project constructor runs.
+ */
+function prepareGitHubRepository(options: GitHubProjectOptions): void {
+  if (options.parent) {
+    return;
+  }
+
+  const repo = new GitHubRepository({
+    name: options.name,
+    outdir: options.outdir,
+    gitOptions: options.gitOptions,
+    gitIgnoreOptions: options.gitIgnoreOptions,
+    github: options.github,
+    githubOptions: options.githubOptions,
+    projenCredentials: options.projenCredentials,
+    projenTokenSecret: options.projenTokenSecret,
+    mergify: options.mergify,
+    mergifyOptions: options.mergifyOptions,
+    autoApproveOptions: options.autoApproveOptions,
+    stale: options.stale,
+    staleOptions: options.staleOptions,
+  });
+  _setPreCreatedRepository(repo);
+}
+
+/**
+ * Initialize GitHub component and related features.
+ * For root projects under a GitHubRepository, delegates to the repository.
+ * For subprojects, creates components directly.
+ */
+function initGitHubComponents(
+  project: GitHubProject,
+  options: GitHubProjectOptions,
+): { github: GitHub | undefined; autoApprove: AutoApprove | undefined } {
+  const repo = project.node.scopes.find(
+    (s): s is GitHubRepository => s instanceof GitHubRepository,
+  );
+
+  if (repo && !project.parent) {
+    // Root project — delegate to repository
+    const github = repo._initGitHub(project);
+    return { github, autoApprove: repo.autoApprove };
+  }
+
+  // Subproject or no GitHubRepository — original behavior
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { GitHub: GitHubClass } = require("./github");
+  const enableGithub = options.github ?? !project.parent;
+  const github = enableGithub
+    ? new GitHubClass(project, {
+        projenTokenSecret: options.projenTokenSecret,
+        projenCredentials: options.projenCredentials,
+        mergify: options.mergify,
+        mergifyOptions: options.mergifyOptions,
+        ...options.githubOptions,
+      })
+    : undefined;
+
+  let autoApprove: AutoApprove | undefined;
+  if (options.autoApproveOptions && github) {
+    autoApprove = new AutoApprove(github, options.autoApproveOptions);
+  }
+
+  const stale = options.stale ?? false;
+  if (stale && github) {
+    new Stale(github, options.staleOptions);
+  }
+
+  return { github, autoApprove };
 }

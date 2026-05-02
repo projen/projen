@@ -850,11 +850,34 @@ function isFile(c: Component): c is FileBase {
 }
 
 /**
+ * Module-level slot for a pre-created Repository.
+ * Used by GitHubProject to provide a GitHubRepository with full options
+ * before the Project constructor runs.
+ * @internal
+ */
+let _preCreatedRepository: IConstruct | undefined;
+
+/**
+ * Set a pre-created repository to be used by the next Project constructor call.
+ * @internal
+ */
+export function _setPreCreatedRepository(repo: IConstruct): void {
+  _preCreatedRepository = repo;
+}
+
+/**
  * Ensures a Repository exists for a root project.
- * If no Repository scope is provided, creates a GitHubRepository as the implicit parent.
+ * If a pre-created repository is available, uses it.
+ * Otherwise, creates a GitHubRepository as the implicit parent.
  * Uses lazy require to avoid circular dependency.
  */
 function ensureRepository(options: ProjectOptions): IConstruct {
+  if (_preCreatedRepository) {
+    const repo = _preCreatedRepository;
+    _preCreatedRepository = undefined;
+    return repo;
+  }
+
   // Lazy require to avoid circular dependency:
   // project.ts -> github/github-repository.ts -> git-repository.ts -> project.ts (type only)
   // eslint-disable-next-line @typescript-eslint/no-require-imports

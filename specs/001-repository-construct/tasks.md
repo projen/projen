@@ -39,7 +39,7 @@
   Done when: `Project` constructor auto-creates a `GitHubRepository` when no Repository ancestor exists (using lazy import to avoid circular deps). `Project` exposes `repo` getter delegating to `Repository.of(this)`. Root project's `synth()` delegates to `Repository.synth()`. Root `.gitignore` and `.gitattributes` creation moves to Repository — Project keeps per-project `.gitignore` but the root-level one is owned by the Repository. `project.gitignore` and `project.gitattributes` delegate to the Repository versions with deprecation warnings for root projects.
   Commit: `feat: T7 — integrate project with repository auto-creation and delegation`
 
-- [ ] **T8: Convert GitHubProject to thin wrapper**
+- [x] **T8: Convert GitHubProject to thin wrapper**
   Files: `src/github/github-project.ts`
   Done when: `GitHubProject` constructor creates a `GitHubRepository` if no Repository ancestor exists (instead of the previous auto-creation from T7), passes GitHub-specific options (`githubOptions`, `projenCredentials`, `mergify`, `autoApprove`, `stale`, etc.) to the Repository. `this.github` points to the Repository-level `GitHub` component. IDE components (`vscode`, `gitpod`, `devContainer`), `Clobber`, and `SampleReadme` remain on the Project. Public API is unchanged.
   Commit: `feat: T8 — convert GitHubProject to thin repository wrapper`
@@ -86,7 +86,7 @@
 | T5   | :white_check_mark:     | Deferred init pattern like T4 |
 | T6   | :white_check_mark:     |       |
 | T7   | :white_check_mark:     | Auto-create repo, repo getter, git file delegation |
-| T8   | :white_large_square:     |       |
+| T8   | :white_check_mark:     | Pre-created repo pattern for option passing |
 | T9   | :white_large_square:     |       |
 | T10  | :white_large_square:     |       |
 | T11  | :white_large_square:     |       |
