@@ -1,6 +1,7 @@
 import type { AutoApproveOptions } from "./auto-approve";
 import { AutoApprove } from "./auto-approve";
 import type { AutoMergeOptions } from "./auto-merge";
+import { DependencyReview } from "./dependency-review";
 import type { GitHub, GitHubOptions } from "./github";
 import type { GithubCredentials } from "./github-credentials";
 import { GitHubRepository } from "./github-repository";
@@ -282,8 +283,23 @@ function initGitHubComponents(
   );
 
   if (repo && !project.parent) {
-    // Root project — delegate to repository
+    // Root project — delegate to repository for core GitHub setup
     const github = repo._initGitHub(project);
+
+    // Apply project-level GitHub options that weren't already handled by the repo.
+    // e.g., dependencyReview with checkLicenses merged in by NodeProject.
+    // Only create if the repo didn't already set up dependency review.
+    if (
+      github &&
+      options.githubOptions?.dependencyReview &&
+      !github.tryFindWorkflow("dependency-review")
+    ) {
+      new DependencyReview(
+        github,
+        options.githubOptions.dependencyReviewOptions,
+      );
+    }
+
     return { github, autoApprove: repo.autoApprove };
   }
 

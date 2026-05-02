@@ -41,18 +41,6 @@ const repo = new GitHubRepository({
         exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
       },
     },
-    dependencyReview: true,
-    dependencyReviewOptions: {
-      allowLicenses: [
-        "MIT",
-        "ISC",
-        "BSD-2-Clause",
-        "BSD-3-Clause",
-        "Apache-2.0",
-        "Python-2.0",
-      ],
-      warnOnly: true,
-    },
   },
   autoApproveOptions: { allowedUsernames: [AUTOMATION_USER] },
 });
@@ -76,6 +64,13 @@ const project = new JsiiProject({
     "generator",
     "cdk",
   ],
+
+  githubOptions: {
+    dependencyReview: true,
+    dependencyReviewOptions: {
+      warnOnly: true,
+    },
+  },
 
   jsiiVersion: "5.9.x",
   typescriptVersion: "5.9.x",

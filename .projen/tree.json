@@ -133,26 +133,7 @@
           "path": ".github/workflows/pull-request-lint.yml"
         }
       },
-      "DependencyReview#AutoId6": {
-        "metadata": {
-          "type": "component",
-          "construct": "DependencyReview"
-        }
-      },
-      "GithubWorkflow#dependency-review": {
-        "metadata": {
-          "type": "component",
-          "construct": "GithubWorkflow"
-        }
-      },
-      "YamlFile@.github--workflows--dependency-review.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".github/workflows/dependency-review.yml"
-        }
-      },
-      "AutoApprove#AutoId7": {
+      "AutoApprove#AutoId6": {
         "metadata": {
           "type": "component",
           "construct": "AutoApprove"
@@ -169,6 +150,25 @@
           "type": "file",
           "construct": "YamlFile",
           "path": ".github/workflows/auto-approve.yml"
+        }
+      },
+      "DependencyReview#AutoId7": {
+        "metadata": {
+          "type": "component",
+          "construct": "DependencyReview"
+        }
+      },
+      "GithubWorkflow#dependency-review": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--dependency-review.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/dependency-review.yml"
         }
       },
       "VsCode#AutoId8": {
