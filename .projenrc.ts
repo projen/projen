@@ -43,6 +43,14 @@ const repo = new GitHubRepository({
     },
     dependencyReview: true,
     dependencyReviewOptions: {
+      allowLicenses: [
+        "MIT",
+        "ISC",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "Apache-2.0",
+        "Python-2.0",
+      ],
       warnOnly: true,
     },
   },

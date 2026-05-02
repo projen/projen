@@ -152,51 +152,7 @@
           "path": ".github/workflows/dependency-review.yml"
         }
       },
-      "VsCode#AutoId7": {
-        "metadata": {
-          "type": "component",
-          "construct": "VsCode"
-        }
-      },
-      "Gitpod#AutoId8": {
-        "metadata": {
-          "type": "component",
-          "construct": "Gitpod"
-        }
-      },
-      "YamlFile@.gitpod.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".gitpod.yml"
-        }
-      },
-      "DevContainer#AutoId9": {
-        "metadata": {
-          "type": "component",
-          "construct": "DevContainer"
-        }
-      },
-      "JsonFile@.devcontainer.json": {
-        "metadata": {
-          "type": "file",
-          "construct": "JsonFile",
-          "path": ".devcontainer.json"
-        }
-      },
-      "Clobber#AutoId10": {
-        "metadata": {
-          "type": "component",
-          "construct": "Clobber"
-        }
-      },
-      "SampleReadme#AutoId11": {
-        "metadata": {
-          "type": "component",
-          "construct": "SampleReadme"
-        }
-      },
-      "AutoApprove#AutoId12": {
+      "AutoApprove#AutoId7": {
         "metadata": {
           "type": "component",
           "construct": "AutoApprove"
@@ -213,6 +169,50 @@
           "type": "file",
           "construct": "YamlFile",
           "path": ".github/workflows/auto-approve.yml"
+        }
+      },
+      "VsCode#AutoId8": {
+        "metadata": {
+          "type": "component",
+          "construct": "VsCode"
+        }
+      },
+      "Gitpod#AutoId9": {
+        "metadata": {
+          "type": "component",
+          "construct": "Gitpod"
+        }
+      },
+      "YamlFile@.gitpod.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".gitpod.yml"
+        }
+      },
+      "DevContainer#AutoId10": {
+        "metadata": {
+          "type": "component",
+          "construct": "DevContainer"
+        }
+      },
+      "JsonFile@.devcontainer.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": ".devcontainer.json"
+        }
+      },
+      "Clobber#AutoId11": {
+        "metadata": {
+          "type": "component",
+          "construct": "Clobber"
+        }
+      },
+      "SampleReadme#AutoId12": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleReadme"
         }
       },
       "NodePackage#AutoId13": {
