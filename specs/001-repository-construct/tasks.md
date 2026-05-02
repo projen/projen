@@ -29,7 +29,7 @@
   Done when: `GitLabRepository` extends `GitRepository`, creates a `GitlabConfiguration` component. Accepts `GitLabRepositoryOptions`. Exported from `src/gitlab/index.ts`.
   Commit: `feat: T5 — create gitlab repository with GitlabConfiguration`
 
-- [ ] **T6: Implement Repository.synth() orchestration**
+- [x] **T6: Implement Repository.synth() orchestration**
   Files: `src/repository.ts`
   Done when: `Repository.synth()` implements the full flow: repo `preSynthesize()` → repo component `preSynthesize()` → for each project: project full lifecycle (pre-synth, cleanup, subprojects, synthesize, post-synth) → repo component `synthesize()` → repo `postSynthesize()`. Handles file cleanup at the repo level. Handles the `ejected` flow if applicable.
   Commit: `feat: T6 — implement repository-driven synthesis orchestration`
@@ -84,7 +84,7 @@
 | T3   | :white_check_mark:     |       |
 | T4   | :white_check_mark:     | GitHub component deferred via _initGitHub() |
 | T5   | :white_check_mark:     | Deferred init pattern like T4 |
-| T6   | :white_large_square:     |       |
+| T6   | :white_check_mark:     |       |
 | T7   | :white_large_square:     |       |
 | T8   | :white_large_square:     |       |
 | T9   | :white_large_square:     |       |

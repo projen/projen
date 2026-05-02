@@ -109,12 +109,36 @@ export class Repository extends Construct {
   /**
    * Synthesize the repository and all its projects.
    *
-   * Stub — full orchestration will be implemented in T6.
+   * The synthesis flow is:
+   * 1. Repository preSynthesize (repo + repo-level components)
+   * 2. Each root project's full lifecycle (pre-synth, cleanup, subprojects, synth, post-synth)
+   * 3. Repository-level component synthesize
+   * 4. Repository postSynthesize
    */
   public synth(): void {
+    // Phase 1: Repository pre-synthesis
     this.preSynthesize();
+    for (const comp of this.components) {
+      comp.preSynthesize();
+    }
+
+    // Phase 2: Each root project runs its full synthesis lifecycle
     for (const project of this.projects) {
-      project.synth();
+      // Only trigger root projects (direct children).
+      // Subprojects are handled recursively inside Project.synth().
+      if (!project.parent) {
+        project.synth();
+      }
+    }
+
+    // Phase 3: Repository-level component synthesis
+    for (const comp of this.components) {
+      comp.synthesize();
+    }
+
+    // Phase 4: Repository post-synthesis
+    for (const comp of this.components) {
+      comp.postSynthesize();
     }
     this.postSynthesize();
   }
