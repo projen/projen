@@ -34,7 +34,7 @@
   Done when: `Repository.synth()` implements the full flow: repo `preSynthesize()` → repo component `preSynthesize()` → for each project: project full lifecycle (pre-synth, cleanup, subprojects, synthesize, post-synth) → repo component `synthesize()` → repo `postSynthesize()`. Handles file cleanup at the repo level. Handles the `ejected` flow if applicable.
   Commit: `feat: T6 — implement repository-driven synthesis orchestration`
 
-- [ ] **T7: Modify Project for Repository integration**
+- [x] **T7: Modify Project for Repository integration**
   Files: `src/project.ts`
   Done when: `Project` constructor auto-creates a `GitHubRepository` when no Repository ancestor exists (using lazy import to avoid circular deps). `Project` exposes `repo` getter delegating to `Repository.of(this)`. Root project's `synth()` delegates to `Repository.synth()`. Root `.gitignore` and `.gitattributes` creation moves to Repository — Project keeps per-project `.gitignore` but the root-level one is owned by the Repository. `project.gitignore` and `project.gitattributes` delegate to the Repository versions with deprecation warnings for root projects.
   Commit: `feat: T7 — integrate project with repository auto-creation and delegation`
@@ -85,7 +85,7 @@
 | T4   | :white_check_mark:     | GitHub component deferred via _initGitHub() |
 | T5   | :white_check_mark:     | Deferred init pattern like T4 |
 | T6   | :white_check_mark:     |       |
-| T7   | :white_large_square:     |       |
+| T7   | :white_check_mark:     | Auto-create repo, repo getter, git file delegation |
 | T8   | :white_large_square:     |       |
 | T9   | :white_large_square:     |       |
 | T10  | :white_large_square:     |       |
