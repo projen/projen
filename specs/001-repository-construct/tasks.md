@@ -12,7 +12,7 @@
   Done when: `Repository` extends `Construct`, tags itself with `REPOSITORY_SYMBOL`, exposes `name`, `outdir`, `projects` (via `isProject` symbol check), `of()` static lookup, `isRepository()` static check, `synth()`, `preSynthesize()`, `postSynthesize()`. Class is exported from `src/index.ts`. Does NOT yet include synthesis orchestration logic — `synth()` is a stub.
   Commit: `feat: T2 — create repository base class`
 
-- [ ] **T3: Create GitRepository class**
+- [x] **T3: Create GitRepository class**
   Files: `src/git-repository.ts`, `src/index.ts`
   Done when: `GitRepository` extends `Repository`, creates `.gitignore` (`IgnoreFile`) and `.gitattributes` (`GitAttributesFile`) in its constructor, exposes `annotateGenerated()`. Accepts `GitRepositoryOptions` with `gitOptions` and `gitIgnoreOptions`. Exported from `src/index.ts`.
   Commit: `feat: T3 — create git repository with gitignore and gitattributes`
@@ -81,7 +81,7 @@
 |------|--------|-------|
 | T1   | :white_check_mark:     |       |
 | T2   | :white_check_mark:     |       |
-| T3   | :white_large_square:     |       |
+| T3   | :white_check_mark:     |       |
 | T4   | :white_large_square:     |       |
 | T5   | :white_large_square:     |       |
 | T6   | :white_large_square:     |       |

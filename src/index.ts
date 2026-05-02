@@ -20,6 +20,7 @@ export * from "./option-hints";
 export * from "./project";
 export * from "./project-build";
 export * from "./repository";
+export * from "./git-repository";
 export * from "./project-tree";
 export * from "./projects";
 export * from "./projenrc";
