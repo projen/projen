@@ -2,7 +2,7 @@
 
 ## Phase 1 — Foundation
 
-- [ ] **T1: Add Repository symbol infrastructure to util/constructs.ts**
+- [x] **T1: Add Repository symbol infrastructure to util/constructs.ts**
   Files: `src/util/constructs.ts`
   Done when: `REPOSITORY_SYMBOL`, `tagAsRepository`, `isRepository`, `findClosestRepository`, and `tryFindClosestRepository` are exported. `findClosestRepository` walks up the construct tree using `tryFindClosest` and throws if none found. All functions follow the existing pattern of `PROJECT_SYMBOL` / `COMPONENT_SYMBOL`.
   Commit: `feat: T1 — add repository symbol and lookup utilities`
@@ -79,7 +79,7 @@
 
 | Task | Status | Notes |
 |------|--------|-------|
-| T1   | :white_large_square:     |       |
+| T1   | :white_check_mark:     |       |
 | T2   | :white_large_square:     |       |
 | T3   | :white_large_square:     |       |
 | T4   | :white_large_square:     |       |
