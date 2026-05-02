@@ -61,6 +61,15 @@ export interface ProjectOptions {
   readonly parent?: Project;
 
   /**
+   * The repository this project belongs to.
+   *
+   * When provided, the project is created within the given repository
+   * instead of auto-creating a default GitHubRepository.
+   * Mutually exclusive with `parent`.
+   */
+  readonly repoRoot?: Repository;
+
+  /**
    * The root directory of the project.
    *
    * Relative to this directory, all files are synthesized.
@@ -279,13 +288,9 @@ export class Project extends Construct {
 
   constructor(options: ProjectOptions) {
     // Determine the scope for this project in the construct tree.
-    // If no parent project is provided and no Repository ancestor exists,
-    // auto-create a GitHubRepository as the implicit tree root.
-    let scope: IConstruct | undefined = options.parent;
+    let scope: IConstruct | undefined = options.parent ?? options.repoRoot;
     if (!scope) {
-      // No parent project — check if we're being created inside an existing Repository
-      // (this can't be checked yet since we haven't called super, so we rely on
-      // the absence of a parent to trigger auto-creation)
+      // No parent project or explicit repository — auto-create a GitHubRepository
       scope = ensureRepository(options);
     }
 

@@ -246,7 +246,7 @@ export class GitHubProject extends Project {
  * before the Project constructor runs.
  */
 function prepareGitHubRepository(options: GitHubProjectOptions): void {
-  if (options.parent) {
+  if (options.parent || options.repoRoot) {
     return;
   }
 
