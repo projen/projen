@@ -51,7 +51,7 @@
   Done when: Snapshot tests exist for `GitHubProject`, `TypeScriptProject`, `NodeProject` (and others as feasible) with default options. Snapshots verify that synthesis output is identical to pre-refactor output. Covers AC-7.
   Commit: `test: T9 — snapshot tests for backward compatibility`
 
-- [ ] **T10: Unit tests for Repository, GitRepository, and lookup**
+- [x] **T10: Unit tests for Repository, GitRepository, and lookup**
   Files: `test/repository.test.ts`, `test/git-repository.test.ts`
   Done when: Tests cover: `Repository.of()` from project/subproject/component (AC-5), throws when no Repository (AC-5), `isRepository()` (AC-1), `projects` getter (AC-10), `GitRepository` creates gitignore/gitattributes (AC-2), per-project gitignore still works (AC-2), `annotateGenerated()` (AC-2), `repo` accessor on Project (AC-8), gitignore/gitattributes delegation (AC-9).
   Commit: `test: T10 — unit tests for repository base and git repository`
@@ -88,7 +88,7 @@
 | T7   | :white_check_mark:     | Auto-create repo, repo getter, git file delegation |
 | T8   | :white_check_mark:     | Pre-created repo pattern for option passing |
 | T9   | :white_check_mark:     |       |
-| T10  | :white_large_square:     |       |
+| T10  | :white_check_mark:     |       |
 | T11  | :white_large_square:     |       |
 | T12  | :white_large_square:     |       |
 | T13  | :white_large_square:     |       |
