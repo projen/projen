@@ -1,8 +1,8 @@
-import { TestProject } from "../util";
 import { Project } from "../../src";
 import { GitHub } from "../../src/github/github";
 import { GitHubRepository } from "../../src/github/github-repository";
 import { Repository } from "../../src/repository";
+import { TestProject } from "../util";
 
 describe("GitHubRepository", () => {
   test("auto-created repository is a GitHubRepository", () => {

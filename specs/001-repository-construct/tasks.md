@@ -68,7 +68,7 @@
 
 ## Phase 4 — Cleanup
 
-- [ ] **T13: Lint, compile, and full build verification**
+- [x] **T13: Lint, compile, and full build verification**
   Files: (all modified files)
   Done when: `node ./projen.js eslint` passes, `node ./projen.js compile` passes, `node ./projen.js test` passes (all existing + new tests), `node ./projen.js build` succeeds. No regressions.
   Commit: `chore: T13 — fix lint and build issues` (only if fixes needed)
@@ -91,7 +91,7 @@
 | T10  | :white_check_mark:     |       |
 | T11  | :white_check_mark:     |       |
 | T12  | :white_check_mark:     |       |
-| T13  | :white_large_square:     |       |
+| T13  | :white_check_mark:     | Compile + lint + 224 tests passing |
 
 ## AC Coverage
 

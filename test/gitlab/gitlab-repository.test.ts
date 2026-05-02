@@ -1,6 +1,6 @@
-import { TestProject } from "../util";
 import { GitLabRepository } from "../../src/gitlab/gitlab-repository";
 import { Repository } from "../../src/repository";
+import { TestProject } from "../util";
 
 describe("GitLabRepository", () => {
   test("can be created explicitly", () => {

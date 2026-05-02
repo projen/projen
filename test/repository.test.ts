@@ -48,9 +48,7 @@ describe("Repository", () => {
 
     test("throws when no Repository in ancestor chain", () => {
       const bare = new Construct(undefined as any, "bare");
-      expect(() => Repository.of(bare)).toThrow(
-        /No Repository found/,
-      );
+      expect(() => Repository.of(bare)).toThrow(/No Repository found/);
     });
   });
 
