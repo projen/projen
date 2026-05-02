@@ -29,7 +29,7 @@ As a projen component author, I want a reliable `Repository.of(construct)` looku
 A `Repository` class extends `Construct` and can serve as the root of a projen construct tree. It has a static `of(construct)` method that walks the tree upward and returns the nearest `Repository`. Results are cached for performance.
 
 **AC-2: GitRepository manages git files.**
-A `GitRepository` class extends `Repository` and owns `.gitignore` and `.gitattributes` file management. These files are synthesized at the Repository level, not the Project level.
+A `GitRepository` class extends `Repository` and owns `.gitignore` and `.gitattributes` file management. These files are synthesized at the Repository level, not the Project level. Each project is allowed to have its own `.gitignore` for folder level settings.
 
 **AC-3: GitHubRepository provides GitHub integration.**
 A `GitHubRepository` class extends `GitRepository` and automatically creates a `GitHub` component. Workflows, PR templates, Dependabot, and Mergify are managed through this component at the Repository level.
@@ -89,14 +89,14 @@ A subproject in a monorepo can call `Repository.of(this)` and, if the result is 
 - **Existing `GitAttributesFile`** — [src/gitattributes.ts](../../src/gitattributes.ts) — moved to Repository-level ownership.
 - **Synthesis flow** — `Project.synth()` in [src/project.ts](../../src/project.ts) — needs refactoring to support Repository-driven synthesis.
 
+## Resolved Questions
+
+1. **Auto-creation trigger mechanism.** Auto-creation of the implicit Repository happens in the `Project` constructor. When no `Repository` ancestor is found in the construct tree, the constructor creates a default `GitHubRepository` as parent before proceeding.
+
+2. **GitHubProject migration path.** `GitHubProject` becomes a thin wrapper that creates a `GitHubRepository` + the underlying project. Its public API is preserved for backward compatibility.
+
+3. **Testing strategy for backward compatibility.** Snapshot tests are used to verify that existing project types produce identical output before and after the refactor. This is the primary mechanism for ensuring backward compatibility.
+
 ## Open Questions
 
-1. **Auto-creation trigger mechanism.** Should auto-creation of the implicit Repository happen in the `Project` constructor, or in a static factory method? The constructor approach is simpler but could cause issues with construct tree ordering.
-
-2. **Deprecation timeline.** How many minor versions should the `Project.gitignore` / `Project.gitattributes` pass-through accessors remain before removal? Should they be deprecated immediately or after a stabilization period?
-
-3. **GitHubProject migration path.** Should `GitHubProject` be modified to use the new Repository internally (preserving its public API), or should it become a thin wrapper that creates a `GitHubRepository` + `TypeScriptProject`?
-
-4. **Testing strategy for backward compatibility.** Should we snapshot-test existing project types to verify identical output before and after the refactor, or rely on unit tests for each behavioral contract?
-
-5. **Standalone CI providers.** While out of scope, does the class hierarchy need any hooks or extension points now to avoid breaking changes when CircleCI/Jenkins support is added later?
+1. **Deprecation timeline.** How many minor versions should the `Project.gitignore` / `Project.gitattributes` pass-through accessors remain before removal? (Not blocking for initial implementation.)
