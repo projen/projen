@@ -24,7 +24,7 @@
   Done when: `GitHubRepository` extends `GitRepository`, creates a `GitHub` component in its constructor (mirroring the pattern from `GitHubProject`), creates `AutoApprove` and `Stale` if configured. Accepts `GitHubRepositoryOptions`. The `GitHub` component must be able to resolve a `project` from the Repository scope — this may require adjusting how the component is parented. Exported from `src/github/index.ts`.
   Commit: `feat: T4 — create github repository with GitHub component`
 
-- [ ] **T5: Create GitLabRepository class**
+- [x] **T5: Create GitLabRepository class**
   Files: `src/gitlab/gitlab-repository.ts`, `src/gitlab/index.ts`
   Done when: `GitLabRepository` extends `GitRepository`, creates a `GitlabConfiguration` component. Accepts `GitLabRepositoryOptions`. Exported from `src/gitlab/index.ts`.
   Commit: `feat: T5 — create gitlab repository with GitlabConfiguration`
@@ -83,7 +83,7 @@
 | T2   | :white_check_mark:     |       |
 | T3   | :white_check_mark:     |       |
 | T4   | :white_check_mark:     | GitHub component deferred via _initGitHub() |
-| T5   | :white_large_square:     |       |
+| T5   | :white_check_mark:     | Deferred init pattern like T4 |
 | T6   | :white_large_square:     |       |
 | T7   | :white_large_square:     |       |
 | T8   | :white_large_square:     |       |
