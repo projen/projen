@@ -46,7 +46,7 @@
 
 ## Phase 3 — Testing
 
-- [ ] **T9: Snapshot tests for backward compatibility**
+- [x] **T9: Snapshot tests for backward compatibility**
   Files: `test/backward-compat.test.ts`
   Done when: Snapshot tests exist for `GitHubProject`, `TypeScriptProject`, `NodeProject` (and others as feasible) with default options. Snapshots verify that synthesis output is identical to pre-refactor output. Covers AC-7.
   Commit: `test: T9 — snapshot tests for backward compatibility`
@@ -87,7 +87,7 @@
 | T6   | :white_check_mark:     |       |
 | T7   | :white_check_mark:     | Auto-create repo, repo getter, git file delegation |
 | T8   | :white_check_mark:     | Pre-created repo pattern for option passing |
-| T9   | :white_large_square:     |       |
+| T9   | :white_check_mark:     |       |
 | T10  | :white_large_square:     |       |
 | T11  | :white_large_square:     |       |
 | T12  | :white_large_square:     |       |
