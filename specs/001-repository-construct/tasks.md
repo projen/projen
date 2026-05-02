@@ -7,7 +7,7 @@
   Done when: `REPOSITORY_SYMBOL`, `tagAsRepository`, `isRepository`, `findClosestRepository`, and `tryFindClosestRepository` are exported. `findClosestRepository` walks up the construct tree using `tryFindClosest` and throws if none found. All functions follow the existing pattern of `PROJECT_SYMBOL` / `COMPONENT_SYMBOL`.
   Commit: `feat: T1 — add repository symbol and lookup utilities`
 
-- [ ] **T2: Create Repository base class**
+- [x] **T2: Create Repository base class**
   Files: `src/repository.ts`, `src/index.ts`
   Done when: `Repository` extends `Construct`, tags itself with `REPOSITORY_SYMBOL`, exposes `name`, `outdir`, `projects` (via `isProject` symbol check), `of()` static lookup, `isRepository()` static check, `synth()`, `preSynthesize()`, `postSynthesize()`. Class is exported from `src/index.ts`. Does NOT yet include synthesis orchestration logic — `synth()` is a stub.
   Commit: `feat: T2 — create repository base class`
@@ -80,7 +80,7 @@
 | Task | Status | Notes |
 |------|--------|-------|
 | T1   | :white_check_mark:     |       |
-| T2   | :white_large_square:     |       |
+| T2   | :white_check_mark:     |       |
 | T3   | :white_large_square:     |       |
 | T4   | :white_large_square:     |       |
 | T5   | :white_large_square:     |       |
