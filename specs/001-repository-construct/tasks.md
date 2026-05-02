@@ -61,7 +61,7 @@
   Done when: Tests cover: `GitHubRepository` creates `GitHub` component (AC-3), workflows can be added (AC-3), subproject can access repo and add workflows (AC-11), `GitLabRepository` creates `GitlabConfiguration` (AC-4), auto-creation produces `GitHubRepository` (AC-7).
   Commit: `test: T11 — unit tests for GitHub and GitLab repositories`
 
-- [ ] **T12: Unit tests for synthesis flow**
+- [x] **T12: Unit tests for synthesis flow**
   Files: `test/repository.test.ts`
   Done when: Tests verify `Repository.synth()` calls lifecycle hooks in correct order (AC-6), `Project.synth()` on root delegates to `Repository.synth()` (AC-6). Update `test/util.ts` and `src/util/synth.ts` if needed to support Repository-aware `synthSnapshot()`.
   Commit: `test: T12 — unit tests for repository-driven synthesis`
@@ -90,7 +90,7 @@
 | T9   | :white_check_mark:     |       |
 | T10  | :white_check_mark:     |       |
 | T11  | :white_check_mark:     |       |
-| T12  | :white_large_square:     |       |
+| T12  | :white_check_mark:     |       |
 | T13  | :white_large_square:     |       |
 
 ## AC Coverage
