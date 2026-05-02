@@ -83,6 +83,14 @@ export class GitRepository extends Repository {
     });
     Object.defineProperty(this, "gitattributes", { value: gitattributes });
 
+    // Also set on the project so that project.annotateGenerated() works
+    // during IgnoreFile construction (FileBase calls project.annotateGenerated)
+    Object.defineProperty(project, "gitattributes", {
+      value: gitattributes,
+      writable: true,
+      configurable: true,
+    });
+
     // Flush any annotations that were queued before gitattributes was ready
     if (this._pendingAnnotations) {
       for (const g of this._pendingAnnotations) {

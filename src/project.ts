@@ -819,6 +819,13 @@ function initGitFiles(
   const gitattributes = new GitAttributesFile(project, {
     endOfLine: options.gitOptions?.endOfLine,
   });
+  // Set on the project immediately so annotateGenerated() can access it
+  // (GitHubProject.annotateGenerated reads this.gitattributes)
+  Object.defineProperty(project, "gitattributes", {
+    value: gitattributes,
+    writable: true,
+    configurable: true,
+  });
   project.annotateGenerated("/.projen/**");
   project.annotateGenerated(`/${gitattributes.path}`);
 
