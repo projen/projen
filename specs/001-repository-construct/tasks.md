@@ -56,7 +56,7 @@
   Done when: Tests cover: `Repository.of()` from project/subproject/component (AC-5), throws when no Repository (AC-5), `isRepository()` (AC-1), `projects` getter (AC-10), `GitRepository` creates gitignore/gitattributes (AC-2), per-project gitignore still works (AC-2), `annotateGenerated()` (AC-2), `repo` accessor on Project (AC-8), gitignore/gitattributes delegation (AC-9).
   Commit: `test: T10 — unit tests for repository base and git repository`
 
-- [ ] **T11: Unit tests for GitHubRepository, GitLabRepository, and subproject workflows**
+- [x] **T11: Unit tests for GitHubRepository, GitLabRepository, and subproject workflows**
   Files: `test/github/github-repository.test.ts`, `test/gitlab/gitlab-repository.test.ts`
   Done when: Tests cover: `GitHubRepository` creates `GitHub` component (AC-3), workflows can be added (AC-3), subproject can access repo and add workflows (AC-11), `GitLabRepository` creates `GitlabConfiguration` (AC-4), auto-creation produces `GitHubRepository` (AC-7).
   Commit: `test: T11 — unit tests for GitHub and GitLab repositories`
@@ -89,7 +89,7 @@
 | T8   | :white_check_mark:     | Pre-created repo pattern for option passing |
 | T9   | :white_check_mark:     |       |
 | T10  | :white_check_mark:     |       |
-| T11  | :white_large_square:     |       |
+| T11  | :white_check_mark:     |       |
 | T12  | :white_large_square:     |       |
 | T13  | :white_large_square:     |       |
 
