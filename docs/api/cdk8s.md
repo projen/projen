@@ -1104,6 +1104,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1332,6 +1333,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.cdk8s.Cdk8sPythonApp.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -2334,6 +2347,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -2587,6 +2601,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.cdk8s.Cdk8sTypeScriptApp.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -3902,6 +3928,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -4155,6 +4182,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.cdk8s.ConstructLibraryCdk8s.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -5726,6 +5765,7 @@ const cdk8sPythonOptions: cdk8s.Cdk8sPythonOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -5961,6 +6001,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.cdk8s.Cdk8sPythonOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -6846,6 +6902,7 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -7180,6 +7237,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -9528,6 +9601,7 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -9871,6 +9945,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 

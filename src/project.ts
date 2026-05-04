@@ -399,7 +399,14 @@ export class Project extends Construct {
    * The root project.
    */
   public get root(): Project {
-    return isProject(this.node.root) ? this.node.root : this;
+    // Walk up the parent chain to find the topmost project.
+    // We can't rely on this.node.root because the construct tree root
+    // may be a Repository, not a Project.
+    let current: Project = this;
+    while (current.parent) {
+      current = current.parent;
+    }
+    return current;
   }
 
   /**
