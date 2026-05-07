@@ -5940,10 +5940,12 @@ const createPullRequestOptions: github.CreatePullRequestOptions = { ... }
 | <code><a href="#projen.github.CreatePullRequestOptions.property.pullRequestDescription">pullRequestDescription</a></code> | <code>string</code> | Description added to the pull request. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.pullRequestTitle">pullRequestTitle</a></code> | <code>string</code> | The full title used to create the pull request. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow that will create the PR. |
+| <code><a href="#projen.github.CreatePullRequestOptions.property.addPaths">addPaths</a></code> | <code>string[]</code> | Paths to add to the commit, mapping to the action's `add-paths` input. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.baseBranch">baseBranch</a></code> | <code>string</code> | Sets the pull request base branch. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.branchName">branchName</a></code> | <code>string</code> | The pull request branch name. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.credentials">credentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | The job credentials used to create the pull request. |
+| <code><a href="#projen.github.CreatePullRequestOptions.property.deleteBranch">deleteBranch</a></code> | <code>boolean</code> | Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity used to create the commit. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.signoff">signoff</a></code> | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message. |
@@ -5989,6 +5991,19 @@ public readonly workflowName: string;
 - *Type:* string
 
 The name of the workflow that will create the PR.
+
+---
+
+##### `addPaths`<sup>Optional</sup> <a name="addPaths" id="projen.github.CreatePullRequestOptions.property.addPaths"></a>
+
+```typescript
+public readonly addPaths: string[];
+```
+
+- *Type:* string[]
+- *Default:* all paths
+
+Paths to add to the commit, mapping to the action's `add-paths` input.
 
 ---
 
@@ -6042,6 +6057,19 @@ public readonly credentials: GithubCredentials;
 The job credentials used to create the pull request.
 
 Provided credentials must have permissions to create a pull request on the repository.
+
+---
+
+##### `deleteBranch`<sup>Optional</sup> <a name="deleteBranch" id="projen.github.CreatePullRequestOptions.property.deleteBranch"></a>
+
+```typescript
+public readonly deleteBranch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input.
 
 ---
 
@@ -8752,10 +8780,12 @@ const pullRequestFromPatchOptions: github.PullRequestFromPatchOptions = { ... }
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.pullRequestDescription">pullRequestDescription</a></code> | <code>string</code> | Description added to the pull request. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.pullRequestTitle">pullRequestTitle</a></code> | <code>string</code> | The full title used to create the pull request. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow that will create the PR. |
+| <code><a href="#projen.github.PullRequestFromPatchOptions.property.addPaths">addPaths</a></code> | <code>string[]</code> | Paths to add to the commit, mapping to the action's `add-paths` input. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.baseBranch">baseBranch</a></code> | <code>string</code> | Sets the pull request base branch. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.branchName">branchName</a></code> | <code>string</code> | The pull request branch name. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.credentials">credentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | The job credentials used to create the pull request. |
+| <code><a href="#projen.github.PullRequestFromPatchOptions.property.deleteBranch">deleteBranch</a></code> | <code>boolean</code> | Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity used to create the commit. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.signoff">signoff</a></code> | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message. |
@@ -8805,6 +8835,19 @@ public readonly workflowName: string;
 - *Type:* string
 
 The name of the workflow that will create the PR.
+
+---
+
+##### `addPaths`<sup>Optional</sup> <a name="addPaths" id="projen.github.PullRequestFromPatchOptions.property.addPaths"></a>
+
+```typescript
+public readonly addPaths: string[];
+```
+
+- *Type:* string[]
+- *Default:* all paths
+
+Paths to add to the commit, mapping to the action's `add-paths` input.
 
 ---
 
@@ -8858,6 +8901,19 @@ public readonly credentials: GithubCredentials;
 The job credentials used to create the pull request.
 
 Provided credentials must have permissions to create a pull request on the repository.
+
+---
+
+##### `deleteBranch`<sup>Optional</sup> <a name="deleteBranch" id="projen.github.PullRequestFromPatchOptions.property.deleteBranch"></a>
+
+```typescript
+public readonly deleteBranch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input.
 
 ---
 
