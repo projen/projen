@@ -140,6 +140,14 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly runsOn?: string[];
 
   /**
+   * Github Runner selection labels
+   * @default - runsOn
+   * @description Defines a target Runner by labels for just the build job
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly buildRunsOn?: string[];
+
+  /**
    * Github Runner Group selection options
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
@@ -212,7 +220,10 @@ export class BuildWorkflow extends Component {
       this.project,
     );
     const jobConfig: workflows.Job = {
-      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      ...filteredRunsOnOptions(
+        options.buildRunsOn ?? options.runsOn,
+        options.runsOnGroup,
+      ),
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,

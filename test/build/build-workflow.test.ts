@@ -1,3 +1,4 @@
+import * as yaml from "yaml";
 import { BuildWorkflow } from "../../src/build";
 import type { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
@@ -50,6 +51,35 @@ describe("name", () => {
         workflows[".github/workflows/build_my-project.yml"],
       ).toMatchSnapshot();
     });
+  });
+});
+
+describe("buildRunsOn", () => {
+  test("defaults to runsOn value", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "./foo",
+      runsOn: ["self-hosted"],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("overrides runsOn for the build job", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "./foo",
+      runsOn: ["ubuntu-latest"],
+      buildRunsOn: ["self-hosted", "linux"],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build["runs-on"]).toEqual(["self-hosted", "linux"]);
   });
 });
 
