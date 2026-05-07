@@ -4101,9 +4101,97 @@ const workflowCallOptions: github.workflows.WorkflowCallOptions = { ... }
 ```
 
 
+### WorkflowDispatchInput <a name="WorkflowDispatchInput" id="projen.github.workflows.WorkflowDispatchInput"></a>
+
+An input for a workflow_dispatch event.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowDispatchInput.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const workflowDispatchInput: github.workflows.WorkflowDispatchInput = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.description">description</a></code> | <code>string</code> | A description of the input. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.default">default</a></code> | <code>string</code> | The default value of the input. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.options">options</a></code> | <code>string[]</code> | Options for the input if type is 'choice'. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.required">required</a></code> | <code>boolean</code> | Whether the input is required. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.type">type</a></code> | <code>string</code> | The type of the input. |
+
+---
+
+##### `description`<sup>Required</sup> <a name="description" id="projen.github.workflows.WorkflowDispatchInput.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A description of the input.
+
+---
+
+##### `default`<sup>Optional</sup> <a name="default" id="projen.github.workflows.WorkflowDispatchInput.property.default"></a>
+
+```typescript
+public readonly default: string;
+```
+
+- *Type:* string
+- *Default:* no default
+
+The default value of the input.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.workflows.WorkflowDispatchInput.property.options"></a>
+
+```typescript
+public readonly options: string[];
+```
+
+- *Type:* string[]
+- *Default:* no options
+
+Options for the input if type is 'choice'.
+
+---
+
+##### `required`<sup>Optional</sup> <a name="required" id="projen.github.workflows.WorkflowDispatchInput.property.required"></a>
+
+```typescript
+public readonly required: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the input is required.
+
+---
+
+##### `type`<sup>Optional</sup> <a name="type" id="projen.github.workflows.WorkflowDispatchInput.property.type"></a>
+
+```typescript
+public readonly type: string;
+```
+
+- *Type:* string
+- *Default:* "string"
+
+The type of the input.
+
+---
+
 ### WorkflowDispatchOptions <a name="WorkflowDispatchOptions" id="projen.github.workflows.WorkflowDispatchOptions"></a>
 
-The Workflow dispatch event accepts no options.
+The Workflow dispatch event options.
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowDispatchOptions.Initializer"></a>
 
@@ -4113,6 +4201,25 @@ import { github } from 'projen'
 const workflowDispatchOptions: github.workflows.WorkflowDispatchOptions = { ... }
 ```
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowDispatchOptions.property.inputs">inputs</a></code> | <code>{[ key: string ]: projen.github.workflows.WorkflowDispatchInput}</code> | Inputs for the workflow_dispatch event. |
+
+---
+
+##### `inputs`<sup>Optional</sup> <a name="inputs" id="projen.github.workflows.WorkflowDispatchOptions.property.inputs"></a>
+
+```typescript
+public readonly inputs: {[ key: string ]: WorkflowDispatchInput};
+```
+
+- *Type:* {[ key: string ]: projen.github.workflows.WorkflowDispatchInput}
+
+Inputs for the workflow_dispatch event.
+
+---
 
 ### WorkflowRunOptions <a name="WorkflowRunOptions" id="projen.github.workflows.WorkflowRunOptions"></a>
 
