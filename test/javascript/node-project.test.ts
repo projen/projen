@@ -1405,6 +1405,44 @@ describe("workflowRunsOn", () => {
   });
 });
 
+describe("buildWorkflowOptions.runsOn", () => {
+  test("overrides workflowRunsOn for the build job", () => {
+    const project = new TestNodeProject({
+      workflowRunsOn: ["ubuntu-latest"],
+      buildWorkflowOptions: {
+        runsOn: ["self-hosted"],
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("overrides workflowRunsOnGroup for the build job", () => {
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux"],
+      },
+      buildWorkflowOptions: {
+        runsOnGroup: {
+          group: "Custom",
+          labels: ["self-hosted", "arm64"],
+        },
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(build).toHaveProperty("jobs.build.runs-on.group", "Custom");
+    expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+      "self-hosted",
+      "arm64",
+    ]);
+  });
+});
+
 describe("buildWorkflowTriggers", () => {
   test("default to pull request and workflow dispatch", () => {
     // WHEN
