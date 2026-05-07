@@ -959,10 +959,12 @@ describe("Single Project", () => {
       expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
         NPM_DIST_TAG: "latest",
         NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+        PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
       });
       expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
         NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         NPM_DIST_TAG: "latest-3",
+        PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
       });
     });
 
@@ -993,10 +995,12 @@ describe("Single Project", () => {
       expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
         NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         NPM_DIST_TAG: "main-tag",
+        PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
       });
       expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
         NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
         NPM_DIST_TAG: "latest-3",
+        PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
       });
     });
 
@@ -1051,6 +1055,7 @@ describe("Single Project", () => {
       NPM_CONFIG_PROVENANCE: "true",
       NPM_DIST_TAG: "latest",
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+      PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
     });
 
     expect(releaseWorkflow.jobs.release_npm.permissions).toStrictEqual({
@@ -1085,6 +1090,7 @@ describe("Single Project", () => {
     expect(releaseWorkflow.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_DIST_TAG: "latest",
       NPM_TRUSTED_PUBLISHER: "true",
+      PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
     });
 
     expect(releaseWorkflow.jobs.release_npm.permissions).toStrictEqual({
@@ -1151,6 +1157,69 @@ describe("Single Project", () => {
         job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:'),
       ).toBeTruthy();
     }
+  });
+
+  test("workflow dispatch has dry_run input", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.on.workflow_dispatch.inputs.dry_run).toEqual({
+      description: "Dry run (skip actual publishing)",
+      required: false,
+      type: "boolean",
+    });
+  });
+
+  test("publish jobs pass PUBLIB_DRYRUN from workflow input", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    const release = new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    // WHEN
+    release.publisher.publishToNpm();
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+    const npmJob = releaseWorkflow.jobs.release_npm;
+    const releaseStep = npmJob.steps.find((s: any) => s.name === "Release");
+    expect(releaseStep.env.PUBLIB_DRYRUN).toBe("${{ inputs.dry_run }}");
+  });
+
+  test("github release respects PUBLIB_DRYRUN", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    new Release(project, {
+      task: project.buildTask,
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+    const githubJob = releaseWorkflow.jobs.release_github;
+    const releaseStep = githubJob.steps.find((s: any) => s.name === "Release");
+    expect(releaseStep.if).toBe("${{ !inputs.dry_run }}");
+    expect(releaseStep.env.PUBLIB_DRYRUN).toBeUndefined();
   });
 });
 

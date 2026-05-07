@@ -787,7 +787,15 @@ export class Release extends Component {
                 paths: this.releaseTrigger.paths,
               }
             : undefined,
-        workflowDispatch: {}, // allow manual triggering
+        workflowDispatch: {
+          inputs: {
+            dry_run: {
+              description: "Dry run (skip actual publishing)",
+              required: false,
+              type: "boolean",
+            },
+          },
+        },
       });
 
       // Create job based on child (only?) project GitHub
