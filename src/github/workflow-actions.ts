@@ -143,6 +143,8 @@ export class WorkflowActions {
           author: committer,
           committer: committer,
           signoff: options.signoff ?? true,
+          "add-paths": options.addPaths?.join("\n") || undefined,
+          "delete-branch": options.deleteBranch ?? undefined,
         },
       },
     ];
@@ -256,6 +258,21 @@ export interface CreatePullRequestOptions {
    * @default `github-actions/${options.workflowName}`
    */
   readonly branchName?: string;
+
+  /**
+   * Paths to add to the commit, mapping to the action's `add-paths` input.
+   *
+   * @default - all paths
+   */
+  readonly addPaths?: string[];
+
+  /**
+   * Whether to delete the pull request branch when the pull request is closed,
+   * mapping to the action's `delete-branch` input.
+   *
+   * @default false
+   */
+  readonly deleteBranch?: boolean;
 
   /**
    * The git identity used to create the commit.

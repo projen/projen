@@ -319,6 +319,8 @@ export class Publisher extends Component {
           .map(([_, job]) => job),
         environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.githubReleaseCommand(options, branchOptions),
+        releaseStepIf: "${{ !inputs.dry_run }}",
+        isPubLib: false,
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
         },
@@ -791,8 +793,14 @@ export class Publisher extends Component {
         {
           name: "Release",
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+          if: opts.releaseStepIf,
           run: commandToRun,
-          env: jobEnv,
+          env: {
+            ...jobEnv,
+            ...((opts.isPubLib ?? true)
+              ? { PUBLIB_DRYRUN: "${{ inputs.dry_run }}" }
+              : {}),
+          },
         },
         ...opts.postPublishSteps,
       ];
@@ -886,6 +894,7 @@ export class Publisher extends Component {
       "exit $exitcode;",
       "fi",
     ].join(" ");
+
     return idempotentRelease;
   }
 }
@@ -946,6 +955,18 @@ interface PublishJobOptions {
    * @default - no environment used
    */
   readonly environment?: string;
+
+  /**
+   * A condition for the release step.
+   * @default - no condition
+   */
+  readonly releaseStepIf?: string;
+
+  /**
+   * Whether this job uses publib (and thus supports PUBLIB_DRYRUN).
+   * @default true
+   */
+  readonly isPubLib?: boolean;
 }
 
 /**

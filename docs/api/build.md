@@ -593,6 +593,7 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildTask">buildTask</a></code> | <code>projen.Task</code> | The task to execute in order to build the project. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.buildRunsOn">buildRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
@@ -690,6 +691,19 @@ public readonly artifactsDirectory: string;
 - *Default:* "dist"
 
 A name of a directory that includes build artifacts.
+
+---
+
+##### `buildRunsOn`<sup>Optional</sup> <a name="buildRunsOn" id="projen.build.BuildWorkflowOptions.property.buildRunsOn"></a>
+
+```typescript
+public readonly buildRunsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* runsOn
+
+Github Runner selection labels.
 
 ---
 

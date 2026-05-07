@@ -792,7 +792,7 @@ export class Jest extends Component {
         new JestReporter("jest-junit", { outputDirectory: reportsDir }),
       );
 
-      this.project.addDevDeps("jest-junit@^16");
+      this.project.addDevDeps("jest-junit@^17");
 
       this.project.gitignore.exclude(
         "# jest-junit artifacts",

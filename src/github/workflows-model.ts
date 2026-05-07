@@ -1249,11 +1249,49 @@ export interface WorkflowRunOptions {
   readonly branches?: Array<string>;
 }
 
-//#region Empty Options (future-proofing the API)
 /**
- * The Workflow dispatch event accepts no options.
+ * The Workflow dispatch event options.
  */
-export interface WorkflowDispatchOptions {}
+export interface WorkflowDispatchOptions {
+  /**
+   * Inputs for the workflow_dispatch event.
+   */
+  readonly inputs?: { [name: string]: WorkflowDispatchInput };
+}
+
+/**
+ * An input for a workflow_dispatch event.
+ */
+export interface WorkflowDispatchInput {
+  /**
+   * A description of the input.
+   */
+  readonly description: string;
+
+  /**
+   * Whether the input is required.
+   * @default false
+   */
+  readonly required?: boolean;
+
+  /**
+   * The default value of the input.
+   * @default - no default
+   */
+  readonly default?: string;
+
+  /**
+   * The type of the input.
+   * @default "string"
+   */
+  readonly type?: "string" | "boolean" | "choice" | "number" | "environment";
+
+  /**
+   * Options for the input if type is 'choice'.
+   * @default - no options
+   */
+  readonly options?: string[];
+}
 
 /**
  * The Workflow Call event accepts no options.
