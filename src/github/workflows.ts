@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { extname } from "node:path";
 import { snake } from "case";
 import type { GitHubActionsProvider } from "./actions-provider";
@@ -359,7 +360,7 @@ function renderJobs(
       env: job.env,
       defaults: kebabCaseKeys(job.defaults),
       if: job.if,
-      steps: steps.map(renderStep),
+      steps: assignStepIds(steps).map(renderStep),
       "timeout-minutes": job.timeoutMinutes,
       strategy: renderJobStrategy(job.strategy),
       "continue-on-error": job.continueOnError,
@@ -410,7 +411,7 @@ function renderJobs(
     return rendered;
   }
 
-  function renderStep(step: workflows.JobStep) {
+  function renderStep(step: workflows.JobStep & { id: string }) {
     return {
       name: step.name,
       id: step.id,
@@ -425,6 +426,57 @@ function renderJobs(
       "working-directory": step.workingDirectory,
     };
   }
+}
+
+/**
+ * Assigns a stable `id` to every step that doesn't already have one.
+ *
+ * Priority:
+ * 1. Explicit `id` on the step — used as-is.
+ * 2. Derived from `name` — converted to snake_case.
+ * 3. Content hash fallback — `auto_<hash>` based on `run` or `uses`.
+ *
+ * Duplicate IDs within the same job are disambiguated with `_2`, `_3`, etc.
+ */
+function assignStepIds(
+  steps: workflows.JobStep[],
+): Array<workflows.JobStep & { id: string }> {
+  const usedIds = new Map<string, number>();
+
+  function uniqueId(base: string): string {
+    const count = usedIds.get(base) ?? 0;
+    if (count === 0) {
+      usedIds.set(base, 1);
+      return base;
+    }
+    const next = count + 1;
+    usedIds.set(base, next);
+    return `${base}_${next}`;
+  }
+
+  return steps.map((step) => {
+    if (step.id) {
+      // Explicit id — register it and use as-is
+      const id = uniqueId(step.id);
+      return { ...step, id };
+    }
+
+    if (step.name) {
+      // Derive from name: snake_case, collapse non-alphanumeric
+      const base = snake(step.name)
+        .replace(/[^a-z0-9_]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_|_$/g, "");
+      const id = uniqueId(base);
+      return { ...step, id };
+    }
+
+    // Fallback: content hash
+    const content = step.run ?? step.uses ?? "";
+    const hash = createHash("sha256").update(content).digest("hex").slice(0, 8);
+    const id = uniqueId(`auto_${hash}`);
+    return { ...step, id };
+  });
 }
 
 function arrayOrScalar<T>(arr: T | T[] | undefined): T | T[] | undefined {
