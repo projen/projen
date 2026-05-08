@@ -1,5 +1,6 @@
-import { Job, JobPermission } from "../../src/github/workflows-model";
 import { GithubWorkflow } from "../../src/github/workflows";
+import type { Job } from "../../src/github/workflows-model";
+import { JobPermission } from "../../src/github/workflows-model";
 import { synthSnapshot, TestProject } from "../util";
 
 /**
@@ -73,10 +74,7 @@ describe("step id assignment", () => {
     workflow.addJob("build", {
       runsOn: ["ubuntu-latest"],
       permissions: {},
-      steps: [
-        { run: "echo hello" },
-        { run: "echo hello" },
-      ],
+      steps: [{ run: "echo hello" }, { run: "echo hello" }],
     });
 
     const job = workflow.getJob("build") as Job;

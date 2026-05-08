@@ -445,10 +445,10 @@ function assignJobStepIds(
     } else {
       // Jobs with no length or undefined steps are passed through sense
       // steps may be populated later during synthesis (eg setupTools)
-      result[name] = 
+      result[name] =
         job.steps.length > 0
-        ? { ...job, steps: assignStepIds(job.steps) }
-        : job;
+          ? { ...job, steps: assignStepIds(job.steps) }
+          : job;
     }
   }
   return result;

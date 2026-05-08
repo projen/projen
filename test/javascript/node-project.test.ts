@@ -1562,7 +1562,6 @@ describe("scoped private packages", () => {
       expect(buildWorkflow.jobs.build.steps).toEqual(
         expect.arrayContaining([
           {
-            id: "aws_codeartifact_login",
             name: "AWS CodeArtifact Login",
             run: "npx projen ca:login",
             env: {
@@ -1573,7 +1572,6 @@ describe("scoped private packages", () => {
             },
           },
           {
-            id: "install_dependencies",
             name: "Install dependencies",
             run: "yarn install --check-files",
           },
@@ -1649,7 +1647,6 @@ describe("scoped private packages", () => {
       expect(buildWorkflow.jobs.build.steps).toEqual(
         expect.arrayContaining([
           {
-            id: "configure_aws_credentials",
             name: "Configure AWS Credentials",
             uses: expect.stringContaining(
               "aws-actions/configure-aws-credentials",
@@ -1661,12 +1658,10 @@ describe("scoped private packages", () => {
             },
           },
           {
-            id: "aws_codeartifact_login",
             name: "AWS CodeArtifact Login",
             run: "npx projen ca:login",
           },
           {
-            id: "install_dependencies",
             name: "Install dependencies",
             run: "yarn install --check-files",
           },
@@ -1990,24 +1985,23 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const expectedSteps = [
-      {
-        id: "aws_codeartifact_login",
-        name: "AWS CodeArtifact Login",
-        run: "pnpm dlx projen ca:login",
-        env: {
-          AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
-          AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
-        },
+    const expectedStep = {
+      name: "AWS CodeArtifact Login",
+      run: "pnpm dlx projen ca:login",
+      env: {
+        AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+        AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
       },
-    ];
+    };
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
-      expect.arrayContaining(expectedSteps),
+      expect.arrayContaining([
+        { ...expectedStep, id: "aws_codeartifact_login" },
+      ]),
     );
     expect(buildWorkflow.jobs.build.steps).toEqual(
-      expect.arrayContaining(expectedSteps),
+      expect.arrayContaining([expectedStep]),
     );
   });
 });
