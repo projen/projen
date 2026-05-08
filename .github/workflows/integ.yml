@@ -95,8 +95,8 @@ jobs:
       fail-fast: false
       matrix:
         go-version:
-          - 1.24.x
           - 1.25.x
+          - 1.26.x
   integ-java:
     runs-on: ubuntu-latest
     permissions:
