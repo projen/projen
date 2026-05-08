@@ -14,23 +14,28 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
+        id: download_patch
         uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: ${{ runner.temp }}
       - name: Apply patch
+        id: apply_patch
         run: '[ -s ${{ runner.temp }}/repo.patch ] && git apply ${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Push changes
+        id: push_changes
         env:
           PULL_REQUEST_REF: ${{ github.event.pull_request.head.ref }}
         run: |-
@@ -44,33 +49,42 @@ jobs:
       contents: read
     if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create js artifact
+        id: create_js_artifact
         run: cd .repo && node ./projen.js package:js
       - name: Collect js artifact
+        id: collect_js_artifact
         run: mv .repo/dist dist
   package-java:
     needs: build
@@ -79,37 +93,47 @@ jobs:
       contents: read
     if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-java@v5
+      - id: auto_caa81516
+        uses: actions/setup-java@v5
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create java artifact
+        id: create_java_artifact
         run: cd .repo && node ./projen.js package:java
       - name: Collect java artifact
+        id: collect_java_artifact
         run: mv .repo/dist dist
   package-python:
     needs: build
@@ -118,36 +142,46 @@ jobs:
       contents: read
     if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
-      - uses: actions/setup-python@v6
+      - id: auto_0bca5aae
+        uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create python artifact
+        id: create_python_artifact
         run: cd .repo && node ./projen.js package:python
       - name: Collect python artifact
+        id: collect_python_artifact
         run: mv .repo/dist dist
   package-go:
     needs: build
@@ -156,36 +190,46 @@ jobs:
       contents: read
     if: ${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
-      - uses: actions/setup-go@v6
+      - id: auto_5c729294
+        uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create go artifact
+        id: create_go_artifact
         run: cd .repo && node ./projen.js package:go
       - name: Collect go artifact
+        id: collect_go_artifact
         run: mv .repo/dist dist
   build_matrix:
     runs-on: ${{ matrix.runner.os }}
@@ -198,11 +242,13 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
+        id: setup_node_js
         uses: actions/setup-node@v6
         with:
           node-version: lts/-1
@@ -213,10 +259,13 @@ jobs:
           npm config set cache D:\a\_temp\npm --global
           echo "TEMP=D:\a\_temp" >> $env:GITHUB_ENV
       - name: Install dependencies
+        id: install_dependencies
         run: npm install
       - name: build
+        id: build
         run: node ./projen.js build
       - name: Upload coverage to Codecov
+        id: upload_coverage_to_codecov
         uses: codecov/codecov-action@v6
         with:
           directory: coverage
@@ -230,6 +279,7 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
+        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened && matrix.runner.primary_build
         uses: actions/upload-artifact@v7
         with:
@@ -237,16 +287,19 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
+        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat repo.patch
           exit 1
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
         if: matrix.runner.primary_build
       - name: Upload artifact
+        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact

@@ -27,23 +27,29 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
+        id: setup_node_js
         uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: npm ci
       - name: release
+        id: release
         run: node ./projen.js release
       - name: Upload coverage to Codecov
+        id: upload_coverage_to_codecov
         uses: codecov/codecov-action@v6
         with:
           directory: coverage
@@ -61,10 +67,12 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -86,19 +94,23 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: ${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -109,6 +121,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -126,33 +139,43 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: 24.x
           package-manager-cache: "false"
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create js artifact
+        id: create_js_artifact
         run: cd .repo && node ./projen.js package:js
       - name: Collect js artifact
+        id: collect_js_artifact
         run: mv .repo/dist dist
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
@@ -166,6 +189,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -182,37 +206,48 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-java@v5
+      - id: auto_caa81516
+        uses: actions/setup-java@v5
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create java artifact
+        id: create_java_artifact
         run: cd .repo && node ./projen.js package:java
       - name: Collect java artifact
+        id: collect_java_artifact
         run: mv .repo/dist dist
       - name: Release
+        id: release
         env:
           MAVEN_SERVER_ID: central-ossrh
           MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
@@ -228,6 +263,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -245,36 +281,47 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
-      - uses: actions/setup-python@v6
+      - id: auto_0bca5aae
+        uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create python artifact
+        id: create_python_artifact
         run: cd .repo && node ./projen.js package:python
       - name: Collect python artifact
+        id: collect_python_artifact
         run: mv .repo/dist dist
       - name: Release
+        id: release
         env:
           PYPI_TRUSTED_PUBLISHER: "true"
           PUBLIB_DRYRUN: ${{ inputs.dry_run }}
@@ -285,6 +332,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -301,36 +349,47 @@ jobs:
     environment: release
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/-1
           package-manager-cache: "false"
-      - uses: actions/setup-go@v6
+      - id: auto_5c729294
+        uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           path: .repo
       - name: Install Dependencies
+        id: install_dependencies
         run: cd .repo && npm ci
       - name: Extract build artifact
+        id: extract_build_artifact
         run: tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo
       - name: Move build artifact out of the way
+        id: move_build_artifact_out_of_the_way
         run: mv dist dist.old
       - name: Create go artifact
+        id: create_go_artifact
         run: cd .repo && node ./projen.js package:go
       - name: Collect go artifact
+        id: collect_go_artifact
         run: mv .repo/dist dist
       - name: Release
+        id: release
         env:
           GIT_USER_NAME: github-actions[bot]
           GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
@@ -343,6 +402,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: ${{ failure() }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

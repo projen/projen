@@ -11,6 +11,7 @@ exports[`deps upgrade commit can be signed 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
+      "id": "checkout",
       "name": "Checkout",
       "uses": "actions/checkout@v6",
       "with": {
@@ -18,6 +19,7 @@ exports[`deps upgrade commit can be signed 1`] = `
       },
     },
     {
+      "id": "download_patch",
       "name": "Download patch",
       "uses": "actions/download-artifact@v8",
       "with": {
@@ -26,10 +28,12 @@ exports[`deps upgrade commit can be signed 1`] = `
       },
     },
     {
+      "id": "apply_patch",
       "name": "Apply patch",
       "run": "[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."",
     },
     {
+      "id": "set_git_identity",
       "name": "Set git identity",
       "run": "git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
@@ -70,6 +74,7 @@ Upgrades project dependencies. See details in [workflow run].
 exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -78,10 +83,12 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "yarn install --check-files --frozen-lockfile",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "npx projen build",
   },
@@ -94,6 +101,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -104,6 +112,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -154,6 +163,7 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
 exports[`mutableBuild will push changes to PR branches 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -162,10 +172,12 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "yarn install --check-files",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "npx projen build",
   },
@@ -178,6 +190,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -188,6 +201,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -200,6 +214,7 @@ exit 1",
 exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -209,6 +224,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
     },
   },
   {
+    "id": "download_patch",
     "name": "Download patch",
     "uses": "actions/download-artifact@v8",
     "with": {
@@ -217,10 +233,12 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
     },
   },
   {
+    "id": "apply_patch",
     "name": "Apply patch",
     "run": "[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."",
   },
   {
+    "id": "set_git_identity",
     "name": "Set git identity",
     "run": "git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
@@ -229,6 +247,7 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
     "env": {
       "PULL_REQUEST_REF": "\${{ github.event.pull_request.head.ref }}",
     },
+    "id": "push_changes",
     "name": "Push changes",
     "run": "git add .
 git commit -s -m "chore: self mutation"
@@ -337,6 +356,7 @@ permissions-backup.acl
 exports[`package manager build job steps bun build job steps 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -345,6 +365,7 @@ exports[`package manager build job steps bun build job steps 1`] = `
     },
   },
   {
+    "id": "setup_bun",
     "name": "Setup bun",
     "uses": "oven-sh/setup-bun@v2",
     "with": {
@@ -352,10 +373,12 @@ exports[`package manager build job steps bun build job steps 1`] = `
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "bun install",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "bunx projen build",
   },
@@ -368,6 +391,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -378,6 +402,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -390,6 +415,7 @@ exit 1",
 exports[`package manager build job steps pnpm build job steps 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -398,6 +424,7 @@ exports[`package manager build job steps pnpm build job steps 1`] = `
     },
   },
   {
+    "id": "setup_pnpm",
     "name": "Setup pnpm",
     "uses": "pnpm/action-setup@v5",
     "with": {
@@ -405,6 +432,7 @@ exports[`package manager build job steps pnpm build job steps 1`] = `
     },
   },
   {
+    "id": "setup_node_js",
     "name": "Setup Node.js",
     "uses": "actions/setup-node@v6",
     "with": {
@@ -413,10 +441,12 @@ exports[`package manager build job steps pnpm build job steps 1`] = `
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "pnpm i --no-frozen-lockfile",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "pnpm exec projen build",
   },
@@ -429,6 +459,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -439,6 +470,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -451,6 +483,7 @@ exit 1",
 exports[`package manager build job steps yarn berry build job steps 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -459,10 +492,12 @@ exports[`package manager build job steps yarn berry build job steps 1`] = `
     },
   },
   {
+    "id": "enable_corepack",
     "name": "Enable corepack",
     "run": "corepack enable",
   },
   {
+    "id": "setup_node_js",
     "name": "Setup Node.js",
     "uses": "actions/setup-node@v6",
     "with": {
@@ -471,10 +506,12 @@ exports[`package manager build job steps yarn berry build job steps 1`] = `
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "yarn install --no-immutable",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "yarn projen build",
   },
@@ -487,6 +524,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -497,6 +535,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -509,6 +548,7 @@ exit 1",
 exports[`provided preBuildSteps for build workflow get combined with setup steps 1`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -517,14 +557,17 @@ exports[`provided preBuildSteps for build workflow get combined with setup steps
     },
   },
   {
+    "id": "install_dependencies",
     "name": "Install dependencies",
     "run": "yarn install --check-files",
   },
   {
+    "id": "hello",
     "name": "hello",
     "run": "echo hello",
   },
   {
+    "id": "build",
     "name": "build",
     "run": "npx projen build",
   },
@@ -537,6 +580,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     "working-directory": "./",
   },
   {
+    "id": "upload_patch",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v7",
@@ -547,6 +591,7 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
     },
   },
   {
+    "id": "fail_build_on_mutation",
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
     "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."

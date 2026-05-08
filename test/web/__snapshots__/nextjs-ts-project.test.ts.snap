@@ -42,18 +42,22 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
+        id: setup_node_js
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: yarn install --check-files
       - name: build
+        id: build
         run: npx projen build
       - name: Find mutations
         id: self_mutation
@@ -63,6 +67,7 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
+        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -70,6 +75,7 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
+        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -83,23 +89,28 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
+        id: download_patch
         uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
+        id: apply_patch
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Push changes
+        id: push_changes
         env:
           PULL_REQUEST_REF: \${{ github.event.pull_request.head.ref }}
         run: |-
@@ -128,7 +139,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -155,15 +167,19 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Setup Node.js
+        id: setup_node_js
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
+        id: upgrade_dependencies
         run: npx projen upgrade
       - name: Find mutations
         id: create_patch
@@ -173,6 +189,7 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
+        id: upload_patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v7
         with:
@@ -188,15 +205,19 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Download patch
+        id: download_patch
         uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
+        id: apply_patch
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
