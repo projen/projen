@@ -349,7 +349,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -385,10 +385,11 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
+          cache: false
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -423,10 +424,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
+          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -565,7 +567,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -591,7 +593,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -634,10 +636,11 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
+          cache: false
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -681,10 +684,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
+          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -4168,7 +4172,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:

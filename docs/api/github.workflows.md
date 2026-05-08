@@ -1189,6 +1189,64 @@ Which activity types to trigger on.
 
 ---
 
+### JavaToolRequirement <a name="JavaToolRequirement" id="projen.github.workflows.JavaToolRequirement"></a>
+
+Version requirement for Java tools.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.JavaToolRequirement.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const javaToolRequirement: github.workflows.JavaToolRequirement = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.distribution">distribution</a></code> | <code>string</code> | The JDK distribution to use. |
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.github.workflows.JavaToolRequirement.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.JavaToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
+
+---
+
+##### `distribution`<sup>Optional</sup> <a name="distribution" id="projen.github.workflows.JavaToolRequirement.property.distribution"></a>
+
+```typescript
+public readonly distribution: string;
+```
+
+- *Type:* string
+- *Default:* "corretto"
+
+The JDK distribution to use.
+
+---
+
 ### Job <a name="Job" id="projen.github.workflows.Job"></a>
 
 A GitHub Workflow job definition.
@@ -2970,6 +3028,63 @@ Git ref.
 
 ---
 
+### PythonToolRequirement <a name="PythonToolRequirement" id="projen.github.workflows.PythonToolRequirement"></a>
+
+Version requirement for Python tools.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.PythonToolRequirement.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const pythonToolRequirement: github.workflows.PythonToolRequirement = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.packageManager">packageManager</a></code> | <code>string</code> | The package manager to use for caching (e.g. "pip", "pipenv", "poetry"). Required when `cache` is true. |
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.github.workflows.PythonToolRequirement.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.PythonToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.github.workflows.PythonToolRequirement.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: string;
+```
+
+- *Type:* string
+
+The package manager to use for caching (e.g. "pip", "pipenv", "poetry"). Required when `cache` is true.
+
+---
+
 ### RegistryPackageOptions <a name="RegistryPackageOptions" id="projen.github.workflows.RegistryPackageOptions"></a>
 
 Registry package options.
@@ -3432,6 +3547,7 @@ const toolRequirement: github.workflows.ToolRequirement = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.ToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.ToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
 
 ---
 
@@ -3442,6 +3558,19 @@ public readonly version: string;
 ```
 
 - *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.ToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
 
 ---
 
@@ -3463,9 +3592,9 @@ const tools: github.workflows.Tools = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.Tools.property.dotnet">dotnet</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup .NET Core. |
 | <code><a href="#projen.github.workflows.Tools.property.go">go</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup golang. |
-| <code><a href="#projen.github.workflows.Tools.property.java">java</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup java (temurin distribution). |
+| <code><a href="#projen.github.workflows.Tools.property.java">java</a></code> | <code>projen.github.workflows.JavaToolRequirement</code> | Setup java. |
 | <code><a href="#projen.github.workflows.Tools.property.node">node</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup node.js. |
-| <code><a href="#projen.github.workflows.Tools.property.python">python</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup python. |
+| <code><a href="#projen.github.workflows.Tools.property.python">python</a></code> | <code>projen.github.workflows.PythonToolRequirement</code> | Setup python. |
 
 ---
 
@@ -3498,13 +3627,13 @@ Setup golang.
 ##### `java`<sup>Optional</sup> <a name="java" id="projen.github.workflows.Tools.property.java"></a>
 
 ```typescript
-public readonly java: ToolRequirement;
+public readonly java: JavaToolRequirement;
 ```
 
-- *Type:* projen.github.workflows.ToolRequirement
+- *Type:* projen.github.workflows.JavaToolRequirement
 - *Default:* not installed
 
-Setup java (temurin distribution).
+Setup java.
 
 ---
 
@@ -3524,10 +3653,10 @@ Setup node.js.
 ##### `python`<sup>Optional</sup> <a name="python" id="projen.github.workflows.Tools.property.python"></a>
 
 ```typescript
-public readonly python: ToolRequirement;
+public readonly python: PythonToolRequirement;
 ```
 
-- *Type:* projen.github.workflows.ToolRequirement
+- *Type:* projen.github.workflows.PythonToolRequirement
 - *Default:* not installed
 
 Setup python.
