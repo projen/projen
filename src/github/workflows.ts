@@ -230,7 +230,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
-    Object.assign(this._jobs, { ...jobs });
+    Object.assign(this._jobs, assignJobStepIds(jobs));
   }
 
   /**
@@ -264,7 +264,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
-    Object.assign(this._jobs, { ...jobs });
+    Object.assign(this._jobs, assignJobStepIds(jobs));
   }
 
   /**
@@ -360,7 +360,7 @@ function renderJobs(
       env: job.env,
       defaults: kebabCaseKeys(job.defaults),
       if: job.if,
-      steps: assignStepIds(steps).map(renderStep),
+      steps: steps.map(renderStep),
       "timeout-minutes": job.timeoutMinutes,
       strategy: renderJobStrategy(job.strategy),
       "continue-on-error": job.continueOnError,
@@ -411,7 +411,7 @@ function renderJobs(
     return rendered;
   }
 
-  function renderStep(step: workflows.JobStep & { id: string }) {
+  function renderStep(step: workflows.JobStep) {
     return {
       name: step.name,
       id: step.id,
@@ -429,19 +429,54 @@ function renderJobs(
 }
 
 /**
+ * Eagerly assigns step IDs to all non-reusable jobs in a record.
+ * Reusable workflow jobs (those with `uses`) are passed through unchanged.
+ */
+function assignJobStepIds(
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
+): Record<string, workflows.Job | workflows.JobCallingReusableWorkflow> {
+  const result: Record<
+    string,
+    workflows.Job | workflows.JobCallingReusableWorkflow
+  > = {};
+  for (const [name, job] of Object.entries(jobs)) {
+    if ("uses" in job) {
+      result[name] = job;
+    } else {
+      result[name] = { ...job, steps: assignStepIds(job.steps) };
+    }
+  }
+  return result;
+}
+
+/**
  * Assigns a stable `id` to every step that doesn't already have one.
  *
  * Priority:
- * 1. Explicit `id` on the step — used as-is.
+ * 1. Explicit `id` on the step — preserved as-is and never renamed.
  * 2. Derived from `name` — converted to snake_case.
  * 3. Content hash fallback — `auto_<hash>` based on `run` or `uses`.
  *
- * Duplicate IDs within the same job are disambiguated with `_2`, `_3`, etc.
+ * Explicit IDs are reserved in a first pass so that derived/auto IDs never
+ * collide with them. Duplicate explicit IDs in the same job throw an error.
+ * Derived/auto IDs that collide are disambiguated with `_2`, `_3`, etc.
  */
 function assignStepIds(
   steps: workflows.JobStep[],
 ): Array<workflows.JobStep & { id: string }> {
   const usedIds = new Map<string, number>();
+
+  // First pass: reserve all explicit IDs so derived IDs won't claim them.
+  for (const step of steps) {
+    if (step.id) {
+      if (usedIds.has(step.id)) {
+        throw new Error(
+          `Duplicate explicit step id "${step.id}". Step IDs must be unique within a job.`,
+        );
+      }
+      usedIds.set(step.id, 1);
+    }
+  }
 
   function uniqueId(base: string): string {
     const count = usedIds.get(base) ?? 0;
@@ -456,9 +491,8 @@ function assignStepIds(
 
   return steps.map((step) => {
     if (step.id) {
-      // Explicit id — register it and use as-is
-      const id = uniqueId(step.id);
-      return { ...step, id };
+      // Explicit id — already reserved in first pass, use as-is
+      return { ...step, id: step.id };
     }
 
     if (step.name) {
