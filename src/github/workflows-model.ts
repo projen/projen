@@ -182,16 +182,16 @@ export interface Job extends CommonJobDefinition {
  */
 export interface Tools {
   /**
-   * Setup java (temurin distribution).
+   * Setup java.
    * @default - not installed
    */
-  readonly java?: ToolRequirement;
+  readonly java?: JavaToolRequirement;
 
   /**
    * Setup python.
    * @default - not installed
    */
-  readonly python?: ToolRequirement;
+  readonly python?: PythonToolRequirement;
 
   /**
    * Setup golang.
@@ -217,6 +217,33 @@ export interface Tools {
  */
 export interface ToolRequirement {
   readonly version: string;
+  /**
+   * Whether to enable automatic dependency caching.
+   * @default false
+   */
+  readonly cache?: boolean;
+}
+
+/**
+ * Version requirement for Python tools.
+ */
+export interface PythonToolRequirement extends ToolRequirement {
+  /**
+   * The package manager to use for caching (e.g. "pip", "pipenv", "poetry").
+   * Required when `cache` is true.
+   */
+  readonly packageManager?: string;
+}
+
+/**
+ * Version requirement for Java tools.
+ */
+export interface JavaToolRequirement extends ToolRequirement {
+  /**
+   * The JDK distribution to use.
+   * @default "corretto"
+   */
+  readonly distribution?: string;
 }
 
 /**
