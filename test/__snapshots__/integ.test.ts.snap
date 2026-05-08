@@ -385,7 +385,6 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-          cache: false
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
@@ -428,7 +427,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
-          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
@@ -636,7 +634,6 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-          cache: false
       - uses: actions/setup-node@v6
         with:
           node-version: 16.0.0
@@ -688,7 +685,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
-          cache: false
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:

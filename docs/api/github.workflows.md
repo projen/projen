@@ -1208,6 +1208,7 @@ const javaToolRequirement: github.workflows.JavaToolRequirement = { ... }
 | <code><a href="#projen.github.workflows.JavaToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JavaToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
 | <code><a href="#projen.github.workflows.JavaToolRequirement.property.distribution">distribution</a></code> | <code>string</code> | The JDK distribution to use. |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.packageManager">packageManager</a></code> | <code>string</code> | The package manager to use for caching (e.g. "maven", "gradle", "sbt"). Required when `cache` is true. |
 
 ---
 
@@ -1244,6 +1245,18 @@ public readonly distribution: string;
 - *Default:* "corretto"
 
 The JDK distribution to use.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.github.workflows.JavaToolRequirement.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: string;
+```
+
+- *Type:* string
+
+The package manager to use for caching (e.g. "maven", "gradle", "sbt"). Required when `cache` is true.
 
 ---
 
