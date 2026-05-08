@@ -14,7 +14,6 @@ exports[`node version in workflow does setup a custom version 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "id": "checkout",
       "name": "Checkout",
       "uses": "actions/checkout@v6",
       "with": {
@@ -23,7 +22,6 @@ exports[`node version in workflow does setup a custom version 1`] = `
       },
     },
     {
-      "id": "setup_node_js",
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v6",
       "with": {
@@ -32,12 +30,10 @@ exports[`node version in workflow does setup a custom version 1`] = `
       },
     },
     {
-      "id": "install_dependencies",
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
     {
-      "id": "build",
       "name": "build",
       "run": "npx projen build",
     },
@@ -50,7 +46,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       "working-directory": "./",
     },
     {
-      "id": "upload_patch",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v7",
@@ -61,7 +56,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       },
     },
     {
-      "id": "fail_build_on_mutation",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -70,12 +64,10 @@ exit 1",
     },
     {
       "continue-on-error": true,
-      "id": "backup_artifact_permissions",
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
-      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {
@@ -102,7 +94,6 @@ exports[`node version in workflow does setup default version 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "id": "checkout",
       "name": "Checkout",
       "uses": "actions/checkout@v6",
       "with": {
@@ -111,7 +102,6 @@ exports[`node version in workflow does setup default version 1`] = `
       },
     },
     {
-      "id": "setup_node_js",
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v6",
       "with": {
@@ -120,12 +110,10 @@ exports[`node version in workflow does setup default version 1`] = `
       },
     },
     {
-      "id": "install_dependencies",
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
     {
-      "id": "build",
       "name": "build",
       "run": "npx projen build",
     },
@@ -138,7 +126,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       "working-directory": "./",
     },
     {
-      "id": "upload_patch",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v7",
@@ -149,7 +136,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       },
     },
     {
-      "id": "fail_build_on_mutation",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -158,12 +144,10 @@ exit 1",
     },
     {
       "continue-on-error": true,
-      "id": "backup_artifact_permissions",
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
-      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {
@@ -190,7 +174,6 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "id": "checkout",
       "name": "Checkout",
       "uses": "actions/checkout@v6",
       "with": {
@@ -199,7 +182,6 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       },
     },
     {
-      "id": "setup_node_js",
       "name": "Setup Node.js",
       "uses": "actions/setup-node@v6",
       "with": {
@@ -208,12 +190,10 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
       },
     },
     {
-      "id": "install_dependencies",
       "name": "Install dependencies",
       "run": "yarn install --check-files",
     },
     {
-      "id": "build",
       "name": "build",
       "run": "npx projen build",
     },
@@ -226,7 +206,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       "working-directory": "./",
     },
     {
-      "id": "upload_patch",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Upload patch",
       "uses": "actions/upload-artifact@v7",
@@ -237,7 +216,6 @@ git diff --staged --patch --exit-code > repo.patch || echo "self_mutation_happen
       },
     },
     {
-      "id": "fail_build_on_mutation",
       "if": "steps.self_mutation.outputs.self_mutation_happened",
       "name": "Fail build on mutation",
       "run": "echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -246,12 +224,10 @@ exit 1",
     },
     {
       "continue-on-error": true,
-      "id": "backup_artifact_permissions",
       "name": "Backup artifact permissions",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
-      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {

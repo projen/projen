@@ -18,13 +18,11 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: build
-        id: build
         run: projen build
       - name: Find mutations
         id: self_mutation
@@ -34,7 +32,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -42,7 +39,6 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -105,13 +101,11 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: build
-        id: build
         run: projen build
       - name: Find mutations
         id: self_mutation
@@ -121,7 +115,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -129,7 +122,6 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
@@ -195,13 +187,11 @@ jobs:
         working-directory: ./child
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: build
-        id: build
         run: projen build
       - name: Find mutations
         id: self_mutation
@@ -211,7 +201,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -219,7 +208,6 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."

@@ -264,16 +264,13 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Install dependencies
-        id: install_dependencies
         run: yarn install --check-files
       - name: build
-        id: build
         run: npx projen build
       - name: Find mutations
         id: self_mutation
@@ -283,7 +280,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -291,18 +287,15 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat repo.patch
           exit 1
       - name: Backup artifact permissions
-        id: backup_artifact_permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact
@@ -351,8 +344,7 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -499,8 +491,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -529,8 +520,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -1840,16 +1830,13 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Install dependencies
-        id: install_dependencies
         run: yarn install --check-files
       - name: build
-        id: build
         run: npx projen build
       - name: Find mutations
         id: self_mutation
@@ -1859,7 +1846,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -1867,18 +1853,15 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat repo.patch
           exit 1
       - name: Backup artifact permissions
-        id: backup_artifact_permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact
@@ -1927,8 +1910,7 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -2075,8 +2057,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -2105,8 +2086,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -3414,16 +3394,13 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v6
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Install dependencies
-        id: install_dependencies
         run: yarn install --check-files
       - name: build
-        id: build
         run: npx projen build
       - name: Find mutations
         id: self_mutation
@@ -3433,7 +3410,6 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
-        id: upload_patch
         if: steps.self_mutation.outputs.self_mutation_happened
         uses: actions/upload-artifact@v7
         with:
@@ -3441,18 +3417,15 @@ jobs:
           path: repo.patch
           overwrite: true
       - name: Fail build on mutation
-        id: fail_build_on_mutation
         if: steps.self_mutation.outputs.self_mutation_happened
         run: |-
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat repo.patch
           exit 1
       - name: Backup artifact permissions
-        id: backup_artifact_permissions
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
-        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact
@@ -3501,8 +3474,7 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -3649,8 +3621,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"
@@ -3679,8 +3650,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - id: auto_4ca7ae43
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: "false"

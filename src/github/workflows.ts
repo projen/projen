@@ -443,7 +443,12 @@ function assignJobStepIds(
     if ("uses" in job) {
       result[name] = job;
     } else {
-      result[name] = { ...job, steps: assignStepIds(job.steps) };
+      // Jobs with no length or undefined steps are passed through sense
+      // steps may be populated later during synthesis (eg setupTools)
+      result[name] = 
+        job.steps.length > 0
+        ? { ...job, steps: assignStepIds(job.steps) }
+        : job;
     }
   }
   return result;
