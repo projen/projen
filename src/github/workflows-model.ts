@@ -244,6 +244,11 @@ export interface JavaToolRequirement extends ToolRequirement {
    * @default "corretto"
    */
   readonly distribution?: string;
+  /**
+   * The package manager to use for caching (e.g. "maven", "gradle", "sbt").
+   * Required when `cache` is true.
+   */
+  readonly packageManager?: string;
 }
 
 /**

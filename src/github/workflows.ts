@@ -444,12 +444,17 @@ function setupTools(tools: workflows.Tools) {
   const steps: workflows.JobStep[] = [];
 
   if (tools.java) {
+    if (tools.java.cache && !tools.java.packageManager) {
+      throw new Error(
+        "java.packageManager is required when java.cache is true",
+      );
+    }
     steps.push({
       uses: "actions/setup-java@v5",
       with: {
         distribution: tools.java.distribution ?? "corretto",
         "java-version": tools.java.version,
-        cache: tools.java.cache ?? false,
+        ...(tools.java.cache && { cache: tools.java.packageManager }),
       },
     });
   }
@@ -474,7 +479,7 @@ function setupTools(tools: workflows.Tools) {
       uses: "actions/setup-python@v6",
       with: {
         "python-version": tools.python.version,
-        cache: tools.python.cache ? tools.python.packageManager : false,
+        ...(tools.python.cache && { cache: tools.python.packageManager }),
       },
     });
   }

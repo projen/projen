@@ -173,7 +173,7 @@ describe("setupTools", () => {
       runsOn: ["ubuntu-latest"],
       permissions: {},
       tools: {
-        java: { version: "11", cache: true },
+        java: { version: "11", cache: true, packageManager: "maven" },
         go: { version: "^1.18.0", cache: true },
         dotnet: { version: "6.x", cache: true },
         node: { version: "18.x", cache: true },
@@ -218,6 +218,23 @@ describe("setupTools", () => {
     const workflows = synthWorkflows(p);
     const content = workflows[".github/workflows/test-tools.yml"];
     expect(content).toMatchSnapshot();
+  });
+
+  test("java cache requires packageManager", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "11", cache: true },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    expect(() => synthWorkflows(p)).toThrow(
+      "java.packageManager is required when java.cache is true",
+    );
   });
 
   test("java custom distribution", () => {

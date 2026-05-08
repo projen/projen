@@ -1694,7 +1694,6 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     {
       "uses": "actions/setup-java@v5",
       "with": {
-        "cache": false,
         "distribution": "corretto",
         "java-version": "11",
       },
@@ -1932,7 +1931,6 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     {
       "uses": "actions/setup-python@v6",
       "with": {
-        "cache": false,
         "python-version": "3.x",
       },
     },
@@ -2139,7 +2137,6 @@ exports[`language bindings snapshot java 1`] = `
     {
       "uses": "actions/setup-java@v5",
       "with": {
-        "cache": false,
         "distribution": "corretto",
         "java-version": "11",
       },
@@ -2278,7 +2275,6 @@ exports[`language bindings snapshot python 1`] = `
     {
       "uses": "actions/setup-python@v6",
       "with": {
-        "cache": false,
         "python-version": "3.x",
       },
     },
