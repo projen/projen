@@ -248,7 +248,7 @@ export class IntegrationTests extends Component {
    */
   private setupPythonStep(version: string): JobStep {
     return {
-      uses: "actions/setup-python@v5",
+      uses: "actions/setup-python@v6",
       with: {
         "python-version": version,
       },
@@ -260,7 +260,7 @@ export class IntegrationTests extends Component {
    */
   private setupGoStep(version: string): JobStep {
     return {
-      uses: "actions/setup-go@v5",
+      uses: "actions/setup-go@v6",
       with: {
         "go-version": version,
       },
@@ -272,7 +272,7 @@ export class IntegrationTests extends Component {
    */
   private setupJavaStep(version: string, distribution: string): JobStep {
     return {
-      uses: "actions/setup-java@v4",
+      uses: "actions/setup-java@v5",
       with: {
         "java-version": version,
         distribution: distribution,
