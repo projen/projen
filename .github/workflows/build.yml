@@ -52,7 +52,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -99,7 +99,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -142,7 +142,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
@@ -188,10 +188,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/-1
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
+          cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8

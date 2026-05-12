@@ -32,7 +32,7 @@ export interface LanguageVersions {
 export const INTEG_TEST_VERSIONS: LanguageVersions = {
   node: ["lts/-2", "lts/-1", "lts/*"],
   python: ["3.10", "3.11", "3.12", "3.13", "3.14"],
-  go: ["1.24.x", "1.25.x"],
+  go: ["1.25.x", "1.26.x"],
   java: [
     { version: "8", distribution: "corretto" },
     { version: "11", distribution: "corretto" },

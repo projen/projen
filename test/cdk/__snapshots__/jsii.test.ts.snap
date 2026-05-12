@@ -347,7 +347,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -494,7 +494,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -523,7 +523,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -1657,12 +1657,13 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
       "uses": "actions/setup-go@v6",
       "with": {
+        "cache": false,
         "go-version": "^1.18.0",
       },
     },
@@ -1750,7 +1751,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -1834,7 +1835,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -1915,12 +1916,13 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
       "uses": "actions/setup-dotnet@v5",
       "with": {
+        "cache": false,
         "dotnet-version": "6.x",
       },
     },
@@ -1999,7 +2001,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -2083,12 +2085,13 @@ exports[`language bindings snapshot dotnet 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
       "uses": "actions/setup-dotnet@v5",
       "with": {
+        "cache": false,
         "dotnet-version": "6.x",
       },
     },
@@ -2159,12 +2162,13 @@ exports[`language bindings snapshot go 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
       "uses": "actions/setup-go@v6",
       "with": {
+        "cache": false,
         "go-version": "^1.18.0",
       },
     },
@@ -2242,7 +2246,7 @@ exports[`language bindings snapshot java 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -2312,7 +2316,7 @@ exports[`language bindings snapshot js 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -2382,7 +2386,7 @@ exports[`language bindings snapshot python 1`] = `
       "uses": "actions/setup-node@v6",
       "with": {
         "node-version": "lts/*",
-        "package-manager-cache": "false",
+        "package-manager-cache": false,
       },
     },
     {
@@ -2528,7 +2532,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2557,7 +2561,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2608,10 +2612,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
+          cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2738,7 +2743,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2767,7 +2772,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2818,10 +2823,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-go@v6
         with:
           go-version: ^1.18.0
+          cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2946,7 +2952,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -2975,7 +2981,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -3026,10 +3032,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 6.x
+          cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -3152,7 +3159,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -3181,7 +3188,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8
@@ -3232,10 +3239,11 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          package-manager-cache: "false"
+          package-manager-cache: false
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 6.x
+          cache: false
       - name: Download build artifacts
         id: download_build_artifacts
         uses: actions/download-artifact@v8

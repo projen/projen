@@ -51,7 +51,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
       - id: auto_8dd8b1ae
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - id: auto_4ca7ae43
@@ -91,7 +91,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
       - id: auto_5d1021cd
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ matrix.go-version }}
       - id: auto_4ca7ae43
@@ -115,8 +115,8 @@ jobs:
       fail-fast: false
       matrix:
         go-version:
-          - 1.24.x
           - 1.25.x
+          - 1.26.x
   integ-java:
     runs-on: ubuntu-latest
     permissions:
@@ -128,7 +128,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
       - id: auto_5c7767f2
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java-version }}
           distribution: ${{ matrix.java-distribution }}
