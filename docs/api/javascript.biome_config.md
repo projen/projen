@@ -123,7 +123,7 @@ const biomeConfiguration: javascript.biome_config.BiomeConfiguration = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.AssistConfiguration</code> | Specific configuration for assists. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.css">css</a></code> | <code>projen.javascript.biome_config.CssConfiguration</code> | Specific configuration for the Css language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.extends">extends</a></code> | <code>string[]</code> | A list of paths to other JSON files, used to extends the current configuration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.extends">extends</a></code> | <code>string[]</code> | A list of paths to other JSON files, used to extend the current configuration. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.files">files</a></code> | <code>projen.javascript.biome_config.FilesConfiguration</code> | The configuration of the filesystem. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.FormatterConfiguration</code> | The configuration of the formatter. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.graphql">graphql</a></code> | <code>projen.javascript.biome_config.GraphqlConfiguration</code> | Specific configuration for the GraphQL language. |
@@ -172,7 +172,7 @@ public readonly extends: string[];
 
 - *Type:* string[]
 
-A list of paths to other JSON files, used to extends the current configuration.
+A list of paths to other JSON files, used to extend the current configuration.
 
 ---
 
