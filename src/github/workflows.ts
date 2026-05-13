@@ -675,9 +675,18 @@ function setupTools(tools: workflows.Tools) {
   const steps: workflows.JobStep[] = [];
 
   if (tools.java) {
+    if (tools.java.cache && !tools.java.packageManager) {
+      throw new Error(
+        "java.packageManager is required when java.cache is true",
+      );
+    }
     steps.push({
       uses: "actions/setup-java@v5",
-      with: { distribution: "corretto", "java-version": tools.java.version },
+      with: {
+        distribution: tools.java.distribution ?? "corretto",
+        "java-version": tools.java.version,
+        ...(tools.java.cache && { cache: tools.java.packageManager }),
+      },
     });
   }
 
@@ -686,29 +695,43 @@ function setupTools(tools: workflows.Tools) {
       uses: "actions/setup-node@v6",
       with: {
         "node-version": tools.node.version,
-        "package-manager-cache": "false",
+        "package-manager-cache": tools.node.cache ?? false,
       },
     });
   }
 
   if (tools.python) {
+    if (tools.python.cache && !tools.python.packageManager) {
+      throw new Error(
+        "python.packageManager is required when python.cache is true",
+      );
+    }
     steps.push({
       uses: "actions/setup-python@v6",
-      with: { "python-version": tools.python.version },
+      with: {
+        "python-version": tools.python.version,
+        ...(tools.python.cache && { cache: tools.python.packageManager }),
+      },
     });
   }
 
   if (tools.go) {
     steps.push({
       uses: "actions/setup-go@v6",
-      with: { "go-version": tools.go.version },
+      with: {
+        "go-version": tools.go.version,
+        cache: tools.go.cache ?? false,
+      },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
       uses: "actions/setup-dotnet@v5",
-      with: { "dotnet-version": tools.dotnet.version },
+      with: {
+        "dotnet-version": tools.dotnet.version,
+        cache: tools.dotnet.cache ?? false,
+      },
     });
   }
 

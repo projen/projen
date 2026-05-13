@@ -506,3 +506,131 @@ describe("step mutation API", () => {
     });
   });
 });
+
+describe("setupTools", () => {
+  test("all tools default cache to false", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "11" },
+        python: { version: "3.x" },
+        go: { version: "^1.18.0" },
+        dotnet: { version: "6.x" },
+        node: { version: "18.x" },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = workflows[".github/workflows/test-tools.yml"];
+    expect(content).toMatchSnapshot();
+  });
+
+  test("tools can enable cache", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "11", cache: true, packageManager: "maven" },
+        go: { version: "^1.18.0", cache: true },
+        dotnet: { version: "6.x", cache: true },
+        node: { version: "18.x", cache: true },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = workflows[".github/workflows/test-tools.yml"];
+    expect(content).toMatchSnapshot();
+  });
+
+  test("python cache requires packageManager", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        python: { version: "3.x", cache: true },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    expect(() => synthWorkflows(p)).toThrow(
+      "python.packageManager is required when python.cache is true",
+    );
+  });
+
+  test("python cache with packageManager", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        python: { version: "3.x", cache: true, packageManager: "poetry" },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = workflows[".github/workflows/test-tools.yml"];
+    expect(content).toMatchSnapshot();
+  });
+
+  test("java cache requires packageManager", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "11", cache: true },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    expect(() => synthWorkflows(p)).toThrow(
+      "java.packageManager is required when java.cache is true",
+    );
+  });
+
+  test("java custom distribution", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "17", distribution: "temurin" },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = workflows[".github/workflows/test-tools.yml"];
+    expect(content).toMatchSnapshot();
+  });
+
+  test("java defaults to corretto distribution", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("test-tools");
+    wf.addJob("job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        java: { version: "11" },
+      },
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = workflows[".github/workflows/test-tools.yml"];
+    expect(content).toContain("distribution: corretto");
+  });
+});
