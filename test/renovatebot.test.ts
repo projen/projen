@@ -1,5 +1,6 @@
-import { synthSnapshot, TestProject } from "./util";
 import { DependencyType, RenovatebotMinimumReleaseAgeBehaviour } from "../src";
+import { synthSnapshot, TestProject } from "./util";
+import { TypeScriptProject } from "../src/typescript";
 
 describe("renovatebot", () => {
   test("renovatebot: true creates renovatebot configuration", () => {
@@ -205,5 +206,38 @@ describe("renovatebot", () => {
 
     // THEN
     expect(p.tryFindObjectFile("renovate.json5")).toBeDefined();
+  });
+
+  test("renovatebot: adds customManagers:biomeVersions when biome is configured", () => {
+    // GIVEN
+    const p = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+      renovatebot: true,
+      biome: true,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"].extends).toContain(
+      "customManagers:biomeVersions",
+    );
+  });
+
+  test("renovatebot: does not add customManagers:biomeVersions when biome is not configured", () => {
+    // GIVEN
+    const p = new TestProject({
+      renovatebot: true,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"].extends).not.toContain(
+      "customManagers:biomeVersions",
+    );
   });
 });
