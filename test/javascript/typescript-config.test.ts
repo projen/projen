@@ -385,4 +385,82 @@ describe("TypescriptConfig", () => {
 
     expect(typescriptConfig.exclude).not.toContain("test/**/*.ts");
   });
+
+  test("Should support references via options", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+      references: [{ path: "./tsconfig.dev.json" }],
+    });
+
+    expect(typescriptConfig.references).toEqual([
+      { path: "./tsconfig.dev.json" },
+    ]);
+  });
+
+  test("Should allow adding references", () => {
+    const testNodeProject = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test-node-project",
+    });
+
+    const typescriptConfig = new TypescriptConfig(testNodeProject, {
+      compilerOptions: {},
+    });
+
+    typescriptConfig.addReference({ path: "./tsconfig.dev.json" });
+
+    expect(typescriptConfig.references).toEqual([
+      { path: "./tsconfig.dev.json" },
+    ]);
+  });
+
+  test("Should omit references when empty", () => {
+    withProjectDir((outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const tsConfig = new TypescriptConfig(project, {
+        compilerOptions: { outDir: "testOutDir" },
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.config).not.toHaveProperty("references");
+    });
+  });
+
+  test("Should include references in output when set", () => {
+    withProjectDir((outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const tsConfig = new TypescriptConfig(project, {
+        compilerOptions: { outDir: "testOutDir" },
+        references: [{ path: "./tsconfig.dev.json" }],
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.config.references).toEqual([
+        { path: "./tsconfig.dev.json" },
+      ]);
+    });
+  });
 });

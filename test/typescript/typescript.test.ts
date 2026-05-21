@@ -750,3 +750,63 @@ describe("only one of components can be enabled", () => {
     ).toThrow("Only one of biome and eslint can be enabled.");
   });
 });
+
+describe("project references", () => {
+  test("tsconfig.json references tsconfig.dev.json by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot["tsconfig.json"].references).toEqual([
+      { path: "./tsconfig.dev.json" },
+    ]);
+  });
+
+  test("tsconfig.dev.json has composite and noEmit enabled", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot["tsconfig.dev.json"].compilerOptions.composite).toBe(true);
+    expect(snapshot["tsconfig.dev.json"].compilerOptions.noEmit).toBe(true);
+  });
+
+  test("no references when disableTsconfigDev is set", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      disableTsconfigDev: true,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot["tsconfig.json"].references).toBeUndefined();
+  });
+
+  test("references custom tsconfigDevFile name", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      tsconfigDevFile: "tsconfig.test.json",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot["tsconfig.json"].references).toEqual([
+      { path: "./tsconfig.test.json" },
+    ]);
+  });
+
+  test("no references when tsconfig is disabled", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(snapshot["tsconfig.json"]).toBeUndefined();
+  });
+});
