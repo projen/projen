@@ -1,7 +1,14 @@
 import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
-import { NodePackage, NodePackageManager } from "./node-package";
+import type { CodeArtifactOptions } from "./node-package";
+import {
+  NodePackage,
+  NodePackageManager,
+  CodeArtifactAuthProvider,
+} from "./node-package";
+import { secretToString } from "../github/private/util";
+import type { JobStep } from "../github/workflows-model";
 import type { Project } from "../project";
 import { findUp } from "../util";
 
@@ -430,4 +437,86 @@ export function installedVersionProbablyMatches(
     semver.minVersion(requestedRange, options) ?? "1.2.3",
     semver.minVersion(checkRange, options) ?? "1.2.3",
   );
+}
+
+/**
+ * Gets the workflow steps required to authenticate to AWS CodeArtifact and install dependencies from a scoped registry, based on the provided package manager and CodeArtifact options.
+ * @param packageManager The package manager being used (e.g., npm, yarn, pnpm, bun).
+ * @param codeArtifactOptions The options for AWS CodeArtifact authentication and configuration.
+ * @returns An array of JobStep objects representing the necessary steps to authenticate and install from AWS CodeArtifact.
+ */
+export function getScopedPackageWorkflowSteps(
+  packageManager: NodePackageManager,
+  codeArtifactOptions: CodeArtifactOptions | undefined,
+): JobStep[] {
+  const parsedCodeArtifactOptions = {
+    accessKeyIdSecret:
+      codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+    secretAccessKeySecret:
+      codeArtifactOptions?.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
+    roleToAssume: codeArtifactOptions?.roleToAssume,
+    authProvider: codeArtifactOptions?.authProvider,
+  };
+
+  const executeProjenCommand = `${executeCommandPriorInstallation(packageManager)} projen`;
+
+  if (
+    parsedCodeArtifactOptions.authProvider ===
+    CodeArtifactAuthProvider.GITHUB_OIDC
+  ) {
+    return [
+      {
+        name: "Configure AWS Credentials",
+        uses: "aws-actions/configure-aws-credentials@v6",
+        with: {
+          "aws-region": "us-east-2",
+          "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+          "role-duration-seconds": 900,
+        },
+      },
+      {
+        name: "AWS CodeArtifact Login",
+        run: `${executeProjenCommand} ca:login`,
+      },
+    ];
+  }
+
+  if (parsedCodeArtifactOptions.roleToAssume) {
+    return [
+      {
+        name: "Configure AWS Credentials",
+        uses: "aws-actions/configure-aws-credentials@v6",
+        with: {
+          "aws-access-key-id": secretToString(
+            parsedCodeArtifactOptions.accessKeyIdSecret,
+          ),
+          "aws-secret-access-key": secretToString(
+            parsedCodeArtifactOptions.secretAccessKeySecret,
+          ),
+          "aws-region": "us-east-2",
+          "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+          "role-duration-seconds": 900,
+        },
+      },
+      {
+        name: "AWS CodeArtifact Login",
+        run: `${executeProjenCommand} ca:login`,
+      },
+    ];
+  }
+
+  return [
+    {
+      name: "AWS CodeArtifact Login",
+      run: `${executeProjenCommand} ca:login`,
+      env: {
+        AWS_ACCESS_KEY_ID: secretToString(
+          parsedCodeArtifactOptions.accessKeyIdSecret,
+        ),
+        AWS_SECRET_ACCESS_KEY: secretToString(
+          parsedCodeArtifactOptions.secretAccessKeySecret,
+        ),
+      },
+    },
+  ];
 }
