@@ -14203,6 +14203,51 @@ Commands that are run (using prerequisites as inputs) to create a target.
 
 ---
 
+### RunScriptConfig <a name="RunScriptConfig" id="projen.RunScriptConfig"></a>
+
+The resolved configuration for running a script.
+
+#### Initializer <a name="Initializer" id="projen.RunScriptConfig.Initializer"></a>
+
+```typescript
+import { RunScriptConfig } from 'projen'
+
+const runScriptConfig: RunScriptConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RunScriptConfig.property.dependencies">dependencies</a></code> | <code><a href="#projen.DependencyRequest">DependencyRequest</a>[]</code> | Dependencies required to run the script. |
+| <code><a href="#projen.RunScriptConfig.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | The task steps to execute the script. |
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.RunScriptConfig.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: DependencyRequest[];
+```
+
+- *Type:* <a href="#projen.DependencyRequest">DependencyRequest</a>[]
+
+Dependencies required to run the script.
+
+---
+
+##### `steps`<sup>Required</sup> <a name="steps" id="projen.RunScriptConfig.property.steps"></a>
+
+```typescript
+public readonly steps: TaskStep[];
+```
+
+- *Type:* <a href="#projen.TaskStep">TaskStep</a>[]
+
+The task steps to execute the script.
+
+---
+
 ### SampleDirOptions <a name="SampleDirOptions" id="projen.SampleDirOptions"></a>
 
 SampleDir options.
@@ -16872,6 +16917,56 @@ public readonly cmd: string;
 ---
 
 
+### ScriptRunner <a name="ScriptRunner" id="projen.ScriptRunner"></a>
+
+- *Implements:* <a href="#projen.IScriptRunner">IScriptRunner</a>
+
+A script runner that executes the entrypoint file directly.
+
+#### Initializers <a name="Initializers" id="projen.ScriptRunner.Initializer"></a>
+
+```typescript
+import { ScriptRunner } from 'projen'
+
+new ScriptRunner()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ScriptRunner.bind">bind</a></code> | Bind the runner to a project and entrypoint, producing a resolved config. |
+
+---
+
+##### `bind` <a name="bind" id="projen.ScriptRunner.bind"></a>
+
+```typescript
+public bind(_project: Project, entrypoint: string): RunScriptConfig
+```
+
+Bind the runner to a project and entrypoint, producing a resolved config.
+
+###### `_project`<sup>Required</sup> <a name="_project" id="projen.ScriptRunner.bind.parameter._project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.ScriptRunner.bind.parameter.entrypoint"></a>
+
+- *Type:* string
+
+---
+
+
+
+
 ### Semver <a name="Semver" id="projen.Semver"></a>
 
 
@@ -18051,6 +18146,41 @@ The value to resolve.
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.IResolver.resolve.parameter.options"></a>
 
 - *Type:* <a href="#projen.ResolveOptions">ResolveOptions</a>
+
+---
+
+
+### IScriptRunner <a name="IScriptRunner" id="projen.IScriptRunner"></a>
+
+- *Implemented By:* projen.typescript.TypeScriptRunner, <a href="#projen.ScriptRunner">ScriptRunner</a>, <a href="#projen.IScriptRunner">IScriptRunner</a>
+
+A script runner that can execute files of a particular type.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.IScriptRunner.bind">bind</a></code> | Bind the runner to a project and entrypoint, producing a resolved config. |
+
+---
+
+##### `bind` <a name="bind" id="projen.IScriptRunner.bind"></a>
+
+```typescript
+public bind(project: Project, entrypoint: string): RunScriptConfig
+```
+
+Bind the runner to a project and entrypoint, producing a resolved config.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.IScriptRunner.bind.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.IScriptRunner.bind.parameter.entrypoint"></a>
+
+- *Type:* string
 
 ---
 
