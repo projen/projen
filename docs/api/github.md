@@ -1876,6 +1876,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.github.GitHubProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.github.GitHubProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.github.GitHubProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.github.GitHubProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.github.GitHubProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.github.GitHubProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.github.GitHubProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -2206,6 +2207,24 @@ The command to use in order to run the projen CLI.
 
 ---
 
+##### ~~`repo`~~<sup>Required</sup> <a name="repo" id="projen.github.GitHubProject.property.repo"></a>
+
+- *Deprecated:* This is a *temporary* class. At the moment, our base project
+types such as `NodeProject` and `JavaProject` are derived from this, but we
+want to be able to use these project types outside of GitHub as well. One of
+the next steps to address this is to abstract workflows so that different
+"engines" can be used to implement our CI/CD solutions.
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+---
+
 ##### ~~`root`~~<sup>Required</sup> <a name="root" id="projen.github.GitHubProject.property.root"></a>
 
 - *Deprecated:* This is a *temporary* class. At the moment, our base project
@@ -2481,6 +2500,334 @@ Normally
 this task should synthesize the project files.
 
 ---
+
+### GitHubRepository <a name="GitHubRepository" id="projen.github.GitHubRepository"></a>
+
+A git repository hosted on GitHub.
+
+Manages GitHub integration including workflows, PR templates,
+Dependabot, Mergify, and other GitHub-specific configuration.
+
+#### Initializers <a name="Initializers" id="projen.github.GitHubRepository.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.GitHubRepository(options: GitHubRepositoryOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubRepository.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.GitHubRepositoryOptions">GitHubRepositoryOptions</a></code> | *No description.* |
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.github.GitHubRepository.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.GitHubRepositoryOptions">GitHubRepositoryOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.GitHubRepository.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.GitHubRepository.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.GitHubRepository.postSynthesize">postSynthesize</a></code> | Called after all projects are synthesized. |
+| <code><a href="#projen.github.GitHubRepository.preSynthesize">preSynthesize</a></code> | Called before all projects are synthesized. |
+| <code><a href="#projen.github.GitHubRepository.synth">synth</a></code> | Synthesize the repository and all its projects. |
+| <code><a href="#projen.github.GitHubRepository.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.GitHubRepository.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.github.GitHubRepository.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.github.GitHubRepository.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.GitHubRepository.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after all projects are synthesized.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.GitHubRepository.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before all projects are synthesized.
+
+##### `synth` <a name="synth" id="projen.github.GitHubRepository.synth"></a>
+
+```typescript
+public synth(): void
+```
+
+Synthesize the repository and all its projects.
+
+The synthesis flow is:
+1. Repository preSynthesize (repo + repo-level components)
+2. Each root project's full lifecycle (pre-synth, cleanup, subprojects, synth, post-synth)
+3. Repository-level component synthesize
+4. Repository postSynthesize
+
+##### `annotateGenerated` <a name="annotateGenerated" id="projen.github.GitHubRepository.annotateGenerated"></a>
+
+```typescript
+public annotateGenerated(glob: string): void
+```
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+> [https://github.com/github/linguist/blob/master/docs/overrides.md](https://github.com/github/linguist/blob/master/docs/overrides.md)
+
+###### `glob`<sup>Required</sup> <a name="glob" id="projen.github.GitHubRepository.annotateGenerated.parameter.glob"></a>
+
+- *Type:* string
+
+the glob pattern to match (could be a file path).
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.GitHubRepository.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.GitHubRepository.isRepository">isRepository</a></code> | Test whether the given construct is a Repository. |
+| <code><a href="#projen.github.GitHubRepository.of">of</a></code> | Find the closest Repository by walking up the construct tree. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.GitHubRepository.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.GitHubRepository.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.GitHubRepository.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isRepository` <a name="isRepository" id="projen.github.GitHubRepository.isRepository"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.GitHubRepository.isRepository(x: any)
+```
+
+Test whether the given construct is a Repository.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.GitHubRepository.isRepository.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.github.GitHubRepository.of"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.GitHubRepository.of(construct: IConstruct)
+```
+
+Find the closest Repository by walking up the construct tree.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.github.GitHubRepository.of.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+the construct to search from.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubRepository.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.GitHubRepository.property.components">components</a></code> | <code>projen.Component[]</code> | All components directly owned by this repository (not within a project). |
+| <code><a href="#projen.github.GitHubRepository.property.name">name</a></code> | <code>string</code> | Repository name. |
+| <code><a href="#projen.github.GitHubRepository.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this repository. |
+| <code><a href="#projen.github.GitHubRepository.property.projects">projects</a></code> | <code>projen.Project[]</code> | All projects within this repository. |
+| <code><a href="#projen.github.GitHubRepository.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
+| <code><a href="#projen.github.GitHubRepository.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | The .gitignore file for this repository. |
+| <code><a href="#projen.github.GitHubRepository.property.autoApprove">autoApprove</a></code> | <code><a href="#projen.github.AutoApprove">AutoApprove</a></code> | Auto approve set up for this repository. |
+| <code><a href="#projen.github.GitHubRepository.property.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | Access all GitHub components. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.GitHubRepository.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `components`<sup>Required</sup> <a name="components" id="projen.github.GitHubRepository.property.components"></a>
+
+```typescript
+public readonly components: Component[];
+```
+
+- *Type:* projen.Component[]
+
+All components directly owned by this repository (not within a project).
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.GitHubRepository.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Repository name.
+
+---
+
+##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.github.GitHubRepository.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+
+Absolute output directory of this repository.
+
+---
+
+##### `projects`<sup>Required</sup> <a name="projects" id="projen.github.GitHubRepository.property.projects"></a>
+
+```typescript
+public readonly projects: Project[];
+```
+
+- *Type:* projen.Project[]
+
+All projects within this repository.
+
+---
+
+##### `gitattributes`<sup>Required</sup> <a name="gitattributes" id="projen.github.GitHubRepository.property.gitattributes"></a>
+
+```typescript
+public readonly gitattributes: GitAttributesFile;
+```
+
+- *Type:* projen.GitAttributesFile
+
+The .gitattributes file for this repository.
+
+Available after the first root project is added.
+
+---
+
+##### `gitignore`<sup>Required</sup> <a name="gitignore" id="projen.github.GitHubRepository.property.gitignore"></a>
+
+```typescript
+public readonly gitignore: IgnoreFile;
+```
+
+- *Type:* projen.IgnoreFile
+
+The .gitignore file for this repository.
+
+Available after the first root project is added.
+
+---
+
+##### `autoApprove`<sup>Optional</sup> <a name="autoApprove" id="projen.github.GitHubRepository.property.autoApprove"></a>
+
+```typescript
+public readonly autoApprove: AutoApprove;
+```
+
+- *Type:* <a href="#projen.github.AutoApprove">AutoApprove</a>
+
+Auto approve set up for this repository.
+
+---
+
+##### `github`<sup>Optional</sup> <a name="github" id="projen.github.GitHubRepository.property.github"></a>
+
+```typescript
+public readonly github: GitHub;
+```
+
+- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+
+Access all GitHub components.
+
+This is `undefined` if GitHub integration is disabled.
+
+---
+
 
 ### GithubWorkflow <a name="GithubWorkflow" id="projen.github.GithubWorkflow"></a>
 
@@ -7697,6 +8044,7 @@ const gitHubProjectOptions: github.GitHubProjectOptions = { ... }
 | <code><a href="#projen.github.GitHubProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.github.GitHubProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code><a href="#projen.github.AutoApproveOptions">AutoApproveOptions</a></code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code><a href="#projen.github.AutoMergeOptions">AutoMergeOptions</a></code> | Configure options for automatic merging on GitHub. |
@@ -7888,6 +8236,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.github.GitHubProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -8141,6 +8505,251 @@ public readonly vscode: boolean;
 Enable VSCode integration.
 
 Enabled by default for root projects. Disabled for non-root projects.
+
+---
+
+### GitHubRepositoryOptions <a name="GitHubRepositoryOptions" id="projen.github.GitHubRepositoryOptions"></a>
+
+Options for `GitHubRepository`.
+
+#### Initializer <a name="Initializer" id="projen.github.GitHubRepositoryOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const gitHubRepositoryOptions: github.GitHubRepositoryOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.name">name</a></code> | <code>string</code> | The name of the repository. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the repository. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code><a href="#projen.github.AutoApproveOptions">AutoApproveOptions</a></code> | Enable and configure the 'auto approve' workflow. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code><a href="#projen.github.AutoMergeOptions">AutoMergeOptions</a></code> | Configure options for automatic merging on GitHub. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.github">github</a></code> | <code>boolean</code> | Enable GitHub integration. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.githubOptions">githubOptions</a></code> | <code><a href="#projen.github.GitHubOptions">GitHubOptions</a></code> | Options for GitHub integration. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for mergify. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
+| <code><a href="#projen.github.GitHubRepositoryOptions.property.staleOptions">staleOptions</a></code> | <code><a href="#projen.github.StaleOptions">StaleOptions</a></code> | Auto-close stale issues and pull requests. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.GitHubRepositoryOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the repository.
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.github.GitHubRepositoryOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* "."
+
+The root directory of the repository.
+
+---
+
+##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.github.GitHubRepositoryOptions.property.gitIgnoreOptions"></a>
+
+```typescript
+public readonly gitIgnoreOptions: IgnoreFileOptions;
+```
+
+- *Type:* projen.IgnoreFileOptions
+
+Configuration options for .gitignore file.
+
+---
+
+##### `gitOptions`<sup>Optional</sup> <a name="gitOptions" id="projen.github.GitHubRepositoryOptions.property.gitOptions"></a>
+
+```typescript
+public readonly gitOptions: GitOptions;
+```
+
+- *Type:* projen.GitOptions
+
+Configuration options for git.
+
+---
+
+##### `autoApproveOptions`<sup>Optional</sup> <a name="autoApproveOptions" id="projen.github.GitHubRepositoryOptions.property.autoApproveOptions"></a>
+
+```typescript
+public readonly autoApproveOptions: AutoApproveOptions;
+```
+
+- *Type:* <a href="#projen.github.AutoApproveOptions">AutoApproveOptions</a>
+- *Default:* auto approve is disabled
+
+Enable and configure the 'auto approve' workflow.
+
+---
+
+##### `autoMerge`<sup>Optional</sup> <a name="autoMerge" id="projen.github.GitHubRepositoryOptions.property.autoMerge"></a>
+
+```typescript
+public readonly autoMerge: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable automatic merging on GitHub.
+
+Has no effect if `github.mergify`
+is set to false.
+
+---
+
+##### `autoMergeOptions`<sup>Optional</sup> <a name="autoMergeOptions" id="projen.github.GitHubRepositoryOptions.property.autoMergeOptions"></a>
+
+```typescript
+public readonly autoMergeOptions: AutoMergeOptions;
+```
+
+- *Type:* <a href="#projen.github.AutoMergeOptions">AutoMergeOptions</a>
+- *Default:* see defaults in `AutoMergeOptions`
+
+Configure options for automatic merging on GitHub.
+
+Has no effect if
+`github.mergify` or `autoMerge` is set to false.
+
+---
+
+##### `github`<sup>Optional</sup> <a name="github" id="projen.github.GitHubRepositoryOptions.property.github"></a>
+
+```typescript
+public readonly github: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable GitHub integration.
+
+---
+
+##### `githubOptions`<sup>Optional</sup> <a name="githubOptions" id="projen.github.GitHubRepositoryOptions.property.githubOptions"></a>
+
+```typescript
+public readonly githubOptions: GitHubOptions;
+```
+
+- *Type:* <a href="#projen.github.GitHubOptions">GitHubOptions</a>
+- *Default:* see GitHubOptions
+
+Options for GitHub integration.
+
+---
+
+##### ~~`mergify`~~<sup>Optional</sup> <a name="mergify" id="projen.github.GitHubRepositoryOptions.property.mergify"></a>
+
+- *Deprecated:* use `githubOptions.mergify` instead
+
+```typescript
+public readonly mergify: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether mergify should be enabled on this repository or not.
+
+---
+
+##### ~~`mergifyOptions`~~<sup>Optional</sup> <a name="mergifyOptions" id="projen.github.GitHubRepositoryOptions.property.mergifyOptions"></a>
+
+- *Deprecated:* use `githubOptions.mergifyOptions` instead
+
+```typescript
+public readonly mergifyOptions: MergifyOptions;
+```
+
+- *Type:* <a href="#projen.github.MergifyOptions">MergifyOptions</a>
+- *Default:* default options
+
+Options for mergify.
+
+---
+
+##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.GitHubRepositoryOptions.property.projenCredentials"></a>
+
+```typescript
+public readonly projenCredentials: GithubCredentials;
+```
+
+- *Type:* <a href="#projen.github.GithubCredentials">GithubCredentials</a>
+- *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
+
+Choose a method of providing GitHub API access for projen workflows.
+
+---
+
+##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubRepositoryOptions.property.projenTokenSecret"></a>
+
+- *Deprecated:* use `projenCredentials`
+
+```typescript
+public readonly projenTokenSecret: string;
+```
+
+- *Type:* string
+- *Default:* "PROJEN_GITHUB_TOKEN"
+
+The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
+
+This token needs to have the `repo`, `workflows`
+and `packages` scope.
+
+---
+
+##### `stale`<sup>Optional</sup> <a name="stale" id="projen.github.GitHubRepositoryOptions.property.stale"></a>
+
+```typescript
+public readonly stale: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Auto-close of stale issues and pull request.
+
+See `staleOptions` for options.
+
+---
+
+##### `staleOptions`<sup>Optional</sup> <a name="staleOptions" id="projen.github.GitHubRepositoryOptions.property.staleOptions"></a>
+
+```typescript
+public readonly staleOptions: StaleOptions;
+```
+
+- *Type:* <a href="#projen.github.StaleOptions">StaleOptions</a>
+- *Default:* see defaults in `StaleOptions`
+
+Auto-close stale issues and pull requests.
+
+To disable set `stale` to `false`.
 
 ---
 

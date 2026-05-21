@@ -2658,6 +2658,309 @@ Direct access to the gitpod configuration (escape hatch).
 ---
 
 
+### GitRepository <a name="GitRepository" id="projen.GitRepository"></a>
+
+A repository backed by git.
+
+Manages repository-level `.gitignore` and `.gitattributes` files.
+The actual file objects are created on the root project (since FileBase
+requires a Project scope), but ownership and configuration lives here.
+Individual projects may still have their own `.gitignore` for
+folder-level settings.
+
+#### Initializers <a name="Initializers" id="projen.GitRepository.Initializer"></a>
+
+```typescript
+import { GitRepository } from 'projen'
+
+new GitRepository(options: GitRepositoryOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.GitRepository.Initializer.parameter.options">options</a></code> | <code><a href="#projen.GitRepositoryOptions">GitRepositoryOptions</a></code> | *No description.* |
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.GitRepository.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.GitRepositoryOptions">GitRepositoryOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.GitRepository.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.GitRepository.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.GitRepository.postSynthesize">postSynthesize</a></code> | Called after all projects are synthesized. |
+| <code><a href="#projen.GitRepository.preSynthesize">preSynthesize</a></code> | Called before all projects are synthesized. |
+| <code><a href="#projen.GitRepository.synth">synth</a></code> | Synthesize the repository and all its projects. |
+| <code><a href="#projen.GitRepository.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+
+---
+
+##### `toString` <a name="toString" id="projen.GitRepository.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.GitRepository.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.GitRepository.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.GitRepository.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after all projects are synthesized.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.GitRepository.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before all projects are synthesized.
+
+##### `synth` <a name="synth" id="projen.GitRepository.synth"></a>
+
+```typescript
+public synth(): void
+```
+
+Synthesize the repository and all its projects.
+
+The synthesis flow is:
+1. Repository preSynthesize (repo + repo-level components)
+2. Each root project's full lifecycle (pre-synth, cleanup, subprojects, synth, post-synth)
+3. Repository-level component synthesize
+4. Repository postSynthesize
+
+##### `annotateGenerated` <a name="annotateGenerated" id="projen.GitRepository.annotateGenerated"></a>
+
+```typescript
+public annotateGenerated(glob: string): void
+```
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+> [https://github.com/github/linguist/blob/master/docs/overrides.md](https://github.com/github/linguist/blob/master/docs/overrides.md)
+
+###### `glob`<sup>Required</sup> <a name="glob" id="projen.GitRepository.annotateGenerated.parameter.glob"></a>
+
+- *Type:* string
+
+the glob pattern to match (could be a file path).
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.GitRepository.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.GitRepository.isRepository">isRepository</a></code> | Test whether the given construct is a Repository. |
+| <code><a href="#projen.GitRepository.of">of</a></code> | Find the closest Repository by walking up the construct tree. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.GitRepository.isConstruct"></a>
+
+```typescript
+import { GitRepository } from 'projen'
+
+GitRepository.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.GitRepository.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isRepository` <a name="isRepository" id="projen.GitRepository.isRepository"></a>
+
+```typescript
+import { GitRepository } from 'projen'
+
+GitRepository.isRepository(x: any)
+```
+
+Test whether the given construct is a Repository.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.GitRepository.isRepository.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.GitRepository.of"></a>
+
+```typescript
+import { GitRepository } from 'projen'
+
+GitRepository.of(construct: IConstruct)
+```
+
+Find the closest Repository by walking up the construct tree.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.GitRepository.of.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+the construct to search from.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.GitRepository.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.GitRepository.property.components">components</a></code> | <code><a href="#projen.Component">Component</a>[]</code> | All components directly owned by this repository (not within a project). |
+| <code><a href="#projen.GitRepository.property.name">name</a></code> | <code>string</code> | Repository name. |
+| <code><a href="#projen.GitRepository.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this repository. |
+| <code><a href="#projen.GitRepository.property.projects">projects</a></code> | <code><a href="#projen.Project">Project</a>[]</code> | All projects within this repository. |
+| <code><a href="#projen.GitRepository.property.gitattributes">gitattributes</a></code> | <code><a href="#projen.GitAttributesFile">GitAttributesFile</a></code> | The .gitattributes file for this repository. |
+| <code><a href="#projen.GitRepository.property.gitignore">gitignore</a></code> | <code><a href="#projen.IgnoreFile">IgnoreFile</a></code> | The .gitignore file for this repository. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.GitRepository.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `components`<sup>Required</sup> <a name="components" id="projen.GitRepository.property.components"></a>
+
+```typescript
+public readonly components: Component[];
+```
+
+- *Type:* <a href="#projen.Component">Component</a>[]
+
+All components directly owned by this repository (not within a project).
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.GitRepository.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Repository name.
+
+---
+
+##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.GitRepository.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+
+Absolute output directory of this repository.
+
+---
+
+##### `projects`<sup>Required</sup> <a name="projects" id="projen.GitRepository.property.projects"></a>
+
+```typescript
+public readonly projects: Project[];
+```
+
+- *Type:* <a href="#projen.Project">Project</a>[]
+
+All projects within this repository.
+
+---
+
+##### `gitattributes`<sup>Required</sup> <a name="gitattributes" id="projen.GitRepository.property.gitattributes"></a>
+
+```typescript
+public readonly gitattributes: GitAttributesFile;
+```
+
+- *Type:* <a href="#projen.GitAttributesFile">GitAttributesFile</a>
+
+The .gitattributes file for this repository.
+
+Available after the first root project is added.
+
+---
+
+##### `gitignore`<sup>Required</sup> <a name="gitignore" id="projen.GitRepository.property.gitignore"></a>
+
+```typescript
+public readonly gitignore: IgnoreFile;
+```
+
+- *Type:* <a href="#projen.IgnoreFile">IgnoreFile</a>
+
+The .gitignore file for this repository.
+
+Available after the first root project is added.
+
+---
+
+
 ### IgnoreFile <a name="IgnoreFile" id="projen.IgnoreFile"></a>
 
 #### Initializers <a name="Initializers" id="projen.IgnoreFile.Initializer"></a>
@@ -5975,6 +6278,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.Project.property.preCompileTask">preCompileTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Project.property.projectBuild">projectBuild</a></code> | <code><a href="#projen.ProjectBuild">ProjectBuild</a></code> | Manages the build process of the project. |
 | <code><a href="#projen.Project.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.Project.property.repo">repo</a></code> | <code><a href="#projen.Repository">Repository</a></code> | The repository this project belongs to. |
 | <code><a href="#projen.Project.property.root">root</a></code> | <code><a href="#projen.Project">Project</a></code> | The root project. |
 | <code><a href="#projen.Project.property.subprojects">subprojects</a></code> | <code><a href="#projen.Project">Project</a>[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.Project.property.tasks">tasks</a></code> | <code><a href="#projen.Tasks">Tasks</a></code> | Project tasks. |
@@ -6188,6 +6492,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.Project.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* <a href="#projen.Repository">Repository</a>
+
+The repository this project belongs to.
 
 ---
 
@@ -7628,6 +7944,254 @@ public readonly file: JsonFile;
 - *Type:* <a href="#projen.JsonFile">JsonFile</a>
 
 The file holding the renovatebot configuration.
+
+---
+
+
+### Repository <a name="Repository" id="projen.Repository"></a>
+
+Represents a repository — the root of a projen construct tree.
+
+A Repository sits above Projects in the construct tree, similar to how
+`App` sits above `Stack` in the AWS CDK. Repository owns repository-level
+concerns like git configuration and CI/CD platform integration.
+
+#### Initializers <a name="Initializers" id="projen.Repository.Initializer"></a>
+
+```typescript
+import { Repository } from 'projen'
+
+new Repository(options: RepositoryOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.Repository.Initializer.parameter.options">options</a></code> | <code><a href="#projen.RepositoryOptions">RepositoryOptions</a></code> | *No description.* |
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.Repository.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.RepositoryOptions">RepositoryOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.Repository.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.Repository.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Repository.postSynthesize">postSynthesize</a></code> | Called after all projects are synthesized. |
+| <code><a href="#projen.Repository.preSynthesize">preSynthesize</a></code> | Called before all projects are synthesized. |
+| <code><a href="#projen.Repository.synth">synth</a></code> | Synthesize the repository and all its projects. |
+
+---
+
+##### `toString` <a name="toString" id="projen.Repository.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.Repository.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Repository.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.Repository.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after all projects are synthesized.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.Repository.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before all projects are synthesized.
+
+##### `synth` <a name="synth" id="projen.Repository.synth"></a>
+
+```typescript
+public synth(): void
+```
+
+Synthesize the repository and all its projects.
+
+The synthesis flow is:
+1. Repository preSynthesize (repo + repo-level components)
+2. Each root project's full lifecycle (pre-synth, cleanup, subprojects, synth, post-synth)
+3. Repository-level component synthesize
+4. Repository postSynthesize
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.Repository.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.Repository.isRepository">isRepository</a></code> | Test whether the given construct is a Repository. |
+| <code><a href="#projen.Repository.of">of</a></code> | Find the closest Repository by walking up the construct tree. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.Repository.isConstruct"></a>
+
+```typescript
+import { Repository } from 'projen'
+
+Repository.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.Repository.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isRepository` <a name="isRepository" id="projen.Repository.isRepository"></a>
+
+```typescript
+import { Repository } from 'projen'
+
+Repository.isRepository(x: any)
+```
+
+Test whether the given construct is a Repository.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.Repository.isRepository.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.Repository.of"></a>
+
+```typescript
+import { Repository } from 'projen'
+
+Repository.of(construct: IConstruct)
+```
+
+Find the closest Repository by walking up the construct tree.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.Repository.of.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+the construct to search from.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.Repository.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.Repository.property.components">components</a></code> | <code><a href="#projen.Component">Component</a>[]</code> | All components directly owned by this repository (not within a project). |
+| <code><a href="#projen.Repository.property.name">name</a></code> | <code>string</code> | Repository name. |
+| <code><a href="#projen.Repository.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this repository. |
+| <code><a href="#projen.Repository.property.projects">projects</a></code> | <code><a href="#projen.Project">Project</a>[]</code> | All projects within this repository. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.Repository.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `components`<sup>Required</sup> <a name="components" id="projen.Repository.property.components"></a>
+
+```typescript
+public readonly components: Component[];
+```
+
+- *Type:* <a href="#projen.Component">Component</a>[]
+
+All components directly owned by this repository (not within a project).
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.Repository.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Repository name.
+
+---
+
+##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.Repository.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+
+Absolute output directory of this repository.
+
+---
+
+##### `projects`<sup>Required</sup> <a name="projects" id="projen.Repository.property.projects"></a>
+
+```typescript
+public readonly projects: Project[];
+```
+
+- *Type:* <a href="#projen.Project">Project</a>[]
+
+All projects within this repository.
 
 ---
 
@@ -12846,6 +13410,78 @@ processes that could be useful, e.g. running test suites.
 
 ---
 
+### GitRepositoryOptions <a name="GitRepositoryOptions" id="projen.GitRepositoryOptions"></a>
+
+Options for `GitRepository`.
+
+#### Initializer <a name="Initializer" id="projen.GitRepositoryOptions.Initializer"></a>
+
+```typescript
+import { GitRepositoryOptions } from 'projen'
+
+const gitRepositoryOptions: GitRepositoryOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.GitRepositoryOptions.property.name">name</a></code> | <code>string</code> | The name of the repository. |
+| <code><a href="#projen.GitRepositoryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the repository. |
+| <code><a href="#projen.GitRepositoryOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code><a href="#projen.IgnoreFileOptions">IgnoreFileOptions</a></code> | Configuration options for .gitignore file. |
+| <code><a href="#projen.GitRepositoryOptions.property.gitOptions">gitOptions</a></code> | <code><a href="#projen.GitOptions">GitOptions</a></code> | Configuration options for git. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.GitRepositoryOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the repository.
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.GitRepositoryOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* "."
+
+The root directory of the repository.
+
+---
+
+##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.GitRepositoryOptions.property.gitIgnoreOptions"></a>
+
+```typescript
+public readonly gitIgnoreOptions: IgnoreFileOptions;
+```
+
+- *Type:* <a href="#projen.IgnoreFileOptions">IgnoreFileOptions</a>
+
+Configuration options for .gitignore file.
+
+---
+
+##### `gitOptions`<sup>Optional</sup> <a name="gitOptions" id="projen.GitRepositoryOptions.property.gitOptions"></a>
+
+```typescript
+public readonly gitOptions: GitOptions;
+```
+
+- *Type:* <a href="#projen.GitOptions">GitOptions</a>
+
+Configuration options for git.
+
+---
+
 ### GroupRunnerOptions <a name="GroupRunnerOptions" id="projen.GroupRunnerOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.GroupRunnerOptions.Initializer"></a>
@@ -13693,6 +14329,7 @@ const projectOptions: ProjectOptions = { ... }
 | <code><a href="#projen.ProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code><a href="#projen.ProjenrcJsonOptions">ProjenrcJsonOptions</a></code> | Options for .projenrc.json. |
 | <code><a href="#projen.ProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.ProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code><a href="#projen.RenovatebotOptions">RenovatebotOptions</a></code> | Options for renovatebot. |
+| <code><a href="#projen.ProjectOptions.property.repoRoot">repoRoot</a></code> | <code><a href="#projen.Repository">Repository</a></code> | The repository this project belongs to. |
 
 ---
 
@@ -13867,6 +14504,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.ProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* <a href="#projen.Repository">Repository</a>
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -14077,6 +14730,52 @@ handles as OR.
 Some normal scheduling values defined in enum `RenovatebotScheduleInterval`.
 
 > [https://docs.renovatebot.com/configuration-options/#schedule](https://docs.renovatebot.com/configuration-options/#schedule)
+
+---
+
+### RepositoryOptions <a name="RepositoryOptions" id="projen.RepositoryOptions"></a>
+
+Options for `Repository`.
+
+#### Initializer <a name="Initializer" id="projen.RepositoryOptions.Initializer"></a>
+
+```typescript
+import { RepositoryOptions } from 'projen'
+
+const repositoryOptions: RepositoryOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RepositoryOptions.property.name">name</a></code> | <code>string</code> | The name of the repository. |
+| <code><a href="#projen.RepositoryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the repository. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.RepositoryOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the repository.
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.RepositoryOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* "."
+
+The root directory of the repository.
 
 ---
 

@@ -986,6 +986,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "default": "ApprovalLevel.BROADENING",
         "docs": "To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.",
         "featured": false,
@@ -2335,6 +2353,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "default": "ApprovalLevel.BROADENING",
@@ -5419,6 +5455,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -8915,6 +8969,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -10538,6 +10610,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "default": "true",
@@ -13407,6 +13497,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -16656,6 +16764,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -19868,6 +19994,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -21089,6 +21233,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "default": "true",
@@ -23899,6 +24061,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -26646,6 +26826,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -29448,6 +29646,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -32164,6 +32380,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -32721,6 +32955,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
     ],
     "pjid": "project",
@@ -33610,6 +33862,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "default": "true",
@@ -36062,6 +36332,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -38850,6 +39138,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -41747,6 +42053,24 @@ exports[`inventory 1`] = `
         "switch": "renovatebot-options",
       },
       {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
+      },
+      {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": {
@@ -44618,6 +44942,24 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "RenovatebotOptions",
         "switch": "renovatebot-options",
+      },
+      {
+        "docs": "The repository this project belongs to.",
+        "featured": false,
+        "fqn": "projen.Repository",
+        "fullType": {
+          "fqn": "projen.Repository",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "repoRoot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": [
+          "repoRoot",
+        ],
+        "simpleType": "Repository",
+        "switch": "repo-root",
       },
       {
         "docs": "The repository is the location where the actual code for your package lives.",

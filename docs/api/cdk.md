@@ -900,6 +900,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.ConstructLibrary.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.ConstructLibrary.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk.ConstructLibrary.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk.ConstructLibrary.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1151,6 +1152,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.cdk.ConstructLibrary.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -3051,6 +3064,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk.JsiiProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.cdk.JsiiProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.cdk.JsiiProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk.JsiiProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.cdk.JsiiProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.cdk.JsiiProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -3302,6 +3316,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.cdk.JsiiProject.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -4025,6 +4051,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -4362,6 +4389,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.cdk.ConstructLibraryOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -7586,6 +7629,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -7922,6 +7966,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.cdk.JsiiProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 

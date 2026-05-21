@@ -23,12 +23,30 @@ import {
   ReleasableCommits,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
+import { GitHubRepository } from "./src/github/github-repository";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 
 const AUTOMATION_USER = "projen-automation";
 const BOOTSTRAP_SCRIPT = "projen.js";
 
+const repo = new GitHubRepository({
+  name: "projen",
+  githubOptions: {
+    mergify: false,
+    mergeQueue: true,
+    pullRequestLintOptions: {
+      contributorStatement:
+        "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
+      contributorStatementOptions: {
+        exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
+      },
+    },
+  },
+  autoApproveOptions: { allowedUsernames: [AUTOMATION_USER] },
+});
+
 const project = new JsiiProject({
+  repoRoot: repo,
   name: "projen",
   description: "CDK for software projects",
   repositoryUrl: "https://github.com/projen/projen.git",
@@ -48,15 +66,6 @@ const project = new JsiiProject({
   ],
 
   githubOptions: {
-    mergify: false,
-    mergeQueue: true,
-    pullRequestLintOptions: {
-      contributorStatement:
-        "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
-      contributorStatementOptions: {
-        exemptUsers: [AUTOMATION_USER, "dependabot[bot]"],
-      },
-    },
     dependencyReview: true,
     dependencyReviewOptions: {
       warnOnly: true,
@@ -180,7 +189,6 @@ const project = new JsiiProject({
   releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
-  autoApproveOptions: { allowedUsernames: [AUTOMATION_USER] },
   checkLicenses: {
     allow: [
       "MIT",
@@ -199,7 +207,7 @@ javascript.Eslint.of(project)?.addRules({
 });
 
 // Trusted Publishing requires npm 11 which is available by default in node 24
-project.github
+repo.github
   ?.tryFindWorkflow("release")
   ?.file?.patch(
     JsonPatch.replace("/jobs/release_npm/steps/0/with/node-version", "24.x"),
@@ -298,4 +306,4 @@ new AiInstructions(project, {
   ],
 });
 
-project.synth();
+repo.synth();
