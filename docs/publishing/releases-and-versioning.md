@@ -9,7 +9,7 @@ Projen takes care of managing versioning and releases of your project.
 The release model is based on (scaled) [trunk-based development](https://trunkbaseddevelopment.com/) and relies on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and [Semantic Versioning](https://semver.org/)
 to automatically determine the next version for every release.
 
-This means that commits to the default branch (`main`) are considered ready for production and by default every commit will be released and published to package managers.
+This means that commits to the default branch (`main`) are considered ready for production and by default every commit will be released and published to package managers (see [Release Triggers](#release-triggers) for additional information on this behavior).
 
 ## Initial development phase
 
@@ -18,6 +18,18 @@ Anything may change at any time and public APIs should not be considered stable.
 Commits marked as a breaking change will increase the *minor* version. All other commits will increase the *patch* version.
 
 Projen will **never** release `v1.0.0` without your intervention. Once the project is ready, you have to make a one-time change to bump the major version.
+
+Before the release and versioning support will work, an initial tag **MUST** exist in the git repository for the project.
+The tag **MUST** conform to [Semantic Versioning](https://semver.org/) conventions.
+For example, find an appropriate commit on the `main` branch of the git repository and run command:
+
+```bash
+git tag v0.0.0 <commitId>
+```
+
+Use the `git log --oneline` command to list commits to select from.
+
+Whatever initial semver tag is specified, the release and versioning support will calculate the next semantic version to use based on this tag.
 
 ## Major Versions
 
@@ -88,6 +100,18 @@ If the project type supports it, then you can specify a `releaseTrigger`. You ca
 or not your releases are automated as well as any unique artifacts associated with releases such as project-level
 changelogs.
 
+The default setting for `releaseTrigger` is `ReleaseTrigger.continuous()`.  This setting implies that any commit
+to the `main` branch will result in a release being created.  However, this presumes that GitHub and GitHub actions
+are being used and that the carrying out of the release activity will take place within a GitHub action (see `.github/workflows/release.yml`
+to understand this behavior).  Running `pnpm release` on a locally cloned repository with this `releaseTrigger` setting
+**will** create release-related artifacts in the `dist` folder, but **will not** update the git repository with
+any tag-related information, nor will it update a `CHANGELOG.md` file in the local repository (see [Manual Releases](#manual-releases)
+for additional information).
+
+## Scheduled Releases
+
+This setting relies on GitHub and GitHub actions being used.  Releases will be created on the CRON-based schedule indicated.
+
 ```js
 releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
 ```
@@ -122,10 +146,17 @@ releaseTrigger: ReleaseTrigger.manual(),
 This will create a `release` task. Run it locally (`projen release`) to cut a release. It will build the project and create releasable artifacts inside the `dist` directory.
 
 It will also trigger a `publish:git` task. This task does
-manage a project-level changelog, commit any changes, tag the release, and push any commits and tags to the remote repository.
+manage a project-level changelog, commit any changes, tag the release (adds a git tag to the commit used
+to update the `CHANGELOG.md` file), and push any commits and tags to the remote repository.
 
 The command used for pushing can be customized by specifying
 `gitPushCommand`. Set to an empty string to disable pushing entirely.
+If working completely local, setting `gitPushCommand` to an empty string ( `''` )
+results in the local git repository getting appropriate tags added.
+
+Note that setting `releaseTrigger` to `ReleaseTrigger.manual()` also has the side-effect of **removing**
+the GitHub action workflow related to release processing.  There is no `.github/workflows/release.yml` file
+created for the repository.
 
 ### Publishing modules for manual releases
 
