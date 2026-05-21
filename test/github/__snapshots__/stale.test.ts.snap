@@ -15,7 +15,8 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/stale@v10
+      - id: auto_65b1296e
+        uses: actions/stale@v10
         with:
           days-before-stale: -1
           days-before-close: -1
@@ -45,7 +46,8 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/stale@v10
+      - id: auto_65b1296e
+        uses: actions/stale@v10
         with:
           days-before-stale: -1
           days-before-close: -1

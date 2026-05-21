@@ -300,23 +300,28 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
+        id: download_patch
         uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
+        id: apply_patch
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Push changes
+        id: push_changes
         env:
           PULL_REQUEST_REF: \${{ github.event.pull_request.head.ref }}
         run: |-
@@ -345,7 +350,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -383,16 +389,20 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Install dependencies
+        id: install_dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
+        id: release
         run: npx projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -407,10 +417,12 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -430,14 +442,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -460,12 +475,15 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: main
       - name: Install dependencies
+        id: install_dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
+        id: upgrade_dependencies
         run: npx projen upgrade
       - name: Find mutations
         id: create_patch
@@ -475,6 +493,7 @@ jobs:
         shell: bash
         working-directory: ./
       - name: Upload patch
+        id: upload_patch
         if: steps.create_patch.outputs.patch_created
         uses: actions/upload-artifact@v7
         with:
@@ -490,17 +509,21 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           ref: main
       - name: Download patch
+        id: download_patch
         uses: actions/download-artifact@v8
         with:
           name: repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
+        id: apply_patch
         run: '[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
