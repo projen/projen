@@ -23,6 +23,7 @@ export * from "./project-tree";
 export * from "./projects";
 export * from "./projenrc";
 export * from "./projenrc-json";
+export * from "./projenrc-yaml";
 export * from "./readme";
 export * from "./renovatebot";
 export * from "./sample-file";

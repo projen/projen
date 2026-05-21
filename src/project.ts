@@ -24,6 +24,8 @@ import { ProjectBuild as ProjectBuild } from "./project-build";
 import { ProjectTree } from "./project-tree";
 import type { ProjenrcJsonOptions } from "./projenrc-json";
 import { ProjenrcJson } from "./projenrc-json";
+import type { ProjenrcYamlOptions } from "./projenrc-yaml";
+import { ProjenrcYaml } from "./projenrc-yaml";
 import type { RenovatebotOptions } from "./renovatebot";
 import { Renovatebot } from "./renovatebot";
 import type { Task, TaskOptions } from "./task";
@@ -90,6 +92,20 @@ export interface ProjectOptions {
    * @default - default options
    */
   readonly projenrcJsonOptions?: ProjenrcJsonOptions;
+
+  /**
+   * Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable
+   * .projenrc.yaml generation.
+   *
+   * @default false
+   */
+  readonly projenrcYaml?: boolean;
+
+  /**
+   * Options for .projenrc.yaml
+   * @default - default options
+   */
+  readonly projenrcYamlOptions?: ProjenrcYamlOptions;
 
   /**
    * The shell command to use in order to run the projen CLI.
@@ -372,6 +388,11 @@ export class Project extends Construct {
     const projenrcJson = options.projenrcJson ?? false;
     if (!this.parent && projenrcJson) {
       new ProjenrcJson(this, options.projenrcJsonOptions);
+    }
+
+    const projenrcYaml = options.projenrcYaml ?? false;
+    if (!this.parent && projenrcYaml) {
+      new ProjenrcYaml(this, options.projenrcYamlOptions);
     }
 
     if (options.renovatebot) {

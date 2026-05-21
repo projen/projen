@@ -7430,6 +7430,225 @@ The path of the projenrc file.
 ---
 
 
+### ProjenrcYaml <a name="ProjenrcYaml" id="projen.ProjenrcYaml"></a>
+
+Sets up a project to use YAML for projenrc.
+
+#### Initializers <a name="Initializers" id="projen.ProjenrcYaml.Initializer"></a>
+
+```typescript
+import { ProjenrcYaml } from 'projen'
+
+new ProjenrcYaml(project: Project, options?: ProjenrcYamlOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ProjenrcYaml.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.ProjenrcYaml.Initializer.parameter.options">options</a></code> | <code><a href="#projen.ProjenrcYamlOptions">ProjenrcYamlOptions</a></code> | *No description.* |
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.ProjenrcYaml.Initializer.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.ProjenrcYaml.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.ProjenrcYamlOptions">ProjenrcYamlOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ProjenrcYaml.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.ProjenrcYaml.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ProjenrcYaml.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.ProjenrcYaml.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ProjenrcYaml.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.ProjenrcYaml.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.ProjenrcYaml.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.ProjenrcYaml.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.ProjenrcYaml.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.ProjenrcYaml.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.ProjenrcYaml.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ProjenrcYaml.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.ProjenrcYaml.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.ProjenrcYaml.of">of</a></code> | Returns the `Projenrc` instance associated with a project or `undefined` if there is no Projenrc. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.ProjenrcYaml.isConstruct"></a>
+
+```typescript
+import { ProjenrcYaml } from 'projen'
+
+ProjenrcYaml.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ProjenrcYaml.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.ProjenrcYaml.isComponent"></a>
+
+```typescript
+import { ProjenrcYaml } from 'projen'
+
+ProjenrcYaml.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.ProjenrcYaml.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.ProjenrcYaml.of"></a>
+
+```typescript
+import { ProjenrcYaml } from 'projen'
+
+ProjenrcYaml.of(project: Project)
+```
+
+Returns the `Projenrc` instance associated with a project or `undefined` if there is no Projenrc.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.ProjenrcYaml.of.parameter.project"></a>
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+The project.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ProjenrcYaml.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.ProjenrcYaml.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.ProjenrcYaml.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.ProjenrcYaml.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.ProjenrcYaml.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.ProjenrcYaml.property.filePath"></a>
+
+```typescript
+public readonly filePath: string;
+```
+
+- *Type:* string
+
+The path of the projenrc file.
+
+---
+
+
 ### Renovatebot <a name="Renovatebot" id="projen.Renovatebot"></a>
 
 Defines renovatebot configuration for projen project.
@@ -13691,6 +13910,8 @@ const projectOptions: ProjectOptions = { ... }
 | <code><a href="#projen.ProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.ProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.ProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code><a href="#projen.ProjenrcJsonOptions">ProjenrcJsonOptions</a></code> | Options for .projenrc.json. |
+| <code><a href="#projen.ProjectOptions.property.projenrcYaml">projenrcYaml</a></code> | <code>boolean</code> | Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation. |
+| <code><a href="#projen.ProjectOptions.property.projenrcYamlOptions">projenrcYamlOptions</a></code> | <code><a href="#projen.ProjenrcYamlOptions">ProjenrcYamlOptions</a></code> | Options for .projenrc.yaml. |
 | <code><a href="#projen.ProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.ProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code><a href="#projen.RenovatebotOptions">RenovatebotOptions</a></code> | Options for renovatebot. |
 
@@ -13844,6 +14065,32 @@ Options for .projenrc.json.
 
 ---
 
+##### `projenrcYaml`<sup>Optional</sup> <a name="projenrcYaml" id="projen.ProjectOptions.property.projenrcYaml"></a>
+
+```typescript
+public readonly projenrcYaml: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation.
+
+---
+
+##### `projenrcYamlOptions`<sup>Optional</sup> <a name="projenrcYamlOptions" id="projen.ProjectOptions.property.projenrcYamlOptions"></a>
+
+```typescript
+public readonly projenrcYamlOptions: ProjenrcYamlOptions;
+```
+
+- *Type:* <a href="#projen.ProjenrcYamlOptions">ProjenrcYamlOptions</a>
+- *Default:* default options
+
+Options for .projenrc.yaml.
+
+---
+
 ##### `renovatebot`<sup>Optional</sup> <a name="renovatebot" id="projen.ProjectOptions.property.renovatebot"></a>
 
 ```typescript
@@ -13929,6 +14176,37 @@ public readonly filename: string;
 
 - *Type:* string
 - *Default:* ".projenrc.json"
+
+The name of the projenrc file.
+
+---
+
+### ProjenrcYamlOptions <a name="ProjenrcYamlOptions" id="projen.ProjenrcYamlOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.ProjenrcYamlOptions.Initializer"></a>
+
+```typescript
+import { ProjenrcYamlOptions } from 'projen'
+
+const projenrcYamlOptions: ProjenrcYamlOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ProjenrcYamlOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
+
+---
+
+##### `filename`<sup>Optional</sup> <a name="filename" id="projen.ProjenrcYamlOptions.property.filename"></a>
+
+```typescript
+public readonly filename: string;
+```
+
+- *Type:* string
+- *Default:* ".projenrc.yaml"
 
 The name of the projenrc file.
 
