@@ -2541,9 +2541,16 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.GithubWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.addStep">addStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.GithubWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
+| <code><a href="#projen.github.GithubWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
+| <code><a href="#projen.github.GithubWorkflow.insertStepBefore">insertStepBefore</a></code> | Inserts a step before an existing step, identified by ID. |
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.patchStep">patchStep</a></code> | Applies a surgical modification to an existing step. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.removeStep">removeStep</a></code> | Removes a step from a job by step ID. |
+| <code><a href="#projen.github.GithubWorkflow.replaceStep">replaceStep</a></code> | Replaces an existing step in a job, preserving its position. |
 | <code><a href="#projen.github.GithubWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
@@ -2644,6 +2651,32 @@ Jobs to add.
 
 ---
 
+##### `addStep` <a name="addStep" id="projen.github.GithubWorkflow.addStep"></a>
+
+```typescript
+public addStep(jobId: string, step: JobStep): void
+```
+
+Appends a step to the end of a job's step list.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.addStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.addStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to add.
+
+Must have an `id` set.
+
+---
+
 ##### `getJob` <a name="getJob" id="projen.github.GithubWorkflow.getJob"></a>
 
 ```typescript
@@ -2657,6 +2690,101 @@ Get a single job from the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `getStep` <a name="getStep" id="projen.github.GithubWorkflow.getStep"></a>
+
+```typescript
+public getStep(jobId: string, stepId: string): JobStep
+```
+
+Gets a single step from a job by step ID.
+
+The returned object is frozen and read-only. Use `replaceStep` or
+`patchStep` to modify a step.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.getStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.getStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The step ID to look up.
+
+---
+
+##### `insertStepAfter` <a name="insertStepAfter" id="projen.github.GithubWorkflow.insertStepAfter"></a>
+
+```typescript
+public insertStepAfter(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step after an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.insertStepAfter.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.GithubWorkflow.insertStepAfter.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert after.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.insertStepAfter.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
+
+---
+
+##### `insertStepBefore` <a name="insertStepBefore" id="projen.github.GithubWorkflow.insertStepBefore"></a>
+
+```typescript
+public insertStepBefore(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step before an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.insertStepBefore.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.GithubWorkflow.insertStepBefore.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert before.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.insertStepBefore.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
 
 ---
 
@@ -2676,6 +2804,53 @@ The event(s) to trigger the workflow.
 
 ---
 
+##### `patchStep` <a name="patchStep" id="projen.github.GithubWorkflow.patchStep"></a>
+
+```typescript
+public patchStep(jobId: string, stepId: string, patch: JobStep): void
+```
+
+Applies a surgical modification to an existing step.
+
+The provided patch is shallow-merged onto the existing step. Fields not
+present in the patch are preserved unchanged. Use `getStep` to read the
+current step values before constructing the patch.
+
+*Example*
+
+```typescript
+// Add an env var without replacing existing ones:
+const step = workflow.getStep("build", "install");
+workflow.patchStep("build", "install", {
+  env: { ...step.env, NODE_AUTH_TOKEN: "${{ steps.jfrog.outputs.oidc-token }}" },
+});
+```
+
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.patchStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.patchStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to patch.
+
+---
+
+###### `patch`<sup>Required</sup> <a name="patch" id="projen.github.GithubWorkflow.patchStep.parameter.patch"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+A partial step object whose fields are shallow-merged onto the existing step.
+
+---
+
 ##### `removeJob` <a name="removeJob" id="projen.github.GithubWorkflow.removeJob"></a>
 
 ```typescript
@@ -2689,6 +2864,64 @@ Removes a single job to the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `removeStep` <a name="removeStep" id="projen.github.GithubWorkflow.removeStep"></a>
+
+```typescript
+public removeStep(jobId: string, stepId: string): void
+```
+
+Removes a step from a job by step ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.removeStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.removeStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to remove.
+
+---
+
+##### `replaceStep` <a name="replaceStep" id="projen.github.GithubWorkflow.replaceStep"></a>
+
+```typescript
+public replaceStep(jobId: string, stepId: string, step: JobStep): void
+```
+
+Replaces an existing step in a job, preserving its position.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.replaceStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.replaceStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to replace.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.replaceStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The replacement step.
+
+If `id` is omitted, it inherits the original step's ID.
 
 ---
 
@@ -4299,9 +4532,16 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.TaskWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.addStep">addStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.TaskWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
+| <code><a href="#projen.github.TaskWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
+| <code><a href="#projen.github.TaskWorkflow.insertStepBefore">insertStepBefore</a></code> | Inserts a step before an existing step, identified by ID. |
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.patchStep">patchStep</a></code> | Applies a surgical modification to an existing step. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.removeStep">removeStep</a></code> | Removes a step from a job by step ID. |
+| <code><a href="#projen.github.TaskWorkflow.replaceStep">replaceStep</a></code> | Replaces an existing step in a job, preserving its position. |
 | <code><a href="#projen.github.TaskWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
@@ -4402,6 +4642,32 @@ Jobs to add.
 
 ---
 
+##### `addStep` <a name="addStep" id="projen.github.TaskWorkflow.addStep"></a>
+
+```typescript
+public addStep(jobId: string, step: JobStep): void
+```
+
+Appends a step to the end of a job's step list.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.addStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.addStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to add.
+
+Must have an `id` set.
+
+---
+
 ##### `getJob` <a name="getJob" id="projen.github.TaskWorkflow.getJob"></a>
 
 ```typescript
@@ -4415,6 +4681,101 @@ Get a single job from the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `getStep` <a name="getStep" id="projen.github.TaskWorkflow.getStep"></a>
+
+```typescript
+public getStep(jobId: string, stepId: string): JobStep
+```
+
+Gets a single step from a job by step ID.
+
+The returned object is frozen and read-only. Use `replaceStep` or
+`patchStep` to modify a step.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.getStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.getStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The step ID to look up.
+
+---
+
+##### `insertStepAfter` <a name="insertStepAfter" id="projen.github.TaskWorkflow.insertStepAfter"></a>
+
+```typescript
+public insertStepAfter(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step after an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.insertStepAfter.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.TaskWorkflow.insertStepAfter.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert after.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.insertStepAfter.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
+
+---
+
+##### `insertStepBefore` <a name="insertStepBefore" id="projen.github.TaskWorkflow.insertStepBefore"></a>
+
+```typescript
+public insertStepBefore(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step before an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.insertStepBefore.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.TaskWorkflow.insertStepBefore.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert before.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.insertStepBefore.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
 
 ---
 
@@ -4434,6 +4795,53 @@ The event(s) to trigger the workflow.
 
 ---
 
+##### `patchStep` <a name="patchStep" id="projen.github.TaskWorkflow.patchStep"></a>
+
+```typescript
+public patchStep(jobId: string, stepId: string, patch: JobStep): void
+```
+
+Applies a surgical modification to an existing step.
+
+The provided patch is shallow-merged onto the existing step. Fields not
+present in the patch are preserved unchanged. Use `getStep` to read the
+current step values before constructing the patch.
+
+*Example*
+
+```typescript
+// Add an env var without replacing existing ones:
+const step = workflow.getStep("build", "install");
+workflow.patchStep("build", "install", {
+  env: { ...step.env, NODE_AUTH_TOKEN: "${{ steps.jfrog.outputs.oidc-token }}" },
+});
+```
+
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.patchStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.patchStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to patch.
+
+---
+
+###### `patch`<sup>Required</sup> <a name="patch" id="projen.github.TaskWorkflow.patchStep.parameter.patch"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+A partial step object whose fields are shallow-merged onto the existing step.
+
+---
+
 ##### `removeJob` <a name="removeJob" id="projen.github.TaskWorkflow.removeJob"></a>
 
 ```typescript
@@ -4447,6 +4855,64 @@ Removes a single job to the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `removeStep` <a name="removeStep" id="projen.github.TaskWorkflow.removeStep"></a>
+
+```typescript
+public removeStep(jobId: string, stepId: string): void
+```
+
+Removes a step from a job by step ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.removeStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.removeStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to remove.
+
+---
+
+##### `replaceStep` <a name="replaceStep" id="projen.github.TaskWorkflow.replaceStep"></a>
+
+```typescript
+public replaceStep(jobId: string, stepId: string, step: JobStep): void
+```
+
+Replaces an existing step in a job, preserving its position.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.replaceStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.replaceStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to replace.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.replaceStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The replacement step.
+
+If `id` is omitted, it inherits the original step's ID.
 
 ---
 
