@@ -213,18 +213,27 @@ export class Renovatebot extends Component {
       renovateIgnore.push(...new Set(reusableWorkflows));
     }
 
+    const extendsPresets = [
+      ":preserveSemverRanges",
+      "config:recommended",
+      "group:allNonMajor",
+      "group:recommended",
+      "group:monorepos",
+    ];
+
+    // Add Biome custom manager if Biome is configured
+    // Lazy require to avoid circular dependency (renovatebot -> biome -> project -> renovatebot)
+    const { Biome } = require("./javascript/biome/biome"); // eslint-disable-line @typescript-eslint/no-require-imports
+    if (Biome.of(this._project)) {
+      extendsPresets.push("customManagers:biomeVersions");
+    }
+
     return {
       labels: this.labels,
       schedule: this.scheduleInterval,
       minimumReleaseAge: this.minimumReleaseAge,
       minimumReleaseAgeBehaviour: this.minimumReleaseAgeBehaviour,
-      extends: [
-        ":preserveSemverRanges",
-        "config:recommended",
-        "group:allNonMajor",
-        "group:recommended",
-        "group:monorepos",
-      ],
+      extends: extendsPresets,
       packageRules: [
         {
           matchDepTypes: ["devDependencies"],
