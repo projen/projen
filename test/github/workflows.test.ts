@@ -276,9 +276,9 @@ describe("step mutation API", () => {
 
     test("throws when id not set", () => {
       const { wf } = createWorkflowWithSteps(SAMPLE_STEPS);
-      expect(() => wf.appendStep("build", { name: "No ID", run: "echo" })).toThrow(
-        /Step must have an "id"/,
-      );
+      expect(() =>
+        wf.appendStep("build", { name: "No ID", run: "echo" }),
+      ).toThrow(/Step must have an "id"/);
     });
   });
 
