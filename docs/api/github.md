@@ -2541,7 +2541,7 @@ Additional options to configure the workflow.
 | <code><a href="#projen.github.GithubWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.GithubWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
-| <code><a href="#projen.github.GithubWorkflow.addStep">addStep</a></code> | Appends a step to the end of a job's step list. |
+| <code><a href="#projen.github.GithubWorkflow.appendStep">appendStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.GithubWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
 | <code><a href="#projen.github.GithubWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
@@ -2651,15 +2651,15 @@ Jobs to add.
 
 ---
 
-##### `addStep` <a name="addStep" id="projen.github.GithubWorkflow.addStep"></a>
+##### `appendStep` <a name="appendStep" id="projen.github.GithubWorkflow.appendStep"></a>
 
 ```typescript
-public addStep(jobId: string, step: JobStep): void
+public appendStep(jobId: string, step: JobStep): void
 ```
 
 Appends a step to the end of a job's step list.
 
-###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.addStep.parameter.jobId"></a>
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.appendStep.parameter.jobId"></a>
 
 - *Type:* string
 
@@ -2667,7 +2667,7 @@ The job name (unique within the workflow).
 
 ---
 
-###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.addStep.parameter.step"></a>
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.appendStep.parameter.step"></a>
 
 - *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
 
@@ -2894,7 +2894,7 @@ The ID of the step to remove.
 ##### `replaceStep` <a name="replaceStep" id="projen.github.GithubWorkflow.replaceStep"></a>
 
 ```typescript
-public replaceStep(jobId: string, stepId: string, step: JobStep): void
+public replaceStep(jobId: string, stepId: string, replacementStep: JobStep): void
 ```
 
 Replaces an existing step in a job, preserving its position.
@@ -2915,7 +2915,7 @@ The ID of the step to replace.
 
 ---
 
-###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.replaceStep.parameter.step"></a>
+###### `replacementStep`<sup>Required</sup> <a name="replacementStep" id="projen.github.GithubWorkflow.replaceStep.parameter.replacementStep"></a>
 
 - *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
 
@@ -4532,7 +4532,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | <code><a href="#projen.github.TaskWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.TaskWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
-| <code><a href="#projen.github.TaskWorkflow.addStep">addStep</a></code> | Appends a step to the end of a job's step list. |
+| <code><a href="#projen.github.TaskWorkflow.appendStep">appendStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.TaskWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
 | <code><a href="#projen.github.TaskWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
@@ -4642,15 +4642,15 @@ Jobs to add.
 
 ---
 
-##### `addStep` <a name="addStep" id="projen.github.TaskWorkflow.addStep"></a>
+##### `appendStep` <a name="appendStep" id="projen.github.TaskWorkflow.appendStep"></a>
 
 ```typescript
-public addStep(jobId: string, step: JobStep): void
+public appendStep(jobId: string, step: JobStep): void
 ```
 
 Appends a step to the end of a job's step list.
 
-###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.addStep.parameter.jobId"></a>
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.appendStep.parameter.jobId"></a>
 
 - *Type:* string
 
@@ -4658,7 +4658,7 @@ The job name (unique within the workflow).
 
 ---
 
-###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.addStep.parameter.step"></a>
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.appendStep.parameter.step"></a>
 
 - *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
 
@@ -4885,7 +4885,7 @@ The ID of the step to remove.
 ##### `replaceStep` <a name="replaceStep" id="projen.github.TaskWorkflow.replaceStep"></a>
 
 ```typescript
-public replaceStep(jobId: string, stepId: string, step: JobStep): void
+public replaceStep(jobId: string, stepId: string, replacementStep: JobStep): void
 ```
 
 Replaces an existing step in a job, preserving its position.
@@ -4906,7 +4906,7 @@ The ID of the step to replace.
 
 ---
 
-###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.replaceStep.parameter.step"></a>
+###### `replacementStep`<sup>Required</sup> <a name="replacementStep" id="projen.github.TaskWorkflow.replaceStep.parameter.replacementStep"></a>
 
 - *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
 
