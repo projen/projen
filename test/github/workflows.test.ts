@@ -257,10 +257,10 @@ describe("step mutation API", () => {
     });
   });
 
-  describe("addStep", () => {
+  describe("appendStep", () => {
     test("appends step to end", () => {
       const { wf, p } = createWorkflowWithSteps(SAMPLE_STEPS);
-      wf.addStep("build", { id: "lint", name: "Lint", run: "npx eslint" });
+      wf.appendStep("build", { id: "lint", name: "Lint", run: "npx eslint" });
 
       const steps = synthSteps(p);
       expect(steps).toHaveLength(5);
@@ -270,13 +270,13 @@ describe("step mutation API", () => {
     test("throws on duplicate id", () => {
       const { wf } = createWorkflowWithSteps(SAMPLE_STEPS);
       expect(() =>
-        wf.addStep("build", { id: "checkout", name: "Dup", run: "echo" }),
+        wf.appendStep("build", { id: "checkout", name: "Dup", run: "echo" }),
       ).toThrow(/Step ID "checkout" already exists in job "build"/);
     });
 
     test("throws when id not set", () => {
       const { wf } = createWorkflowWithSteps(SAMPLE_STEPS);
-      expect(() => wf.addStep("build", { name: "No ID", run: "echo" })).toThrow(
+      expect(() => wf.appendStep("build", { name: "No ID", run: "echo" })).toThrow(
         /Step must have an "id"/,
       );
     });

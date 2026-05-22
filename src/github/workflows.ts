@@ -296,7 +296,7 @@ export class GithubWorkflow extends Component {
    * @param jobId The job name (unique within the workflow)
    * @param step The step to add. Must have an `id` set.
    */
-  public addStep(jobId: string, step: workflows.JobStep): void {
+  public appendStep(jobId: string, step: workflows.JobStep): void {
     const steps = this.resolveJobSteps(jobId);
     this.requireStepId(step);
     this.requireUniqueStepId(steps, step.id!, jobId);
@@ -308,16 +308,16 @@ export class GithubWorkflow extends Component {
    *
    * @param jobId The job name (unique within the workflow)
    * @param stepId The ID of the step to replace
-   * @param step The replacement step. If `id` is omitted, it inherits the original step's ID.
+   * @param replacementStep The replacement step. If `id` is omitted, it inherits the original step's ID.
    */
   public replaceStep(
     jobId: string,
     stepId: string,
-    step: workflows.JobStep,
+    replacementStep: workflows.JobStep,
   ): void {
     const steps = this.resolveJobSteps(jobId);
     const index = this.findStepIndex(steps, stepId, jobId);
-    const newStep = { ...step, id: step.id ?? stepId };
+    const newStep = { ...replacementStep, id: replacementStep.id ?? stepId };
 
     // If the id changed, validate uniqueness of the new id
     if (newStep.id !== stepId) {
