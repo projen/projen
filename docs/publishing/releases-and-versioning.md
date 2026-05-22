@@ -103,14 +103,14 @@ changelogs.
 The default setting for `releaseTrigger` is `ReleaseTrigger.continuous()`.  This setting implies that any commit
 to the `main` branch will result in a release being created.  However, this presumes that GitHub and GitHub actions
 are being used and that the carrying out of the release activity will take place within a GitHub action (see `.github/workflows/release.yml`
-to understand this behavior).  Running `pnpm release` on a locally cloned repository with this `releaseTrigger` setting
+to understand this behavior). Running `pnpm release` on a locally cloned repository with this `releaseTrigger` setting
 **will** create release-related artifacts in the `dist` folder, but **will not** update the git repository with
 any tag-related information, nor will it update a `CHANGELOG.md` file in the local repository (see [Manual Releases](#manual-releases)
 for additional information).
 
 ## Scheduled Releases
 
-This setting relies on GitHub and GitHub actions being used.  Releases will be created on the CRON-based schedule indicated.
+This setting relies on GitHub and GitHub actions being used. Releases will be created on the CRON-based schedule indicated.
 
 ```js
 releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
@@ -155,7 +155,7 @@ If working completely local, setting `gitPushCommand` to an empty string ( `''` 
 results in the local git repository getting appropriate tags added.
 
 Note that setting `releaseTrigger` to `ReleaseTrigger.manual()` also has the side-effect of **removing**
-the GitHub action workflow related to release processing.  There is no `.github/workflows/release.yml` file
+the GitHub action workflow related to release processing. There is no `.github/workflows/release.yml` file
 created for the repository.
 
 ### Publishing modules for manual releases
