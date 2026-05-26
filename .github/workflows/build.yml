@@ -51,7 +51,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -90,7 +90,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -128,7 +128,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -167,7 +167,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -195,6 +195,7 @@ jobs:
       id-token: write
     outputs:
       self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+      artifact_id: ${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -248,6 +249,7 @@ jobs:
         continue-on-error: true
         if: matrix.runner.primary_build
       - name: Upload artifact
+        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact
@@ -272,6 +274,7 @@ jobs:
     if: always()
     outputs:
       self_mutation_happened: ${{ needs.build_matrix.outputs.self_mutation_happened }}
+      artifact_id: ${{ needs.build_matrix.outputs.artifact_id }}
     steps:
       - name: Build result
         run: echo ${{ needs.build_matrix.result }}

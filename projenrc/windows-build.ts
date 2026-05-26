@@ -106,6 +106,7 @@ export class WindowsBuild extends Component {
         if: "always()",
         outputs: {
           self_mutation_happened: `\${{ needs.${JOB_BUILD_MATRIX}.outputs.self_mutation_happened }}`,
+          artifact_id: `\${{ needs.${JOB_BUILD_MATRIX}.outputs.artifact_id }}`,
         },
         steps: [
           {

@@ -34,9 +34,11 @@ import { Version } from "../version";
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
 const TAG_EXISTS_STEPID = "check_tag_exists";
+const UPLOAD_ARTIFACT_STEP = "upload_artifact";
 
 const LATEST_COMMIT_OUTPUT = "latest_commit";
 const TAG_EXISTS_OUTPUT = "tag_exists";
+const ARTIFACT_ID_OUTPUT = "artifact_id";
 
 /**
  * Conditional (Github Workflow Job `if`) to check if a release job should be run.
@@ -759,6 +761,7 @@ export class Release extends Component {
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       WorkflowSteps.uploadArtifact({
+        id: UPLOAD_ARTIFACT_STEP,
         if: noNewCommits,
         with: {
           name: BUILD_ARTIFACT_NAME,
@@ -808,6 +811,10 @@ export class Release extends Component {
           [TAG_EXISTS_OUTPUT]: {
             stepId: TAG_EXISTS_STEPID,
             outputName: "exists",
+          },
+          [ARTIFACT_ID_OUTPUT]: {
+            stepId: UPLOAD_ARTIFACT_STEP,
+            outputName: "artifact-id",
           },
         },
         container: this.containerImage

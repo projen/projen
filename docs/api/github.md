@@ -7163,6 +7163,7 @@ const downloadArtifactWith: github.DownloadArtifactWith = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.DownloadArtifactWith.property.artifactIds">artifactIds</a></code> | <code>string[]</code> | IDs of the artifacts to download. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.mergeMultiple">mergeMultiple</a></code> | <code>boolean</code> | When multiple artifacts are matched, this changes the behavior of the destination directories If true, the downloaded artifacts will be in the same directory specified by path If false, the downloaded artifacts will be extracted into individual named directories within the specified path. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to download. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to download. |
@@ -7170,6 +7171,20 @@ const downloadArtifactWith: github.DownloadArtifactWith = { ... }
 | <code><a href="#projen.github.DownloadArtifactWith.property.repository">repository</a></code> | <code>string</code> | The repository owner and the repository name joined together by "/" If github-token is specified, this is the repository that artifacts will be downloaded from. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.runId">runId</a></code> | <code>string</code> | The id of the workflow run where the desired download artifact was uploaded from If github-token is specified, this is the run that artifacts will be downloaded from. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.token">token</a></code> | <code>string</code> | The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run. |
+
+---
+
+##### `artifactIds`<sup>Optional</sup> <a name="artifactIds" id="projen.github.DownloadArtifactWith.property.artifactIds"></a>
+
+```typescript
+public readonly artifactIds: string[];
+```
+
+- *Type:* string[]
+
+IDs of the artifacts to download.
+
+Either inputs `artifact-ids` or `name` can be used, but not both.
 
 ---
 
