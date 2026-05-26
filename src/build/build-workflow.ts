@@ -31,6 +31,7 @@ import type { Project } from "../project";
 import type { GroupRunnerOptions } from "../runner-options";
 import { filteredRunsOnOptions } from "../runner-options";
 import {
+  ARTIFACT_ID_OUTPUT,
   BUILD_JOBID,
   DEFAULT_ARTIFACTS_DIRECTORY,
   NOT_FORK,
@@ -39,6 +40,7 @@ import {
   SELF_MUTATION_CONDITION,
   SELF_MUTATION_HAPPENED_OUTPUT,
   SELF_MUTATION_STEP,
+  UPLOAD_ARTIFACT_STEP,
 } from "./private/consts";
 import { workflowNameForProject } from "../util/name";
 
@@ -248,6 +250,10 @@ export class BuildWorkflow extends Component {
           stepId: SELF_MUTATION_STEP,
           outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         },
+        [ARTIFACT_ID_OUTPUT]: {
+          stepId: UPLOAD_ARTIFACT_STEP,
+          outputName: "artifact-id",
+        },
       },
     };
 
@@ -284,14 +290,15 @@ export class BuildWorkflow extends Component {
     const steps = [];
 
     steps.push(
-      {
+      WorkflowSteps.downloadArtifact({
         name: "Download build artifacts",
-        uses: "actions/download-artifact@v8",
         with: {
-          name: BUILD_ARTIFACT_NAME,
+          artifactIds: [
+            `\${{ needs.${BUILD_JOBID}.outputs.${ARTIFACT_ID_OUTPUT} }}`,
+          ],
           path: this.artifactsDirectory,
         },
-      },
+      }),
       {
         name: "Restore build artifact permissions",
         continueOnError: true,
@@ -477,6 +484,7 @@ export class BuildWorkflow extends Component {
               run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
             },
             WorkflowSteps.uploadArtifact({
+              id: UPLOAD_ARTIFACT_STEP,
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.project.parent

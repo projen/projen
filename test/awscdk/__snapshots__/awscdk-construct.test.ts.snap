@@ -6,6 +6,7 @@ exports[`node version in workflow does setup a custom version 1`] = `
     "CI": "true",
   },
   "outputs": {
+    "artifact_id": "\${{ steps.upload_artifact.outputs.artifact-id }}",
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
   "permissions": {
@@ -68,6 +69,7 @@ exit 1",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
+      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {
@@ -86,6 +88,7 @@ exports[`node version in workflow does setup default version 1`] = `
     "CI": "true",
   },
   "outputs": {
+    "artifact_id": "\${{ steps.upload_artifact.outputs.artifact-id }}",
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
   "permissions": {
@@ -148,6 +151,7 @@ exit 1",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
+      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {
@@ -166,6 +170,7 @@ exports[`node version in workflow does use minNodeVersion 1`] = `
     "CI": "true",
   },
   "outputs": {
+    "artifact_id": "\${{ steps.upload_artifact.outputs.artifact-id }}",
     "self_mutation_happened": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
   },
   "permissions": {
@@ -228,6 +233,7 @@ exit 1",
       "run": "cd dist && getfacl -R . > permissions-backup.acl",
     },
     {
+      "id": "upload_artifact",
       "name": "Upload artifact",
       "uses": "actions/upload-artifact@v7",
       "with": {

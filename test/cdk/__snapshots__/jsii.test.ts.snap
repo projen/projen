@@ -260,6 +260,7 @@ jobs:
       contents: write
     outputs:
       self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -296,6 +297,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         uses: actions/upload-artifact@v7
         with:
           name: build-artifact
@@ -346,7 +348,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.build.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -423,6 +425,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
       tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -455,6 +458,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -478,7 +482,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -504,7 +508,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -1631,7 +1635,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -1709,7 +1713,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -1784,7 +1788,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -1863,7 +1867,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -1938,7 +1942,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2014,7 +2018,7 @@ exports[`language bindings snapshot dotnet 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2083,7 +2087,7 @@ exports[`language bindings snapshot go 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2152,7 +2156,7 @@ exports[`language bindings snapshot java 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2214,7 +2218,7 @@ exports[`language bindings snapshot js 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2282,7 +2286,7 @@ exports[`language bindings snapshot python 1`] = `
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v8",
       "with": {
-        "name": "build-artifact",
+        "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
       },
     },
@@ -2349,6 +2353,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
       tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -2381,6 +2386,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -2405,7 +2411,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2431,7 +2437,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2477,7 +2483,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2533,6 +2539,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
       tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -2565,6 +2572,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -2589,7 +2597,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2615,7 +2623,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2661,7 +2669,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2715,6 +2723,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
       tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -2747,6 +2756,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -2771,7 +2781,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2797,7 +2807,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2843,7 +2853,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2895,6 +2905,7 @@ jobs:
     outputs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
       tag_exists: \${{ steps.check_tag_exists.outputs.exists }}
+      artifact_id: \${{ steps.upload_artifact.outputs.artifact-id }}
     env:
       CI: "true"
     steps:
@@ -2927,6 +2938,7 @@ jobs:
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
       - name: Upload artifact
+        id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v7
         with:
@@ -2951,7 +2963,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -2977,7 +2989,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
@@ -3023,7 +3035,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v8
         with:
-          name: build-artifact
+          artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
         run: cd dist && setfacl --restore=permissions-backup.acl

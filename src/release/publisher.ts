@@ -1,7 +1,8 @@
 import type { BranchOptions } from "./release";
+import { ARTIFACT_ID_OUTPUT } from "../build/private/consts";
 import { Component } from "../component";
+import { WorkflowSteps } from "../github";
 import {
-  BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
@@ -774,14 +775,15 @@ export class Publisher extends Component {
       }
 
       const steps: JobStep[] = [
-        {
+        WorkflowSteps.downloadArtifact({
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v8",
           with: {
-            name: BUILD_ARTIFACT_NAME,
+            artifactIds: [
+              `\${{ needs.${this.buildJobId}.outputs.${ARTIFACT_ID_OUTPUT} }}`,
+            ],
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
           },
-        },
+        }),
         {
           name: "Restore build artifact permissions",
           continueOnError: true,

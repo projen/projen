@@ -83,6 +83,32 @@ describe("buildRunsOn", () => {
   });
 });
 
+describe("addPostBuildJob", () => {
+  test("downloads artifact by id", () => {
+    const p = new TestProject();
+    const bw = new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    bw.addPostBuildJob("post-job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    const postJob = build.jobs["post-job"];
+    const downloadStep = postJob.steps[0];
+    expect(downloadStep.name).toBe("Download build artifacts");
+    expect(downloadStep.with["artifact-ids"]).toBe(
+      "${{ needs.build.outputs.artifact_id }}",
+    );
+    expect(downloadStep.with.name).toBeUndefined();
+  });
+});
+
 function synthWorkflows(p: Project): any {
   const snapshot = synthSnapshot(p);
   const filtered = Object.keys(snapshot)
