@@ -107,6 +107,38 @@ describe("addPostBuildJob", () => {
     );
     expect(downloadStep.with.name).toBeUndefined();
   });
+
+  test("artifact_id output is not present without post-build jobs", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build.outputs.artifact_id).toBeUndefined();
+  });
+
+  test("artifact_id output is present with post-build jobs", () => {
+    const p = new TestProject();
+    const bw = new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    bw.addPostBuildJob("post-job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build.outputs.artifact_id).toBe(
+      "${{ steps.upload_artifact.outputs.artifact-id }}",
+    );
+  });
 });
 
 function synthWorkflows(p: Project): any {
