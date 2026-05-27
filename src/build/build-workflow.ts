@@ -250,10 +250,6 @@ export class BuildWorkflow extends Component {
           stepId: SELF_MUTATION_STEP,
           outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         },
-        [ARTIFACT_ID_OUTPUT]: {
-          stepId: UPLOAD_ARTIFACT_STEP,
-          outputName: "artifact-id",
-        },
       },
     };
 
@@ -320,6 +316,15 @@ export class BuildWorkflow extends Component {
 
     // add to the list of build job IDs
     this._postBuildJobs.push(id);
+
+    // add artifact_id output to the build job (only needed when post-build jobs exist)
+    const buildJob = this.workflow.getJob(BUILD_JOBID) as Job;
+    if (buildJob.outputs && !buildJob.outputs[ARTIFACT_ID_OUTPUT]) {
+      (buildJob.outputs as Record<string, unknown>)[ARTIFACT_ID_OUTPUT] = {
+        stepId: UPLOAD_ARTIFACT_STEP,
+        outputName: "artifact-id",
+      };
+    }
   }
 
   /**
