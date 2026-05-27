@@ -68,7 +68,7 @@ const project = new JsiiProject({
 
   packageManager: javascript.NodePackageManager.NPM,
 
-  deps: ["constructs@^10.0.0"],
+  deps: ["constructs@^10.5.0"],
 
   bundledDeps: [
     "conventional-changelog-config-spec",
@@ -104,7 +104,7 @@ const project = new JsiiProject({
     "aws-cdk-lib",
   ],
 
-  peerDeps: ["constructs@^10.0.0"],
+  peerDeps: ["constructs@^10.5.0"],
 
   depsUpgrade: false, // configured below
   auditDeps: true,

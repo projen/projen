@@ -181,3 +181,35 @@ you can add the following to export it:
 ```typescript
 export * from './our-s3-bucket'
 ```
+
+## Adding jsii support to TypeScript projects
+
+If you have an existing `TypeScriptProject` and want to add jsii capabilities without switching to `JsiiProject`, you can use the `JsiiBuild`.
+This is particularly useful in monorepo setups where workspace projects have their own project type.
+
+```typescript
+import { TypeScriptProject } from 'projen/lib/typescript';
+import { JsiiBuild } from 'projen/lib/cdk';
+
+const project = new TypeScriptProject({
+  name: 'my-construct-lib',
+  defaultReleaseBranch: 'main',
+  disableTsconfig: true, // jsii manages tsconfig
+});
+
+project.with(new JsiiBuild({
+  jsiiVersion: '~5.9.0',
+  workspaceDirectory: 'packages/my-construct-lib',
+  publishToMaven: {
+    javaPackage: 'com.example.mylib',
+    mavenGroupId: 'com.example',
+    mavenArtifactId: 'my-construct-lib',
+  },
+  publishToPypi: {
+    distName: 'my-construct-lib',
+    module: 'my_construct_lib',
+  },
+}));
+```
+
+See [Mixins](../concepts/mixins.md) for more information on the mixin pattern.
