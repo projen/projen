@@ -15,7 +15,7 @@ In projen, constructs are used to represent the desired state of project configu
 The lowest-level constructs represent a configuration file.
 Files are composed to represent higher-level logical units of configurations, etc.
 
-Projen uses two types of constructs as basic building blocks: Projects & Components.
+Projen uses three primitives to build project configurations: Projects, Components, and [Mixins](./mixins.md).
 
 ## Composition
 
@@ -60,3 +60,20 @@ Project
 └── MyComponent
     └── YourComponent
 ```
+
+## Mixins
+
+While components require you to own the class hierarchy (you compose them *into* a project), mixins let you add capabilities *onto* any existing project without changing its type.
+
+Mixins implement the `IMixin` interface from `constructs` and are applied using the `.with()` method:
+
+```ts
+const project = new TypeScriptProject({ ... });
+project.with(new JsiiBuild({ jsiiVersion: '~5.9.0' }));
+```
+
+This is particularly powerful in monorepo scenarios where workspace projects aren't `JsiiProject` instances but still need jsii capabilities.
+Instead of maintaining hundreds of lines of custom configuration code, you apply a mixin.
+
+Mixins are not part of the construct tree — they modify constructs in place and are then discarded.
+For a full guide on creating and using mixins, see [Mixins](./mixins.md).

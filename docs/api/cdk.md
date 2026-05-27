@@ -6832,6 +6832,295 @@ Name of the integration test.
 
 ---
 
+### JsiiBuildOptions <a name="JsiiBuildOptions" id="projen.cdk.JsiiBuildOptions"></a>
+
+Options for `JsiiBuild`.
+
+#### Initializer <a name="Initializer" id="projen.cdk.JsiiBuildOptions.Initializer"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+const jsiiBuildOptions: cdk.JsiiBuildOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.release.CodeArtifactOptions</code> | Options for publishing npm package to AWS CodeArtifact. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.compat">compat</a></code> | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.compatIgnore">compatIgnore</a></code> | <code>string</code> | Name of the ignore file for API compatibility tests. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.compressAssembly">compressAssembly</a></code> | <code>boolean</code> | Emit a compressed version of the assembly. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.docgen">docgen</a></code> | <code>boolean</code> | Generate a MarkDown file describing the jsii API. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.docgenFilePath">docgenFilePath</a></code> | <code>string</code> | File path for generated docs. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.excludeTypescript">excludeTypescript</a></code> | <code>string[]</code> | Accepts a list of glob patterns. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.jsiiVersion">jsiiVersion</a></code> | <code>string</code> | Version of the jsii compiler to use. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Whether to use trusted publishing for npm. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.publishToGo">publishToGo</a></code> | <code><a href="#projen.cdk.JsiiGoTarget">JsiiGoTarget</a></code> | Publish Go bindings to a git repository. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.publishToMaven">publishToMaven</a></code> | <code><a href="#projen.cdk.JsiiJavaTarget">JsiiJavaTarget</a></code> | Publish to maven. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.publishToNuget">publishToNuget</a></code> | <code><a href="#projen.cdk.JsiiDotNetTarget">JsiiDotNetTarget</a></code> | Publish to NuGet. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.publishToPypi">publishToPypi</a></code> | <code><a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a></code> | Publish to pypi. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Whether to publish to npm. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.stability">stability</a></code> | <code>string</code> | The stability of the package. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.Step[]</code> | Additional steps to run before packaging in workflows. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version to use in packaging workflows. |
+| <code><a href="#projen.cdk.JsiiBuildOptions.property.workspaceDirectory">workspaceDirectory</a></code> | <code>string</code> | Relative path of the package within the repository. |
+
+---
+
+##### `codeArtifactOptions`<sup>Optional</sup> <a name="codeArtifactOptions" id="projen.cdk.JsiiBuildOptions.property.codeArtifactOptions"></a>
+
+```typescript
+public readonly codeArtifactOptions: CodeArtifactOptions;
+```
+
+- *Type:* projen.release.CodeArtifactOptions
+- *Default:* undefined
+
+Options for publishing npm package to AWS CodeArtifact.
+
+---
+
+##### `compat`<sup>Optional</sup> <a name="compat" id="projen.cdk.JsiiBuildOptions.property.compat"></a>
+
+```typescript
+public readonly compat: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Automatically run API compatibility test against the latest version published to npm after compilation.
+
+You can manually run compatibility tests using `yarn compat` if this feature is disabled.
+- You can ignore compatibility failures by adding lines to a ".compatignore" file.
+
+---
+
+##### `compatIgnore`<sup>Optional</sup> <a name="compatIgnore" id="projen.cdk.JsiiBuildOptions.property.compatIgnore"></a>
+
+```typescript
+public readonly compatIgnore: string;
+```
+
+- *Type:* string
+- *Default:* ".compatignore"
+
+Name of the ignore file for API compatibility tests.
+
+---
+
+##### `compressAssembly`<sup>Optional</sup> <a name="compressAssembly" id="projen.cdk.JsiiBuildOptions.property.compressAssembly"></a>
+
+```typescript
+public readonly compressAssembly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Emit a compressed version of the assembly.
+
+---
+
+##### `docgen`<sup>Optional</sup> <a name="docgen" id="projen.cdk.JsiiBuildOptions.property.docgen"></a>
+
+```typescript
+public readonly docgen: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Generate a MarkDown file describing the jsii API.
+
+---
+
+##### `docgenFilePath`<sup>Optional</sup> <a name="docgenFilePath" id="projen.cdk.JsiiBuildOptions.property.docgenFilePath"></a>
+
+```typescript
+public readonly docgenFilePath: string;
+```
+
+- *Type:* string
+- *Default:* "API.md"
+
+File path for generated docs.
+
+---
+
+##### `excludeTypescript`<sup>Optional</sup> <a name="excludeTypescript" id="projen.cdk.JsiiBuildOptions.property.excludeTypescript"></a>
+
+```typescript
+public readonly excludeTypescript: string[];
+```
+
+- *Type:* string[]
+
+Accepts a list of glob patterns.
+
+Files matching any of those patterns will be excluded from the TypeScript compiler input.
+
+By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
+This can be problematic for example when the package's build or test procedure generates .ts files
+that cannot be compiled with jsii's compiler settings.
+
+---
+
+##### `jsiiVersion`<sup>Optional</sup> <a name="jsiiVersion" id="projen.cdk.JsiiBuildOptions.property.jsiiVersion"></a>
+
+```typescript
+public readonly jsiiVersion: string;
+```
+
+- *Type:* string
+- *Default:* "~5.9.0"
+
+Version of the jsii compiler to use.
+
+Set to "*" if you want to manually manage the version of jsii in your
+project by managing updates to `package.json` on your own.
+
+NOTE: The jsii compiler releases since 5.0.0 are not semantically versioned
+and should remain on the same minor, so we recommend using a `~` dependency
+(e.g. `~5.0.0`).
+
+---
+
+##### `npmTrustedPublishing`<sup>Optional</sup> <a name="npmTrustedPublishing" id="projen.cdk.JsiiBuildOptions.property.npmTrustedPublishing"></a>
+
+```typescript
+public readonly npmTrustedPublishing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to use trusted publishing for npm.
+
+---
+
+##### `publishToGo`<sup>Optional</sup> <a name="publishToGo" id="projen.cdk.JsiiBuildOptions.property.publishToGo"></a>
+
+```typescript
+public readonly publishToGo: JsiiGoTarget;
+```
+
+- *Type:* <a href="#projen.cdk.JsiiGoTarget">JsiiGoTarget</a>
+- *Default:* no publishing
+
+Publish Go bindings to a git repository.
+
+---
+
+##### `publishToMaven`<sup>Optional</sup> <a name="publishToMaven" id="projen.cdk.JsiiBuildOptions.property.publishToMaven"></a>
+
+```typescript
+public readonly publishToMaven: JsiiJavaTarget;
+```
+
+- *Type:* <a href="#projen.cdk.JsiiJavaTarget">JsiiJavaTarget</a>
+- *Default:* no publishing
+
+Publish to maven.
+
+---
+
+##### `publishToNuget`<sup>Optional</sup> <a name="publishToNuget" id="projen.cdk.JsiiBuildOptions.property.publishToNuget"></a>
+
+```typescript
+public readonly publishToNuget: JsiiDotNetTarget;
+```
+
+- *Type:* <a href="#projen.cdk.JsiiDotNetTarget">JsiiDotNetTarget</a>
+- *Default:* no publishing
+
+Publish to NuGet.
+
+---
+
+##### `publishToPypi`<sup>Optional</sup> <a name="publishToPypi" id="projen.cdk.JsiiBuildOptions.property.publishToPypi"></a>
+
+```typescript
+public readonly publishToPypi: JsiiPythonTarget;
+```
+
+- *Type:* <a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a>
+- *Default:* no publishing
+
+Publish to pypi.
+
+---
+
+##### `releaseToNpm`<sup>Optional</sup> <a name="releaseToNpm" id="projen.cdk.JsiiBuildOptions.property.releaseToNpm"></a>
+
+```typescript
+public readonly releaseToNpm: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to publish to npm.
+
+---
+
+##### `stability`<sup>Optional</sup> <a name="stability" id="projen.cdk.JsiiBuildOptions.property.stability"></a>
+
+```typescript
+public readonly stability: string;
+```
+
+- *Type:* string
+- *Default:* "stable"
+
+The stability of the package.
+
+---
+
+##### `workflowBootstrapSteps`<sup>Optional</sup> <a name="workflowBootstrapSteps" id="projen.cdk.JsiiBuildOptions.property.workflowBootstrapSteps"></a>
+
+```typescript
+public readonly workflowBootstrapSteps: Step[];
+```
+
+- *Type:* projen.github.workflows.Step[]
+- *Default:* []
+
+Additional steps to run before packaging in workflows.
+
+---
+
+##### `workflowNodeVersion`<sup>Optional</sup> <a name="workflowNodeVersion" id="projen.cdk.JsiiBuildOptions.property.workflowNodeVersion"></a>
+
+```typescript
+public readonly workflowNodeVersion: string;
+```
+
+- *Type:* string
+- *Default:* "lts/*"
+
+The node version to use in packaging workflows.
+
+---
+
+##### `workspaceDirectory`<sup>Optional</sup> <a name="workspaceDirectory" id="projen.cdk.JsiiBuildOptions.property.workspaceDirectory"></a>
+
+```typescript
+public readonly workspaceDirectory: string;
+```
+
+- *Type:* string
+- *Default:* "." - root of the repository
+
+Relative path of the package within the repository.
+
+This is used in monorepo setups where the package is not at the root.
+Packaging steps will extract build artifacts into this subdirectory.
+
+---
+
 ### JsiiDocgenOptions <a name="JsiiDocgenOptions" id="projen.cdk.JsiiDocgenOptions"></a>
 
 Options for `JsiiDocgen`.
@@ -10468,6 +10757,94 @@ public readonly module: string;
 - *Type:* string
 
 ---
+
+## Classes <a name="Classes" id="Classes"></a>
+
+### JsiiBuild <a name="JsiiBuild" id="projen.cdk.JsiiBuild"></a>
+
+- *Implements:* constructs.IMixin
+
+A mixin that adds jsii compilation, multi-language packaging, and publishing capabilities to any TypeScript project.
+
+This implements the constructs `IMixin` interface and is applied using the
+`.with()` method on any construct.
+
+*Example*
+
+```typescript
+const project = new TypeScriptProject({ disableTsconfig: true, ... });
+project.with(new JsiiBuild({
+  jsiiVersion: '~5.9.0',
+  publishToMaven: { ... },
+}));
+```
+
+
+#### Initializers <a name="Initializers" id="projen.cdk.JsiiBuild.Initializer"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+new cdk.JsiiBuild(options?: JsiiBuildOptions, extraJobOptions?: {[ key: string ]: any})
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.cdk.JsiiBuild.Initializer.parameter.options">options</a></code> | <code><a href="#projen.cdk.JsiiBuildOptions">JsiiBuildOptions</a></code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiBuild.Initializer.parameter.extraJobOptions">extraJobOptions</a></code> | <code>{[ key: string ]: any}</code> | *No description.* |
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.cdk.JsiiBuild.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.cdk.JsiiBuildOptions">JsiiBuildOptions</a>
+
+---
+
+##### `extraJobOptions`<sup>Optional</sup> <a name="extraJobOptions" id="projen.cdk.JsiiBuild.Initializer.parameter.extraJobOptions"></a>
+
+- *Type:* {[ key: string ]: any}
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.cdk.JsiiBuild.applyTo">applyTo</a></code> | Applies jsii configuration to the target TypeScriptProject. |
+| <code><a href="#projen.cdk.JsiiBuild.supports">supports</a></code> | Returns true if the construct is a TypeScriptProject. |
+
+---
+
+##### `applyTo` <a name="applyTo" id="projen.cdk.JsiiBuild.applyTo"></a>
+
+```typescript
+public applyTo(project: IConstruct): void
+```
+
+Applies jsii configuration to the target TypeScriptProject.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiBuild.applyTo.parameter.project"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `supports` <a name="supports" id="projen.cdk.JsiiBuild.supports"></a>
+
+```typescript
+public supports(construct: IConstruct): boolean
+```
+
+Returns true if the construct is a TypeScriptProject.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.cdk.JsiiBuild.supports.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+
 
 
 
