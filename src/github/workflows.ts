@@ -274,6 +274,237 @@ export class GithubWorkflow extends Component {
     delete this._jobs[id];
   }
 
+  /**
+   * Gets a single step from a job by step ID.
+   *
+   * The returned object is frozen and read-only. Use `replaceStep` or
+   * `patchStep` to modify a step.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param stepId The step ID to look up
+   * @returns A read-only copy of the step
+   */
+  public getStep(jobId: string, stepId: string): workflows.JobStep {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, stepId, jobId);
+    return Object.freeze({ ...steps[index] });
+  }
+
+  /**
+   * Appends a step to the end of a job's step list.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param step The step to add. Must have an `id` set.
+   */
+  public appendStep(jobId: string, step: workflows.JobStep): void {
+    const steps = this.resolveJobSteps(jobId);
+    this.requireStepId(step);
+    this.requireUniqueStepId(steps, step.id!, jobId);
+    steps.push(step);
+  }
+
+  /**
+   * Replaces an existing step in a job, preserving its position.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param stepId The ID of the step to replace
+   * @param replacementStep The replacement step. If `id` is omitted, it inherits the original step's ID.
+   */
+  public replaceStep(
+    jobId: string,
+    stepId: string,
+    replacementStep: workflows.JobStep,
+  ): void {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, stepId, jobId);
+    const newStep = { ...replacementStep, id: replacementStep.id ?? stepId };
+
+    // If the id changed, validate uniqueness of the new id
+    if (newStep.id !== stepId) {
+      this.requireUniqueStepId(steps, newStep.id!, jobId);
+    }
+
+    steps[index] = newStep;
+  }
+
+  /**
+   * Applies a surgical modification to an existing step.
+   *
+   * The provided patch is shallow-merged onto the existing step. Fields not
+   * present in the patch are preserved unchanged. Use `getStep` to read the
+   * current step values before constructing the patch.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param stepId The ID of the step to patch
+   * @param patch A partial step object whose fields are shallow-merged onto the existing step
+   *
+   * @example
+   * // Append a flag to an existing test command:
+   * const step = workflow.getStep("build", "test");
+   * workflow.patchStep("build", "test", {
+   *   run: `${step.run} --testPathIgnorePatterns "integration/*"`,
+   * });
+   *
+   * @example
+   * // Add an env var without replacing existing ones:
+   * const step = workflow.getStep("build", "install");
+   * workflow.patchStep("build", "install", {
+   *   env: { ...step.env, NODE_AUTH_TOKEN: "${{ steps.jfrog.outputs.oidc-token }}" },
+   * });
+   */
+  public patchStep(
+    jobId: string,
+    stepId: string,
+    patch: workflows.JobStep,
+  ): void {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, stepId, jobId);
+    const currentStep = steps[index];
+    steps[index] = { ...currentStep, ...patch, id: stepId };
+  }
+
+  /**
+   * Removes a step from a job by step ID.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param stepId The ID of the step to remove
+   */
+  public removeStep(jobId: string, stepId: string): void {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, stepId, jobId);
+    steps.splice(index, 1);
+  }
+
+  /**
+   * Inserts a step before an existing step, identified by ID.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param referenceStepId The ID of the step to insert before
+   * @param step The step to insert. Must have an `id` set.
+   */
+  public insertStepBefore(
+    jobId: string,
+    referenceStepId: string,
+    step: workflows.JobStep,
+  ): void {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, referenceStepId, jobId);
+    this.requireStepId(step);
+    this.requireUniqueStepId(steps, step.id!, jobId);
+    steps.splice(index, 0, step);
+  }
+
+  /**
+   * Inserts a step after an existing step, identified by ID.
+   *
+   * @param jobId The job name (unique within the workflow)
+   * @param referenceStepId The ID of the step to insert after
+   * @param step The step to insert. Must have an `id` set.
+   */
+  public insertStepAfter(
+    jobId: string,
+    referenceStepId: string,
+    step: workflows.JobStep,
+  ): void {
+    const steps = this.resolveJobSteps(jobId);
+    const index = this.findStepIndex(steps, referenceStepId, jobId);
+    this.requireStepId(step);
+    this.requireUniqueStepId(steps, step.id!, jobId);
+    steps.splice(index + 1, 0, step);
+  }
+
+  /**
+   * Resolves the mutable steps array for a job.
+   * Throws if the job is not found or is a reusable workflow call.
+   */
+  private resolveJobSteps(jobId: string): workflows.JobStep[] {
+    const job = this._jobs[jobId];
+    if (!job) {
+      throw new Error(
+        `Job "${jobId}" not found in workflow "${this.name}". Available jobs: ${Object.keys(this._jobs).join(", ") || "(none)"}`,
+      );
+    }
+    if ("uses" in job) {
+      throw new Error(
+        `Job "${jobId}" is a reusable workflow call and does not have steps`,
+      );
+    }
+    return job.steps as workflows.JobStep[];
+  }
+
+  /**
+   * Finds the index of a step by ID or name within a steps array.
+   * Matches against `id` first, then falls back to `name`.
+   * Throws if the step is not found, or if multiple steps match by name.
+   */
+  private findStepIndex(
+    steps: workflows.JobStep[],
+    stepIdOrName: string,
+    jobId: string,
+  ): number {
+    // Try exact id match first
+    const byId = steps.findIndex((s) => s.id === stepIdOrName);
+    if (byId !== -1) {
+      return byId;
+    }
+
+    // Fall back to name match
+    const byName: number[] = [];
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].name === stepIdOrName) {
+        byName.push(i);
+      }
+    }
+
+    if (byName.length === 1) {
+      return byName[0];
+    }
+
+    if (byName.length > 1) {
+      throw new Error(
+        `Multiple steps match name "${stepIdOrName}" in job "${jobId}" (at indices ${byName.join(", ")}). Use a unique step "id" instead.`,
+      );
+    }
+
+    const availableIds = steps
+      .map((s) => s.id)
+      .filter(Boolean)
+      .join(", ");
+    const availableNames = steps
+      .map((s) => s.name)
+      .filter(Boolean)
+      .join(", ");
+    throw new Error(
+      `Step "${stepIdOrName}" not found in job "${jobId}". Available step IDs: ${availableIds || "(none)"}. Available step names: ${availableNames || "(none)"}`,
+    );
+  }
+
+  /**
+   * Validates that a step has an `id` set.
+   */
+  private requireStepId(step: workflows.JobStep): void {
+    if (!step.id) {
+      throw new Error(
+        'Step must have an "id" to be added via the step mutation API',
+      );
+    }
+  }
+
+  /**
+   * Validates that a step ID is unique within a job's steps.
+   */
+  private requireUniqueStepId(
+    steps: workflows.JobStep[],
+    stepId: string,
+    jobId: string,
+  ): void {
+    if (steps.some((s) => s.id === stepId)) {
+      throw new Error(
+        `Step ID "${stepId}" already exists in job "${jobId}". Step IDs must be unique within a job.`,
+      );
+    }
+  }
+
   private renderWorkflow() {
     return {
       name: this.name,
