@@ -778,6 +778,9 @@ export class Release extends Component {
         // see https://github.com/projen/projen/issues/3761
         limitConcurrency: true,
       });
+      // When run-name evaluates to empty string, GitHub falls back to the
+      // default event-specific name (e.g. commit message for push events).
+      workflow.runName = `$\{{ inputs.dry_run && format('[DRY RUN] ${workflowName} by @{0}', github.actor) || '' }}`;
       workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]
