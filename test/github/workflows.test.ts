@@ -328,6 +328,21 @@ describe("step mutation API", () => {
       const step = wf.getStep("build", "checkout");
       expect(step.with).toEqual({ "fetch-depth": "0" });
     });
+
+    test("can replace step with a new name", () => {
+      const { wf } = createWorkflowWithSteps([
+        { name: "Checkout", uses: "actions/checkout@v6" },
+        { id: "install", name: "Install", run: "npm ci" },
+      ]);
+      wf.replaceStep("build", "Checkout", {
+        id: "checkout_repo",
+        name: "Checkout",
+        uses: "actions/checkout@v6",
+        with: { "fetch-depth": "0" },
+      });
+      const step = wf.getStep("build", "checkout_repo");
+      expect(step.with).toEqual({ "fetch-depth": "0" });
+    });
   });
 
   describe("patchStep", () => {
