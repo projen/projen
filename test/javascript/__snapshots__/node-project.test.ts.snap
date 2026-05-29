@@ -11,6 +11,7 @@ exports[`deps upgrade commit can be signed 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
+      "id": "checkout",
       "name": "Checkout",
       "uses": "actions/checkout@v6",
       "with": {
@@ -18,6 +19,7 @@ exports[`deps upgrade commit can be signed 1`] = `
       },
     },
     {
+      "id": "download_patch",
       "name": "Download patch",
       "uses": "actions/download-artifact@v8",
       "with": {
@@ -26,10 +28,12 @@ exports[`deps upgrade commit can be signed 1`] = `
       },
     },
     {
+      "id": "apply_patch",
       "name": "Apply patch",
       "run": "[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."",
     },
     {
+      "id": "set_git_identity",
       "name": "Set git identity",
       "run": "git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
@@ -200,6 +204,7 @@ exit 1",
 exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
+    "id": "checkout",
     "name": "Checkout",
     "uses": "actions/checkout@v6",
     "with": {
@@ -209,6 +214,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
     },
   },
   {
+    "id": "download_patch",
     "name": "Download patch",
     "uses": "actions/download-artifact@v8",
     "with": {
@@ -217,10 +223,12 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
     },
   },
   {
+    "id": "apply_patch",
     "name": "Apply patch",
     "run": "[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."",
   },
   {
+    "id": "set_git_identity",
     "name": "Set git identity",
     "run": "git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
@@ -229,6 +237,7 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
     "env": {
       "PULL_REQUEST_REF": "\${{ github.event.pull_request.head.ref }}",
     },
+    "id": "push_changes",
     "name": "Push changes",
     "run": "git add .
 git commit -s -m "chore: self mutation"

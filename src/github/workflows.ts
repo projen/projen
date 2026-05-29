@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { extname } from "node:path";
 import { snake } from "case";
 import type { GitHubActionsProvider } from "./actions-provider";
@@ -229,7 +230,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
-    Object.assign(this._jobs, { ...jobs });
+    Object.assign(this._jobs, assignJobStepIds(jobs));
   }
 
   /**
@@ -263,7 +264,7 @@ export class GithubWorkflow extends Component {
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
   ) {
     verifyJobConstraints(jobs);
-    Object.assign(this._jobs, { ...jobs });
+    Object.assign(this._jobs, assignJobStepIds(jobs));
   }
 
   /**
@@ -317,11 +318,16 @@ export class GithubWorkflow extends Component {
   ): void {
     const steps = this.resolveJobSteps(jobId);
     const index = this.findStepIndex(steps, stepId, jobId);
-    const newStep = { ...replacementStep, id: replacementStep.id ?? stepId };
+    const originalId = steps[index].id;
+    const newStep = {
+      ...replacementStep,
+      id: replacementStep.id ?? originalId ?? stepId,
+    };
 
-    // If the id changed, validate uniqueness of the new id
-    if (newStep.id !== stepId) {
-      this.requireUniqueStepId(steps, newStep.id!, jobId);
+    // If the id changed, validate uniqueness of the new id against the other steps
+    if (newStep.id !== originalId) {
+      const otherSteps = steps.filter((_, i) => i !== index);
+      this.requireUniqueStepId(otherSteps, newStep.id!, jobId);
     }
 
     steps[index] = newStep;
@@ -656,6 +662,96 @@ function renderJobs(
       "working-directory": step.workingDirectory,
     };
   }
+}
+
+/**
+ * Eagerly assigns step IDs to all non-reusable jobs in a record.
+ * Reusable workflow jobs (those with `uses`) are passed through unchanged.
+ */
+function assignJobStepIds(
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
+): Record<string, workflows.Job | workflows.JobCallingReusableWorkflow> {
+  const result: Record<
+    string,
+    workflows.Job | workflows.JobCallingReusableWorkflow
+  > = {};
+  for (const [name, job] of Object.entries(jobs)) {
+    if ("uses" in job) {
+      result[name] = job;
+    } else {
+      // Jobs with no length or undefined steps are passed through sense
+      // steps may be populated later during synthesis (eg setupTools)
+      result[name] =
+        job.steps.length > 0
+          ? { ...job, steps: assignStepIds(job.steps) }
+          : job;
+    }
+  }
+  return result;
+}
+
+/**
+ * Assigns a stable `id` to every step that doesn't already have one.
+ *
+ * Priority:
+ * 1. Explicit `id` on the step — preserved as-is and never renamed.
+ * 2. Derived from `name` — converted to snake_case.
+ * 3. Content hash fallback — `auto_<hash>` based on `run` or `uses`.
+ *
+ * Explicit IDs are reserved in a first pass so that derived/auto IDs never
+ * collide with them. Duplicate explicit IDs in the same job throw an error.
+ * Derived/auto IDs that collide are disambiguated with `_2`, `_3`, etc.
+ */
+function assignStepIds(
+  steps: workflows.JobStep[],
+): Array<workflows.JobStep & { id: string }> {
+  const usedIds = new Map<string, number>();
+
+  // First pass: reserve all explicit IDs so derived IDs won't claim them.
+  for (const step of steps) {
+    if (step.id) {
+      if (usedIds.has(step.id)) {
+        throw new Error(
+          `Duplicate explicit step id "${step.id}". Step IDs must be unique within a job.`,
+        );
+      }
+      usedIds.set(step.id, 1);
+    }
+  }
+
+  function uniqueId(base: string): string {
+    const count = usedIds.get(base) ?? 0;
+    if (count === 0) {
+      usedIds.set(base, 1);
+      return base;
+    }
+    const next = count + 1;
+    usedIds.set(base, next);
+    return `${base}_${next}`;
+  }
+
+  return steps.map((step) => {
+    if (step.id) {
+      // Explicit id — already reserved in first pass, use as-is
+      return { ...step, id: step.id };
+    }
+
+    if (step.name) {
+      // Derive from name: snake_case, collapse non-alphanumeric
+      const base = snake(step.name)
+        .replace(/[^a-z0-9_]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_|_$/g, "");
+      const id = uniqueId(base);
+      return { ...step, id };
+    }
+
+    // Fallback: content hash
+    const content = step.run ?? step.uses ?? "";
+    const hash = createHash("sha256").update(content).digest("hex").slice(0, 8);
+    const id = uniqueId(`auto_${hash}`);
+    return { ...step, id };
+  });
 }
 
 function arrayOrScalar<T>(arr: T | T[] | undefined): T | T[] | undefined {

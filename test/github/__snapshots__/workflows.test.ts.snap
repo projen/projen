@@ -48,7 +48,8 @@ jobs:
         with:
           dotnet-version: 6.x
           cache: false
-      - run: echo hello
+      - id: auto_584a331f
+        run: echo hello
 "
 `;
 
@@ -66,7 +67,8 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - run: echo hello
+      - id: auto_584a331f
+        run: echo hello
 "
 `;
 
@@ -84,7 +86,8 @@ jobs:
         with:
           python-version: 3.x
           cache: poetry
-      - run: echo hello
+      - id: auto_584a331f
+        run: echo hello
 "
 `;
 
@@ -115,7 +118,8 @@ jobs:
         with:
           dotnet-version: 6.x
           cache: true
-      - run: echo hello
+      - id: auto_584a331f
+        run: echo hello
 "
 `;
 
