@@ -2894,6 +2894,7 @@ const overrideFormatterConfiguration: javascript.biome_config.OverrideFormatterC
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
@@ -3038,6 +3039,18 @@ public readonly lineWidth: number;
 What's the max width of a line.
 
 Defaults to 80.
+
+---
+
+##### `trailingCommas`<sup>Optional</sup> <a name="trailingCommas" id="projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingCommas"></a>
+
+```typescript
+public readonly trailingCommas: JsTrailingCommas;
+```
+
+- *Type:* projen.javascript.biome_config.JsTrailingCommas
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
 
 ---
 
