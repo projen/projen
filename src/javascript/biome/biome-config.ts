@@ -2511,6 +2511,13 @@ export interface OverrideFormatterConfiguration {
   readonly lineWidth?: number;
 
   /**
+   * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+   *
+   * @schema OverrideFormatterConfiguration#trailingCommas
+   */
+  readonly trailingCommas?: JsTrailingCommas;
+
+  /**
    * Whether to add a trailing newline at the end of the file.
    *
    * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
@@ -2547,6 +2554,7 @@ export function toJson_OverrideFormatterConfiguration(obj: OverrideFormatterConf
     'indentWidth': obj.indentWidth,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'trailingCommas': obj.trailingCommas,
     'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
