@@ -21,6 +21,7 @@ import {
   javascript,
   JsonPatch,
   ReleasableCommits,
+  typescript,
 } from "./src";
 import { JsiiProject } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
@@ -125,6 +126,7 @@ const project = new JsiiProject({
   // since this is projen, we need to always compile before we run
   projenCommand: `node ./${BOOTSTRAP_SCRIPT}`,
   projenrcTs: true,
+  runner: typescript.TypeScriptRunner.tsx(),
   projectTree: true,
 
   // Disable interop since it's disabled available in jsii
