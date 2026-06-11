@@ -122,6 +122,9 @@
     "yaml",
     "yargs"
   ],
+  "overrides": {
+    "shelljs": "^0.10.0"
+  },
   "keywords": [
     "cdk",
     "cicd",

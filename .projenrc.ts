@@ -198,6 +198,10 @@ javascript.Eslint.of(project)?.addRules({
   "@typescript-eslint/consistent-type-exports": "error",
 });
 
+// Override shelljs to fix critical vulnerability in transitive execa@1.0.0 (CWE-427)
+// See: https://github.com/projen/projen/issues/4737
+project.package.addPackageResolutions("shelljs@^0.10.0");
+
 // Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")
