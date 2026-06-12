@@ -4187,6 +4187,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.publishToPypi">publishToPypi</a></code> | <code><a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a></code> | Publish to pypi. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.python">python</a></code> | <code><a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a></code> | *No description.* |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.rootdir">rootdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.validateTsconfig">validateTsconfig</a></code> | <code><a href="#projen.cdk.ValidateTsconfig">ValidateTsconfig</a></code> | Level of tsconfig validation jsii should perform on the user-provided tsconfig. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.catalog">catalog</a></code> | <code><a href="#projen.cdk.Catalog">Catalog</a></code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. |
 
 ---
@@ -6708,6 +6709,24 @@ public readonly rootdir: string;
 
 ---
 
+##### `validateTsconfig`<sup>Optional</sup> <a name="validateTsconfig" id="projen.cdk.ConstructLibraryOptions.property.validateTsconfig"></a>
+
+```typescript
+public readonly validateTsconfig: ValidateTsconfig;
+```
+
+- *Type:* <a href="#projen.cdk.ValidateTsconfig">ValidateTsconfig</a>
+- *Default:* ValidateTsconfig.STRICT
+
+Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+
+Only relevant when the project synthesizes its own tsconfig
+(i.e. `disableTsconfig` is not set on the TypeScriptProject).
+
+> [https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig](https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig)
+
+---
+
 ##### `catalog`<sup>Optional</sup> <a name="catalog" id="projen.cdk.ConstructLibraryOptions.property.catalog"></a>
 
 ```typescript
@@ -8075,6 +8094,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.publishToPypi">publishToPypi</a></code> | <code><a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a></code> | Publish to pypi. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.python">python</a></code> | <code><a href="#projen.cdk.JsiiPythonTarget">JsiiPythonTarget</a></code> | *No description.* |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.rootdir">rootdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.validateTsconfig">validateTsconfig</a></code> | <code><a href="#projen.cdk.ValidateTsconfig">ValidateTsconfig</a></code> | Level of tsconfig validation jsii should perform on the user-provided tsconfig. |
 
 ---
 
@@ -10592,6 +10612,24 @@ public readonly rootdir: string;
 
 - *Type:* string
 - *Default:* "."
+
+---
+
+##### `validateTsconfig`<sup>Optional</sup> <a name="validateTsconfig" id="projen.cdk.JsiiProjectOptions.property.validateTsconfig"></a>
+
+```typescript
+public readonly validateTsconfig: ValidateTsconfig;
+```
+
+- *Type:* <a href="#projen.cdk.ValidateTsconfig">ValidateTsconfig</a>
+- *Default:* ValidateTsconfig.STRICT
+
+Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+
+Only relevant when the project synthesizes its own tsconfig
+(i.e. `disableTsconfig` is not set on the TypeScriptProject).
+
+> [https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig](https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig)
 
 ---
 
