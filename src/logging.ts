@@ -1,4 +1,4 @@
-import * as chalk from "chalk";
+import chalk from "chalk";
 import { IS_TEST_RUN } from "./common";
 
 export const ICON = "👾"; //'✨';

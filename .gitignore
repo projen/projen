@@ -49,13 +49,13 @@ codecov.*
 !/.prettierignore
 !/.prettierrc.json
 !/test/
+!/tsconfig.json
 !/tsconfig.dev.json
 !/src/
 /lib
 /dist/
 !/.eslintrc.json
 .jsii
-tsconfig.json
 !/API.md
 !/.github/workflows/check-licenses.yml
 !/.github/workflows/upgrade-bundled-main.yml
