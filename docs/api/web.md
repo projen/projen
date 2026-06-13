@@ -6798,6 +6798,8 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.projenrcYaml">projenrcYaml</a></code> | <code>boolean</code> | Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.projenrcYamlOptions">projenrcYamlOptions</a></code> | <code>projen.ProjenrcYamlOptions</code> | Options for .projenrc.yaml. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
@@ -7106,6 +7108,32 @@ public readonly projenrcJsonOptions: ProjenrcJsonOptions;
 - *Default:* default options
 
 Options for .projenrc.json.
+
+---
+
+##### `projenrcYaml`<sup>Optional</sup> <a name="projenrcYaml" id="projen.web.NextJsProjectOptions.property.projenrcYaml"></a>
+
+```typescript
+public readonly projenrcYaml: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation.
+
+---
+
+##### `projenrcYamlOptions`<sup>Optional</sup> <a name="projenrcYamlOptions" id="projen.web.NextJsProjectOptions.property.projenrcYamlOptions"></a>
+
+```typescript
+public readonly projenrcYamlOptions: ProjenrcYamlOptions;
+```
+
+- *Type:* projen.ProjenrcYamlOptions
+- *Default:* default options
+
+Options for .projenrc.yaml.
 
 ---
 
@@ -9072,6 +9100,8 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenrcYaml">projenrcYaml</a></code> | <code>boolean</code> | Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenrcYamlOptions">projenrcYamlOptions</a></code> | <code>projen.ProjenrcYamlOptions</code> | Options for .projenrc.yaml. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
@@ -9396,6 +9426,32 @@ public readonly projenrcJsonOptions: ProjenrcJsonOptions;
 - *Default:* default options
 
 Options for .projenrc.json.
+
+---
+
+##### `projenrcYaml`<sup>Optional</sup> <a name="projenrcYaml" id="projen.web.NextJsTypeScriptProjectOptions.property.projenrcYaml"></a>
+
+```typescript
+public readonly projenrcYaml: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation.
+
+---
+
+##### `projenrcYamlOptions`<sup>Optional</sup> <a name="projenrcYamlOptions" id="projen.web.NextJsTypeScriptProjectOptions.property.projenrcYamlOptions"></a>
+
+```typescript
+public readonly projenrcYamlOptions: ProjenrcYamlOptions;
+```
+
+- *Type:* projen.ProjenrcYamlOptions
+- *Default:* default options
+
+Options for .projenrc.yaml.
 
 ---
 
@@ -11701,6 +11757,8 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.web.ReactProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.web.ReactProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
+| <code><a href="#projen.web.ReactProjectOptions.property.projenrcYaml">projenrcYaml</a></code> | <code>boolean</code> | Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation. |
+| <code><a href="#projen.web.ReactProjectOptions.property.projenrcYamlOptions">projenrcYamlOptions</a></code> | <code>projen.ProjenrcYamlOptions</code> | Options for .projenrc.yaml. |
 | <code><a href="#projen.web.ReactProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.ReactProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
@@ -11982,6 +12040,32 @@ public readonly projenrcJsonOptions: ProjenrcJsonOptions;
 - *Default:* default options
 
 Options for .projenrc.json.
+
+---
+
+##### `projenrcYaml`<sup>Optional</sup> <a name="projenrcYaml" id="projen.web.ReactProjectOptions.property.projenrcYaml"></a>
+
+```typescript
+public readonly projenrcYaml: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation.
+
+---
+
+##### `projenrcYamlOptions`<sup>Optional</sup> <a name="projenrcYamlOptions" id="projen.web.ReactProjectOptions.property.projenrcYamlOptions"></a>
+
+```typescript
+public readonly projenrcYamlOptions: ProjenrcYamlOptions;
+```
+
+- *Type:* projen.ProjenrcYamlOptions
+- *Default:* default options
+
+Options for .projenrc.yaml.
 
 ---
 
@@ -14143,6 +14227,8 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenCommand">projenCommand</a></code> | <code>string</code> | The shell command to use in order to run the projen CLI. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenrcJson">projenrcJson</a></code> | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenrcYaml">projenrcYaml</a></code> | <code>boolean</code> | Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenrcYamlOptions">projenrcYamlOptions</a></code> | <code>projen.ProjenrcYamlOptions</code> | Options for .projenrc.yaml. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
@@ -14440,6 +14526,32 @@ public readonly projenrcJsonOptions: ProjenrcJsonOptions;
 - *Default:* default options
 
 Options for .projenrc.json.
+
+---
+
+##### `projenrcYaml`<sup>Optional</sup> <a name="projenrcYaml" id="projen.web.ReactTypeScriptProjectOptions.property.projenrcYaml"></a>
+
+```typescript
+public readonly projenrcYaml: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Generate (once) .projenrc.yaml (in YAML). Set to `false` in order to disable .projenrc.yaml generation.
+
+---
+
+##### `projenrcYamlOptions`<sup>Optional</sup> <a name="projenrcYamlOptions" id="projen.web.ReactTypeScriptProjectOptions.property.projenrcYamlOptions"></a>
+
+```typescript
+public readonly projenrcYamlOptions: ProjenrcYamlOptions;
+```
+
+- *Type:* projen.ProjenrcYamlOptions
+- *Default:* default options
+
+Options for .projenrc.yaml.
 
 ---
 
