@@ -41,6 +41,14 @@ export interface TypescriptConfigOptions {
    * Must provide either `extends` or `compilerOptions` (or both).
    */
   readonly compilerOptions?: TypeScriptCompilerOptions;
+
+  /**
+   * Referenced projects. Requires TypeScript version 3.0 or later.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+   * @default []
+   */
+  readonly references?: TypescriptConfigReference[];
 }
 
 /**
@@ -625,6 +633,14 @@ export interface TypeScriptCompilerOptions {
   readonly tsBuildInfoFile?: string;
 
   /**
+   * Enable constraints that allow a TypeScript project to be used with project references.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#composite
+   * @default undefined
+   */
+  readonly composite?: boolean;
+
+  /**
    * Allow Unused Labels
    *
    * When:
@@ -677,6 +693,18 @@ export interface TypeScriptCompilerOptions {
 }
 
 /**
+ * A TypeScript project reference.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+ */
+export interface TypescriptConfigReference {
+  /**
+   * The path to the referenced `tsconfig.json` file.
+   */
+  readonly path: string;
+}
+
+/**
  * Container for `TypescriptConfig` `tsconfig.json` base configuration(s).
  * Extending from more than one base config file requires TypeScript 5.0+.
  */
@@ -722,6 +750,7 @@ export class TypescriptConfig extends Component {
   public readonly compilerOptions?: TypeScriptCompilerOptions;
   private readonly includeSet: Set<string>;
   private readonly excludeSet: Set<string>;
+  private readonly _references: TypescriptConfigReference[];
   public readonly fileName: string;
   public readonly file: JsonFile;
 
@@ -742,6 +771,7 @@ export class TypescriptConfig extends Component {
     this.excludeSet = options.exclude
       ? new Set(options.exclude)
       : new Set(["node_modules"]);
+    this._references = [...(options.references ?? [])];
     this.fileName = fileName;
 
     this.compilerOptions = options.compilerOptions;
@@ -753,6 +783,7 @@ export class TypescriptConfig extends Component {
         compilerOptions: this.compilerOptions,
         include: () => this.include,
         exclude: () => this.exclude,
+        references: () => this.renderReferences(),
       },
     });
 
@@ -862,6 +893,33 @@ export class TypescriptConfig extends Component {
       ...this._extends.toJSON(),
       value.file.absolutePath,
     ]);
+  }
+
+  /**
+   * Array of project references.
+   */
+  public get references(): TypescriptConfigReference[] {
+    return [...this._references];
+  }
+
+  /**
+   * Add a project reference to this config.
+   *
+   * @param reference The reference to add.
+   */
+  public addReference(reference: TypescriptConfigReference) {
+    this._references.push(reference);
+  }
+
+  /**
+   * Render the `references` field.
+   * @private
+   */
+  private renderReferences(): TypescriptConfigReference[] | undefined {
+    if (this._references.length === 0) {
+      return undefined;
+    }
+    return this._references;
   }
 
   /**
