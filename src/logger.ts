@@ -1,4 +1,4 @@
-import * as chalk from "chalk";
+import chalk from "chalk";
 import type { IConstruct } from "constructs";
 import { IS_TEST_RUN } from "./common";
 import { Component } from "./component";

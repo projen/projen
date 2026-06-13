@@ -13,7 +13,7 @@ import { TaskRuntime } from "../task-runtime";
 import { findUp, getNodeMajorVersion } from "../util";
 
 async function main() {
-  const ya = yargs;
+  const ya = yargs as unknown as yargs.Argv;
   ya.command(newCommand);
 
   const pathToProjenDir = findUp(PROJEN_DIR, process.cwd());

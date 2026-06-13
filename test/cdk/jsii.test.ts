@@ -352,10 +352,8 @@ describe("publish to go", () => {
       versionSuffix: "-dev",
     });
     expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
-    expect(output["package.json"].jsii.excludeTypescript).toStrictEqual([
-      "src/**/test/*.ts",
-      "src/**/__tests__/*.ts",
-    ]);
+    expect(output["tsconfig.json"].exclude).toContain("src/**/test/*.ts");
+    expect(output["tsconfig.json"].exclude).toContain("src/**/__tests__/*.ts");
   });
 });
 
@@ -838,4 +836,91 @@ describe("release workflow use Yarn Berry packageManager option", () => {
       );
     },
   );
+});
+
+describe("tsconfig", () => {
+  test("partial user overrides merge with jsii defaults", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+      tsconfig: {
+        compilerOptions: {
+          stripInternal: true,
+        },
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const tsconfig = output["tsconfig.json"];
+
+    // User override applied
+    expect(tsconfig.compilerOptions.stripInternal).toBe(true);
+    // jsii defaults still present
+    expect(tsconfig.compilerOptions.target).toBe("ES2022");
+    expect(tsconfig.compilerOptions.lib).toStrictEqual(["es2022"]);
+    expect(tsconfig.compilerOptions.skipLibCheck).toBe(true);
+    expect(tsconfig.compilerOptions.noEmitOnError).toBe(true);
+    expect(tsconfig.compilerOptions.esModuleInterop).toBe(true);
+  });
+
+  test("defaults produce jsii-compatible tsconfig", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+    });
+
+    const output = synthSnapshot(project);
+    const pkg = output["package.json"];
+
+    expect(pkg.jsii.tsconfig).toBe("tsconfig.json");
+    expect(pkg.jsii.validateTsconfig).toBe("strict");
+    expect(pkg.jsii.tsc).toBeUndefined();
+  });
+
+  test("disableTsconfig falls back to legacy jsii-generated tsconfig", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+    });
+
+    const output = synthSnapshot(project);
+    const pkg = output["package.json"];
+
+    expect(pkg.jsii.tsc).toStrictEqual({ outDir: "lib", rootDir: "src" });
+    expect(pkg.jsii.tsconfig).toBeUndefined();
+    expect(output["tsconfig.json"]).toBeUndefined();
+  });
+
+  test("works with jsii 6.x", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+      jsiiVersion: "~6.0.0",
+    });
+
+    const output = synthSnapshot(project);
+    const tsconfig = output["tsconfig.json"];
+    const pkg = output["package.json"];
+
+    // tsconfig settings are compatible with both jsii 5.9 and 6.0 strict validation
+    expect(pkg.jsii.tsconfig).toBe("tsconfig.json");
+    expect(pkg.jsii.validateTsconfig).toBe("strict");
+    expect(tsconfig.compilerOptions.target).toBe("ES2022");
+    expect(tsconfig.compilerOptions.module).toBe("CommonJS");
+    // moduleResolution not set (jsii 6.0 deprecated "node"/"node10")
+    expect(tsconfig.compilerOptions.moduleResolution).toBeUndefined();
+  });
 });

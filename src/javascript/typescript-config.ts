@@ -41,6 +41,16 @@ export interface TypescriptConfigOptions {
    * Must provide either `extends` or `compilerOptions` (or both).
    */
   readonly compilerOptions?: TypeScriptCompilerOptions;
+
+  /**
+   * Whether to allow comments in the tsconfig.json file.
+   *
+   * Some tools (like jsii) may not support comments in tsconfig.json
+   * since they use JSON.parse() instead of a JSONC parser.
+   *
+   * @default true
+   */
+  readonly allowComments?: boolean;
 }
 
 /**
@@ -747,7 +757,7 @@ export class TypescriptConfig extends Component {
     this.compilerOptions = options.compilerOptions;
 
     this.file = new JsonFile(project, fileName, {
-      allowComments: true,
+      allowComments: options.allowComments ?? true,
       obj: {
         extends: () => this.renderExtends(),
         compilerOptions: this.compilerOptions,

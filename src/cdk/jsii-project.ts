@@ -120,7 +120,7 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * (e.g. `~5.0.0`).
    *
    * @default "~5.9.0"
-   * @pjnew "~5.9.0"
+   * @pjnew "~6.0.0"
    */
   readonly jsiiVersion?: string;
 }
@@ -194,11 +194,23 @@ export class JsiiProject extends TypeScriptProject {
       authorName: options.author,
       authorEmail,
       authorUrl,
+      tsconfig: {
+        // jsii uses JSON.parse() and cannot handle comments
+        allowComments: false,
+        compilerOptions: {
+          // jsii strict validation requirements
+          target: "ES2022",
+          lib: ["es2022"],
+          esModuleInterop: true,
+          skipLibCheck: true,
+          noEmitOnError: true,
+          stripInternal: false,
+        },
+      },
     };
 
     const forcedOptions = {
       releaseToNpm: false, // we have a jsii release workflow
-      disableTsconfig: true, // jsii generates its own tsconfig.json
       docgen: false, // we use jsii-docgen here so disable typescript docgen
     };
 
