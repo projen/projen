@@ -133,7 +133,26 @@
           "path": ".github/workflows/pull-request-lint.yml"
         }
       },
-      "DependencyReview#AutoId6": {
+      "AutoApprove#AutoId6": {
+        "metadata": {
+          "type": "component",
+          "construct": "AutoApprove"
+        }
+      },
+      "GithubWorkflow#auto-approve": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--auto-approve.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/auto-approve.yml"
+        }
+      },
+      "DependencyReview#AutoId7": {
         "metadata": {
           "type": "component",
           "construct": "DependencyReview"
@@ -152,13 +171,13 @@
           "path": ".github/workflows/dependency-review.yml"
         }
       },
-      "VsCode#AutoId7": {
+      "VsCode#AutoId8": {
         "metadata": {
           "type": "component",
           "construct": "VsCode"
         }
       },
-      "Gitpod#AutoId8": {
+      "Gitpod#AutoId9": {
         "metadata": {
           "type": "component",
           "construct": "Gitpod"
@@ -171,7 +190,7 @@
           "path": ".gitpod.yml"
         }
       },
-      "DevContainer#AutoId9": {
+      "DevContainer#AutoId10": {
         "metadata": {
           "type": "component",
           "construct": "DevContainer"
@@ -184,35 +203,16 @@
           "path": ".devcontainer.json"
         }
       },
-      "Clobber#AutoId10": {
+      "Clobber#AutoId11": {
         "metadata": {
           "type": "component",
           "construct": "Clobber"
         }
       },
-      "SampleReadme#AutoId11": {
+      "SampleReadme#AutoId12": {
         "metadata": {
           "type": "component",
           "construct": "SampleReadme"
-        }
-      },
-      "AutoApprove#AutoId12": {
-        "metadata": {
-          "type": "component",
-          "construct": "AutoApprove"
-        }
-      },
-      "GithubWorkflow#auto-approve": {
-        "metadata": {
-          "type": "component",
-          "construct": "GithubWorkflow"
-        }
-      },
-      "YamlFile@.github--workflows--auto-approve.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".github/workflows/auto-approve.yml"
         }
       },
       "NodePackage#AutoId13": {

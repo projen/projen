@@ -22,5 +22,6 @@ export * from "./task-workflow";
 export * from "./task-workflow-job";
 
 export * from "./github-project";
+export * from "./github-repository";
 
 export * as workflows from "./workflows-model";

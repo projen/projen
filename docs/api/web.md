@@ -885,6 +885,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.web.NextJsProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.web.NextJsProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.web.NextJsProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.NextJsProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.web.NextJsProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.web.NextJsProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -1129,6 +1130,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.web.NextJsProject.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -2335,6 +2348,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.web.NextJsTypeScriptProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -2588,6 +2602,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.web.NextJsTypeScriptProject.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -4088,6 +4114,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.web.ReactProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.web.ReactProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.web.ReactProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.ReactProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.web.ReactProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.web.ReactProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -4330,6 +4357,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.web.ReactProject.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -5833,6 +5872,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactTypeScriptProject.property.preCompileTask">preCompileTask</a></code> | <code>projen.Task</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.projectBuild">projectBuild</a></code> | <code>projen.ProjectBuild</code> | Manages the build process of the project. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.projenCommand">projenCommand</a></code> | <code>string</code> | The command to use in order to run the projen CLI. |
+| <code><a href="#projen.web.ReactTypeScriptProject.property.repo">repo</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.root">root</a></code> | <code>projen.Project</code> | The root project. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.subprojects">subprojects</a></code> | <code>projen.Project[]</code> | Returns all the subprojects within this project. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.tasks">tasks</a></code> | <code>projen.Tasks</code> | Project tasks. |
@@ -6084,6 +6124,18 @@ public readonly projenCommand: string;
 - *Type:* string
 
 The command to use in order to run the projen CLI.
+
+---
+
+##### `repo`<sup>Required</sup> <a name="repo" id="projen.web.ReactTypeScriptProject.property.repo"></a>
+
+```typescript
+public readonly repo: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
 
 ---
 
@@ -6800,6 +6852,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -7132,6 +7185,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.web.NextJsProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -9074,6 +9143,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -9422,6 +9492,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.web.NextJsTypeScriptProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -11703,6 +11789,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.web.ReactProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.ReactProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.web.ReactProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.web.ReactProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -12008,6 +12095,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.web.ReactProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
@@ -14145,6 +14248,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.projenrcJsonOptions">projenrcJsonOptions</a></code> | <code>projen.ProjenrcJsonOptions</code> | Options for .projenrc.json. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.renovatebot">renovatebot</a></code> | <code>boolean</code> | Use renovatebot to handle dependency upgrades. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.renovatebotOptions">renovatebotOptions</a></code> | <code>projen.RenovatebotOptions</code> | Options for renovatebot. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.repoRoot">repoRoot</a></code> | <code>projen.Repository</code> | The repository this project belongs to. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoApproveOptions">autoApproveOptions</a></code> | <code>projen.github.AutoApproveOptions</code> | Enable and configure the 'auto approve' workflow. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoMerge">autoMerge</a></code> | <code>boolean</code> | Enable automatic merging on GitHub. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.autoMergeOptions">autoMergeOptions</a></code> | <code>projen.github.AutoMergeOptions</code> | Configure options for automatic merging on GitHub. |
@@ -14466,6 +14570,22 @@ public readonly renovatebotOptions: RenovatebotOptions;
 - *Default:* default options
 
 Options for renovatebot.
+
+---
+
+##### `repoRoot`<sup>Optional</sup> <a name="repoRoot" id="projen.web.ReactTypeScriptProjectOptions.property.repoRoot"></a>
+
+```typescript
+public readonly repoRoot: Repository;
+```
+
+- *Type:* projen.Repository
+
+The repository this project belongs to.
+
+When provided, the project is created within the given repository
+instead of auto-creating a default GitHubRepository.
+Mutually exclusive with `parent`.
 
 ---
 
