@@ -882,13 +882,8 @@ test("typesVersions is not managed by projen, but can be manipulated", () => {
   const pkg = new NodePackage(project);
   pkg.file.addOverride("typesVersions.>=4\\.0", { "*": ["ts4.0/*"] });
 
-  project.synth();
-
   // ASSERT
-  const pkgFile = JSON.parse(
-    readFileSync(join(project.outdir, "package.json"), "utf-8"),
-  );
-
+  const pkgFile = synthSnapshot(project)["package.json"];
   expect(pkgFile.typesVersions).toStrictEqual({
     "<=3.9": { "*": ["ts3.9/*"] },
     ">=4.0": { "*": ["ts4.0/*"] },
