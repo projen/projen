@@ -1153,6 +1153,320 @@ public readonly nestedTemplates: {[ key: string ]: NestedConfiguration};
 ---
 
 
+### GitLabRepository <a name="GitLabRepository" id="projen.gitlab.GitLabRepository"></a>
+
+A git repository hosted on GitLab.
+
+Manages GitLab CI configuration at the repository level.
+
+#### Initializers <a name="Initializers" id="projen.gitlab.GitLabRepository.Initializer"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+new gitlab.GitLabRepository(options: GitLabRepositoryOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.gitlab.GitLabRepository.Initializer.parameter.options">options</a></code> | <code><a href="#projen.gitlab.GitLabRepositoryOptions">GitLabRepositoryOptions</a></code> | *No description.* |
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.gitlab.GitLabRepository.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.gitlab.GitLabRepositoryOptions">GitLabRepositoryOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.gitlab.GitLabRepository.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.gitlab.GitLabRepository.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.gitlab.GitLabRepository.postSynthesize">postSynthesize</a></code> | Called after all projects are synthesized. |
+| <code><a href="#projen.gitlab.GitLabRepository.preSynthesize">preSynthesize</a></code> | Called before all projects are synthesized. |
+| <code><a href="#projen.gitlab.GitLabRepository.synth">synth</a></code> | Synthesize the repository and all its projects. |
+| <code><a href="#projen.gitlab.GitLabRepository.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+
+---
+
+##### `toString` <a name="toString" id="projen.gitlab.GitLabRepository.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.gitlab.GitLabRepository.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.gitlab.GitLabRepository.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.GitLabRepository.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after all projects are synthesized.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.gitlab.GitLabRepository.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before all projects are synthesized.
+
+##### `synth` <a name="synth" id="projen.gitlab.GitLabRepository.synth"></a>
+
+```typescript
+public synth(): void
+```
+
+Synthesize the repository and all its projects.
+
+The synthesis flow is:
+1. Repository preSynthesize (repo + repo-level components)
+2. Each root project's full lifecycle (pre-synth, cleanup, subprojects, synth, post-synth)
+3. Repository-level component synthesize
+4. Repository postSynthesize
+
+##### `annotateGenerated` <a name="annotateGenerated" id="projen.gitlab.GitLabRepository.annotateGenerated"></a>
+
+```typescript
+public annotateGenerated(glob: string): void
+```
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+> [https://github.com/github/linguist/blob/master/docs/overrides.md](https://github.com/github/linguist/blob/master/docs/overrides.md)
+
+###### `glob`<sup>Required</sup> <a name="glob" id="projen.gitlab.GitLabRepository.annotateGenerated.parameter.glob"></a>
+
+- *Type:* string
+
+the glob pattern to match (could be a file path).
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.gitlab.GitLabRepository.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.gitlab.GitLabRepository.isRepository">isRepository</a></code> | Test whether the given construct is a Repository. |
+| <code><a href="#projen.gitlab.GitLabRepository.of">of</a></code> | Find the closest Repository by walking up the construct tree. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.gitlab.GitLabRepository.isConstruct"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+gitlab.GitLabRepository.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.gitlab.GitLabRepository.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isRepository` <a name="isRepository" id="projen.gitlab.GitLabRepository.isRepository"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+gitlab.GitLabRepository.isRepository(x: any)
+```
+
+Test whether the given construct is a Repository.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.gitlab.GitLabRepository.isRepository.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.gitlab.GitLabRepository.of"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+gitlab.GitLabRepository.of(construct: IConstruct)
+```
+
+Find the closest Repository by walking up the construct tree.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.gitlab.GitLabRepository.of.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+the construct to search from.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.gitlab.GitLabRepository.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.components">components</a></code> | <code>projen.Component[]</code> | All components directly owned by this repository (not within a project). |
+| <code><a href="#projen.gitlab.GitLabRepository.property.name">name</a></code> | <code>string</code> | Repository name. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.outdir">outdir</a></code> | <code>string</code> | Absolute output directory of this repository. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.projects">projects</a></code> | <code>projen.Project[]</code> | All projects within this repository. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.gitattributes">gitattributes</a></code> | <code>projen.GitAttributesFile</code> | The .gitattributes file for this repository. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.gitignore">gitignore</a></code> | <code>projen.IgnoreFile</code> | The .gitignore file for this repository. |
+| <code><a href="#projen.gitlab.GitLabRepository.property.gitlab">gitlab</a></code> | <code><a href="#projen.gitlab.GitlabConfiguration">GitlabConfiguration</a></code> | The GitLab CI configuration. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.gitlab.GitLabRepository.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `components`<sup>Required</sup> <a name="components" id="projen.gitlab.GitLabRepository.property.components"></a>
+
+```typescript
+public readonly components: Component[];
+```
+
+- *Type:* projen.Component[]
+
+All components directly owned by this repository (not within a project).
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.gitlab.GitLabRepository.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Repository name.
+
+---
+
+##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.gitlab.GitLabRepository.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+
+Absolute output directory of this repository.
+
+---
+
+##### `projects`<sup>Required</sup> <a name="projects" id="projen.gitlab.GitLabRepository.property.projects"></a>
+
+```typescript
+public readonly projects: Project[];
+```
+
+- *Type:* projen.Project[]
+
+All projects within this repository.
+
+---
+
+##### `gitattributes`<sup>Required</sup> <a name="gitattributes" id="projen.gitlab.GitLabRepository.property.gitattributes"></a>
+
+```typescript
+public readonly gitattributes: GitAttributesFile;
+```
+
+- *Type:* projen.GitAttributesFile
+
+The .gitattributes file for this repository.
+
+Available after the first root project is added.
+
+---
+
+##### `gitignore`<sup>Required</sup> <a name="gitignore" id="projen.gitlab.GitLabRepository.property.gitignore"></a>
+
+```typescript
+public readonly gitignore: IgnoreFile;
+```
+
+- *Type:* projen.IgnoreFile
+
+The .gitignore file for this repository.
+
+Available after the first root project is added.
+
+---
+
+##### `gitlab`<sup>Optional</sup> <a name="gitlab" id="projen.gitlab.GitLabRepository.property.gitlab"></a>
+
+```typescript
+public readonly gitlab: GitlabConfiguration;
+```
+
+- *Type:* <a href="#projen.gitlab.GitlabConfiguration">GitlabConfiguration</a>
+
+The GitLab CI configuration.
+
+This is `undefined` until a project is added to the repository.
+
+---
+
+
 ### NestedConfiguration <a name="NestedConfiguration" id="projen.gitlab.NestedConfiguration"></a>
 
 A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
@@ -2672,6 +2986,92 @@ public readonly variables: string[];
 Filter job by checking comparing values of environment variables.
 
 Read more about variable expressions: https://docs.gitlab.com/ee/ci/variables/README.html#variables-expressions
+
+---
+
+### GitLabRepositoryOptions <a name="GitLabRepositoryOptions" id="projen.gitlab.GitLabRepositoryOptions"></a>
+
+Options for `GitLabRepository`.
+
+#### Initializer <a name="Initializer" id="projen.gitlab.GitLabRepositoryOptions.Initializer"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+const gitLabRepositoryOptions: gitlab.GitLabRepositoryOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.gitlab.GitLabRepositoryOptions.property.name">name</a></code> | <code>string</code> | The name of the repository. |
+| <code><a href="#projen.gitlab.GitLabRepositoryOptions.property.outdir">outdir</a></code> | <code>string</code> | The root directory of the repository. |
+| <code><a href="#projen.gitlab.GitLabRepositoryOptions.property.gitIgnoreOptions">gitIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .gitignore file. |
+| <code><a href="#projen.gitlab.GitLabRepositoryOptions.property.gitOptions">gitOptions</a></code> | <code>projen.GitOptions</code> | Configuration options for git. |
+| <code><a href="#projen.gitlab.GitLabRepositoryOptions.property.gitlabOptions">gitlabOptions</a></code> | <code><a href="#projen.gitlab.CiConfigurationOptions">CiConfigurationOptions</a></code> | Options for GitLab CI configuration. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.gitlab.GitLabRepositoryOptions.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the repository.
+
+---
+
+##### `outdir`<sup>Optional</sup> <a name="outdir" id="projen.gitlab.GitLabRepositoryOptions.property.outdir"></a>
+
+```typescript
+public readonly outdir: string;
+```
+
+- *Type:* string
+- *Default:* "."
+
+The root directory of the repository.
+
+---
+
+##### `gitIgnoreOptions`<sup>Optional</sup> <a name="gitIgnoreOptions" id="projen.gitlab.GitLabRepositoryOptions.property.gitIgnoreOptions"></a>
+
+```typescript
+public readonly gitIgnoreOptions: IgnoreFileOptions;
+```
+
+- *Type:* projen.IgnoreFileOptions
+
+Configuration options for .gitignore file.
+
+---
+
+##### `gitOptions`<sup>Optional</sup> <a name="gitOptions" id="projen.gitlab.GitLabRepositoryOptions.property.gitOptions"></a>
+
+```typescript
+public readonly gitOptions: GitOptions;
+```
+
+- *Type:* projen.GitOptions
+
+Configuration options for git.
+
+---
+
+##### `gitlabOptions`<sup>Optional</sup> <a name="gitlabOptions" id="projen.gitlab.GitLabRepositoryOptions.property.gitlabOptions"></a>
+
+```typescript
+public readonly gitlabOptions: CiConfigurationOptions;
+```
+
+- *Type:* <a href="#projen.gitlab.CiConfigurationOptions">CiConfigurationOptions</a>
+- *Default:* default options
+
+Options for GitLab CI configuration.
 
 ---
 
