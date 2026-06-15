@@ -153,6 +153,7 @@ const project = new JsiiProject({
       // starved of CPU time and sometimes hang or timeout. This should
       // help mitigate that.
       maxWorkers: "50%",
+      setupFiles: ["./test/jest.setup.js"],
     },
   },
 
