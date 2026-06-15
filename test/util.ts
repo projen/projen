@@ -117,9 +117,9 @@ export function withProjectDir(
       shell('git config user.email "my@user.email.com"');
       shell("git config commit.gpgsign false");
       shell("git config tag.gpgsign false");
-    } else if (process.env.CI) {
+    } else if (process.env.GITHUB_ACTIONS) {
       // if "git" is set to "false", we still want to make sure global user is defined
-      // (relevant in CI context)
+      // (relevant in our GITHUB_ACTIONS context)
       shell(
         'git config user.name || git config --global user.name "My User Name"',
       );
