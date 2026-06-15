@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Logger, TaskRuntime } from "../../src";
+import { javascript, Logger, TaskRuntime } from "../../src";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
 import { Transform } from "../../src/javascript";
 import {
@@ -15,6 +15,7 @@ describe("TypeScriptProject with default settings", () => {
   it("synthesizes", () => {
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       name: "test",
     });
 
@@ -25,6 +26,7 @@ describe("TypeScriptProject with default settings", () => {
   it("compiles", () => {
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       name: "test",
     });
 
@@ -650,9 +652,10 @@ describe("tsconfigDev", () => {
       name: "test",
       projenrcTs: true,
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       release: true,
     });
-    project.synth();
+    synthSnapshot(project);
 
     expect(project.packageTask.steps.length).not.toBe(0);
   });
@@ -666,7 +669,7 @@ describe("tsconfigDev", () => {
       release: true,
       package: false,
     });
-    project.synth();
+    synthSnapshot(project);
 
     expect(project.packageTask.steps.length).not.toBe(0);
     expect(loggerWarnSpy).toHaveBeenCalledWith(

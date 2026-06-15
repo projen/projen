@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import { promises as fs, mkdtempSync, readFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
-import { ReleasableCommits } from "../../src";
+import { javascript, ReleasableCommits } from "../../src";
 import * as logging from "../../src/logging";
 import type { BumpOptions } from "../../src/release/bump-version";
 import { bump } from "../../src/release/bump-version";
@@ -585,6 +585,7 @@ describe("newline at the end of version file", () => {
         name: "test",
         outdir: projectdir,
         release: true,
+        packageManager: javascript.NodePackageManager.NPM,
       });
       project.synth();
 

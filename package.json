@@ -158,6 +158,9 @@
       "text-summary"
     ],
     "maxWorkers": "50%",
+    "setupFiles": [
+      "./test/jest.setup.js"
+    ],
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",

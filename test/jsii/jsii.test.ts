@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { NodeRelease } from "@jsii/check-node";
+import type { JsiiProjectOptions } from "../../src/cdk";
 import { JsiiProject } from "../../src/cdk";
 import { NodePackageManager } from "../../src/javascript";
 import { execProjenCLI, synthSnapshot } from "../util";
@@ -36,13 +37,7 @@ function getSupportedNodeVersions(): string[] {
 
 describe("JsiiProject with default settings", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-    });
+    const project = new TestJsiiProject();
 
     const output = synthSnapshot(project);
     expect(output).toMatchSnapshot({
@@ -55,13 +50,7 @@ describe("JsiiProject with default settings", () => {
   });
 
   it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-    });
+    const project = new TestJsiiProject();
 
     project.synth();
 
@@ -71,13 +60,8 @@ describe("JsiiProject with default settings", () => {
 
 describe("JsiiProject with modern jsiiVersion", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-      jsiiVersion: "~5.0.0",
+    const project = new TestJsiiProject({
+      jsiiVersion: "~5.9.0",
     });
 
     const output = synthSnapshot(project);
@@ -85,7 +69,7 @@ describe("JsiiProject with modern jsiiVersion", () => {
       "package.json": {
         devDependencies: {
           jest: "*",
-          jsii: "~5.0.0",
+          jsii: "~5.9.0",
         },
       },
     });
@@ -93,13 +77,9 @@ describe("JsiiProject with modern jsiiVersion", () => {
   });
 
   it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-      jsiiVersion: "~5.0.0",
+    const project = new TestJsiiProject({
+      jsiiVersion: "~5.9.0",
+      devDeps: ["jsii-pacmak@1.135.0"],
     });
 
     project.synth();
@@ -110,12 +90,7 @@ describe("JsiiProject with modern jsiiVersion", () => {
 
 describe("JsiiProject with jsiiVersion: '*'", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
+    const project = new TestJsiiProject({
       jsiiVersion: "*",
     });
 
@@ -132,12 +107,7 @@ describe("JsiiProject with jsiiVersion: '*'", () => {
   });
 
   it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
+    const project = new TestJsiiProject({
       jsiiVersion: "*",
     });
 
@@ -163,14 +133,8 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
       });
 
       it("compiles", () => {
-        const project = new JsiiProject({
-          defaultReleaseBranch: "main",
-          name: "test",
-          repositoryUrl: "github.com/projen/projen.dummy",
-          author: "Test",
-          authorAddress: "test@projen",
+        const project = new TestJsiiProject({
           minNodeVersion,
-          packageManager: NodePackageManager.NPM,
           docgen: false,
           jsiiVersion,
         });
@@ -182,3 +146,27 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
     });
   },
 );
+
+class TestJsiiProject extends JsiiProject {
+  public constructor(
+    options: Omit<
+      JsiiProjectOptions,
+      | "defaultReleaseBranch"
+      | "name"
+      | "repositoryUrl"
+      | "author"
+      | "authorAddress"
+      | "packageManager"
+    > = {},
+  ) {
+    super({
+      defaultReleaseBranch: "main",
+      name: "@projen/test",
+      repositoryUrl: "github.com/projen/projen.dummy",
+      author: "Test",
+      authorAddress: "test@projen",
+      packageManager: NodePackageManager.NPM,
+      ...options,
+    });
+  }
+}

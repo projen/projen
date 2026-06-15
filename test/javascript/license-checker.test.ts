@@ -1,3 +1,4 @@
+import { javascript } from "../../src";
 import { NodeProject } from "../../src/javascript";
 import { execProjenCLI } from "../util";
 
@@ -7,7 +8,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             production: false,
             development: false,
@@ -23,7 +25,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             allow: [],
             deny: [],
@@ -38,7 +41,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             allow: ["MIT"],
             deny: ["BSD"],
@@ -55,6 +59,7 @@ describe("license checker", () => {
     const project = new NodeProject({
       name: "test",
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       checkLicenses: {
         production: true,
         development: true,
@@ -77,6 +82,7 @@ describe("license checker", () => {
       license: "MIT",
       copyrightOwner: "Jane Doe",
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       deps: ["find-up-simple"], // this package is MIT licensed
       checkLicenses: {
         production: true,

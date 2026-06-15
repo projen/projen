@@ -1,4 +1,4 @@
-import { TaskRuntime } from "../../src";
+import { javascript, TaskRuntime } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
 import { TypeScriptProject } from "../../src/typescript";
 import { execProjenCLI, synthSnapshot } from "../util";
@@ -10,6 +10,7 @@ test.each([
   const project = new TypeScriptProject({
     name: "test",
     defaultReleaseBranch: "master",
+    packageManager: javascript.NodePackageManager.NPM,
     eslint: true,
     prettier,
   });
