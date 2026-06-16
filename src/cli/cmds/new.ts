@@ -75,6 +75,7 @@ class Command implements yargs.CommandModule {
       args.command(type.pjid, type.docs ?? "", {
         builder: (cargs) => {
           cargs.showHelpOnFail(false);
+          cargs.strictOptions();
 
           for (const option of type.options ?? []) {
             // not all types can be represented in the cli
