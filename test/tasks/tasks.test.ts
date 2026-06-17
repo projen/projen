@@ -1,9 +1,8 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { Project } from "../../src";
-import { TaskRuntime } from "../../src";
+import type { Project, TasksManifest, TaskStep } from "../../src";
 import * as logging from "../../src/logging";
-import type { TasksManifest, TaskStep } from "../../src/task-model";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { TestProject, synthSnapshot } from "../util";
 
 test("default tasks", () => {
@@ -35,6 +34,36 @@ describe("runTask", () => {
     expect(() => p.tasks.runTask("does-not-exist")).toThrow(
       /cannot find command/,
     );
+  });
+
+  test("throws when the task exits with a non-zero code", () => {
+    const p = new TestProject();
+    p.addTask("boom", { exec: `node -e "process.exit(3)"` });
+    p.synth();
+
+    // The CLI translates any task failure into exit code 1, which the runner
+    // surfaces as a failed task.
+    expect(() => p.tasks.runTask("boom")).toThrow(
+      /Task "boom" failed \(exit code 1\)/,
+    );
+  });
+
+  test("surfaces errors raised while spawning the task runner", () => {
+    const p = new TestProject();
+    p.addTask("noop", { exec: "echo hi" });
+    p.synth();
+
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const childProcess = require("node:child_process");
+    const spy = jest
+      .spyOn(childProcess, "spawnSync")
+      .mockReturnValue({ error: new Error("spawn boom"), status: null } as any);
+
+    try {
+      expect(() => p.tasks.runTask("noop")).toThrow("spawn boom");
+    } finally {
+      spy.mockRestore();
+    }
   });
 });
 
@@ -790,5 +819,5 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
 }
 
 function synthTasksManifest(p: Project) {
-  return synthSnapshot(p)[TaskRuntime.MANIFEST_FILE];
+  return synthSnapshot(p)[ProjenTaskRunner.MANIFEST_FILE];
 }

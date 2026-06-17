@@ -1,5 +1,5 @@
 import * as yaml from "yaml";
-import type { Component } from "../../src";
+import { type Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
@@ -17,7 +17,7 @@ import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
 import type { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
-import { TaskRuntime } from "../../src/task-runtime";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { synthSnapshot, TestProject } from "../util";
 
 logging.disable();
@@ -1486,7 +1486,7 @@ test("post-upgrade workflow", () => {
 
   // THEN
   const snapshot = synthSnapshot(project);
-  const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = snapshot[ProjenTaskRunner.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
     spawn: "post-upgrade",
   });
@@ -1877,7 +1877,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [
@@ -1903,7 +1903,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [
@@ -1939,7 +1939,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [

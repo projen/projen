@@ -23,10 +23,14 @@ jobs:
         run: npm ci
       - name: Compile
         run: node ./projen.js compile
+      - name: Bundle task runner
+        run: node ./projen.js bundle:task-runner
       - name: Package
         run: node ./projen.js package:js
       - name: Run Node integration test
         run: node ./projen.js integ:node
+      - name: Run eject integration test
+        run: node ./projen.js integ:eject
     strategy:
       fail-fast: false
       matrix:

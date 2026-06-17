@@ -23,6 +23,7 @@
     "eject": "node ./projen.js eject",
     "eslint": "node ./projen.js eslint",
     "integ": "node ./projen.js integ",
+    "integ:eject": "node ./projen.js integ:eject",
     "integ:go": "node ./projen.js integ:go",
     "integ:java": "node ./projen.js integ:java",
     "integ:node": "node ./projen.js integ:node",

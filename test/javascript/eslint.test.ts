@@ -1,5 +1,6 @@
-import { javascript, TaskRuntime } from "../../src";
+import { javascript } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { TypeScriptProject } from "../../src/typescript";
 import { execProjenCLI, synthSnapshot } from "../util";
 
@@ -325,7 +326,7 @@ describe("eslint settings", () => {
     });
 
     // THEN
-    const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
+    const manifest = synthSnapshot(project)[ProjenTaskRunner.MANIFEST_FILE];
     expect(eslint.eslintTask._renderSpec()).toMatchObject(
       manifest.tasks.eslint,
     );

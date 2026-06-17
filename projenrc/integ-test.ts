@@ -125,6 +125,15 @@ export class IntegrationTests extends Component {
       });
     }
 
+    // The eject integration test is not language-specific. It is its own task
+    // (so it can be run locally and as part of the aggregate `integ` task) but
+    // in CI it runs as a step of the node matrix job rather than a dedicated
+    // job - see `createNodeMatrixJob`.
+    this.tasks.eject = project.addTask("integ:eject", {
+      exec: "scripts/integ-eject.sh",
+      description: "Run projen eject integration test",
+    });
+
     // Create main integ task that runs all tests
     this.integTask = project.addTask("integ", {
       description: "Run all integration tests",
@@ -141,6 +150,7 @@ export class IntegrationTests extends Component {
     for (const config of languageConfigs) {
       this.integTask.spawn(this.tasks[config.name]);
     }
+    this.integTask.spawn(this.tasks.eject);
 
     // Create a separate workflow for integ tests
     if (options.workflow !== false && project.github) {
@@ -305,12 +315,18 @@ export class IntegrationTests extends Component {
         this.setupNodeStep("${{ matrix.node-version }}"),
         this.installDepsStep(project),
         this.compileStep(project),
+        // Build the run-task.cjs bundle (normally a post-compile step) so the
+        // packaged tarball includes it - the eject test below depends on it.
+        this.runTaskStep(project, "Bundle task runner", "bundle:task-runner"),
         this.runTaskStep(project, "Package", config.packageTask),
         this.runTaskStep(
           project,
           `Run Node integration test`,
           taskName(config.name),
         ),
+        // The eject test is run here, within the node matrix, rather than as a
+        // dedicated job (it only needs the node tarball from `package:js`).
+        this.runTaskStep(project, "Run eject integration test", "integ:eject"),
       ],
     };
   }

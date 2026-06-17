@@ -1,10 +1,10 @@
 import childProcess, { spawnSync } from "child_process";
-import { mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
-import type { Project } from "../../src";
+import { TaskRuntime } from "../../src/cli/task-runtime";
 import * as logging from "../../src/logging";
-import { TaskRuntime } from "../../src/task-runtime";
+import type { Project } from "../../src/project";
 import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -230,7 +230,7 @@ describe("environment variables", () => {
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
   });
 
-  test("warns and skips env var when $() command fails", () => {
+  test("warns and skips env var when $() command fails", async () => {
     // GIVEN
     const warn = jest.spyOn(logging, "warn");
     const p = new TestProject();
@@ -243,7 +243,7 @@ describe("environment variables", () => {
     p.synth();
 
     const rt = new TaskRuntime(p.outdir);
-    rt.runTask("test:env:fail");
+    await rt.runTask("test:env:fail");
 
     // THEN
     expect(warn).toHaveBeenCalledWith(
@@ -255,7 +255,7 @@ describe("environment variables", () => {
     warn.mockRestore();
   });
 
-  test("warns with stdout when $() command writes error to stdout", () => {
+  test("warns with stdout when $() command writes error to stdout", async () => {
     // GIVEN
     const warn = jest.spyOn(logging, "warn");
     const p = new TestProject();
@@ -270,7 +270,7 @@ describe("environment variables", () => {
     p.synth();
 
     const rt = new TaskRuntime(p.outdir);
-    rt.runTask("test:env:fail:stdout");
+    await rt.runTask("test:env:fail:stdout");
 
     // THEN
     expect(warn).toHaveBeenCalledWith(
@@ -637,30 +637,28 @@ describe("shell selection per platform", () => {
     Object.defineProperty(process, "platform", { value: originalPlatform });
   });
 
-  test("runs commands through dax on windows", () => {
+  test("runs commands through dax on windows", async () => {
     // GIVEN
     const p = new TestProject();
     p.addTask("hello", { exec: "echo hello" });
     p.synth();
 
-    const spawnSpy = jest
-      .spyOn(childProcess, "spawnSync")
-      .mockReturnValue({ status: 0 } as any);
+    const spawnSpy = jest.spyOn(childProcess, "spawnSync");
 
     // WHEN
     Object.defineProperty(process, "platform", { value: "win32" });
-    new TaskRuntime(p.outdir).runTask("hello");
+    await new TaskRuntime(p.outdir).runTask("hello");
 
-    // THEN: the command is executed via `node -e <dax runner> "echo hello"`,
-    // not through the system shell (cmd.exe).
-    expect(spawnSpy).toHaveBeenCalledWith(
-      process.execPath,
-      ["-e", expect.stringContaining("CommandBuilder"), "echo hello"],
-      expect.objectContaining({ shell: false }),
+    // THEN: on windows the command is driven through dax's `$` (cross-platform
+    // shell) directly - it must NOT fall through to the system shell
+    // (`spawnSync` with `shell: true`, i.e. cmd.exe).
+    expect(spawnSpy).not.toHaveBeenCalledWith(
+      "echo hello",
+      expect.objectContaining({ shell: true }),
     );
   });
 
-  test("runs commands through the system shell on non-windows", () => {
+  test("runs commands through the system shell on non-windows", async () => {
     // GIVEN
     const p = new TestProject();
     p.addTask("hello", { exec: "echo hello" });
@@ -672,13 +670,74 @@ describe("shell selection per platform", () => {
 
     // WHEN
     Object.defineProperty(process, "platform", { value: "linux" });
-    new TaskRuntime(p.outdir).runTask("hello");
+    await new TaskRuntime(p.outdir).runTask("hello");
 
     // THEN
     expect(spawnSpy).toHaveBeenCalledWith(
       "echo hello",
       expect.objectContaining({ shell: true }),
     );
+  });
+
+  // Regression test for https://github.com/projen/projen/issues/4368
+  // `projen package` ran `shx mkdir -p dist/js`, which failed on Windows
+  // because cmd.exe could not find `shx`. Tasks now use bare POSIX commands
+  // (e.g. `mkdir -p`) and are executed through dax on Windows, which ships a
+  // cross-platform `mkdir` builtin - so no `shx` (or any external bin) is
+  // required.
+  test("POSIX `mkdir -p` works on windows through dax, without shx (#4368)", async () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("make-dist", { exec: "mkdir -p dist/js" });
+    p.synth();
+
+    // WHEN running on (simulated) windows
+    Object.defineProperty(process, "platform", { value: "win32" });
+    await new TaskRuntime(p.outdir).runTask("make-dist");
+
+    // THEN the nested directory is created (dax's builtin mkdir handled `-p`)
+    expect(existsSync(join(p.outdir, "dist", "js"))).toBe(true);
+  });
+
+  // Regression test for https://github.com/projen/projen/issues/4686
+  // A command stored in tasks.json is executed on whatever platform the project
+  // is checked out on. Because Windows now runs through dax (a POSIX-style
+  // shell) instead of cmd.exe, a single POSIX quoting scheme is parsed the same
+  // on Windows as on POSIX - so an arbitrary value can be passed as a single
+  // argument cross-platform.
+  test("POSIX single-quoted args parse correctly through dax and the host shell (#4686)", async () => {
+    // a value with spaces, quotes, and characters that are special to both
+    // sh and cmd.exe
+    const value = `a b "c" $HOME & (d)`;
+    // POSIX single-quote escaping (also understood by dax)
+    const quoted = `'${value.split("'").join("'\\''")}'`;
+
+    const p = new TestProject();
+    p.addTask("echo-arg", {
+      exec: `node -e "require('fs').writeFileSync(process.env.OUT, process.argv[1])" -- ${quoted}`,
+    });
+    p.synth();
+
+    const run = async (label: string): Promise<string> => {
+      const out = join(p.outdir, `arg-${label}.txt`);
+      await new TaskRuntime(p.outdir).runTask("echo-arg", [], [], { OUT: out });
+      return readFileSync(out, "utf-8");
+    };
+
+    // dax (Windows) path - cross-platform, so this is exercised regardless of
+    // the host OS. We deliberately never force the non-windows branch on a
+    // Windows host, which would invoke cmd.exe and mangle POSIX quoting.
+    Object.defineProperty(process, "platform", { value: "win32" });
+    const viaDax = await run("dax");
+
+    // the host's native shell: the system shell on POSIX hosts, dax again on
+    // Windows hosts.
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+    const viaHost = await run("host");
+
+    // THEN both receive the value as a single, unmangled argument
+    expect(viaDax).toBe(value);
+    expect(viaHost).toBe(value);
   });
 });
 
@@ -714,3 +773,218 @@ function executeTask(
     .trim()
     .split(/\r\n|\n|\r/);
 }
+
+describe("ejected run-task.cjs bundle", () => {
+  // Build the standalone task runner the same way the "bundle:task-runner"
+  // projen task does, then exercise it the way an *ejected* project would. The
+  // bundle is what gets copied to `scripts/run-task.cjs` on "projen eject".
+  let bundlePath: string;
+
+  beforeAll(() => {
+    // esbuild is a devDependency and is allowed in tests.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { buildSync } = require("esbuild");
+    bundlePath = join(mkdtemp(), "run-task.cjs");
+    buildSync({
+      entryPoints: [
+        join(__dirname, "..", "..", "src", "cli", "task-runtime.ts"),
+      ],
+      outfile: bundlePath,
+      bundle: true,
+      platform: "node",
+      format: "cjs",
+      // NOTE: package.json is intentionally NOT marked external so its contents
+      // (the version) are inlined - see projen#3679.
+      footer: { js: "TaskRuntime.main();" },
+    });
+  });
+
+  // Regression test for:
+  // - https://github.com/projen/projen/issues/3679 (no sibling package.json)
+  // - https://github.com/projen/projen/issues/4407 (parseConflictJSON)
+  test("runs tasks without a sibling package.json and parses conflicted manifests", () => {
+    // GIVEN a project dir with NO package.json and a tasks.json that still has
+    // git merge-conflict markers (as can happen after a rebase/merge)
+    const workdir = mkdtemp();
+    mkdirSync(join(workdir, ".projen"));
+    const conflictedManifest = [
+      "{",
+      '  "tasks": {',
+      '    "hello": {',
+      '      "name": "hello",',
+      '      "steps": [',
+      "        {",
+      "<<<<<<< HEAD",
+      '          "exec": "echo CURRENT"',
+      "=======",
+      '          "exec": "echo INCOMING"',
+      ">>>>>>> other",
+      "        }",
+      "      ]",
+      "    }",
+      "  }",
+      "}",
+    ].join("\n");
+    writeFileSync(join(workdir, ".projen", "tasks.json"), conflictedManifest);
+    expect(existsSync(join(workdir, "package.json"))).toBe(false);
+
+    // WHEN running the bundled runner from that directory
+    const result = spawnSync(process.execPath, [bundlePath, "hello"], {
+      cwd: workdir,
+      env: { ...process.env },
+      timeout: 10_000,
+    });
+
+    // THEN it does not crash on load (missing package.json, #3679) nor when
+    // parsing the manifest (parseConflictJSON, #4407), and it executes the
+    // "theirs"/incoming side of the conflict.
+    expect(result.stderr.toString("utf-8")).not.toMatch(
+      /Cannot find module|parseConflictJSON is not a function/,
+    );
+    expect(result.status).toBe(0);
+    expect(result.stdout.toString("utf-8")).toContain("INCOMING");
+  });
+});
+
+describe("in-process task execution", () => {
+  const originalPlatform = process.platform;
+
+  afterEach(() => {
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  test("runs a task with env, condition, steps, spawn, builtin and args", async () => {
+    const p = new TestProject();
+
+    const child = p.addTask("child", {
+      env: { CHILD_ENV: `$(node -e "console.log('dyn-child')")` },
+      exec: `node -e "require('fs').appendFileSync('out.txt', 'child:' + process.env.CHILD_ENV + '\\n')"`,
+    });
+
+    const parent = p.addTask("parent", {
+      condition: `node -e "process.exit(0)"`,
+      env: { PARENT_ENV: `$(node -e "console.log('dyn-parent')")` },
+      requiredEnv: ["PARENT_ENV"],
+    });
+    parent.exec(
+      `node -e "require('fs').appendFileSync('out.txt', 'parent:' + process.env.PARENT_ENV + '\\n')"`,
+    );
+    parent.spawn(child);
+    parent.builtin("builtin-example");
+    parent.exec(
+      `node -e "require('fs').appendFileSync('out.txt', 'args:' + process.argv.slice(1).join(',') + '\\n')"`,
+      { receiveArgs: true },
+    );
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("parent", [], ["a1", "a2"]);
+
+    const contents = readFileSync(join(p.outdir, "out.txt"), "utf-8");
+    expect(contents).toContain("parent:dyn-parent");
+    expect(contents).toContain("child:dyn-child");
+    expect(contents).toContain("args:a1,a2");
+  });
+
+  test("skips a task whose condition exits non-zero", async () => {
+    const p = new TestProject();
+    const t = p.addTask("foo", { condition: `node -e "process.exit(1)"` });
+    t.exec(
+      `node -e "require('fs').writeFileSync('should-not-exist.txt', 'x')"`,
+    );
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("foo");
+
+    expect(existsSync(join(p.outdir, "should-not-exist.txt"))).toBe(false);
+  });
+
+  test("throws when requiredEnv is missing", async () => {
+    const p = new TestProject();
+    p.addTask("foo", { requiredEnv: ["MISSING_XYZ"], exec: "echo hi" });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("foo")).rejects.toThrow(
+      /missing required environment variables: MISSING_XYZ/,
+    );
+  });
+
+  test("throws when a step exec fails", async () => {
+    const p = new TestProject();
+    p.addTask("foo", { exec: `node -e "process.exit(2)"` });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("foo")).rejects.toThrow(
+      /failed when executing/,
+    );
+  });
+
+  test("throws for an unknown task", async () => {
+    const p = new TestProject();
+    p.synth();
+
+    await expect(
+      new TaskRuntime(p.outdir).runTask("does-not-exist"),
+    ).rejects.toThrow(/cannot find command does-not-exist/);
+  });
+
+  test("throws when a step cwd does not exist", async () => {
+    const p = new TestProject();
+    const t = p.addTask("foo");
+    t.exec("echo hi", { cwd: join(p.outdir, "nope") });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("foo")).rejects.toThrow(
+      /must be an existing directory/,
+    );
+  });
+
+  test("TaskRuntime.main runs a task from the current working directory", async () => {
+    const p = new TestProject();
+    p.addTask("maintask", {
+      exec: `node -e "require('fs').writeFileSync('main.txt', 'ok')"`,
+    });
+    p.synth();
+
+    const cwd = process.cwd();
+    try {
+      process.chdir(p.outdir);
+      await TaskRuntime.main("maintask");
+    } finally {
+      process.chdir(cwd);
+    }
+
+    expect(readFileSync(join(p.outdir, "main.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("evaluates dynamic env through dax on windows (captured output)", async () => {
+    const p = new TestProject();
+    p.addTask("foo", {
+      exec: `node -e "require('fs').writeFileSync('env.txt', process.env.DV || '')"`,
+      env: { DV: "$(echo daxvalue)" },
+    });
+    p.synth();
+
+    Object.defineProperty(process, "platform", { value: "win32" });
+    await new TaskRuntime(p.outdir).runTask("foo");
+
+    expect(readFileSync(join(p.outdir, "env.txt"), "utf-8").trim()).toBe(
+      "daxvalue",
+    );
+  });
+
+  test("single-quotes args at a quoted marker", async () => {
+    const p = new TestProject();
+    p.addTask("q", {
+      exec: `node -e "require('fs').writeFileSync('q.txt', JSON.stringify(process.argv.slice(1)))" -- "$@"`,
+      receiveArgs: true,
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("q", [], ["a b", "c"]);
+
+    expect(JSON.parse(readFileSync(join(p.outdir, "q.txt"), "utf-8"))).toEqual([
+      "a b",
+      "c",
+    ]);
+  });
+});

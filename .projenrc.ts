@@ -211,6 +211,30 @@ javascript.Eslint.of(project)?.addRules({
   "@typescript-eslint/consistent-type-exports": "error",
 });
 
+// The CLI (src/cli) is the runtime entrypoint of projen. It may depend on the
+// rest of the library, but nothing in src/ outside of src/cli may depend on the
+// CLI (otherwise the library and the CLI become circularly coupled). This is
+// enforced for every src file except those inside src/cli itself.
+javascript.Eslint.of(project)?.addOverride({
+  files: ["src/**/*.ts"],
+  excludedFiles: ["src/cli/**/*.ts"],
+  rules: {
+    "import/no-restricted-paths": [
+      "error",
+      {
+        zones: [
+          {
+            target: "./src",
+            from: "./src/cli",
+            message:
+              "src/ must not import from src/cli. The CLI may import from the library, but not the other way around.",
+          },
+        ],
+      },
+    ],
+  },
+});
+
 // Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")
@@ -241,9 +265,11 @@ setupDevcontainer(project);
 
 setupNpmignore(project);
 
-new IntegrationTests(project);
-
+// Must run before IntegrationTests so the "bundle:task-runner" task exists when
+// the integ workflow jobs are built (the node job runs it before packaging).
 setupBundleTaskRunner(project);
+
+new IntegrationTests(project);
 
 new JsiiFromJsonSchema(project, {
   structName: "BiomeConfiguration",

@@ -57,7 +57,7 @@
       "description": "Bundle the run-task.cjs script needed for \"projen eject\"",
       "steps": [
         {
-          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.cjs --bundle --platform=node --format=cjs --external:\"*/package.json\" --banner:js=\"#!/usr/bin/env node\" --footer:js=\"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\""
+          "exec": "esbuild src/cli/task-runtime.ts --outfile=lib/run-task.cjs --bundle --platform=node --format=cjs --banner:js=\"#!/usr/bin/env node\" --footer:js=\"TaskRuntime.main();\""
         }
       ]
     },
@@ -214,6 +214,18 @@
         },
         {
           "spawn": "integ:java"
+        },
+        {
+          "spawn": "integ:eject"
+        }
+      ]
+    },
+    "integ:eject": {
+      "name": "integ:eject",
+      "description": "Run projen eject integration test",
+      "steps": [
+        {
+          "exec": "scripts/integ-eject.sh"
         }
       ]
     },

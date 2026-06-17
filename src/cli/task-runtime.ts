@@ -5,17 +5,56 @@ import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
 import { gray, underline } from "chalk";
-import { PROJEN_DIR } from "./common";
-import * as logging from "./logging";
-import type { TasksManifest, TaskSpec, TaskStep } from "./task-model";
+import { $ } from "dax";
+import { PROJEN_DIR } from "../common";
+import * as logging from "../logging";
+import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
 
-// avoids a (false positive) esbuild warning about incorrect imports
+// avoids a (false positive) esbuild warning about incorrect imports.
+// `?.default ?? module` keeps this working both as a plain CommonJS require and
+// when the dependency is interop-wrapped inside the bundled run-task.cjs (where
+// `require(...)` may yield `{ default: fn }` instead of the function). See
+// projen#4407 ("parseConflictJSON is not a function" after eject).
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const parseConflictJSON = require("parse-conflict-json");
+const parseConflictJSONModule = require("parse-conflict-json");
+const parseConflictJSON =
+  parseConflictJSONModule?.default ?? parseConflictJSONModule;
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
 const QUOTED_ARGS_MARKER = `"${ARGS_MARKER}"`;
+
+/**
+ * The result of executing a shell command.
+ *
+ * This is a normalized subset of node's `SpawnSyncReturns` so that the
+ * synchronous (`spawnSync`) and asynchronous (`dax`) execution paths can return
+ * a compatible shape.
+ */
+interface ShellResult {
+  /**
+   * The exit code of the command, or `null` if the process was terminated by a
+   * signal or never spawned.
+   */
+  readonly status: number | null;
+
+  /**
+   * Captured stdout. Only populated when stdout is piped (e.g. when evaluating
+   * environment variables); `null`/`undefined` when stdio is inherited.
+   */
+  readonly stdout?: Buffer | null;
+
+  /**
+   * Captured stderr. See `stdout`.
+   */
+  readonly stderr?: Buffer | null;
+
+  /**
+   * An error raised while attempting to spawn the command (not a non-zero exit
+   * code, which is reported via `status`).
+   */
+  readonly error?: Error;
+}
 
 /**
  * The runtime component of the tasks engine.
@@ -28,6 +67,25 @@ export class TaskRuntime {
     PROJEN_DIR,
     "tasks.json",
   );
+
+  /**
+   * One-shot entrypoint for the standalone task runner.
+   *
+   * Creates a runtime rooted at the current working directory, runs the named
+   * task, and converts any failure into a non-zero process exit code. This is
+   * the single line invoked by the bundled `scripts/run-task.cjs` that
+   * "projen eject" emits, which keeps the generated bundle footer trivial.
+   *
+   * @param name The name of the task to run. Defaults to `process.argv[2]`.
+   */
+  public static async main(name: string = process.argv[2]): Promise<void> {
+    try {
+      await new TaskRuntime(".").runTask(name);
+    } catch (e: any) {
+      console.error(e?.stack ?? String(e));
+      process.exit(1);
+    }
+  }
 
   /**
    * The contents of tasks.json
@@ -72,23 +130,23 @@ export class TaskRuntime {
    * Runs the task.
    * @param name The task name.
    */
-  public runTask(
+  public async runTask(
     name: string,
     parents: string[] = [],
     args: Array<string | number> = [],
     env: { [name: string]: string } = {},
-  ) {
+  ): Promise<void> {
     const task = this.tryFindTask(name);
     if (!task) {
-      throw new Error(`cannot find command ${task}`);
+      throw new Error(`cannot find command ${name}`);
     }
 
-    new RunTask(this, task, parents, args, env);
+    await new RunTask(this, task, parents, args, env).run();
   }
 }
 
 class RunTask {
-  private readonly env: { [name: string]: string | undefined } = {};
+  private env: { [name: string]: string | undefined } = {};
   private readonly parents: string[];
 
   private readonly workdir: string;
@@ -97,19 +155,27 @@ class RunTask {
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
     parents: string[] = [],
-    args: Array<string | number> = [],
-    envParam: { [name: string]: string } = {},
+    private readonly args: Array<string | number> = [],
+    private readonly envParam: { [name: string]: string } = {},
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
-
     this.parents = parents;
+  }
+
+  /**
+   * Executes the task. This was previously done in the constructor, but is now
+   * an async method since shell execution is asynchronous (e.g. dax on
+   * Windows).
+   */
+  public async run(): Promise<void> {
+    const { task, args, parents } = this;
 
     if (!task.steps || task.steps.length === 0) {
       this.logDebug(gray("No actions have been specified for this task."));
       return;
     }
 
-    this.env = this.resolveEnvironment(envParam, parents);
+    this.env = await this.resolveEnvironment(this.envParam, parents);
 
     const envlogs = [];
     for (const [k, v] of Object.entries(this.env)) {
@@ -124,7 +190,7 @@ class RunTask {
     }
 
     // evaluate condition
-    if (!this.evalCondition(task)) {
+    if (!(await this.evalCondition(task))) {
       this.log("condition exited with non-zero - skipping");
       return;
     }
@@ -146,7 +212,7 @@ class RunTask {
 
     for (const step of task.steps) {
       // evaluate step condition
-      if (!this.evalCondition(step)) {
+      if (!(await this.evalCondition(step))) {
         this.log("condition exited with non-zero - skipping");
         continue;
       }
@@ -161,7 +227,7 @@ class RunTask {
       }
 
       if (step.spawn) {
-        this.runtime.runTask(
+        await this.runtime.runTask(
           step.spawn,
           [...this.parents, this.task.name],
           argsList,
@@ -172,7 +238,7 @@ class RunTask {
       const execs = step.exec ? [step.exec] : [];
 
       // Parse step-specific environment variables
-      const env = this.evalEnvironment(step.env ?? {});
+      const env = await this.evalEnvironment(step.env ?? {});
 
       if (step.builtin) {
         execs.push(this.renderBuiltin(step.builtin));
@@ -200,14 +266,15 @@ class RunTask {
 
         const cwd = step.cwd;
         try {
-          const result = this.shell({
+          const result = await this.shell({
             command,
             cwd,
             extraEnv: env,
           });
           hasError = result.status !== 0;
         } catch (e) {
-          // This is the error 'shx' will throw
+          // a non-zero exit code is reported via `result.status` above; this
+          // catch handles errors thrown while attempting to spawn the command.
           if ((e as any)?.message?.startsWith("non-zero exit code:")) {
             hasError = true;
           }
@@ -233,14 +300,14 @@ class RunTask {
    * evaluates to false (exits with non-zero), indicating that the task should
    * be skipped.
    */
-  private evalCondition(taskOrStep: TaskSpec | TaskStep) {
+  private async evalCondition(taskOrStep: TaskSpec | TaskStep) {
     // no condition, carry on
     if (!taskOrStep.condition) {
       return true;
     }
 
     this.log(gray(`${underline("condition")}: ${taskOrStep.condition}`));
-    const result = this.shell({
+    const result = await this.shell({
       command: taskOrStep.condition,
       logprefix: "condition: ",
       quiet: true,
@@ -255,13 +322,13 @@ class RunTask {
   /**
    * Evaluates environment variables from shell commands (e.g. `$(xx)`)
    */
-  private evalEnvironment(env: { [name: string]: string }) {
+  private async evalEnvironment(env: { [name: string]: string }) {
     const output: { [name: string]: string | undefined } = {};
 
     for (const [key, value] of Object.entries(env ?? {})) {
       if (String(value).startsWith("$(") && String(value).endsWith(")")) {
         const query = value.substring(2, value.length - 1);
-        const result = this.shellEval({ command: query });
+        const result = await this.shellEval({ command: query });
         if (result.status !== 0) {
           const error = result.error
             ? result.error.stack
@@ -276,7 +343,7 @@ class RunTask {
           );
           logging.warn(this.fmtLog(`${underline(key)}: ${error}`));
         } else {
-          output[key] = result.stdout.toString("utf-8").trim();
+          output[key] = result.stdout?.toString("utf-8").trim() ?? "";
         }
       } else {
         output[key] = value;
@@ -290,7 +357,7 @@ class RunTask {
    * `$(xx)` for allowing environment to be evaluated by executing a shell
    * command and obtaining its result.
    */
-  private resolveEnvironment(
+  private async resolveEnvironment(
     envParam: { [name: string]: string },
     parents: string[],
   ) {
@@ -333,7 +400,7 @@ class RunTask {
     return format(`${underline(this.fullname)} |`, ...args);
   }
 
-  private shell(options: ShellOptions) {
+  private async shell(options: ShellOptions): Promise<ShellResult> {
     const quiet = options.quiet ?? false;
     if (!quiet) {
       const log = new Array<string>();
@@ -368,23 +435,25 @@ class RunTask {
     // commands projen tasks are written in (`cat`, `cp`, `mkdir -p`, `rm -rf`,
     // `&&` chains, `$VAR`, ...). Run the command through dax's cross-platform
     // shell instead, which ships built-in implementations of the common
-    // commands. dax executes commands asynchronously, but the task runtime is
-    // synchronous (tasks run during synthesis), so we drive dax from a
-    // synchronous child `node` process.
+    // commands. Now that the task runtime is asynchronous we can drive dax's
+    // `$` API directly instead of spawning a synchronous child node process.
     if (process.platform === "win32") {
-      const dax = require.resolve("dax");
-      const runner = `const { CommandBuilder } = require(${JSON.stringify(
-        dax,
-      )}); new CommandBuilder().command(process.argv[1]).noThrow().spawn().then((r) => process.exit(r.code), (e) => { console.error(e?.stack ?? String(e)); process.exit(1); });`;
+      // stdout/stderr are only captured when a caller pipes them (e.g.
+      // `shellEval`); otherwise inherit so output is streamed to the terminal.
+      const capture = Array.isArray(options.spawnOptions?.stdio);
 
-      return spawnSync(process.execPath, ["-e", runner, options.command], {
-        ...options,
-        cwd,
-        shell: false,
-        stdio: "inherit",
-        env,
-        ...options.spawnOptions,
-      });
+      const result = await $.raw`${options.command}`
+        .cwd(cwd)
+        .env(env)
+        .stdout(capture ? "piped" : "inherit")
+        .stderr(capture ? "piped" : "inherit")
+        .noThrow();
+
+      return {
+        status: result.code,
+        stdout: capture ? Buffer.from(result.stdoutBytes) : null,
+        stderr: capture ? Buffer.from(result.stderrBytes) : null,
+      };
     }
 
     return spawnSync(options.command, {
@@ -397,7 +466,7 @@ class RunTask {
     });
   }
 
-  private shellEval(options: ShellOptions) {
+  private async shellEval(options: ShellOptions): Promise<ShellResult> {
     return this.shell({
       quiet: true,
       ...options,
@@ -408,7 +477,19 @@ class RunTask {
   }
 
   private renderBuiltin(builtin: string) {
-    const moduleRoot = dirname(require.resolve("../package.json"));
+    // Locate projen's package root by walking up from this module's directory
+    // until we find a package.json. This works whether the code runs from the
+    // compiled file (lib/cli/task-runtime.js) or from the bundled run-task.cjs
+    // (lib/run-task.cjs), which live at different depths - so a hard-coded
+    // relative path to package.json would be wrong in one of the two cases.
+    let moduleRoot = __dirname;
+    while (!existsSync(join(moduleRoot, "package.json"))) {
+      const parent = dirname(moduleRoot);
+      if (parent === moduleRoot) {
+        throw new Error("unable to locate the projen package root");
+      }
+      moduleRoot = parent;
+    }
     const program = require.resolve(
       join(moduleRoot, "lib", `${builtin}.task.js`),
     );

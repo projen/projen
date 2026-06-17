@@ -2,12 +2,12 @@ import { spawnSync } from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
-import * as logging from "../logging";
-import { Project } from "../project";
+import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../common";
+import * as logging from "../../logging";
+import { Project } from "../../project";
 import type { TaskRuntime } from "../task-runtime";
 
-const projenModule = path.dirname(require.resolve("../../package.json"));
+const projenModule = path.dirname(require.resolve("../../../package.json"));
 
 export interface SynthOptions {
   /**
@@ -34,7 +34,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   const rcfile = path.resolve(
     workdir,
     options.rcfile ?? DEFAULT_PROJEN_RC_JS_FILENAME,
-  ); // TODO: support non javascript projenrc (e.g. java projects)
+  ); // @TODO: support non javascript projenrc (e.g. java projects)
 
   // if --rc points to .projenrc.js, then behave as if it wasn't specified.
   if (rcfile === path.resolve(workdir, DEFAULT_PROJEN_RC_JS_FILENAME)) {
@@ -72,7 +72,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
       // if "--rc" is specified, ignore the default task
       if (defaultTask) {
         if (!options.rcfile) {
-          runtime.runTask(defaultTask.name);
+          await runtime.runTask(defaultTask.name);
           return true;
         } else {
           logging.warn(

@@ -8613,7 +8613,7 @@ public readonly marker: string;
 
 ### Tasks <a name="Tasks" id="projen.Tasks"></a>
 
-Defines project tasks.
+Defines and manages project tasks.
 
 Tasks extend the projen CLI by adding subcommands to it. Task definitions are
 synthesized into `.projen/tasks.json`.
@@ -8650,6 +8650,7 @@ new Tasks(project: Project)
 | <code><a href="#projen.Tasks.addEnvironment">addEnvironment</a></code> | Adds global environment. |
 | <code><a href="#projen.Tasks.addTask">addTask</a></code> | Adds a task to a project. |
 | <code><a href="#projen.Tasks.removeTask">removeTask</a></code> | Removes a task from a project. |
+| <code><a href="#projen.Tasks.resolveTasksManifest">resolveTasksManifest</a></code> | *No description.* |
 | <code><a href="#projen.Tasks.runTask">runTask</a></code> | Runs the specified task. |
 | <code><a href="#projen.Tasks.tryFind">tryFind</a></code> | Finds a task by name. |
 
@@ -8771,6 +8772,18 @@ Removes a task from a project.
 - *Type:* string
 
 The name of the task to remove.
+
+---
+
+##### `resolveTasksManifest` <a name="resolveTasksManifest" id="projen.Tasks.resolveTasksManifest"></a>
+
+```typescript
+public resolveTasksManifest(resolver: IResolver): TasksManifest
+```
+
+###### `resolver`<sup>Required</sup> <a name="resolver" id="projen.Tasks.resolveTasksManifest.parameter.resolver"></a>
+
+- *Type:* <a href="#projen.IResolver">IResolver</a>
 
 ---
 
@@ -17720,154 +17733,6 @@ Sets the description of this task.
 
 ---
 
-
-### TaskRuntime <a name="TaskRuntime" id="projen.TaskRuntime"></a>
-
-The runtime component of the tasks engine.
-
-#### Initializers <a name="Initializers" id="projen.TaskRuntime.Initializer"></a>
-
-```typescript
-import { TaskRuntime } from 'projen'
-
-new TaskRuntime(workdir: string)
-```
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.TaskRuntime.Initializer.parameter.workdir">workdir</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `workdir`<sup>Required</sup> <a name="workdir" id="projen.TaskRuntime.Initializer.parameter.workdir"></a>
-
-- *Type:* string
-
----
-
-#### Methods <a name="Methods" id="Methods"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.TaskRuntime.runTask">runTask</a></code> | Runs the task. |
-| <code><a href="#projen.TaskRuntime.tryFindTask">tryFindTask</a></code> | Find a task by name, or `undefined` if not found. |
-
----
-
-##### `runTask` <a name="runTask" id="projen.TaskRuntime.runTask"></a>
-
-```typescript
-public runTask(name: string, parents?: string[], args?: (string | number)[], env?: {[ key: string ]: string}): void
-```
-
-Runs the task.
-
-###### `name`<sup>Required</sup> <a name="name" id="projen.TaskRuntime.runTask.parameter.name"></a>
-
-- *Type:* string
-
-The task name.
-
----
-
-###### `parents`<sup>Optional</sup> <a name="parents" id="projen.TaskRuntime.runTask.parameter.parents"></a>
-
-- *Type:* string[]
-
----
-
-###### `args`<sup>Optional</sup> <a name="args" id="projen.TaskRuntime.runTask.parameter.args"></a>
-
-- *Type:* string | number[]
-
----
-
-###### `env`<sup>Optional</sup> <a name="env" id="projen.TaskRuntime.runTask.parameter.env"></a>
-
-- *Type:* {[ key: string ]: string}
-
----
-
-##### `tryFindTask` <a name="tryFindTask" id="projen.TaskRuntime.tryFindTask"></a>
-
-```typescript
-public tryFindTask(name: string): TaskSpec
-```
-
-Find a task by name, or `undefined` if not found.
-
-###### `name`<sup>Required</sup> <a name="name" id="projen.TaskRuntime.tryFindTask.parameter.name"></a>
-
-- *Type:* string
-
----
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.TaskRuntime.property.manifest">manifest</a></code> | <code><a href="#projen.TasksManifest">TasksManifest</a></code> | The contents of tasks.json. |
-| <code><a href="#projen.TaskRuntime.property.tasks">tasks</a></code> | <code><a href="#projen.TaskSpec">TaskSpec</a>[]</code> | The tasks in this project. |
-| <code><a href="#projen.TaskRuntime.property.workdir">workdir</a></code> | <code>string</code> | The root directory of the project and the cwd for executing tasks. |
-
----
-
-##### `manifest`<sup>Required</sup> <a name="manifest" id="projen.TaskRuntime.property.manifest"></a>
-
-```typescript
-public readonly manifest: TasksManifest;
-```
-
-- *Type:* <a href="#projen.TasksManifest">TasksManifest</a>
-
-The contents of tasks.json.
-
----
-
-##### `tasks`<sup>Required</sup> <a name="tasks" id="projen.TaskRuntime.property.tasks"></a>
-
-```typescript
-public readonly tasks: TaskSpec[];
-```
-
-- *Type:* <a href="#projen.TaskSpec">TaskSpec</a>[]
-
-The tasks in this project.
-
----
-
-##### `workdir`<sup>Required</sup> <a name="workdir" id="projen.TaskRuntime.property.workdir"></a>
-
-```typescript
-public readonly workdir: string;
-```
-
-- *Type:* string
-
-The root directory of the project and the cwd for executing tasks.
-
----
-
-#### Constants <a name="Constants" id="Constants"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.TaskRuntime.property.MANIFEST_FILE">MANIFEST_FILE</a></code> | <code>string</code> | The project-relative path of the tasks manifest file. |
-
----
-
-##### `MANIFEST_FILE`<sup>Required</sup> <a name="MANIFEST_FILE" id="projen.TaskRuntime.property.MANIFEST_FILE"></a>
-
-```typescript
-public readonly MANIFEST_FILE: string;
-```
-
-- *Type:* string
-
-The project-relative path of the tasks manifest file.
-
----
 
 ### Testing <a name="Testing" id="projen.Testing"></a>
 

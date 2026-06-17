@@ -465,7 +465,7 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             include: [`${this.srcdir}/**/*.ts`],
-            // exclude: ['node_modules'], // TODO: shouldn't we exclude node_modules?
+            // exclude: ['node_modules'], // @TODO: shouldn't we exclude node_modules?
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,

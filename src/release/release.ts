@@ -455,7 +455,7 @@ export class Release extends Component {
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
      * disabled and no other trigger is set.
      *
-     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
+     * @TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
      */
     if (
       !(
