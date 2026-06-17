@@ -8,7 +8,6 @@ import { toJson_UvConfiguration } from "./uv-config";
 import type { Dependency } from "../dependencies";
 import { DependencyType } from "../dependencies";
 import type { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 import { exec, execOrUndefined } from "../util";
 import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
@@ -197,11 +196,10 @@ export class Uv
 
   public installDependencies(): void {
     this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
     if (this.file.changed) {
-      runtime.runTask(this.installTask.name);
+      this.project.tasks.runTask(this.installTask.name);
     } else {
-      runtime.runTask(this.installCiTask.name);
+      this.project.tasks.runTask(this.installCiTask.name);
     }
   }
 }

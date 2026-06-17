@@ -19,6 +19,14 @@ export class Tasks extends Component {
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
+  /**
+   * Task runtime used to execute tasks in-process. Created lazily because the
+   * tasks manifest (`.projen/tasks.json`) is only written during synthesis,
+   * while tasks are executed afterwards (e.g. post-synthesis dependency
+   * installation).
+   */
+  private _runtime?: TaskRuntime;
+
   constructor(project: Project) {
     super(project);
 
@@ -108,6 +116,23 @@ export class Tasks extends Component {
    */
   public tryFind(name: string): undefined | Task {
     return this._tasks[name];
+  }
+
+  /**
+   * Runs the specified task.
+   *
+   * @param name The name of the task to run.
+   * @param args Arguments to pass to the task.
+   */
+  public runTask(name: string, args?: (string | number)[]) {
+    this.runtime.runTask(name, [], args);
+  }
+
+  private get runtime(): TaskRuntime {
+    if (!this._runtime) {
+      this._runtime = new TaskRuntime(this.project.outdir);
+    }
+    return this._runtime;
   }
 
   public synthesize(): void {

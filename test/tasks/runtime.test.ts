@@ -1,11 +1,11 @@
 import { spawnSync } from "child_process";
+import * as childProcess from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
 import type { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
-import { makeCrossPlatform } from "../../src/util/tasks";
 import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -574,63 +574,6 @@ test("exec can receive fixed args", () => {
   expect(executeTask(p, "test1")).toStrictEqual(["child: [one --two -3]"]);
 });
 
-describe("makeCrossPlatform", () => {
-  const originalPlatform = process.platform;
-
-  beforeEach(() => {
-    jest.resetModules();
-    jest.clearAllMocks();
-  });
-
-  afterEach(() => {
-    // Restore the original platform
-    Object.defineProperty(process, "platform", { value: originalPlatform });
-  });
-
-  test("does not modify the command on linux", () => {
-    // Mock the platform to be "linux"
-    Object.defineProperty(process, "platform", { value: "linux" });
-
-    expect(makeCrossPlatform("ls -l")).toBe("ls -l");
-  });
-
-  test("does not modify a command not supported by shx on windows", () => {
-    // Mock the platform to be "win32"
-    Object.defineProperty(process, "platform", { value: "win32" });
-
-    expect(makeCrossPlatform('echo "Hello World"')).toBe('echo "Hello World"');
-  });
-
-  test("prefixes supported commands with shx on windows", () => {
-    // Mock the platform to be "win32"
-    Object.defineProperty(process, "platform", { value: "win32" });
-
-    expect(makeCrossPlatform("cat file.txt")).toBe("shx cat file.txt");
-  });
-
-  test("processes multiple commands correctly on windows", () => {
-    // Mock the platform to be "win32"
-    Object.defineProperty(process, "platform", { value: "win32" });
-
-    expect(makeCrossPlatform("mkdir newdir && rm olddir")).toBe(
-      "shx mkdir newdir && shx rm olddir",
-    );
-  });
-
-  test("trims commands with leading and trailing spaces", () => {
-    // Mock the platform to be "win32"
-    Object.defineProperty(process, "platform", { value: "win32" });
-
-    expect(makeCrossPlatform("  cp file1.txt file2.txt  ")).toBe(
-      "shx cp file1.txt file2.txt",
-    );
-  });
-
-  test("Empty command returns an empty string", () => {
-    expect(makeCrossPlatform("")).toBe("");
-  });
-});
-
 describe("manifest with merge conflicts", () => {
   test("can parse tasks from a manifest file with merge conflicts", () => {
     const manifestWithConflict =
@@ -682,6 +625,61 @@ describe("command", () => {
     expect(executeTask(p, "test1")).toStrictEqual([
       '["--pack-command","pnpm pack"]',
     ]);
+  });
+});
+
+describe("shell selection per platform", () => {
+  const originalPlatform = process.platform;
+
+  afterEach(() => {
+    // remove the spawnSync spy so it doesn't leak into other tests, and
+    // restore the real platform
+    jest.restoreAllMocks();
+    Object.defineProperty(process, "platform", { value: originalPlatform });
+  });
+
+  test("runs commands through dax on windows", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("hello", { exec: "echo hello" });
+    p.synth();
+
+    const spawnSpy = jest
+      .spyOn(childProcess, "spawnSync")
+      .mockReturnValue({ status: 0 } as any);
+
+    // WHEN
+    Object.defineProperty(process, "platform", { value: "win32" });
+    new TaskRuntime(p.outdir).runTask("hello");
+
+    // THEN: the command is executed via `node -e <dax runner> "echo hello"`,
+    // not through the system shell (cmd.exe).
+    expect(spawnSpy).toHaveBeenCalledWith(
+      process.execPath,
+      ["-e", expect.stringContaining("CommandBuilder"), "echo hello"],
+      expect.objectContaining({ shell: false }),
+    );
+  });
+
+  test("runs commands through the system shell on non-windows", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("hello", { exec: "echo hello" });
+    p.synth();
+
+    const spawnSpy = jest
+      .spyOn(childProcess, "spawnSync")
+      .mockReturnValue({ status: 0 } as any);
+
+    // WHEN
+    Object.defineProperty(process, "platform", { value: "linux" });
+    new TaskRuntime(p.outdir).runTask("hello");
+
+    // THEN
+    expect(spawnSpy).toHaveBeenCalledWith(
+      "echo hello",
+      expect.objectContaining({ shell: true }),
+    );
   });
 });
 
