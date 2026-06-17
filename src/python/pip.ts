@@ -5,7 +5,6 @@ import type { Dependency } from "../dependencies";
 import { DependencyType } from "../dependencies";
 import type { Project } from "../project";
 import type { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 
 /**
  * Options for pip
@@ -60,8 +59,7 @@ export class Pip extends Component implements IPythonDeps {
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
 
-    const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installCiTask.name);
+    this.project.tasks.runTask(this.installCiTask.name);
   }
 }
 

@@ -25,7 +25,6 @@ import { JsonFile } from "../json";
 import type { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import type { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
@@ -1896,11 +1895,10 @@ export class NodePackage extends Component {
    * @param _trigger the reason for the install, available for subclasses to act on.
    */
   protected installDependencies(_trigger: InstallTrigger) {
-    const runtime = new TaskRuntime(this.project.outdir);
     const taskToRun = this.isAutomatedBuild
       ? this.installCiTask
       : this.installTask;
-    runtime.runTask(taskToRun.name);
+    this.project.tasks.runTask(taskToRun.name);
   }
 
   /**

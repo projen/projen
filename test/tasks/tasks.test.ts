@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import type { Project } from "../../src";
 import { TaskRuntime } from "../../src";
 import * as logging from "../../src/logging";
@@ -7,6 +9,33 @@ import { TestProject, synthSnapshot } from "../util";
 test("default tasks", () => {
   const p = new TestProject();
   expect(synthTasksManifest(p)).toMatchSnapshot();
+});
+
+describe("runTask", () => {
+  test("executes the task and forwards arguments", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("write-args", {
+      exec: `node -e "require('fs').writeFileSync('args.txt', process.argv.slice(1).join(','))"`,
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // WHEN
+    p.tasks.runTask("write-args", ["hello", 42]);
+
+    // THEN
+    expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe("hello,42");
+  });
+
+  test("throws when the task does not exist", () => {
+    const p = new TestProject();
+    p.synth();
+
+    expect(() => p.tasks.runTask("does-not-exist")).toThrow(
+      /cannot find command/,
+    );
+  });
 });
 
 test("empty task", () => {

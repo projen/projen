@@ -8,7 +8,6 @@ import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "./task-model";
-import { makeCrossPlatform } from "./util/tasks";
 
 // avoids a (false positive) esbuild warning about incorrect imports
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -182,7 +181,7 @@ class RunTask {
       for (const exec of execs) {
         let hasError = false;
 
-        let command = makeCrossPlatform(exec);
+        let command = exec;
 
         if (command.includes(QUOTED_ARGS_MARKER)) {
           // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
@@ -359,16 +358,41 @@ class RunTask {
       );
     }
 
+    const env = {
+      ...process.env,
+      ...this.env,
+      ...options.extraEnv,
+    };
+
+    // On Windows the default shell (cmd.exe) does not understand the POSIX-style
+    // commands projen tasks are written in (`cat`, `cp`, `mkdir -p`, `rm -rf`,
+    // `&&` chains, `$VAR`, ...). Run the command through dax's cross-platform
+    // shell instead, which ships built-in implementations of the common
+    // commands. dax executes commands asynchronously, but the task runtime is
+    // synchronous (tasks run during synthesis), so we drive dax from a
+    // synchronous child `node` process.
+    if (process.platform === "win32") {
+      const dax = require.resolve("dax");
+      const runner = `const { CommandBuilder } = require(${JSON.stringify(
+        dax,
+      )}); new CommandBuilder().command(process.argv[1]).noThrow().spawn().then((r) => process.exit(r.code), (e) => { console.error(e?.stack ?? String(e)); process.exit(1); });`;
+
+      return spawnSync(process.execPath, ["-e", runner, options.command], {
+        ...options,
+        cwd,
+        shell: false,
+        stdio: "inherit",
+        env,
+        ...options.spawnOptions,
+      });
+    }
+
     return spawnSync(options.command, {
       ...options,
       cwd,
       shell: true,
       stdio: "inherit",
-      env: {
-        ...process.env,
-        ...this.env,
-        ...options.extraEnv,
-      },
+      env,
       ...options.spawnOptions,
     });
   }
