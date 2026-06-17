@@ -8531,6 +8531,7 @@ new Tasks(project: Project)
 | <code><a href="#projen.Tasks.addEnvironment">addEnvironment</a></code> | Adds global environment. |
 | <code><a href="#projen.Tasks.addTask">addTask</a></code> | Adds a task to a project. |
 | <code><a href="#projen.Tasks.removeTask">removeTask</a></code> | Removes a task from a project. |
+| <code><a href="#projen.Tasks.runTask">runTask</a></code> | Runs the specified task. |
 | <code><a href="#projen.Tasks.tryFind">tryFind</a></code> | Finds a task by name. |
 
 ---
@@ -8651,6 +8652,30 @@ Removes a task from a project.
 - *Type:* string
 
 The name of the task to remove.
+
+---
+
+##### `runTask` <a name="runTask" id="projen.Tasks.runTask"></a>
+
+```typescript
+public runTask(name: string, args?: (string | number)[]): void
+```
+
+Runs the specified task.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.Tasks.runTask.parameter.name"></a>
+
+- *Type:* string
+
+The name of the task to run.
+
+---
+
+###### `args`<sup>Optional</sup> <a name="args" id="projen.Tasks.runTask.parameter.args"></a>
+
+- *Type:* string | number[]
+
+Arguments to pass to the task.
 
 ---
 
