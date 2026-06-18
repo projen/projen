@@ -1,11 +1,8 @@
 {
   "files": [
-    ".amazonq/rules/project.md",
-    ".cursor/rules/project.md",
     ".devcontainer.json",
     ".eslintrc.json",
     ".gitattributes",
-    ".github/copilot-instructions.md",
     ".github/pull_request_template.md",
     ".github/workflows/auto-approve.yml",
     ".github/workflows/auto-queue.yml",
@@ -19,7 +16,6 @@
     ".github/workflows/upgrade-main.yml",
     ".gitignore",
     ".gitpod.yml",
-    ".kiro/steering/project.md",
     ".markdownlint.json",
     ".prettierignore",
     ".prettierrc.json",

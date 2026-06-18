@@ -548,18 +548,11 @@
           "construct": "AiInstructions"
         }
       },
-      "AiInstructionsFile@.github--copilot-instructions.md": {
+      "AiInstructionsFile@AGENTS.md": {
         "metadata": {
           "type": "file",
           "construct": "AiInstructionsFile",
-          "path": ".github/copilot-instructions.md"
-        }
-      },
-      "AiInstructionsFile@.cursor--rules--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".cursor/rules/project.md"
+          "path": "AGENTS.md"
         }
       },
       "AiInstructionsFile@CLAUDE.md": {
@@ -567,27 +560,6 @@
           "type": "file",
           "construct": "AiInstructionsFile",
           "path": "CLAUDE.md"
-        }
-      },
-      "AiInstructionsFile@.amazonq--rules--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".amazonq/rules/project.md"
-        }
-      },
-      "AiInstructionsFile@.kiro--steering--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".kiro/steering/project.md"
-        }
-      },
-      "AiInstructionsFile@AGENTS.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": "AGENTS.md"
         }
       }
     }
