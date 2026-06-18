@@ -23,19 +23,19 @@ import {
   JsonPatch,
   ReleasableCommits,
 } from "./src";
-import { JsiiProject } from "./src/cdk";
+import { JsiiBuild } from "./src/cdk";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
+import { TypeScriptProject } from "./src/typescript";
 
 const AUTOMATION_USER = "projen-automation";
 const BOOTSTRAP_SCRIPT = "projen.js";
 
-const project = new JsiiProject({
+const project = new TypeScriptProject({
   name: "projen",
   description: "CDK for software projects",
-  repositoryUrl: "https://github.com/projen/projen.git",
-
-  author: "Amazon Web Services",
-  authorAddress: "https://aws.amazon.com",
+  repository: "https://github.com/projen/projen.git",
+  authorName: "Amazon Web Services",
+  authorUrl: "https://aws.amazon.com",
   authorOrganization: true,
 
   stability: "experimental",
@@ -64,8 +64,7 @@ const project = new JsiiProject({
     },
   },
 
-  jsiiVersion: "5.9.x",
-  typescriptVersion: "5.9.x",
+  typescriptVersion: "6.0.x",
 
   packageManager: javascript.NodePackageManager.NPM,
 
@@ -128,12 +127,17 @@ const project = new JsiiProject({
   projenrcTs: true,
   projectTree: true,
 
-  // Disable interop since it's disabled available in jsii
-  tsconfigDev: {
+  tsconfig: {
     compilerOptions: {
-      esModuleInterop: false,
+      isolatedModules: true,
+      target: "ES2022",
+      lib: ["es2022"],
+      module: "node16",
+      esModuleInterop: true,
+      skipLibCheck: true,
+      noEmitOnError: true,
+      stripInternal: false,
     },
-    exclude: ["docusaurus/**/*"],
   },
 
   jestOptions: {
@@ -163,19 +167,6 @@ const project = new JsiiProject({
   releasableCommits: ReleasableCommits.featuresAndFixes(),
 
   releaseEnvironment: "release",
-  publishToMaven: {
-    javaPackage: "io.github.cdklabs.projen",
-    mavenGroupId: "io.github.cdklabs",
-    mavenArtifactId: "projen",
-  },
-  publishToPypi: {
-    distName: "projen",
-    module: "projen",
-    trustedPublishing: true,
-  },
-  publishToGo: {
-    moduleName: "github.com/projen/projen-go",
-  },
   npmTrustedPublishing: true,
   npmProvenance: true,
 
@@ -194,6 +185,26 @@ const project = new JsiiProject({
     ],
   },
 });
+
+// We use a custom jsii project for more flexibility
+project.with(
+  new JsiiBuild({
+    jsiiVersion: "6.0.x",
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.projen",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "projen",
+    },
+    publishToPypi: {
+      distName: "projen",
+      module: "projen",
+      trustedPublishing: true,
+    },
+    publishToGo: {
+      moduleName: "github.com/projen/projen-go",
+    },
+  }),
+);
 
 javascript.Eslint.of(project)?.addRules({
   "@typescript-eslint/consistent-type-imports": "error",

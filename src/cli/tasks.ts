@@ -1,4 +1,4 @@
-import * as chalk from "chalk";
+import chalk from "chalk";
 import type * as yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import * as logging from "../logging";
