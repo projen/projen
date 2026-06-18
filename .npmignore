@@ -38,12 +38,8 @@ tsconfig.tsbuildinfo
 /VISION.md
 /SECURITY.md
 /.gitpod.yml
-.github/copilot-instructions.md
-.cursor/rules/project.md
-CLAUDE.md
-.amazonq/rules/project.md
-.kiro/steering/project.md
 AGENTS.md
+CLAUDE.md
 /.gitattributes
 /.projenrc.ts
 /projenrc

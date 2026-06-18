@@ -17,6 +17,7 @@ import {
   IntegrationTests,
 } from "./projenrc";
 import {
+  AiAgent,
   AiInstructions,
   javascript,
   JsonPatch,
@@ -290,12 +291,23 @@ if (project.defaultTask) {
 project.node.addMetadata("projen.version", "https://github.com/projen/projen");
 
 new AiInstructions(project, {
+  agents: [
+    AiAgent.CODEX, // AGENTS.md now supported by most agents
+    AiAgent.CLAUDE, // CLAUDE.md
+  ],
   instructions: [
     `# Developing projen itself
 
     - **Avoid running a full build**: It takes a long time. Instead run individual tasks directly.
     - **Run specific tests**: Use \`${project.projenCommand} test test/path-to-test.test.ts\` to run specific test files. Prefer this over running all tests.
     - **Always run the linter**: Use \`${project.projenCommand} eslint\` to ensure any code is formatted correctly and follows best practices. Use often.`,
+
+    `## Integration tests
+
+    - **Integration tests use the packaged build output**: End-to-end behavior that depends on the published artifacts (e.g. \`projen new\`, \`projen eject\`, cross-language synthesis) must be tested via the \`scripts/integ-*.sh\` scripts
+    - Wire them through the \`IntegrationTests\` component in \`projenrc/integ-test.ts\`.
+    - These tests will be run against the standard build output (the npm tarball in \`dist/js\`, wheels in \`dist/python\`, etc.).
+    - Do NOT write Jest tests that rebuild projen or bundle their own artifacts - always consume the build output so the tests exercise what is actually shipped.`,
   ],
 });
 
