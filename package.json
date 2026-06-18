@@ -141,6 +141,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
+  "stability": "experimental",
   "publishConfig": {
     "access": "public"
   },
@@ -203,7 +204,6 @@
     }
   },
   "types": "lib/index.d.ts",
-  "stability": "experimental",
   "jsii": {
     "outdir": "dist",
     "targets": {

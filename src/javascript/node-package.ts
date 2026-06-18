@@ -798,6 +798,7 @@ export class NodePackage extends Component {
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
+      stability: options.stability,
       publishConfig: () => this.renderPublishConfig(),
       typesVersions: this._prev?.typesVersions,
 

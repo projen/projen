@@ -276,7 +276,10 @@ export class JsiiBuild implements IMixin {
 
     const compatIgnore = options.compatIgnore ?? ".compatignore";
 
-    project.addFields({ stability: options.stability ?? "stable" });
+    project.addFields({
+      stability:
+        options.stability ?? project.package.manifest.stability ?? "stable",
+    });
 
     if (options.stability === "deprecated") {
       project.addFields({ deprecated: true });
@@ -358,7 +361,11 @@ export class JsiiBuild implements IMixin {
         npmTokenSecret: project.package.npmTokenSecret,
         npmProvenance: project.package.npmProvenance,
         codeArtifactOptions: options.codeArtifactOptions,
-        trustedPublishing: options.npmTrustedPublishing ?? false,
+        trustedPublishing:
+          options.npmTrustedPublishing ??
+          //@ts-ignore
+          project.options.npmTrustedPublishing ??
+          false,
       };
       this.addTargetToBuild(project, packageJsTask, "js", extraJobOptions);
       this.addTargetToRelease(project, packageJsTask, "js", npmjs);
@@ -515,7 +522,11 @@ export class JsiiBuild implements IMixin {
       },
       tools: {
         node: {
-          version: this.options.workflowNodeVersion ?? "lts/*",
+          version:
+            this.options.workflowNodeVersion ??
+            // @ts-ignore
+            project.nodeVersion ??
+            "lts/*",
         },
         ...pacmak.publishTools,
       },
