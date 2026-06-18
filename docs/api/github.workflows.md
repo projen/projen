@@ -62,7 +62,6 @@ const appPermissions: github.workflows.AppPermissions = { ... }
 | <code><a href="#projen.github.workflows.AppPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.profile">profile</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners">repositoryAnnouncementBanners</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryCustomProperties">repositoryCustomProperties</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryHooks">repositoryHooks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
@@ -442,18 +441,6 @@ public readonly profile: AppPermission;
 
 ```typescript
 public readonly pullRequests: AppPermission;
-```
-
-- *Type:* projen.github.workflows.AppPermission
-
----
-
-##### ~~`repositoryAnnouncementBanners`~~<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryAnnouncementBanners: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -1885,7 +1872,6 @@ const jobPermissions: github.workflows.JobPermissions = { ... }
 | <code><a href="#projen.github.workflows.JobPermissions.property.packages">packages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.JobPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.securityEvents">securityEvents</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.statuses">statuses</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 
@@ -2005,18 +1991,6 @@ public readonly pages: JobPermission;
 
 ```typescript
 public readonly pullRequests: JobPermission;
-```
-
-- *Type:* projen.github.workflows.JobPermission
-
----
-
-##### ~~`repositoryProjects`~~<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryProjects: JobPermission;
 ```
 
 - *Type:* projen.github.workflows.JobPermission

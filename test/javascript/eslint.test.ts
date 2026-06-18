@@ -30,7 +30,6 @@ test("can acceess file", () => {
 
   const eslint = new Eslint(project, {
     dirs: ["mysrc"],
-    lintProjenRc: false,
   });
 
   // WHEN
@@ -53,7 +52,6 @@ describe("prettier", () => {
     new Eslint(project, {
       dirs: ["mysrc"],
       prettier: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -77,7 +75,6 @@ describe("alias", () => {
         "@foo": "./src/foo",
       },
       aliasExtensions: [".ts", ".js"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -107,7 +104,6 @@ describe("eslint settings", () => {
     new Eslint(project, {
       devdirs: ["foo", "bar"],
       dirs: ["mysrc"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -125,7 +121,6 @@ describe("eslint settings", () => {
     const eslint = new Eslint(project, {
       dirs: ["mysrc"],
       tsAlwaysTryTypes: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -146,7 +141,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     eslint.addExtends("plugin:some-plugin/recommended");
@@ -173,7 +167,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // Add the prettier plugins in the incorrect order
@@ -212,7 +205,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       sortExtends: {
         compare: () => 0,
       },
@@ -243,7 +235,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       sortExtends: {
         // Backwards alphanumeric
         compare: (a, b) => b.localeCompare(a),
@@ -276,7 +267,6 @@ describe("eslint settings", () => {
     new Eslint(project, {
       dirs: ["src"],
       yaml: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -296,7 +286,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
     eslint.addOverride({
       files: ["*.json", "*.json5", "*.jsonc"],
@@ -322,7 +311,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -365,7 +353,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       fileExtensions: [],
     });
 
@@ -388,7 +375,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -426,7 +412,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     const taskStep = eslint.eslintTask.steps[0];

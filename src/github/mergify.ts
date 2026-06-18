@@ -68,14 +68,6 @@ export interface MergifyQueue {
 
   /**
    * The list of conditions that needs to match to queue the pull request.
-   * @see https://docs.mergify.com/configuration/file-format/#queue-rules
-   *
-   * @deprecated use `queueConditions` instead
-   */
-  readonly conditions?: MergifyCondition[];
-
-  /**
-   * The list of conditions that needs to match to queue the pull request.
    * @see https://docs.mergify.com/conditions/#conditions
    */
   readonly queueConditions?: MergifyCondition[];
@@ -151,13 +143,6 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
-    if (queue.conditions && !queue.queueConditions) {
-      queue = {
-        ...queue,
-        queueConditions: queue.conditions,
-        conditions: undefined,
-      };
-    }
     this.queues.push(queue);
     this.createYamlFile();
   }

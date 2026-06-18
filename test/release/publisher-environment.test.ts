@@ -7,7 +7,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -28,7 +28,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -49,7 +49,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -70,7 +70,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -91,7 +91,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -112,7 +112,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -136,7 +136,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -158,7 +158,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -178,7 +178,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -197,7 +197,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -226,7 +226,7 @@ describe("Publisher Environment Support", () => {
     // GIVEN
     const project = new TestProject();
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -258,7 +258,7 @@ describe("Publisher Environment Support", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,

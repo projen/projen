@@ -244,7 +244,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addDevDeps("ts-node");
     if (options.sampleCode ?? true) {
-      new SampleCode(this, this.cdkDeps.cdkMajorVersion);
+      new SampleCode(this);
     }
 
     new AutoDiscover(this, {
@@ -263,14 +263,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (options.experimentalIntegRunner) {
       new IntegRunner(this);
     }
-  }
-
-  /**
-   * Adds an AWS CDK module dependencies
-   * @param modules The list of modules to depend on
-   */
-  public addCdkDependency(...modules: string[]) {
-    return this.cdkDeps.addV1Dependencies(...modules);
   }
 
   private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
@@ -337,10 +329,7 @@ function ensureRelativePathPrefix(filePath: string) {
 class SampleCode extends Component {
   private readonly appProject: AwsCdkTypeScriptApp;
 
-  constructor(
-    project: AwsCdkTypeScriptApp,
-    private readonly cdkMajorVersion: number,
-  ) {
+  constructor(project: AwsCdkTypeScriptApp) {
     super(project);
     this.appProject = project;
   }
@@ -356,14 +345,8 @@ class SampleCode extends Component {
     }
 
     const srcImports = new Array<string>();
-    if (this.cdkMajorVersion < 2) {
-      srcImports.push(
-        "import { App, Construct, Stack, StackProps } from '@aws-cdk/core';",
-      );
-    } else {
-      srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
-      srcImports.push("import { Construct } from 'constructs';");
-    }
+    srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
+    srcImports.push("import { Construct } from 'constructs';");
 
     const srcCode = `${srcImports.join("\n")}
 
@@ -400,13 +383,8 @@ app.synth();`;
     }
 
     const testImports = new Array<string>();
-    if (this.cdkMajorVersion < 2) {
-      testImports.push("import { App } from '@aws-cdk/core';");
-      testImports.push("import { Template } from '@aws-cdk/assertions';");
-    } else {
-      testImports.push("import { App } from 'aws-cdk-lib';");
-      testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
-    }
+    testImports.push("import { App } from 'aws-cdk-lib';");
+    testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
 
     const appEntrypointName = path.basename(
       this.appProject.appEntrypoint,

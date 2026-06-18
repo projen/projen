@@ -164,16 +164,6 @@ export interface NodePackageOptions {
   readonly autoDetectBin?: boolean;
 
   /**
-   * npm scripts to include. If a script has the same name as a standard script,
-   * the standard script will be overwritten.
-   * Also adds the script as a task.
-   *
-   * @default {}
-   * @deprecated use `project.addTask()` or `package.setScript()`
-   */
-  readonly scripts?: { [name: string]: string };
-
-  /**
    * The Node Package Manager used to execute scripts
    *
    * @default - Detected from the calling process or `YARN_CLASSIC` if detection fails.
@@ -294,13 +284,6 @@ export interface NodePackageOptions {
    * @default "https://registry.npmjs.org"
    */
   readonly npmRegistryUrl?: string;
-
-  /**
-   * The host name of the npm registry to publish to. Cannot be set together with `npmRegistryUrl`.
-   *
-   * @deprecated use `npmRegistryUrl` instead
-   */
-  readonly npmRegistry?: string;
 
   /**
    * The url to your project's issue tracker.
@@ -826,12 +809,6 @@ export class NodePackage extends Component {
       this.configureYarnBerry(project, options);
     }
 
-    // add tasks for scripts from options (if specified)
-    // @deprecated
-    for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
-      project.addTask(cmdname, { exec: shell });
-    }
-
     this.file = new JsonFile(this, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
@@ -1001,15 +978,6 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Indicates if a script by the given name is defined.
-   * @param name The name of the script
-   * @deprecated Use `project.tasks.tryFind(name)`
-   */
-  public hasScript(name: string) {
-    return this.project.tasks.tryFind(name) !== undefined;
-  }
-
-  /**
    * Directly set fields in `package.json`.
    * @escape
    * @param name field name
@@ -1167,14 +1135,6 @@ export class NodePackage extends Component {
   }
 
   /**
-   * The command which executes "projen".
-   * @deprecated use `project.projenCommand` instead.
-   */
-  public get projenCommand() {
-    return this.project.projenCommand;
-  }
-
-  /**
    * Returns `true` if we are running within a CI build.
    */
   private get isAutomatedBuild(): boolean {
@@ -1199,16 +1159,7 @@ export class NodePackage extends Component {
   // -------------------------------------------------------------------------------------------
 
   private parseNpmOptions(options: NodePackageOptions) {
-    let npmRegistryUrl = options.npmRegistryUrl;
-    if (options.npmRegistry) {
-      if (npmRegistryUrl) {
-        throw new Error(
-          'cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.',
-        );
-      }
-
-      npmRegistryUrl = `https://${options.npmRegistry}`;
-    }
+    const npmRegistryUrl = options.npmRegistryUrl;
 
     const npmr = new URL(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
     if (!npmr || !npmr.hostname || !npmr.href) {
@@ -1957,7 +1908,7 @@ export class NodePackage extends Component {
 
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, this._yarnBerryVersion, yarnRcOptions);
+    new Yarnrc(project, yarnRcOptions);
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {

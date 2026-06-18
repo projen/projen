@@ -1479,7 +1479,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
 | <code><a href="#projen.github.GitHubProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.github.GitHubProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.github.GitHubProject.addTask">addTask</a></code> | Adds a new task to this project. |
-| <code><a href="#projen.github.GitHubProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.github.GitHubProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
 | <code><a href="#projen.github.GitHubProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.github.GitHubProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
@@ -1487,7 +1486,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
 | <code><a href="#projen.github.GitHubProject.runTaskCommand">runTaskCommand</a></code> | Returns the shell command to execute in order to run a task. |
 | <code><a href="#projen.github.GitHubProject.synth">synth</a></code> | Synthesize all project files into `outdir`. |
 | <code><a href="#projen.github.GitHubProject.tryFindFile">tryFindFile</a></code> | Finds a file at the specified relative path within this project and all its subprojects. |
-| <code><a href="#projen.github.GitHubProject.tryFindJsonFile">tryFindJsonFile</a></code> | Finds a json file by name. |
 | <code><a href="#projen.github.GitHubProject.tryFindObjectFile">tryFindObjectFile</a></code> | Finds an object file (like JsonFile, YamlFile, etc.) by name. |
 | <code><a href="#projen.github.GitHubProject.tryRemoveFile">tryRemoveFile</a></code> | Finds a file at the specified relative path within this project and removes it. |
 
@@ -1603,22 +1601,6 @@ Task properties.
 
 ---
 
-##### ~~`addTip`~~ <a name="addTip" id="projen.github.GitHubProject.addTip"></a>
-
-```typescript
-public addTip(message: string): void
-```
-
-Prints a "tip" message during synthesis.
-
-###### `message`<sup>Required</sup> <a name="message" id="projen.github.GitHubProject.addTip.parameter.message"></a>
-
-- *Type:* string
-
-The message.
-
----
-
 ##### ~~`annotateGenerated`~~ <a name="annotateGenerated" id="projen.github.GitHubProject.annotateGenerated"></a>
 
 ```typescript
@@ -1724,22 +1706,6 @@ The file path.
 
 If this path is relative, it will be resolved
 from the root of _this_ project.
-
----
-
-##### ~~`tryFindJsonFile`~~ <a name="tryFindJsonFile" id="projen.github.GitHubProject.tryFindJsonFile"></a>
-
-```typescript
-public tryFindJsonFile(filePath: string): JsonFile
-```
-
-Finds a json file by name.
-
-###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.github.GitHubProject.tryFindJsonFile.parameter.filePath"></a>
-
-- *Type:* string
-
-The file path.
 
 ---
 
@@ -1883,7 +1849,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.github.GitHubProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
 | <code><a href="#projen.github.GitHubProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.github.GitHubProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
-| <code><a href="#projen.github.GitHubProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
 | <code><a href="#projen.github.GitHubProject.property.autoApprove">autoApprove</a></code> | <code><a href="#projen.github.AutoApprove">AutoApprove</a></code> | Auto approve set up for this project. |
 | <code><a href="#projen.github.GitHubProject.property.devContainer">devContainer</a></code> | <code>projen.vscode.DevContainer</code> | Access for .devcontainer.json (used for GitHub Codespaces). |
 | <code><a href="#projen.github.GitHubProject.property.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | Access all github components. |
@@ -2336,22 +2301,6 @@ public readonly parent: Project;
 A parent project.
 
 If undefined, this is the root project.
-
----
-
-##### ~~`projectType`~~<sup>Required</sup> <a name="projectType" id="projen.github.GitHubProject.property.projectType"></a>
-
-- *Deprecated:* This is a *temporary* class. At the moment, our base project
-types such as `NodeProject` and `JavaProject` are derived from this, but we
-want to be able to use these project types outside of GitHub as well. One of
-the next steps to address this is to abstract workflows so that different
-"engines" can be used to implement our CI/CD solutions.
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
 
 ---
 
@@ -7938,7 +7887,6 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
 | <code><a href="#projen.github.GitHubOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for Mergify. |
 | <code><a href="#projen.github.GitHubOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
-| <code><a href="#projen.github.GitHubOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestBackport">pullRequestBackport</a></code> | <code>boolean</code> | Add a workflow that allows backport of PRs to other branches using labels. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestBackportOptions">pullRequestBackportOptions</a></code> | <code><a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a></code> | Options for configuring pull request backport. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLint">pullRequestLint</a></code> | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. |
@@ -8072,24 +8020,6 @@ Choose a method of providing GitHub API access for projen workflows.
 
 ---
 
-##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubOptions.property.projenTokenSecret"></a>
-
-- *Deprecated:* - use `projenCredentials`
-
-```typescript
-public readonly projenTokenSecret: string;
-```
-
-- *Type:* string
-- *Default:* "PROJEN_GITHUB_TOKEN"
-
-The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
-
-This token needs to have the `repo`, `workflows`
-and `packages` scope.
-
----
-
 ##### `pullRequestBackport`<sup>Optional</sup> <a name="pullRequestBackport" id="projen.github.GitHubOptions.property.pullRequestBackport"></a>
 
 ```typescript
@@ -8199,11 +8129,7 @@ const gitHubProjectOptions: github.GitHubProjectOptions = { ... }
 | <code><a href="#projen.github.GitHubProjectOptions.property.github">github</a></code> | <code>boolean</code> | Enable GitHub integration. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.githubOptions">githubOptions</a></code> | <code><a href="#projen.github.GitHubOptions">GitHubOptions</a></code> | Options for GitHub integration. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.gitpod">gitpod</a></code> | <code>boolean</code> | Add a Gitpod development environment. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for mergify. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.github.GitHubProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.staleOptions">staleOptions</a></code> | <code><a href="#projen.github.StaleOptions">StaleOptions</a></code> | Auto-close stale issues and pull requests. |
@@ -8497,51 +8423,6 @@ Add a Gitpod development environment.
 
 ---
 
-##### ~~`mergify`~~<sup>Optional</sup> <a name="mergify" id="projen.github.GitHubProjectOptions.property.mergify"></a>
-
-- *Deprecated:* use `githubOptions.mergify` instead
-
-```typescript
-public readonly mergify: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Whether mergify should be enabled on this repository or not.
-
----
-
-##### ~~`mergifyOptions`~~<sup>Optional</sup> <a name="mergifyOptions" id="projen.github.GitHubProjectOptions.property.mergifyOptions"></a>
-
-- *Deprecated:* use `githubOptions.mergifyOptions` instead
-
-```typescript
-public readonly mergifyOptions: MergifyOptions;
-```
-
-- *Type:* <a href="#projen.github.MergifyOptions">MergifyOptions</a>
-- *Default:* default options
-
-Options for mergify.
-
----
-
-##### ~~`projectType`~~<sup>Optional</sup> <a name="projectType" id="projen.github.GitHubProjectOptions.property.projectType"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
-- *Default:* ProjectType.UNKNOWN
-
-Which type of project this is (library/app).
-
----
-
 ##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.GitHubProjectOptions.property.projenCredentials"></a>
 
 ```typescript
@@ -8552,24 +8433,6 @@ public readonly projenCredentials: GithubCredentials;
 - *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
 
 Choose a method of providing GitHub API access for projen workflows.
-
----
-
-##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubProjectOptions.property.projenTokenSecret"></a>
-
-- *Deprecated:* use `projenCredentials`
-
-```typescript
-public readonly projenTokenSecret: string;
-```
-
-- *Type:* string
-- *Default:* "PROJEN_GITHUB_TOKEN"
-
-The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
-
-This token needs to have the `repo`, `workflows`
-and `packages` scope.
 
 ---
 
@@ -8958,7 +8821,6 @@ const mergifyQueue: github.MergifyQueue = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
-| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
 | <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
@@ -8987,22 +8849,6 @@ public readonly name: string;
 - *Type:* string
 
 The name of the queue.
-
----
-
-##### ~~`conditions`~~<sup>Optional</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
-
-- *Deprecated:* use `queueConditions` instead
-
-```typescript
-public readonly conditions: (string | MergifyConditionalOperator)[];
-```
-
-- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
-
-The list of conditions that needs to match to queue the pull request.
-
-> [https://docs.mergify.com/configuration/file-format/#queue-rules](https://docs.mergify.com/configuration/file-format/#queue-rules)
 
 ---
 
@@ -11385,7 +11231,6 @@ new github.WorkflowActions()
 | --- | --- |
 | <code><a href="#projen.github.WorkflowActions.checkoutWithPatch">checkoutWithPatch</a></code> | Checks out a repository and applies a git patch that was created using `uploadGitPatch`. |
 | <code><a href="#projen.github.WorkflowActions.createPullRequest">createPullRequest</a></code> | A step that creates a pull request based on the current repo state. |
-| <code><a href="#projen.github.WorkflowActions.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
 | <code><a href="#projen.github.WorkflowActions.uploadGitPatch">uploadGitPatch</a></code> | Creates a .patch file from the current git diff and uploads it as an artifact. Use `checkoutWithPatch` to download and apply in another job. |
 
 ---
@@ -11423,24 +11268,6 @@ A step that creates a pull request based on the current repo state.
 - *Type:* <a href="#projen.github.CreatePullRequestOptions">CreatePullRequestOptions</a>
 
 Options.
-
----
-
-##### ~~`setupGitIdentity`~~ <a name="setupGitIdentity" id="projen.github.WorkflowActions.setupGitIdentity"></a>
-
-```typescript
-import { github } from 'projen'
-
-github.WorkflowActions.setupGitIdentity(id: GitIdentity)
-```
-
-Configures the git identity (user name and email).
-
-###### `id`<sup>Required</sup> <a name="id" id="projen.github.WorkflowActions.setupGitIdentity.parameter.id"></a>
-
-- *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-
-The identity to use.
 
 ---
 

@@ -1377,7 +1377,9 @@ test('hello', () => {
         "node",
       ],
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
       "src/**/*.ts",
     ],

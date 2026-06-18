@@ -165,7 +165,7 @@ async function handler(args: any) {
  * Returns the yargs option type for a given project option
  */
 function argType(
-  option: inventory.ProjectOption,
+  option: inventory.InventoryProjectOption,
 ): "string" | "boolean" | "number" | "array" {
   if (option.kind === "enum") {
     return "string";
@@ -181,7 +181,7 @@ function argType(
 /**
  * Returns the description for a given project option
  */
-function argDesc(option: inventory.ProjectOption): string {
+function argDesc(option: inventory.InventoryProjectOption): string {
   let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
 
   const helpDefault = option.initialValue ?? option.default;
@@ -198,7 +198,7 @@ function argDesc(option: inventory.ProjectOption): string {
  * Compute the initial value for a given project option
  */
 function argInitialValue(
-  option: inventory.ProjectOption,
+  option: inventory.InventoryProjectOption,
   cwd = process.cwd(),
 ): any {
   // if we have determined an initial value for the field
@@ -214,7 +214,7 @@ function argInitialValue(
  * - lists of primitives
  * - enums
  */
-function argTypeSupported(option: inventory.ProjectOption): boolean {
+function argTypeSupported(option: inventory.InventoryProjectOption): boolean {
   return (
     option.simpleType === "string" ||
     option.simpleType === "number" ||
@@ -227,14 +227,14 @@ function argTypeSupported(option: inventory.ProjectOption): boolean {
 /**
  * Checks if the given option is a primitive array
  */
-function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
+function isPrimitiveArrayOption(
+  option: inventory.InventoryProjectOption,
+): boolean {
   return Boolean(
     option.jsonLike &&
-    option.fullType.collection?.kind === "array" &&
-    option.fullType.collection.elementtype.primitive &&
-    ["string", "number"].includes(
-      option.fullType.collection.elementtype.primitive,
-    ),
+    option.type.collection?.kind === "array" &&
+    option.type.collection.elementtype.primitive &&
+    ["string", "number"].includes(option.type.collection.elementtype.primitive),
   );
 }
 
@@ -255,7 +255,7 @@ function renderDefault(cwd: string, value: string) {
  */
 function commandLineToProps(
   cwd: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   argv: Record<string, unknown>,
 ): Record<string, any> {
   const props: Record<string, any> = {};
@@ -434,7 +434,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 function parseArg(
   value: any,
   type: string,
-  option?: inventory.ProjectOption,
+  option?: inventory.InventoryProjectOption,
 ): any {
   switch (type) {
     case "number":
@@ -446,10 +446,7 @@ function parseArg(
         value = [value];
       }
       return value.map((v: any) =>
-        parseArg(
-          v,
-          option?.fullType.collection?.elementtype.primitive || "string",
-        ),
+        parseArg(v, option?.type.collection?.elementtype.primitive || "string"),
       );
     // return value unchanged
     case "string":
@@ -470,7 +467,7 @@ function parseArg(
  */
 async function initProject(
   baseDir: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   args: any,
 ) {
   // convert command line arguments to project props using type information

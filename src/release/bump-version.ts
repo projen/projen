@@ -462,7 +462,7 @@ function determineLatestTag(options: LatestTagOptions): {
   // remove tag prefix (if exists)
   let latestVersion = latestTag;
   if (prefix && latestVersion.startsWith(prefix)) {
-    latestVersion = latestVersion.substr(prefix.length);
+    latestVersion = latestVersion.substring(prefix.length);
   }
 
   // remove "v" prefix (if exists)

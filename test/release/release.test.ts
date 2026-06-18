@@ -18,7 +18,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -60,7 +60,7 @@ describe("Single Project", () => {
         branch: "main",
         artifactsDirectory: "dist",
       } as any);
-    }).toThrow("Either 'tasks' or 'task' must be provided");
+    }).toThrow("'tasks' must be provided");
   });
 
   test("with major version filter", () => {
@@ -69,7 +69,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "10.x",
       majorVersion: 10,
@@ -90,7 +90,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "10.x",
       majorVersion: 10,
@@ -112,7 +112,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "10.x",
       artifactsDirectory: "dist",
@@ -132,7 +132,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "10.x",
       artifactsDirectory: "dist",
@@ -153,7 +153,7 @@ describe("Single Project", () => {
     // WHEN
     expect(() => {
       new Release(project, {
-        task: project.buildTask,
+        tasks: [project.buildTask],
         versionFile: "version.json",
         branch: "10.x",
         artifactsDirectory: "dist",
@@ -170,7 +170,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -195,7 +195,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -216,7 +216,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true,
@@ -241,7 +241,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -285,7 +285,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.manual(),
@@ -305,11 +305,10 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
-      releaseEveryCommit: false,
-      releaseSchedule: schedule,
+      releaseTrigger: ReleaseTrigger.scheduled({ schedule }),
       publishTasks: true, // to increase coverage
       artifactsDirectory: "dist",
     });
@@ -330,7 +329,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.continuous(),
@@ -357,7 +356,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.continuous({ paths: ["sub/**"] }),
@@ -384,7 +383,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.tagged({ tags: ["v*.*.*"] }),
@@ -411,7 +410,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.workflowDispatch(),
@@ -435,7 +434,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.manual(),
@@ -458,7 +457,7 @@ describe("Single Project", () => {
     // GIVEN
     const project = new TestProject();
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseTrigger: ReleaseTrigger.manual({
@@ -486,7 +485,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 0,
@@ -519,7 +518,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "goo.json",
       branch: "main",
       majorVersion: 0,
@@ -539,7 +538,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "goo.json",
       branch: "main",
       minMajorVersion: 1,
@@ -558,7 +557,7 @@ describe("Single Project", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "goo.json",
       branch: "main",
       majorVersion: 0,
@@ -581,7 +580,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "goo.json",
       branch: "main",
       majorVersion: 1,
@@ -603,7 +602,7 @@ describe("Single Project", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "goo.json",
       branch: "firefox",
       majorVersion: 1,
@@ -628,7 +627,7 @@ describe("Single Project", () => {
     expect(
       () =>
         new Release(project, {
-          task: project.buildTask,
+          tasks: [project.buildTask],
           versionFile: "goo.json",
           branch: "main",
           majorVersion: 1,
@@ -645,7 +644,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -672,7 +671,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       releaseFailureIssue: true,
@@ -695,7 +694,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -722,7 +721,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -758,7 +757,7 @@ describe("Single Project", () => {
     const roleArn = "role-arn";
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -785,7 +784,7 @@ describe("Single Project", () => {
     const roleArn = "role-arn";
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -819,7 +818,7 @@ describe("Single Project", () => {
     // GIVEN
     const project = new TestProject();
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -846,7 +845,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       workflowRunsOn: ["self-hosted"],
@@ -874,7 +873,7 @@ describe("Single Project", () => {
     const project = new TestProject({});
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -909,7 +908,7 @@ describe("Single Project", () => {
     const project = new TestProject({});
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -944,7 +943,7 @@ describe("Single Project", () => {
         },
         branch: "main",
         majorVersion: 1,
-        task: project.buildTask,
+        tasks: [project.buildTask],
         versionFile: "version.json",
         publishTasks: true, // to increase coverage
         artifactsDirectory: "dist",
@@ -980,7 +979,7 @@ describe("Single Project", () => {
         branch: "main",
         majorVersion: 1,
         npmDistTag: "main-tag",
-        task: project.buildTask,
+        tasks: [project.buildTask],
         versionFile: "version.json",
         publishTasks: true, // to increase coverage
         artifactsDirectory: "dist",
@@ -1003,30 +1002,6 @@ describe("Single Project", () => {
         PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
       });
     });
-
-    test("if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag", () => {
-      // GIVEN
-      const project = new TestProject();
-
-      // WHEN
-      const release = new Release(project, {
-        releaseBranches: {
-          "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
-        },
-        branch: "main",
-        majorVersion: 1,
-        task: project.buildTask,
-        versionFile: "version.json",
-        publishTasks: true, // to increase coverage
-        artifactsDirectory: "dist",
-      });
-
-      release.publisher.publishToNpm({ distTag: "next" });
-
-      expect(() => project.synth()).toThrow(
-        /cannot set branch-level npmDistTag and npmDistTag in publishToNpm/,
-      );
-    });
   });
 
   test("if npmProvenance is enabled, environment variable is set and id-token write permission is granted", () => {
@@ -1035,7 +1010,7 @@ describe("Single Project", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -1070,7 +1045,7 @@ describe("Single Project", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -1104,7 +1079,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       workflowRunsOn: ["self-hosted"],
@@ -1131,7 +1106,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -1164,7 +1139,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -1185,7 +1160,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -1207,7 +1182,7 @@ describe("Single Project", () => {
     const project = new TestProject();
 
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",
@@ -1237,7 +1212,7 @@ describe("Subproject", () => {
     // WHEN
 
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -1265,7 +1240,7 @@ describe("Subproject", () => {
     // WHEN
 
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -1294,7 +1269,7 @@ describe("Subproject", () => {
     // WHEN
     const artifactsDirectory = "dist";
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -1336,7 +1311,7 @@ describe("Subproject", () => {
 
     // WHEN
     new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       publishTasks: true, // to increase coverage
@@ -1357,7 +1332,7 @@ describe("python", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,
@@ -1399,7 +1374,7 @@ describe("nuget", () => {
 
     // WHEN
     const release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       majorVersion: 1,

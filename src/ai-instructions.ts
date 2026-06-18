@@ -93,7 +93,6 @@ export interface AiInstructionsOptions {
  * @example
  * const project = new TypeScriptProject({
  *   name: "my-project",
- *   defaultReleaseBranch: "main",
  * });
  *
  * // Basic usage - generates files for all supported AI agents

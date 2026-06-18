@@ -1,6 +1,6 @@
 import * as path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { Projenrc } from "../../src/projenrc-json";
+import { ProjenrcJson } from "../../src/projenrc-json";
 import { synthSnapshot, TestProject, withProjectDir } from "../util";
 
 test("projenrc.json default project", () => {
@@ -8,7 +8,7 @@ test("projenrc.json default project", () => {
   const project = new TestProject();
 
   // WHEN
-  new Projenrc(project);
+  new ProjenrcJson(project);
 
   // THEN
   expect(synthSnapshot(project)).toMatchSnapshot();
@@ -32,7 +32,7 @@ test("projenrc.json with typed options", () => {
   );
 
   // WHEN
-  new Projenrc(project);
+  new ProjenrcJson(project);
 
   // THEN
   expect(synthSnapshot(project)).toMatchSnapshot();
@@ -46,7 +46,7 @@ test("projenrc.json new project in outdir", () => {
         outdir: newOutDir,
       }),
     );
-    const projen = new Projenrc(project);
+    const projen = new ProjenrcJson(project);
 
     expect(projen.project.outdir).toEqual(newOutDir);
   });

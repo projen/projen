@@ -1,5 +1,4 @@
 import { Prettier } from "./prettier";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import type { ICompareString } from "../compare";
 import { Component } from "../component";
 import type { NodeProject } from "../javascript";
@@ -47,21 +46,6 @@ export interface EslintOptions {
    * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
    */
   readonly ignorePatterns?: string[];
-
-  /**
-   * Projenrc file to lint. Use empty string to disable.
-   * @default "projenrc.js"
-   * @deprecated provide as `devdirs`
-   */
-  readonly lintProjenRcFile?: string;
-
-  /**
-   * Should we lint .projenrc.js
-   *
-   * @default true
-   * @deprecated set to `false` to remove any automatic rules and add manually
-   */
-  readonly lintProjenRc?: boolean;
 
   /**
    * Enable prettier for code formatting
@@ -221,17 +205,9 @@ export class Eslint extends Component {
       project.addDevDeps("eslint-import-resolver-alias");
     }
 
-    const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile =
-      options.lintProjenRcFile ?? DEFAULT_PROJEN_RC_JS_FILENAME;
-
     const devdirs = options.devdirs ?? [];
 
-    this._lintPatterns = new Set([
-      ...options.dirs,
-      ...devdirs,
-      ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-    ]);
+    this._lintPatterns = new Set([...options.dirs, ...devdirs]);
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
@@ -387,26 +363,8 @@ export class Eslint extends Component {
       ],
     };
 
-    // Overrides for .projenrc.js
-    // @deprecated
-    if (lintProjenRc) {
-      this.overrides = [
-        {
-          files: [lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME],
-          rules: {
-            "@typescript-eslint/no-require-imports": "off",
-            "import/no-extraneous-dependencies": "off",
-          },
-        },
-      ];
-    }
-
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      // @deprecated
-      ...(lintProjenRc
-        ? [`!${lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME}`]
-        : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",

@@ -9,66 +9,6 @@ import { NpmAccess } from "../../src/javascript";
 import { mkdtemp, synthSnapshot } from "../util";
 
 describe("constructs dependency selection", () => {
-  test("user-selected", () => {
-    // GIVEN
-    const project = new TestProject({
-      cdkVersion: "1.100.0",
-      constructsVersion: "3.1337.0-ultimate",
-    });
-
-    // WHEN
-    const snapshot = synthSnapshot(project);
-
-    // THEN
-    expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "^3.1337.0-ultimate",
-    );
-    expect(
-      snapshot["package.json"]?.devDependencies?.constructs,
-    ).toBeUndefined();
-    expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
-  });
-
-  test("for cdk 1.x", () => {
-    // GIVEN
-    const project = new TestProject({ cdkVersion: "1.112.0" });
-
-    // WHEN
-    const snapshot = synthSnapshot(project);
-
-    // THEN
-    expect(snapshot["package.json"]?.peerDependencies?.constructs).toMatch(
-      /^\^3\./,
-    );
-    expect(
-      snapshot["package.json"]?.devDependencies?.constructs,
-    ).toBeUndefined();
-    expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"],
-    ).toStrictEqual("^1.112.0");
-    expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"],
-    ).toStrictEqual("^1.112.0");
-    expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
-  });
-
-  // assertions library is only available since 1.111.0
-  test("for cdk 1.x < 1.111.0", () => {
-    // GIVEN
-    const project = new TestProject({ cdkVersion: "1.110.0" });
-
-    // WHEN
-    const snapshot = synthSnapshot(project);
-
-    // THEN
-    expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assertions"],
-    ).toBeUndefined();
-    expect(
-      snapshot["package.json"]?.devDependencies["@aws-cdk/assert"],
-    ).toStrictEqual("^1.110.0");
-  });
-
   test("for cdk 2.x", () => {
     // GIVEN
     const project = new TestProject({ cdkVersion: "2.0.0-alpha.5" });
@@ -105,56 +45,10 @@ describe("constructs dependency selection", () => {
     ).toThrow(/CDK 2.x requires constructs 10.x/);
   });
 
-  test("for cdk 2.x, throws if cdkDependencies provided", () => {
-    expect(
-      () =>
-        new TestProject({
-          cdkVersion: "2.0.0-alpha.5",
-          cdkDependencies: ["@aws-cdk/aws-lambda"],
-        }),
-    ).toThrow(
-      /cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead/,
-    );
-  });
-
-  test("for cdk 2.x, throws if cdkTestDependencies provided", () => {
-    expect(
-      () =>
-        new TestProject({
-          cdkVersion: "2.0.0-alpha.5",
-          cdkTestDependencies: ["@aws-cdk/aws-lambda"],
-        }),
-    ).toThrow(
-      /cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead/,
-    );
-  });
-
-  test("for cdk 2.x, throws if cdkDependenciesAsDeps provided", () => {
-    expect(
-      () =>
-        new TestProject({
-          cdkVersion: "2.0.0-alpha.5",
-          cdkDependenciesAsDeps: true,
-        }),
-    ).toThrow(/cdkDependenciesAsDeps is not used for CDK 2.x/);
-  });
-
-  test("for cdk 2.x, throws if cdkAssert provided", () => {
-    expect(
-      () =>
-        new TestProject({
-          cdkVersion: "2.0.0-alpha.5",
-          cdkAssert: true,
-        }),
-    ).toThrow(
-      /cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib/,
-    );
-  });
-
   test("for cdk 3.x (does not exist yet)", () => {
     // GIVEN
     expect(() => new TestProject({ cdkVersion: "3.1337.42" })).toThrow(
-      /Unsupported AWS CDK major version 3\.x/,
+      /AWS CDK v3 is not supported/,
     );
   });
 });
@@ -167,7 +61,7 @@ describe("lambda functions", () => {
     writeFileSync(join(outdir, "src", "my.lambda.ts"), "// dummy");
 
     const project = new TestProject({
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       libdir: "liblib",
       outdir: outdir,
       bundlerOptions: {
@@ -197,7 +91,7 @@ describe("lambda functions", () => {
   test("auto-discover can be disabled", () => {
     // GIVEN
     const project = new TestProject({
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       lambdaAutoDiscover: false,
     });
 
@@ -220,7 +114,7 @@ describe("lambda functions", () => {
     writeFileSync(join(outdir, "src", "my.singleton-lambda.ts"), "// dummy");
 
     const project = new TestProject({
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       outdir,
       lambdaAutoDiscover: false,
       singletonLambdaAutoDiscover: true,
@@ -303,7 +197,7 @@ describe("node version in workflow", () => {
 
 describe("workflow container image", () => {
   it("does not use an image by default for cdk v1", () => {
-    const project = new TestProject({ cdkVersion: "1.100.0" });
+    const project = new TestProject({ cdkVersion: "2.189.1" });
     const snapshot = synthSnapshot(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build).not.toHaveProperty("container");

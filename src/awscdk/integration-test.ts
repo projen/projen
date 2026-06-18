@@ -1,6 +1,5 @@
 import { join } from "path/posix";
 import type { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS_V1 } from "./internal";
 import type { IntegrationTestBaseOptions } from "../cdk";
 import { IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
@@ -83,18 +82,6 @@ export class IntegrationTest extends IntegrationTestBase {
     const pathMetadata = options.pathMetadata ?? false;
     if (!pathMetadata) {
       opts.push("--no-path-metadata");
-    }
-
-    if (options.cdkDeps.cdkMajorVersion === 1) {
-      // add all feature flags
-      const features = {
-        ...FEATURE_FLAGS_V1,
-        "@aws-cdk/core:newStyleStackSynthesis": true, // simplifies asset coordinates in synth output
-      };
-
-      for (const feature of Object.keys(features)) {
-        opts.push(`--context ${feature}=true`);
-      }
     }
 
     const cdkopts = opts.join(" ");

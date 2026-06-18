@@ -59,15 +59,6 @@ export interface SetupPyOptions {
    * Escape hatch to allow any value
    */
   readonly additionalOptions?: { [name: string]: any };
-
-  /**
-   * Escape hatch to allow any value (JS/TS only)
-   *
-   * @deprecated Prefer using `additionalOptions` instead.
-   *
-   * @jsii ignore
-   */
-  readonly [name: string]: any;
 }
 
 /**

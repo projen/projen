@@ -119,7 +119,6 @@ const project = new TypeScriptProject({
 
   codeCov: true,
   prettier: true,
-  defaultReleaseBranch: "main",
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run

@@ -3794,7 +3794,6 @@ const reports: gitlab.Reports = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.gitlab.Reports.property.cobertura">cobertura</a></code> | <code>string[]</code> | Path for file(s) that should be parsed as Cobertura XML coverage report. |
 | <code><a href="#projen.gitlab.Reports.property.codequality">codequality</a></code> | <code>string[]</code> | Path to file or list of files with code quality report(s) (such as Code Climate). |
 | <code><a href="#projen.gitlab.Reports.property.containerScanning">containerScanning</a></code> | <code>string[]</code> | Path to file or list of files with Container scanning vulnerabilities report(s). |
 | <code><a href="#projen.gitlab.Reports.property.coverageReport">coverageReport</a></code> | <code><a href="#projen.gitlab.CoverageReport">CoverageReport</a></code> | Code coverage report information. |
@@ -3811,20 +3810,6 @@ const reports: gitlab.Reports = { ... }
 | <code><a href="#projen.gitlab.Reports.property.sast">sast</a></code> | <code>string[]</code> | Path to file or list of files with SAST vulnerabilities report(s). |
 | <code><a href="#projen.gitlab.Reports.property.secretDetection">secretDetection</a></code> | <code>string[]</code> | Path to file or list of files with secret detection report(s). |
 | <code><a href="#projen.gitlab.Reports.property.terraform">terraform</a></code> | <code>string[]</code> | Path to file or list of files with terraform plan(s). |
-
----
-
-##### ~~`cobertura`~~<sup>Optional</sup> <a name="cobertura" id="projen.gitlab.Reports.property.cobertura"></a>
-
-- *Deprecated:* per {@link https://docs.gitlab.com/ee/update/deprecations.html#artifactsreportscobertura-keyword} use {@link coverageReport } instead
-
-```typescript
-public readonly cobertura: string[];
-```
-
-- *Type:* string[]
-
-Path for file(s) that should be parsed as Cobertura XML coverage report.
 
 ---
 

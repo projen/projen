@@ -196,16 +196,6 @@ export class Task {
   }
 
   /**
-   * Adds a command at the beginning of the task.
-   * @param shell The command to add.
-   *
-   * @deprecated use `prependExec()`
-   */
-  public prepend(shell: string, options: TaskStepOptions = {}) {
-    this.prependExec(shell, options);
-  }
-
-  /**
    * Spawns a sub-task.
    * @param subtask The subtask to execute.
    */

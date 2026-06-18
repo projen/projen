@@ -7,7 +7,7 @@ describe("IntegrationTest", () => {
       cdk8sVersion: "1.0.0-beta.11",
       name: "project",
       defaultReleaseBranch: "main",
-      releaseWorkflow: true,
+      release: true,
     });
 
     // WHEN
@@ -31,7 +31,7 @@ describe("IntegrationTest", () => {
       cdk8sVersion: "1.0.0-beta.11",
       name: "project",
       defaultReleaseBranch: "main",
-      releaseWorkflow: true,
+      release: true,
     });
 
     // WHEN

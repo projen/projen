@@ -3,12 +3,7 @@ import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType, Component } from "../../src";
-import {
-  YarnCacheMigrationMode,
-  YarnChecksumBehavior,
-  YarnNodeLinker,
-  YarnNpmPublishAccess,
-} from "../../src/javascript";
+import { YarnNodeLinker, YarnNpmPublishAccess } from "../../src/javascript";
 import {
   NodePackage,
   NodePackageManager,
@@ -1191,68 +1186,6 @@ describe("yarn berry", () => {
       ).toThrow(
         "Cannot set npmAccess (public) and yarnRcOptions.npmPublishAccess (restricted) to different values.",
       );
-    });
-  });
-
-  describe("invalid options", () => {
-    describe("using v4", () => {
-      test("throws an error if a v3 setting is used in v4", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "4.13.0",
-                yarnRcOptions: {
-                  ignoreCwd: true,
-                  lockfileFilename: "something-else.lock",
-                },
-              },
-            }),
-        ).toThrow(
-          "The following options are not available in Yarn >= 4: ignoreCwd, lockfileFilename",
-        );
-      });
-    });
-
-    describe("using v3", () => {
-      test("throws an error if a v4 setting is used in v3", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "3.6.4",
-                yarnRcOptions: {
-                  cacheMigrationMode: YarnCacheMigrationMode.ALWAYS,
-                  httpsCaFilePath: "/etc/foo/bar",
-                },
-              },
-            }),
-        ).toThrow(
-          "The following options are only available in Yarn v4 and newer: cacheMigrationMode, httpsCaFilePath",
-        );
-      });
-
-      test("throws an error if a v4 checksumBehavior setting is used in v3", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "3.6.4",
-                yarnRcOptions: {
-                  checksumBehavior: YarnChecksumBehavior.RESET,
-                },
-              },
-            }),
-        ).toThrow(
-          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer.",
-        );
-      });
     });
   });
 });
