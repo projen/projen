@@ -144,8 +144,8 @@ export class Tasks extends Component {
 
   public resolveTasksManifest(resolver: IResolver): TasksManifest {
     const obj = {
-      tasks: (() => this.renderTasks()) as any,
       env: (() => this.renderEnv()) as any,
+      tasks: (() => this.renderTasks()) as any,
     };
 
     return (

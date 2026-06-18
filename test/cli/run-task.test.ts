@@ -5,6 +5,8 @@ import { basename, dirname, join } from "path";
 import { TaskRuntime } from "../../src/cli/task-runtime";
 import * as logging from "../../src/logging";
 import type { Project } from "../../src/project";
+import type { TasksManifest } from "../../src/task-model";
+import { TasksManifestSchema } from "../../src/util/task-manifest";
 import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -986,5 +988,203 @@ describe("in-process task execution", () => {
       "a b",
       "c",
     ]);
+  });
+});
+
+describe("manifest versioning", () => {
+  /** Stamps the current schema version onto a manifest. */
+  function versionedManifest(manifest: TasksManifest): TasksManifest {
+    return {
+      manifestVersion: TasksManifestSchema.VERSION,
+      ...manifest,
+    };
+  }
+
+  /** Writes a manifest object to `.projen/tasks.json` under a fresh workdir. */
+  function writeManifest(contents: unknown): string {
+    const workdir = mkdtemp();
+    const manifestPath = join(workdir, TaskRuntime.MANIFEST_FILE);
+    mkdirSync(dirname(manifestPath), { recursive: true });
+    writeFileSync(manifestPath, JSON.stringify(contents, undefined, 2));
+    return workdir;
+  }
+
+  test("synthesized manifest carries the schema version", () => {
+    const p = new TestProject();
+    p.synth();
+
+    const manifest: TasksManifest = JSON.parse(
+      readFileSync(join(p.outdir, TaskRuntime.MANIFEST_FILE), "utf-8"),
+    );
+
+    expect(manifest.manifestVersion).toBe(TasksManifestSchema.VERSION);
+    // constructing a runtime over it must not throw
+    expect(() => new TaskRuntime(p.outdir)).not.toThrow();
+  });
+
+  test("a running task picks up manifest changes made by an earlier task", async () => {
+    // GIVEN a project whose "parent" task first runs "regen" (which rewrites
+    // .projen/tasks.json) and then runs "target".
+    const p = new TestProject();
+    const target = p.addTask("target", {
+      exec: `node -e "require('fs').writeFileSync('out.txt', 'v1')"`,
+    });
+    const regen = p.addTask("regen", {
+      // projen marks generated files read-only, so make the manifest writable
+      // before overwriting it (mimicking what a real re-synth does).
+      exec: `node -e "const fs=require('fs');fs.chmodSync('.projen/tasks.json',0o644);fs.copyFileSync('tasks-v2.json','.projen/tasks.json')"`,
+    });
+    const parent = p.addTask("parent");
+    parent.spawn(regen);
+    parent.spawn(target);
+    p.synth();
+
+    // a regenerated, valid manifest where "target" now writes "v2"
+    const v2 = versionedManifest({
+      tasks: {
+        target: {
+          name: "target",
+          steps: [
+            { exec: `node -e "require('fs').writeFileSync('out.txt', 'v2')"` },
+          ],
+        },
+      },
+    });
+    writeFileSync(
+      join(p.outdir, "tasks-v2.json"),
+      JSON.stringify(v2, undefined, 2),
+    );
+
+    // WHEN
+    await new TaskRuntime(p.outdir).runTask("parent");
+
+    // THEN the *reloaded* definition of "target" ran (writes "v2"), not the
+    // stale in-memory one (which would have written "v1").
+    expect(readFileSync(join(p.outdir, "out.txt"), "utf-8")).toBe("v2");
+  });
+
+  test("warns (does not throw) for a manifest from a newer projen version", () => {
+    const warn = jest.spyOn(logging, "warn");
+
+    const workdir = writeManifest({
+      manifestVersion: TasksManifestSchema.VERSION + 1,
+      tasks: { foo: { name: "foo", steps: [{ exec: "echo hi" }] } },
+    });
+
+    let rt!: TaskRuntime;
+    expect(() => (rt = new TaskRuntime(workdir))).not.toThrow();
+    expect(rt.tryFindTask("foo")).toBeDefined();
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("newer version of projen"),
+    );
+
+    warn.mockRestore();
+  });
+
+  test("accepts a legacy manifest without a version", () => {
+    // legacy manifests (pre-versioning) carry no manifestVersion
+    const workdir = writeManifest({
+      tasks: { foo: { name: "foo", steps: [{ exec: "echo hi" }] } },
+    });
+
+    let rt!: TaskRuntime;
+    expect(() => (rt = new TaskRuntime(workdir))).not.toThrow();
+    expect(rt.tryFindTask("foo")).toStrictEqual({
+      name: "foo",
+      steps: [{ exec: "echo hi" }],
+    });
+  });
+
+  test("parses a versioned manifest that still has git conflict markers", () => {
+    // A versioned manifest that ended up with a git merge conflict. The runtime
+    // must still parse it (via parseConflictJSON) without throwing.
+    const conflicted = [
+      "{",
+      '  "manifestVersion": 1,',
+      '  "tasks": {',
+      '    "foo": {',
+      '      "name": "foo",',
+      '      "steps": [',
+      "        {",
+      "<<<<<<< HEAD",
+      '          "exec": "echo current"',
+      "=======",
+      '          "exec": "echo incoming"',
+      ">>>>>>> other",
+      "        }",
+      "      ]",
+      "    }",
+      "  }",
+      "}",
+    ].join("\n");
+
+    const workdir = mkdtemp();
+    const manifestPath = join(workdir, TaskRuntime.MANIFEST_FILE);
+    mkdirSync(dirname(manifestPath), { recursive: true });
+    writeFileSync(manifestPath, conflicted);
+
+    let rt!: TaskRuntime;
+    expect(() => (rt = new TaskRuntime(workdir))).not.toThrow();
+    // "theirs"/incoming side wins
+    expect(rt.tryFindTask("foo")).toStrictEqual({
+      name: "foo",
+      steps: [{ exec: "echo incoming" }],
+    });
+  });
+
+  test("emits a debug log when a task reloads a changed manifest", async () => {
+    const debug = jest.spyOn(logging, "debug");
+
+    const p = new TestProject();
+    const target = p.addTask("target", {
+      exec: `node -e "require('fs').writeFileSync('out.txt', 'v1')"`,
+    });
+    const regen = p.addTask("regen", {
+      exec: `node -e "const fs=require('fs');fs.chmodSync('.projen/tasks.json',0o644);fs.copyFileSync('tasks-v2.json','.projen/tasks.json')"`,
+    });
+    const parent = p.addTask("parent");
+    parent.spawn(regen);
+    parent.spawn(target);
+    p.synth();
+
+    const v2 = versionedManifest({
+      tasks: {
+        target: {
+          name: "target",
+          steps: [
+            { exec: `node -e "require('fs').writeFileSync('out.txt', 'v2')"` },
+          ],
+        },
+      },
+    });
+    writeFileSync(
+      join(p.outdir, "tasks-v2.json"),
+      JSON.stringify(v2, undefined, 2),
+    );
+
+    await new TaskRuntime(p.outdir).runTask("parent");
+
+    expect(debug).toHaveBeenCalledWith(
+      expect.stringContaining("successfully loaded the new tasks manifest"),
+    );
+    debug.mockRestore();
+  });
+
+  test("treats a project without a manifest on disk as empty", async () => {
+    // a workdir with no .projen/tasks.json at all
+    const workdir = mkdtemp();
+
+    const rt = new TaskRuntime(workdir);
+    expect(rt.tasks).toEqual([]);
+    expect(rt.tryFindTask("anything")).toBeUndefined();
+    await expect(rt.runTask("anything")).rejects.toThrow(/cannot find command/);
+  });
+
+  test("tryFindTask returns undefined when the manifest has no tasks", () => {
+    // a (legacy) manifest object that omits the "tasks" key entirely
+    const workdir = writeManifest({});
+
+    const rt = new TaskRuntime(workdir);
+    expect(rt.tryFindTask("foo")).toBeUndefined();
   });
 });

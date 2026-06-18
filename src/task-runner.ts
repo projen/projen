@@ -8,6 +8,7 @@ import type { IResolver } from "./file";
 import { JsonFile } from "./json";
 import type { Task } from "./task";
 import type { TasksManifest } from "./task-model";
+import { TasksManifestSchema } from "./util/task-manifest";
 
 export interface ITaskRunner {
   /**
@@ -75,6 +76,16 @@ export class ProjenTaskRunner extends Component implements ITaskRunner {
       resolve: (obj, options) => resolve(obj, options),
     };
 
-    return this.project.tasks.resolveTasksManifest(resolver);
+    // The runner owns the on-disk manifest, so it stamps the schema version
+    // onto the logical tasks/env produced by `Tasks`. The version lets the task
+    // runtime detect manifests produced by a newer (potentially incompatible)
+    // version of projen.
+    const resolved: TasksManifest =
+      this.project.tasks.resolveTasksManifest(resolver) ?? {};
+
+    return {
+      manifestVersion: TasksManifestSchema.VERSION,
+      ...resolved,
+    };
   }
 }
