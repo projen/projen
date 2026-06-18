@@ -4186,6 +4186,7 @@ The project.
 | <code><a href="#projen.github.PullRequestTemplate.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.PullRequestTemplate.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.PullRequestTemplate.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.github.PullRequestTemplate.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.github.PullRequestTemplate.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.github.PullRequestTemplate.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.github.PullRequestTemplate.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -4225,6 +4226,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.github.PullRequestTemplate.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 

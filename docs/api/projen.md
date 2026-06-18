@@ -547,6 +547,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.AiInstructionsFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.AiInstructionsFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.AiInstructionsFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.AiInstructionsFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.AiInstructionsFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.AiInstructionsFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.AiInstructionsFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -586,6 +587,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.AiInstructionsFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -1832,6 +1845,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.FileBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.FileBase.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.FileBase.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.FileBase.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.FileBase.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.FileBase.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.FileBase.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -1871,6 +1885,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.FileBase.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -2202,6 +2228,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.GitAttributesFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.GitAttributesFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.GitAttributesFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.GitAttributesFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.GitAttributesFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.GitAttributesFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.GitAttributesFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -2243,6 +2270,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.GitAttributesFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -2936,6 +2975,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.IgnoreFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.IgnoreFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.IgnoreFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.IgnoreFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.IgnoreFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.IgnoreFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.IgnoreFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -2977,6 +3017,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.IgnoreFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3441,6 +3493,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.IniFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.IniFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.IniFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.IniFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.IniFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.IniFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.IniFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3481,6 +3534,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.IniFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3937,13 +4002,14 @@ Test whether the given construct is a component.
 | <code><a href="#projen.JsonFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.JsonFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.JsonFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.JsonFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.JsonFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.JsonFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.JsonFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
 | <code><a href="#projen.JsonFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
 | <code><a href="#projen.JsonFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
 | <code><a href="#projen.JsonFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
-| <code><a href="#projen.JsonFile.property.supportsComments">supportsComments</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.JsonFile.property.supportsComments">supportsComments</a></code> | <code>boolean</code> | Indicates if the files supports comments. |
 
 ---
 
@@ -3978,6 +4044,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.JsonFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -4066,6 +4144,8 @@ public readonly supportsComments: boolean;
 ```
 
 - *Type:* boolean
+
+Indicates if the files supports comments.
 
 ---
 
@@ -4260,6 +4340,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.License.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.License.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.License.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.License.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.License.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.License.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.License.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -4299,6 +4380,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.License.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -4928,6 +5021,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.Makefile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.Makefile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.Makefile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.Makefile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.Makefile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.Makefile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.Makefile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -4968,6 +5062,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.Makefile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -5424,6 +5530,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.ObjectFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.ObjectFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.ObjectFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.ObjectFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.ObjectFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.ObjectFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.ObjectFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -5464,6 +5571,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.ObjectFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -9032,6 +9151,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.TextFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.TextFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.TextFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.TextFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.TextFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.TextFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.TextFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -9071,6 +9191,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.TextFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -9515,6 +9647,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.TomlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.TomlFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.TomlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.TomlFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.TomlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.TomlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.TomlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -9555,6 +9688,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.TomlFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -10316,6 +10461,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.XmlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.XmlFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.XmlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.XmlFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.XmlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.XmlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.XmlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -10356,6 +10502,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.XmlFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -10812,6 +10970,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.YamlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.YamlFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.YamlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.YamlFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.YamlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.YamlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.YamlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -10853,6 +11012,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.YamlFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 

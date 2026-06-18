@@ -1344,6 +1344,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.PyprojectTomlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.PyprojectTomlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -1384,6 +1385,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.PyprojectTomlFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3242,6 +3255,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.RequirementsFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.RequirementsFile.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.RequirementsFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.RequirementsFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.RequirementsFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.RequirementsFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.RequirementsFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3281,6 +3295,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.RequirementsFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3543,6 +3569,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.SetupPy.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.SetupPy.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.SetupPy.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.SetupPy.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.SetupPy.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.SetupPy.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.SetupPy.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3582,6 +3609,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.SetupPy.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
