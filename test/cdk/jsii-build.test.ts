@@ -1,5 +1,5 @@
 import { javascript, Project } from "../../src";
-import { JsiiBuild } from "../../src/cdk";
+import { JsiiBuild, ValidateTsconfig } from "../../src/cdk";
 import { TypeScriptProject } from "../../src/typescript";
 import { synthSnapshot } from "../util";
 
@@ -144,5 +144,84 @@ describe("JsiiBuild", () => {
       const releaseWorkflow = output[".github/workflows/release.yml"];
       expect(releaseWorkflow).toContain(".repo/packages/my-lib");
     });
+  });
+});
+
+describe("JsiiBuild tsconfig option", () => {
+  it("uses the injected tsconfig for jsii compilation", () => {
+    const project = createTypeScriptProject();
+    const tsconfig = new javascript.TypescriptConfig(project, {
+      fileName: "tsconfig.jsii.json",
+      compilerOptions: {
+        rootDir: "src",
+        outDir: "lib",
+      },
+    });
+    project.with(new JsiiBuild({ tsconfig }));
+
+    const output = synthSnapshot(project);
+    const pkgjson = output["package.json"];
+
+    expect(pkgjson.jsii.tsconfig).toBe("tsconfig.jsii.json");
+    expect(pkgjson.jsii.validateTsconfig).toBe("strict");
+    expect(pkgjson.jsii.tsc).toBeUndefined();
+    expect(output["tsconfig.jsii.json"]).toBeDefined();
+  });
+
+  it("falls back to project.tsconfig when no tsconfig is injected", () => {
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+    });
+    project.with(new JsiiBuild());
+
+    const output = synthSnapshot(project);
+    const pkgjson = output["package.json"];
+
+    expect(pkgjson.jsii.tsconfig).toBe("tsconfig.json");
+    expect(pkgjson.jsii.tsc).toBeUndefined();
+  });
+
+  it("falls back to tsc settings when disableTsconfig is true and no tsconfig injected", () => {
+    const project = createTypeScriptProject();
+    project.with(new JsiiBuild());
+
+    const output = synthSnapshot(project);
+    const pkgjson = output["package.json"];
+
+    expect(pkgjson.jsii.tsc).toStrictEqual({ outDir: "lib", rootDir: "src" });
+    expect(pkgjson.jsii.tsconfig).toBeUndefined();
+  });
+
+  it("adds excludeTypescript patterns to the injected tsconfig", () => {
+    const project = createTypeScriptProject();
+    const tsconfig = new javascript.TypescriptConfig(project, {
+      fileName: "tsconfig.jsii.json",
+      compilerOptions: {
+        rootDir: "src",
+        outDir: "lib",
+      },
+    });
+    project.with(
+      new JsiiBuild({ tsconfig, excludeTypescript: ["src/**/test/*.ts"] }),
+    );
+
+    const output = synthSnapshot(project);
+
+    expect(output["tsconfig.jsii.json"].exclude).toContain("src/**/test/*.ts");
+    expect(output["package.json"].jsii.excludeTypescript).toBeUndefined();
+  });
+
+  it("respects custom validateTsconfig level", () => {
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+    });
+    project.with(new JsiiBuild({ validateTsconfig: ValidateTsconfig.MINIMAL }));
+
+    const output = synthSnapshot(project);
+    const pkgjson = output["package.json"];
+
+    expect(pkgjson.jsii.validateTsconfig).toBe("minimal");
   });
 });

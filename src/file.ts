@@ -65,9 +65,14 @@ export abstract class FileBase extends Component {
   public readonly: boolean;
 
   /**
-   * Indicates if the file should be marked as executable
+   * Indicates if the file should be marked as executable.
    */
   public executable: boolean;
+
+  /**
+   * Indicates if the file will be committed.
+   */
+  public readonly committed: boolean;
 
   /**
    * The absolute path of this file.
@@ -126,13 +131,13 @@ export abstract class FileBase extends Component {
     this.shouldAddMarker = options.marker ?? true;
 
     const globPattern = `/${this.path}`;
-    const committed = options.committed ?? project.commitGenerated ?? true;
-    if (committed && filePath !== ".gitattributes") {
+    this.committed = options.committed ?? project.commitGenerated ?? true;
+    if (this.committed && filePath !== ".gitattributes") {
       project.annotateGenerated(`/${filePath}`);
     }
     const editGitignore = options.editGitignore ?? true;
     if (editGitignore) {
-      this.project.addGitIgnore(`${committed ? "!" : ""}${globPattern}`);
+      this.project.addGitIgnore(`${this.committed ? "!" : ""}${globPattern}`);
     } else {
       if (options.committed != null) {
         throw new Error(

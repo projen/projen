@@ -12347,6 +12347,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.exactOptionalPropertyTypes">exactOptionalPropertyTypes</a></code> | <code>boolean</code> | Specifies that optional property types should be interpreted exactly as written, meaning that `\| undefined` is not added to the type Available with TypeScript 4.4 and newer. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.experimentalDecorators">experimentalDecorators</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.forceConsistentCasingInFileNames">forceConsistentCasingInFileNames</a></code> | <code>boolean</code> | Disallow inconsistently-cased references to the same file. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.ignoreDeprecations">ignoreDeprecations</a></code> | <code>string</code> | Silence deprecation warnings for options scheduled for removal in a future TypeScript release (for example `moduleResolution: "node10"`, which became an error in TypeScript 6.0). |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.importsNotUsedAsValues">importsNotUsedAsValues</a></code> | <code><a href="#projen.javascript.TypeScriptImportsNotUsedAsValues">TypeScriptImportsNotUsedAsValues</a></code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.incremental">incremental</a></code> | <code>boolean</code> | Tells TypeScript to save information about the project graph from the last compilation to files stored on disk. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.inlineSourceMap">inlineSourceMap</a></code> | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files. |
@@ -12695,6 +12696,23 @@ public readonly forceConsistentCasingInFileNames: boolean;
 - *Default:* false
 
 Disallow inconsistently-cased references to the same file.
+
+---
+
+##### `ignoreDeprecations`<sup>Optional</sup> <a name="ignoreDeprecations" id="projen.javascript.TypeScriptCompilerOptions.property.ignoreDeprecations"></a>
+
+```typescript
+public readonly ignoreDeprecations: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+Silence deprecation warnings for options scheduled for removal in a future TypeScript release (for example `moduleResolution: "node10"`, which became an error in TypeScript 6.0).
+
+Set to the TypeScript version that introduced the deprecation, e.g. `"6.0"`.
+
+> [https://www.typescriptlang.org/tsconfig/#ignoreDeprecations](https://www.typescriptlang.org/tsconfig/#ignoreDeprecations)
 
 ---
 

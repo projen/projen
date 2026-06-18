@@ -5010,6 +5010,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.web.ReactTypeDef.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.web.ReactTypeDef.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeDef.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.web.ReactTypeDef.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.web.ReactTypeDef.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.web.ReactTypeDef.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.web.ReactTypeDef.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -5055,6 +5056,20 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### ~~`committed`~~<sup>Required</sup> <a name="committed" id="projen.web.ReactTypeDef.property.committed"></a>
+
+- *Deprecated:* No longer used.
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
