@@ -282,7 +282,7 @@ exports[`auto-discover 5`] = `
   "name": "bundle:hello.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -294,7 +294,7 @@ exports[`auto-discover 6`] = `
   "name": "bundle:hello.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/* --watch",
     },
   ],
 }
@@ -306,7 +306,7 @@ exports[`auto-discover 7`] = `
   "name": "bundle:subdir/jangy.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -318,7 +318,7 @@ exports[`auto-discover 8`] = `
   "name": "bundle:subdir/jangy.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/jangy.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/* --watch",
     },
   ],
 }
@@ -330,7 +330,7 @@ exports[`auto-discover 9`] = `
   "name": "bundle:subdir/world.lambda",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*",
     },
   ],
 }
@@ -342,7 +342,7 @@ exports[`auto-discover 10`] = `
   "name": "bundle:subdir/world.lambda:watch",
   "steps": [
     {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/* --watch",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target="node22" --platform="node" --outfile="assets/subdir/world.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/* --watch",
     },
   ],
 }

@@ -21,7 +21,7 @@ exports[`defaults 1`] = `
 /package.json linguist-generated
 /postcss.config.json linguist-generated
 /tailwind.config.json linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -267,7 +267,7 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/pages/
 /lib
 /dist/
@@ -307,7 +307,7 @@ merge_queue:
 permissions-backup.acl
 /.mergify.yml
 /test/
-/tsconfig.dev.json
+/test/tsconfig.json
 /pages/
 !/lib/
 !/lib/**/*.js
@@ -396,7 +396,7 @@ tsconfig.tsbuildinfo
       "LICENSE",
       "postcss.config.json",
       "tailwind.config.json",
-      "tsconfig.dev.json",
+      "test/tsconfig.json",
     ],
   },
   ".projen/tasks.json": {
@@ -1062,68 +1062,18 @@ export default function Home() {
       "extend": {},
     },
   },
-  "tsconfig.dev.json": {
+  "test/tsconfig.json": {
     "compilerOptions": {
-      "allowJs": true,
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "incremental": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "isolatedModules": true,
-      "jsx": "preserve",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext",
-      ],
       "module": "commonjs",
-      "moduleResolution": "bundler",
       "noEmit": true,
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "paths": {
-        "@/*": [
-          "./*",
-        ],
-      },
-      "plugins": [
-        {
-          "name": "next",
-        },
-      ],
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "es5",
-      "types": [
-        "node",
-        "react",
-        "react-dom",
-      ],
+      "rootDir": "..",
     },
     "exclude": [
       "node_modules",
     ],
+    "extends": "../tsconfig.json",
     "include": [
-      "pages/**/*.ts",
-      "test/**/*.ts",
       "**/*.ts",
-      "**/*.tsx",
-      "next-env.d.ts",
-      ".next/types/**/*.ts",
-      ".projenrc.js",
     ],
   },
   "tsconfig.json": {

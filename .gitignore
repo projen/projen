@@ -50,11 +50,12 @@ codecov.*
 !/.prettierrc.json
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/src/
 /lib
 /dist/
 !/.eslintrc.json
+!/projenrc/tsconfig.json
 .jsii
 !/API.md
 !/.github/workflows/check-licenses.yml

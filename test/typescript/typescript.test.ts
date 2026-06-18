@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
 import { javascript, Logger } from "../../src";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
 import { Transform } from "../../src/javascript";
 import { ProjenTaskRunner } from "../../src/task-runner";
 import {
@@ -126,30 +125,15 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
     }),
   );
 
-  expect(out["tsconfig.dev.json"]).toEqual(
+  // The dev/test tsconfig lives in the test directory, extends the root
+  // tsconfig (inheriting compiler options such as esModuleInterop), and is
+  // type-check only. ts-jest consumes this config.
+  expect(out[`${prj.testdir}/tsconfig.json`]).toEqual(
     expect.objectContaining({
-      include: expect.arrayContaining([
-        DEFAULT_PROJEN_RC_JS_FILENAME,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
+      extends: "../tsconfig.json",
+      include: ["**/*.ts"],
       compilerOptions: expect.objectContaining({
-        esModuleInterop: true,
-      }),
-    }),
-  );
-
-  expect(out["tsconfig.dev.json"]).toEqual(
-    expect.objectContaining({
-      include: expect.arrayContaining([
-        DEFAULT_PROJEN_RC_JS_FILENAME,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
-      compilerOptions: expect.objectContaining({
-        esModuleInterop: true,
+        noEmit: true,
       }),
     }),
   );
@@ -193,12 +177,18 @@ test("projenrc.ts", () => {
   });
 
   const snapshot = synthSnapshot(prj);
-  expect(snapshot["tsconfig.dev.json"].include).toContain(".projenrc.ts");
-  expect(snapshot["tsconfig.dev.json"].include).not.toContain(".projenrc.js");
+  // projenrc files are no longer added to a build/dev tsconfig include; they
+  // are covered by the eslint project service's default project instead.
+  expect(snapshot[`${prj.testdir}/tsconfig.json`].include).not.toContain(
+    ".projenrc.ts",
+  );
+  expect(
+    snapshot[".eslintrc.json"].parserOptions.projectService.allowDefaultProject,
+  ).toContain(".projenrc.ts");
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
-    steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+    steps: [{ exec: "ts-node --project test/tsconfig.json .projenrc.ts" }],
   });
 });
 
@@ -309,7 +299,7 @@ describe("jestConfig", () => {
       expect(transformConfig).toBeDefined();
       expect(transformConfig[0]).toStrictEqual("ts-jest");
       expect(transformConfig[1]).toStrictEqual({
-        tsconfig: "tsconfig.dev.json",
+        tsconfig: "test/tsconfig.json",
       });
     });
 
@@ -376,7 +366,7 @@ describe("jestConfig", () => {
           expect(transformConfig).toBeDefined();
           expect(transformConfig[0]).toStrictEqual("ts-jest");
           expect(transformConfig[1]).toStrictEqual({
-            tsconfig: "tsconfig.dev.json",
+            tsconfig: "test/tsconfig.json",
           });
         },
         { git: false },
@@ -499,7 +489,7 @@ describe("jestConfig", () => {
       const jestConfig = snapshot["package.json"].jest;
       expect(jestConfig.preset).toStrictEqual("ts-jest");
       expect(jestConfig.globals["ts-jest"].tsconfig).toStrictEqual(
-        "tsconfig.dev.json",
+        "test/tsconfig.json",
       );
       expect(jestConfig.globals["ts-jest"].shouldBePreserved).toStrictEqual(
         true,
@@ -596,7 +586,7 @@ describe("tsconfig", () => {
 });
 
 describe("tsconfigDev", () => {
-  test("uses tsconfig.dev.json by default", () => {
+  test("places the dev tsconfig in the test directory by default", () => {
     const prj = new TypeScriptProject({
       name: "test",
       projenrcTs: true,
@@ -604,12 +594,13 @@ describe("tsconfigDev", () => {
     });
 
     const snapshot = synthSnapshot(prj);
-    expect(prj.tsconfigDev.fileName).toBe("tsconfig.dev.json");
+    expect(prj.tsconfigDev.fileName).toBe("test/tsconfig.json");
     expect(snapshot["tsconfig.json"]).not.toBeUndefined();
-    expect(snapshot["tsconfig.dev.json"]).not.toBeUndefined();
+    expect(snapshot["test/tsconfig.json"]).not.toBeUndefined();
+    expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
-        steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+        steps: [{ exec: "ts-node --project test/tsconfig.json .projenrc.ts" }],
       }),
     );
   });

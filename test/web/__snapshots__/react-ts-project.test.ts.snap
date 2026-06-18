@@ -32,7 +32,7 @@ exports[`defaults 1`] = `
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
+      "projectService": true,
       "sourceType": "module",
     },
     "plugins": [
@@ -218,7 +218,7 @@ exports[`defaults 1`] = `
         "node": {},
         "typescript": {
           "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
+          "project": "./tsconfig.json",
         },
       },
     },
@@ -241,7 +241,7 @@ exports[`defaults 1`] = `
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -477,7 +477,7 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/src/
 /lib
 /dist/
@@ -516,7 +516,7 @@ merge_queue:
 permissions-backup.acl
 /.mergify.yml
 /test/
-/tsconfig.dev.json
+/test/tsconfig.json
 /src/
 !/lib/
 !/lib/**/*.js
@@ -655,7 +655,7 @@ tsconfig.tsbuildinfo
       ".projen/files.json",
       ".projen/tasks.json",
       "LICENSE",
-      "tsconfig.dev.json",
+      "test/tsconfig.json",
       "tsconfig.json",
     ],
   },
@@ -1311,56 +1311,17 @@ export default reportWebVitals;",
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 ",
-  "tsconfig.dev.json": {
+  "test/tsconfig.json": {
     "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "isolatedModules": true,
-      "jsx": "react-jsx",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext",
-      ],
-      "module": "commonjs",
-      "moduleResolution": "node",
       "noEmit": true,
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "es5",
-      "types": [
-        "jest",
-        "node",
-        "react",
-        "react-dom",
-      ],
+      "rootDir": "..",
     },
     "exclude": [
       "node_modules",
     ],
+    "extends": "../tsconfig.json",
     "include": [
-      "src/**/*.ts",
-      "test/**/*.ts",
-      "src",
-      ".projenrc.js",
+      "**/*.ts",
     ],
   },
   "tsconfig.json": {

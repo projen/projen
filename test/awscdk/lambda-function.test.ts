@@ -52,7 +52,7 @@ describe("bundled function", () => {
       name: "bundle:hello.lambda",
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node22" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*',
         },
       ],
     });
@@ -126,7 +126,7 @@ test("runtime can be used to customize the lambda runtime Node 14.x and esbuild 
     name: "bundle:hello.lambda",
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk',
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:aws-sdk',
       },
     ],
   });
@@ -156,7 +156,7 @@ test("runtime can be used to customize the lambda runtime Node 16.x and esbuild 
     name: "bundle:hello.lambda",
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node16" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk',
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node16" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:aws-sdk',
       },
     ],
   });
@@ -192,7 +192,7 @@ test.each([
       name: "bundle:hello.lambda",
       steps: [
         {
-          exec: `esbuild --bundle src/hello.lambda.ts --target="${runtime.esbuildTarget}" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*`,
+          exec: `esbuild --bundle src/hello.lambda.ts --target="${runtime.esbuildTarget}" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*`,
         },
       ],
     });
@@ -218,7 +218,7 @@ test("aws sdk v3 packages are considered external with NODEJS_18_X", () => {
     name: "bundle:hello.lambda",
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:@aws-sdk/*',
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node18" --platform="node" --outfile="assets/hello.lambda/index.js" --tsconfig="test/tsconfig.json" --external:@aws-sdk/*',
       },
     ],
   });

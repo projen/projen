@@ -374,11 +374,11 @@
           "construct": "TypescriptConfig"
         }
       },
-      "JsonFile@tsconfig.dev.json": {
+      "JsonFile@test--tsconfig.json": {
         "metadata": {
           "type": "file",
           "construct": "JsonFile",
-          "path": "tsconfig.dev.json"
+          "path": "test/tsconfig.json"
         }
       },
       "Eslint#AutoId23": {
@@ -400,16 +400,23 @@
           "construct": "Projenrc"
         }
       },
-      "SampleCode#AutoId25": {
+      "TypescriptConfig#AutoId25": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypescriptConfig"
+        }
+      },
+      "JsonFile@projenrc--tsconfig.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": "projenrc/tsconfig.json"
+        }
+      },
+      "SampleCode#AutoId26": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
-        }
-      },
-      "SampleDir#AutoId26": {
-        "metadata": {
-          "type": "component",
-          "construct": "SampleDir"
         }
       },
       "SampleDir#AutoId27": {
@@ -418,7 +425,13 @@
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId28": {
+      "SampleDir#AutoId28": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleDir"
+        }
+      },
+      "JsiiDocgen#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -445,7 +458,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId29": {
+      "UpgradeDependencies#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -464,7 +477,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId30": {
+      "UpgradeDependencies#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -497,7 +510,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId31": {
+      "VsCodeLaunchConfig#AutoId32": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -510,7 +523,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId32": {
+      "IntegrationTests#AutoId33": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -563,7 +576,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId33": {
+      "AiInstructions#AutoId34": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"
