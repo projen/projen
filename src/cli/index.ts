@@ -1,17 +1,17 @@
 import { resolve } from "path";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import newCommand from "./cmds/new";
-import { synth } from "./synth";
-import { discoverTaskCommands } from "./tasks";
 import {
   PROJEN_DIR,
   DEFAULT_PROJEN_RC_JS_FILENAME,
   PROJEN_VERSION,
 } from "../common";
 import * as logging from "../logging";
-import { TaskRuntime } from "../task-runtime";
 import { findUp, getNodeMajorVersion } from "../util";
+import newCommand from "./cmds/new";
+import { discoverTaskCommands } from "./cmds/run-task";
+import { synth } from "./cmds/synth";
+import { TaskRuntime } from "./task-runtime";
 
 async function main() {
   const ya = yargs(hideBin(process.argv));

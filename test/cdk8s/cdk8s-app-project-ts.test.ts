@@ -1,6 +1,6 @@
 import * as yaml from "yaml";
-import { TaskRuntime } from "../../src";
 import { Cdk8sTypeScriptApp } from "../../src/cdk8s";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { synthSnapshot } from "../util";
 
 test("test if cdk8s synth is possible", () => {
@@ -181,7 +181,7 @@ test("upgrade task ignores pinned versions", () => {
     release: true,
     constructsVersion: "3.3.75",
   });
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[ProjenTaskRunner.MANIFEST_FILE].tasks;
   // notice cdk8s and constructs isn't here
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [

@@ -21,19 +21,24 @@ export * from "./integ-test";
  */
 export function setupBundleTaskRunner(project: Project) {
   // build `run-task` script needed for "projen eject" functionality
-  // TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
+  // @TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
+  //
+  // We intentionally do NOT mark "*/package.json" as external. Bundling it
+  // inlines projen's version (read by src/common.ts) directly into the script,
+  // so the ejected scripts/run-task.cjs does not depend on a sibling
+  // package.json existing at runtime - which it doesn't for non-node projects.
+  // See projen#3679.
   const taskRunnerPath = "lib/run-task.cjs";
   const task = project.addTask("bundle:task-runner", {
     description: 'Bundle the run-task.cjs script needed for "projen eject"',
     exec:
-      `esbuild src/task-runtime.ts ` +
+      `esbuild src/cli/task-runtime.ts ` +
       `--outfile=${taskRunnerPath} ` +
       `--bundle ` +
       `--platform=node ` +
       `--format=cjs ` +
-      `--external:"*/package.json" ` +
       `--banner:js="#!/usr/bin/env node" ` +
-      `--footer:js="const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);"`,
+      `--footer:js="TaskRuntime.main();"`,
   });
   project.postCompileTask.spawn(task);
 }

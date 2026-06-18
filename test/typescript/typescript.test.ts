@@ -1,8 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
-import { javascript, Logger, TaskRuntime } from "../../src";
+import { javascript, Logger } from "../../src";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
 import { Transform } from "../../src/javascript";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import {
   mergeTsconfigOptions,
   TsJestTsconfig,
@@ -262,7 +263,7 @@ test("upgrade task ignores pinned versions", () => {
     deps: ["npm@^8"],
     typescriptVersion: "4.4.4",
   });
-  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(prj)[ProjenTaskRunner.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
     [
       {

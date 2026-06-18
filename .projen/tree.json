@@ -25,6 +25,14 @@
         "metadata": {
           "type": "component",
           "construct": "Tasks"
+        },
+        "nodes": {
+          "ProjenTaskRunner#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "ProjenTaskRunner"
+            }
+          }
         }
       },
       "JsonFile@.projen--tasks.json": {

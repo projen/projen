@@ -123,6 +123,28 @@
   "overrides": [
     {
       "files": [
+        "src/**/*.ts"
+      ],
+      "excludedFiles": [
+        "src/cli/**/*.ts"
+      ],
+      "rules": {
+        "import/no-restricted-paths": [
+          "error",
+          {
+            "zones": [
+              {
+                "target": "./src",
+                "from": "./src/cli",
+                "message": "src/ must not import from src/cli. The CLI may import from the library, but not the other way around."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         ".projenrc.ts"
       ],
       "rules": {
