@@ -367,18 +367,16 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projen new with unknown option works", () => {
+    test("projen new rejects unsupported project type option", () => {
       withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
-          "new",
-          "node",
-          "--DOES_NOT_EXIST",
-          "--no-synth",
-        ]);
-
-        const projenrc = directorySnapshot(projectdir)[".projenrc.js"];
-        expect(projenrc).toBeDefined();
-        expect(projenrc).toMatchSnapshot();
+        expect(() =>
+          execProjenCLI(projectdir, [
+            "new",
+            "jsii",
+            "--projenrc-py",
+            "--no-synth",
+          ]),
+        ).toThrow("Unknown arguments: projenrc-py, projenrcPy");
       });
     });
 
