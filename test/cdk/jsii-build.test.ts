@@ -225,3 +225,126 @@ describe("JsiiBuild tsconfig option", () => {
     expect(pkgjson.jsii.validateTsconfig).toBe("minimal");
   });
 });
+
+describe("JsiiBuild fallback behaviors", () => {
+  describe("stability", () => {
+    it("falls back to project-level stability when not set on JsiiBuild", () => {
+      const project = createTypeScriptProject({ stability: "experimental" });
+      project.with(new JsiiBuild());
+
+      const output = synthSnapshot(project);
+      expect(output["package.json"].stability).toBe("experimental");
+    });
+
+    it("JsiiBuild stability takes precedence over project-level stability", () => {
+      const project = createTypeScriptProject({ stability: "experimental" });
+      project.with(new JsiiBuild({ stability: "stable" }));
+
+      const output = synthSnapshot(project);
+      expect(output["package.json"].stability).toBe("stable");
+    });
+
+    it("defaults to stable when neither JsiiBuild nor project-level stability is set", () => {
+      const project = createTypeScriptProject();
+      project.with(new JsiiBuild());
+
+      const output = synthSnapshot(project);
+      expect(output["package.json"].stability).toBe("stable");
+    });
+  });
+
+  describe("npmTrustedPublishing", () => {
+    it("falls back to project-level npmTrustedPublishing when not set on JsiiBuild", () => {
+      const project = createTypeScriptProject({
+        npmTrustedPublishing: true,
+      });
+      project.with(new JsiiBuild());
+
+      const output = synthSnapshot(project);
+      const releaseWorkflow = output[".github/workflows/release.yml"];
+      expect(releaseWorkflow).toContain("NPM_TRUSTED_PUBLISHER");
+      expect(releaseWorkflow).not.toContain("NPM_TOKEN");
+    });
+
+    it("JsiiBuild npmTrustedPublishing takes precedence over project-level", () => {
+      const project = createTypeScriptProject({
+        npmTrustedPublishing: true,
+      });
+      project.with(new JsiiBuild({ npmTrustedPublishing: false }));
+
+      const output = synthSnapshot(project);
+      const releaseWorkflow = output[".github/workflows/release.yml"];
+      // not trusted publishing means NPM_TOKEN secret is required
+      expect(releaseWorkflow).toContain("NPM_TOKEN");
+    });
+
+    it("defaults to false when neither JsiiBuild nor project-level is set", () => {
+      const project = createTypeScriptProject();
+      project.with(new JsiiBuild());
+
+      const output = synthSnapshot(project);
+      const releaseWorkflow = output[".github/workflows/release.yml"];
+      // not trusted publishing means NPM_TOKEN secret is required
+      expect(releaseWorkflow).toContain("NPM_TOKEN");
+    });
+  });
+
+  describe("workflowNodeVersion", () => {
+    it("falls back to project-level workflowNodeVersion when not set on JsiiBuild", () => {
+      const project = createTypeScriptProject({
+        workflowNodeVersion: "18.x",
+      });
+      project.with(
+        new JsiiBuild({
+          publishToMaven: {
+            javaPackage: "com.example",
+            mavenGroupId: "com.example",
+            mavenArtifactId: "test",
+          },
+        }),
+      );
+
+      const output = synthSnapshot(project);
+      const buildWorkflow = output[".github/workflows/build.yml"];
+      expect(buildWorkflow).toContain("node-version: 18.x");
+    });
+
+    it("JsiiBuild workflowNodeVersion takes precedence over project-level", () => {
+      const project = createTypeScriptProject({
+        workflowNodeVersion: "18.x",
+      });
+      project.with(
+        new JsiiBuild({
+          workflowNodeVersion: "20.x",
+          publishToMaven: {
+            javaPackage: "com.example",
+            mavenGroupId: "com.example",
+            mavenArtifactId: "test",
+          },
+        }),
+      );
+
+      const output = synthSnapshot(project);
+      const buildWorkflow = output[".github/workflows/build.yml"];
+      // The package-java job should use 20.x from JsiiBuild, not 18.x from project
+      expect(buildWorkflow).toContain("node-version: 20.x");
+    });
+
+    it("defaults to lts/* when neither JsiiBuild nor project-level is set", () => {
+      const project = createTypeScriptProject();
+      project.with(
+        new JsiiBuild({
+          publishToMaven: {
+            javaPackage: "com.example",
+            mavenGroupId: "com.example",
+            mavenArtifactId: "test",
+          },
+        }),
+      );
+
+      const output = synthSnapshot(project);
+      const buildWorkflow = output[".github/workflows/build.yml"];
+      expect(buildWorkflow).toContain("node-version: lts/*");
+    });
+  });
+});

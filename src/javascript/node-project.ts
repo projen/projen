@@ -603,6 +603,7 @@ export class NodeProject extends GitHubProject {
   protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
   public readonly biome?: Biome;
+  private readonly options: NodePackageOptions;
 
   constructor(options: NodeProjectOptions) {
     super({
@@ -623,7 +624,8 @@ export class NodeProject extends GitHubProject {
         options.projenCommand ?? execCommand(options.packageManager, "projen"),
     });
 
-    this.package = new NodePackage(this, options);
+    this.options = options;
+    this.package = new NodePackage(this, this.options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity =
       options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
