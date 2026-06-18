@@ -44,3 +44,4 @@
 /src/python/pyproject-toml.ts linguist-generated
 /src/python/uv-config.ts linguist-generated
 /tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/tsconfig.json linguist-generated

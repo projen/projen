@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import { posix, win32 } from "path";
+import fs from "node:fs";
+import { posix, win32 } from "node:path";
 import { TestProject } from "./util";
 import { JsonFile } from "../src/json";
 import {
@@ -345,11 +345,9 @@ describe("assertExecutablePermissions", () => {
     // Mock the platform to be "linux"
     Object.defineProperty(process, "platform", { value: "linux" });
 
-    // Mock the fs.accessSync function to not throw for executable permissions
+    // The file is executable: accessSync succeeds for the X_OK check.
     jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
-      if (mode === fs.constants.X_OK) {
-        return;
-      } else {
+      if (mode !== fs.constants.X_OK) {
         throw new Error();
       }
     });
@@ -361,12 +359,10 @@ describe("assertExecutablePermissions", () => {
     // Mock the platform to be "linux"
     Object.defineProperty(process, "platform", { value: "linux" });
 
-    // Mock the fs.accessSync function to return non-executable permissions
+    // The file is not executable: accessSync throws for the X_OK check.
     jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
       if (mode === fs.constants.X_OK) {
         throw new Error();
-      } else {
-        return;
       }
     });
 
@@ -377,11 +373,9 @@ describe("assertExecutablePermissions", () => {
     // Mock the platform to be "linux"
     Object.defineProperty(process, "platform", { value: "linux" });
 
-    // Mock the fs.accessSync function to return executable permissions
+    // The file is executable, but we expect it not to be.
     jest.spyOn(fs, "accessSync").mockImplementation((_path, mode) => {
-      if (mode === fs.constants.X_OK) {
-        return;
-      } else {
+      if (mode !== fs.constants.X_OK) {
         throw new Error();
       }
     });

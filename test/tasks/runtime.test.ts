@@ -1,5 +1,4 @@
-import { spawnSync } from "child_process";
-import * as childProcess from "child_process";
+import childProcess, { spawnSync } from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
