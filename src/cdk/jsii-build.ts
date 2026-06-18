@@ -132,7 +132,6 @@ export interface JsiiBuildOptions {
    * (e.g. `~5.0.0`).
    *
    * @default "~5.9.0"
-   * @pjnew "~5.9.0"
    */
   readonly jsiiVersion?: string;
 

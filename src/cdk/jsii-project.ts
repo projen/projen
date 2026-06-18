@@ -1,3 +1,4 @@
+import type { ValidateTsconfig } from "./jsii-build";
 import { JsiiBuild } from "./jsii-build";
 import type {
   GoPublishOptions,
@@ -120,9 +121,20 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * (e.g. `~5.0.0`).
    *
    * @default "~5.9.0"
-   * @pjnew "~5.9.0"
+   * @pjnew "~6.0.0"
    */
   readonly jsiiVersion?: string;
+
+  /**
+   * Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+   *
+   * Only relevant when the project synthesizes its own tsconfig
+   * (i.e. `disableTsconfig` is not set on the TypeScriptProject).
+   *
+   * @see https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig
+   * @default ValidateTsconfig.STRICT
+   */
+  readonly validateTsconfig?: ValidateTsconfig;
 }
 
 export enum Stability {
@@ -194,11 +206,27 @@ export class JsiiProject extends TypeScriptProject {
       authorName: options.author,
       authorEmail,
       authorUrl,
+      tsconfig: {
+        compilerOptions: {
+          // jsii strict validation requirements
+          target: "ES2022",
+          lib: ["es2022"],
+          module: "node16",
+          esModuleInterop: true,
+          skipLibCheck: true,
+          noEmitOnError: true,
+          stripInternal: false,
+        },
+      },
+      tsconfigDev: {
+        compilerOptions: {
+          stripInternal: true,
+        },
+      },
     };
 
     const forcedOptions = {
       releaseToNpm: false, // we have a jsii release workflow
-      disableTsconfig: true, // jsii generates its own tsconfig.json
       docgen: false, // we use jsii-docgen here so disable typescript docgen
     };
 
@@ -224,6 +252,7 @@ export class JsiiProject extends TypeScriptProject {
           docgenFilePath: options.docgenFilePath,
           compressAssembly: options.compressAssembly,
           jsiiVersion: options.jsiiVersion,
+          validateTsconfig: options.validateTsconfig,
           stability: options.stability,
           docgen: options.docgen,
           releaseToNpm: options.releaseToNpm,

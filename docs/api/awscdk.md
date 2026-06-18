@@ -11096,6 +11096,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.publishToPypi">publishToPypi</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | Publish to pypi. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.python">python</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.rootdir">rootdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.validateTsconfig">validateTsconfig</a></code> | <code>projen.cdk.ValidateTsconfig</code> | Level of tsconfig validation jsii should perform on the user-provided tsconfig. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.catalog">catalog</a></code> | <code>projen.cdk.Catalog</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | Minimum version of the AWS CDK to depend on. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.cdkAssert">cdkAssert</a></code> | <code>boolean</code> | Warning: NodeJS only. |
@@ -13630,6 +13631,24 @@ public readonly rootdir: string;
 
 - *Type:* string
 - *Default:* "."
+
+---
+
+##### `validateTsconfig`<sup>Optional</sup> <a name="validateTsconfig" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.validateTsconfig"></a>
+
+```typescript
+public readonly validateTsconfig: ValidateTsconfig;
+```
+
+- *Type:* projen.cdk.ValidateTsconfig
+- *Default:* ValidateTsconfig.STRICT
+
+Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+
+Only relevant when the project synthesizes its own tsconfig
+(i.e. `disableTsconfig` is not set on the TypeScriptProject).
+
+> [https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig](https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig)
 
 ---
 
@@ -19899,6 +19918,7 @@ const constructLibraryAwsOptions: awscdk.ConstructLibraryAwsOptions = { ... }
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.publishToPypi">publishToPypi</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | Publish to pypi. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.python">python</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | *No description.* |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.rootdir">rootdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.validateTsconfig">validateTsconfig</a></code> | <code>projen.cdk.ValidateTsconfig</code> | Level of tsconfig validation jsii should perform on the user-provided tsconfig. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.catalog">catalog</a></code> | <code>projen.cdk.Catalog</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | Minimum version of the AWS CDK to depend on. |
 | <code><a href="#projen.awscdk.ConstructLibraryAwsOptions.property.cdkAssert">cdkAssert</a></code> | <code>boolean</code> | Warning: NodeJS only. |
@@ -22755,6 +22775,26 @@ public readonly rootdir: string;
 
 - *Type:* string
 - *Default:* "."
+
+---
+
+##### ~~`validateTsconfig`~~<sup>Optional</sup> <a name="validateTsconfig" id="projen.awscdk.ConstructLibraryAwsOptions.property.validateTsconfig"></a>
+
+- *Deprecated:* use `AwsCdkConstructLibraryOptions`
+
+```typescript
+public readonly validateTsconfig: ValidateTsconfig;
+```
+
+- *Type:* projen.cdk.ValidateTsconfig
+- *Default:* ValidateTsconfig.STRICT
+
+Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+
+Only relevant when the project synthesizes its own tsconfig
+(i.e. `disableTsconfig` is not set on the TypeScriptProject).
+
+> [https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig](https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig)
 
 ---
 

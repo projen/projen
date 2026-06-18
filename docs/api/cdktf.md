@@ -1737,6 +1737,7 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.publishToPypi">publishToPypi</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | Publish to pypi. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.python">python</a></code> | <code>projen.cdk.JsiiPythonTarget</code> | *No description.* |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.rootdir">rootdir</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.validateTsconfig">validateTsconfig</a></code> | <code>projen.cdk.ValidateTsconfig</code> | Level of tsconfig validation jsii should perform on the user-provided tsconfig. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.catalog">catalog</a></code> | <code>projen.cdk.Catalog</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.cdktfVersion">cdktfVersion</a></code> | <code>string</code> | Minimum target version this library is tested against. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.constructsVersion">constructsVersion</a></code> | <code>string</code> | Construct version to use. |
@@ -4257,6 +4258,24 @@ public readonly rootdir: string;
 
 - *Type:* string
 - *Default:* "."
+
+---
+
+##### `validateTsconfig`<sup>Optional</sup> <a name="validateTsconfig" id="projen.cdktf.ConstructLibraryCdktfOptions.property.validateTsconfig"></a>
+
+```typescript
+public readonly validateTsconfig: ValidateTsconfig;
+```
+
+- *Type:* projen.cdk.ValidateTsconfig
+- *Default:* ValidateTsconfig.STRICT
+
+Level of tsconfig validation jsii should perform on the user-provided tsconfig.
+
+Only relevant when the project synthesizes its own tsconfig
+(i.e. `disableTsconfig` is not set on the TypeScriptProject).
+
+> [https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig](https://aws.github.io/jsii/user-guides/lib-author/configuration/#validatetsconfig)
 
 ---
 

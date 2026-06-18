@@ -7468,7 +7468,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -9233,6 +9233,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "fullType": {
+          "fqn": "projen.cdk.ValidateTsconfig",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
@@ -15262,7 +15281,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -16957,6 +16976,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "fullType": {
+          "fqn": "projen.cdk.ValidateTsconfig",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
@@ -18474,7 +18512,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -20169,6 +20207,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "fullType": {
+          "fqn": "projen.cdk.ValidateTsconfig",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
@@ -22505,7 +22562,7 @@ exports[`inventory 1`] = `
         "fullType": {
           "primitive": "string",
         },
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -24200,6 +24257,25 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "fullType": {
+          "fqn": "projen.cdk.ValidateTsconfig",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
       },
       {
         "default": "- standard configuration applicable for GitHub repositories",
