@@ -183,6 +183,7 @@ The project.
 | <code><a href="#projen.typescript.Projenrc.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.typescript.Projenrc.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.typescript.Projenrc.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
+| <code><a href="#projen.typescript.Projenrc.property.tsconfig">tsconfig</a></code> | <code>projen.javascript.TypescriptConfig</code> | *No description.* |
 
 ---
 
@@ -217,6 +218,16 @@ public readonly filePath: string;
 - *Type:* string
 
 The path of the projenrc file.
+
+---
+
+##### `tsconfig`<sup>Required</sup> <a name="tsconfig" id="projen.typescript.Projenrc.property.tsconfig"></a>
+
+```typescript
+public readonly tsconfig: TypescriptConfig;
+```
+
+- *Type:* projen.javascript.TypescriptConfig
 
 ---
 
