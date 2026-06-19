@@ -1,4 +1,3 @@
-import * as child_process from "child_process";
 import {
   accessSync,
   chmodSync,
@@ -11,78 +10,6 @@ import {
 } from "fs";
 import * as path from "path";
 import * as Case from "case";
-import * as logging from "./logging";
-
-const MAX_BUFFER = 10 * 1024 * 1024;
-
-/**
- * Executes a command with STDOUT > STDERR.
- */
-export function exec(
-  command: string,
-  options: {
-    cwd: string;
-    env?: Record<string, string>;
-    stdio?: child_process.StdioOptions;
-  },
-): void {
-  logging.debug(`${command} (cwd: ${options.cwd})`);
-
-  child_process.execSync(command, {
-    stdio: options.stdio || ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
-    maxBuffer: MAX_BUFFER,
-    cwd: options.cwd,
-    env: options.env,
-  });
-}
-
-/**
- * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
- */
-export function execCapture(
-  command: string,
-  options: { cwd: string; modEnv?: Record<string, string> },
-) {
-  logging.debug(`${command} (cwd: ${options.cwd})`);
-
-  return child_process.execSync(command, {
-    stdio: ["inherit", "pipe", "pipe"], // "pipe" for STDERR means it appears in exceptions
-    maxBuffer: MAX_BUFFER,
-    cwd: options.cwd,
-    env: {
-      ...process.env,
-      ...options.modEnv,
-    },
-  });
-}
-
-/**
- * Executes `command` and returns its value or undefined if the command failed.
- */
-export function execOrUndefined(
-  command: string,
-  options: { cwd: string },
-): string | undefined {
-  logging.debug(`${command} (cwd: ${options.cwd})`);
-
-  try {
-    const value = child_process
-      .execSync(command, {
-        stdio: ["inherit", "pipe", "pipe"], // "pipe" for STDERR means it appears in exceptions
-        maxBuffer: MAX_BUFFER,
-        cwd: options.cwd,
-      })
-      .toString("utf-8")
-      .trim();
-
-    if (!value) {
-      return undefined;
-    } // an empty string is the same as undefined
-    return value;
-  } catch {
-    return undefined;
-  }
-}
 
 export interface WriteFileOptions {
   /**

@@ -1,17 +1,17 @@
 import type { IConstruct } from "constructs";
+import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
+import { PyprojectTomlFile } from "./pyproject-toml-file";
 import type { IPythonDeps } from "./python-deps";
 import type { IPythonEnv } from "./python-env";
 import type { IPythonPackaging } from "./python-packaging";
 import { Component } from "../component";
+import type { PythonExecutableOptions } from "./python-project";
 import type { UvConfiguration } from "./uv-config";
 import { toJson_UvConfiguration } from "./uv-config";
 import type { Dependency } from "../dependencies";
 import { DependencyType } from "../dependencies";
 import type { Task } from "../task";
-import { exec, execOrUndefined } from "../util";
-import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
-import { PyprojectTomlFile } from "./pyproject-toml-file";
-import type { PythonExecutableOptions } from "./python-project";
+import { uv } from "../util/exec";
 
 /**
  * Options for UV project
@@ -174,7 +174,7 @@ export class Uv
   }
 
   public setupEnvironment(): void {
-    const result = execOrUndefined("which uv", {
+    const result = uv.tryCapture(["--version"], {
       cwd: this.project.outdir,
     });
     if (!result) {
@@ -186,7 +186,7 @@ export class Uv
 
     // Create venv with the specific Python version
     // this will install the requested python version if needed
-    exec(`uv venv --python "${this.venvPython}" --clear .venv`, {
+    uv.run(["venv", "--python", this.venvPython, "--clear", ".venv"], {
       cwd: this.project.outdir,
     });
     this.project.logger.info(

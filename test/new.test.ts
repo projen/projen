@@ -1,6 +1,5 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
-import { execSync } from "child_process";
 import { mkdirSync, existsSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import {
@@ -14,7 +13,8 @@ import {
   withProjectDir,
 } from "./util";
 import * as inventory from "../src/inventory";
-import { execCapture, normalizePersistedPath } from "../src/util";
+import { normalizePersistedPath } from "../src/util";
+import { git, npm } from "../src/util/exec";
 
 const EXCLUDE_FROM_SNAPSHOT = [".git/**", "node_modules/**"];
 const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
@@ -24,10 +24,10 @@ const EXCLUDE_FROM_SNAPSHOT_EXTENDED = [
 ];
 
 for (const type of inventory.discover()) {
-  test(`projen new ${type.pjid}`, () => {
-    withProjectDir((projectdir) => {
+  test(`projen new ${type.pjid}`, async () => {
+    await withProjectDir(async (projectdir) => {
       // execute `projen new PJID --no-synth` in the project directory
-      execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
+      await execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
 
       // compare generated snapshot
       const actual = directorySnapshot(projectdir, {
@@ -40,11 +40,15 @@ for (const type of inventory.discover()) {
 }
 
 describe("projen new --from", () => {
+  // These tests download external packages from the npm registry (`npm pack`
+  // and `projen new --from`), which can take a while, especially on Windows CI.
+  jest.setTimeout(20_000);
+
   describe("using registry", () => {
-    test("existing package", () => {
-      withProjectDir((projectdir) => {
+    test("existing package", async () => {
+      await withProjectDir(async (projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -67,11 +71,11 @@ describe("projen new --from", () => {
       });
     });
 
-    test("non-existing package", () => {
+    test("non-existing package", async () => {
       try {
-        withProjectDir((projectdir) => {
+        await withProjectDir(async (projectdir) => {
           const nonExistentPackage = `@projen/some-non-existent-package`;
-          execProjenCLI(projectdir, [
+          await execProjenCLI(projectdir, [
             "new",
             "--from",
             nonExistentPackage,
@@ -85,10 +89,10 @@ describe("projen new --from", () => {
       }
     });
 
-    test("non-jsii module", () => {
+    test("non-jsii module", async () => {
       try {
-        withProjectDir((projectdir) => {
-          execProjenCLI(projectdir, [
+        await withProjectDir(async (projectdir) => {
+          await execProjenCLI(projectdir, [
             "new",
             "--from",
             "typescript", // valid package, but not a jsii module
@@ -103,9 +107,9 @@ describe("projen new --from", () => {
       }
     });
 
-    test("using dist tag", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("using dist tag", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@latest",
@@ -122,10 +126,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("can choose from one of multiple external project types", () => {
-      withProjectDir((projectdir) => {
+    test("can choose from one of multiple external project types", async () => {
+      await withProjectDir(async (projectdir) => {
         // execute `projen new --from @taimos/projen@0.0.187 taimos-ts-lib` in the project directory
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@taimos/projen@0.0.187",
@@ -142,10 +146,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("with pjid that is similar to a built-in one", () => {
-      withProjectDir((projectdir) => {
+    test("with pjid that is similar to a built-in one", async () => {
+      await withProjectDir(async (projectdir) => {
         try {
-          execProjenCLI(projectdir, [
+          await execProjenCLI(projectdir, [
             "new",
             "--from",
             "cdklabs-projen-project-types@0.1.48",
@@ -169,14 +173,19 @@ describe("projen new --from", () => {
         "@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
       ],
       ["relative path", "./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
-    ])("projen new --from %s ", (_, external) => {
-      withProjectDir((projectdir) => {
-        const shell = (command: string) =>
-          execSync(command, { cwd: projectdir });
+    ])("projen new --from %s ", async (_, external) => {
+      await withProjectDir(async (projectdir) => {
         // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
-        shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
+        await npm.run(["pack", "@pepperize/projen-awscdk-app-ts@0.0.333"], {
+          cwd: projectdir,
+        });
 
-        execProjenCLI(projectdir, ["new", "--from", external, "--no-post"]);
+        await execProjenCLI(projectdir, [
+          "new",
+          "--from",
+          external,
+          "--no-post",
+        ]);
 
         // patch the projen version in package.json to match the current version
         // otherwise, every bump would need to update these snapshots.
@@ -194,19 +203,24 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projen new --from from external tarball (absolute path)", () => {
-      withProjectDir((projectdir) => {
-        const shell = (command: string) =>
-          execSync(command, { cwd: projectdir });
+    test("projen new --from from external tarball (absolute path)", async () => {
+      await withProjectDir(async (projectdir) => {
         // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
-        shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
+        await npm.run(["pack", "@pepperize/projen-awscdk-app-ts@0.0.333"], {
+          cwd: projectdir,
+        });
         const tarball = resolve(
           projectdir,
           "pepperize-projen-awscdk-app-ts-0.0.333.tgz",
         );
         const normalizedTarball = normalizePersistedPath(tarball);
 
-        execProjenCLI(projectdir, ["new", "--from", tarball, "--no-post"]);
+        await execProjenCLI(projectdir, [
+          "new",
+          "--from",
+          tarball,
+          "--no-post",
+        ]);
 
         // patch the projen version in package.json to match the current version
         // otherwise, every bump would need to update these snapshots.
@@ -235,10 +249,15 @@ describe("projen new --from", () => {
     test.each([
       ["none-existent-package-0.0.1.tgz"],
       ["@projen/non-existing-package@file:./none-existent-package-0.0.1.tgz"],
-    ])("non-existent tarball %s", (external) => {
-      withProjectDir((projectdir) => {
+    ])("non-existent tarball %s", async (external) => {
+      await withProjectDir(async (projectdir) => {
         try {
-          execProjenCLI(projectdir, ["new", "--from", external, "--no-post"]);
+          await execProjenCLI(projectdir, [
+            "new",
+            "--from",
+            external,
+            "--no-post",
+          ]);
         } catch (error: any) {
           // expect an error since this tarball doesn't exist as it wasn't added via `npm pack`
           expect(error.message).toContain(
@@ -264,10 +283,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("with enum values", () => {
-      withProjectDir((projectdir) => {
+    test("with enum values", async () => {
+      await withProjectDir(async (projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -290,10 +309,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("with array option", () => {
-      withProjectDir((projectdir) => {
+    test("with array option", async () => {
+      await withProjectDir(async (projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -313,10 +332,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("options are not overwritten when creating from external project types", () => {
-      withProjectDir((projectdir) => {
+    test("options are not overwritten when creating from external project types", async () => {
+      await withProjectDir(async (projectdir) => {
         // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -334,10 +353,10 @@ describe("projen new --from", () => {
       });
     });
 
-    test("will fail when a required option without a default is not provided", () => {
-      withProjectDir((projectdir) => {
+    test("will fail when a required option without a default is not provided", async () => {
+      await withProjectDir(async (projectdir) => {
         try {
-          execProjenCLI(projectdir, [
+          await execProjenCLI(projectdir, [
             "new",
             "--from",
             "mrpj@0.0.1",
@@ -352,9 +371,9 @@ describe("projen new --from", () => {
       });
     });
 
-    test("--no-comments", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("--no-comments", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "node",
           "--no-comments",
@@ -367,22 +386,22 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projen new rejects unsupported project type option", () => {
-      withProjectDir((projectdir) => {
-        expect(() =>
+    test("projen new rejects unsupported project type option", async () => {
+      await withProjectDir(async (projectdir) => {
+        await expect(
           execProjenCLI(projectdir, [
             "new",
             "jsii",
             "--projenrc-py",
             "--no-synth",
           ]),
-        ).toThrow("Unknown arguments: projenrc-py, projenrcPy");
+        ).rejects.toThrow("Unknown arguments: projenrc-py, projenrcPy");
       });
     });
 
-    test("creating node project with enum-typed CLI arg", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("creating node project with enum-typed CLI arg", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "node",
           "--package-manager",
@@ -395,9 +414,9 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projenrc-json creates node-project", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("projenrc-json creates node-project", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "node",
           "--projenrc-json",
@@ -409,9 +428,9 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projenrc-json creates java project", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("projenrc-json creates java project", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "java",
           "--projenrc-json",
@@ -426,9 +445,9 @@ describe("projen new --from", () => {
       });
     });
 
-    test("projenrc-json creates external project type", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
+    test("projenrc-json creates external project type", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@0.0.333",
@@ -443,15 +462,15 @@ describe("projen new --from", () => {
       });
     });
 
-    test("--outdir path/to/mydir", () => {
-      withProjectDir((projectdir) => {
+    test("--outdir path/to/mydir", async () => {
+      await withProjectDir(async (projectdir) => {
         // GIVEN
-        const shell = (command: string) =>
-          execSync(command, { cwd: projectdir });
-        shell(`mkdir -p ${join("path", "to", "mydir")}`);
+        mkdirSync(join(projectdir, "path", "to", "mydir"), {
+          recursive: true,
+        });
 
         // WHEN
-        execProjenCLI(projectdir, [
+        await execProjenCLI(projectdir, [
           "new",
           "node",
           "--outdir",
@@ -471,9 +490,9 @@ describe("projen new --from", () => {
   });
 
   describe("projen new --from with NODE_ENV=production", () => {
-    test("should install external module successfully", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(
+    test("should install external module successfully", async () => {
+      await withProjectDir(async (projectdir) => {
+        await execProjenCLI(
           projectdir,
           [
             "new",
@@ -489,9 +508,9 @@ describe("projen new --from", () => {
 });
 
 describe("typescript project", () => {
-  test("projenrc-ts creates typescript projenrc", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, [
+  test("projenrc-ts creates typescript projenrc", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, [
         "new",
         "typescript",
         "--no-synth",
@@ -507,18 +526,18 @@ describe("typescript project", () => {
 });
 
 describe("python project", () => {
-  test("includes .projenrc.py by default", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
+  test("includes .projenrc.py by default", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
 
       const output = directorySnapshot(projectdir);
       expect(output[".projenrc.py"]).toBeDefined();
     });
   });
 
-  test("can include .projenrc.js", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, [
+  test("can include .projenrc.js", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, [
         "new",
         "python",
         "--no-synth",
@@ -531,9 +550,9 @@ describe("python project", () => {
     });
   });
 
-  test("can include .projenrc.ts", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, [
+  test("can include .projenrc.ts", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, [
         "new",
         "python",
         "--no-synth",
@@ -550,9 +569,9 @@ describe("python project", () => {
     });
   });
 
-  test("can define an array option", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, [
+  test("can define an array option", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, [
         "new",
         "python",
         "--no-synth",
@@ -568,9 +587,9 @@ describe("python project", () => {
 });
 
 describe("initial values", () => {
-  test("cli can override initial values", () => {
-    withProjectDir((projectdir) => {
-      execProjenCLI(projectdir, [
+  test("cli can override initial values", async () => {
+    await withProjectDir(async (projectdir) => {
+      await execProjenCLI(projectdir, [
         "new",
         "typescript",
         "--projenrc-ts",
@@ -587,13 +606,13 @@ describe("initial values", () => {
 });
 
 describe("git", () => {
-  test("--git (default) will initialize a git repo and create a commit", () => {
-    withProjectDir(
-      (projectdir) => {
-        execProjenCLI(projectdir, ["new", "project"]);
+  test("--git (default) will initialize a git repo and create a commit", async () => {
+    await withProjectDir(
+      async (projectdir) => {
+        await execProjenCLI(projectdir, ["new", "project"]);
         expect(
-          execCapture("git log", { cwd: projectdir })
-            .toString("utf8")
+          git
+            .capture(["log"], { cwd: projectdir })
             .includes("chore: project created with projen"),
         ).toBeTruthy();
       },
@@ -601,9 +620,9 @@ describe("git", () => {
     );
   });
 
-  test("--git (default) respects init.defaultBranch setting", () => {
-    withProjectDir(
-      (projectdir) => {
+  test("--git (default) respects init.defaultBranch setting", async () => {
+    await withProjectDir(
+      async (projectdir) => {
         const defaultBranch = "test-default-branch";
 
         // Simulate git config using env variables
@@ -615,21 +634,21 @@ describe("git", () => {
           GIT_CONFIG_VALUE_0: defaultBranch,
         };
 
-        execProjenCLI(projectdir, ["new", "project"], env);
+        await execProjenCLI(projectdir, ["new", "project"], env);
         expect(
-          execCapture("git rev-parse --abbrev-ref HEAD", {
+          git.capture(["rev-parse", "--abbrev-ref", "HEAD"], {
             cwd: projectdir,
-          }).toString(),
+          }),
         ).toContain(defaultBranch);
       },
       { git: false },
     );
   });
 
-  test("--no-git will not create a git repo", () => {
-    withProjectDir(
-      (projectdir) => {
-        execProjenCLI(projectdir, ["new", "project", "--no-git"]);
+  test("--no-git will not create a git repo", async () => {
+    await withProjectDir(
+      async (projectdir) => {
+        await execProjenCLI(projectdir, ["new", "project", "--no-git"]);
         expect(existsSync(join(projectdir, ".git"))).toBeFalsy();
       },
       { git: false },
@@ -639,13 +658,13 @@ describe("git", () => {
 
 describe("regressions", () => {
   // https://github.com/projen/projen/issues/2837
-  test("projen new --from does not fail when save=false in npm config", () => {
-    withProjectDir((projectdir) => {
+  test("projen new --from does not fail when save=false in npm config", async () => {
+    await withProjectDir(async (projectdir) => {
       // Tells Node to not save packages on install. However we must save the external package to determine its name.
       writeFileSync(join(projectdir, ".npmrc"), "save=false\n");
 
       // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
-      execProjenCLI(
+      await execProjenCLI(
         projectdir,
         [
           "new",
@@ -673,10 +692,10 @@ describe("regressions", () => {
   });
 
   // https://github.com/projen/projen/issues/2649
-  test("projen new without any arguments displays full help", () => {
-    withProjectDir((projectdir) => {
+  test("projen new without any arguments displays full help", async () => {
+    await withProjectDir(async (projectdir) => {
       try {
-        execProjenCLI(projectdir, ["new"]);
+        await execProjenCLI(projectdir, ["new"]);
       } catch (error: any) {
         expect(error.message).toMatch("Creates a new projen project");
         expect(error.message).toMatch("Commands:");
@@ -686,13 +705,13 @@ describe("regressions", () => {
   });
 
   // https://github.com/projen/projen/issues/2443
-  test("can create external project in directory path containing a space", () => {
+  test("can create external project in directory path containing a space", async () => {
     const pathWithSpace = join(mkdtemp(), "path with space");
     mkdirSync(pathWithSpace, { recursive: true });
 
-    withProjectDir(
-      (projectdir) => {
-        execProjenCLI(projectdir, [
+    await withProjectDir(
+      async (projectdir) => {
+        await execProjenCLI(projectdir, [
           "new",
           "--from",
           "@pepperize/projen-awscdk-app-ts@latest",

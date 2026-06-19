@@ -5,7 +5,8 @@ import { promises as fs } from "fs";
 import * as path from "node:path";
 import type { Config } from "conventional-changelog-config-spec";
 import * as logging from "../logging";
-import { exec, execCapture } from "../util";
+import { git, node, npx } from "../util/exec";
+import type { AsyncTool, Tool } from "../util/exec";
 
 const DEFAULT_CATV_SPEC = "commit-and-tag-version@^12";
 
@@ -27,25 +28,34 @@ export interface InvokeOptions {
 }
 
 export class CommitAndTagVersion {
-  private readonly cmd: string;
+  private readonly tool: Tool | AsyncTool;
+  private readonly args: string[];
 
   constructor(
     packageSpec: string | undefined,
     private readonly cwd: string,
     private readonly options: CommitAndTagOptions,
   ) {
-    let cmd;
+    let resolvedCli: string | undefined;
     if (!packageSpec) {
       // If no packageSpec is given, try and resolve the CATV binary
       // from devDependencies. This will speed up execution a lot.
       try {
-        cmd = `${process.execPath} ${require.resolve("commit-and-tag-version/bin/cli.js")}`;
+        resolvedCli = require.resolve("commit-and-tag-version/bin/cli.js");
       } catch {
-        // Oh well
+        // not installed locally; fall back to npx below
       }
     }
 
-    this.cmd = cmd ?? `npx ${packageSpec ?? DEFAULT_CATV_SPEC}`;
+    if (resolvedCli) {
+      // Run the resolved CLI directly with node - fully shell-free.
+      this.tool = node;
+      this.args = [resolvedCli];
+    } else {
+      // npx is a Windows `.cmd` shim, so it runs via the cross-platform helper.
+      this.tool = npx;
+      this.args = [packageSpec ?? DEFAULT_CATV_SPEC];
+    }
   }
 
   /**
@@ -93,11 +103,9 @@ export class CommitAndTagVersion {
     try {
       let ret: any;
       if (options.capture) {
-        ret = execCapture(this.cmd, {
-          cwd: this.cwd,
-        }).toString();
+        ret = await this.tool.capture(this.args, { cwd: this.cwd });
       } else {
-        ret = exec(this.cmd, { cwd: this.cwd });
+        await this.tool.run(this.args, { cwd: this.cwd });
       }
       return ret;
     } finally {
@@ -116,20 +124,18 @@ export class CommitAndTagVersion {
    * would be empty).
    */
   public async regeneratePreviousChangeLog(version: string, latestTag: string) {
-    const oldCommit = execCapture(`git rev-parse ${latestTag}`, {
+    const oldCommit = git.capture(["rev-parse", latestTag], {
       cwd: this.cwd,
-    })
-      .toString("utf8")
-      .trim();
+    });
 
-    exec(`git tag --delete ${latestTag}`, { cwd: this.cwd });
+    git.run(["tag", "--delete", latestTag], { cwd: this.cwd });
     try {
       await this.invoke({
         releaseAs: version,
         skipBump: true,
       });
     } finally {
-      exec(`git tag ${latestTag} ${oldCommit}`, { cwd: this.cwd });
+      git.run(["tag", latestTag, oldCommit], { cwd: this.cwd });
     }
   }
 

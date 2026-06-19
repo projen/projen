@@ -89,8 +89,8 @@ test("ensure python import is correctly resolved to jsiiFqn when python module i
   expect(resolvedImportName).toEqual(jsiiFqn);
 });
 
-test("generate projenrc in python with a given outdir", () => {
-  withProjectDir((projectdir) => {
+test("generate projenrc in python with a given outdir", async () => {
+  await withProjectDir(async (projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.python.PythonProject", {

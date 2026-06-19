@@ -49,12 +49,12 @@ describe("JsiiProject with default settings", () => {
     });
   });
 
-  it("compiles", () => {
+  it("compiles", async () => {
     const project = new TestJsiiProject();
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -76,7 +76,7 @@ describe("JsiiProject with modern jsiiVersion", () => {
     expect(output["package.json"].resolutions).toBeUndefined();
   });
 
-  it("compiles", () => {
+  it("compiles", async () => {
     const project = new TestJsiiProject({
       jsiiVersion: "~5.9.0",
       devDeps: ["jsii-pacmak@1.135.0"],
@@ -84,7 +84,7 @@ describe("JsiiProject with modern jsiiVersion", () => {
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -106,14 +106,14 @@ describe("JsiiProject with jsiiVersion: '*'", () => {
     expect(output["package.json"].resolutions).toBeUndefined();
   });
 
-  it("compiles", () => {
+  it("compiles", async () => {
     const project = new TestJsiiProject({
       jsiiVersion: "*",
     });
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -132,7 +132,7 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
         process.env.CI = originalCI;
       });
 
-      it("compiles", () => {
+      it("compiles", async () => {
         const project = new TestJsiiProject({
           minNodeVersion,
           docgen: false,
@@ -141,7 +141,7 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
 
         project.synth();
 
-        execProjenCLI(project.outdir, ["compile"]);
+        await execProjenCLI(project.outdir, ["compile"]);
       });
     });
   },

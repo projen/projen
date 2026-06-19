@@ -7,6 +7,7 @@ import { TASKS_MANIFEST_VERSION } from "../../src/common";
 import * as logging from "../../src/logging";
 import type { Project } from "../../src/project";
 import type { TasksManifest } from "../../src/task-model";
+import { node } from "../../src/util/exec";
 import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -751,29 +752,28 @@ function executeTask(
 ) {
   p.synth();
 
-  const args = [require.resolve("../../lib/cli"), taskName].map(
-    (x) => `"${x}"`,
-  );
-
-  const result = spawnSync(
-    `"${process.execPath}"`,
-    [...args, ...additionalArgs],
-    {
-      cwd: p.outdir,
-      shell: true,
-      env: { ...process.env, ...env },
-      timeout: 10_000, // let's try to catch hanging processes sooner than later
-    },
-  );
-  if (result.status !== 0) {
-    throw new Error(`non-zero exit code: ${result.stderr.toString("utf-8")}`);
+  let stdout: string;
+  try {
+    // Run the compiled CLI through the same shell-free `tool` helper the rest
+    // of the codebase uses; `capture` returns its stdout.
+    stdout = node.capture(
+      [require.resolve("../../lib/cli"), taskName, ...additionalArgs],
+      { cwd: p.outdir, env },
+    );
+  } catch (e: any) {
+    // `capture` throws on a non-zero exit; surface the CLI's stderr the way
+    // these tests assert on.
+    if (typeof e?.status === "number") {
+      throw new Error(
+        `non-zero exit code: ${e.stderr?.toString("utf-8") ?? ""}`,
+      );
+    }
+    throw e;
   }
 
-  // Split by any line terminator. The line terminator would depend on the OS, the shell where the command is running and the binary which runs the command called. It could be any of \n, \r\n, or \r.
-  return result.stdout
-    .toString("utf-8")
-    .trim()
-    .split(/\r\n|\n|\r/);
+  // Split by any line terminator: \n, \r\n, or \r depending on the OS and the
+  // binary that produced the output.
+  return stdout.split(/\r\n|\n|\r/);
 }
 
 describe("ejected run-task.cjs bundle", () => {

@@ -1,4 +1,3 @@
-import child_process from "child_process";
 import {
   copyFileSync,
   mkdirSync,
@@ -10,6 +9,7 @@ import * as os from "os";
 import { join, dirname, basename } from "path";
 import * as glob from "fast-glob";
 import { mkdtemp, directorySnapshot, sanitizeOutput } from "./util";
+import { node } from "../src/util/exec";
 
 const samples = join(__dirname, "integration");
 const files = glob.sync("**/*.projenrc.js", { cwd: samples });
@@ -19,7 +19,7 @@ const files = glob.sync("**/*.projenrc.js", { cwd: samples });
 const projenModule = join(__dirname, "..");
 
 for (const projenrc of files) {
-  test(basename(projenrc, ".projenrc.js"), () => {
+  test(basename(projenrc, ".projenrc.js"), async () => {
     const workdir = mkdtemp();
     const base = join(samples, dirname(projenrc));
     if (base !== samples) {
@@ -39,13 +39,9 @@ for (const projenrc of files) {
     );
 
     // synthesize by running the projenrc directly, with post-synth disabled.
-    child_process.execFileSync(process.execPath, [".projenrc.js"], {
-      stdio: ["inherit", 2, "pipe"],
+    node.run([".projenrc.js"], {
       cwd: workdir,
-      env: { ...process.env, PROJEN_DISABLE_POST: "1" } as Record<
-        string,
-        string
-      >,
+      env: { PROJEN_DISABLE_POST: "1" },
     });
 
     // patch the projen version in package.json to match the current version

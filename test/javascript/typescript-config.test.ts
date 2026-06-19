@@ -19,8 +19,8 @@ describe("TypescriptConfig", () => {
     process.env.PROJEN_DISABLE_POST = ENV_PROJEN_DISABLE_POST;
   });
 
-  test("TypeScript should parse generated config without warnings", () => {
-    withProjectDir((outdir) => {
+  test("TypeScript should parse generated config without warnings", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -44,8 +44,8 @@ describe("TypescriptConfig", () => {
     });
   });
 
-  test("TypeScript should parse generated config with extensions without warnings", () => {
-    withProjectDir((outdir) => {
+  test("TypeScript should parse generated config with extensions without warnings", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -76,8 +76,8 @@ describe("TypescriptConfig", () => {
     });
   });
 
-  test("TypeScript should allow parse package for extends.", () => {
-    withProjectDir((outdir) => {
+  test("TypeScript should allow parse package for extends.", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -103,8 +103,8 @@ describe("TypescriptConfig", () => {
     });
   });
 
-  test("TypeScript should allow parse package for extends witout compilerOptions.", () => {
-    withProjectDir((outdir) => {
+  test("TypeScript should allow parse package for extends witout compilerOptions.", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -143,8 +143,8 @@ describe("TypescriptConfig", () => {
     }).toThrow(/Must provide either `extends` or `compilerOptions`/);
   });
 
-  test("TypeScript should parse generated config with multiple extensions", () => {
-    withProjectDir((outdir) => {
+  test("TypeScript should parse generated config with multiple extensions", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new NodeProject({
         name: "project",
         defaultReleaseBranch: "main",
@@ -282,8 +282,13 @@ describe("TypescriptConfig", () => {
     }),
   ])(
     "Should warn when using extends with %p",
-    ({ tsVersion, manifestVersion, extends: extendsPaths, expectWarn }) => {
-      withProjectDir((outdir) => {
+    async ({
+      tsVersion,
+      manifestVersion,
+      extends: extendsPaths,
+      expectWarn,
+    }) => {
+      await withProjectDir(async (outdir) => {
         const project = new NodeProject({
           name: "project",
           defaultReleaseBranch: "main",
