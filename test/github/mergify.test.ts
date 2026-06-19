@@ -49,14 +49,16 @@ describe("mergify", () => {
     // GIVEN
     const project = createProject({
       autoMerge: false,
-      mergifyOptions: {
-        rules: [
-          {
-            actions: ["action"],
-            conditions: ["condition"],
-            name: "rule-name",
-          },
-        ],
+      githubOptions: {
+        mergifyOptions: {
+          rules: [
+            {
+              actions: ["action"],
+              conditions: ["condition"],
+              name: "rule-name",
+            },
+          ],
+        },
       },
     });
 

@@ -6,7 +6,7 @@ test("happy flow", () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: "my-app",
     groupId: "org.acme",
-    cdkVersion: "1.130.0",
+    cdkVersion: "2.189.1",
     mainClass: "org.bacme.BoomApp",
     name: "my-app",
     version: "0.1.0",
@@ -38,7 +38,7 @@ test("mainClass", () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: "my-app",
     groupId: "org.acme",
-    cdkVersion: "1.130.0",
+    cdkVersion: "2.189.1",
     mainClass: "org.acme.jojo.MyApp",
     name: "my-app",
     version: "0.1.0",
@@ -48,75 +48,6 @@ test("mainClass", () => {
   expect(snapshot["cdk.json"].app).toStrictEqual(
     "mvn exec:java --quiet -Dexec.mainClass=org.acme.jojo.MyApp",
   );
-});
-
-test("deps", () => {
-  const p = new awscdk.AwsCdkJavaApp({
-    artifactId: "my-app",
-    groupId: "org.acme",
-    cdkVersion: "1.120.0",
-    mainClass: "org.acme.jojo.MyApp",
-    name: "my-app",
-    version: "0.1.0",
-    cdkDependencies: [
-      "software.amazon.awscdk/aws-lambda",
-      "software.amazon.awscdk/aws-sns",
-    ],
-  });
-
-  p.addCdkDependency("software.amazon.awscdk/aws-sqs");
-
-  const snapshot = Testing.synth(p);
-  const pom = JSON.parse(
-    xml.convert(snapshot["pom.xml"], {
-      format: "json",
-    }),
-  );
-
-  expect(
-    pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.amazon.awscdk",
-    ),
-  ).toStrictEqual([
-    {
-      artifactId: "aws-lambda",
-      groupId: "software.amazon.awscdk",
-      version: "[1.120.0,2.0.0)",
-    },
-    {
-      artifactId: "aws-sns",
-      groupId: "software.amazon.awscdk",
-      version: "[1.120.0,2.0.0)",
-    },
-    {
-      artifactId: "aws-sqs",
-      groupId: "software.amazon.awscdk",
-      version: "[1.120.0,2.0.0)",
-    },
-    {
-      artifactId: "core",
-      groupId: "software.amazon.awscdk",
-      version: "[1.120.0,2.0.0)",
-    },
-    {
-      artifactId: "assertions",
-      groupId: "software.amazon.awscdk",
-      version: "[1.120.0,2.0.0)",
-      scope: "test",
-    },
-  ]);
-
-  expect(
-    pom.project.dependencies.dependency.filter(
-      (d: any) => d.groupId === "software.constructs",
-    ),
-  ).toStrictEqual([
-    {
-      artifactId: "constructs",
-      groupId: "software.constructs",
-      version: "[3.2.27,4.0.0)",
-    },
-  ]);
 });
 
 test("deps cdkv2", () => {
@@ -165,7 +96,7 @@ test("can disable sample code", () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: "my-app",
     groupId: "org.acme",
-    cdkVersion: "1.120.0",
+    cdkVersion: "2.189.1",
     mainClass: "org.acme.jojo.MyApp",
     sampleJavaPackage: "org.acme",
     sample: false,

@@ -49,7 +49,7 @@ test("renderable default values simulation", () => {
     name: "myOption",
     switch: "my-option",
     simpleType: "boolean",
-    fullType: { primitive: "boolean" },
+    type: { primitive: "boolean" },
     parent: "MyModule",
   };
   expect(() => throwIfNotRenderable(baseOption)).not.toThrow();

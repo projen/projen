@@ -27,14 +27,6 @@ export interface BundlerOptions {
   readonly assetsDir?: string;
 
   /**
-   * Install the `bundle` command as a pre-compile phase.
-   *
-   * @default true
-   * @deprecated Use `runBundleTask` instead.
-   */
-  readonly addToPreCompile?: boolean;
-
-  /**
    * Choose which phase (if any) to add the `bundle` command to.
    *
    * Note: If using `addBundle()` with the `bundleCompiledResults`, this option
@@ -93,11 +85,7 @@ export class Bundler extends Component {
     this.bundledir = options.assetsDir ?? "assets";
     this.loaders = options.loaders;
 
-    this.runBundleTask =
-      options.runBundleTask ??
-      (options.addToPreCompile === false
-        ? RunBundleTask.MANUAL
-        : RunBundleTask.PRE_COMPILE);
+    this.runBundleTask = options.runBundleTask ?? RunBundleTask.PRE_COMPILE;
   }
 
   /**
@@ -577,7 +565,6 @@ export enum RunBundleTask {
    * // to go to the "lib" directory:
    * const project = new TypeScriptProject({
    *   name: "test",
-   *   defaultReleaseBranch: "main",
    *   tsconfig: {
    *     compilerOptions: {
    *       outDir: "lib",

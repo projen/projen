@@ -272,10 +272,6 @@ export interface JobPermissions {
   readonly packages?: JobPermission;
   readonly pages?: JobPermission;
   readonly pullRequests?: JobPermission;
-  /**
-   * @deprecated removed by GitHub
-   */
-  readonly repositoryProjects?: JobPermission;
   readonly securityEvents?: JobPermission;
   readonly statuses?: JobPermission;
 }
@@ -328,10 +324,6 @@ export interface AppPermissions {
   readonly pages?: AppPermission;
   readonly profile?: AppPermission;
   readonly pullRequests?: AppPermission;
-  /**
-   * @deprecated removed by GitHub
-   */
-  readonly repositoryAnnouncementBanners?: AppPermission;
   readonly repositoryCustomProperties?: AppPermission;
   readonly repositoryHooks?: AppPermission;
   readonly repositoryProjects?: AppPermission;

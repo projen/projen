@@ -8,7 +8,7 @@ describe("Publisher Trusted Publishing Validation", () => {
   beforeEach(() => {
     project = new TestProject();
     release = new Release(project, {
-      task: project.buildTask,
+      tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
       artifactsDirectory: "dist",

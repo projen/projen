@@ -3,29 +3,7 @@ import { Component } from "../component";
 import { JsonFile } from "../json";
 import type { Project } from "../project";
 import { tryReadFileSync } from "../util";
-import { FEATURE_FLAGS_V1, FEATURE_FLAGS_V2 } from "./internal";
-
-/**
- * CDK V1 feature flags configuration.
- * @deprecated CDK V1 is EOS. Upgrade to CDK V2.
- */
-export class CdkFeatureFlagsV1 implements ICdkFeatureFlags {
-  /**
-   * Disable all feature flags.
-   */
-  public static readonly NONE = new CdkFeatureFlagsV1({});
-
-  /**
-   * Enable all CDK V1 feature flags.
-   */
-  public static readonly ALL = new CdkFeatureFlagsV1(FEATURE_FLAGS_V1);
-
-  public readonly flags: Record<string, unknown>;
-
-  private constructor(flags: Record<string, unknown>) {
-    this.flags = flags;
-  }
-}
+import { FEATURE_FLAGS_V2 } from "./internal";
 
 /**
  * CDK V2 feature flags configuration.
@@ -86,12 +64,6 @@ export interface ICdkFeatureFlags {
  * CDK feature flags configuration.
  */
 export class CdkFeatureFlags implements ICdkFeatureFlags {
-  /**
-   * CDK V1 feature flags configuration.
-   * @deprecated CDK V1 is EOS. Upgrade to CDK V2.
-   */
-  public static readonly V1 = CdkFeatureFlagsV1;
-
   /**
    * CDK V2 feature flags configuration.
    */

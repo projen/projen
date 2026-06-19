@@ -57,20 +57,10 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   readonly publishToGo?: JsiiGoTarget;
 
   /**
-   * @deprecated use `publishToPyPi`
-   */
-  readonly python?: JsiiPythonTarget;
-
-  /**
    * Publish to NuGet
    * @default - no publishing
    */
   readonly publishToNuget?: JsiiDotNetTarget;
-
-  /**
-   * @deprecated use `publishToNuget`
-   */
-  readonly dotnet?: JsiiDotNetTarget;
 
   /**
    * Automatically run API compatibility test against the latest version published to npm after compilation.
@@ -243,9 +233,9 @@ export class JsiiProject extends TypeScriptProject {
       new JsiiBuild(
         {
           publishToMaven: options.publishToMaven,
-          publishToPypi: options.publishToPypi ?? options.python,
+          publishToPypi: options.publishToPypi,
           publishToGo: options.publishToGo,
-          publishToNuget: options.publishToNuget ?? options.dotnet,
+          publishToNuget: options.publishToNuget,
           compat: options.compat,
           compatIgnore: options.compatIgnore,
           excludeTypescript: options.excludeTypescript,

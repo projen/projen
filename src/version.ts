@@ -94,11 +94,6 @@ export interface VersionOptions {
 }
 
 export class Version extends Component {
-  /**
-   * @deprecated use `version.bumpPackage` on the component instance instead
-   */
-  public static readonly STANDARD_VERSION = COMMIT_AND_TAG_VERSION_DEFAULT;
-
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;
 

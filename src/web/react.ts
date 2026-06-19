@@ -1,7 +1,5 @@
 import * as path from "path";
 import { Component } from "../component";
-import type { FileBaseOptions, IResolver } from "../file";
-import { FileBase } from "../file";
 import type { NodeProjectOptions } from "../javascript";
 import {
   NodeProject,
@@ -481,27 +479,5 @@ class ReactSampleCode extends Component {
         ["setupTests." + fileExtWithoutX]: setupTestsJs.join("\n"),
       },
     });
-  }
-}
-
-/**
- * @deprecated No longer used.
- */
-export interface ReactTypeDefOptions extends FileBaseOptions {}
-
-/**
- * @deprecated No longer used.
- */
-export class ReactTypeDef extends FileBase {
-  constructor(
-    project: ReactTypeScriptProject,
-    filePath: string,
-    options: ReactTypeDefOptions = {},
-  ) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver): string | undefined {
-    return ['/// <reference types="react-scripts" />'].join("\n");
   }
 }

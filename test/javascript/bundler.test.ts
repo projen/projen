@@ -451,10 +451,10 @@ test.each([
   // DEFAULT: `addToPreCompile` was true by default
   [{}, true, false],
 
-  // `addToPreCompile` set to false - same as RunBundleTask.MANUAL
+  // RunBundleTask.MANUAL - same as old addToPreCompile: false
   [
     {
-      addToPreCompile: false,
+      runBundleTask: RunBundleTask.MANUAL,
     },
     false,
     false,

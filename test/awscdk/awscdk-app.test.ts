@@ -6,7 +6,6 @@ import {
   LambdaRuntime,
 } from "../../src/awscdk";
 import {
-  FEATURE_FLAGS_V1,
   FEATURE_FLAGS_V2,
   toDeterministicSingletonUuid,
 } from "../../src/awscdk/internal";
@@ -19,7 +18,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       app: "bun --smol my-app.ts",
     });
     const files = synthSnapshot(project);
@@ -30,7 +29,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       packageManager: NodePackageManager.BUN,
     });
     const files = synthSnapshot(project);
@@ -43,7 +42,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       packageManager: NodePackageManager.PNPM,
     });
     const files = synthSnapshot(project);
@@ -56,7 +55,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       packageManager: NodePackageManager.NPM,
     });
     const files = synthSnapshot(project);
@@ -69,7 +68,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       packageManager: NodePackageManager.YARN_BERRY,
     });
     const files = synthSnapshot(project);
@@ -82,7 +81,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       packageManager: NodePackageManager.YARN_CLASSIC,
     });
     const files = synthSnapshot(project);
@@ -95,7 +94,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
     });
     const files = synthSnapshot(project);
     expect(files["cdk.json"].app).toStrictEqual(
@@ -107,7 +106,7 @@ describe("cdk.json", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       appEntrypoint: "my-app.ts",
     });
     const files = synthSnapshot(project);
@@ -121,7 +120,7 @@ describe("cdk.json", () => {
       new AwsCdkTypeScriptApp({
         name: "hello",
         defaultReleaseBranch: "main",
-        cdkVersion: "1.100.0",
+        cdkVersion: "2.189.1",
         app: "bun --smol my-app.ts",
         appEntrypoint: "my-app.ts",
       });
@@ -140,7 +139,7 @@ describe("lambda functions", () => {
       name: "hello",
       outdir: outdir,
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       libdir: "liblib",
       lambdaOptions: {
         runtime: LambdaRuntime.NODEJS_22_X,
@@ -167,7 +166,7 @@ describe("lambda functions", () => {
     const project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       lambdaAutoDiscover: false,
     });
 
@@ -195,7 +194,7 @@ describe("lambda functions", () => {
       name: "hello",
       outdir,
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
       lambdaAutoDiscover: false,
       singletonLambdaAutoDiscover: true,
     });
@@ -220,7 +219,7 @@ describe("synth", () => {
     project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
     });
 
     files = synthSnapshot(project);
@@ -258,7 +257,7 @@ describe("watch", () => {
     project = new AwsCdkTypeScriptApp({
       name: "hello",
       defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
+      cdkVersion: "2.189.1",
     });
 
     files = synthSnapshot(project);
@@ -347,34 +346,6 @@ describe("CDK v2", () => {
     expect(snapshot["cdk.json"].context).toEqual(
       expect.objectContaining(FEATURE_FLAGS_V2),
     );
-  });
-});
-
-describe("CDK v1", () => {
-  let project: AwsCdkTypeScriptApp;
-  let snapshot: SynthOutput;
-
-  beforeEach(() => {
-    project = new AwsCdkTypeScriptApp({
-      name: "hello",
-      defaultReleaseBranch: "main",
-      cdkVersion: "1.100.0",
-      featureFlags: CdkFeatureFlags.V1.ALL,
-    });
-    snapshot = synthSnapshot(project);
-  });
-  it("has a aws-cdk-lib runtime depdendency", () => {
-    expect(snapshot["package.json"].dependencies).toMatchObject({
-      "@aws-cdk/core": "^1.100.0",
-    });
-  });
-  it("has a constructs runtime depdendency", () => {
-    expect(snapshot["package.json"].dependencies).toMatchObject({
-      constructs: "^3.2.27",
-    });
-  });
-  it("has v1 feature flags in context", () => {
-    expect(snapshot["cdk.json"].context).toEqual(FEATURE_FLAGS_V1);
   });
 });
 

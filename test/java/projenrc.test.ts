@@ -1,7 +1,6 @@
 import * as path from "path";
-import type { ProjectOption } from "../../lib/inventory";
-import { generateJavaOptionNames } from "../../lib/java";
-import { Pom } from "../../src/java";
+import type { InventoryProjectOption } from "../../src/inventory";
+import { generateJavaOptionNames, Pom } from "../../src/java";
 import { Projenrc, getJavaImport } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { synthSnapshot, TestProject, withProjectDir } from "../util";
@@ -84,14 +83,14 @@ test("generate projenrc in java", () => {
 
 test("assert unknown manifest type doesn't throw", () => {
   // GIVEN
-  const options: ProjectOption[] = [
+  const options: InventoryProjectOption[] = [
     {
       fqn: "unknown.fqn",
       path: [],
       name: "unknownFqn",
       simpleType: "",
       switch: "",
-      fullType: {},
+      type: {},
       parent: "",
     },
     {
@@ -100,7 +99,7 @@ test("assert unknown manifest type doesn't throw", () => {
       name: "knownFqn",
       simpleType: "",
       switch: "",
-      fullType: {},
+      type: {},
       parent: "",
     },
   ];

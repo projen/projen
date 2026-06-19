@@ -38,7 +38,6 @@ and should follow projen conventions.
 ```typescript
 const project = new TypeScriptProject({
   name: "my-project",
-  defaultReleaseBranch: "main",
 });
 
 // Basic usage - generates files for all supported AI agents
@@ -5699,7 +5698,6 @@ new Project(options: ProjectOptions)
 | <code><a href="#projen.Project.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.Project.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.Project.addTask">addTask</a></code> | Adds a new task to this project. |
-| <code><a href="#projen.Project.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.Project.annotateGenerated">annotateGenerated</a></code> | Consider a set of files as "generated". |
 | <code><a href="#projen.Project.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.Project.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
@@ -5707,7 +5705,6 @@ new Project(options: ProjectOptions)
 | <code><a href="#projen.Project.runTaskCommand">runTaskCommand</a></code> | Returns the shell command to execute in order to run a task. |
 | <code><a href="#projen.Project.synth">synth</a></code> | Synthesize all project files into `outdir`. |
 | <code><a href="#projen.Project.tryFindFile">tryFindFile</a></code> | Finds a file at the specified relative path within this project and all its subprojects. |
-| <code><a href="#projen.Project.tryFindJsonFile">tryFindJsonFile</a></code> | Finds a json file by name. |
 | <code><a href="#projen.Project.tryFindObjectFile">tryFindObjectFile</a></code> | Finds an object file (like JsonFile, YamlFile, etc.) by name. |
 | <code><a href="#projen.Project.tryRemoveFile">tryRemoveFile</a></code> | Finds a file at the specified relative path within this project and removes it. |
 
@@ -5823,22 +5820,6 @@ Task properties.
 
 ---
 
-##### ~~`addTip`~~ <a name="addTip" id="projen.Project.addTip"></a>
-
-```typescript
-public addTip(message: string): void
-```
-
-Prints a "tip" message during synthesis.
-
-###### `message`<sup>Required</sup> <a name="message" id="projen.Project.addTip.parameter.message"></a>
-
-- *Type:* string
-
-The message.
-
----
-
 ##### `annotateGenerated` <a name="annotateGenerated" id="projen.Project.annotateGenerated"></a>
 
 ```typescript
@@ -5942,22 +5923,6 @@ The file path.
 
 If this path is relative, it will be resolved
 from the root of _this_ project.
-
----
-
-##### ~~`tryFindJsonFile`~~ <a name="tryFindJsonFile" id="projen.Project.tryFindJsonFile"></a>
-
-```typescript
-public tryFindJsonFile(filePath: string): JsonFile
-```
-
-Finds a json file by name.
-
-###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.Project.tryFindJsonFile.parameter.filePath"></a>
-
-- *Type:* string
-
-The file path.
 
 ---
 
@@ -6884,229 +6849,6 @@ public readonly file: JsonFile;
 ```
 
 - *Type:* <a href="#projen.JsonFile">JsonFile</a>
-
----
-
-
-### Projenrc <a name="Projenrc" id="projen.Projenrc"></a>
-
-#### Initializers <a name="Initializers" id="projen.Projenrc.Initializer"></a>
-
-```typescript
-import { Projenrc } from 'projen'
-
-new Projenrc(project: Project, options?: ProjenrcJsonOptions)
-```
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.Projenrc.Initializer.parameter.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
-| <code><a href="#projen.Projenrc.Initializer.parameter.options">options</a></code> | <code><a href="#projen.ProjenrcJsonOptions">ProjenrcJsonOptions</a></code> | *No description.* |
-
----
-
-##### `project`<sup>Required</sup> <a name="project" id="projen.Projenrc.Initializer.parameter.project"></a>
-
-- *Type:* <a href="#projen.Project">Project</a>
-
----
-
-##### `options`<sup>Optional</sup> <a name="options" id="projen.Projenrc.Initializer.parameter.options"></a>
-
-- *Type:* <a href="#projen.ProjenrcJsonOptions">ProjenrcJsonOptions</a>
-
----
-
-#### Methods <a name="Methods" id="Methods"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.Projenrc.toString">toString</a></code> | Returns a string representation of this construct. |
-| <code><a href="#projen.Projenrc.with">with</a></code> | Applies one or more mixins to this construct. |
-| <code><a href="#projen.Projenrc.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
-| <code><a href="#projen.Projenrc.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
-| <code><a href="#projen.Projenrc.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-
----
-
-##### ~~`toString`~~ <a name="toString" id="projen.Projenrc.toString"></a>
-
-```typescript
-public toString(): string
-```
-
-Returns a string representation of this construct.
-
-##### ~~`with`~~ <a name="with" id="projen.Projenrc.with"></a>
-
-```typescript
-public with(mixins: ...IMixin[]): IConstruct
-```
-
-Applies one or more mixins to this construct.
-
-Mixins are applied in order. The list of constructs is captured at the
-start of the call, so constructs added by a mixin will not be visited.
-Use multiple `with()` calls if subsequent mixins should apply to added
-constructs.
-
-###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.Projenrc.with.parameter.mixins"></a>
-
-- *Type:* ...constructs.IMixin[]
-
-The mixins to apply.
-
----
-
-##### ~~`postSynthesize`~~ <a name="postSynthesize" id="projen.Projenrc.postSynthesize"></a>
-
-```typescript
-public postSynthesize(): void
-```
-
-Called after synthesis.
-
-Order is *not* guaranteed.
-
-##### ~~`preSynthesize`~~ <a name="preSynthesize" id="projen.Projenrc.preSynthesize"></a>
-
-```typescript
-public preSynthesize(): void
-```
-
-Called before synthesis.
-
-##### ~~`synthesize`~~ <a name="synthesize" id="projen.Projenrc.synthesize"></a>
-
-```typescript
-public synthesize(): void
-```
-
-Synthesizes files to the project output directory.
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.Projenrc.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
-| <code><a href="#projen.Projenrc.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.Projenrc.of">of</a></code> | Returns the `Projenrc` instance associated with a project or `undefined` if there is no Projenrc. |
-
----
-
-##### ~~`isConstruct`~~ <a name="isConstruct" id="projen.Projenrc.isConstruct"></a>
-
-```typescript
-import { Projenrc } from 'projen'
-
-Projenrc.isConstruct(x: any)
-```
-
-Checks if `x` is a construct.
-
-Use this method instead of `instanceof` to properly detect `Construct`
-instances, even when the construct library is symlinked.
-
-Explanation: in JavaScript, multiple copies of the `constructs` library on
-disk are seen as independent, completely different libraries. As a
-consequence, the class `Construct` in each copy of the `constructs` library
-is seen as a different class, and an instance of one class will not test as
-`instanceof` the other class. `npm install` will not create installations
-like this, but users may manually symlink construct libraries together or
-use a monorepo tool: in those cases, multiple copies of the `constructs`
-library can be accidentally installed, and `instanceof` will behave
-unpredictably. It is safest to avoid using `instanceof`, and using
-this type-testing method instead.
-
-###### `x`<sup>Required</sup> <a name="x" id="projen.Projenrc.isConstruct.parameter.x"></a>
-
-- *Type:* any
-
-Any object.
-
----
-
-##### ~~`isComponent`~~ <a name="isComponent" id="projen.Projenrc.isComponent"></a>
-
-```typescript
-import { Projenrc } from 'projen'
-
-Projenrc.isComponent(x: any)
-```
-
-Test whether the given construct is a component.
-
-###### `x`<sup>Required</sup> <a name="x" id="projen.Projenrc.isComponent.parameter.x"></a>
-
-- *Type:* any
-
----
-
-##### ~~`of`~~ <a name="of" id="projen.Projenrc.of"></a>
-
-```typescript
-import { Projenrc } from 'projen'
-
-Projenrc.of(project: Project)
-```
-
-Returns the `Projenrc` instance associated with a project or `undefined` if there is no Projenrc.
-
-###### `project`<sup>Required</sup> <a name="project" id="projen.Projenrc.of.parameter.project"></a>
-
-- *Type:* <a href="#projen.Project">Project</a>
-
-The project.
-
----
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.Projenrc.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.Projenrc.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
-| <code><a href="#projen.Projenrc.property.filePath">filePath</a></code> | <code>string</code> | The path of the projenrc file. |
-
----
-
-##### ~~`node`~~<sup>Required</sup> <a name="node" id="projen.Projenrc.property.node"></a>
-
-- *Deprecated:* use `ProjenrcJson`
-
-```typescript
-public readonly node: Node;
-```
-
-- *Type:* constructs.Node
-
-The tree node.
-
----
-
-##### ~~`project`~~<sup>Required</sup> <a name="project" id="projen.Projenrc.property.project"></a>
-
-- *Deprecated:* use `ProjenrcJson`
-
-```typescript
-public readonly project: Project;
-```
-
-- *Type:* <a href="#projen.Project">Project</a>
-
----
-
-##### ~~`filePath`~~<sup>Required</sup> <a name="filePath" id="projen.Projenrc.property.filePath"></a>
-
-- *Deprecated:* use `ProjenrcJson`
-
-```typescript
-public readonly filePath: string;
-```
-
-- *Type:* string
-
-The path of the projenrc file.
 
 ---
 
@@ -10076,25 +9818,6 @@ The name of the file that contains the version (under `artifactsDirectory`).
 
 ---
 
-#### Constants <a name="Constants" id="Constants"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.Version.property.STANDARD_VERSION">STANDARD_VERSION</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### ~~`STANDARD_VERSION`~~<sup>Required</sup> <a name="STANDARD_VERSION" id="projen.Version.property.STANDARD_VERSION"></a>
-
-- *Deprecated:* use `version.bumpPackage` on the component instance instead
-
-```typescript
-public readonly STANDARD_VERSION: string;
-```
-
-- *Type:* string
-
----
 
 ### XmlFile <a name="XmlFile" id="projen.XmlFile"></a>
 
@@ -13873,6 +13596,122 @@ Omits empty objects and arrays.
 
 ---
 
+### ProjectOption <a name="ProjectOption" id="projen.ProjectOption"></a>
+
+#### Initializer <a name="Initializer" id="projen.ProjectOption.Initializer"></a>
+
+```typescript
+import { ProjectOption } from 'projen'
+
+const projectOption: ProjectOption = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ProjectOption.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.type">type</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.default">default</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.deprecated">deprecated</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.docs">docs</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.featured">featured</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.fqn">fqn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.initialValue">initialValue</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectOption.property.optional">optional</a></code> | <code>boolean</code> | *No description.* |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.ProjectOption.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `type`<sup>Required</sup> <a name="type" id="projen.ProjectOption.property.type"></a>
+
+```typescript
+public readonly type: any;
+```
+
+- *Type:* any
+
+---
+
+##### `default`<sup>Optional</sup> <a name="default" id="projen.ProjectOption.property.default"></a>
+
+```typescript
+public readonly default: string;
+```
+
+- *Type:* string
+
+---
+
+##### `deprecated`<sup>Optional</sup> <a name="deprecated" id="projen.ProjectOption.property.deprecated"></a>
+
+```typescript
+public readonly deprecated: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `docs`<sup>Optional</sup> <a name="docs" id="projen.ProjectOption.property.docs"></a>
+
+```typescript
+public readonly docs: string;
+```
+
+- *Type:* string
+
+---
+
+##### `featured`<sup>Optional</sup> <a name="featured" id="projen.ProjectOption.property.featured"></a>
+
+```typescript
+public readonly featured: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `fqn`<sup>Optional</sup> <a name="fqn" id="projen.ProjectOption.property.fqn"></a>
+
+```typescript
+public readonly fqn: string;
+```
+
+- *Type:* string
+
+---
+
+##### `initialValue`<sup>Optional</sup> <a name="initialValue" id="projen.ProjectOption.property.initialValue"></a>
+
+```typescript
+public readonly initialValue: string;
+```
+
+- *Type:* string
+
+---
+
+##### `optional`<sup>Optional</sup> <a name="optional" id="projen.ProjectOption.property.optional"></a>
+
+```typescript
+public readonly optional: boolean;
+```
+
+- *Type:* boolean
+
+---
+
 ### ProjectOptions <a name="ProjectOptions" id="projen.ProjectOptions"></a>
 
 Options for `Project`.
@@ -14079,6 +13918,100 @@ Options for renovatebot.
 
 ---
 
+### ProjectType <a name="ProjectType" id="projen.ProjectType"></a>
+
+#### Initializer <a name="Initializer" id="projen.ProjectType.Initializer"></a>
+
+```typescript
+import { ProjectType } from 'projen'
+
+const projectType: ProjectType = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.ProjectType.property.docsurl">docsurl</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.fqn">fqn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.moduleName">moduleName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.options">options</a></code> | <code><a href="#projen.ProjectOption">ProjectOption</a>[]</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.pjid">pjid</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.typename">typename</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.ProjectType.property.docs">docs</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `docsurl`<sup>Required</sup> <a name="docsurl" id="projen.ProjectType.property.docsurl"></a>
+
+```typescript
+public readonly docsurl: string;
+```
+
+- *Type:* string
+
+---
+
+##### `fqn`<sup>Required</sup> <a name="fqn" id="projen.ProjectType.property.fqn"></a>
+
+```typescript
+public readonly fqn: string;
+```
+
+- *Type:* string
+
+---
+
+##### `moduleName`<sup>Required</sup> <a name="moduleName" id="projen.ProjectType.property.moduleName"></a>
+
+```typescript
+public readonly moduleName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.ProjectType.property.options"></a>
+
+```typescript
+public readonly options: ProjectOption[];
+```
+
+- *Type:* <a href="#projen.ProjectOption">ProjectOption</a>[]
+
+---
+
+##### `pjid`<sup>Required</sup> <a name="pjid" id="projen.ProjectType.property.pjid"></a>
+
+```typescript
+public readonly pjid: string;
+```
+
+- *Type:* string
+
+---
+
+##### `typename`<sup>Required</sup> <a name="typename" id="projen.ProjectType.property.typename"></a>
+
+```typescript
+public readonly typename: string;
+```
+
+- *Type:* string
+
+---
+
+##### `docs`<sup>Optional</sup> <a name="docs" id="projen.ProjectType.property.docs"></a>
+
+```typescript
+public readonly docs: string;
+```
+
+- *Type:* string
+
+---
+
 ### ProjenrcJsonOptions <a name="ProjenrcJsonOptions" id="projen.ProjenrcJsonOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.ProjenrcJsonOptions.Initializer"></a>
@@ -14098,39 +14031,6 @@ const projenrcJsonOptions: ProjenrcJsonOptions = { ... }
 ---
 
 ##### `filename`<sup>Optional</sup> <a name="filename" id="projen.ProjenrcJsonOptions.property.filename"></a>
-
-```typescript
-public readonly filename: string;
-```
-
-- *Type:* string
-- *Default:* ".projenrc.json"
-
-The name of the projenrc file.
-
----
-
-### ProjenrcOptions <a name="ProjenrcOptions" id="projen.ProjenrcOptions"></a>
-
-#### Initializer <a name="Initializer" id="projen.ProjenrcOptions.Initializer"></a>
-
-```typescript
-import { ProjenrcOptions } from 'projen'
-
-const projenrcOptions: ProjenrcOptions = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.ProjenrcOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
-
----
-
-##### ~~`filename`~~<sup>Optional</sup> <a name="filename" id="projen.ProjenrcOptions.property.filename"></a>
-
-- *Deprecated:* use `ProjenrcJsonOptions`
 
 ```typescript
 public readonly filename: string;
@@ -17081,152 +16981,6 @@ public readonly cmd: string;
 ---
 
 
-### Semver <a name="Semver" id="projen.Semver"></a>
-
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.Semver.caret">caret</a></code> | Accept any minor version. |
-| <code><a href="#projen.Semver.latest">latest</a></code> | Latest version. |
-| <code><a href="#projen.Semver.of">of</a></code> | *No description.* |
-| <code><a href="#projen.Semver.pinned">pinned</a></code> | Accept only an exact version. |
-| <code><a href="#projen.Semver.tilde">tilde</a></code> | Accept patches. |
-
----
-
-##### ~~`caret`~~ <a name="caret" id="projen.Semver.caret"></a>
-
-```typescript
-import { Semver } from 'projen'
-
-Semver.caret(version: string)
-```
-
-Accept any minor version.
-
->= version
-< next major version
-
-###### `version`<sup>Required</sup> <a name="version" id="projen.Semver.caret.parameter.version"></a>
-
-- *Type:* string
-
----
-
-##### ~~`latest`~~ <a name="latest" id="projen.Semver.latest"></a>
-
-```typescript
-import { Semver } from 'projen'
-
-Semver.latest()
-```
-
-Latest version.
-
-##### ~~`of`~~ <a name="of" id="projen.Semver.of"></a>
-
-```typescript
-import { Semver } from 'projen'
-
-Semver.of(spec: string)
-```
-
-###### `spec`<sup>Required</sup> <a name="spec" id="projen.Semver.of.parameter.spec"></a>
-
-- *Type:* string
-
----
-
-##### ~~`pinned`~~ <a name="pinned" id="projen.Semver.pinned"></a>
-
-```typescript
-import { Semver } from 'projen'
-
-Semver.pinned(version: string)
-```
-
-Accept only an exact version.
-
-###### `version`<sup>Required</sup> <a name="version" id="projen.Semver.pinned.parameter.version"></a>
-
-- *Type:* string
-
----
-
-##### ~~`tilde`~~ <a name="tilde" id="projen.Semver.tilde"></a>
-
-```typescript
-import { Semver } from 'projen'
-
-Semver.tilde(version: string)
-```
-
-Accept patches.
-
->= version
-< next minor version
-
-###### `version`<sup>Required</sup> <a name="version" id="projen.Semver.tilde.parameter.version"></a>
-
-- *Type:* string
-
----
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.Semver.property.spec">spec</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.Semver.property.mode">mode</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.Semver.property.version">version</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### ~~`spec`~~<sup>Required</sup> <a name="spec" id="projen.Semver.property.spec"></a>
-
-- *Deprecated:* This class will be removed in upcoming releases. if you wish to
-specify semver requirements in `deps`, `devDeps`, etc, specify them like so
-`express@^2.1`.
-
-```typescript
-public readonly spec: string;
-```
-
-- *Type:* string
-
----
-
-##### ~~`mode`~~<sup>Optional</sup> <a name="mode" id="projen.Semver.property.mode"></a>
-
-- *Deprecated:* This class will be removed in upcoming releases. if you wish to
-specify semver requirements in `deps`, `devDeps`, etc, specify them like so
-`express@^2.1`.
-
-```typescript
-public readonly mode: string;
-```
-
-- *Type:* string
-
----
-
-##### ~~`version`~~<sup>Optional</sup> <a name="version" id="projen.Semver.property.version"></a>
-
-- *Deprecated:* This class will be removed in upcoming releases. if you wish to
-specify semver requirements in `deps`, `devDeps`, etc, specify them like so
-`express@^2.1`.
-
-```typescript
-public readonly version: string;
-```
-
-- *Type:* string
-
----
-
-
 ### Task <a name="Task" id="projen.Task"></a>
 
 A task that can be performed on the project.
@@ -17272,7 +17026,6 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
 | <code><a href="#projen.Task.insertStep">insertStep</a></code> | Insert one or more steps at a given index. |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
-| <code><a href="#projen.Task.prepend">prepend</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
@@ -17431,28 +17184,6 @@ public lock(): void
 ```
 
 Forbid additional changes to this task.
-
-##### ~~`prepend`~~ <a name="prepend" id="projen.Task.prepend"></a>
-
-```typescript
-public prepend(shell: string, options?: TaskStepOptions): void
-```
-
-Adds a command at the beginning of the task.
-
-###### `shell`<sup>Required</sup> <a name="shell" id="projen.Task.prepend.parameter.shell"></a>
-
-- *Type:* string
-
-The command to add.
-
----
-
-###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.prepend.parameter.options"></a>
-
-- *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
-
----
 
 ##### `prependExec` <a name="prependExec" id="projen.Task.prependExec"></a>
 
@@ -18578,50 +18309,6 @@ Logging verbosity.
 
 
 ##### `VERBOSE` <a name="VERBOSE" id="projen.LogLevel.VERBOSE"></a>
-
----
-
-
-### ProjectType <a name="ProjectType" id="projen.ProjectType"></a>
-
-Which type of project this is.
-
-#### Members <a name="Members" id="Members"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#projen.ProjectType.UNKNOWN">UNKNOWN</a></code> | This module may be a either a library or an app. |
-| <code><a href="#projen.ProjectType.LIB">LIB</a></code> | This is a library, intended to be published to a package manager and consumed by other projects. |
-| <code><a href="#projen.ProjectType.APP">APP</a></code> | This is an app (service, tool, website, etc). |
-
----
-
-##### ~~`UNKNOWN`~~ <a name="UNKNOWN" id="projen.ProjectType.UNKNOWN"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-This module may be a either a library or an app.
-
----
-
-
-##### ~~`LIB`~~ <a name="LIB" id="projen.ProjectType.LIB"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-This is a library, intended to be published to a package manager and consumed by other projects.
-
----
-
-
-##### ~~`APP`~~ <a name="APP" id="projen.ProjectType.APP"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-This is an app (service, tool, website, etc).
-
-Its artifacts are intended to
-be deployed or published for end-user consumption.
 
 ---
 

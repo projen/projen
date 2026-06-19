@@ -181,7 +181,7 @@ class RunTask {
     for (const [k, v] of Object.entries(this.env)) {
       const vv = v ?? "";
       const trimmed =
-        vv.length > ENV_TRIM_LEN ? vv.substr(0, ENV_TRIM_LEN) + "..." : vv;
+        vv.length > ENV_TRIM_LEN ? vv.substring(0, ENV_TRIM_LEN) + "..." : vv;
       envlogs.push(`${k}=${trimmed}`);
     }
 

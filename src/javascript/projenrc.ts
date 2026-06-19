@@ -3,6 +3,7 @@ import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
+import type { InventoryProjectType } from "../inventory";
 import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 import { Biome } from "./biome/biome";
@@ -72,7 +73,7 @@ export class Projenrc extends ProjenrcFile {
     const { renderedOptions, imports } = renderJavaScriptOptions({
       comments: bootstrap.comments,
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
     });
 
     imports.add(moduleName, importName);

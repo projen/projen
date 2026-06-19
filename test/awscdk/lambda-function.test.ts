@@ -471,7 +471,7 @@ test("auto-discover", () => {
     testdir: project.testdir,
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: new AwsCdkDepsJs(project, {
-      cdkVersion: "1.23.0",
+      cdkVersion: "2.189.1",
       dependencyType: DependencyType.RUNTIME,
     }),
     lambdaOptions: {
@@ -657,7 +657,7 @@ describe("runtime override support", () => {
 
 function cdkDepsForProject(
   project: TypeScriptProject,
-  cdkVersion = "1.0.0",
+  cdkVersion = "2.189.1",
 ): awscdk.AwsCdkDeps {
   return new AwsCdkDepsJs(project, {
     cdkVersion: cdkVersion,

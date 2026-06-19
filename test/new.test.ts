@@ -395,39 +395,6 @@ describe("projen new --from", () => {
       });
     });
 
-    test("creating python project with enum-typed CLI arg", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
-          "new",
-          "python",
-          "--project-type",
-          "lib",
-          "--projenrc-python",
-          "--no-synth",
-        ]);
-
-        const projenrc = directorySnapshot(projectdir)[".projenrc.py"];
-        expect(projenrc).toMatchSnapshot();
-      });
-    });
-
-    test("creating java project with enum-typed CLI arg", () => {
-      withProjectDir((projectdir) => {
-        execProjenCLI(projectdir, [
-          "new",
-          "java",
-          "--project-type",
-          "lib",
-          "--projenrc-java",
-          "--no-synth",
-        ]);
-
-        const projenrc =
-          directorySnapshot(projectdir)["src/test/java/projenrc.java"];
-        expect(projenrc).toMatchSnapshot();
-      });
-    });
-
     test("projenrc-json creates node-project", () => {
       withProjectDir((projectdir) => {
         execProjenCLI(projectdir, [

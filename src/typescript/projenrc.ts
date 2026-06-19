@@ -1,5 +1,6 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { dirname, resolve } from "path";
+import type { InventoryProjectType } from "../inventory";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import type { TypeScriptProject } from "../typescript";
@@ -126,7 +127,7 @@ export class Projenrc extends ProjenrcFile {
 
     const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
       comments: bootstrap.comments,
     });
 

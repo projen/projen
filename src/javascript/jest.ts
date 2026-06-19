@@ -479,15 +479,6 @@ export interface JestConfigOptions {
    * Escape hatch to allow any value
    */
   readonly additionalOptions?: { [name: string]: any };
-
-  /**
-   * Escape hatch to allow any value (JS/TS only)
-   *
-   * @deprecated use `additionalOptions` instead.
-   *
-   * @jsii ignore
-   */
-  readonly [name: string]: any;
 }
 
 /**
@@ -536,26 +527,12 @@ export class WatchPlugin {
 
 export interface JestOptions {
   /**
-   * Collect coverage. Deprecated
-   * @default true
-   * @deprecated use jestConfig.collectCoverage
-   */
-  readonly coverage?: boolean;
-
-  /**
    * Include the `text` coverage reporter, which means that coverage summary is printed
    * at the end of the jest execution.
    *
    * @default true
    */
   readonly coverageText?: boolean;
-
-  /**
-   * Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`
-   * @default ["/node_modules/"]
-   * @deprecated use jestConfig.coveragePathIgnorePatterns or jestConfig.testPathIgnorePatterns respectively
-   */
-  readonly ignorePatterns?: string[];
 
   /**
    * Result processing with jest-junit.
@@ -739,8 +716,9 @@ export class Jest extends Component {
     this.extraCliOptions = options.extraCliOptions ?? [];
     this.passWithNoTests = options.passWithNoTests ?? true;
 
-    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
-      options.ignorePatterns ?? ["/node_modules/"];
+    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
+      "/node_modules/",
+    ];
     this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? [
       "/node_modules/",
     ];
@@ -768,8 +746,7 @@ export class Jest extends Component {
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
-      collectCoverage:
-        options.coverage ?? this.jestConfig?.collectCoverage ?? true,
+      collectCoverage: this.jestConfig?.collectCoverage ?? true,
       coverageReporters: this.coverageReporters,
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns:

@@ -16,7 +16,7 @@ const getTestProject = (
     defaultReleaseBranch: "main",
     sampleCode: false,
     githubOptions: {
-      mergify: false,
+      githubOptions: { mergify: false },
     },
     ...projenOptions,
   });

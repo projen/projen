@@ -442,10 +442,10 @@ export class TypeScriptProject extends NodeProject {
     // the javascript files and not let jest compile it for us.
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
-    if (options.entrypointTypes || this.entrypoint !== "") {
+    if (options.entrypointTypes || this.package.entrypoint !== "") {
       const entrypointPath = path.join(
-        path.dirname(this.entrypoint),
-        path.basename(this.entrypoint, ".js"),
+        path.dirname(this.package.entrypoint),
+        path.basename(this.package.entrypoint, ".js"),
       );
       const normalizedPath = normalizePersistedPath(entrypointPath);
       const entrypointTypes =
@@ -465,7 +465,7 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions(
           {
             include: [`${this.srcdir}/**/*.ts`],
-            // exclude: ['node_modules'], // @TODO: shouldn't we exclude node_modules?
+            exclude: ["node_modules"],
             compilerOptions: {
               rootDir: this.srcdir,
               outDir: this.libdir,
@@ -548,7 +548,6 @@ export class TypeScriptProject extends NodeProject {
         dirs: [this.srcdir],
         devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
-        lintProjenRc: false,
         ...options.eslintOptions,
       });
 
@@ -852,7 +851,7 @@ class SampleCode extends Component {
 export class TypeScriptAppProject extends TypeScriptProject {
   constructor(options: TypeScriptProjectOptions) {
     // Releasing and packaging are coupled. If one is disabled, disable the other by default.
-    const shouldRelease = options.release ?? options.releaseWorkflow ?? false;
+    const shouldRelease = options.release ?? false;
 
     super({
       release: shouldRelease,
@@ -863,16 +862,6 @@ export class TypeScriptAppProject extends TypeScriptProject {
     });
   }
 }
-
-/**
- * @deprecated use `TypeScriptProject`
- */
-export class TypeScriptLibraryProject extends TypeScriptProject {}
-
-/**
- * @deprecated use TypeScriptProjectOptions
- */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {}
 
 /**
  * @internal

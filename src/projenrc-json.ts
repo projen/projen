@@ -52,13 +52,3 @@ export class ProjenrcJson extends ProjenrcFile {
     );
   }
 }
-
-/**
- * @deprecated use `ProjenrcJsonOptions`
- */
-export interface ProjenrcOptions extends ProjenrcJsonOptions {}
-
-/**
- * @deprecated use `ProjenrcJson`
- */
-export class Projenrc extends ProjenrcJson {}

@@ -1406,7 +1406,9 @@ import '@testing-library/jest-dom';
         "react-dom",
       ],
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
       "src/**/*.ts",
       "src",

@@ -1178,7 +1178,9 @@ export default function Home() {
         "react-dom",
       ],
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
       "pages/**/*.ts",
       "**/*.ts",

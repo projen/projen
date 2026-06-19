@@ -715,14 +715,14 @@ describe("npm publishing options", () => {
     );
   });
 
-  test("deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed", () => {
+  test("npmRegistryUrl without trailing slash normalizes correctly", () => {
     // GIVEN
     const project = new TestProject();
 
     // WHEN
     const npm = new NodePackage(project, {
       packageName: "@projen/my-package",
-      npmRegistry: "foo.bar.com",
+      npmRegistryUrl: "https://foo.bar.com",
     });
 
     // THEN
@@ -955,7 +955,7 @@ test("enabling dependabot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
     dependabot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   // THEN
@@ -970,7 +970,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
     renovatebot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   // THEN
@@ -997,7 +997,7 @@ test("renovatebot ignored dependency overrides", () => {
   // WHEN
   const project = new TestNodeProject({
     renovatebot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   project.package.addPackageResolutions(

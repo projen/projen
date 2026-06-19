@@ -8,7 +8,7 @@ test("test if cdk8s synth is possible", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
@@ -55,7 +55,7 @@ test("adding cdk8sImports", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     k8sSpecVersion: "1.20.0",
     cdk8sImports: ["github:crossplane/crossplane@0.14.0"],
@@ -82,7 +82,7 @@ test("constructs version undefined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
   });
 
   const output = synthSnapshot(project);
@@ -99,7 +99,7 @@ test("constructs version pinning", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     constructsVersionPinning: true,
   });
@@ -118,7 +118,7 @@ test("cdk8sPlusVersion undefined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
@@ -136,7 +136,7 @@ test("cdk8sPlusVersion defined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     cdk8sPlusVersion: "1.0.0-beta.200",
   });
@@ -156,7 +156,7 @@ test("cdk8sPlusVersion pinning", () => {
     name: "project",
     defaultReleaseBranch: "main",
     cdk8sPlusVersionPinning: true,
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
