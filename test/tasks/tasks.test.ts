@@ -804,6 +804,7 @@ describe("addSteps", () => {
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest["//"];
+  delete manifest.manifestVersion;
 
   // delete all standard tasks
   delete manifest.tasks.build;

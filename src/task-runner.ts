@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import * as path from "node:path";
 import type { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
-import { PROJEN_DIR } from "./common";
+import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "./common";
 import { Component } from "./component";
 import type { IResolver } from "./file";
 import { JsonFile } from "./json";
@@ -75,6 +75,16 @@ export class ProjenTaskRunner extends Component implements ITaskRunner {
       resolve: (obj, options) => resolve(obj, options),
     };
 
-    return this.project.tasks.resolveTasksManifest(resolver);
+    // The runner owns the on-disk manifest, so it stamps the schema version
+    // onto the logical tasks/env produced by `Tasks`. The version lets the task
+    // runtime detect manifests produced by a newer (potentially incompatible)
+    // version of projen.
+    const resolved: TasksManifest =
+      this.project.tasks.resolveTasksManifest(resolver) ?? {};
+
+    return {
+      manifestVersion: TASKS_MANIFEST_VERSION,
+      ...resolved,
+    };
   }
 }
