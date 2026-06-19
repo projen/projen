@@ -2,13 +2,12 @@ import { spawnSync } from "node:child_process";
 import * as path from "node:path";
 import type { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
-import { PROJEN_DIR } from "./common";
+import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "./common";
 import { Component } from "./component";
 import type { IResolver } from "./file";
 import { JsonFile } from "./json";
 import type { Task } from "./task";
 import type { TasksManifest } from "./task-model";
-import { TasksManifestSchema } from "./util/task-manifest";
 
 export interface ITaskRunner {
   /**
@@ -84,7 +83,7 @@ export class ProjenTaskRunner extends Component implements ITaskRunner {
       this.project.tasks.resolveTasksManifest(resolver) ?? {};
 
     return {
-      manifestVersion: TasksManifestSchema.VERSION,
+      manifestVersion: TASKS_MANIFEST_VERSION,
       ...resolved,
     };
   }

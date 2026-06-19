@@ -3,10 +3,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
 import { TaskRuntime } from "../../src/cli/task-runtime";
+import { TASKS_MANIFEST_VERSION } from "../../src/common";
 import * as logging from "../../src/logging";
 import type { Project } from "../../src/project";
 import type { TasksManifest } from "../../src/task-model";
-import { TasksManifestSchema } from "../../src/util/task-manifest";
 import { mkdtemp, TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
@@ -995,7 +995,7 @@ describe("manifest versioning", () => {
   /** Stamps the current schema version onto a manifest. */
   function versionedManifest(manifest: TasksManifest): TasksManifest {
     return {
-      manifestVersion: TasksManifestSchema.VERSION,
+      manifestVersion: TASKS_MANIFEST_VERSION,
       ...manifest,
     };
   }
@@ -1017,7 +1017,7 @@ describe("manifest versioning", () => {
       readFileSync(join(p.outdir, TaskRuntime.MANIFEST_FILE), "utf-8"),
     );
 
-    expect(manifest.manifestVersion).toBe(TasksManifestSchema.VERSION);
+    expect(manifest.manifestVersion).toBe(TASKS_MANIFEST_VERSION);
     // constructing a runtime over it must not throw
     expect(() => new TaskRuntime(p.outdir)).not.toThrow();
   });
@@ -1067,7 +1067,7 @@ describe("manifest versioning", () => {
     const warn = jest.spyOn(logging, "warn");
 
     const workdir = writeManifest({
-      manifestVersion: TasksManifestSchema.VERSION + 1,
+      manifestVersion: TASKS_MANIFEST_VERSION + 1,
       tasks: { foo: { name: "foo", steps: [{ exec: "echo hi" }] } },
     });
 
