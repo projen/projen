@@ -745,3 +745,16 @@ describe("only one of components can be enabled", () => {
     ).toThrow("Only one of biome and eslint can be enabled.");
   });
 });
+
+describe("TsJestTsconfig", () => {
+  test("factory methods produce the expected ts-jest tsconfig value", () => {
+    expect(TsJestTsconfig.auto().toJSON()).toBe(true);
+    expect(TsJestTsconfig.builtInDefaults().toJSON()).toBe(false);
+    expect(TsJestTsconfig.fromFile("tsconfig.dev.json").toJSON()).toEqual(
+      "tsconfig.dev.json",
+    );
+    expect(TsJestTsconfig.custom({ strict: true }).toJSON()).toEqual({
+      strict: true,
+    });
+  });
+});
