@@ -758,3 +758,18 @@ describe("TsJestTsconfig", () => {
     });
   });
 });
+
+test("compiled tests (testdir under srcdir) generate a jest snapshot resolver", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    srcdir: "src",
+    testdir: "src/__tests__",
+    jest: true,
+  });
+
+  const snapshot = synthSnapshot(project);
+  const resolver = snapshot[".projen/jest-snapshot-resolver.js"];
+  expect(resolver).toContain("resolveSnapshotPath");
+  expect(resolver).toContain("resolveTestPath");
+});
