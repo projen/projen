@@ -8636,6 +8636,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.Tasks.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
 | <code><a href="#projen.Tasks.property.all">all</a></code> | <code><a href="#projen.Task">Task</a>[]</code> | All tasks. |
 | <code><a href="#projen.Tasks.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Returns a copy of the currently global environment for this project. |
+| <code><a href="#projen.Tasks.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The default shell used to run all task commands, or `undefined` for the built-in cross-platform projen shell. |
 
 ---
 
@@ -8682,6 +8683,24 @@ public readonly env: {[ key: string ]: string};
 - *Type:* {[ key: string ]: string}
 
 Returns a copy of the currently global environment for this project.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.Tasks.property.shell"></a>
+
+```typescript
+public readonly shell: TaskShell;
+```
+
+- *Type:* <a href="#projen.TaskShell">TaskShell</a>
+
+The default shell used to run all task commands, or `undefined` for the built-in cross-platform projen shell.
+
+Individual tasks and steps can
+override this.
+Sets the default shell used to run all task commands.
+
+> [{@link TaskCommonOptions.shell }]({@link TaskCommonOptions.shell })
 
 ---
 
@@ -14587,6 +14606,7 @@ const taskCommonOptions: TaskCommonOptions = { ... }
 | <code><a href="#projen.TaskCommonOptions.property.description">description</a></code> | <code>string</code> | The description of this build command. |
 | <code><a href="#projen.TaskCommonOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this task. |
 | <code><a href="#projen.TaskCommonOptions.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
+| <code><a href="#projen.TaskCommonOptions.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The shell used to run this task's commands, including its `condition` and `$(...)` environment evaluation. Use {@link TaskShell} to pick a built-in or an explicit invocation. Set at project, task or step level; the nearest declared level wins. |
 
 ---
 
@@ -14661,6 +14681,19 @@ Task execution will fail if one of these is not defined.
 
 ---
 
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TaskCommonOptions.property.shell"></a>
+
+```typescript
+public readonly shell: TaskShell;
+```
+
+- *Type:* <a href="#projen.TaskShell">TaskShell</a>
+- *Default:* inherited from the task/project, otherwise the built-in projen shell
+
+The shell used to run this task's commands, including its `condition` and `$(...)` environment evaluation. Use {@link TaskShell} to pick a built-in or an explicit invocation. Set at project, task or step level; the nearest declared level wins.
+
+---
+
 ### TaskOptions <a name="TaskOptions" id="projen.TaskOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.TaskOptions.Initializer"></a>
@@ -14680,6 +14713,7 @@ const taskOptions: TaskOptions = { ... }
 | <code><a href="#projen.TaskOptions.property.description">description</a></code> | <code>string</code> | The description of this build command. |
 | <code><a href="#projen.TaskOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this task. |
 | <code><a href="#projen.TaskOptions.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
+| <code><a href="#projen.TaskOptions.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The shell used to run this task's commands, including its `condition` and `$(...)` environment evaluation. Use {@link TaskShell} to pick a built-in or an explicit invocation. Set at project, task or step level; the nearest declared level wins. |
 | <code><a href="#projen.TaskOptions.property.args">args</a></code> | <code>string[]</code> | Should the provided `exec` shell command receive fixed args. |
 | <code><a href="#projen.TaskOptions.property.exec">exec</a></code> | <code>string</code> | Shell command to execute as the first command of the task. |
 | <code><a href="#projen.TaskOptions.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute as the first command of the task, provided as a list of the program followed by its arguments (an "argv"). |
@@ -14756,6 +14790,19 @@ public readonly requiredEnv: string[];
 A set of environment variables that must be defined in order to execute this task.
 
 Task execution will fail if one of these is not defined.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TaskOptions.property.shell"></a>
+
+```typescript
+public readonly shell: TaskShell;
+```
+
+- *Type:* <a href="#projen.TaskShell">TaskShell</a>
+- *Default:* inherited from the task/project, otherwise the built-in projen shell
+
+The shell used to run this task's commands, including its `condition` and `$(...)` environment evaluation. Use {@link TaskShell} to pick a built-in or an explicit invocation. Set at project, task or step level; the nearest declared level wins.
 
 ---
 
@@ -14856,6 +14903,7 @@ const tasksManifest: TasksManifest = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.TasksManifest.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Environment for all tasks. |
 | <code><a href="#projen.TasksManifest.property.manifestVersion">manifestVersion</a></code> | <code>number</code> | The version of the tasks manifest schema. |
+| <code><a href="#projen.TasksManifest.property.shell">shell</a></code> | <code>string \| string[]</code> | The default task shell, in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list. See {@link TaskCommonOptions.shell}. |
 | <code><a href="#projen.TasksManifest.property.tasks">tasks</a></code> | <code>{[ key: string ]: <a href="#projen.TaskSpec">TaskSpec</a>}</code> | All tasks available for this project. |
 
 ---
@@ -14889,6 +14937,18 @@ and are treated as "legacy" for backwards compatibility.
 
 ---
 
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TasksManifest.property.shell"></a>
+
+```typescript
+public readonly shell: string | string[];
+```
+
+- *Type:* string | string[]
+
+The default task shell, in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list. See {@link TaskCommonOptions.shell}.
+
+---
+
 ##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.TasksManifest.property.tasks"></a>
 
 ```typescript
@@ -14905,6 +14965,9 @@ All tasks available for this project.
 
 Specification of a single task.
 
+The `tasks.json` (manifest) form of a task. {@link TaskCommonOptions} is the
+form used to define one; they differ only in the rendered `shell` field.
+
 #### Initializer <a name="Initializer" id="projen.TaskSpec.Initializer"></a>
 
 ```typescript
@@ -14917,13 +14980,26 @@ const taskSpec: TaskSpec = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.TaskSpec.property.name">name</a></code> | <code>string</code> | Task name. |
 | <code><a href="#projen.TaskSpec.property.condition">condition</a></code> | <code>string</code> | A shell command which determines if the this task should be executed. |
 | <code><a href="#projen.TaskSpec.property.cwd">cwd</a></code> | <code>string</code> | The working directory for all steps in this task (unless overridden by the step). |
 | <code><a href="#projen.TaskSpec.property.description">description</a></code> | <code>string</code> | The description of this build command. |
 | <code><a href="#projen.TaskSpec.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this task. |
 | <code><a href="#projen.TaskSpec.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
-| <code><a href="#projen.TaskSpec.property.name">name</a></code> | <code>string</code> | Task name. |
+| <code><a href="#projen.TaskSpec.property.shell">shell</a></code> | <code>string \| string[]</code> | The task shell in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list. |
 | <code><a href="#projen.TaskSpec.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | Task steps. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.TaskSpec.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+Task name.
 
 ---
 
@@ -14998,15 +15074,16 @@ Task execution will fail if one of these is not defined.
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="projen.TaskSpec.property.name"></a>
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TaskSpec.property.shell"></a>
 
 ```typescript
-public readonly name: string;
+public readonly shell: string | string[];
 ```
 
-- *Type:* string
+- *Type:* string | string[]
+- *Default:* the built-in projen shell
 
-Task name.
+The task shell in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list.
 
 ---
 
@@ -15029,6 +15106,10 @@ A single step within a task.
 The step could either be  the execution of a
 shell command or execution of a sub-task, by name.
 
+The `tasks.json` (manifest) form of a step. {@link TaskStepOptions} is the
+form used to define steps (via `task.exec()` etc.); they differ only in the
+rendered `shell` field.
+
 #### Initializer <a name="Initializer" id="projen.TaskStep.Initializer"></a>
 
 ```typescript
@@ -15042,15 +15123,16 @@ const taskStep: TaskStep = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.TaskStep.property.args">args</a></code> | <code>string[]</code> | A list of fixed arguments always passed to the step. |
+| <code><a href="#projen.TaskStep.property.builtin">builtin</a></code> | <code>string</code> | The name of a built-in task to execute. |
 | <code><a href="#projen.TaskStep.property.condition">condition</a></code> | <code>string</code> | A shell command which determines if the this step should be executed. |
 | <code><a href="#projen.TaskStep.property.cwd">cwd</a></code> | <code>string</code> | The working directory for this step. |
 | <code><a href="#projen.TaskStep.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this step (`exec` and `builtin` only). |
-| <code><a href="#projen.TaskStep.property.name">name</a></code> | <code>string</code> | Step name. |
-| <code><a href="#projen.TaskStep.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
-| <code><a href="#projen.TaskStep.property.builtin">builtin</a></code> | <code>string</code> | The name of a built-in task to execute. |
 | <code><a href="#projen.TaskStep.property.exec">exec</a></code> | <code>string</code> | Shell command to execute. |
 | <code><a href="#projen.TaskStep.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute, provided as a list of the program followed by its arguments (an "argv"). |
+| <code><a href="#projen.TaskStep.property.name">name</a></code> | <code>string</code> | Step name. |
+| <code><a href="#projen.TaskStep.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
 | <code><a href="#projen.TaskStep.property.say">say</a></code> | <code>string</code> | Print a message. |
+| <code><a href="#projen.TaskStep.property.shell">shell</a></code> | <code>string \| string[]</code> | The step shell in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list. |
 | <code><a href="#projen.TaskStep.property.spawn">spawn</a></code> | <code>string</code> | Subtask to execute. |
 
 ---
@@ -15066,27 +15148,29 @@ public readonly args: string[];
 
 A list of fixed arguments always passed to the step.
 
-Useful to re-use existing tasks without having to re-define the whole task.\
-Fixed args are always passed to the step, even if `receiveArgs` is `false`
-and are always passed before any args the task is called with.
-
-If the step executes a shell commands, args are passed through at the end of the `exec` shell command.\
-The position of the args can be changed by including the marker `$@` inside the command string.
-
-If the step spawns a subtask, args are passed to the subtask.
-The subtask must define steps receiving args for this to have any effect.
-
-If the step calls a builtin script, args are passed to the script.
-It is up to the script to use or discard the arguments.
+> [{@link TaskStepOptions.args }]({@link TaskStepOptions.args })
 
 ---
 
-*Example*
+##### `builtin`<sup>Optional</sup> <a name="builtin" id="projen.TaskStep.property.builtin"></a>
 
 ```typescript
-task.spawn("deploy", { args: ["--force"] });
+public readonly builtin: string;
 ```
 
+- *Type:* string
+- *Default:* do not execute a builtin task
+
+The name of a built-in task to execute.
+
+Built-in tasks are node.js programs baked into the projen module and as
+component runtime helpers.
+
+The name is a path relative to the projen lib/ directory (without the .task.js extension).
+For example, if your built in builtin task is under `src/release/resolve-version.task.ts`,
+then this would be `release/resolve-version`.
+
+---
 
 ##### `condition`<sup>Optional</sup> <a name="condition" id="projen.TaskStep.property.condition"></a>
 
@@ -15128,76 +15212,7 @@ public readonly env: {[ key: string ]: string};
 
 Defines environment variables for the execution of this step (`exec` and `builtin` only).
 
-Values in this map can be simple, literal values or shell expressions that will be evaluated at runtime e.g. `$(echo "foo")`.
-
----
-
-*Example*
-
-```typescript
-{ "foo": "bar", "boo": "$(echo baz)" }
-```
-
-
-##### `name`<sup>Optional</sup> <a name="name" id="projen.TaskStep.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-- *Default:* no name
-
-Step name.
-
----
-
-##### `receiveArgs`<sup>Optional</sup> <a name="receiveArgs" id="projen.TaskStep.property.receiveArgs"></a>
-
-```typescript
-public readonly receiveArgs: boolean;
-```
-
-- *Type:* boolean
-- *Default:* false
-
-Should this step receive args passed to the task.
-
-If `true`, args are passed through at the end of the `exec` shell command.\
-The position of the args can be changed by including the marker `$@` inside the command string.
-
-If the marker is explicitly double-quoted ("$@") arguments will be wrapped in single quotes, approximating
-the whitespace preserving behavior of bash variable expansion.
-
-If the step spawns a subtask, args are passed to the subtask.
-The subtask must define steps receiving args for this to have any effect.
-
----
-
-*Example*
-
-```typescript
-task.exec("echo Hello $@ World!", { receiveArgs: true });
-```
-
-
-##### `builtin`<sup>Optional</sup> <a name="builtin" id="projen.TaskStep.property.builtin"></a>
-
-```typescript
-public readonly builtin: string;
-```
-
-- *Type:* string
-- *Default:* do not execute a builtin task
-
-The name of a built-in task to execute.
-
-Built-in tasks are node.js programs baked into the projen module and as
-component runtime helpers.
-
-The name is a path relative to the projen lib/ directory (without the .task.js extension).
-For example, if your built in builtin task is under `src/release/resolve-version.task.ts`,
-then this would be `release/resolve-version`.
+> [{@link TaskStepOptions.env }]({@link TaskStepOptions.env })
 
 ---
 
@@ -15249,6 +15264,34 @@ Mutually exclusive with `exec`.
 ```
 
 
+##### `name`<sup>Optional</sup> <a name="name" id="projen.TaskStep.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+- *Default:* no name
+
+Step name.
+
+---
+
+##### `receiveArgs`<sup>Optional</sup> <a name="receiveArgs" id="projen.TaskStep.property.receiveArgs"></a>
+
+```typescript
+public readonly receiveArgs: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Should this step receive args passed to the task.
+
+> [{@link TaskStepOptions.receiveArgs }]({@link TaskStepOptions.receiveArgs })
+
+---
+
 ##### `say`<sup>Optional</sup> <a name="say" id="projen.TaskStep.property.say"></a>
 
 ```typescript
@@ -15259,6 +15302,19 @@ public readonly say: string;
 - *Default:* don't say anything
 
 Print a message.
+
+---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TaskStep.property.shell"></a>
+
+```typescript
+public readonly shell: string | string[];
+```
+
+- *Type:* string | string[]
+- *Default:* the task's (or project's) shell
+
+The step shell in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list.
 
 ---
 
@@ -15297,6 +15353,7 @@ const taskStepOptions: TaskStepOptions = { ... }
 | <code><a href="#projen.TaskStepOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this step (`exec` and `builtin` only). |
 | <code><a href="#projen.TaskStepOptions.property.name">name</a></code> | <code>string</code> | Step name. |
 | <code><a href="#projen.TaskStepOptions.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
+| <code><a href="#projen.TaskStepOptions.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The shell used to run this step, overriding the task/project shell. |
 
 ---
 
@@ -15411,7 +15468,7 @@ Should this step receive args passed to the task.
 If `true`, args are passed through at the end of the `exec` shell command.\
 The position of the args can be changed by including the marker `$@` inside the command string.
 
-If the marker is explicitly double-quoted ("$@") arguments will be wrapped in single quotes, approximating
+If the marker is explicitly double-quoted ("$@") arguments will be wrapped in double quotes, approximating
 the whitespace preserving behavior of bash variable expansion.
 
 If the step spawns a subtask, args are passed to the subtask.
@@ -15425,6 +15482,21 @@ The subtask must define steps receiving args for this to have any effect.
 task.exec("echo Hello $@ World!", { receiveArgs: true });
 ```
 
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.TaskStepOptions.property.shell"></a>
+
+```typescript
+public readonly shell: TaskShell;
+```
+
+- *Type:* <a href="#projen.TaskShell">TaskShell</a>
+- *Default:* the task's (or project's) shell
+
+The shell used to run this step, overriding the task/project shell.
+
+> [{@link TaskCommonOptions.shell }]({@link TaskCommonOptions.shell })
+
+---
 
 ### TextFileOptions <a name="TextFileOptions" id="projen.TextFileOptions"></a>
 
@@ -16973,7 +17045,7 @@ Use an arbitrary shell command to find releasable commits since the latest tag.
 
 A new release will be initiated, if the number of returned commits is greater than zero.
 Must return a newline separate list of commits that should considered releasable.
-`$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.*
+`$LATEST_TAG` is available as an environment variable (set to the actual latest tag for the given prefix).
 
 *Example*
 
@@ -17304,12 +17376,12 @@ Forbid additional changes to this task.
 ##### `prependExec` <a name="prependExec" id="projen.Task.prependExec"></a>
 
 ```typescript
-public prependExec(shell: string, options?: TaskStepOptions): void
+public prependExec(command: string, options?: TaskStepOptions): void
 ```
 
 Adds a command at the beginning of the task.
 
-###### `shell`<sup>Required</sup> <a name="shell" id="projen.Task.prependExec.parameter.shell"></a>
+###### `command`<sup>Required</sup> <a name="command" id="projen.Task.prependExec.parameter.command"></a>
 
 - *Type:* string
 
@@ -17498,6 +17570,7 @@ The new step to replace the old one entirely, it is not merged with the old step
 | <code><a href="#projen.Task.property.condition">condition</a></code> | <code>string</code> | A command to execute which determines if the task should be skipped. |
 | <code><a href="#projen.Task.property.cwd">cwd</a></code> | <code>string</code> | Returns the working directory for this task. |
 | <code><a href="#projen.Task.property.description">description</a></code> | <code>string</code> | Returns the description of this task. |
+| <code><a href="#projen.Task.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The shell used to run this task's commands, or `undefined` when inheriting the built-in default shell. |
 
 ---
 
@@ -17579,6 +17652,132 @@ Returns the description of this task.
 Sets the description of this task.
 
 ---
+
+##### `shell`<sup>Optional</sup> <a name="shell" id="projen.Task.property.shell"></a>
+
+```typescript
+public readonly shell: TaskShell;
+```
+
+- *Type:* <a href="#projen.TaskShell">TaskShell</a>
+
+The shell used to run this task's commands, or `undefined` when inheriting the built-in default shell.
+
+Sets the shell used to run this task's commands.
+
+> [{@link TaskCommonOptions.shell }]({@link TaskCommonOptions.shell })
+
+---
+
+
+### TaskShell <a name="TaskShell" id="projen.TaskShell"></a>
+
+The shell used to run a task's commands - including its `condition` and any `$(...)` environment-variable evaluation.
+
+Choose one of the built-in shells, or provide an explicit shell invocation:
+
+- {@link TaskShell.projen} (the default) - the built-in cross-platform shell.
+- {@link TaskShell.system} - the operating system's native shell.
+- {@link TaskShell.bash} / {@link TaskShell.sh} - common POSIX shells.
+- {@link TaskShell.command} - an arbitrary shell invocation given as an
+  explicit argument list, e.g. `TaskShell.command(["npx", "-c"])`.
+
+A `shell` can be set at the project (tasks), task and step level, and the
+nearest declared level wins (it is a scalar override, not merged).
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.TaskShell.bash">bash</a></code> | Runs commands through `bash -c`. |
+| <code><a href="#projen.TaskShell.command">command</a></code> | An arbitrary shell invocation, given as an explicit argument list. |
+| <code><a href="#projen.TaskShell.projen">projen</a></code> | The built-in cross-platform shell (the default). |
+| <code><a href="#projen.TaskShell.sh">sh</a></code> | Runs commands through `sh -c`. |
+| <code><a href="#projen.TaskShell.system">system</a></code> | The operating system's native shell (`/bin/sh` on POSIX, `cmd.exe` on Windows). |
+
+---
+
+##### `bash` <a name="bash" id="projen.TaskShell.bash"></a>
+
+```typescript
+import { TaskShell } from 'projen'
+
+TaskShell.bash()
+```
+
+Runs commands through `bash -c`.
+
+##### `command` <a name="command" id="projen.TaskShell.command"></a>
+
+```typescript
+import { TaskShell } from 'projen'
+
+TaskShell.command(command: string[])
+```
+
+An arbitrary shell invocation, given as an explicit argument list.
+
+The task
+command is appended as the final argument, so the invocation must accept
+the command as its last argument (e.g. `bash -c`, `sh -c`, `npx -c`,
+`yarn exec`).
+
+*Example*
+
+```typescript
+TaskShell.command(["npx", "-c"]);
+```
+
+
+###### `command`<sup>Required</sup> <a name="command" id="projen.TaskShell.command.parameter.command"></a>
+
+- *Type:* string[]
+
+The shell program followed by its arguments.
+
+Must not be
+empty.
+
+---
+
+##### `projen` <a name="projen" id="projen.TaskShell.projen"></a>
+
+```typescript
+import { TaskShell } from 'projen'
+
+TaskShell.projen()
+```
+
+The built-in cross-platform shell (the default).
+
+It interprets POSIX-style
+task syntax (`mkdir -p`, `&&`, `$VAR`, ...) identically on every platform,
+including Windows.
+
+##### `sh` <a name="sh" id="projen.TaskShell.sh"></a>
+
+```typescript
+import { TaskShell } from 'projen'
+
+TaskShell.sh()
+```
+
+Runs commands through `sh -c`.
+
+##### `system` <a name="system" id="projen.TaskShell.system"></a>
+
+```typescript
+import { TaskShell } from 'projen'
+
+TaskShell.system()
+```
+
+The operating system's native shell (`/bin/sh` on POSIX, `cmd.exe` on Windows).
+
+Use this to opt out of the cross-platform shell and run commands through
+whatever shell the host provides.
+
 
 
 ### Testing <a name="Testing" id="projen.Testing"></a>

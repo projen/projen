@@ -5,6 +5,7 @@ import type {
   TaskStep,
   TaskStepOptions,
 } from "./task-model";
+import type { TaskShell } from "./task-shell";
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -68,6 +69,7 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private _cwd?: string | undefined;
+  private _shell?: TaskShell | undefined;
 
   private readonly requiredEnv?: string[];
   private _locked: boolean;
@@ -78,6 +80,7 @@ export class Task {
     this._description = props.description;
     this._conditions = props.condition ? [props.condition] : [];
     this._cwd = props.cwd;
+    this._shell = props.shell;
     this._locked = false;
     this._env = props.env ?? {};
 
@@ -124,6 +127,22 @@ export class Task {
    */
   public set cwd(cwd: string | undefined) {
     this._cwd = cwd;
+  }
+
+  /**
+   * The shell used to run this task's commands, or `undefined` when inheriting
+   * the built-in default shell.
+   * @see {@link TaskCommonOptions.shell}
+   */
+  public get shell(): TaskShell | undefined {
+    return this._shell;
+  }
+
+  /**
+   * Sets the shell used to run this task's commands.
+   */
+  public set shell(shell: TaskShell | undefined) {
+    this._shell = shell;
   }
 
   /**
@@ -199,7 +218,7 @@ export class Task {
    * @param options Options
    */
   public exec(command: string, options: TaskStepOptions = {}) {
-    this._pushSteps("exec", [{ exec: command, ...options }]);
+    this._pushSteps("exec", [this.renderStep({ exec: command, ...options })]);
   }
 
   /**
@@ -217,7 +236,9 @@ export class Task {
    * @param options Options
    */
   public execArgs(command: string[], options: TaskStepOptions = {}) {
-    this._pushSteps("execArgs", [{ execArgs: command, ...options }]);
+    this._pushSteps("execArgs", [
+      this.renderStep({ execArgs: command, ...options }),
+    ]);
   }
 
   /**
@@ -241,7 +262,7 @@ export class Task {
    * @param options Options
    */
   public say(message: string, options: TaskStepOptions = {}) {
-    this._pushSteps("say", [{ say: message, ...options }]);
+    this._pushSteps("say", [this.renderStep({ say: message, ...options })]);
   }
 
   /**
@@ -249,7 +270,9 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
-    this._pushSteps("spawn", [{ spawn: subtask.name, ...options }]);
+    this._pushSteps("spawn", [
+      this.renderStep({ spawn: subtask.name, ...options }),
+    ]);
   }
 
   /**
@@ -263,10 +286,12 @@ export class Task {
 
   /**
    * Adds a command at the beginning of the task.
-   * @param shell The command to add.
+   * @param command The command to add.
    */
-  public prependExec(shell: string, options: TaskStepOptions = {}) {
-    this._unshiftSteps("prependExec", [{ exec: shell, ...options }]);
+  public prependExec(command: string, options: TaskStepOptions = {}) {
+    this._unshiftSteps("prependExec", [
+      this.renderStep({ exec: command, ...options }),
+    ]);
   }
 
   /**
@@ -274,7 +299,9 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
-    this._unshiftSteps("prependSpawn", [{ spawn: subtask.name, ...options }]);
+    this._unshiftSteps("prependSpawn", [
+      this.renderStep({ spawn: subtask.name, ...options }),
+    ]);
   }
 
   /**
@@ -282,7 +309,20 @@ export class Task {
    * @param message Your message
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
-    this._unshiftSteps("prependSay", [{ say: message, ...options }]);
+    this._unshiftSteps("prependSay", [
+      this.renderStep({ say: message, ...options }),
+    ]);
+  }
+
+  /**
+   * Renders step options (with a {@link TaskShell}) to the manifest
+   * {@link TaskStep} form, where `shell` is its `string | string[]` rendering.
+   */
+  private renderStep(
+    step: { readonly shell?: TaskShell } & Omit<TaskStep, "shell">,
+  ): TaskStep {
+    const { shell, ...rest } = step;
+    return shell ? { ...rest, shell: shell._render() } : rest;
   }
 
   private _pushSteps(method: string, steps: TaskStep[]) {
@@ -448,6 +488,7 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this._cwd,
+      shell: this._shell?._render(),
     };
   }
 

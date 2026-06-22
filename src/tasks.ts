@@ -8,6 +8,7 @@ import type { TaskOptions } from "./task";
 import { Task } from "./task";
 import type { TasksManifest, TaskSpec } from "./task-model";
 import { ProjenTaskRunner, type ITaskRunner } from "./task-runner";
+import type { TaskShell } from "./task-shell";
 
 /**
  * Defines and manages project tasks.
@@ -18,6 +19,7 @@ import { ProjenTaskRunner, type ITaskRunner } from "./task-runner";
 export class Tasks extends Component {
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
+  private _shell?: TaskShell;
   private _runner: ITaskRunner;
 
   constructor(project: Project) {
@@ -101,6 +103,23 @@ export class Tasks extends Component {
   }
 
   /**
+   * The default shell used to run all task commands, or `undefined` for the
+   * built-in cross-platform projen shell. Individual tasks and steps can
+   * override this.
+   * @see {@link TaskCommonOptions.shell}
+   */
+  public get shell(): TaskShell | undefined {
+    return this._shell;
+  }
+
+  /**
+   * Sets the default shell used to run all task commands.
+   */
+  public set shell(shell: TaskShell | undefined) {
+    this._shell = shell;
+  }
+
+  /**
    * Finds a task by name. Returns `undefined` if the task cannot be found.
    * @param name The name of the task
    */
@@ -145,6 +164,7 @@ export class Tasks extends Component {
   public resolveTasksManifest(resolver: IResolver): TasksManifest {
     const obj = {
       env: (() => this.renderEnv()) as any,
+      shell: (() => this._shell?._render()) as any,
       tasks: (() => this.renderTasks()) as any,
     };
 

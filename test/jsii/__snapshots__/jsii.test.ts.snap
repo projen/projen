@@ -853,7 +853,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -2407,7 +2407,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -3963,7 +3963,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",

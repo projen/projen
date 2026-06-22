@@ -228,7 +228,7 @@ cython_debug/
       "PATH": "$(echo $(poetry env info -p)/bin:$PATH)",
       "VIRTUAL_ENV": "$(poetry env info -p || poetry run poetry env info -p)",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",

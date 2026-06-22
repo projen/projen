@@ -96,7 +96,7 @@ export interface BumpOptions {
    *
    * A new release will be initiated, if the number of returned commits is greater than zero.
    *
-   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.
+   * `$LATEST_TAG` is available as an environment variable (set to the actual latest tag for the given prefix).
    *
    * @default "git log --oneline $LATEST_TAG..HEAD"
    */
@@ -310,13 +310,16 @@ async function hasNewInterestingCommits(options: {
   latestTag: string;
   cwd: string;
 }): Promise<boolean> {
-  const findCommits = (
-    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
-  ).replace("$LATEST_TAG", options.latestTag);
+  // `$LATEST_TAG` is provided to the command as an environment variable
+  // (rather than interpolated into the command string), consistent with how
+  // `nextVersionCommand` receives it.
+  const findCommits =
+    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd;
 
   const commitsSinceLastTag = (
     await rawShell.tryCapture(findCommits, {
       cwd: options.cwd,
+      env: { LATEST_TAG: options.latestTag },
     })
   )?.split("\n");
   const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;

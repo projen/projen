@@ -319,7 +319,7 @@ export class ReleasableCommits {
     // @see: https://github.com/conventional-commits/parser/blob/eeefb961ebf5b9dfea0fea8b06f8ad34a1e439b9/lib/parser.js
     // -E requires this to be POSIX Extended Regular Expression, which comes with certain limitations
     // see https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Expressions for details
-    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep "^(${allowedTypes}){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+"`;
+    const cmd = `git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(${allowedTypes}){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'`;
 
     return new ReleasableCommits(withPath(cmd, path));
   }
@@ -341,7 +341,7 @@ export class ReleasableCommits {
    *
    * A new release will be initiated, if the number of returned commits is greater than zero.
    * Must return a newline separate list of commits that should considered releasable.
-   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.*
+   * `$LATEST_TAG` is available as an environment variable (set to the actual latest tag for the given prefix).
    *
    * @example "git log --oneline $LATEST_TAG..HEAD -- ."
    */
