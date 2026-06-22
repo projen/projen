@@ -27,7 +27,7 @@ test("ts-node with default configuration", () => {
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
-    steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+    steps: [{ exec: "ts-node --project test/tsconfig.json .projenrc.ts" }],
   });
 });
 
@@ -45,7 +45,9 @@ test("ts-node configured to use SWC", () => {
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
-    steps: [{ exec: "ts-node --swc --project tsconfig.dev.json .projenrc.ts" }],
+    steps: [
+      { exec: "ts-node --swc --project test/tsconfig.json .projenrc.ts" },
+    ],
   });
 });
 

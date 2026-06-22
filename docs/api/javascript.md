@@ -625,6 +625,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 | <code><a href="#projen.javascript.Eslint.addOverride">addOverride</a></code> | Add an eslint override. |
 | <code><a href="#projen.javascript.Eslint.addPlugins">addPlugins</a></code> | Adds an eslint plugin. |
 | <code><a href="#projen.javascript.Eslint.addRules">addRules</a></code> | Add an eslint rule. |
+| <code><a href="#projen.javascript.Eslint.allowDefaultProjectFiles">allowDefaultProjectFiles</a></code> | Allow files matching these patterns to be linted with the typescript-eslint "default project" when they are not included by any `tsconfig.json`. |
 | <code><a href="#projen.javascript.Eslint.allowDevDeps">allowDevDeps</a></code> | Add a glob file pattern which allows importing dev dependencies. |
 
 ---
@@ -769,6 +770,28 @@ Add an eslint rule.
 ###### `rules`<sup>Required</sup> <a name="rules" id="projen.javascript.Eslint.addRules.parameter.rules"></a>
 
 - *Type:* {[ key: string ]: any}
+
+---
+
+##### `allowDefaultProjectFiles` <a name="allowDefaultProjectFiles" id="projen.javascript.Eslint.allowDefaultProjectFiles"></a>
+
+```typescript
+public allowDefaultProjectFiles(patterns: ...string[]): void
+```
+
+Allow files matching these patterns to be linted with the typescript-eslint "default project" when they are not included by any `tsconfig.json`.
+
+Only has an effect when the project service is enabled (see
+`EslintOptions.projectService`). This is typically used for loose files
+that live outside `src`/`test` (e.g. `.projenrc.ts`).
+
+> [https://typescript-eslint.io/packages/parser/#allowdefaultproject](https://typescript-eslint.io/packages/parser/#allowdefaultproject)
+
+###### `patterns`<sup>Required</sup> <a name="patterns" id="projen.javascript.Eslint.allowDefaultProjectFiles.parameter.patterns"></a>
+
+- *Type:* ...string[]
+
+glob patterns, relative to the project root.
 
 ---
 
@@ -6606,6 +6629,7 @@ const eslintOptions: javascript.EslintOptions = { ... }
 | <code><a href="#projen.javascript.EslintOptions.property.fileExtensions">fileExtensions</a></code> | <code>string[]</code> | File types that should be linted (e.g. [ ".js", ".ts" ]). |
 | <code><a href="#projen.javascript.EslintOptions.property.ignorePatterns">ignorePatterns</a></code> | <code>string[]</code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns. |
 | <code><a href="#projen.javascript.EslintOptions.property.prettier">prettier</a></code> | <code>boolean</code> | Enable prettier for code formatting. |
+| <code><a href="#projen.javascript.EslintOptions.property.projectService">projectService</a></code> | <code>boolean</code> | Use the typescript-eslint "project service" for typed linting instead of a single `parserOptions.project`. |
 | <code><a href="#projen.javascript.EslintOptions.property.sortExtends">sortExtends</a></code> | <code>projen.ICompareString</code> | The extends array in eslint is order dependent. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsAlwaysTryTypes">tsAlwaysTryTypes</a></code> | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. |
 | <code><a href="#projen.javascript.EslintOptions.property.tsconfigPath">tsconfigPath</a></code> | <code>string</code> | Path to `tsconfig.json` which should be used by eslint. |
@@ -6714,6 +6738,29 @@ public readonly prettier: boolean;
 - *Default:* false
 
 Enable prettier for code formatting.
+
+---
+
+##### `projectService`<sup>Optional</sup> <a name="projectService" id="projen.javascript.EslintOptions.property.projectService"></a>
+
+```typescript
+public readonly projectService: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use the typescript-eslint "project service" for typed linting instead of a single `parserOptions.project`.
+
+When enabled, typescript-eslint resolves the nearest `tsconfig.json` for
+each linted file (the same resolution model used by the TypeScript language
+service / `tsserver`). This allows files in different directories (e.g.
+`src` and `test`) to be linted against the `tsconfig.json` that actually
+includes them, without maintaining a single config that lists every file.
+
+Requires `@typescript-eslint/*` v8 or newer.
+
+> [https://typescript-eslint.io/blog/project-service/](https://typescript-eslint.io/blog/project-service/)
 
 ---
 

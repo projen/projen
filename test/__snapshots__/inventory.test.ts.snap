@@ -3230,7 +3230,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -4984,8 +4984,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -6248,7 +6248,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -8129,8 +8129,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -10640,7 +10640,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -12286,8 +12286,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -13523,7 +13523,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -15300,8 +15300,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -16505,7 +16505,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -18265,8 +18265,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -20213,7 +20213,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -21973,8 +21973,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -25453,7 +25453,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -27065,8 +27065,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -34091,7 +34091,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -35708,8 +35708,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -36756,7 +36756,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -38351,8 +38351,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -39399,7 +39399,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -40994,8 +40994,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",

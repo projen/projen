@@ -339,7 +339,7 @@ class SampleCode extends Component {
     const srcdir = path.join(outdir, this.appProject.srcdir);
     if (
       fs.existsSync(srcdir) &&
-      fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
+      fs.readdirSync(srcdir).some((x) => x.endsWith(".ts"))
     ) {
       return;
     }
@@ -377,7 +377,7 @@ app.synth();`;
     const testdir = path.join(outdir, this.appProject.testdir);
     if (
       fs.existsSync(testdir) &&
-      fs.readdirSync(testdir).filter((x) => x.endsWith(".ts"))
+      fs.readdirSync(testdir).some((x) => x.endsWith(".ts"))
     ) {
       return;
     }

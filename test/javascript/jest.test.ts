@@ -116,18 +116,22 @@ test("Typescript Project Jest Defaults Configured", () => {
   });
 
   const snapshot = synthSnapshot(project);
-  const jestTypescriptConfig = snapshot["tsconfig.dev.json"];
+  const jestTypescriptConfig = snapshot["test/tsconfig.json"];
 
-  expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
-  expect(jestTypescriptConfig.compilerOptions).toStrictEqual(
-    compilerOptionDefaults,
-  );
-  expect(jestTypescriptConfig.include).toEqual([
-    "src/**/*.ts",
-    "test/**/*.ts",
-    ".projenrc.js",
-  ]);
+  // the dev/test config lives in the test dir, extends the root config, and
+  // only overrides emit-related options. Compiler defaults are inherited via
+  // `extends`.
+  expect(jestTypescriptConfig.extends).toEqual("../tsconfig.json");
+  expect(jestTypescriptConfig.compilerOptions).toStrictEqual({
+    noEmit: true,
+    rootDir: "..",
+  });
+  expect(jestTypescriptConfig.include).toEqual(["**/*.ts"]);
   expect(jestTypescriptConfig.exclude).toEqual(["node_modules"]);
+  // the shared defaults now live on the root config (inherited by the dev one)
+  expect(snapshot["tsconfig.json"].compilerOptions).toEqual(
+    expect.objectContaining(compilerOptionDefaults),
+  );
 });
 
 test("Typescript Project Jest With Compiler Options", () => {
@@ -147,18 +151,16 @@ test("Typescript Project Jest With Compiler Options", () => {
     },
   });
 
-  const mergedCompilerOptions = {
-    ...compilerOptionDefaults,
-    ...compilerOptions,
-  };
-
   const snapshot = synthSnapshot(project);
-  const jestTypescriptConfig = snapshot["tsconfig.dev.json"];
+  const jestTypescriptConfig = snapshot["test/tsconfig.json"];
 
-  expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
-  expect(jestTypescriptConfig.compilerOptions).toStrictEqual(
-    mergedCompilerOptions,
-  );
+  // user-provided dev compiler options are merged on top of the noEmit
+  // override; shared defaults continue to be inherited from the root config.
+  expect(jestTypescriptConfig.compilerOptions).toStrictEqual({
+    noEmit: true,
+    rootDir: "..",
+    ...compilerOptions,
+  });
 });
 
 test("jestOptions.typeScriptCompilerOptions is deprecated", () => {

@@ -311,9 +311,13 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly tsconfigDev?: TypescriptConfigOptions;
 
   /**
-   * The name of the development tsconfig.json file.
+   * The name (and path) of the development tsconfig file.
    *
-   * @default "tsconfig.dev.json"
+   * By default this lives inside the test directory (e.g. `test/tsconfig.json`)
+   * so that the TypeScript language service resolves it as the nearest config
+   * for test files.
+   *
+   * @default - "{testdir}/tsconfig.json"
    */
   readonly tsconfigDevFile?: string;
 
@@ -325,7 +329,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    */
   readonly disableTsconfig?: boolean;
   /**
-   * Do not generate a `tsconfig.dev.json` file.
+   * Do not generate a development tsconfig file.
    *
    * @default false
    */
@@ -459,42 +463,23 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
-    if (!options.disableTsconfig) {
-      this.tsconfig = new TypescriptConfig(
-        this,
-        mergeTsconfigOptions(
-          {
-            include: [`${this.srcdir}/**/*.ts`],
-            exclude: ["node_modules"],
-            compilerOptions: {
-              rootDir: this.srcdir,
-              outDir: this.libdir,
-              ...this.defaultTypeScriptCompilerOptions(),
-            },
-          },
-          options.tsconfig,
-        ),
-      );
+    const shouldHaveTsconfig = !options.disableTsconfig;
+    const shouldHaveDevTsconfig = !options.disableTsconfigDev;
+
+    if (shouldHaveTsconfig) {
+      this.tsconfig = this.makeTsconfig(options);
     }
 
-    if (options.disableTsconfigDev) {
-      this.tsconfigDev = this.tsconfig!;
+    if (shouldHaveDevTsconfig) {
+      // When a root tsconfig exists, the dev/test config lives inside the test
+      // directory and extends it; otherwise it is a self-contained config at
+      // the repository root.
+      this.tsconfigDev = this.tsconfig
+        ? this.makeDevTsconfig(options, this.tsconfig)
+        : this.makeStandaloneDevTsconfig(options);
     } else {
-      const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
-      this.tsconfigDev = new TypescriptConfig(
-        this,
-        mergeTsconfigOptions(
-          {
-            fileName: tsconfigDevFile,
-            include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
-
-            exclude: ["node_modules"],
-            compilerOptions: this.defaultTypeScriptCompilerOptions(),
-          },
-          options.tsconfig,
-          options.tsconfigDev,
-        ),
-      );
+      // `disableTsconfigDev`: reuse the main tsconfig as the dev config.
+      this.tsconfigDev = this.tsconfig!;
     }
 
     this.gitignore.include(`/${this.srcdir}/`);
@@ -544,7 +529,8 @@ export class TypeScriptProject extends NodeProject {
 
     if (eslintEnabled) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: `./${this.tsconfigDev.fileName}`,
+        tsconfigPath: `./${(this.tsconfig ?? this.tsconfigDev).fileName}`,
+        projectService: true,
         dirs: [this.srcdir],
         devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
@@ -564,9 +550,12 @@ export class TypeScriptProject extends NodeProject {
       if (options.projenrcTs) {
         new ProjenrcTs(this, options.projenrcTsOptions);
       } else {
-        // projenrc.js created in NodeProject needs to be added in tsconfigDev
+        // projenrc.js created in NodeProject needs to be added in tsconfigDev.
+        // Only relevant when the dev config lives at the repository root
+        // (i.e. it was not relocated into the test directory or aliased to the
+        // root tsconfig); otherwise the include path would not resolve.
         const projenrcJs = NodeProjectProjenrc.of(this);
-        if (projenrcJs) {
+        if (projenrcJs && shouldHaveDevTsconfig && !shouldHaveTsconfig) {
           this.tsconfigDev.addInclude(projenrcJs.filePath);
         }
       }
@@ -587,6 +576,96 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * The main `tsconfig.json` used to compile the project (src -> lib).
+   */
+  private makeTsconfig(options: TypeScriptProjectOptions): TypescriptConfig {
+    return new TypescriptConfig(
+      this,
+      mergeTsconfigOptions(
+        {
+          include: [`${this.srcdir}/**/*.ts`],
+          exclude: ["node_modules"],
+          compilerOptions: {
+            rootDir: this.srcdir,
+            outDir: this.libdir,
+            ...this.defaultTypeScriptCompilerOptions(),
+          },
+        },
+        options.tsconfig,
+      ),
+    );
+  }
+
+  /**
+   * The development/test tsconfig, placed inside the test directory so that the
+   * TypeScript language service picks it up for test files. `tsserver` (and
+   * editors like VS Code >= 1.114, which bundle TypeScript 6) resolve the
+   * nearest `tsconfig.json` starting from the source file and no longer
+   * discover a differently-named config (e.g. `tsconfig.dev.json`) at the root.
+   *
+   * It extends the root tsconfig and is type-check only (`noEmit`), so it never
+   * participates in the build.
+   */
+  private makeDevTsconfig(
+    options: TypeScriptProjectOptions,
+    tsconfig: TypescriptConfig,
+  ): TypescriptConfig {
+    const tsconfigDevFile =
+      options.tsconfigDevFile ?? `${this.testdir}/tsconfig.json`;
+    // The root tsconfig sets `rootDir` to the source directory. Since this
+    // config also type-checks files outside `src` (the tests, and `src` files
+    // pulled in via imports), point `rootDir` at the project root relative to
+    // the config's own location to avoid TS6059 ("not under rootDir"). This
+    // only affects the (suppressed) emit layout.
+    const rootDir =
+      path.posix.relative(path.posix.dirname(tsconfigDevFile), ".") || ".";
+    const devTsconfig = new TypescriptConfig(
+      this,
+      mergeTsconfigOptions(
+        {
+          fileName: tsconfigDevFile,
+          // include is relative to the config's directory (the test dir)
+          include: ["**/*.ts"],
+          exclude: ["node_modules"],
+          compilerOptions: {
+            // type-check only; the root tsconfig owns compilation
+            noEmit: true,
+            rootDir,
+          },
+        },
+        options.tsconfigDev,
+      ),
+    );
+    // inherit all compiler options (including the dynamically resolved `types`)
+    // from the root tsconfig.
+    devTsconfig.addExtends(tsconfig);
+    return devTsconfig;
+  }
+
+  /**
+   * A self-contained development tsconfig at the repository root, used when
+   * there is no root tsconfig to extend (e.g. `disableTsconfig`).
+   */
+  private makeStandaloneDevTsconfig(
+    options: TypeScriptProjectOptions,
+  ): TypescriptConfig {
+    const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
+    return new TypescriptConfig(
+      this,
+      mergeTsconfigOptions(
+        {
+          fileName: tsconfigDevFile,
+          include: [`${this.srcdir}/**/*.ts`, `${this.testdir}/**/*.ts`],
+          exclude: ["node_modules"],
+          compilerOptions: this.defaultTypeScriptCompilerOptions(),
+        },
+        options.tsconfig,
+        options.tsconfigDev,
+      ),
+    );
   }
 
   /**

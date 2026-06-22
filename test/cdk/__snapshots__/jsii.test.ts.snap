@@ -32,7 +32,7 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
+      "projectService": true,
       "sourceType": "module",
     },
     "plugins": [
@@ -218,7 +218,7 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
         "node": {},
         "typescript": {
           "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
+          "project": "./tsconfig.json",
         },
       },
     },
@@ -244,7 +244,7 @@ exports[`JsiiProject with default settings synthesizes 1`] = `
 /API.md linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /tsconfig.json linguist-generated
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -672,7 +672,7 @@ junit.xml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/src/
 /lib
 /dist/
@@ -719,7 +719,7 @@ permissions-backup.acl
 /dist/version.txt
 /.mergify.yml
 /test/
-/tsconfig.dev.json
+/test/tsconfig.json
 /src/
 !/lib/
 !/lib/**/*.js
@@ -846,7 +846,7 @@ tsconfig.tsbuildinfo
       ".projen/files.json",
       ".projen/tasks.json",
       "LICENSE",
-      "tsconfig.dev.json",
+      "test/tsconfig.json",
       "tsconfig.json",
     ],
   },
@@ -1428,7 +1428,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "^.+\\.[t]sx?$": [
           "ts-jest",
           {
-            "tsconfig": "tsconfig.dev.json",
+            "tsconfig": "test/tsconfig.json",
           },
         ],
       },
@@ -1485,49 +1485,18 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     return 'hello, world!';
   }
 }",
-  "test/hello.test.ts": "import { Hello } from '../src';
-
-test('hello', () => {
-  expect(new Hello().sayHello()).toBe('hello, world!');
-});",
-  "tsconfig.dev.json": {
+  "test/tsconfig.json": {
     "compilerOptions": {
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": [
-        "es2022",
-      ],
-      "module": "node16",
-      "noEmitOnError": true,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
+      "noEmit": true,
+      "rootDir": "..",
       "stripInternal": true,
-      "target": "ES2022",
-      "types": [
-        "jest",
-        "node",
-      ],
     },
     "exclude": [
       "node_modules",
     ],
+    "extends": "../tsconfig.json",
     "include": [
-      "src/**/*.ts",
-      "test/**/*.ts",
-      ".projenrc.js",
+      "**/*.ts",
     ],
   },
   "tsconfig.json": {

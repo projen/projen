@@ -1,6 +1,7 @@
 import { existsSync, writeFileSync, mkdirSync } from "fs";
-import { dirname, resolve } from "path";
+import { dirname, posix, resolve } from "path";
 import type { InventoryProjectType } from "../inventory";
+import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import type { TypeScriptProject } from "../typescript";
@@ -35,6 +36,8 @@ const DEFAULT_FILENAME = ".projenrc.ts";
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
+  public readonly tsconfig: TypescriptConfig;
+
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
   private readonly _swc: boolean;
@@ -46,6 +49,22 @@ export class Projenrc extends ProjenrcFile {
     this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
     this._swc = options.swc ?? false;
+
+    // Give the projenrc source tree its own `tsconfig.json` so the eslint
+    // project service (and editors) resolve it as the nearest config for those
+    // files. This avoids listing the whole tree under `allowDefaultProject`,
+    // which only permits a small number of loose files (and rejects `**`
+    // globs). It extends the root config and is type-check only.
+    const baseTsconfig = project.tsconfig ?? project.tsconfigDev;
+    this.tsconfig = new TypescriptConfig(project, {
+      fileName: `${this._projenCodeDir}/tsconfig.json`,
+      include: ["**/*.ts"],
+      extends: TypescriptConfigExtends.fromTypescriptConfigs([baseTsconfig]),
+      compilerOptions: {
+        noEmit: true,
+        rootDir: posix.relative(this._projenCodeDir, ".") || ".",
+      },
+    });
 
     this.addDefaultTask();
 
@@ -65,8 +84,9 @@ export class Projenrc extends ProjenrcFile {
 
     const tsNode = this._swc ? "ts-node --swc" : "ts-node";
 
-    // we use "tsconfig.dev.json" here to allow projen source files to reside
-    // anywhere in the project tree.
+    // ts-node compiles the entrypoint and its imports on demand using the dev
+    // tsconfig's compiler options, so projen source files may reside anywhere
+    // in the project tree regardless of the config's `include`.
     this._tsProject.defaultTask?.exec(
       `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`,
     );
@@ -78,8 +98,11 @@ export class Projenrc extends ProjenrcFile {
     this._tsProject.addPackageIgnore(`/${this.filePath}`);
     this._tsProject.addPackageIgnore(`/${this._projenCodeDir}`);
 
-    this._tsProject.tsconfigDev.addInclude(this.filePath);
-    this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
+    // The projenrc entrypoint lives at the repository root and is not covered
+    // by any `tsconfig.json`. Register only this single file with the eslint
+    // project service's default project (the projenrc source tree is covered
+    // by its own tsconfig). `allowDefaultProject` does not permit `**` globs.
+    this._tsProject.eslint?.allowDefaultProjectFiles(this.filePath);
 
     this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
     this._tsProject.eslint?.addLintPattern(this.filePath);

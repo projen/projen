@@ -40,6 +40,90 @@ test("can acceess file", () => {
   expect(output.env).toHaveProperty("foo", "bar");
 });
 
+describe("project service", () => {
+  test("pins all files to a single project by default", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    new Eslint(project, {
+      dirs: ["mysrc"],
+      tsconfigPath: "tsconfig.json",
+    });
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.project).toEqual("tsconfig.json");
+    expect(parserOptions.projectService).toBeUndefined();
+  });
+
+  test("enables the typescript-eslint project service", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    new Eslint(project, {
+      dirs: ["mysrc"],
+      projectService: true,
+    });
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.projectService).toBe(true);
+    expect(parserOptions.project).toBeUndefined();
+  });
+
+  test("registers default project files when provided", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    const eslint = new Eslint(project, {
+      dirs: ["mysrc"],
+      projectService: true,
+      tsconfigPath: "./tsconfig.json",
+    });
+    eslint.allowDefaultProjectFiles(".projenrc.ts", "scripts/run.ts");
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.projectService).toStrictEqual({
+      allowDefaultProject: [".projenrc.ts", "scripts/run.ts"],
+      defaultProject: "./tsconfig.json",
+    });
+  });
+});
+
+test("lintPatterns reflects the configured dirs and devdirs", () => {
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  const eslint = new Eslint(project, {
+    dirs: ["mysrc"],
+    devdirs: ["mytest"],
+  });
+
+  expect(eslint.lintPatterns).toEqual(
+    expect.arrayContaining(["mysrc", "mytest"]),
+  );
+});
+
+test("lintPatterns is empty when no patterns are configured", () => {
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  const eslint = new Eslint(project, { dirs: [] });
+
+  expect(eslint.lintPatterns).toEqual([]);
+});
+
 describe("prettier", () => {
   test("snapshot", () => {
     // GIVEN

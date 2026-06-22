@@ -17,6 +17,23 @@ export interface EslintOptions {
   readonly tsconfigPath?: string;
 
   /**
+   * Use the typescript-eslint "project service" for typed linting instead of a
+   * single `parserOptions.project`.
+   *
+   * When enabled, typescript-eslint resolves the nearest `tsconfig.json` for
+   * each linted file (the same resolution model used by the TypeScript language
+   * service / `tsserver`). This allows files in different directories (e.g.
+   * `src` and `test`) to be linted against the `tsconfig.json` that actually
+   * includes them, without maintaining a single config that lists every file.
+   *
+   * Requires `@typescript-eslint/*` v8 or newer.
+   *
+   * @see https://typescript-eslint.io/blog/project-service/
+   * @default false
+   */
+  readonly projectService?: boolean;
+
+  /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
    */
   readonly dirs: string[];
@@ -180,6 +197,7 @@ export class Eslint extends Component {
 
   private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
+  private readonly _allowDefaultProject = new Set<string>();
   private readonly _plugins = new Set<string>();
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
@@ -372,6 +390,7 @@ export class Eslint extends Component {
     ];
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
+    const projectService = options.projectService ?? false;
 
     this.addPlugins("@typescript-eslint");
     this.addPlugins("import");
@@ -388,7 +407,11 @@ export class Eslint extends Component {
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
-        project: tsconfig,
+        // Either let typescript-eslint resolve the nearest tsconfig per file
+        // (project service), or pin all files to a single project.
+        ...(projectService
+          ? { projectService: () => this.renderProjectService(tsconfig) }
+          : { project: tsconfig }),
       },
       extends: () =>
         Array.from(this._extends).sort((a, b) =>
@@ -509,6 +532,39 @@ export class Eslint extends Component {
    */
   public allowDevDeps(pattern: string) {
     this._allowDevDeps.add(pattern);
+  }
+
+  /**
+   * Allow files matching these patterns to be linted with the typescript-eslint
+   * "default project" when they are not included by any `tsconfig.json`.
+   *
+   * Only has an effect when the project service is enabled (see
+   * `EslintOptions.projectService`). This is typically used for loose files
+   * that live outside `src`/`test` (e.g. `.projenrc.ts`).
+   *
+   * @see https://typescript-eslint.io/packages/parser/#allowdefaultproject
+   * @param patterns glob patterns, relative to the project root.
+   */
+  public allowDefaultProjectFiles(...patterns: string[]) {
+    for (const pattern of patterns) {
+      this._allowDefaultProject.add(pattern);
+    }
+  }
+
+  /**
+   * Render the value of `parserOptions.projectService`. When loose files have
+   * been registered via `allowDefaultProjectFiles`, an options object is
+   * emitted; otherwise the plain `true` shorthand is used.
+   * @internal
+   */
+  private renderProjectService(defaultProject: string): boolean | object {
+    if (this._allowDefaultProject.size === 0) {
+      return true;
+    }
+    return {
+      allowDefaultProject: Array.from(this._allowDefaultProject),
+      defaultProject,
+    };
   }
 
   /**
