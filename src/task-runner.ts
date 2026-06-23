@@ -1,4 +1,3 @@
-import { spawnSync } from "node:child_process";
 import * as path from "node:path";
 import type { IConstruct } from "constructs";
 import { resolve } from "./_resolve";
@@ -8,6 +7,7 @@ import type { IResolver } from "./file";
 import { JsonFile } from "./json";
 import type { Task } from "./task";
 import type { TasksManifest } from "./task-model";
+import { node } from "./util/exec";
 
 export interface ITaskRunner {
   /**
@@ -54,19 +54,20 @@ export class ProjenTaskRunner extends Component implements ITaskRunner {
     const moduleRoot = path.dirname(require.resolve("../package.json"));
     const cli = path.join(moduleRoot, "lib", "cli", "index.js");
     const argv = [cli, task.name, ...(args ?? []).map((a) => a.toString())];
-    const result = spawnSync(process.execPath, argv, {
-      cwd: this.project.outdir,
-      stdio: "inherit",
-    });
-
-    if (result.error) {
-      throw result.error;
-    }
-
-    if (result.status !== 0) {
-      throw new Error(
-        `Task "${task.name}" failed (exit code ${result.status ?? "unknown"}).`,
-      );
+    try {
+      node.run(argv, {
+        cwd: this.project.outdir,
+        inheritStdio: true,
+      });
+    } catch (e: any) {
+      // `node.run` (execFileSync) throws on a non-zero exit (with a numeric
+      // `.status`) or on a spawn failure. Translate a non-zero exit into a
+      // task-friendly error; re-throw spawn errors as-is. The child's stderr
+      // was already streamed live (inheritStdio), so it need not be re-surfaced.
+      if (typeof e?.status === "number") {
+        throw new Error(`Task "${task.name}" failed (exit code ${e.status}).`);
+      }
+      throw e;
     }
   }
 

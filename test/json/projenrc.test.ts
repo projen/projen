@@ -38,8 +38,8 @@ test("projenrc.json with typed options", () => {
   expect(synthSnapshot(project)).toMatchSnapshot();
 });
 
-test("projenrc.json new project in outdir", () => {
-  withProjectDir((projectdir) => {
+test("projenrc.json new project in outdir", async () => {
+  await withProjectDir(async (projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.typescript.TypeScriptProject", {

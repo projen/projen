@@ -205,9 +205,47 @@ project.with(
   }),
 );
 
-javascript.Eslint.of(project)?.addRules({
+project.eslint?.addRules({
   "@typescript-eslint/consistent-type-imports": "error",
   "@typescript-eslint/consistent-type-exports": "error",
+  // Centralize all OS-command execution in src/util/exec.ts so command
+  // execution goes through a single, consistent set of helpers. Type-only
+  // imports are allowed (they have no runtime effect).
+  "no-restricted-imports": "off",
+  "@typescript-eslint/no-restricted-imports": [
+    "error",
+    {
+      paths: [
+        {
+          name: "child_process",
+          message:
+            "Do not import 'child_process' directly. Use the helpers in src/util/exec.ts (e.g. `git.run`).",
+          allowTypeImports: true,
+        },
+        {
+          name: "node:child_process",
+          message:
+            "Do not import 'node:child_process' directly. Use the helpers in src/util/exec.ts (e.g. `git.run`).",
+          allowTypeImports: true,
+        },
+      ],
+    },
+  ],
+});
+// Files that need direct child_process access:
+// - src/util/exec.ts: the single home for command execution
+// - test/cli/run-task.test.ts: spawns the CLI and spies on the task runtime's
+//   process execution
+// - test/tasks/tasks.test.ts: spies on the task runner's process execution
+project.eslint?.addOverride({
+  files: [
+    "src/util/exec.ts",
+    "test/cli/run-task.test.ts",
+    "test/tasks/tasks.test.ts",
+  ],
+  rules: {
+    "@typescript-eslint/no-restricted-imports": "off",
+  },
 });
 
 // The CLI (src/cli) is the runtime entrypoint of projen. It may depend on the

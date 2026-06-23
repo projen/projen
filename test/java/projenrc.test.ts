@@ -181,8 +181,8 @@ test("assert getJavaImport returns the correct import with no submodules", () =>
   expect(fullName).toEqual("software.aws.sdk.Component");
 });
 
-test("assert generateProjenrc returns the correct projenrc with correct outdir", () => {
-  withProjectDir((projectdir) => {
+test("assert generateProjenrc returns the correct projenrc with correct outdir", async () => {
+  await withProjectDir(async (projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.java.JavaProject", {

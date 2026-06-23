@@ -12,8 +12,9 @@ import { DependencyType } from "../dependencies";
 import type { Project } from "../project";
 import type { Task } from "../task";
 import { TomlFile } from "../toml";
-import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import { decamelizeKeysRecursively } from "../util";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
+import { poetry } from "../util/exec";
 
 export interface PoetryOptions
   extends PythonPackagingOptions, PythonExecutableOptions {}
@@ -216,7 +217,7 @@ export class Poetry
    * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
    */
   public setupEnvironment() {
-    const result = execOrUndefined("which poetry", {
+    const result = poetry.tryCapture(["--version"], {
       cwd: this.project.outdir,
     });
     if (!result) {
@@ -225,13 +226,15 @@ export class Poetry
       );
     }
 
-    let envPath = execOrUndefined("poetry env info -p", {
+    let envPath = poetry.tryCapture(["env", "info", "-p"], {
       cwd: this.project.outdir,
     });
     if (!envPath) {
       this.project.logger.info("Setting up a virtual environment...");
-      exec(`poetry env use ${this.pythonExec}`, { cwd: this.project.outdir });
-      envPath = execOrUndefined("poetry env info -p", {
+      poetry.run(["env", "use", this.pythonExec], {
+        cwd: this.project.outdir,
+      });
+      envPath = poetry.tryCapture(["env", "info", "-p"], {
         cwd: this.project.outdir,
       });
       this.project.logger.info(

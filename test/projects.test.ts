@@ -3,10 +3,13 @@ import { installPackage } from "../src/cli/util";
 import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
 
+// some tests install packages from the npm registry, which can take a while
+jest.setTimeout(20_000); // 20s
+
 describe("createProject", () => {
-  test("creates a project in a directory", () => {
-    withProjectDir(
-      (projectdir) => {
+  test("creates a project in a directory", async () => {
+    await withProjectDir(
+      async (projectdir) => {
         // GIVEN
         Projects.createProject({
           optionHints: InitProjectOptionHints.FEATURED,
@@ -30,9 +33,9 @@ describe("createProject", () => {
     );
   });
 
-  test("creates a project and passes in JSON-like project options", () => {
-    withProjectDir(
-      (projectdir) => {
+  test("creates a project and passes in JSON-like project options", async () => {
+    await withProjectDir(
+      async (projectdir) => {
         // GIVEN
         Projects.createProject({
           optionHints: InitProjectOptionHints.FEATURED,
@@ -64,11 +67,11 @@ describe("createProject", () => {
     );
   });
 
-  test("creates a project from an external project type, if it's installed", () => {
-    withProjectDir(
-      (projectdir) => {
+  test("creates a project from an external project type, if it's installed", async () => {
+    await withProjectDir(
+      async (projectdir) => {
         // GIVEN
-        installPackage(projectdir, "cdklabs-projen-project-types@0.1.48");
+        await installPackage(projectdir, "cdklabs-projen-project-types@0.1.48");
 
         // WHEN
         Projects.createProject({

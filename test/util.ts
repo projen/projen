@@ -1,4 +1,3 @@
-import * as cp from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
@@ -8,7 +7,7 @@ import type { GitHubProjectOptions } from "../src/github/github-project";
 import { GitHubProject } from "../src/github/github-project";
 import * as logging from "../src/logging";
 import type { Task } from "../src/task";
-import { exec } from "../src/util";
+import { git, node } from "../src/util/exec";
 import { directorySnapshot } from "../src/util/synth";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
@@ -39,26 +38,28 @@ interface ProjenCLIExecOptions {
   preInstallProjen?: boolean;
 }
 
-export function execProjenCLI(
+export async function execProjenCLI(
   workdir: string,
   args: string[] = [],
   env?: Record<string, string>,
   { preInstallProjen = true }: ProjenCLIExecOptions = {},
 ) {
-  const command = [process.execPath, PROJEN_CLI, ...args];
-
   // For "projen new" commands we need to pre-install the current library,
   // to ensure the latest code is used in test cases
   // https://github.com/projen/projen/issues/3410
   if (preInstallProjen && args.includes("new")) {
-    installPackage(
+    await installPackage(
       workdir,
       `file:${path.normalize(path.join(__dirname, ".."))}`,
       true,
     );
   }
 
-  return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir, env });
+  // run the CLI shell-free via node
+  return node.run([PROJEN_CLI, ...args], {
+    cwd: workdir,
+    env,
+  });
 }
 
 const autoRemove = new Set<string>();
@@ -97,8 +98,8 @@ export function synthSnapshotWithPost(project: Project) {
   }
 }
 
-export function withProjectDir(
-  code: (workdir: string) => void,
+export async function withProjectDir(
+  code: (workdir: string) => void | Promise<void>,
   options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {},
 ) {
   const origDir = process.cwd();
@@ -108,31 +109,36 @@ export function withProjectDir(
     const projectdir = path.join(outdir, "my-project");
     fs.mkdirSync(projectdir);
 
-    const shell = (command: string) =>
-      cp.execSync(command, { cwd: projectdir });
+    const runGit = (args: string[]) => git.run(args, { cwd: projectdir });
     if (options.git ?? true) {
-      shell("git init -b main");
-      shell("git remote add origin git@boom.com:foo/bar.git");
-      shell('git config user.name "My User Name"');
-      shell('git config user.email "my@user.email.com"');
-      shell("git config commit.gpgsign false");
-      shell("git config tag.gpgsign false");
+      runGit(["init", "-b", "main"]);
+      runGit(["remote", "add", "origin", "git@boom.com:foo/bar.git"]);
+      runGit(["config", "user.name", "My User Name"]);
+      runGit(["config", "user.email", "my@user.email.com"]);
+      runGit(["config", "commit.gpgsign", "false"]);
+      runGit(["config", "tag.gpgsign", "false"]);
     } else if (process.env.GITHUB_ACTIONS) {
-      // if "git" is set to "false", we still want to make sure global user is defined
-      // (relevant in our GITHUB_ACTIONS context)
-      shell(
-        'git config user.name || git config --global user.name "My User Name"',
-      );
-      shell(
-        'git config user.email || git config --global user.email "my@user.email.com"',
-      );
+      // if "git" is set to "false", we still want to make sure a global user is
+      // defined (relevant in our GITHUB_ACTIONS context): only set the global
+      // value if none is configured yet (`git config <key>` exits non-zero when
+      // unset).
+      try {
+        runGit(["config", "user.name"]);
+      } catch {
+        runGit(["config", "--global", "user.name", "My User Name"]);
+      }
+      try {
+        runGit(["config", "user.email"]);
+      } catch {
+        runGit(["config", "--global", "user.email", "my@user.email.com"]);
+      }
     }
 
     if (options.chdir ?? false) {
       process.chdir(projectdir);
     }
 
-    code(projectdir);
+    await code(projectdir);
   } finally {
     process.chdir(origDir);
     fs.rmSync(outdir, { force: true, recursive: true });

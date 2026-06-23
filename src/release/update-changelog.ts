@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import { join } from "path";
 import * as logging from "../logging";
 import * as utils from "../util";
+import { git } from "../util/exec";
 
 export interface UpdateChangelogOptions {
   /**
@@ -85,8 +86,6 @@ export async function updateChangelog(
 
   await fs.writeFile(outputChangelog, newChangelog);
 
-  utils.exec(
-    `git add ${outputChangelog} && git commit -m "chore(release): ${version}"`,
-    { cwd },
-  );
+  git.run(["add", outputChangelog], { cwd });
+  git.run(["commit", "-m", `chore(release): ${version}`], { cwd });
 }

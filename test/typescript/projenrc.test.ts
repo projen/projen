@@ -2,8 +2,8 @@ import * as path from "path";
 import { Projenrc, TypeScriptProject } from "../../src/typescript";
 import { withProjectDir, synthSnapshot } from "../util";
 
-test("assert new Typescript project in foo outdir", () => {
-  withProjectDir((projectdir) => {
+test("assert new Typescript project in foo outdir", async () => {
+  await withProjectDir(async (projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",

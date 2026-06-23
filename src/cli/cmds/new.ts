@@ -1,4 +1,3 @@
-import type { SpawnSyncReturns } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import * as semver from "semver";
@@ -7,20 +6,14 @@ import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import {
-  exec,
-  execCapture,
-  execOrUndefined,
-  getGitVersion,
-  isTruthy,
-  normalizePersistedPath,
-} from "../../util";
+import { getGitVersion, isTruthy, normalizePersistedPath } from "../../util";
+import { git, npm } from "../../util/exec";
 import { tryProcessMacro } from "../macros";
 import {
   CliError,
   findJsiiFilePath,
   installPackage,
-  renderInstallCommand,
+  renderInstallArgs,
 } from "../util";
 
 class Command implements yargs.CommandModule {
@@ -297,26 +290,29 @@ function commandLineToProps(
  */
 async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   const projenVersion = args.projenVersion ?? "latest";
-  const installCommand = renderInstallCommand(
-    baseDir,
-    `projen@${projenVersion}`,
-  );
+  const installArgs = renderInstallArgs(baseDir, `projen@${projenVersion}`);
   if (args.projenVersion) {
-    exec(installCommand, { cwd: baseDir });
+    await npm.run(installArgs, { cwd: baseDir });
   } else {
-    // do not overwrite existing installation
-    exec(
-      `npm ls --prefix="${baseDir}" --depth=0 --pattern projen || ${installCommand}`,
-      { cwd: baseDir },
-    );
+    // do not overwrite an existing installation: only install if `npm ls` fails
+    try {
+      await npm.run(
+        ["ls", `--prefix=${baseDir}`, "--depth=0", "--pattern", "projen"],
+        { cwd: baseDir },
+      );
+    } catch {
+      await npm.run(installArgs, { cwd: baseDir });
+    }
   }
 
-  const installPackageWithCliError = (b: string, s: string): string => {
+  const installPackageWithCliError = async (
+    b: string,
+    s: string,
+  ): Promise<string> => {
     try {
-      return installPackage(b, s);
+      return await installPackage(b, s);
     } catch (error: unknown) {
-      const stderr =
-        (error as SpawnSyncReturns<Buffer>)?.stderr?.toString() ?? "";
+      const stderr = (error as { stderr?: Buffer })?.stderr?.toString() ?? "";
       const isLocal = stderr.includes("code ENOENT");
       const isRegistry = stderr.includes("code E404");
       if (isLocal || isRegistry) {
@@ -330,7 +326,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     }
   };
 
-  const moduleName = installPackageWithCliError(baseDir, spec);
+  const moduleName = await installPackageWithCliError(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
@@ -485,33 +481,38 @@ async function initProject(
   });
 
   if (fs.existsSync(path.join(baseDir, "package.json")) && args.post) {
-    exec("npm run eslint --if-present", { cwd: baseDir });
+    await npm.run(["run", "eslint", "--if-present"], {
+      cwd: baseDir,
+    });
   }
 
   if (args.git) {
-    const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    const gitversion: string = getGitVersion(
-      execCapture("git --version", { cwd: baseDir }).toString(),
-    );
+    const opts = { cwd: baseDir };
+    const gitversion: string = getGitVersion(git.capture(["--version"], opts));
     logging.debug("system using git version ", gitversion);
     // `git config init.defaultBranch` and `git init -b` are only available since git 2.28.0
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
       const defaultGitInitBranch =
-        execOrUndefined("git config init.defaultBranch", {
-          cwd: baseDir,
-        })?.trim() || "main";
-      git(`init -b ${defaultGitInitBranch}`);
-      git("add .");
-      git('commit --allow-empty -m "chore: project created with projen"');
+        git.tryCapture(["config", "init.defaultBranch"], opts)?.trim() ||
+        "main";
+      git.run(["init", "-b", defaultGitInitBranch], opts);
+      git.run(["add", "."], opts);
+      git.run(
+        ["commit", "--allow-empty", "-m", "chore: project created with projen"],
+        opts,
+      );
       logging.debug(`default branch name set to ${defaultGitInitBranch}`);
     } else {
-      git("init");
-      git("add .");
-      git('commit --allow-empty -m "chore: project created with projen"');
+      git.run(["init"], opts);
+      git.run(["add", "."], opts);
+      git.run(
+        ["commit", "--allow-empty", "-m", "chore: project created with projen"],
+        opts,
+      );
       logging.debug(
         "older version of git detected, changed default branch name to main",
       );
-      git("branch -M main");
+      git.run(["branch", "-M", "main"], opts);
     }
   }
 }

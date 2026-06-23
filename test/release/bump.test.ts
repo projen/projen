@@ -1,4 +1,3 @@
-import { execSync } from "child_process";
 import { promises as fs, mkdtempSync, readFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
@@ -7,6 +6,7 @@ import * as logging from "../../src/logging";
 import type { BumpOptions } from "../../src/release/bump-version";
 import { bump } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
+import { git } from "../../src/util/exec";
 import { execProjenCLI, withProjectDir } from "../util";
 
 logging.disable();
@@ -567,6 +567,45 @@ describe("Releasable Commits Configurations", () => {
 });
 
 //----------------------------------------------------------------------------------------------------------------------------------
+describe("nextVersionCommand", () => {
+  const commits = [
+    { message: "v1", tag: "v1.2.3" },
+    { message: "feat: a feature" },
+  ];
+
+  test("a relative bump from the command overrides the computed bump", async () => {
+    const result = await testBump({
+      commits,
+      options: {
+        nextVersionCommand: `node -e "process.stdout.write('minor')"`,
+      },
+    });
+    expect(result.version).toStrictEqual("1.3.0");
+  });
+
+  test("an absolute version from the command is used as-is", async () => {
+    const result = await testBump({
+      commits,
+      options: {
+        nextVersionCommand: `node -e "process.stdout.write('9.9.9')"`,
+      },
+    });
+    expect(result.version).toStrictEqual("9.9.9");
+  });
+
+  test("invalid command output fails the bump", async () => {
+    await expect(
+      testBump({
+        commits,
+        options: {
+          nextVersionCommand: `node -e "process.stdout.write('not-a-version')"`,
+        },
+      }),
+    ).rejects.toThrow(/returned invalid output/);
+  });
+});
+
+//----------------------------------------------------------------------------------------------------------------------------------
 describe("newline at the end of version file", () => {
   test("created version file ends with a newline", async () => {
     const result = await testBump();
@@ -579,7 +618,7 @@ describe("newline at the end of version file", () => {
   });
 
   test("existing version file keeps newline at the end", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TypeScriptProject({
         defaultReleaseBranch: "main",
         name: "test",
@@ -590,11 +629,11 @@ describe("newline at the end of version file", () => {
       project.synth();
 
       // Commit files so the bump will work
-      execSync("git add .", { cwd: projectdir });
-      execSync('git commit -m "chore: init"', { cwd: projectdir });
+      git.run(["add", "."], { cwd: projectdir });
+      git.run(["commit", "-m", "chore: init"], { cwd: projectdir });
 
       // Bump the version
-      execProjenCLI(projectdir, ["bump"]);
+      await execProjenCLI(projectdir, ["bump"]);
 
       const file = readFileSync(join(projectdir, "package.json"), "utf-8");
       expect(file.endsWith("\n")).toBe(true);
@@ -612,26 +651,21 @@ async function testBump(
 ) {
   const workdir = mkdtempSync(join(tmpdir(), "bump-test-"));
 
-  const git = (cmd: string) =>
-    execSync(`git ${cmd}`, {
-      cwd: workdir,
-      stdio: "inherit",
-      timeout: 10_000, // let's try to catch hanging processes sooner than later
-    });
+  const run = (args: string[]) => git.run(args, { cwd: workdir });
 
   // init a git repository
-  git("init -b main");
-  git('config user.email "you@example.com"');
-  git('config user.name "Your Name"');
-  git("config commit.gpgsign false");
-  git("config tag.gpgsign false");
+  run(["init", "-b", "main"]);
+  run(["config", "user.email", "you@example.com"]);
+  run(["config", "user.name", "Your Name"]);
+  run(["config", "commit.gpgsign", "false"]);
+  run(["config", "tag.gpgsign", "false"]);
 
   const commit = async (message: string, path: string = "dummy.txt") => {
     const filePath = join(workdir, path);
     await fs.mkdir(dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, message);
-    git("add .");
-    git(`commit -F "${filePath}"`);
+    run(["add", "."]);
+    run(["commit", "-F", filePath]);
   };
 
   await commit("initial commit");
@@ -639,7 +673,7 @@ async function testBump(
   for (const c of opts.commits ?? []) {
     await commit(c.message, c.path);
     if (c.tag) {
-      git(`tag ${c.tag}`);
+      run(["tag", c.tag]);
     }
   }
 

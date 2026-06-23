@@ -1,3 +1,4 @@
+import childProcess from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
 import type { Project, TasksManifest, TaskStep } from "../../src";
@@ -53,11 +54,11 @@ describe("runTask", () => {
     p.addTask("noop", { exec: "echo hi" });
     p.synth();
 
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const childProcess = require("node:child_process");
     const spy = jest
-      .spyOn(childProcess, "spawnSync")
-      .mockReturnValue({ error: new Error("spawn boom"), status: null } as any);
+      .spyOn(childProcess, "execFileSync")
+      .mockImplementation(() => {
+        throw new Error("spawn boom");
+      });
 
     try {
       expect(() => p.tasks.runTask("noop")).toThrow("spawn boom");

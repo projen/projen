@@ -23,7 +23,7 @@ describe("TypeScriptProject with default settings", () => {
     expect(output).toMatchSnapshot();
   });
 
-  it("compiles", () => {
+  it("compiles", async () => {
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",
       packageManager: javascript.NodePackageManager.NPM,
@@ -32,7 +32,7 @@ describe("TypeScriptProject with default settings", () => {
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -327,7 +327,7 @@ describe("jestConfig", () => {
       expect(jestConfig.transform[JS_PATTERN]).toStrictEqual("babel-jest");
     });
 
-    test("allows overriding of ts-jest transform pattern", () => {
+    test("allows overriding of ts-jest transform pattern", async () => {
       const loggerWarnSpy = jest.spyOn(Logger.prototype, "warn");
       const TS_WITH_JS_PATTERN = "^.+\\.[tj]sx?$";
 
@@ -335,8 +335,8 @@ describe("jestConfig", () => {
       // root to ensure that external projects don't trigger the legacy warning.
       // In order to do that, we need to make the folder ourselves instead of
       // relying on the Project calss making one for us.
-      withProjectDir(
-        (projectdir) => {
+      await withProjectDir(
+        async (projectdir) => {
           fs.writeFileSync(
             path.join(projectdir, "package.json"),
             `{"dependencies": {}}`,

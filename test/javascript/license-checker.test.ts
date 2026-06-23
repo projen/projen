@@ -54,7 +54,7 @@ describe("license checker", () => {
     });
   });
 
-  test("will fail task if denied license is found", () => {
+  test("will fail task if denied license is found", async () => {
     // GIVEN
     const project = new NodeProject({
       name: "test",
@@ -70,12 +70,14 @@ describe("license checker", () => {
     project.synth();
 
     // THEN
-    expect(() => execProjenCLI(project.outdir, ["check-licenses"])).toThrow(
+    await expect(
+      execProjenCLI(project.outdir, ["check-licenses"]),
+    ).rejects.toThrow(
       `Found license defined by the --failOn flag: "Apache-2.0"`,
     );
   });
 
-  test("will pass if only allowed licenses are found", () => {
+  test("will pass if only allowed licenses are found", async () => {
     // GIVEN
     const project = new NodeProject({
       name: "test",
@@ -94,6 +96,6 @@ describe("license checker", () => {
     project.synth();
 
     // THEN
-    execProjenCLI(project.outdir, ["check-licenses"]);
+    await execProjenCLI(project.outdir, ["check-licenses"]);
   });
 });

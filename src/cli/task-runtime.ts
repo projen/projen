@@ -1,5 +1,4 @@
 import type { SpawnOptions } from "child_process";
-import { spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
@@ -9,6 +8,7 @@ import { $ } from "dax";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
+import { rawShell } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
 // `?.default ?? module` keeps this working both as a plain CommonJS require and
@@ -514,6 +514,10 @@ class RunTask {
       ...options.extraEnv,
     };
 
+    // stdout/stderr are only captured when a caller pipes them (e.g.
+    // `shellEval`); otherwise inherit so output is streamed to the terminal.
+    const capture = Array.isArray(options.spawnOptions?.stdio);
+
     // On Windows the default shell (cmd.exe) does not understand the POSIX-style
     // commands projen tasks are written in (`cat`, `cp`, `mkdir -p`, `rm -rf`,
     // `&&` chains, `$VAR`, ...). Run the command through dax's cross-platform
@@ -521,10 +525,6 @@ class RunTask {
     // commands. Now that the task runtime is asynchronous we can drive dax's
     // `$` API directly instead of spawning a synchronous child node process.
     if (process.platform === "win32") {
-      // stdout/stderr are only captured when a caller pipes them (e.g.
-      // `shellEval`); otherwise inherit so output is streamed to the terminal.
-      const capture = Array.isArray(options.spawnOptions?.stdio);
-
       const result = await $.raw`${options.command}`
         .cwd(cwd)
         .env(env)
@@ -539,14 +539,9 @@ class RunTask {
       };
     }
 
-    return spawnSync(options.command, {
-      ...options,
-      cwd,
-      shell: true,
-      stdio: "inherit",
-      env,
-      ...options.spawnOptions,
-    });
+    // On other platforms, run the command through the system shell via the
+    // centralized `rawShell` helper.
+    return rawShell.exec(options.command, { cwd, env, capture });
   }
 
   private async shellEval(options: ShellOptions): Promise<ShellResult> {

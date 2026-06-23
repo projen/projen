@@ -1,11 +1,10 @@
-import { execSync } from "child_process";
 import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import * as logging from "../../src/logging";
 import type { TagOptions } from "../../src/release/tag-version";
 import { tag } from "../../src/release/tag-version";
-import { execCapture } from "../../src/util";
+import { git } from "../../src/util/exec";
 
 logging.disable();
 jest.setTimeout(1000 * 60); // 1min
@@ -56,16 +55,16 @@ async function testTag(opts: TestTagOpts = {}) {
   const releaseTagFile =
     opts.tagOptions?.releaseTagFile ?? DEFAULT_RELEASE_TAG_FILE;
 
-  const git = gitFunc(workdir);
+  const run = (args: string[]) => git.run(args, { cwd: workdir });
   const getLatestTag = latestTagFunc(workdir);
   const getTagAnnotation = tagAnnotationFunc(workdir);
 
   // init a git repository
-  git("init -q");
-  git('config user.email "you@example.com"');
-  git('config user.name "Your Name"');
-  git("config commit.gpgsign false");
-  git("config tag.gpgsign false");
+  run(["init", "-q"]);
+  run(["config", "user.email", "you@example.com"]);
+  run(["config", "user.name", "Your Name"]);
+  run(["config", "commit.gpgsign", "false"]);
+  run(["config", "tag.gpgsign", "false"]);
   await fs.writeFile(
     join(workdir, opts.testOptions?.releaseTagPath || "", releaseTagFile),
     releaseTag,
@@ -74,8 +73,8 @@ async function testTag(opts: TestTagOpts = {}) {
     join(workdir, opts.testOptions?.changelogPath || "", changelog),
     changelogContent,
   );
-  git("add .");
-  git('commit -m "chore: foo"');
+  run(["add", "."]);
+  run(["commit", "-m", "chore: foo"]);
 
   await tag(workdir, {
     changelog,
@@ -91,11 +90,9 @@ async function testTag(opts: TestTagOpts = {}) {
   };
 }
 
-const gitFunc = (cwd: string) => (cmd: string) =>
-  execSync(`git ${cmd}`, { cwd: cwd, stdio: "inherit" });
 const latestTagFunc = (cwd: string) => () =>
-  execCapture("git describe --tags --abbrev=0", { cwd: cwd }).toString();
+  git.capture(["describe", "--tags", "--abbrev=0"], { cwd: cwd });
 const tagAnnotationFunc = (cwd: string) => (releaseTag: string) =>
-  execCapture(`git tag -l --format='%(contents)' ${releaseTag}`, {
+  git.capture(["tag", "-l", "--format=%(contents)", releaseTag], {
     cwd: cwd,
-  }).toString();
+  });

@@ -7,7 +7,7 @@ import { execProjenCLI, synthSnapshot } from "../util";
 test.each([
   ["prettier is off", false],
   ["prettier is on", true],
-])("eslint task passes with default config: %s", (_, prettier) => {
+])("eslint task passes with default config: %s", async (_, prettier) => {
   const project = new TypeScriptProject({
     name: "test",
     defaultReleaseBranch: "master",
@@ -18,7 +18,7 @@ test.each([
   project.synth();
 
   // THEN
-  execProjenCLI(project.outdir, ["eslint"]);
+  await execProjenCLI(project.outdir, ["eslint"]);
 });
 
 test("can acceess file", () => {
