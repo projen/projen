@@ -19,6 +19,7 @@ import { CdkConfig } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
 import type { LambdaFunctionCommonOptions } from "./lambda-function";
+import { dirContainsFile } from "../util/fs";
 
 export interface AwsCdkTypeScriptAppOptions
   extends
@@ -337,18 +338,20 @@ class SampleCode extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
-    if (
-      fs.existsSync(srcdir) &&
-      fs.readdirSync(srcdir).some((x) => x.endsWith(".ts"))
-    ) {
-      return;
-    }
 
-    const srcImports = new Array<string>();
-    srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
-    srcImports.push("import { Construct } from 'constructs';");
+    // Don't generate the sample app if the user already has TypeScript source
+    // files in the source directory - we don't want to pollute something they
+    // have worked on. We check recursively so that an existing entrypoint
+    // located in a subdirectory (e.g. an `appEntrypoint` of "bin/main.ts") is
+    // also detected. As an extra safeguard, never overwrite an existing
+    // entrypoint file.
+    const entrypointPath = path.join(srcdir, this.appProject.appEntrypoint);
+    if (!dirContainsFile(srcdir, ".ts") && !fs.existsSync(entrypointPath)) {
+      const srcImports = new Array<string>();
+      srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
+      srcImports.push("import { Construct } from 'constructs';");
 
-    const srcCode = `${srcImports.join("\n")}
+      const srcCode = `${srcImports.join("\n")}
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
@@ -371,27 +374,35 @@ new MyStack(app, '${this.project.name}-dev', { env: devEnv });
 
 app.synth();`;
 
-    fs.mkdirSync(srcdir, { recursive: true });
-    fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
-
-    const testdir = path.join(outdir, this.appProject.testdir);
-    if (
-      fs.existsSync(testdir) &&
-      fs.readdirSync(testdir).some((x) => x.endsWith(".ts"))
-    ) {
-      return;
+      // create the entrypoint's directory (which may be a subdirectory of `srcdir`) before writing the file.
+      fs.mkdirSync(path.dirname(entrypointPath), { recursive: true });
+      fs.writeFileSync(entrypointPath, srcCode);
     }
 
-    const testImports = new Array<string>();
-    testImports.push("import { App } from 'aws-cdk-lib';");
-    testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
-
+    const testdir = path.join(outdir, this.appProject.testdir);
     const appEntrypointName = path.basename(
       this.appProject.appEntrypoint,
       ".ts",
     );
-    const testCode = `${testImports.join("\n")}
-import { MyStack } from '../${this.appProject.srcdir}/${appEntrypointName}';
+    const testPath = path.join(testdir, `${appEntrypointName}.test.ts`);
+
+    // import path to the stack, preserving any subdirectory in the entrypoint
+    // (e.g. "bin/main.ts" -> "../src/bin/main") and using posix separators.
+    const entrypointImport = this.appProject.appEntrypoint
+      .replace(/\.ts$/, "")
+      .split(path.sep)
+      .join(path.posix.sep);
+
+    // Likewise, don't generate the sample test if the user already has
+    // TypeScript files in the test directory, and never overwrite an existing
+    // test file.
+    if (!dirContainsFile(testdir, ".ts") && !fs.existsSync(testPath)) {
+      const testImports = new Array<string>();
+      testImports.push("import { App } from 'aws-cdk-lib';");
+      testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
+
+      const testCode = `${testImports.join("\n")}
+import { MyStack } from '../${this.appProject.srcdir}/${entrypointImport}';
 
 test('Snapshot', () => {
   const app = new App();
@@ -401,10 +412,8 @@ test('Snapshot', () => {
   expect(template.toJSON()).toMatchSnapshot();
 });`;
 
-    fs.mkdirSync(testdir, { recursive: true });
-    fs.writeFileSync(
-      path.join(testdir, `${appEntrypointName}.test.ts`),
-      testCode,
-    );
+      fs.mkdirSync(path.dirname(testPath), { recursive: true });
+      fs.writeFileSync(testPath, testCode);
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { join } from "path";
+import { dirname, join } from "path";
 import {
   AwsCdkTypeScriptApp,
   CdkFeatureFlags,
@@ -125,6 +125,145 @@ describe("cdk.json", () => {
         appEntrypoint: "my-app.ts",
       });
     }).toThrow("Only one of 'app' or 'appEntrypoint' can be specified");
+  });
+});
+
+describe("sample code", () => {
+  it("generates the app entrypoint and matching test by default", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+    });
+
+    const files = synthSnapshot(project);
+
+    expect(files["src/main.ts"]).toContain(
+      "export class MyStack extends Stack",
+    );
+    expect(files["test/main.test.ts"]).toContain(
+      "import { MyStack } from '../src/main';",
+    );
+  });
+
+  it("generates a custom appEntrypoint located in a subdirectory", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+      appEntrypoint: "bin/main.ts",
+    });
+
+    const files = synthSnapshot(project);
+
+    // the entrypoint must be created inside the (previously non-existent)
+    // subdirectory - this used to crash because only `src` was created.
+    expect(files["src/bin/main.ts"]).toContain(
+      "export class MyStack extends Stack",
+    );
+    expect(files["test/main.test.ts"]).toContain(
+      "import { MyStack } from '../src/bin/main';",
+    );
+    expect(files["cdk.json"].app).toStrictEqual(
+      "npx ts-node -P tsconfig.json --prefer-ts-exts src/bin/main.ts",
+    );
+  });
+
+  it("does not generate sample code when the source directory already contains a .ts file", () => {
+    // GIVEN an unrelated source file at the top level of `src`
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src"));
+    writeFileSync(join(outdir, "src", "other.ts"), "// pre-existing");
+
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      outdir,
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+      appEntrypoint: "bin/main.ts",
+    });
+
+    // THEN we don't pollute the user's source dir with sample code, and the
+    // existing file is left untouched.
+    const files = synthSnapshot(project);
+    expect(files["src/bin/main.ts"]).toBeUndefined();
+    expect(files["src/other.ts"]).toStrictEqual("// pre-existing");
+  });
+
+  it("detects existing .ts files in nested subdirectories", () => {
+    // GIVEN a source file nested in a subdirectory of `src`
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src", "nested"), { recursive: true });
+    writeFileSync(join(outdir, "src", "nested", "other.ts"), "// pre-existing");
+
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      outdir,
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+    });
+
+    // THEN the recursive check finds it and no sample code is generated
+    const files = synthSnapshot(project);
+    expect(files["src/main.ts"]).toBeUndefined();
+  });
+
+  it("ignores non-.ts files when deciding whether to generate sample code", () => {
+    // GIVEN only a non-TypeScript file in `src`
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src"));
+    writeFileSync(join(outdir, "src", "README.md"), "# not source");
+
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      outdir,
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+    });
+
+    // THEN sample code is still generated
+    const files = synthSnapshot(project);
+    expect(files["src/main.ts"]).toContain(
+      "export class MyStack extends Stack",
+    );
+  });
+
+  it("does not overwrite an existing entrypoint in a subdirectory", () => {
+    // GIVEN a user-authored entrypoint at the configured location
+    const outdir = mkdtemp();
+    const entrypoint = join(outdir, "src", "bin", "main.ts");
+    mkdirSync(dirname(entrypoint), { recursive: true });
+    writeFileSync(entrypoint, "// my own entrypoint");
+
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      outdir,
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+      appEntrypoint: "bin/main.ts",
+    });
+
+    // THEN the existing file is preserved (not overwritten with the sample)
+    const files = synthSnapshot(project);
+    expect(files["src/bin/main.ts"]).toStrictEqual("// my own entrypoint");
+  });
+
+  it("does not overwrite an existing default entrypoint", () => {
+    // GIVEN a user-authored src/main.ts
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src"));
+    writeFileSync(join(outdir, "src", "main.ts"), "// my own main");
+
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      outdir,
+      defaultReleaseBranch: "main",
+      cdkVersion: "2.189.1",
+    });
+
+    // THEN it is preserved
+    const files = synthSnapshot(project);
+    expect(files["src/main.ts"]).toStrictEqual("// my own main");
   });
 });
 
