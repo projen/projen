@@ -8,12 +8,12 @@ Tasks are a project-level feature to define a project command system backed by
 shell scripts. Tasks are used to implement development workflows and are
 accessible through the projen CLI as subcommands.
 
-The following example defines a task named "hello" which executes the shell
-command `echo hello, world!`:
+The following example defines a task named "hello" which runs `echo` with the
+argument `hello, world!`:
 
 ```js
 const hello = project.addTask("hello");
-hello.exec("echo hello, world!");
+hello.execArgs(["echo", "hello, world!"]);
 ```
 
 Run `pnpm dlx projen` and the task will be available in the CLI:
@@ -24,7 +24,20 @@ pnpm dlx projen hello
 hello, world!
 ```
 
-You can also define some metadata and the first exec step declaratively:
+`execArgs` takes the program followed by its arguments as a list. Each element
+is passed to the program exactly as written, so arguments that contain spaces
+or other special characters don't need to be quoted or escaped. This is the
+recommended way to define command steps.
+
+If you'd rather write a full shell command line — for example to use
+environment variable expansion (`$FOO`), pipes (`|`), redirects (`>`), or
+chaining (`&&`) — use `exec` with a single string instead:
+
+```js
+hello.exec("echo hello, world!");
+```
+
+You can also define some metadata and the first step declaratively:
 
 ```js
 const projen = require("projen");
@@ -32,7 +45,7 @@ const projen = require("projen");
 const hello = project.addTask("hello", {
   description: "say hello",
   category: projen.tasks.TaskCategory.TEST,
-  exec: "echo hello, world!",
+  execArgs: ["echo", "hello, world!"],
 });
 ```
 
@@ -41,10 +54,10 @@ const hello = project.addTask("hello", {
 Tasks can include any number of _steps_:
 
 ```ts
-hello.exec("echo step number 2");
+hello.execArgs(["echo", "step number 2"]);
 
 // a name can be added to a step if desired
-hello.exec("echo foo bar", { name: 'print the text "foo bar"' });
+hello.execArgs(["echo", "foo bar"], { name: 'print the text "foo bar"' });
 ```
 
 The `--inspect` option can be used to display the contents of a task:
@@ -81,10 +94,10 @@ Tasks can also spawn sub-tasks as a step:
 
 ```ts
 const world = project.addTask("world");
-world.exec("echo world!");
+world.execArgs(["echo", "world!"]);
 
 const hello = project.addTask("hello");
-hello.exec("echo hello");
+hello.execArgs(["echo", "hello"]);
 hello.spawn(world);
 ```
 
@@ -112,6 +125,12 @@ project.tasks.addEnvironment("FOO", "hello");
 
 const hello = project.addTask("hello");
 hello.env("BAR", "beautiful");
+```
+
+To use environment variables directly in tasks, you must use `exec` because
+`execArgs` does not perform shell expansion:
+
+```ts
 hello.exec("echo $FOO, $BAR $BAZ!", { env: { BAZ: "world" } });
 ```
 
@@ -240,7 +259,7 @@ if test_task:
 Similar to overriding tasks, you can extend tasks by adding additional steps to the end of the task:
 
 ```ts
-project.tasks.tryFind("build")?.exec("echo Build completed successfully.");
+project.tasks.tryFind("build")?.execArgs(["echo", "Build completed successfully."]);
 ```
 
 ## Saying things

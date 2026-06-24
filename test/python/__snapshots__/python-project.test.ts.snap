@@ -166,7 +166,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -480,7 +480,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -796,7 +796,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -1093,7 +1093,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",

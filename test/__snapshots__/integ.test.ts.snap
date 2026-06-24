@@ -953,7 +953,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 1,
+  "manifestVersion": 2,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -2060,7 +2060,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 1,
+  "manifestVersion": 2,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -3279,7 +3279,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 1,
+  "manifestVersion": 2,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -4370,7 +4370,7 @@ permissions-backup.acl
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 1,
+  "manifestVersion": 2,
   "env": {
     "PATH": "$(pnpm -c exec \\"node --print process.env.PATH\\")"
   },

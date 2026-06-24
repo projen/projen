@@ -30,7 +30,7 @@ export interface ExecFileOptions {
   /**
    * Additional environment variables, merged on top of `process.env`.
    */
-  readonly env?: Record<string, string>;
+  readonly env?: Record<string, string | undefined>;
 }
 
 /**

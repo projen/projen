@@ -8,7 +8,7 @@ import { $ } from "dax";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
-import { rawShell } from "../util/exec";
+import { rawShell, tool } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
 // `?.default ?? module` keeps this working both as a plain CommonJS require and
@@ -318,7 +318,7 @@ class RunTask {
         );
       }
 
-      const execs = step.exec ? [step.exec] : [];
+      const execs: Array<string | string[]> = step.exec ? [step.exec] : [];
 
       // Parse step-specific environment variables
       const env = await this.evalEnvironment(step.env ?? {});
@@ -327,24 +327,52 @@ class RunTask {
         execs.push(this.renderBuiltin(step.builtin));
       }
 
+      // `execArgs` is an explicit argv (the program followed by its arguments).
+      // It is handed to `shell()` as an array rather than a rendered string, so
+      // it runs without a shell and every element is passed through verbatim -
+      // which is what lets callers avoid thinking about quoting. Fixed/received
+      // args are spliced in wherever a `$@` marker element appears (mirroring
+      // the string `exec` behavior), or appended at the end if there is none.
+      if (step.execArgs) {
+        const argv: string[] = [];
+        let placed = false;
+        for (const element of step.execArgs) {
+          if (element === ARGS_MARKER) {
+            argv.push(...argsList);
+            placed = true;
+          } else {
+            argv.push(element);
+          }
+        }
+        if (!placed) {
+          argv.push(...argsList);
+        }
+        execs.push(argv);
+      }
+
       for (const exec of execs) {
         let hasError = false;
 
         let command = exec;
 
-        if (command.includes(QUOTED_ARGS_MARKER)) {
-          // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
-          // that contain whitespace will be single quoted ('arg'). This preserves whitespace in things like filenames.
-          // Imitate that behavior here by single quoting every element of the arg array when a quoted arg marker ("$@")
-          // is encountered.
-          command = command.replace(
-            QUOTED_ARGS_MARKER,
-            argsList.map((arg) => `'${arg}'`).join(" "),
-          );
-        } else if (command.includes(ARGS_MARKER)) {
-          command = command.replace(ARGS_MARKER, argsList.join(" "));
-        } else {
-          command = [command, ...argsList].join(" ");
+        // String commands (`exec`/`builtin`) are shell command lines, so the
+        // task args are spliced in following the `$@` marker rules. Array
+        // commands (`execArgs`) already carry their args and are left untouched.
+        if (typeof command === "string") {
+          if (command.includes(QUOTED_ARGS_MARKER)) {
+            // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
+            // that contain whitespace will be single quoted ('arg'). This preserves whitespace in things like filenames.
+            // Imitate that behavior here by single quoting every element of the arg array when a quoted arg marker ("$@")
+            // is encountered.
+            command = command.replace(
+              QUOTED_ARGS_MARKER,
+              argsList.map((arg) => `'${arg}'`).join(" "),
+            );
+          } else if (command.includes(ARGS_MARKER)) {
+            command = command.replace(ARGS_MARKER, argsList.join(" "));
+          } else {
+            command = [command, ...argsList].join(" ");
+          }
         }
 
         const cwd = step.cwd;
@@ -365,11 +393,9 @@ class RunTask {
         }
         if (hasError) {
           throw new Error(
-            `Task "${
-              this.fullname
-            }" failed when executing "${command}" (cwd: ${resolve(
-              cwd ?? this.workdir,
-            )})`,
+            `Task "${this.fullname}" failed when executing "${
+              Array.isArray(command) ? command.join(" ") : command
+            }" (cwd: ${resolve(cwd ?? this.workdir)})`,
           );
         }
       }
@@ -492,7 +518,11 @@ class RunTask {
         log.push(options.logprefix);
       }
 
-      log.push(options.command);
+      log.push(
+        Array.isArray(options.command)
+          ? options.command.join(" ")
+          : options.command,
+      );
 
       if (options.cwd) {
         log.push(`(cwd: ${options.cwd})`);
@@ -518,6 +548,8 @@ class RunTask {
     // `shellEval`); otherwise inherit so output is streamed to the terminal.
     const capture = Array.isArray(options.spawnOptions?.stdio);
 
+    const command = options.command;
+
     // On Windows the default shell (cmd.exe) does not understand the POSIX-style
     // commands projen tasks are written in (`cat`, `cp`, `mkdir -p`, `rm -rf`,
     // `&&` chains, `$VAR`, ...). Run the command through dax's cross-platform
@@ -525,7 +557,15 @@ class RunTask {
     // commands. Now that the task runtime is asynchronous we can drive dax's
     // `$` API directly instead of spawning a synchronous child node process.
     if (process.platform === "win32") {
-      const result = await $.raw`${options.command}`
+      // An array command is an explicit argv: interpolate it through dax (NOT
+      // `$.raw`) so each element is passed as a single argument with no
+      // quoting/expansion. A string command is a shell line, run verbatim via
+      // `$.raw`.
+      const cmd = Array.isArray(command)
+        ? $`${command[0]} ${command.slice(1)}`
+        : $.raw`${command}`;
+
+      const result = await cmd
         .cwd(cwd)
         .env(env)
         .stdout(capture ? "piped" : "inherit")
@@ -539,9 +579,34 @@ class RunTask {
       };
     }
 
-    // On other platforms, run the command through the system shell via the
-    // centralized `rawShell` helper.
-    return rawShell.exec(options.command, { cwd, env, capture });
+    // On other platforms a string command is a shell line, run through the
+    // system shell via `rawShell`.
+    if (!Array.isArray(command)) {
+      return rawShell.exec(command, { cwd, env, capture });
+    }
+
+    // An array command is an explicit argv: run the program directly, without
+    // a shell, via the structured `tool` helper - so each element is passed
+    // verbatim and there is no quoting to get right. `tool.run` throws on a
+    // non-zero exit (with a numeric `status`) and on a spawn failure (without
+    // one); translate the former into a normalized result and re-throw the
+    // latter, matching `rawShell.exec`'s non-throwing contract. Array commands
+    // are always run with inherited stdio - the capturing callers (condition
+    // and env evaluation) only ever pass string commands.
+    const [file, ...args] = command;
+    try {
+      tool(file).run(args, {
+        cwd,
+        env,
+        inheritStdio: true,
+      });
+      return { status: 0 };
+    } catch (e: any) {
+      if (typeof e?.status === "number") {
+        return { status: e.status };
+      }
+      throw e;
+    }
   }
 
   private async shellEval(options: ShellOptions): Promise<ShellResult> {
@@ -576,7 +641,12 @@ class RunTask {
 }
 
 interface ShellOptions {
-  readonly command: string;
+  /**
+   * The command to run. A string is executed as a shell command line; a
+   * string array is an explicit argv (program + arguments) executed without a
+   * shell.
+   */
+  readonly command: string | string[];
   /**
    * @default - project dir
    */

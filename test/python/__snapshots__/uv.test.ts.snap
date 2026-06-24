@@ -184,7 +184,7 @@ cython_debug/
       "PATH": "$(echo .venv/bin:$PATH)",
       "VIRTUAL_ENV": ".venv",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",

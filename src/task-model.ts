@@ -157,11 +157,36 @@ export interface TaskStepOptions {
  */
 export interface TaskStep extends TaskStepOptions {
   /**
-   * Shell command to execute
+   * Shell command to execute.
+   *
+   * The whole command is a single shell string. To pass arguments as a list
+   * instead - without having to quote spaces or other characters yourself -
+   * use `execArgs`.
    *
    * @default - don't execute a shell command
    */
   readonly exec?: string;
+
+  /**
+   * Shell command to execute, provided as a list of the program followed by
+   * its arguments (an "argv").
+   *
+   * Often more convenient than `exec`: each element is passed to the
+   * program as-is, so arguments with spaces or special characters don't need
+   * quoting. Fixed (`args`) or received (`receiveArgs`) arguments are inserted
+   * wherever a `$@` element appears, or appended at the end if there is none.
+   *
+   * The elements are not run through a shell, so environment variables (`$FOO`)
+   * are not expanded and other shell features are unavailable. Use `exec`
+   * if you need them.
+   *
+   * Mutually exclusive with `exec`.
+   *
+   * @example { execArgs: ["echo", "hello world"] }
+   *
+   * @default - don't execute a shell command
+   */
+  readonly execArgs?: string[];
 
   /**
    * Subtask to execute
