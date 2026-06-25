@@ -31,7 +31,7 @@ export class Projenrc extends ProjenrcFile {
     this.filePath = options.filename ?? DEFAULT_PROJEN_RC_JS_FILENAME;
 
     // this is the task projen executes when running `projen`
-    project.defaultTask?.exec(`node ${this.filePath}`);
+    project.defaultTask?.execArgs(["node", this.filePath]);
 
     this.generateProjenrc();
   }

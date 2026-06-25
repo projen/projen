@@ -31,7 +31,9 @@ test("rewire replaces react-scripts", () => {
     if (!task) {
       throw new Error(`Task not found: ${taskName}`);
     }
-    expect(task.steps[task.steps.length - 1].exec).toEqual(script);
+    expect(task.steps[task.steps.length - 1].execArgs).toEqual(
+      script.split(" "),
+    );
   }
 
   assertExec("compile", "react-app-rewired build");

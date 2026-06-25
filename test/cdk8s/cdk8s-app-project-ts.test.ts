@@ -20,14 +20,14 @@ test("test if cdk8s synth is possible", () => {
   // expect a synth task
   expect(output[".projen/tasks.json"].tasks.synth.steps).toStrictEqual([
     {
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     },
   ]);
 
   // expect an import task
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      execArgs: ["cdk8s", "import", "-o", "src/imports"],
     },
   ]);
 
@@ -67,7 +67,7 @@ test("adding cdk8sImports", () => {
   // THEN
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      execArgs: ["cdk8s", "import", "-o", "src/imports"],
     },
   ]);
   expect(yaml.parse(output["cdk8s.yaml"])).toStrictEqual({

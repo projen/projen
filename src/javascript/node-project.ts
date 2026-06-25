@@ -868,15 +868,22 @@ export class NodeProject extends GitHubProject {
       );
     }
     if (release || shouldPackage) {
-      this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
+      this.packageTask.execArgs([
+        "mkdir",
+        "-p",
+        this.artifactsJavascriptDirectory,
+      ]);
 
       const pkgMgr =
         this.package.packageManager === NodePackageManager.PNPM
           ? "pnpm"
           : "npm";
-      this.packageTask.exec(
-        `${pkgMgr} pack --pack-destination ${this.artifactsJavascriptDirectory}`,
-      );
+      this.packageTask.execArgs([
+        pkgMgr,
+        "pack",
+        "--pack-destination",
+        this.artifactsJavascriptDirectory,
+      ]);
     }
 
     if (multipleSelected([options.biome, options.prettier])) {

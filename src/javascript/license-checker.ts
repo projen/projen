@@ -88,16 +88,16 @@ export class LicenseChecker extends Component {
     }
     if (allowedLicenses.length) {
       cmd.push("--onlyAllow");
-      cmd.push(`"${allowedLicenses.join(";")}"`);
+      cmd.push(allowedLicenses.join(";"));
     }
     if (prohibitedLicenses.length) {
       cmd.push("--failOn");
-      cmd.push(`"${prohibitedLicenses.join(";")}"`);
+      cmd.push(prohibitedLicenses.join(";"));
     }
 
     this.project.deps.addDependency("license-checker", DependencyType.BUILD);
     this.task = this.project.addTask(taskName, {
-      exec: cmd.join(" "),
+      execArgs: cmd,
       receiveArgs: true,
     });
     this.project.preCompileTask.spawn(this.task);

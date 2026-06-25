@@ -513,7 +513,10 @@ permissions-backup.acl
         "name": "compile",
         "steps": [
           {
-            "exec": "react-scripts build",
+            "execArgs": [
+              "react-scripts",
+              "build",
+            ],
           },
         ],
       },
@@ -522,7 +525,10 @@ permissions-backup.acl
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -531,7 +537,10 @@ permissions-backup.acl
         "name": "dev",
         "steps": [
           {
-            "exec": "react-scripts start",
+            "execArgs": [
+              "react-scripts",
+              "start",
+            ],
           },
         ],
       },
@@ -570,10 +579,19 @@ permissions-backup.acl
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/js",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/js",
+            ],
           },
           {
-            "exec": "npm pack --pack-destination dist/js",
+            "execArgs": [
+              "npm",
+              "pack",
+              "--pack-destination",
+              "dist/js",
+            ],
           },
         ],
       },
@@ -618,7 +636,11 @@ permissions-backup.acl
         "name": "test",
         "steps": [
           {
-            "exec": "react-scripts test --watchAll=false",
+            "execArgs": [
+              "react-scripts",
+              "test",
+              "--watchAll=false",
+            ],
           },
         ],
       },

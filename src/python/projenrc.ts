@@ -59,7 +59,7 @@ export class Projenrc extends ProjenrcFile {
     );
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask?.exec(`${this.pythonExec} .projenrc.py`);
+    project.defaultTask?.execArgs([this.pythonExec, ".projenrc.py"]);
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();

@@ -435,10 +435,16 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": [
           {
-            "exec": "tsc --build",
+            "execArgs": [
+              "tsc",
+              "--build",
+            ],
           },
           {
-            "exec": "next build",
+            "execArgs": [
+              "next",
+              "build",
+            ],
           },
         ],
       },
@@ -447,7 +453,10 @@ tsconfig.tsbuildinfo
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -456,7 +465,10 @@ tsconfig.tsbuildinfo
         "name": "dev",
         "steps": [
           {
-            "exec": "next dev",
+            "execArgs": [
+              "next",
+              "dev",
+            ],
           },
         ],
       },
@@ -477,7 +489,10 @@ tsconfig.tsbuildinfo
         "name": "export",
         "steps": [
           {
-            "exec": "next export",
+            "execArgs": [
+              "next",
+              "export",
+            ],
           },
         ],
       },
@@ -520,7 +535,10 @@ tsconfig.tsbuildinfo
         "name": "server",
         "steps": [
           {
-            "exec": "next start",
+            "execArgs": [
+              "next",
+              "start",
+            ],
           },
         ],
       },
@@ -529,7 +547,10 @@ tsconfig.tsbuildinfo
         "name": "telemetry",
         "steps": [
           {
-            "exec": "next telemetry",
+            "execArgs": [
+              "next",
+              "telemetry",
+            ],
           },
         ],
       },
@@ -566,7 +587,11 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w",
+            "execArgs": [
+              "tsc",
+              "--build",
+              "-w",
+            ],
           },
         ],
       },

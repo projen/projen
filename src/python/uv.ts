@@ -66,22 +66,22 @@ export class Uv
 
     this.installCiTask = this.project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "uv sync",
+      execArgs: ["uv", "sync"],
     });
 
     this.project.tasks.addEnvironment("VIRTUAL_ENV", ".venv");
     this.project.tasks.addEnvironment("PATH", "$(echo .venv/bin:$PATH)");
 
-    this.project.packageTask.exec("uv build");
+    this.project.packageTask.execArgs(["uv", "build"]);
 
     this.publishTestTask = this.project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
-      exec: "uv publish --index testpypi",
+      execArgs: ["uv", "publish", "--index", "testpypi"],
     });
 
     this.publishTask = this.project.addTask("publish", {
       description: "Uploads the package to PyPI.",
-      exec: "uv publish",
+      execArgs: ["uv", "publish"],
     });
 
     this.file = new PyprojectTomlFile(this.project, {

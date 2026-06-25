@@ -533,9 +533,10 @@ test("empty upgrade list", () => {
     },
   });
   const tasks = synthSnapshot(project)[ProjenTaskRunner.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
-    "echo No dependencies to upgrade.",
-  );
+  expect(tasks.upgrade.steps[0].execArgs).toStrictEqual([
+    "echo",
+    "No dependencies to upgrade.",
+  ]);
 });
 
 test("uses the proper yarn berry upgrade command", () => {

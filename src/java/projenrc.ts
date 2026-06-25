@@ -80,7 +80,7 @@ export class Projenrc extends ProjenrcFile {
     pom.addPlugin("org.codehaus.mojo/exec-maven-plugin@3.0.0");
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask?.exec(`mvn ${compileGoal} --quiet`);
+    project.defaultTask?.execArgs(["mvn", compileGoal, "--quiet"]);
     project.defaultTask?.exec(
       `mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`,
     );

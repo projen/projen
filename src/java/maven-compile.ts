@@ -37,6 +37,6 @@ export class MavenCompile extends Component {
       },
     });
 
-    project.compileTask.exec("mvn compiler:compile");
+    project.compileTask.execArgs(["mvn", "compiler:compile"]);
   }
 }

@@ -329,7 +329,7 @@ export class UpgradeDependencies extends Component {
     // Package Manager upgrade should always include all deps
     const includeForPackageManagerUpgrade = this.buildDependencyList(true);
     if (includeForPackageManagerUpgrade.length === 0) {
-      return [{ exec: "echo No dependencies to upgrade." }];
+      return [{ execArgs: ["echo", "No dependencies to upgrade."] }];
     }
 
     // Removing `npm-check-updates` from our dependency tree because it depends on a package

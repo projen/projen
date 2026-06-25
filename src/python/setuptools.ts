@@ -32,7 +32,12 @@ export class Setuptools extends Component implements IPythonPackaging {
     project.deps.addDependency("wheel@0.36.2", DependencyType.DEVENV);
     project.deps.addDependency("twine@3.3.0", DependencyType.DEVENV);
 
-    project.packageTask.exec(`${this.pythonExec} setup.py sdist bdist_wheel`);
+    project.packageTask.execArgs([
+      this.pythonExec,
+      "setup.py",
+      "sdist",
+      "bdist_wheel",
+    ]);
 
     this.publishTestTask = project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",

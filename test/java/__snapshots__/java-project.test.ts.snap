@@ -255,7 +255,10 @@ dist/java
         "name": "compile",
         "steps": [
           {
-            "exec": "mvn compiler:compile",
+            "execArgs": [
+              "mvn",
+              "compiler:compile",
+            ],
           },
         ],
       },
@@ -264,7 +267,11 @@ dist/java
         "name": "default",
         "steps": [
           {
-            "exec": "mvn compiler:testCompile --quiet",
+            "execArgs": [
+              "mvn",
+              "compiler:testCompile",
+              "--quiet",
+            ],
           },
           {
             "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope="test"",
@@ -291,7 +298,11 @@ dist/java
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/java",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/java",
+            ],
           },
           {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
@@ -311,7 +322,10 @@ dist/java
         "name": "test",
         "steps": [
           {
-            "exec": "mvn test",
+            "execArgs": [
+              "mvn",
+              "test",
+            ],
           },
         ],
       },
@@ -991,7 +1005,10 @@ dist/java
         "name": "compile",
         "steps": [
           {
-            "exec": "mvn compiler:compile",
+            "execArgs": [
+              "mvn",
+              "compiler:compile",
+            ],
           },
         ],
       },
@@ -1000,7 +1017,11 @@ dist/java
         "name": "default",
         "steps": [
           {
-            "exec": "mvn compiler:testCompile --quiet",
+            "execArgs": [
+              "mvn",
+              "compiler:testCompile",
+              "--quiet",
+            ],
           },
           {
             "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope="test"",
@@ -1027,7 +1048,11 @@ dist/java
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/java",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/java",
+            ],
           },
           {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",

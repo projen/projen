@@ -6,10 +6,21 @@ exports[`IntegrationTest adding an integration test 1`] = `
   "name": "integ:my-test-name:snapshot",
   "steps": [
     {
-      "exec": "rm -fr test/my-test-name.integ.snapshot",
+      "execArgs": [
+        "rm",
+        "-fr",
+        "test/my-test-name.integ.snapshot",
+      ],
     },
     {
-      "exec": "cdk8s synth --app "ts-node -P test/tsconfig.json test/my-test-name.integ.ts" -o test/my-test-name.integ.snapshot",
+      "execArgs": [
+        "cdk8s",
+        "synth",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-test-name.integ.ts",
+        "-o",
+        "test/my-test-name.integ.snapshot",
+      ],
     },
   ],
 }
@@ -21,19 +32,43 @@ exports[`IntegrationTest adding an integration test 2`] = `
   "name": "integ:my-test-name:deploy",
   "steps": [
     {
-      "exec": "rm -fr test/.tmp/my-test-name.integ/deploy.cdk.out",
+      "execArgs": [
+        "rm",
+        "-fr",
+        "test/.tmp/my-test-name.integ/deploy.cdk.out",
+      ],
     },
     {
-      "exec": "cdk8s synth --app "ts-node -P test/tsconfig.json test/my-test-name.integ.ts" -o test/.tmp/my-test-name.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk8s",
+        "synth",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-test-name.integ.ts",
+        "-o",
+        "test/.tmp/my-test-name.integ/deploy.cdk.out",
+      ],
     },
     {
-      "exec": "kubectl apply -f test/.tmp/my-test-name.integ/deploy.cdk.out",
+      "execArgs": [
+        "kubectl",
+        "apply",
+        "-f",
+        "test/.tmp/my-test-name.integ/deploy.cdk.out",
+      ],
     },
     {
-      "exec": "rm -fr test/my-test-name.integ.snapshot",
+      "execArgs": [
+        "rm",
+        "-fr",
+        "test/my-test-name.integ.snapshot",
+      ],
     },
     {
-      "exec": "mv test/.tmp/my-test-name.integ/deploy.cdk.out test/my-test-name.integ.snapshot",
+      "execArgs": [
+        "mv",
+        "test/.tmp/my-test-name.integ/deploy.cdk.out",
+        "test/my-test-name.integ.snapshot",
+      ],
     },
   ],
 }
@@ -51,7 +86,11 @@ exports[`IntegrationTest adding an integration test 3`] = `
       "exec": "cdk8s synth --app "ts-node -P test/tsconfig.json test/my-test-name.integ.ts" -o test/.tmp/my-test-name.integ/assert.cdk.out > /dev/null",
     },
     {
-      "exec": "diff test/my-test-name.integ.snapshot/ test/.tmp/my-test-name.integ/assert.cdk.out/",
+      "execArgs": [
+        "diff",
+        "test/my-test-name.integ.snapshot/",
+        "test/.tmp/my-test-name.integ/assert.cdk.out/",
+      ],
     },
   ],
 }

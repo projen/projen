@@ -134,7 +134,10 @@ node_modules/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },

@@ -817,7 +817,10 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": [
           {
-            "exec": "tsc --build",
+            "execArgs": [
+              "tsc",
+              "--build",
+            ],
           },
         ],
       },
@@ -826,7 +829,10 @@ tsconfig.tsbuildinfo
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -879,10 +885,19 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/js",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/js",
+            ],
           },
           {
-            "exec": "npm pack --pack-destination dist/js",
+            "execArgs": [
+              "npm",
+              "pack",
+              "--pack-destination",
+              "dist/js",
+            ],
           },
         ],
       },
@@ -990,7 +1005,11 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w",
+            "execArgs": [
+              "tsc",
+              "--build",
+              "-w",
+            ],
           },
         ],
       },

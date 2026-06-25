@@ -219,7 +219,7 @@ export class Bundler extends Component {
     this.bundleTask.spawn(bundleTask);
 
     if (options.executable ?? false) {
-      bundleTask.exec(`chmod +x ${outfile}`);
+      bundleTask.execArgs(["chmod", "+x", outfile]);
     }
 
     let watchTask;

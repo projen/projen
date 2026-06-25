@@ -527,7 +527,10 @@ permissions-backup.acl
         "name": "compile",
         "steps": [
           {
-            "exec": "next build",
+            "execArgs": [
+              "next",
+              "build",
+            ],
           },
         ],
       },
@@ -536,7 +539,10 @@ permissions-backup.acl
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -545,7 +551,10 @@ permissions-backup.acl
         "name": "dev",
         "steps": [
           {
-            "exec": "next dev",
+            "execArgs": [
+              "next",
+              "dev",
+            ],
           },
         ],
       },
@@ -566,7 +575,10 @@ permissions-backup.acl
         "name": "export",
         "steps": [
           {
-            "exec": "next export",
+            "execArgs": [
+              "next",
+              "export",
+            ],
           },
         ],
       },
@@ -593,10 +605,19 @@ permissions-backup.acl
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/js",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/js",
+            ],
           },
           {
-            "exec": "npm pack --pack-destination dist/js",
+            "execArgs": [
+              "npm",
+              "pack",
+              "--pack-destination",
+              "dist/js",
+            ],
           },
         ],
       },
@@ -641,7 +662,10 @@ permissions-backup.acl
         "name": "server",
         "steps": [
           {
-            "exec": "next start",
+            "execArgs": [
+              "next",
+              "start",
+            ],
           },
         ],
       },
@@ -650,7 +674,10 @@ permissions-backup.acl
         "name": "telemetry",
         "steps": [
           {
-            "exec": "next telemetry",
+            "execArgs": [
+              "next",
+              "telemetry",
+            ],
           },
         ],
       },

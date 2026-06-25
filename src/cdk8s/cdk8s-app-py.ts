@@ -62,7 +62,7 @@ export class Cdk8sPythonApp extends PythonProject {
 
     const synth = this.addTask("synth", {
       description: "Synthesizes your cdk8s app into dist",
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     });
 
     // add synth to the build
