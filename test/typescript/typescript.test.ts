@@ -782,3 +782,22 @@ test("compiled tests (testdir under srcdir) generate a jest snapshot resolver", 
   expect(resolver).toContain("resolveSnapshotPath");
   expect(resolver).toContain("resolveTestPath");
 });
+
+describe("docgen", () => {
+  test("adds a typedoc docgen task defined with execArgs", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      docgen: true,
+    });
+
+    const docgen = prj.tasks.tryFind("docgen");
+    expect(docgen?.steps?.[0]?.execArgs).toStrictEqual([
+      "typedoc",
+      prj.srcdir,
+      "--disableSources",
+      "--out",
+      prj.docsDirectory,
+    ]);
+  });
+});
