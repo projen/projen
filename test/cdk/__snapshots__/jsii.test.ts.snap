@@ -855,7 +855,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -956,7 +956,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -965,7 +968,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "docgen",
         "steps": [
           {
-            "exec": "jsii-docgen -o API.md",
+            "execArgs": [
+              "jsii-docgen",
+              "-o",
+              "API.md",
+            ],
           },
         ],
       },
@@ -1041,7 +1048,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": [
           {
-            "exec": "jsii-pacmak -v --target js",
+            "execArgs": [
+              "jsii-pacmak",
+              "-v",
+              "--target",
+              "js",
+            ],
           },
         ],
       },
@@ -1566,7 +1578,12 @@ exports[`language bindings package:dotnet task 1`] = `
   "name": "package:dotnet",
   "steps": [
     {
-      "exec": "jsii-pacmak -v --target dotnet",
+      "execArgs": [
+        "jsii-pacmak",
+        "-v",
+        "--target",
+        "dotnet",
+      ],
     },
   ],
 }
@@ -1578,7 +1595,12 @@ exports[`language bindings package:go task 1`] = `
   "name": "package:go",
   "steps": [
     {
-      "exec": "jsii-pacmak -v --target go",
+      "execArgs": [
+        "jsii-pacmak",
+        "-v",
+        "--target",
+        "go",
+      ],
     },
   ],
 }
@@ -1590,7 +1612,12 @@ exports[`language bindings package:java task 1`] = `
   "name": "package:java",
   "steps": [
     {
-      "exec": "jsii-pacmak -v --target java",
+      "execArgs": [
+        "jsii-pacmak",
+        "-v",
+        "--target",
+        "java",
+      ],
     },
   ],
 }
@@ -1602,7 +1629,12 @@ exports[`language bindings package:js task 1`] = `
   "name": "package:js",
   "steps": [
     {
-      "exec": "jsii-pacmak -v --target js",
+      "execArgs": [
+        "jsii-pacmak",
+        "-v",
+        "--target",
+        "js",
+      ],
     },
   ],
 }
@@ -1614,7 +1646,12 @@ exports[`language bindings package:python task 1`] = `
   "name": "package:python",
   "steps": [
     {
-      "exec": "jsii-pacmak -v --target python",
+      "execArgs": [
+        "jsii-pacmak",
+        "-v",
+        "--target",
+        "python",
+      ],
     },
   ],
 }

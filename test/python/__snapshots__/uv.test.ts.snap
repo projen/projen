@@ -184,7 +184,7 @@ cython_debug/
       "PATH": "$(echo .venv/bin:$PATH)",
       "VIRTUAL_ENV": ".venv",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -219,7 +219,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -249,7 +252,10 @@ cython_debug/
         "name": "install:ci",
         "steps": [
           {
-            "exec": "uv sync",
+            "execArgs": [
+              "uv",
+              "sync",
+            ],
           },
         ],
       },
@@ -258,7 +264,10 @@ cython_debug/
         "name": "package",
         "steps": [
           {
-            "exec": "uv build",
+            "execArgs": [
+              "uv",
+              "build",
+            ],
           },
         ],
       },
@@ -275,7 +284,10 @@ cython_debug/
         "name": "publish",
         "steps": [
           {
-            "exec": "uv publish",
+            "execArgs": [
+              "uv",
+              "publish",
+            ],
           },
         ],
       },
@@ -284,7 +296,12 @@ cython_debug/
         "name": "publish:test",
         "steps": [
           {
-            "exec": "uv publish --index testpypi",
+            "execArgs": [
+              "uv",
+              "publish",
+              "--index",
+              "testpypi",
+            ],
           },
         ],
       },

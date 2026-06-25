@@ -14682,6 +14682,7 @@ const taskOptions: TaskOptions = { ... }
 | <code><a href="#projen.TaskOptions.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
 | <code><a href="#projen.TaskOptions.property.args">args</a></code> | <code>string[]</code> | Should the provided `exec` shell command receive fixed args. |
 | <code><a href="#projen.TaskOptions.property.exec">exec</a></code> | <code>string</code> | Shell command to execute as the first command of the task. |
+| <code><a href="#projen.TaskOptions.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute as the first command of the task, provided as a list of the program followed by its arguments (an "argv"). |
 | <code><a href="#projen.TaskOptions.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should the provided `exec` shell command receive args passed to the task. |
 | <code><a href="#projen.TaskOptions.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | List of task steps to run. |
 
@@ -14783,6 +14784,30 @@ public readonly exec: string;
 - *Default:* add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 Shell command to execute as the first command of the task.
+
+Mutually exclusive with `execArgs`.
+
+---
+
+##### `execArgs`<sup>Optional</sup> <a name="execArgs" id="projen.TaskOptions.property.execArgs"></a>
+
+```typescript
+public readonly execArgs: string[];
+```
+
+- *Type:* string[]
+- *Default:* add steps using `task.execArgs(args)`, `task.exec(command)` or `task.spawn(subtask)`
+
+Shell command to execute as the first command of the task, provided as a list of the program followed by its arguments (an "argv").
+
+A convenient alternative to `exec`: arguments with spaces or special
+characters are passed through as-is, with no quoting needed. The elements
+are not run through a shell, so environment variables (`$FOO`) are not
+expanded and other shell features are unavailable.
+
+> [TaskStep.execArgs *
+Mutually exclusive with `exec`.](TaskStep.execArgs *
+Mutually exclusive with `exec`.)
 
 ---
 
@@ -15024,6 +15049,7 @@ const taskStep: TaskStep = { ... }
 | <code><a href="#projen.TaskStep.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
 | <code><a href="#projen.TaskStep.property.builtin">builtin</a></code> | <code>string</code> | The name of a built-in task to execute. |
 | <code><a href="#projen.TaskStep.property.exec">exec</a></code> | <code>string</code> | Shell command to execute. |
+| <code><a href="#projen.TaskStep.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute, provided as a list of the program followed by its arguments (an "argv"). |
 | <code><a href="#projen.TaskStep.property.say">say</a></code> | <code>string</code> | Print a message. |
 | <code><a href="#projen.TaskStep.property.spawn">spawn</a></code> | <code>string</code> | Subtask to execute. |
 
@@ -15186,7 +15212,42 @@ public readonly exec: string;
 
 Shell command to execute.
 
+The whole command is a single shell string. To pass arguments as a list
+instead - without having to quote spaces or other characters yourself -
+use `execArgs`.
+
 ---
+
+##### `execArgs`<sup>Optional</sup> <a name="execArgs" id="projen.TaskStep.property.execArgs"></a>
+
+```typescript
+public readonly execArgs: string[];
+```
+
+- *Type:* string[]
+- *Default:* don't execute a shell command
+
+Shell command to execute, provided as a list of the program followed by its arguments (an "argv").
+
+Often more convenient than `exec`: each element is passed to the
+program as-is, so arguments with spaces or special characters don't need
+quoting. Fixed (`args`) or received (`receiveArgs`) arguments are inserted
+wherever a `$@` element appears, or appended at the end if there is none.
+
+The elements are not run through a shell, so environment variables (`$FOO`)
+are not expanded and other shell features are unavailable. Use `exec`
+if you need them.
+
+Mutually exclusive with `exec`.
+
+---
+
+*Example*
+
+```typescript
+{ execArgs: ["echo", "hello world"] }
+```
+
 
 ##### `say`<sup>Optional</sup> <a name="say" id="projen.TaskStep.property.say"></a>
 
@@ -17042,6 +17103,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
 | <code><a href="#projen.Task.exec">exec</a></code> | Executes a shell command. |
+| <code><a href="#projen.Task.execArgs">execArgs</a></code> | Executes a command provided as a list of the program followed by its arguments (an "argv"). |
 | <code><a href="#projen.Task.insertStep">insertStep</a></code> | Insert one or more steps at a given index. |
 | <code><a href="#projen.Task.lock">lock</a></code> | Forbid additional changes to this task. |
 | <code><a href="#projen.Task.prependExec">prependExec</a></code> | Adds a command at the beginning of the task. |
@@ -17161,6 +17223,42 @@ Shell command.
 ---
 
 ###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.exec.parameter.options"></a>
+
+- *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
+
+Options.
+
+---
+
+##### `execArgs` <a name="execArgs" id="projen.Task.execArgs"></a>
+
+```typescript
+public execArgs(command: string[], options?: TaskStepOptions): void
+```
+
+Executes a command provided as a list of the program followed by its arguments (an "argv").
+
+A convenient alternative to `Task.exec`: arguments with spaces or
+special characters are passed through as-is, with no quoting needed. The
+elements are not run through a shell, so environment variables (`$FOO`) are
+not expanded and other shell features are unavailable.
+
+*Example*
+
+```typescript
+task.execArgs(["echo", "hello world"]);
+```
+
+
+###### `command`<sup>Required</sup> <a name="command" id="projen.Task.execArgs.parameter.command"></a>
+
+- *Type:* string[]
+
+The program followed by its arguments.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.Task.execArgs.parameter.options"></a>
 
 - *Type:* <a href="#projen.TaskStepOptions">TaskStepOptions</a>
 

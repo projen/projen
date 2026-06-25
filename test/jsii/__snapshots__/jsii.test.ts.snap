@@ -853,7 +853,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -954,7 +954,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -963,7 +966,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "docgen",
         "steps": [
           {
-            "exec": "jsii-docgen -o API.md",
+            "execArgs": [
+              "jsii-docgen",
+              "-o",
+              "API.md",
+            ],
           },
         ],
       },
@@ -1039,7 +1046,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": [
           {
-            "exec": "jsii-pacmak -v --target js",
+            "execArgs": [
+              "jsii-pacmak",
+              "-v",
+              "--target",
+              "js",
+            ],
           },
         ],
       },
@@ -2395,7 +2407,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -2496,7 +2508,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -2505,7 +2520,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "docgen",
         "steps": [
           {
-            "exec": "jsii-docgen -o API.md",
+            "execArgs": [
+              "jsii-docgen",
+              "-o",
+              "API.md",
+            ],
           },
         ],
       },
@@ -2581,7 +2600,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": [
           {
-            "exec": "jsii-pacmak -v --target js",
+            "execArgs": [
+              "jsii-pacmak",
+              "-v",
+              "--target",
+              "js",
+            ],
           },
         ],
       },
@@ -3939,7 +3963,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 1,
+    "manifestVersion": 2,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -4040,7 +4064,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -4049,7 +4076,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "docgen",
         "steps": [
           {
-            "exec": "jsii-docgen -o API.md",
+            "execArgs": [
+              "jsii-docgen",
+              "-o",
+              "API.md",
+            ],
           },
         ],
       },
@@ -4125,7 +4156,12 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": [
           {
-            "exec": "jsii-pacmak -v --target js",
+            "execArgs": [
+              "jsii-pacmak",
+              "-v",
+              "--target",
+              "js",
+            ],
           },
         ],
       },

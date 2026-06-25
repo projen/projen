@@ -248,12 +248,12 @@ export class ReactComponent extends Component {
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask("dev", {
       description: "Starts the react application",
-      exec: `${reactScripts} start`,
+      execArgs: [reactScripts, "start"],
     });
 
-    project.compileTask.exec(`${reactScripts} build`);
+    project.compileTask.execArgs([reactScripts, "build"]);
 
-    project.testTask.exec(`${reactScripts} test --watchAll=false`);
+    project.testTask.execArgs([reactScripts, "test", "--watchAll=false"]);
 
     const testWatch = project.tasks.tryFind("test:watch");
     testWatch?.reset(`${reactScripts} test`);

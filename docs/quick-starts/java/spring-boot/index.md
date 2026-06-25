@@ -54,8 +54,8 @@ public class projenrc {
         project.addDependency("org.springframework.boot/spring-boot-starter-webmvc@" + springBootVersion);
         project.addTestDependency("org.springframework.boot/spring-boot-starter-webmvc-test@" + springBootVersion);
         project.addPlugin("org.springframework.boot/spring-boot-maven-plugin@" + springBootVersion);
-        project.getTestTask().exec("mvn test");
-        project.addTask("run").exec("mvn spring-boot:run");
+        project.getTestTask().execArgs(["mvn", "test"]);
+        project.addTask("run").execArgs(["mvn", "spring-boot:run"]);
 
         project.synth();
     }

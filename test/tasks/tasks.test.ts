@@ -28,6 +28,81 @@ describe("runTask", () => {
     expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe("hello,42");
   });
 
+  test("execArgs passes each element as a single, unescaped argument", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("write-args", {
+      // With `node -e <script> <args...>`, the trailing args become
+      // process.argv[1..]; the script itself is not in argv.
+      execArgs: [
+        "node",
+        "-e",
+        "require('fs').writeFileSync('args.txt', process.argv.slice(1).join('|'))",
+        "a b", // whitespace must be preserved (not word-split)
+        "$HOME", // must NOT be expanded by the shell
+        "semi;colon", // shell metacharacter must NOT be interpreted
+        "quote'd", // embedded single quote must be handled
+        'also"d', // embedded double quote must be handled
+      ],
+    });
+    p.synth();
+
+    // WHEN
+    p.tasks.runTask("write-args");
+
+    // THEN
+    expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe(
+      "a b|$HOME|semi;colon|quote'd|also\"d",
+    );
+  });
+
+  test("execArgs escapes received args", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("write-args", {
+      execArgs: [
+        "node",
+        "-e",
+        "require('fs').writeFileSync('args.txt', process.argv.slice(1).join('|'))",
+      ],
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // WHEN - args with whitespace and metacharacters are appended safely
+    p.tasks.runTask("write-args", ["x y", "a;b", "quote'd", 'also"d"']);
+
+    // THEN
+    expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe(
+      'x y|a;b|quote\'d|also"d"',
+    );
+  });
+
+  test("execArgs inserts received args at the $@ marker element", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("write-args", {
+      execArgs: [
+        "node",
+        "-e",
+        "require('fs').writeFileSync('args.txt', process.argv.slice(1).join('|'))",
+        "before",
+        "$@",
+        "after",
+      ],
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // WHEN
+    p.tasks.runTask("write-args", ["mid"]);
+
+    // THEN - the args are spliced in place of the marker, not appended
+    expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe(
+      "before|mid|after",
+    );
+  });
+
   test("throws when the task does not exist", () => {
     const p = new TestProject();
     p.synth();
@@ -799,6 +874,60 @@ describe("addSteps", () => {
       expect.stringContaining('Cannot prependSteps to task "my-task"'),
     );
     spy.mockRestore();
+  });
+});
+
+describe("execArgs", () => {
+  test("renders an execArgs step via the task method", () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+
+    // WHEN
+    t.execArgs(["echo", "hello world"]);
+
+    // THEN
+    expectManifest(p, {
+      tasks: {
+        t: {
+          name: "t",
+          steps: [{ execArgs: ["echo", "hello world"] }],
+        },
+      },
+    });
+  });
+
+  test("renders an execArgs step via task options", () => {
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("t", { execArgs: ["echo", "hello world"], receiveArgs: true });
+
+    // THEN
+    expectManifest(p, {
+      tasks: {
+        t: {
+          name: "t",
+          steps: [{ execArgs: ["echo", "hello world"], receiveArgs: true }],
+        },
+      },
+    });
+  });
+
+  test("throws when specifying both exec and execArgs", () => {
+    const p = new TestProject();
+    expect(() =>
+      p.addTask("t", { exec: "echo hi", execArgs: ["echo", "hi"] }),
+    ).toThrow(/cannot specify both exec and execArgs/);
+  });
+
+  test("throws when specifying both execArgs and steps", () => {
+    const p = new TestProject();
+    expect(() =>
+      p.addTask("t", {
+        execArgs: ["echo", "hi"],
+        steps: [{ exec: "echo hi" }],
+      }),
+    ).toThrow(/cannot specify both execArgs and steps/);
   });
 });
 

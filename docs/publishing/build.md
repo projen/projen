@@ -19,11 +19,11 @@ The `build` task spawns a set of sub-tasks which represent the various build pha
 
 To extend the build process, components and projects can use
 `project.projectBuild.xxxTask` and interact with the `Task` object (i.e.
-`project.projectBuild.postCompileTask.exec("echo hi")` will execute `echo hi` after
+`project.projectBuild.postCompileTask.execArgs(["echo", "hi"])` will execute `echo hi` after
 compilation).
 
 > NOTE: the `build` task is locked. This means that any attempt to extend it
-> (i.e. call `spawn`, `exec`, `reset`, etc) will throw an exception. Instead of
+> (i.e. call `spawn`, `execArgs`, `reset`, etc) will throw an exception. Instead of
 > extending `build`, just extend one of the phases. This ensures that phases are
 > always executed in the right order.
 

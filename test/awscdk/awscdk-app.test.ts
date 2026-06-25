@@ -368,7 +368,7 @@ describe("synth", () => {
     expect(files[".projen/tasks.json"].tasks.synth).toStrictEqual({
       name: "synth",
       description: "Synthesizes your cdk app into cdk.out",
-      steps: [{ exec: "cdk synth" }],
+      steps: [{ execArgs: ["cdk", "synth"] }],
     });
   });
 
@@ -377,7 +377,7 @@ describe("synth", () => {
       name: "synth:silent",
       description:
         'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of "yarn build")',
-      steps: [{ exec: "cdk synth -q" }],
+      steps: [{ execArgs: ["cdk", "synth", "-q"] }],
     });
   });
 
@@ -407,7 +407,10 @@ describe("watch", () => {
       name: "watch",
       description:
         "Watches changes in your source code and rebuilds and deploys to the current account",
-      steps: [{ exec: "cdk deploy --hotswap" }, { exec: "cdk watch" }],
+      steps: [
+        { execArgs: ["cdk", "deploy", "--hotswap"] },
+        { execArgs: ["cdk", "watch"] },
+      ],
     });
   });
 
@@ -440,11 +443,20 @@ describe("integ-runner", () => {
       snapshot["package.json"]?.devDependencies["@aws-cdk/integ-tests-alpha"],
     ).toStrictEqual("latest");
     expect(project.tasks.tryFind("integ")?.steps).toEqual([
-      { exec: "integ-runner $@ --language typescript", receiveArgs: true },
+      {
+        execArgs: ["integ-runner", "$@", "--language", "typescript"],
+        receiveArgs: true,
+      },
     ]);
     expect(project.tasks.tryFind("integ:update")?.steps).toEqual([
       {
-        exec: "integ-runner $@ --language typescript --update-on-failed",
+        execArgs: [
+          "integ-runner",
+          "$@",
+          "--language",
+          "typescript",
+          "--update-on-failed",
+        ],
         receiveArgs: true,
       },
     ]);

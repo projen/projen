@@ -298,11 +298,11 @@ Users can suppress these comments by passing `--no-comments` to `projen new`.
 
 ### Summary
 
-| Tag | Behavior |
-|---|---|
-| `@default "value"` | Documents runtime default; also used as initial value in projenrc for **mandatory** options |
-| `@pjnew "value"` | Forces the value into the generated projenrc for both optional and mandatory options (overrides `@default`) |
-| `@featured` | Renders the option as a commented-out hint in the generated projenrc (showing the `@default` value, or `undefined`) |
+| Tag                | Behavior                                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `@default "value"` | Documents runtime default; also used as initial value in projenrc for **mandatory** options                         |
+| `@pjnew "value"`   | Forces the value into the generated projenrc for both optional and mandatory options (overrides `@default`)         |
+| `@featured`        | Renders the option as a commented-out hint in the generated projenrc (showing the `@default` value, or `undefined`) |
 
 ## Setting default .gitignore values
 
@@ -496,18 +496,18 @@ export class MyProject extends GitHubProject {
   }
 
   this.addTask("docker-build", {
-    exec: "docker build -t myproject:latest .",
+    execArgs: ["docker", "build", "-t", "myproject:latest", "."],
     receiveArgs: false,
   });
   this.addTask("docker-stable", {
-    exec: "docker build -t myproject:stable .",
+    execArgs: ["docker", "build", "-t", "myproject:stable", "."],
     receiveArgs: false,
   });
 }
 ```
 
 Note that we are explicitly not passing arguments to the command. Anything
-added after the command specified in `exec` would cause an error. Some
+added after the command specified in `execArgs` would cause an error. Some
 commands you will want to set `receiveArgs` to `true`. For more information,
 [see the docs on tasks](/docs/concepts/tasks).
 

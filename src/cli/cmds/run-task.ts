@@ -71,6 +71,8 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         inspectTask(step.spawn, indent + 2);
       } else if (step.exec) {
         writeln(`- exec: ${step.exec}`);
+      } else if (step.execArgs) {
+        writeln(`- execArgs: ${step.execArgs.join(" ")}`);
       } else if (step.builtin) {
         writeln(`- builtin: ${step.builtin}`);
       }

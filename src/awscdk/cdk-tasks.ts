@@ -41,30 +41,30 @@ export class CdkTasks extends Component {
 
     this.synth = project.addTask("synth", {
       description: "Synthesizes your cdk app into cdk.out",
-      exec: "cdk synth",
+      execArgs: ["cdk", "synth"],
     });
 
     this.synthSilent = project.addTask("synth:silent", {
       description:
         'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of "yarn build")',
-      exec: "cdk synth -q",
+      execArgs: ["cdk", "synth", "-q"],
     });
 
     this.deploy = project.addTask("deploy", {
       description: "Deploys your CDK app to the AWS cloud",
-      exec: "cdk deploy",
+      execArgs: ["cdk", "deploy"],
       receiveArgs: true,
     });
 
     this.destroy = project.addTask("destroy", {
       description: "Destroys your cdk app in the AWS cloud",
-      exec: "cdk destroy",
+      execArgs: ["cdk", "destroy"],
       receiveArgs: true,
     });
 
     this.diff = project.addTask("diff", {
       description: "Diffs the currently deployed app against your code",
-      exec: "cdk diff",
+      execArgs: ["cdk", "diff"],
     });
 
     // typescript projects already have a "watch" task, we will repurpose it
@@ -76,10 +76,10 @@ export class CdkTasks extends Component {
 
     // deploy first because surprisingly watch is not deploying first
     // see https://github.com/aws/aws-cdk/issues/17776
-    watch.exec("cdk deploy --hotswap");
+    watch.execArgs(["cdk", "deploy", "--hotswap"]);
 
     // now we are ready to watch
-    watch.exec("cdk watch");
+    watch.execArgs(["cdk", "watch"]);
 
     this.watch = watch;
   }

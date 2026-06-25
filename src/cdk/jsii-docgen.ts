@@ -41,7 +41,7 @@ export class JsiiDocgen extends Component {
 
     const docgen = this.project.addTask("docgen", {
       description: "Generate API.md from .jsii manifest",
-      exec: `jsii-docgen -o ${filePath}`,
+      execArgs: ["jsii-docgen", "-o", filePath],
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).

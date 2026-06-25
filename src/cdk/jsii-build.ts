@@ -556,12 +556,12 @@ export class JsiiBuild implements IMixin {
     const commandParts = ["jsii-pacmak", "-v"];
 
     if (project.package.packageManager === NodePackageManager.PNPM) {
-      commandParts.push('--pack-command "pnpm pack"');
+      commandParts.push("--pack-command", "pnpm pack");
     }
 
-    commandParts.push(`--target ${language}`);
+    commandParts.push("--target", language);
 
-    packageTargetTask.exec(commandParts.join(" "));
+    packageTargetTask.execArgs(commandParts);
 
     packageAllTask.spawn(packageTargetTask);
     return packageTargetTask;

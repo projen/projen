@@ -89,12 +89,12 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     const synth = this.addTask("synth", {
       description:
         'Synthesizes your cdk8s app into dist (part of "yarn build")',
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     });
 
     this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
-      exec: "cdk8s import -o src/imports",
+      execArgs: ["cdk8s", "import", "-o", "src/imports"],
     });
 
     // add synth to the build

@@ -9,7 +9,13 @@ export class TypedocDocgen {
 
     const docgen = project.addTask("docgen", {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
-      exec: `typedoc ${project.srcdir} --disableSources --out ${project.docsDirectory}`,
+      execArgs: [
+        "typedoc",
+        project.srcdir,
+        "--disableSources",
+        "--out",
+        project.docsDirectory,
+      ],
     });
 
     // spawn after a successful compile

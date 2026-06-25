@@ -744,6 +744,64 @@ describe("shell selection per platform", () => {
   });
 });
 
+test("execArgs runs a step without a shell, passing each element verbatim", async () => {
+  // GIVEN
+  const p = new TestProject();
+  p.addTask("write-args", {
+    execArgs: [
+      "node",
+      "-e",
+      "require('fs').writeFileSync('args.txt', process.argv.slice(1).join('|'))",
+      "a b", // whitespace preserved (not word-split)
+      "$HOME", // not expanded (no shell)
+    ],
+  });
+  p.synth();
+
+  // WHEN - run in-process so the runtime's array path is exercised
+  await new TaskRuntime(p.outdir).runTask("write-args");
+
+  // THEN
+  expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe("a b|$HOME");
+});
+
+test("execArgs splices received args at the $@ marker", async () => {
+  // GIVEN
+  const p = new TestProject();
+  p.addTask("write-args", {
+    execArgs: [
+      "node",
+      "-e",
+      "require('fs').writeFileSync('args.txt', process.argv.slice(1).join('|'))",
+      "before",
+      "$@",
+      "after",
+    ],
+    receiveArgs: true,
+  });
+  p.synth();
+
+  // WHEN
+  await new TaskRuntime(p.outdir).runTask("write-args", [], ["mid"]);
+
+  // THEN
+  expect(readFileSync(join(p.outdir, "args.txt"), "utf-8")).toBe(
+    "before|mid|after",
+  );
+});
+
+test("execArgs surfaces a non-zero exit as a task failure", async () => {
+  // GIVEN
+  const p = new TestProject();
+  p.addTask("boom", { execArgs: ["node", "-e", "process.exit(3)"] });
+  p.synth();
+
+  // THEN
+  await expect(new TaskRuntime(p.outdir).runTask("boom")).rejects.toThrow(
+    /Task "boom" failed when executing "node -e process\.exit\(3\)"/,
+  );
+});
+
 function executeTask(
   p: Project,
   taskName: string,

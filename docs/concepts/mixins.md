@@ -72,7 +72,7 @@ class StandardLinting implements IMixin {
   applyTo(construct: IConstruct): void {
     const project = construct as NodeProject;
     project.addDevDeps('eslint@^9', 'prettier');
-    project.addTask('lint', { exec: 'eslint .' });
+    project.addTask('lint', { execArgs: ['eslint', '.'] });
   }
 }
 ```

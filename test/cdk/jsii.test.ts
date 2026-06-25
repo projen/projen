@@ -446,8 +446,8 @@ describe("docgen", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.docgen.steps[0].exec,
-    ).toStrictEqual("jsii-docgen -o API.md");
+      output[".projen/tasks.json"].tasks.docgen.steps[0].execArgs,
+    ).toStrictEqual(["jsii-docgen", "-o", "API.md"]);
   });
 
   test("can customize output", () => {
@@ -464,8 +464,8 @@ describe("docgen", () => {
 
     const output = synthSnapshot(project);
     expect(
-      output[".projen/tasks.json"].tasks.docgen.steps[0].exec,
-    ).toStrictEqual("jsii-docgen -o docs.md");
+      output[".projen/tasks.json"].tasks.docgen.steps[0].execArgs,
+    ).toStrictEqual(["jsii-docgen", "-o", "docs.md"]);
   });
 });
 
