@@ -855,18 +855,17 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -943,6 +942,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
         "steps": [

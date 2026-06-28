@@ -26,7 +26,11 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         args.help(false);
         args.strict(false);
         args.strictCommands(false);
-        taskArgs = hideBin(process.argv).slice(1);
+        // Strip projen's own task flags so they are consumed here rather than
+        // forwarded to a task that receives args.
+        taskArgs = hideBin(process.argv)
+          .slice(1)
+          .filter((a) => a !== "--no-deps" && a !== "--deps");
       }
 
       args.option("inspect", {
@@ -34,11 +38,18 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         desc: "show all steps in this task",
       });
 
+      args.option("deps", {
+        type: "boolean",
+        default: true,
+        desc: "Run this task's dependencies first. Use --no-deps to run only this task.",
+      });
+
       const argv = args.argv;
 
       if (argv.inspect) {
         return inspectTask(task.name);
       } else {
+        runtime.skipDeps = argv.deps === false;
         try {
           await runtime.runTask(task.name, [], taskArgs);
         } catch (e: any) {
@@ -63,6 +74,11 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
 
     for (const [k, v] of Object.entries(task.env ?? {})) {
       writeln(`${chalk.underline("env")}: ${k}=${v}`);
+    }
+
+    for (const dep of task.dependsOn ?? []) {
+      writeln(`${chalk.underline("depends on")}: ${chalk.bold(dep.task)}`);
+      inspectTask(dep.task, indent + 2);
     }
 
     for (const step of task.steps ?? []) {

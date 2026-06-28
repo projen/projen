@@ -73,6 +73,37 @@ export interface TaskSpec extends TaskCommonOptions {
    * Task steps.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * Other tasks that this task depends on.
+   *
+   * Whenever this task is run - directly, as a dependency of another task, or
+   * via a `spawn` step - its dependencies are run (to completion) first, in the
+   * order listed. Dependencies are de-duplicated within a single invocation, so
+   * a task reachable through multiple dependency paths runs exactly once.
+   *
+   * Unlike `spawn`, a dependency is declared on the *dependent* task, so it is
+   * pulled in automatically no matter how the task is invoked (including
+   * `npx projen <task>` on its own).
+   *
+   * @default - no dependencies
+   */
+  readonly dependsOn?: TaskDependency[];
+}
+
+/**
+ * Describes a dependency of one task on another.
+ *
+ * This is modeled as a struct (rather than a bare task name) so the dependency
+ * graph can grow richer over time without a breaking change to the manifest
+ * schema - for example to add per-dependency options, or to support proper
+ * incremental builds once tasks can declare their inputs and outputs.
+ */
+export interface TaskDependency {
+  /**
+   * The name of the task that must run before the dependent task.
+   */
+  readonly task: string;
 }
 
 /**

@@ -802,6 +802,117 @@ test("execArgs surfaces a non-zero exit as a task failure", async () => {
   );
 });
 
+describe("dependencies", () => {
+  // each task appends its name to out.txt so we can assert execution order
+  const append = (name: string) =>
+    `node -e "require('fs').appendFileSync('out.txt', '${name}\\n')"`;
+
+  const readOrder = (p: Project): string[] => {
+    const file = join(p.outdir, "out.txt");
+    if (!existsSync(file)) {
+      return [];
+    }
+    return readFileSync(file, "utf-8")
+      .split(/\r\n|\n|\r/)
+      .filter((l) => l.length > 0);
+  };
+
+  test("a dependency runs before the task, even standalone", async () => {
+    const p = new TestProject();
+    const a = p.addTask("a", { exec: append("a") });
+    const b = p.addTask("b", { exec: append("b") });
+    b.addDependency(a);
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("b");
+
+    expect(readOrder(p)).toEqual(["a", "b"]);
+  });
+
+  test("a diamond dependency runs the shared dependency exactly once", async () => {
+    const p = new TestProject();
+    const a = p.addTask("a", { exec: append("a") });
+    const b = p.addTask("b", { exec: append("b") });
+    const c = p.addTask("c", { exec: append("c") });
+    const d = p.addTask("d", { exec: append("d") });
+    b.addDependency(a);
+    c.addDependency(a);
+    d.addDependency(b, c);
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("d");
+
+    // a only once, before b and c; d last
+    expect(readOrder(p)).toEqual(["a", "b", "c", "d"]);
+  });
+
+  test("dependencies of a spawned task are de-duplicated across the spawn boundary", async () => {
+    const p = new TestProject();
+    const compile = p.addTask("cc", { exec: append("cc") });
+    const docgen = p.addTask("docgen", { exec: append("docgen") });
+    docgen.addDependency(compile);
+
+    // a phase that runs docgen via a spawn step
+    const post = p.addTask("pp", { exec: append("pp") });
+    post.spawn(docgen);
+
+    // orchestrator depends on cc then pp
+    const orchestrate = p.addTask("orchestrate");
+    orchestrate.addDependency(compile, post);
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("orchestrate");
+
+    // cc runs once (as the orchestrator's dep); the spawned docgen's dep on cc
+    // is de-duped against it.
+    expect(readOrder(p)).toEqual(["cc", "pp", "docgen"]);
+  });
+
+  test("spawn itself is not de-duplicated (runs every time)", async () => {
+    const p = new TestProject();
+    const child = p.addTask("child", { exec: append("child") });
+    const parent = p.addTask("parent");
+    parent.spawn(child);
+    parent.spawn(child);
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("parent");
+
+    expect(readOrder(p)).toEqual(["child", "child"]);
+  });
+
+  test("skipDeps runs only the requested task", async () => {
+    const p = new TestProject();
+    const a = p.addTask("a", { exec: append("a") });
+    const b = p.addTask("b", { exec: append("b") });
+    b.addDependency(a);
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    rt.skipDeps = true;
+    await rt.runTask("b");
+
+    expect(readOrder(p)).toEqual(["b"]);
+  });
+
+  test("skipDeps is global - dependencies of spawned tasks are also skipped", async () => {
+    const p = new TestProject();
+    const a = p.addTask("a", { exec: append("a") });
+    const child = p.addTask("child", { exec: append("child") });
+    child.addDependency(a);
+    const parent = p.addTask("parent");
+    parent.spawn(child);
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    rt.skipDeps = true;
+    await rt.runTask("parent");
+
+    // child still runs (it is spawned), but its dependency `a` is skipped
+    expect(readOrder(p)).toEqual(["child"]);
+  });
+});
+
 function executeTask(
   p: Project,
   taskName: string,
