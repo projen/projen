@@ -103,6 +103,27 @@ export class TaskRuntime {
    */
   public readonly workdir: string;
 
+  /**
+   * When `true`, dependency (`dependsOn`) resolution is skipped for the entire
+   * invocation: only the requested task (and any tasks it `spawn`s) run, and
+   * their declared dependencies are not pulled in.
+   *
+   * Set by the CLI's `--no-deps` flag. Applies globally to the invocation,
+   * including the dependencies of spawned tasks.
+   *
+   * @default false
+   */
+  public skipDeps = false;
+
+  /**
+   * Set of dedup keys (`name::arg1::arg2...`) for tasks that have already run
+   * during this invocation. A task reachable through multiple dependency paths
+   * runs exactly once; `spawn` steps deliberately bypass this set so they run
+   * every time they are reached (but the spawned task's own dependencies are
+   * still de-duplicated against it).
+   */
+  private readonly alreadyRun = new Set<string>();
+
   constructor(workdir: string) {
     this.workdir = resolve(workdir);
     // Perform the initial load. This also verifies the manifest's schema
@@ -142,8 +163,13 @@ export class TaskRuntime {
   }
 
   /**
-   * Runs the task.
+   * Runs the task, after first running its dependencies.
+   *
    * @param name The task name.
+   * @param parents The chain of parent task names, used for logging and env
+   * inheritance.
+   * @param args Arguments to pass to the task.
+   * @param env Extra environment variables to apply to the task.
    */
   public async runTask(
     name: string,
@@ -151,8 +177,32 @@ export class TaskRuntime {
     args: Array<string | number> = [],
     env: { [name: string]: string } = {},
   ): Promise<void> {
+    // Entry points (the CLI, and dependency resolution) de-duplicate the task
+    // against the rest of the invocation, so a task pulled in via multiple
+    // dependency paths runs exactly once.
+    await this._runTask(name, parents, args, env, true);
+  }
+
+  /**
+   * Internal task runner shared by the public `runTask` (and dependency
+   * resolution) and by `spawn` steps.
+   *
+   * @param dedupSelf When `true`, the task itself participates in invocation
+   * de-duplication (run-once semantics). When `false` - as for a `spawn` step -
+   * the task always runs, but its declared dependencies are still resolved and
+   * de-duplicated against everything already run.
+   *
+   * @internal
+   */
+  public async _runTask(
+    name: string,
+    parents: string[],
+    args: Array<string | number>,
+    env: { [name: string]: string },
+    dedupSelf: boolean,
+  ): Promise<void> {
     // A previously executed task (most importantly the "default"/synth task,
-    // which `build` spawns first) may have regenerated `.projen/tasks.json`.
+    // which `build` depends on first) may have regenerated `.projen/tasks.json`.
     // Pick up any such changes before resolving and running this task so we
     // never execute a stale, in-memory definition.
     this.reloadManifestIfChanged();
@@ -160,6 +210,23 @@ export class TaskRuntime {
     const task = this.tryFindTask(name);
     if (!task) {
       throw new Error(`cannot find command ${name}`);
+    }
+
+    if (dedupSelf) {
+      const key = taskKey(name, args);
+      if (this.alreadyRun.has(key)) {
+        logging.debug(gray(`.. skipping ${name} (already run)`));
+        return;
+      }
+      this.alreadyRun.add(key);
+    }
+
+    // Resolve dependencies first, in declaration order. Each is run through the
+    // de-duplicating entry path; dependencies receive no args of their own.
+    if (!this.skipDeps) {
+      for (const dep of task.dependsOn ?? []) {
+        await this._runTask(dep.task, [...parents, name], [], {}, true);
+      }
     }
 
     await new RunTask(this, task, parents, args, env).run();
@@ -310,11 +377,16 @@ class RunTask {
       }
 
       if (step.spawn) {
-        await this.runtime.runTask(
+        // A `spawn` step always runs the spawned task (spawns are positional
+        // and may legitimately re-run a task), but the spawned task's own
+        // dependencies are resolved and de-duplicated against everything that
+        // has already run this invocation.
+        await this.runtime._runTask(
           step.spawn,
           [...this.parents, this.task.name],
           argsList,
-          step.env,
+          step.env ?? {},
+          false,
         );
       }
 
@@ -656,4 +728,12 @@ interface ShellOptions {
   /** @default false */
   readonly quiet?: boolean;
   readonly extraEnv?: { [name: string]: string | undefined };
+}
+
+/**
+ * Builds the invocation-scoped dedup key for a task. The key includes the args
+ * so that the same task invoked with *different* args is not de-duplicated.
+ */
+function taskKey(name: string, args: Array<string | number>): string {
+  return [name, ...args.map((x) => `${x}`)].join("::");
 }

@@ -931,6 +931,129 @@ describe("execArgs", () => {
   });
 });
 
+describe("dependsOn", () => {
+  test("addDependency renders dependsOn in declaration order", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+    const c = p.addTask("c");
+
+    c.addDependency(a, b);
+
+    expectManifest(p, {
+      tasks: {
+        a: { name: "a" },
+        b: { name: "b" },
+        c: { name: "c", dependsOn: [{ task: "a" }, { task: "b" }] },
+      },
+    });
+  });
+
+  test("dependsOn option on addTask", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    p.addTask("b", { dependsOn: [a] });
+
+    expectManifest(p, {
+      tasks: {
+        a: { name: "a" },
+        b: { name: "b", dependsOn: [{ task: "a" }] },
+      },
+    });
+  });
+
+  test("adding the same dependency twice is a no-op", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+
+    b.addDependency(a);
+    b.addDependency(a);
+
+    expect(b.dependencies).toHaveLength(1);
+    expect(b.dependencies[0]).toBe(a);
+  });
+
+  test("removeDependency removes a declared dependency", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+    b.addDependency(a);
+
+    b.removeDependency(a);
+
+    expect(b.dependencies).toHaveLength(0);
+    expectManifest(p, {
+      tasks: {
+        a: { name: "a" },
+        b: { name: "b" },
+      },
+    });
+  });
+
+  test("removeDependency on an undeclared dependency is a no-op", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+
+    expect(() => b.removeDependency(a)).not.toThrow();
+    expect(b.dependencies).toHaveLength(0);
+  });
+
+  test("throws when adding a self dependency", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+
+    expect(() => a.addDependency(a)).toThrow(
+      /Cannot add dependency from task "a" to "a"/,
+    );
+  });
+
+  test("throws when adding a direct circular dependency", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+    b.addDependency(a);
+
+    expect(() => a.addDependency(b)).toThrow(/"b" already depends on "a"/);
+  });
+
+  test("throws when adding a transitive circular dependency", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+    const c = p.addTask("c");
+    b.addDependency(a);
+    c.addDependency(b);
+
+    // a -> c would close the loop a -> c -> b -> a
+    expect(() => a.addDependency(c)).toThrow(/already depends on/);
+  });
+
+  test("removeTask throws when another task depends on it", () => {
+    const p = new TestProject();
+    const a = p.addTask("a");
+    const b = p.addTask("b");
+    b.addDependency(a);
+
+    expect(() => p.removeTask("a")).toThrow(
+      'Unable to remove task "a" because the following tasks depend on it: b',
+    );
+  });
+
+  test("lock prevents adding or removing dependencies", () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    const u = p.addTask("u");
+    t.lock();
+
+    expect(() => t.addDependency(u)).toThrow('Task "t" is locked for changes');
+    expect(() => t.removeDependency(u)).toThrow(
+      'Task "t" is locked for changes',
+    );
+  });
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest["//"];

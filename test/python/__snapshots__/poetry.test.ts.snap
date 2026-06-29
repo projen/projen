@@ -228,18 +228,17 @@ cython_debug/
       "PATH": "$(echo $(poetry env info -p)/bin:$PATH)",
       "VIRTUAL_ENV": "$(poetry env info -p || poetry run poetry env info -p)",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -255,6 +254,11 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
       },

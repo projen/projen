@@ -953,7 +953,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 2,
+  "manifestVersion": 3,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -962,12 +962,6 @@ tsconfig.tsbuildinfo
       "name": "build",
       "description": "Full release build",
       "steps": [
-        {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
         {
           "spawn": "compile"
         },
@@ -979,6 +973,11 @@ tsconfig.tsbuildinfo
         },
         {
           "spawn": "package"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "default"
         }
       ]
     },
@@ -1047,6 +1046,11 @@ tsconfig.tsbuildinfo
       "steps": [
         {
           "exec": "jsii --silence-warnings=reserved-word"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "pre-compile"
         }
       ]
     },
@@ -2082,7 +2086,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 2,
+  "manifestVersion": 3,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -2091,12 +2095,6 @@ tsconfig.tsbuildinfo
       "name": "build",
       "description": "Full release build",
       "steps": [
-        {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
         {
           "spawn": "compile"
         },
@@ -2108,6 +2106,11 @@ tsconfig.tsbuildinfo
         },
         {
           "spawn": "package"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "default"
         }
       ]
     },
@@ -2161,6 +2164,11 @@ tsconfig.tsbuildinfo
         },
         {
           "exec": "cp src/_loadurl.js lib/"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "pre-compile"
         }
       ]
     },
@@ -3328,7 +3336,7 @@ tsconfig.tsbuildinfo
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 2,
+  "manifestVersion": 3,
   "env": {
     "PATH": "$(npx -c \\"node --print process.env.PATH\\")"
   },
@@ -3337,12 +3345,6 @@ tsconfig.tsbuildinfo
       "name": "build",
       "description": "Full release build",
       "steps": [
-        {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
         {
           "spawn": "compile"
         },
@@ -3354,6 +3356,11 @@ tsconfig.tsbuildinfo
         },
         {
           "spawn": "package"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "default"
         }
       ]
     },
@@ -3398,6 +3405,11 @@ tsconfig.tsbuildinfo
             "tsc",
             "--build"
           ]
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "pre-compile"
         }
       ]
     },
@@ -4438,7 +4450,7 @@ permissions-backup.acl
 }
 ",
   ".projen/tasks.json": "{
-  "manifestVersion": 2,
+  "manifestVersion": 3,
   "env": {
     "PATH": "$(pnpm -c exec \\"node --print process.env.PATH\\")"
   },
@@ -4447,12 +4459,6 @@ permissions-backup.acl
       "name": "build",
       "description": "Full release build",
       "steps": [
-        {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
         {
           "spawn": "compile"
         },
@@ -4464,6 +4470,11 @@ permissions-backup.acl
         },
         {
           "spawn": "package"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "default"
         }
       ]
     },
@@ -4519,7 +4530,12 @@ permissions-backup.acl
     },
     "compile": {
       "name": "compile",
-      "description": "Only compile"
+      "description": "Only compile",
+      "dependsOn": [
+        {
+          "task": "pre-compile"
+        }
+      ]
     },
     "default": {
       "name": "default",

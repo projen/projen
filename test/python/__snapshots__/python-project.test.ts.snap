@@ -166,18 +166,17 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -193,6 +192,11 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
       },
@@ -500,18 +504,17 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -527,6 +530,11 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
       },
@@ -836,18 +844,17 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -863,6 +870,11 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
       },
@@ -1153,18 +1165,17 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
-    "manifestVersion": 2,
+    "manifestVersion": 3,
     "tasks": {
       "build": {
+        "dependsOn": [
+          {
+            "task": "default",
+          },
+        ],
         "description": "Full release build",
         "name": "build",
         "steps": [
-          {
-            "spawn": "default",
-          },
-          {
-            "spawn": "pre-compile",
-          },
           {
             "spawn": "compile",
           },
@@ -1180,6 +1191,11 @@ cython_debug/
         ],
       },
       "compile": {
+        "dependsOn": [
+          {
+            "task": "pre-compile",
+          },
+        ],
         "description": "Only compile",
         "name": "compile",
       },

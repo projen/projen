@@ -915,9 +915,8 @@ test("projen synth is only executed for subprojects", () => {
   expect(rootBuildTask).toStrictEqual({
     description: "Full release build",
     name: "build",
+    dependsOn: [{ task: "default" }],
     steps: [
-      { spawn: "default" },
-      { spawn: "pre-compile" },
       { spawn: "compile" },
       { spawn: "post-compile" },
       { spawn: "test" },
@@ -928,7 +927,6 @@ test("projen synth is only executed for subprojects", () => {
     description: "Full release build",
     name: "build",
     steps: [
-      { spawn: "pre-compile" },
       { spawn: "compile" },
       { spawn: "post-compile" },
       { spawn: "test" },

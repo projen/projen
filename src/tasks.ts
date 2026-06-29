@@ -63,8 +63,10 @@ export class Tasks extends Component {
    * @returns The `Task` that was removed, otherwise `undefined`.
    */
   public removeTask(name: string): undefined | Task {
-    const dependentTasks = this.all.filter((task) =>
-      task.steps.find((step) => step.spawn == name),
+    const dependentTasks = this.all.filter(
+      (task) =>
+        task.steps.find((step) => step.spawn == name) ||
+        task.dependencies.some((dep) => dep.name === name),
     );
     if (dependentTasks.length > 0) {
       const errList = dependentTasks.map((depTask) => depTask.name).join(", ");

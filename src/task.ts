@@ -52,6 +52,23 @@ export interface TaskOptions extends TaskCommonOptions {
    * @default - no arguments are passed to the step
    */
   readonly args?: string[];
+
+  /**
+   * Other tasks that this task depends on.
+   *
+   * Dependencies are run (to completion) before this task's steps, whenever
+   * this task runs - including when it is run on its own (e.g. `npx projen
+   * <task>`), pulled in as a dependency of another task, or reached via a
+   * `spawn` step. Within a single invocation, a task reachable through multiple
+   * dependency paths runs exactly once.
+   *
+   * Dependencies are declared on the *dependent* task (unlike `spawn`, which is
+   * declared on the caller), so the relationship is defined once and honored
+   * everywhere the task is used.
+   *
+   * @default - no dependencies
+   */
+  readonly dependsOn?: Task[];
 }
 
 /**
@@ -66,6 +83,7 @@ export class Task {
 
   private readonly _conditions: string[];
   private readonly _steps: TaskStep[];
+  private readonly _dependsOn: Task[];
   private readonly _env: { [name: string]: string };
   private _cwd?: string | undefined;
 
@@ -83,6 +101,11 @@ export class Task {
 
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
+    this._dependsOn = [];
+
+    for (const dep of props.dependsOn ?? []) {
+      this.addDependency(dep);
+    }
 
     if (props.exec && props.steps) {
       throw new Error("cannot specify both exec and steps");
@@ -250,6 +273,54 @@ export class Task {
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
     this._pushSteps("spawn", [{ spawn: subtask.name, ...options }]);
+  }
+
+  /**
+   * Declares that this task depends on one or more other tasks.
+   *
+   * Dependencies are run (to completion) before this task's steps, whenever
+   * this task runs. Within a single invocation, a task reachable through
+   * multiple dependency paths runs exactly once.
+   *
+   * Adding a dependency that is already declared is a no-op. Adding a
+   * dependency that would introduce a cycle throws.
+   *
+   * @param tasks The tasks this task should depend on.
+   */
+  public addDependency(...tasks: Task[]) {
+    this.assertUnlocked();
+
+    for (const task of tasks) {
+      if (this._dependsOn.includes(task)) {
+        continue;
+      }
+      this.validateNoCircularDependency(task);
+      this._dependsOn.push(task);
+    }
+  }
+
+  /**
+   * Removes a previously declared dependency on another task.
+   *
+   * Removing a dependency that was not declared is a no-op.
+   *
+   * @param task The task to no longer depend on.
+   */
+  public removeDependency(task: Task) {
+    this.assertUnlocked();
+
+    const index = this._dependsOn.indexOf(task);
+    if (index !== -1) {
+      this._dependsOn.splice(index, 1);
+    }
+  }
+
+  /**
+   * Returns an immutable copy of the tasks this task depends on, in declaration
+   * order.
+   */
+  public get dependencies(): Task[] {
+    return [...this._dependsOn];
   }
 
   /**
@@ -448,6 +519,7 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this._cwd,
+      dependsOn: omitEmptyArray(this._dependsOn.map((t) => ({ task: t.name }))),
     };
   }
 
@@ -477,4 +549,34 @@ export class Task {
       return value;
     }
   }
+
+  /**
+   * Throws if depending on `target` would introduce a circular dependency,
+   * i.e. if `target` (transitively) already depends on this task.
+   */
+  private validateNoCircularDependency(target: Task) {
+    const self = this;
+    const seen = new Set<Task>();
+
+    recurse(target);
+
+    function recurse(src: Task) {
+      if (src === self) {
+        throw new Error(
+          `Cannot add dependency from task "${self.name}" to "${target.name}": "${target.name}" already depends on "${self.name}"`,
+        );
+      }
+      if (seen.has(src)) {
+        return;
+      }
+      seen.add(src);
+      for (const dep of src._dependsOn) {
+        recurse(dep);
+      }
+    }
+  }
+}
+
+function omitEmptyArray<A>(xs: A[]): A[] | undefined {
+  return xs.length > 0 ? xs : undefined;
 }

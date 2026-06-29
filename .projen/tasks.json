@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 2,
+  "manifestVersion": 3,
   "env": {
     "PATH": "$(npx -c \"node --print process.env.PATH\")"
   },
@@ -18,12 +18,6 @@
       "description": "Full release build",
       "steps": [
         {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
-        {
           "spawn": "compile"
         },
         {
@@ -34,6 +28,11 @@
         },
         {
           "spawn": "package"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "default"
         }
       ]
     },
@@ -127,6 +126,11 @@
       "steps": [
         {
           "exec": "jsii --silence-warnings=reserved-word"
+        }
+      ],
+      "dependsOn": [
+        {
+          "task": "pre-compile"
         }
       ]
     },

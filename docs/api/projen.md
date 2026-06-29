@@ -6393,9 +6393,19 @@ this task should synthesize the project files.
 
 Manages a standard build process for all projects.
 
-Build spawns these tasks in order:
-1. default
-2. pre-compile
+`build` runs the phases in order via explicit `spawn` steps, exactly as
+before, with two changes that introduce the declarative dependency model
+incrementally:
+
+- `compile` now *depends on* `pre-compile` (rather than `build` spawning
+  `pre-compile` separately). `pre-compile` therefore runs whenever `compile`
+  runs, including `npx projen compile` on its own.
+- `build` *depends on* `default` (root projects only) instead of spawning it,
+  so the project is re-synthesized before the build phases run.
+
+Running `build` resolves to:
+1. default (root only, as a dependency)
+2. pre-compile (as a dependency of compile)
 3. compile
 4. post-compile
 5. test
@@ -14661,6 +14671,43 @@ Task execution will fail if one of these is not defined.
 
 ---
 
+### TaskDependency <a name="TaskDependency" id="projen.TaskDependency"></a>
+
+Describes a dependency of one task on another.
+
+This is modeled as a struct (rather than a bare task name) so the dependency
+graph can grow richer over time without a breaking change to the manifest
+schema - for example to add per-dependency options, or to support proper
+incremental builds once tasks can declare their inputs and outputs.
+
+#### Initializer <a name="Initializer" id="projen.TaskDependency.Initializer"></a>
+
+```typescript
+import { TaskDependency } from 'projen'
+
+const taskDependency: TaskDependency = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.TaskDependency.property.task">task</a></code> | <code>string</code> | The name of the task that must run before the dependent task. |
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.TaskDependency.property.task"></a>
+
+```typescript
+public readonly task: string;
+```
+
+- *Type:* string
+
+The name of the task that must run before the dependent task.
+
+---
+
 ### TaskOptions <a name="TaskOptions" id="projen.TaskOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.TaskOptions.Initializer"></a>
@@ -14681,6 +14728,7 @@ const taskOptions: TaskOptions = { ... }
 | <code><a href="#projen.TaskOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this task. |
 | <code><a href="#projen.TaskOptions.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
 | <code><a href="#projen.TaskOptions.property.args">args</a></code> | <code>string[]</code> | Should the provided `exec` shell command receive fixed args. |
+| <code><a href="#projen.TaskOptions.property.dependsOn">dependsOn</a></code> | <code><a href="#projen.Task">Task</a>[]</code> | Other tasks that this task depends on. |
 | <code><a href="#projen.TaskOptions.property.exec">exec</a></code> | <code>string</code> | Shell command to execute as the first command of the task. |
 | <code><a href="#projen.TaskOptions.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute as the first command of the task, provided as a list of the program followed by its arguments (an "argv"). |
 | <code><a href="#projen.TaskOptions.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should the provided `exec` shell command receive args passed to the task. |
@@ -14771,6 +14819,29 @@ public readonly args: string[];
 Should the provided `exec` shell command receive fixed args.
 
 > [{@link TaskStepOptions.args }]({@link TaskStepOptions.args })
+
+---
+
+##### `dependsOn`<sup>Optional</sup> <a name="dependsOn" id="projen.TaskOptions.property.dependsOn"></a>
+
+```typescript
+public readonly dependsOn: Task[];
+```
+
+- *Type:* <a href="#projen.Task">Task</a>[]
+- *Default:* no dependencies
+
+Other tasks that this task depends on.
+
+Dependencies are run (to completion) before this task's steps, whenever
+this task runs - including when it is run on its own (e.g. `npx projen
+<task>`), pulled in as a dependency of another task, or reached via a
+`spawn` step. Within a single invocation, a task reachable through multiple
+dependency paths runs exactly once.
+
+Dependencies are declared on the *dependent* task (unlike `spawn`, which is
+declared on the caller), so the relationship is defined once and honored
+everywhere the task is used.
 
 ---
 
@@ -14923,6 +14994,7 @@ const taskSpec: TaskSpec = { ... }
 | <code><a href="#projen.TaskSpec.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this task. |
 | <code><a href="#projen.TaskSpec.property.requiredEnv">requiredEnv</a></code> | <code>string[]</code> | A set of environment variables that must be defined in order to execute this task. |
 | <code><a href="#projen.TaskSpec.property.name">name</a></code> | <code>string</code> | Task name. |
+| <code><a href="#projen.TaskSpec.property.dependsOn">dependsOn</a></code> | <code><a href="#projen.TaskDependency">TaskDependency</a>[]</code> | Other tasks that this task depends on. |
 | <code><a href="#projen.TaskSpec.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | Task steps. |
 
 ---
@@ -15007,6 +15079,28 @@ public readonly name: string;
 - *Type:* string
 
 Task name.
+
+---
+
+##### `dependsOn`<sup>Optional</sup> <a name="dependsOn" id="projen.TaskSpec.property.dependsOn"></a>
+
+```typescript
+public readonly dependsOn: TaskDependency[];
+```
+
+- *Type:* <a href="#projen.TaskDependency">TaskDependency</a>[]
+- *Default:* no dependencies
+
+Other tasks that this task depends on.
+
+Whenever this task is run - directly, as a dependency of another task, or
+via a `spawn` step - its dependencies are run (to completion) first, in the
+order listed. Dependencies are de-duplicated within a single invocation, so
+a task reachable through multiple dependency paths runs exactly once.
+
+Unlike `spawn`, a dependency is declared on the *dependent* task, so it is
+pulled in automatically no matter how the task is invoked (including
+`npx projen <task>` on its own).
 
 ---
 
@@ -17099,6 +17193,7 @@ new Task(name: string, props?: TaskOptions)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.Task.addCondition">addCondition</a></code> | Add a command to execute which determines if the task should be skipped. |
+| <code><a href="#projen.Task.addDependency">addDependency</a></code> | Declares that this task depends on one or more other tasks. |
 | <code><a href="#projen.Task.addSteps">addSteps</a></code> | Adds steps to this task. |
 | <code><a href="#projen.Task.builtin">builtin</a></code> | Execute a builtin task. |
 | <code><a href="#projen.Task.env">env</a></code> | Adds an environment variable to this task. |
@@ -17110,6 +17205,7 @@ new Task(name: string, props?: TaskOptions)
 | <code><a href="#projen.Task.prependSay">prependSay</a></code> | Says something at the beginning of the task. |
 | <code><a href="#projen.Task.prependSpawn">prependSpawn</a></code> | Adds a spawn instruction at the beginning of the task. |
 | <code><a href="#projen.Task.prependSteps">prependSteps</a></code> | Adds steps at the beginning of this task. |
+| <code><a href="#projen.Task.removeDependency">removeDependency</a></code> | Removes a previously declared dependency on another task. |
 | <code><a href="#projen.Task.removeStep">removeStep</a></code> | *No description.* |
 | <code><a href="#projen.Task.reset">reset</a></code> | Reset the task so it no longer has any commands. |
 | <code><a href="#projen.Task.say">say</a></code> | Say something. |
@@ -17135,6 +17231,29 @@ If a condition already exists, the new condition will be appended with ` && ` de
 - *Type:* ...string[]
 
 The command to execute.
+
+---
+
+##### `addDependency` <a name="addDependency" id="projen.Task.addDependency"></a>
+
+```typescript
+public addDependency(tasks: ...Task[]): void
+```
+
+Declares that this task depends on one or more other tasks.
+
+Dependencies are run (to completion) before this task's steps, whenever
+this task runs. Within a single invocation, a task reachable through
+multiple dependency paths runs exactly once.
+
+Adding a dependency that is already declared is a no-op. Adding a
+dependency that would introduce a cycle throws.
+
+###### `tasks`<sup>Required</sup> <a name="tasks" id="projen.Task.addDependency.parameter.tasks"></a>
+
+- *Type:* ...<a href="#projen.Task">Task</a>[]
+
+The tasks this task should depend on.
 
 ---
 
@@ -17383,6 +17502,24 @@ The steps to add.
 
 ---
 
+##### `removeDependency` <a name="removeDependency" id="projen.Task.removeDependency"></a>
+
+```typescript
+public removeDependency(task: Task): void
+```
+
+Removes a previously declared dependency on another task.
+
+Removing a dependency that was not declared is a no-op.
+
+###### `task`<sup>Required</sup> <a name="task" id="projen.Task.removeDependency.parameter.task"></a>
+
+- *Type:* <a href="#projen.Task">Task</a>
+
+The task to no longer depend on.
+
+---
+
 ##### `removeStep` <a name="removeStep" id="projen.Task.removeStep"></a>
 
 ```typescript
@@ -17492,12 +17629,25 @@ The new step to replace the old one entirely, it is not merged with the old step
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.Task.property.dependencies">dependencies</a></code> | <code><a href="#projen.Task">Task</a>[]</code> | Returns an immutable copy of the tasks this task depends on, in declaration order. |
 | <code><a href="#projen.Task.property.envVars">envVars</a></code> | <code>{[ key: string ]: string}</code> | Returns all environment variables in the task level. |
 | <code><a href="#projen.Task.property.name">name</a></code> | <code>string</code> | Task name. |
 | <code><a href="#projen.Task.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | Returns an immutable copy of all the step specifications of the task. |
 | <code><a href="#projen.Task.property.condition">condition</a></code> | <code>string</code> | A command to execute which determines if the task should be skipped. |
 | <code><a href="#projen.Task.property.cwd">cwd</a></code> | <code>string</code> | Returns the working directory for this task. |
 | <code><a href="#projen.Task.property.description">description</a></code> | <code>string</code> | Returns the description of this task. |
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.Task.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: Task[];
+```
+
+- *Type:* <a href="#projen.Task">Task</a>[]
+
+Returns an immutable copy of the tasks this task depends on, in declaration order.
 
 ---
 
