@@ -1,4 +1,3 @@
-import type { SpawnOptions } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
@@ -8,7 +7,7 @@ import { $ } from "dax";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
-import { rawShell, tool } from "../util/exec";
+import { systemShell, tool } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
 // `?.default ?? module` keeps this working both as a plain CommonJS require and
@@ -25,11 +24,16 @@ const ARGS_MARKER = "$@";
 const QUOTED_ARGS_MARKER = `"${ARGS_MARKER}"`;
 
 /**
- * The result of executing a shell command.
- *
- * This is a normalized subset of node's `SpawnSyncReturns` so that the
- * synchronous (`spawnSync`) and asynchronous (`dax`) execution paths can return
- * a compatible shape.
+ * Double-quotes a single argument so it is passed through verbatim, escaping the
+ * characters that stay special inside double quotes. (Double quotes, not single:
+ * dax's shell lacks the POSIX `'\''` escape.)
+ */
+function quoteArg(arg: string): string {
+  return '"' + arg.replace(/(["$`\\])/g, "\\$1") + '"';
+}
+
+/**
+ * Normalized result of `shell()` (a subset of node's `SpawnSyncReturns`).
  */
 interface ShellResult {
   /**
@@ -258,7 +262,11 @@ class RunTask {
       return;
     }
 
-    this.env = await this.resolveEnvironment(this.envParam, parents);
+    this.env = await this.resolveEnvironment(
+      this.envParam,
+      parents,
+      this.resolveShell(),
+    );
 
     const envlogs = [];
     for (const [k, v] of Object.entries(this.env)) {
@@ -273,7 +281,7 @@ class RunTask {
     }
 
     // evaluate condition
-    if (!(await this.evalCondition(task))) {
+    if (!(await this.evalCondition(task, this.resolveShell()))) {
       this.log("condition exited with non-zero - skipping");
       return;
     }
@@ -294,8 +302,10 @@ class RunTask {
     }
 
     for (const step of task.steps) {
+      const stepShell = this.resolveShell(step);
+
       // evaluate step condition
-      if (!(await this.evalCondition(step))) {
+      if (!(await this.evalCondition(step, stepShell))) {
         this.log("condition exited with non-zero - skipping");
         continue;
       }
@@ -321,7 +331,7 @@ class RunTask {
       const execs: Array<string | string[]> = step.exec ? [step.exec] : [];
 
       // Parse step-specific environment variables
-      const env = await this.evalEnvironment(step.env ?? {});
+      const env = await this.evalEnvironment(step.env ?? {}, stepShell);
 
       if (step.builtin) {
         execs.push(this.renderBuiltin(step.builtin));
@@ -351,22 +361,17 @@ class RunTask {
       }
 
       for (const exec of execs) {
-        let hasError = false;
-
         let command = exec;
 
-        // String commands (`exec`/`builtin`) are shell command lines, so the
-        // task args are spliced in following the `$@` marker rules. Array
-        // commands (`execArgs`) already carry their args and are left untouched.
+        // A string command is a shell line: splice task args in per the `$@`
+        // marker rules. An `execArgs` argv already carries its args, untouched.
         if (typeof command === "string") {
           if (command.includes(QUOTED_ARGS_MARKER)) {
-            // Poorly imitate bash quoted variable expansion. If "$@" is encountered in bash, elements of the arg array
-            // that contain whitespace will be single quoted ('arg'). This preserves whitespace in things like filenames.
-            // Imitate that behavior here by single quoting every element of the arg array when a quoted arg marker ("$@")
-            // is encountered.
+            // `"$@"`: splice each arg in as a separate verbatim word (like
+            // bash's quoted `"$@"`), so whitespace and metacharacters survive.
             command = command.replace(
               QUOTED_ARGS_MARKER,
-              argsList.map((arg) => `'${arg}'`).join(" "),
+              argsList.map(quoteArg).join(" "),
             );
           } else if (command.includes(ARGS_MARKER)) {
             command = command.replace(ARGS_MARKER, argsList.join(" "));
@@ -376,22 +381,15 @@ class RunTask {
         }
 
         const cwd = step.cwd;
-        try {
-          const result = await this.shell({
-            command,
-            cwd,
-            extraEnv: env,
-          });
-          hasError = result.status !== 0;
-        } catch (e) {
-          // a non-zero exit code is reported via `result.status` above; this
-          // catch handles errors thrown while attempting to spawn the command.
-          if ((e as any)?.message?.startsWith("non-zero exit code:")) {
-            hasError = true;
-          }
-          throw e;
-        }
-        if (hasError) {
+        // A thrown error (e.g. spawn failure) propagates; a non-zero exit is
+        // reported via `result.status`.
+        const result = await this.shell({
+          command,
+          cwd,
+          extraEnv: env,
+          shell: stepShell,
+        });
+        if (result.status !== 0) {
           throw new Error(
             `Task "${this.fullname}" failed when executing "${
               Array.isArray(command) ? command.join(" ") : command
@@ -409,7 +407,10 @@ class RunTask {
    * evaluates to false (exits with non-zero), indicating that the task should
    * be skipped.
    */
-  private async evalCondition(taskOrStep: TaskSpec | TaskStep) {
+  private async evalCondition(
+    taskOrStep: TaskSpec | TaskStep,
+    shell: string | string[],
+  ) {
     // no condition, carry on
     if (!taskOrStep.condition) {
       return true;
@@ -418,8 +419,8 @@ class RunTask {
     this.log(gray(`${underline("condition")}: ${taskOrStep.condition}`));
     const result = await this.shell({
       command: taskOrStep.condition,
-      logprefix: "condition: ",
       quiet: true,
+      shell,
     });
     if (result.status === 0) {
       return true;
@@ -431,13 +432,21 @@ class RunTask {
   /**
    * Evaluates environment variables from shell commands (e.g. `$(xx)`)
    */
-  private async evalEnvironment(env: { [name: string]: string }) {
+  private async evalEnvironment(
+    env: { [name: string]: string },
+    shell: string | string[],
+  ) {
     const output: { [name: string]: string | undefined } = {};
 
     for (const [key, value] of Object.entries(env ?? {})) {
       if (String(value).startsWith("$(") && String(value).endsWith(")")) {
         const query = value.substring(2, value.length - 1);
-        const result = await this.shellEval({ command: query });
+        const result = await this.shell({
+          command: query,
+          quiet: true,
+          captureOutput: true,
+          shell,
+        });
         if (result.status !== 0) {
           const error = result.error
             ? result.error.stack
@@ -469,6 +478,7 @@ class RunTask {
   private async resolveEnvironment(
     envParam: { [name: string]: string },
     parents: string[],
+    shell: string | string[],
   ) {
     let env = this.runtime.manifest.env ?? {};
 
@@ -487,7 +497,17 @@ class RunTask {
       ...envParam,
     };
 
-    return this.evalEnvironment(env ?? {});
+    return this.evalEnvironment(env, shell);
+  }
+
+  /**
+   * Resolves the shell for a step's command (or the task's, when no step is
+   * given): step, then task, then project default, then "projen".
+   */
+  private resolveShell(step?: TaskStep): string | string[] {
+    return (
+      step?.shell ?? this.task.shell ?? this.runtime.manifest.shell ?? "projen"
+    );
   }
 
   /**
@@ -514,10 +534,6 @@ class RunTask {
     if (!quiet) {
       const log = new Array<string>();
 
-      if (options.logprefix) {
-        log.push(options.logprefix);
-      }
-
       log.push(
         Array.isArray(options.command)
           ? options.command.join(" ")
@@ -538,85 +554,97 @@ class RunTask {
       );
     }
 
+    // The resolved shell is one of:
+    // - "projen" (default): dax's in-process cross-platform shell, so POSIX-style
+    //   task syntax (`mkdir -p`, `&&`, `$VAR`, ...) works the same everywhere.
+    // - "system": the host's native shell (`/bin/sh`, or `cmd.exe` on Windows).
+    // - an argv, e.g. ["bash","-c"]: a shell invocation with the command appended
+    //   as its final argument.
+    const shell = options.shell ?? "projen";
+    if (typeof shell === "string" && shell !== "projen" && shell !== "system") {
+      throw new Error(
+        `unknown built-in shell ${JSON.stringify(
+          shell,
+        )}; use the built-in "projen" or "system" shells, or a TaskShell.command([...]) invocation`,
+      );
+    }
+
+    // stdout/stderr are captured only when asked (e.g. `$(...)` env eval);
+    // otherwise they are inherited so output streams through.
+    const capture = options.captureOutput ?? false;
+
+    const command = options.command;
     const env = {
       ...process.env,
       ...this.env,
       ...options.extraEnv,
     };
 
-    // stdout/stderr are only captured when a caller pipes them (e.g.
-    // `shellEval`); otherwise inherit so output is streamed to the terminal.
-    const capture = Array.isArray(options.spawnOptions?.stdio);
-
-    const command = options.command;
-
-    // On Windows the default shell (cmd.exe) does not understand the POSIX-style
-    // commands projen tasks are written in (`cat`, `cp`, `mkdir -p`, `rm -rf`,
-    // `&&` chains, `$VAR`, ...). Run the command through dax's cross-platform
-    // shell instead, which ships built-in implementations of the common
-    // commands. Now that the task runtime is asynchronous we can drive dax's
-    // `$` API directly instead of spawning a synchronous child node process.
-    if (process.platform === "win32") {
-      // An array command is an explicit argv: interpolate it through dax (NOT
-      // `$.raw`) so each element is passed as a single argument with no
-      // quoting/expansion. A string command is a shell line, run verbatim via
-      // `$.raw`.
-      const cmd = Array.isArray(command)
-        ? $`${command[0]} ${command.slice(1)}`
-        : $.raw`${command}`;
-
-      const result = await cmd
-        .cwd(cwd)
-        .env(env)
-        .stdout(capture ? "piped" : "inherit")
-        .stderr(capture ? "piped" : "inherit")
-        .noThrow();
-
-      return {
-        status: result.code,
-        stdout: capture ? Buffer.from(result.stdoutBytes) : null,
-        stderr: capture ? Buffer.from(result.stderrBytes) : null,
-      };
-    }
-
-    // On other platforms a string command is a shell line, run through the
-    // system shell via `rawShell`.
-    if (!Array.isArray(command)) {
-      return rawShell.exec(command, { cwd, env, capture });
-    }
-
-    // An array command is an explicit argv: run the program directly, without
-    // a shell, via the structured `tool` helper - so each element is passed
-    // verbatim and there is no quoting to get right. `tool.run` throws on a
-    // non-zero exit (with a numeric `status`) and on a spawn failure (without
-    // one); translate the former into a normalized result and re-throw the
-    // latter, matching `rawShell.exec`'s non-throwing contract. Array commands
-    // are always run with inherited stdio - the capturing callers (condition
-    // and env evaluation) only ever pass string commands.
-    const [file, ...args] = command;
-    try {
-      tool(file).run(args, {
-        cwd,
-        env,
-        inheritStdio: true,
-      });
-      return { status: 0 };
-    } catch (e: any) {
-      if (typeof e?.status === "number") {
-        return { status: e.status };
+    // "system": the host-native engine. A string command runs through the OS
+    // shell; an `execArgs` argv is spawned directly (shell-free), so the real
+    // binary runs with no dax built-ins. (Only `$(...)`/condition eval captures,
+    // and those always pass a string, so an array command never needs capture.)
+    if (shell === "system") {
+      if (Array.isArray(command)) {
+        const [program, ...args] = command;
+        try {
+          tool(program).run(args, { cwd, env, inheritStdio: true });
+          return { status: 0 };
+        } catch (e: any) {
+          if (typeof e?.status === "number") {
+            return { status: e.status };
+          }
+          throw e;
+        }
       }
-      throw e;
+      return systemShell(command, { cwd, env, capture });
     }
+
+    // Otherwise run through dax: the "projen" shell or an explicit invocation.
+    const builder = this.buildDaxCommand(command, shell);
+
+    const result = await builder
+      .cwd(cwd)
+      .env(env)
+      .stdout(capture ? "piped" : "inherit")
+      .stderr(capture ? "piped" : "inherit")
+      .noThrow();
+
+    return {
+      status: result.code,
+      stdout: capture ? Buffer.from(result.stdoutBytes) : null,
+      stderr: capture ? Buffer.from(result.stderrBytes) : null,
+    };
   }
 
-  private async shellEval(options: ShellOptions): Promise<ShellResult> {
-    return this.shell({
-      quiet: true,
-      ...options,
-      spawnOptions: {
-        stdio: ["inherit", "pipe", "pipe"],
-      },
-    });
+  /**
+   * Builds the dax command for the "projen" shell or an explicit invocation.
+   * (The "system" shell is handled host-side, not here.) `command` is a shell
+   * line (string) or an `execArgs` argv (string[]); `shell` is `"projen"` or an
+   * invocation argv such as `["bash", "-c"]`.
+   */
+  private buildDaxCommand(
+    command: string | string[],
+    shell: string | string[],
+  ) {
+    // An invocation (e.g. ["bash","-c"], ["npx","--no","-c"]): append the
+    // command as its final argument. A string is appended as-is; an `execArgs`
+    // argv is rendered to a quoted command line so the shell re-parses the same
+    // argv.
+    if (Array.isArray(shell)) {
+      const [program, ...flags] = shell;
+      const commandLine = Array.isArray(command)
+        ? command.map(quoteArg).join(" ")
+        : command;
+      return $`${program} ${[...flags, commandLine]}`;
+    }
+
+    // The built-in "projen" shell (dax).
+    return Array.isArray(command)
+      ? // execArgs: shell-free argv (each element escaped; `.cmd` shims resolved).
+        $`${command[0]} ${command.slice(1)}`
+      : // string command, parsed in-process by dax's cross-platform shell.
+        $.raw`${command}`;
   }
 
   private renderBuiltin(builtin: string) {
@@ -651,9 +679,19 @@ interface ShellOptions {
    * @default - project dir
    */
   readonly cwd?: string;
-  readonly logprefix?: string;
-  readonly spawnOptions?: SpawnOptions;
+  /**
+   * Capture stdout/stderr (so the caller can read them from the result)
+   * instead of inheriting the parent's streams.
+   *
+   * @default false
+   */
+  readonly captureOutput?: boolean;
   /** @default false */
   readonly quiet?: boolean;
   readonly extraEnv?: { [name: string]: string | undefined };
+  /**
+   * The resolved shell to interpret the command (e.g. "projen", "bash -c").
+   * @default "projen"
+   */
+  readonly shell?: string | string[];
 }

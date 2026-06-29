@@ -1,7 +1,13 @@
 import childProcess from "child_process";
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { Project, TasksManifest, TaskStep } from "../../src";
+import {
+  Task,
+  TaskShell,
+  type Project,
+  type TasksManifest,
+  type TaskStep,
+} from "../../src";
 import * as logging from "../../src/logging";
 import { ProjenTaskRunner } from "../../src/task-runner";
 import { TestProject, synthSnapshot } from "../util";
@@ -949,6 +955,140 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   expect(manifest).toStrictEqual(toStrictEqual);
 }
 
+describe("shell", () => {
+  test("can be set at the task and step level", () => {
+    const p = new TestProject();
+    const t = p.addTask("t", { shell: TaskShell.bash() });
+    t.exec("echo hi", { shell: TaskShell.sh() });
+
+    const spec = t._renderSpec();
+    expect(spec.shell).toEqual(["bash", "-c"]);
+    expect(spec.steps?.[0]?.shell).toEqual(["sh", "-c"]);
+  });
+
+  test("a built-in shell renders to a keyword string", () => {
+    const p = new TestProject();
+    const t = p.addTask("t", { shell: TaskShell.system() });
+
+    expect(t._renderSpec().shell).toBe("system");
+  });
+
+  test("project default shell is rendered into the manifest", () => {
+    const p = new TestProject();
+    p.tasks.shell = TaskShell.command(["bash", "-c"]);
+
+    expect(synthTasksManifest(p).shell).toEqual(["bash", "-c"]);
+  });
+});
+
 function synthTasksManifest(p: Project) {
   return synthSnapshot(p)[ProjenTaskRunner.MANIFEST_FILE];
 }
+
+describe("TaskShell", () => {
+  test("projen() and system() render the built-in keywords", () => {
+    expect(TaskShell.projen()._render()).toBe("projen");
+    expect(TaskShell.system()._render()).toBe("system");
+  });
+
+  test("bash() and sh() render the shell invocation", () => {
+    expect(TaskShell.bash()._render()).toEqual(["bash", "-c"]);
+    expect(TaskShell.sh()._render()).toEqual(["sh", "-c"]);
+  });
+
+  test("command() renders the explicit invocation and defensively copies it", () => {
+    const argv = ["npx", "-c"];
+    const rendered = TaskShell.command(argv)._render();
+    expect(rendered).toEqual(["npx", "-c"]);
+    expect(rendered).not.toBe(argv);
+  });
+
+  test("command() rejects an empty invocation", () => {
+    expect(() => TaskShell.command([])).toThrow(
+      /requires at least the shell program/,
+    );
+  });
+
+  test("the task and project shell properties round-trip", () => {
+    const p = new TestProject();
+
+    p.tasks.shell = TaskShell.system();
+    expect(p.tasks.shell?._render()).toBe("system");
+
+    const t = p.addTask("t");
+    t.shell = TaskShell.bash();
+    expect(t.shell?._render()).toEqual(["bash", "-c"]);
+  });
+
+  test("a task cannot specify both execArgs and steps", () => {
+    const p = new TestProject();
+    expect(() =>
+      p.addTask("t", {
+        execArgs: ["echo", "hi"],
+        steps: [{ exec: "echo bye" }],
+      }),
+    ).toThrow(/cannot specify both execArgs and steps/);
+  });
+});
+
+describe("Task line coverage", () => {
+  test("cannot specify both exec and steps", () => {
+    expect(
+      () => new Task("t", { exec: "echo hi", steps: [{ exec: "x" }] }),
+    ).toThrow(/cannot specify both exec and steps/);
+  });
+
+  test("the cwd property round-trips", () => {
+    const t = new Task("t");
+    t.cwd = "/work/dir";
+    expect(t.cwd).toBe("/work/dir");
+  });
+
+  test("updateStep throws for an out-of-range index", () => {
+    const t = new Task("t", { steps: [{ exec: "a" }] });
+    expect(() => t.updateStep(5, { exec: "b" })).toThrow(
+      /Cannot update step at index 5/,
+    );
+  });
+
+  test("removeStep throws for an out-of-range index", () => {
+    const t = new Task("t", { steps: [{ exec: "a" }] });
+    expect(() => t.removeStep(5)).toThrow(/Cannot remove step at index 5/);
+  });
+
+  describe("with lazily-resolved (non-array) steps", () => {
+    // steps may be a Lazy token that only resolves at synthesis; until then
+    // `_steps` is not an array, so the mutators warn and no-op rather than
+    // operate on an unresolved value.
+    const lazySteps = "${token}" as unknown as TaskStep[];
+
+    test("the steps getter returns an empty array", () => {
+      expect(new Task("t", { steps: lazySteps }).steps).toEqual([]);
+    });
+
+    test("mutators warn and no-op instead of throwing", () => {
+      const warnSpy = jest.spyOn(logging, "warn").mockImplementation(() => {});
+
+      const t = new Task("t", { steps: lazySteps });
+      t.reset();
+      t.insertStep(0, { exec: "x" });
+      t.updateStep(0, { exec: "x" });
+      t.removeStep(0);
+      t.exec("echo hi");
+      t.prependExec("echo bye");
+
+      expect(warnSpy).toHaveBeenCalled();
+      warnSpy.mockRestore();
+    });
+  });
+});
+
+describe("Tasks line coverage", () => {
+  test("addTask throws when a task with the same name already exists", () => {
+    const p = new TestProject();
+    p.addTask("dup");
+    expect(() => p.addTask("dup")).toThrow(
+      /A task with the name dup already exists/,
+    );
+  });
+});

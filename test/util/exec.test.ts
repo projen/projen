@@ -87,18 +87,17 @@ describe("tool (shell-free)", () => {
 });
 
 describe("rawShell (system shell)", () => {
-  test("capture runs a command string and returns trimmed stdout", async () => {
-    const out = await rawShell.capture(
-      `node -e "process.stdout.write('  shell-ok  ')"`,
-      { cwd },
-    );
+  test("capture runs a command string and strips the trailing newline", async () => {
+    const out = await rawShell.capture(`node -e "console.log('shell-ok')"`, {
+      cwd,
+    });
     expect(out).toBe("shell-ok");
   });
 
-  test("capture rejects with status on a non-zero exit", async () => {
+  test("capture rejects on a non-zero exit", async () => {
     await expect(
       rawShell.capture(`node -e "process.exit(4)"`, { cwd }),
-    ).rejects.toMatchObject({ status: 4 });
+    ).rejects.toMatchObject({ exitCode: 4 });
   });
 
   test("tryCapture returns the trimmed value on success", async () => {
@@ -113,20 +112,6 @@ describe("rawShell (system shell)", () => {
     expect(
       await rawShell.tryCapture(`node -e "process.exit(1)"`, { cwd }),
     ).toBeUndefined();
-  });
-
-  test("exec reports the exit status without throwing", () => {
-    const result = rawShell.exec(`node -e "process.exit(5)"`, {
-      cwd,
-      capture: true,
-    });
-    expect(result.status).toBe(5);
-  });
-
-  test("exec inherits streams when not capturing", () => {
-    const result = rawShell.exec(`node -e ""`, { cwd });
-    expect(result.status).toBe(0);
-    expect(result.stdout).toBeNull();
   });
 
   test("additional env is merged over process.env", async () => {

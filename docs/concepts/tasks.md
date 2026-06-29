@@ -77,7 +77,7 @@ You can also add steps to the beginning of a task:
 ```ts
 const hello = project.addTask("hello");
 hello.exec("echo hello");
-hello.prepend("echo world");
+hello.prependExec("echo world");
 ```
 
 Then:
@@ -214,6 +214,94 @@ running in a CI environment
 🤖 hello | condition exited with non-zero - skipping
 ```
 
+## Shell
+
+Every task command - each step's `exec`, the task or step `condition`, and any
+`$(...)` environment-variable evaluation - is interpreted by a shell. By default
+that is projen's **built-in cross-platform shell**, powered by
+[dax](https://github.com/dsherret/dax): it understands POSIX-style syntax
+(`&&`, `|`, `$VAR`, globs, redirects, ...) and ships cross-platform versions of
+common commands (`mkdir -p`, `rm -rf`, `cp`, ...), so the same task definitions
+run identically on Linux, macOS, and Windows with no Unix-like shell installed.
+Any other program is run from your `PATH`, so a task that calls a tool that
+isn't built in (e.g. `grep`, `sed`) is only portable to platforms where that
+tool exists. Notably, many such tools are absent on Windows.
+See dax's [built-in commands](https://dax.land/#builtins) for the full list.
+
+### Choosing a different shell
+
+A task's `shell` is a `TaskShell`. Pick a built-in shell, or provide an explicit
+invocation:
+
+- `TaskShell.projen()` (the default) - the built-in cross-platform shell
+  described above.
+- `TaskShell.system()` - the operating system's native shell (`/bin/sh` on
+  POSIX, `cmd.exe` on Windows). Use this to opt out of the cross-platform shell
+  and run through whatever shell the host provides.
+- `TaskShell.bash()` / `TaskShell.sh()` - convenience helpers for `bash -c` and
+  `sh -c`.
+- `TaskShell.command([...])` - an arbitrary invocation given as an argument
+  list, with the command appended as the final argument, e.g.
+  `TaskShell.command(["yarn", "exec"])`.
+
+The shell can be set at three levels - project, task, and step - and the
+**nearest declared level wins** (a scalar override, not merged):
+
+```ts
+import { TaskShell } from "projen";
+
+// 1. project default - applies to every task
+project.tasks.shell = TaskShell.bash();
+
+// 2. per task
+const hello = project.addTask("hello", {
+  shell: TaskShell.bash(),
+  exec: "echo hello from bash",
+});
+
+// 3. per step - overrides the task/project shell
+hello.exec("echo hello from sh", { shell: TaskShell.sh() });
+```
+
+If none is set, the built-in `projen` shell is used.
+
+### Strings vs. argument lists
+
+The `shell` applies to both ways of writing a command, but differently:
+
+- A **string** command (`exec`, a `condition`, or a `$(...)` value) is a command
+  line, so the shell interprets it - its `&&`, `|`, `$VAR`, redirects, etc. are
+  the shell's to handle.
+- An `execArgs` **argument list** is never parsed by a shell - each element
+  reaches the program exactly as written, whatever the `shell`. The `shell` only
+  decides _how the program is launched_: `projen` and `system` spawn it directly,
+  while an invocation such as `["npx", "--no", "-c"]` runs it through that tool,
+  so it inherits that tool's environment (e.g. `npx` resolving a locally
+  installed binary).
+
+So a step can combine the two - for example, run a binary inside a package
+manager's environment while still passing arguments as a list:
+
+```ts
+project.addTask("synth", {
+  // run through npx, but pass the program + args as a list (no quoting)
+  shell: TaskShell.command(["npx", "--no", "-c"]),
+  execArgs: ["ts-node", "--project", "tsconfig.json", ".projenrc.ts"],
+});
+```
+
+### When to declare a shell
+
+Prefer the built-in `TaskShell.projen()` for portability. It is the default
+and you normally don't need to specify it.
+
+Reach for an explicit invocation when a task relies on features the built-in
+shell does not implement. For example bash-specific syntax or a command that
+must run inside a package manager's environment (`TaskShell.command(["yarn", "exec"])`).
+
+`TaskShell.system()` is available if you want to opt-out of projen handling
+shell selection for you. You can use it to restore the behavior of older projen versions.
+
 ## Tasks as npm scripts
 
 By default, npm scripts in `NodeProject`s (or derivatives) are implemented by delegating the
@@ -276,7 +364,6 @@ Once the task is complete, an additional message will be printed to the console:
 ... other build steps here
 👾 build | Build completed successfully.
 ```
-
 
 ## Patching an existing task vs. creating a new task
 

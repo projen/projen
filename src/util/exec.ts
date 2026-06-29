@@ -272,159 +272,107 @@ export const npx = shimTool("npx");
 
 //
 // ---------------------------------------------------------------------------
-// rawShell: arbitrary shell command strings (via the system shell).
+// rawShell: arbitrary shell command strings (via dax, cross-platform).
 //
-// This runs an opaque command *string* through the operating system's default
-// shell (`/bin/sh` on POSIX, `cmd.exe` on Windows) - the same mechanism the
-// codebase used previously. It is meant for command lines that cannot be
-// expressed as a fixed binary plus a list of arguments, e.g. a release's
-// `nextVersionCommand` or `ReleasableCommits.exec()` (and projen's own
-// generated `ReleasableCommits` queries), as well as task steps on non-Windows
-// platforms. For everything else prefer the structured `tool`/`git` helpers
+// This runs an opaque command *string* through dax's cross-platform shell
+// (incl. Windows). The command is parsed by a shell as-is, so it is meant for
+// arbitrary command lines that cannot be expressed as a fixed binary plus a
+// list of arguments, e.g. a release's `nextVersionCommand` or
+// `ReleasableCommits.exec()` (and projen's own generated `ReleasableCommits`
+// queries). For everything else prefer the structured `tool`/`git` helpers
 // (or `shimTool` for `.cmd` shims), which take an explicit list of arguments.
+//
+// `$.raw` is required here (and only here): the input is an opaque command
+// line, so it must be parsed by a shell. dax provides that shell on every
+// platform, including Windows.
+// ---------------------------------------------------------------------------
+//
+
+export const rawShell = {
+  /**
+   * Runs a user-supplied shell command line and resolves its trimmed
+   * STDOUT. Rejects if the command exits non-zero.
+   */
+  capture: async (
+    command: string,
+    options: { cwd: string; env?: Record<string, string> },
+  ): Promise<string> => {
+    logging.debug(`${command} (cwd: ${options.cwd})`);
+    const cmd = $.raw`${command}`.cwd(options.cwd);
+    return (options.env ? cmd.env(options.env) : cmd).text();
+  },
+
+  /**
+   * Runs a user-supplied shell command line and resolves its trimmed
+   * STDOUT, or `undefined` if the command failed or produced no output.
+   */
+  tryCapture: async (
+    command: string,
+    options: { cwd: string; env?: Record<string, string> },
+  ): Promise<string | undefined> => {
+    logging.debug(`${command} (cwd: ${options.cwd})`);
+    let cmd = $.raw`${command}`.cwd(options.cwd).noThrow().stdout("piped");
+    if (options.env) {
+      cmd = cmd.env(options.env);
+    }
+    const result = await cmd;
+    if (result.code !== 0) {
+      return undefined;
+    }
+    const out = result.stdout.trim();
+    return out || undefined;
+  },
+};
+
+//
+// ---------------------------------------------------------------------------
+// systemShell: the operating system's native shell.
+//
+// Runs an opaque command string through the OS default shell (`/bin/sh` on
+// POSIX, `cmd.exe` on Windows) via `child_process` with `shell: true`. This
+// backs the `"@system"` task shell, which lets a task opt out of the built-in
+// cross-platform shell and use the host's native shell instead.
 // ---------------------------------------------------------------------------
 //
 
 /**
- * Normalized result of running a command through the system shell. This is a
- * subset of node's `SpawnSyncReturns` shape.
+ * Normalized result of running a command through the system shell (a subset of
+ * node's `SpawnSyncReturns`).
  */
-export interface RawShellResult {
-  /**
-   * The exit code, or `null` if the process was terminated by a signal or
-   * never spawned.
-   */
+export interface SystemShellResult {
+  /** Exit code, or `null` if terminated by a signal or never spawned. */
   readonly status: number | null;
-
-  /**
-   * Captured stdout, or `null` when stdout was inherited (not captured).
-   */
+  /** Captured stdout, or `null` when stdout was inherited. */
   readonly stdout: Buffer | null;
-
-  /**
-   * Captured stderr, or `null` when stderr was inherited (not captured).
-   */
+  /** Captured stderr, or `null` when stderr was inherited. */
   readonly stderr: Buffer | null;
-
-  /**
-   * An error raised while attempting to spawn the command (not a non-zero
-   * exit, which is reported via `status`).
-   */
+  /** An error raised while attempting to spawn (not a non-zero exit). */
   readonly error?: Error;
 }
 
 /**
- * Options for {@link rawShell.exec}.
+ * Runs a command line through the operating system's default shell (`/bin/sh`
+ * on POSIX, `cmd.exe` on Windows). Never throws for a non-zero exit (that is
+ * reported via `status`); a spawn failure is reported via `error`. The caller
+ * supplies the full `env`.
  */
-export interface RawShellExecOptions {
-  /**
-   * Working directory for the command.
-   */
-  readonly cwd: string;
-
-  /**
-   * The full environment for the command. Passed through to the shell as-is
-   * (it is *not* merged with `process.env`), so callers that want to inherit
-   * the parent environment must include it themselves.
-   */
-  readonly env?: NodeJS.ProcessEnv;
-
-  /**
-   * Capture stdout/stderr (so the caller can read them from the result)
-   * instead of inheriting the parent's streams.
-   *
-   * @default false
-   */
-  readonly capture?: boolean;
+export function systemShell(
+  command: string,
+  options: { cwd: string; env?: NodeJS.ProcessEnv; capture?: boolean },
+): SystemShellResult {
+  logging.debug(`${command} (cwd: ${options.cwd})`);
+  const result = child_process.spawnSync(command, {
+    cwd: options.cwd,
+    shell: true,
+    maxBuffer: MAX_BUFFER,
+    env: options.env,
+    // "pipe" for STDERR (when capturing) means it appears in exceptions.
+    stdio: options.capture ? ["inherit", "pipe", "pipe"] : "inherit",
+  });
+  return {
+    status: result.status,
+    stdout: result.stdout ?? null,
+    stderr: result.stderr ?? null,
+    error: result.error,
+  };
 }
-
-/**
- * Options for {@link rawShell.capture} / {@link rawShell.tryCapture}.
- */
-export interface RawShellCaptureOptions {
-  /**
-   * Working directory for the command.
-   */
-  readonly cwd: string;
-
-  /**
-   * Additional environment variables, merged on top of `process.env`.
-   */
-  readonly env?: Record<string, string>;
-}
-
-export const rawShell = {
-  /**
-   * Runs a command line through the system shell and returns a normalized
-   * result. Never throws for a non-zero exit (that is reported via `status`);
-   * a spawn failure is reported via `error`.
-   *
-   * The caller is responsible for supplying the full `env`.
-   */
-  exec(command: string, options: RawShellExecOptions): RawShellResult {
-    logging.debug(`${command} (cwd: ${options.cwd})`);
-
-    const result = child_process.spawnSync(command, {
-      cwd: options.cwd,
-      shell: true,
-      maxBuffer: MAX_BUFFER,
-      env: options.env,
-      // "pipe" for STDERR (when capturing) means it appears in exceptions.
-      stdio: options.capture ? ["inherit", "pipe", "pipe"] : "inherit",
-    });
-
-    return {
-      status: result.status,
-      stdout: result.stdout ?? null,
-      stderr: result.stderr ?? null,
-      error: result.error,
-    };
-  },
-
-  /**
-   * Runs a user-supplied shell command line and resolves its trimmed STDOUT.
-   * Rejects if the command exits non-zero.
-   */
-  capture: async (
-    command: string,
-    options: RawShellCaptureOptions,
-  ): Promise<string> => {
-    const result = rawShell.exec(command, {
-      cwd: options.cwd,
-      env: { ...process.env, ...options.env },
-      capture: true,
-    });
-    if (result.error) {
-      throw result.error;
-    }
-    if (result.status !== 0) {
-      const error: any = new Error(
-        `Command failed (exit code ${result.status}): ${command}`,
-      );
-      error.status = result.status;
-      error.stderr = result.stderr;
-      throw error;
-    }
-    return (result.stdout?.toString("utf-8") ?? "").trim();
-  },
-
-  /**
-   * Runs a user-supplied shell command line and resolves its trimmed STDOUT,
-   * or `undefined` if the command failed or produced no output.
-   */
-  tryCapture: async (
-    command: string,
-    options: RawShellCaptureOptions,
-  ): Promise<string | undefined> => {
-    const result = rawShell.exec(command, {
-      cwd: options.cwd,
-      env: { ...process.env, ...options.env },
-      capture: true,
-    });
-    if (result.error || result.status !== 0) {
-      return undefined;
-    }
-    const out = (result.stdout?.toString("utf-8") ?? "").trim();
-    return out || undefined;
-  },
-};

@@ -1,5 +1,5 @@
 import childProcess, { spawnSync } from "child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import fs, { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, dirname, join } from "path";
 import { TaskRuntime } from "../../src/cli/task-runtime";
@@ -7,6 +7,7 @@ import { TASKS_MANIFEST_VERSION } from "../../src/common";
 import * as logging from "../../src/logging";
 import type { Project } from "../../src/project";
 import type { TasksManifest } from "../../src/task-model";
+import { TaskShell } from "../../src/task-shell";
 import { node } from "../../src/util/exec";
 import { mkdtemp, TestProject } from "../util";
 
@@ -630,7 +631,7 @@ describe("command", () => {
   });
 });
 
-describe("shell selection per platform", () => {
+describe("shell execution (dax on every platform)", () => {
   const originalPlatform = process.platform;
 
   afterEach(() => {
@@ -661,22 +662,22 @@ describe("shell selection per platform", () => {
     );
   });
 
-  test("runs commands through the system shell on non-windows", async () => {
+  test("runs commands through dax on non-windows too", async () => {
     // GIVEN
     const p = new TestProject();
     p.addTask("hello", { exec: "echo hello" });
     p.synth();
 
-    const spawnSpy = jest
-      .spyOn(childProcess, "spawnSync")
-      .mockReturnValue({ status: 0 } as any);
+    const spawnSpy = jest.spyOn(childProcess, "spawnSync");
 
     // WHEN
     Object.defineProperty(process, "platform", { value: "linux" });
     await new TaskRuntime(p.outdir).runTask("hello");
 
-    // THEN
-    expect(spawnSpy).toHaveBeenCalledWith(
+    // THEN: commands run through dax's `$` (cross-platform shell) on every
+    // platform, so the system shell (`spawnSync` with `shell: true`) is never
+    // used.
+    expect(spawnSpy).not.toHaveBeenCalledWith(
       "echo hello",
       expect.objectContaining({ shell: true }),
     );
@@ -888,7 +889,10 @@ describe("ejected run-task.cjs bundle", () => {
     writeFileSync(join(workdir, ".projen", "tasks.json"), conflictedManifest);
     expect(existsSync(join(workdir, "package.json"))).toBe(false);
 
-    // WHEN running the bundled runner from that directory
+    // WHEN running the bundled runner from that directory. (This inspects the
+    // raw stdout/stderr/status on a success path, which the `tool` helpers
+    // don't expose - they throw on non-zero and discard stderr on success - so
+    // it uses spawnSync directly.)
     const result = spawnSync(process.execPath, [bundlePath, "hello"], {
       cwd: workdir,
       env: { ...process.env },
@@ -1046,6 +1050,196 @@ describe("in-process task execution", () => {
       "a b",
       "c",
     ]);
+  });
+
+  test("passes args with quotes and special characters verbatim through a quoted marker", async () => {
+    const p = new TestProject();
+    p.addTask("q", {
+      exec: `node -e "require('fs').writeFileSync('q.txt', JSON.stringify(process.argv.slice(1)))" -- "$@"`,
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // values with whitespace, a single quote, and characters that are
+    // significant to a shell - each must arrive as one unmodified argument.
+    const args = ["a b", "it's", "$HOME", "a;b && c", "(d)"];
+    await new TaskRuntime(p.outdir).runTask("q", [], args);
+
+    expect(JSON.parse(readFileSync(join(p.outdir, "q.txt"), "utf-8"))).toEqual(
+      args,
+    );
+  });
+
+  test("runs a task through a declared POSIX shell", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.sh(),
+      exec: `node -e "require('fs').writeFileSync('o.txt', 'ok')"`,
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("a declared shell is actually invoked (a missing shell fails the task)", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.command(["projen-no-such-shell", "-c"]),
+      exec: "echo hi",
+    });
+    p.synth();
+
+    // a bare "echo hi" would succeed through the built-in projen shell; it only
+    // fails because the declared shell is actually spawned and cannot be found.
+    await expect(new TaskRuntime(p.outdir).runTask("t")).rejects.toThrow();
+  });
+
+  test("a step shell overrides the task shell", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t", {
+      shell: TaskShell.command(["projen-no-such-shell", "-c"]),
+    });
+    t.exec(`node -e "require('fs').writeFileSync('o.txt', 'ok')"`, {
+      shell: TaskShell.sh(),
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("the project-level (manifest) shell applies when the task declares none", async () => {
+    const p = new TestProject();
+    // a project default shell that cannot be found
+    p.tasks.shell = TaskShell.command(["projen-no-such-shell", "-c"]);
+    p.addTask("t", { exec: "echo hi" });
+    p.synth();
+
+    // a bare "echo hi" would succeed through the built-in projen shell; it
+    // only fails because the project-level shell is resolved and spawned.
+    await expect(new TaskRuntime(p.outdir).runTask("t")).rejects.toThrow();
+  });
+
+  test("a step shell overrides the project-level shell", async () => {
+    const p = new TestProject();
+    p.tasks.shell = TaskShell.command(["projen-no-such-shell", "-c"]);
+    const t = p.addTask("t");
+    t.exec(`node -e "require('fs').writeFileSync('o.txt', 'ok')"`, {
+      shell: TaskShell.sh(),
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("the system shell runs the command through the OS shell", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.system(),
+      exec: `node -e "require('fs').writeFileSync('o.txt', 'ok')"`,
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("execArgs under the system shell runs the real binary directly", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.system(),
+      execArgs: ["node", "-e", "require('fs').writeFileSync('o.txt', 'ok')"],
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("execArgs runs under a declared invocation shell (verbatim argv)", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.sh(),
+      execArgs: ["node", "-e", "require('fs').writeFileSync('o.txt', 'ok')"],
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("ok");
+  });
+
+  test("execArgs preserves argv elements verbatim under an invocation shell", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.sh(),
+      // The argv is rendered to a command line and appended to the invocation
+      // (it does NOT rely on a `"$@"` trick, which only works for shells like
+      // `sh -c`/`bash -c` and not e.g. `npx -c`). An element with a space and a
+      // `$VAR` must still survive verbatim - the argv is what matters, not how
+      // the invocation shell would re-split a plain string.
+      execArgs: [
+        "node",
+        "-e",
+        "require('fs').writeFileSync('o.txt', process.argv[1])",
+        "hello $HOME world",
+      ],
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe(
+      "hello $HOME world",
+    );
+  });
+
+  test("execArgs under the system shell surfaces a non-zero exit", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.system(),
+      execArgs: ["node", "-e", "process.exit(7)"],
+    });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("t")).rejects.toThrow();
+  });
+
+  test("execArgs under the system shell surfaces a spawn failure", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.system(),
+      execArgs: ["projen-no-such-binary-xyz"],
+    });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("t")).rejects.toThrow();
+  });
+
+  test("an unknown built-in shell keyword in the manifest fails with a clear error", async () => {
+    // A bad keyword can only reach the runtime via a hand-written or foreign
+    // manifest, since TaskShell only ever produces valid values.
+    const workdir = mkdtemp();
+    mkdirSync(join(workdir, ".projen"), { recursive: true });
+    writeFileSync(
+      join(workdir, ".projen", "tasks.json"),
+      JSON.stringify({
+        tasks: {
+          t: { name: "t", shell: "nope", steps: [{ exec: "echo hi" }] },
+        },
+      }),
+    );
+
+    await expect(new TaskRuntime(workdir).runTask("t")).rejects.toThrow(
+      /unknown built-in shell/,
+    );
   });
 });
 
@@ -1244,5 +1438,101 @@ describe("manifest versioning", () => {
 
     const rt = new TaskRuntime(workdir);
     expect(rt.tryFindTask("foo")).toBeUndefined();
+  });
+});
+
+describe("task-runtime line coverage", () => {
+  test("running a task with no steps is a no-op", async () => {
+    const p = new TestProject();
+    p.addTask("empty");
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("empty");
+  });
+
+  test("a step whose condition fails is skipped", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    t.exec(`node -e "require('fs').writeFileSync('o.txt', 'ran')"`, {
+      condition: `node -e "process.exit(1)"`,
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(existsSync(join(p.outdir, "o.txt"))).toBe(false);
+  });
+
+  test("a say step emits a log line", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    t.say("hello from a say step");
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+  });
+
+  test("received args are appended when the command has no $@ marker", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    t.exec(
+      `node -e "require('fs').writeFileSync('o.txt', process.argv.slice(1).join('|'))"`,
+      { receiveArgs: true },
+    );
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t", [], ["A", "B"]);
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("A|B");
+  });
+
+  test("received args are spliced at a bare $@ marker in a string command", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    t.exec(
+      `node -e "require('fs').writeFileSync('o.txt', process.argv.slice(1).join('|'))" $@`,
+      { receiveArgs: true },
+    );
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t", [], ["A", "B"]);
+
+    expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe("A|B");
+  });
+
+  test("main() prints the error and exits non-zero when the task fails", async () => {
+    const exitSpy = jest
+      .spyOn(process, "exit")
+      .mockImplementation((() => undefined) as never);
+    const errSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    await TaskRuntime.main("a-task-that-does-not-exist-xyz");
+
+    expect(exitSpy).toHaveBeenCalledWith(1);
+
+    exitSpy.mockRestore();
+    errSpy.mockRestore();
+  });
+
+  test("a builtin step fails clearly when the package root cannot be located", async () => {
+    const p = new TestProject();
+    const t = p.addTask("t");
+    t.builtin("test");
+    p.synth();
+
+    // force the package.json lookup in renderBuiltin to walk to the FS root
+    // without finding one.
+    const realExistsSync = fs.existsSync;
+    const spy = jest
+      .spyOn(fs, "existsSync")
+      .mockImplementation((pth: any) =>
+        String(pth).endsWith("package.json") ? false : realExistsSync(pth),
+      );
+
+    await expect(new TaskRuntime(p.outdir).runTask("t")).rejects.toThrow(
+      /unable to locate the projen package root/,
+    );
+
+    spy.mockRestore();
   });
 });
