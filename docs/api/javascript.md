@@ -6919,6 +6919,113 @@ The overridden rules.
 
 ---
 
+### FakeTimers <a name="FakeTimers" id="projen.javascript.FakeTimers"></a>
+
+The default configuration of fake timers for all tests.
+
+> [https://jestjs.io/docs/configuration#faketimers-object](https://jestjs.io/docs/configuration#faketimers-object)
+
+#### Initializer <a name="Initializer" id="projen.javascript.FakeTimers.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const fakeTimers: javascript.FakeTimers = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.FakeTimers.property.advanceTimers">advanceTimers</a></code> | <code>number \| boolean</code> | If set to `true` all timers will be advanced automatically by 20 milliseconds every 20 milliseconds. |
+| <code><a href="#projen.javascript.FakeTimers.property.doNotFake">doNotFake</a></code> | <code>string[]</code> | List of names of APIs (e.g. `Date`, `nextTick`, `setTimeout`) that should not be faked. |
+| <code><a href="#projen.javascript.FakeTimers.property.enableGlobally">enableGlobally</a></code> | <code>boolean</code> | Whether fake timers should be enabled for all test files. |
+| <code><a href="#projen.javascript.FakeTimers.property.legacyFakeTimers">legacyFakeTimers</a></code> | <code>boolean</code> | Use the old fake timers implementation instead of one backed by `@sinonjs/fake-timers`. |
+| <code><a href="#projen.javascript.FakeTimers.property.now">now</a></code> | <code>number</code> | Sets current system time to be used by fake timers, in milliseconds. |
+| <code><a href="#projen.javascript.FakeTimers.property.timerLimit">timerLimit</a></code> | <code>number</code> | Maximum number of recursive timers that will be run. |
+
+---
+
+##### `advanceTimers`<sup>Optional</sup> <a name="advanceTimers" id="projen.javascript.FakeTimers.property.advanceTimers"></a>
+
+```typescript
+public readonly advanceTimers: number | boolean;
+```
+
+- *Type:* number | boolean
+- *Default:* false
+
+If set to `true` all timers will be advanced automatically by 20 milliseconds every 20 milliseconds.
+
+A custom time delta may be provided by passing a number.
+
+---
+
+##### `doNotFake`<sup>Optional</sup> <a name="doNotFake" id="projen.javascript.FakeTimers.property.doNotFake"></a>
+
+```typescript
+public readonly doNotFake: string[];
+```
+
+- *Type:* string[]
+- *Default:* [] (all APIs are faked)
+
+List of names of APIs (e.g. `Date`, `nextTick`, `setTimeout`) that should not be faked.
+
+---
+
+##### `enableGlobally`<sup>Optional</sup> <a name="enableGlobally" id="projen.javascript.FakeTimers.property.enableGlobally"></a>
+
+```typescript
+public readonly enableGlobally: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether fake timers should be enabled for all test files.
+
+---
+
+##### `legacyFakeTimers`<sup>Optional</sup> <a name="legacyFakeTimers" id="projen.javascript.FakeTimers.property.legacyFakeTimers"></a>
+
+```typescript
+public readonly legacyFakeTimers: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Use the old fake timers implementation instead of one backed by `@sinonjs/fake-timers`.
+
+---
+
+##### `now`<sup>Optional</sup> <a name="now" id="projen.javascript.FakeTimers.property.now"></a>
+
+```typescript
+public readonly now: number;
+```
+
+- *Type:* number
+- *Default:* Date.now()
+
+Sets current system time to be used by fake timers, in milliseconds.
+
+---
+
+##### `timerLimit`<sup>Optional</sup> <a name="timerLimit" id="projen.javascript.FakeTimers.property.timerLimit"></a>
+
+```typescript
+public readonly timerLimit: number;
+```
+
+- *Type:* number
+- *Default:* 100000
+
+Maximum number of recursive timers that will be run.
+
+---
+
 ### HasteConfig <a name="HasteConfig" id="projen.javascript.HasteConfig"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.HasteConfig.Initializer"></a>
@@ -7080,7 +7187,9 @@ const jestConfigOptions: javascript.JestConfigOptions = { ... }
 | <code><a href="#projen.javascript.JestConfigOptions.property.dependencyExtractor">dependencyExtractor</a></code> | <code>string</code> | This option allows the use of a custom dependency extractor. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.displayName">displayName</a></code> | <code>any</code> | Allows for a label to be printed alongside a test while it is running. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.errorOnDeprecated">errorOnDeprecated</a></code> | <code>boolean</code> | Make calling deprecated APIs throw helpful error messages. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.extensionsToTreatAsEsm">extensionsToTreatAsEsm</a></code> | <code>string[]</code> | Jest will run `.mjs` and `.js` files with nearest package.json's `type` field set to `module` as ECMAScript Modules. If you have any other files that should run with native ESM, you need to specify their file extension here. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.extraGlobals">extraGlobals</a></code> | <code>string[]</code> | Test files run inside a vm, which slows calls to global context properties (e.g. Math). With this option you can specify extra properties to be defined inside the vm for faster lookups. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.fakeTimers">fakeTimers</a></code> | <code><a href="#projen.javascript.FakeTimers">FakeTimers</a></code> | The fake timers may be useful when a piece of code sets a long timeout that we don't want to wait for in a test. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.forceCoverageMatch">forceCoverageMatch</a></code> | <code>string[]</code> | Test files are normally ignored from collecting code coverage. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.globals">globals</a></code> | <code>any</code> | A set of global variables that need to be available in all test environments. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports an async function that is triggered once before all test suites. |
@@ -7096,9 +7205,11 @@ const jestConfigOptions: javascript.JestConfigOptions = { ... }
 | <code><a href="#projen.javascript.JestConfigOptions.property.modulePaths">modulePaths</a></code> | <code>string[]</code> | An alternative API to setting the NODE_PATH env variable, modulePaths is an array of absolute paths to additional locations to search when resolving modules. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.notify">notify</a></code> | <code>boolean</code> | Activates notifications for test results. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.notifyMode">notifyMode</a></code> | <code>string</code> | Specifies notification mode. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.openHandlesTimeout">openHandlesTimeout</a></code> | <code>number</code> | Print a warning indicating that there are probable open handles if Jest does not exit cleanly this number of milliseconds after it completes. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.preset">preset</a></code> | <code>string</code> | A preset that is used as a base for Jest's configuration. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.prettierPath">prettierPath</a></code> | <code>string</code> | Sets the path to the prettier node module used to update inline snapshots. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.projects">projects</a></code> | <code>string \| {[ key: string ]: any}[]</code> | When the projects configuration is provided with an array of paths or glob patterns, Jest will run tests in all of the specified projects at the same time. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.randomize">randomize</a></code> | <code>boolean</code> | The equivalent of the `--randomize` flag to randomize the order of the tests in a file. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.JestReporter">JestReporter</a>[]</code> | Use this configuration option to add custom reporters to Jest. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.resetMocks">resetMocks</a></code> | <code>boolean</code> | Automatically reset mock state before every test. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.resetModules">resetModules</a></code> | <code>boolean</code> | By default, each test file gets its own independent module registry. |
@@ -7107,9 +7218,13 @@ const jestConfigOptions: javascript.JestConfigOptions = { ... }
 | <code><a href="#projen.javascript.JestConfigOptions.property.rootDir">rootDir</a></code> | <code>string</code> | The root directory that Jest should scan for tests and modules within. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.roots">roots</a></code> | <code>string[]</code> | A list of paths to directories that Jest should use to search for files in. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.runner">runner</a></code> | <code>string</code> | This option allows you to use a custom runner instead of Jest's default test runner. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.runtime">runtime</a></code> | <code>string</code> | This option allows the use of a custom runtime to execute test files. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.sandboxInjectedGlobals">sandboxInjectedGlobals</a></code> | <code>string[]</code> | Test files run inside a vm, which slows calls to global context properties (e.g. Math). With this option you can specify extra properties to be defined inside the vm for faster lookups. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.setupFiles">setupFiles</a></code> | <code>string[]</code> | A list of paths to modules that run some code to configure or set up the testing environment. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.setupFilesAfterEnv">setupFilesAfterEnv</a></code> | <code>string[]</code> | A list of paths to modules that run some code to configure or set up the testing framework before each test file in the suite is executed. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.showSeed">showSeed</a></code> | <code>boolean</code> | The equivalent of the `--showSeed` flag to print the seed in the test report summary. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.slowTestThreshold">slowTestThreshold</a></code> | <code>number</code> | The number of seconds after which a test is considered as slow and reported as such in the results. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.snapshotFormat">snapshotFormat</a></code> | <code><a href="#projen.javascript.SnapshotFormatOptions">SnapshotFormatOptions</a></code> | Allows overriding specific snapshot formatting options documented in the pretty-format readme, with the exceptions of `compareKeys` and `plugins`. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.snapshotResolver">snapshotResolver</a></code> | <code>string</code> | The path to a module that can resolve test<->snapshot path. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.snapshotSerializers">snapshotSerializers</a></code> | <code>string[]</code> | A list of paths to snapshot serializer modules Jest should use for snapshot testing. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.testEnvironment">testEnvironment</a></code> | <code>string</code> | The test environment that will be used for testing. |
@@ -7128,9 +7243,13 @@ const jestConfigOptions: javascript.JestConfigOptions = { ... }
 | <code><a href="#projen.javascript.JestConfigOptions.property.transformIgnorePatterns">transformIgnorePatterns</a></code> | <code>string[]</code> | An array of regexp pattern strings that are matched against all source file paths before transformation. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.unmockedModulePathPatterns">unmockedModulePathPatterns</a></code> | <code>string[]</code> | An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.verbose">verbose</a></code> | <code>boolean</code> | Indicates whether each individual test should be reported during the run. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.waitForUnhandledRejections">waitForUnhandledRejections</a></code> | <code>boolean</code> | Gives one event loop turn to handle `rejectionHandled`, `uncaughtException` or `unhandledRejection`. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.watchman">watchman</a></code> | <code>boolean</code> | Whether to use watchman for file crawling. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.watchPathIgnorePatterns">watchPathIgnorePatterns</a></code> | <code>string[]</code> | An array of RegExp patterns that are matched against all source file paths before re-running tests in watch mode. |
 | <code><a href="#projen.javascript.JestConfigOptions.property.watchPlugins">watchPlugins</a></code> | <code><a href="#projen.javascript.WatchPlugin">WatchPlugin</a>[]</code> | *No description.* |
+| <code><a href="#projen.javascript.JestConfigOptions.property.workerGracefulExitTimeout">workerGracefulExitTimeout</a></code> | <code>number</code> | Timeout in milliseconds for a worker process to exit gracefully after all tests have completed. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.workerIdleMemoryLimit">workerIdleMemoryLimit</a></code> | <code>string \| number</code> | Specifies the memory limit for workers before they are recycled and is primarily a work-around for memory leaks. |
+| <code><a href="#projen.javascript.JestConfigOptions.property.workerThreads">workerThreads</a></code> | <code>boolean</code> | Whether to use worker threads for parallelization. |
 
 ---
 
@@ -7285,7 +7404,7 @@ public readonly coverageReporters: string[];
 ```
 
 - *Type:* string[]
-- *Default:* ["json", "lcov", "text", "clover", "cobertura"]
+- *Default:* ["json", "lcov", "clover", "cobertura", "text"]
 
 A list of reporter names that Jest uses when writing coverage reports.
 
@@ -7353,7 +7472,22 @@ Useful for easing the upgrade process.
 
 ---
 
-##### `extraGlobals`<sup>Optional</sup> <a name="extraGlobals" id="projen.javascript.JestConfigOptions.property.extraGlobals"></a>
+##### `extensionsToTreatAsEsm`<sup>Optional</sup> <a name="extensionsToTreatAsEsm" id="projen.javascript.JestConfigOptions.property.extensionsToTreatAsEsm"></a>
+
+```typescript
+public readonly extensionsToTreatAsEsm: string[];
+```
+
+- *Type:* string[]
+- *Default:* []
+
+Jest will run `.mjs` and `.js` files with nearest package.json's `type` field set to `module` as ECMAScript Modules. If you have any other files that should run with native ESM, you need to specify their file extension here.
+
+---
+
+##### ~~`extraGlobals`~~<sup>Optional</sup> <a name="extraGlobals" id="projen.javascript.JestConfigOptions.property.extraGlobals"></a>
+
+- *Deprecated:* Renamed to `sandboxInjectedGlobals` in Jest 28. Use `sandboxInjectedGlobals` instead.
 
 ```typescript
 public readonly extraGlobals: string[];
@@ -7363,6 +7497,21 @@ public readonly extraGlobals: string[];
 - *Default:* undefined
 
 Test files run inside a vm, which slows calls to global context properties (e.g. Math). With this option you can specify extra properties to be defined inside the vm for faster lookups.
+
+---
+
+##### `fakeTimers`<sup>Optional</sup> <a name="fakeTimers" id="projen.javascript.JestConfigOptions.property.fakeTimers"></a>
+
+```typescript
+public readonly fakeTimers: FakeTimers;
+```
+
+- *Type:* <a href="#projen.javascript.FakeTimers">FakeTimers</a>
+- *Default:* {}
+
+The fake timers may be useful when a piece of code sets a long timeout that we don't want to wait for in a test.
+
+This option provides the default configuration of fake timers for all tests.
 
 ---
 
@@ -7586,6 +7735,21 @@ Requires notify: true
 
 ---
 
+##### `openHandlesTimeout`<sup>Optional</sup> <a name="openHandlesTimeout" id="projen.javascript.JestConfigOptions.property.openHandlesTimeout"></a>
+
+```typescript
+public readonly openHandlesTimeout: number;
+```
+
+- *Type:* number
+- *Default:* 1000
+
+Print a warning indicating that there are probable open handles if Jest does not exit cleanly this number of milliseconds after it completes.
+
+Use `0` to disable the warning.
+
+---
+
 ##### `preset`<sup>Optional</sup> <a name="preset" id="projen.javascript.JestConfigOptions.property.preset"></a>
 
 ```typescript
@@ -7628,6 +7792,19 @@ When the projects configuration is provided with an array of paths or glob patte
 
 This is great for monorepos or
 when working on multiple projects at the same time.
+
+---
+
+##### `randomize`<sup>Optional</sup> <a name="randomize" id="projen.javascript.JestConfigOptions.property.randomize"></a>
+
+```typescript
+public readonly randomize: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+The equivalent of the `--randomize` flag to randomize the order of the tests in a file.
 
 ---
 
@@ -7756,6 +7933,35 @@ This option allows you to use a custom runner instead of Jest's default test run
 
 ---
 
+##### `runtime`<sup>Optional</sup> <a name="runtime" id="projen.javascript.JestConfigOptions.property.runtime"></a>
+
+```typescript
+public readonly runtime: string;
+```
+
+- *Type:* string
+- *Default:* "jest-runtime"
+
+This option allows the use of a custom runtime to execute test files.
+
+A custom runtime can be
+provided by specifying a path to a runtime implementation.
+
+---
+
+##### `sandboxInjectedGlobals`<sup>Optional</sup> <a name="sandboxInjectedGlobals" id="projen.javascript.JestConfigOptions.property.sandboxInjectedGlobals"></a>
+
+```typescript
+public readonly sandboxInjectedGlobals: string[];
+```
+
+- *Type:* string[]
+- *Default:* undefined
+
+Test files run inside a vm, which slows calls to global context properties (e.g. Math). With this option you can specify extra properties to be defined inside the vm for faster lookups.
+
+---
+
 ##### `setupFiles`<sup>Optional</sup> <a name="setupFiles" id="projen.javascript.JestConfigOptions.property.setupFiles"></a>
 
 ```typescript
@@ -7790,6 +7996,19 @@ running some code immediately after the test framework has been installed in the
 
 ---
 
+##### `showSeed`<sup>Optional</sup> <a name="showSeed" id="projen.javascript.JestConfigOptions.property.showSeed"></a>
+
+```typescript
+public readonly showSeed: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+The equivalent of the `--showSeed` flag to print the seed in the test report summary.
+
+---
+
 ##### `slowTestThreshold`<sup>Optional</sup> <a name="slowTestThreshold" id="projen.javascript.JestConfigOptions.property.slowTestThreshold"></a>
 
 ```typescript
@@ -7800,6 +8019,19 @@ public readonly slowTestThreshold: number;
 - *Default:* 5
 
 The number of seconds after which a test is considered as slow and reported as such in the results.
+
+---
+
+##### `snapshotFormat`<sup>Optional</sup> <a name="snapshotFormat" id="projen.javascript.JestConfigOptions.property.snapshotFormat"></a>
+
+```typescript
+public readonly snapshotFormat: SnapshotFormatOptions;
+```
+
+- *Type:* <a href="#projen.javascript.SnapshotFormatOptions">SnapshotFormatOptions</a>
+- *Default:* {escapeString: false, printBasicPrototype: false}
+
+Allows overriding specific snapshot formatting options documented in the pretty-format readme, with the exceptions of `compareKeys` and `plugins`.
 
 ---
 
@@ -7839,13 +8071,13 @@ public readonly testEnvironment: string;
 ```
 
 - *Type:* string
-- *Default:* "jsdom"
+- *Default:* "node"
 
 The test environment that will be used for testing.
 
 The default environment in Jest is a
-browser-like environment through jsdom. If you are building a node service, you can use the node
-option to use a node-like environment instead.
+Node.js environment. If you are building a web app, you can use a browser-like environment
+through jsdom instead.
 
 ---
 
@@ -7946,11 +8178,11 @@ public readonly testRunner: string;
 ```
 
 - *Type:* string
-- *Default:* "jasmine2"
+- *Default:* "jest-circus/runner"
 
 This option allows the use of a custom test runner.
 
-The default is jasmine2. A custom test runner
+The default is jest-circus. A custom test runner
 can be provided by specifying a path to a test runner implementation.
 
 ---
@@ -7983,7 +8215,9 @@ Default timeout of a test in milliseconds.
 
 ---
 
-##### `testURL`<sup>Optional</sup> <a name="testURL" id="projen.javascript.JestConfigOptions.property.testURL"></a>
+##### ~~`testURL`~~<sup>Optional</sup> <a name="testURL" id="projen.javascript.JestConfigOptions.property.testURL"></a>
+
+- *Deprecated:* Removed in Jest 28. Use `testEnvironmentOptions.url` instead.
 
 ```typescript
 public readonly testURL: string;
@@ -7998,7 +8232,9 @@ It is reflected in properties such as location.href.
 
 ---
 
-##### `timers`<sup>Optional</sup> <a name="timers" id="projen.javascript.JestConfigOptions.property.timers"></a>
+##### ~~`timers`~~<sup>Optional</sup> <a name="timers" id="projen.javascript.JestConfigOptions.property.timers"></a>
+
+- *Deprecated:* Renamed to `fakeTimers` in Jest 27. Use `fakeTimers` instead.
 
 ```typescript
 public readonly timers: string;
@@ -8077,6 +8313,22 @@ it will default to true.
 
 ---
 
+##### `waitForUnhandledRejections`<sup>Optional</sup> <a name="waitForUnhandledRejections" id="projen.javascript.JestConfigOptions.property.waitForUnhandledRejections"></a>
+
+```typescript
+public readonly waitForUnhandledRejections: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Gives one event loop turn to handle `rejectionHandled`, `uncaughtException` or `unhandledRejection`.
+
+Without this flag Jest may report false-positive errors or fail to report actually unhandled rejections.
+This option may add a noticeable overhead for fast test suites.
+
+---
+
 ##### `watchman`<sup>Optional</sup> <a name="watchman" id="projen.javascript.JestConfigOptions.property.watchman"></a>
 
 ```typescript
@@ -8097,7 +8349,7 @@ public readonly watchPathIgnorePatterns: string[];
 ```
 
 - *Type:* string[]
-- *Default:* []
+- *Default:* ["/node_modules/"]
 
 An array of RegExp patterns that are matched against all source file paths before re-running tests in watch mode.
 
@@ -8114,6 +8366,53 @@ public readonly watchPlugins: WatchPlugin[];
 
 - *Type:* <a href="#projen.javascript.WatchPlugin">WatchPlugin</a>[]
 - *Default:* 
+
+---
+
+##### `workerGracefulExitTimeout`<sup>Optional</sup> <a name="workerGracefulExitTimeout" id="projen.javascript.JestConfigOptions.property.workerGracefulExitTimeout"></a>
+
+```typescript
+public readonly workerGracefulExitTimeout: number;
+```
+
+- *Type:* number
+- *Default:* 500
+
+Timeout in milliseconds for a worker process to exit gracefully after all tests have completed.
+
+If a worker does not exit within this timeout, it is force-killed.
+
+---
+
+##### `workerIdleMemoryLimit`<sup>Optional</sup> <a name="workerIdleMemoryLimit" id="projen.javascript.JestConfigOptions.property.workerIdleMemoryLimit"></a>
+
+```typescript
+public readonly workerIdleMemoryLimit: string | number;
+```
+
+- *Type:* string | number
+- *Default:* undefined
+
+Specifies the memory limit for workers before they are recycled and is primarily a work-around for memory leaks.
+
+The limit can be specified as a percentage of system memory (e.g. `0.5` or `"50%"`)
+or as a fixed byte value (e.g. `"512MB"`).
+
+---
+
+##### `workerThreads`<sup>Optional</sup> <a name="workerThreads" id="projen.javascript.JestConfigOptions.property.workerThreads"></a>
+
+```typescript
+public readonly workerThreads: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to use worker threads for parallelization.
+
+Child processes are used by default.
+Using worker threads may help to improve performance.
 
 ---
 
@@ -11830,6 +12129,170 @@ Scope of the packages.
 "@angular"
 ```
 
+
+### SnapshotFormatOptions <a name="SnapshotFormatOptions" id="projen.javascript.SnapshotFormatOptions"></a>
+
+Snapshot formatting options.
+
+Mirrors the pretty-format options, with the exceptions of
+`compareKeys` and `plugins`.
+
+> [https://jestjs.io/docs/configuration#snapshotformat-object](https://jestjs.io/docs/configuration#snapshotformat-object)
+
+#### Initializer <a name="Initializer" id="projen.javascript.SnapshotFormatOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const snapshotFormatOptions: javascript.SnapshotFormatOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.callToJSON">callToJSON</a></code> | <code>boolean</code> | Calls `toJSON` on objects that have such a method. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.escapeRegex">escapeRegex</a></code> | <code>boolean</code> | Escapes special characters in regular expressions. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.escapeString">escapeString</a></code> | <code>boolean</code> | Escapes quotes in strings. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.highlight">highlight</a></code> | <code>boolean</code> | Highlights syntax with colors in terminal (some plugins). |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.indent">indent</a></code> | <code>number</code> | Spaces of indentation between levels of nesting. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.maxDepth">maxDepth</a></code> | <code>number</code> | Maximum number of levels to print. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.maxWidth">maxWidth</a></code> | <code>number</code> | Maximum number of elements to print at a given level. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.min">min</a></code> | <code>boolean</code> | Prints objects on a single line when `true`. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.printBasicPrototype">printBasicPrototype</a></code> | <code>boolean</code> | Prints the prototype for basic objects and arrays. |
+| <code><a href="#projen.javascript.SnapshotFormatOptions.property.printFunctionName">printFunctionName</a></code> | <code>boolean</code> | Prints the name of functions. |
+
+---
+
+##### `callToJSON`<sup>Optional</sup> <a name="callToJSON" id="projen.javascript.SnapshotFormatOptions.property.callToJSON"></a>
+
+```typescript
+public readonly callToJSON: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Calls `toJSON` on objects that have such a method.
+
+---
+
+##### `escapeRegex`<sup>Optional</sup> <a name="escapeRegex" id="projen.javascript.SnapshotFormatOptions.property.escapeRegex"></a>
+
+```typescript
+public readonly escapeRegex: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Escapes special characters in regular expressions.
+
+---
+
+##### `escapeString`<sup>Optional</sup> <a name="escapeString" id="projen.javascript.SnapshotFormatOptions.property.escapeString"></a>
+
+```typescript
+public readonly escapeString: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Escapes quotes in strings.
+
+---
+
+##### `highlight`<sup>Optional</sup> <a name="highlight" id="projen.javascript.SnapshotFormatOptions.property.highlight"></a>
+
+```typescript
+public readonly highlight: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Highlights syntax with colors in terminal (some plugins).
+
+---
+
+##### `indent`<sup>Optional</sup> <a name="indent" id="projen.javascript.SnapshotFormatOptions.property.indent"></a>
+
+```typescript
+public readonly indent: number;
+```
+
+- *Type:* number
+- *Default:* 2
+
+Spaces of indentation between levels of nesting.
+
+---
+
+##### `maxDepth`<sup>Optional</sup> <a name="maxDepth" id="projen.javascript.SnapshotFormatOptions.property.maxDepth"></a>
+
+```typescript
+public readonly maxDepth: number;
+```
+
+- *Type:* number
+- *Default:* Infinity
+
+Maximum number of levels to print.
+
+---
+
+##### `maxWidth`<sup>Optional</sup> <a name="maxWidth" id="projen.javascript.SnapshotFormatOptions.property.maxWidth"></a>
+
+```typescript
+public readonly maxWidth: number;
+```
+
+- *Type:* number
+- *Default:* Infinity
+
+Maximum number of elements to print at a given level.
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="projen.javascript.SnapshotFormatOptions.property.min"></a>
+
+```typescript
+public readonly min: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Prints objects on a single line when `true`.
+
+---
+
+##### `printBasicPrototype`<sup>Optional</sup> <a name="printBasicPrototype" id="projen.javascript.SnapshotFormatOptions.property.printBasicPrototype"></a>
+
+```typescript
+public readonly printBasicPrototype: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Prints the prototype for basic objects and arrays.
+
+---
+
+##### `printFunctionName`<sup>Optional</sup> <a name="printFunctionName" id="projen.javascript.SnapshotFormatOptions.property.printFunctionName"></a>
+
+```typescript
+public readonly printFunctionName: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Prints the name of functions.
+
+---
 
 ### TypeScriptCompilerOptions <a name="TypeScriptCompilerOptions" id="projen.javascript.TypeScriptCompilerOptions"></a>
 
