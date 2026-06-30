@@ -33,6 +33,30 @@ function quoteArg(arg: string): string {
 }
 
 /**
+ * dax's built-in cross-platform shell only implements a subset of POSIX shell
+ * syntax and throws a terse `Not implemented: ...` for the rest. Rewrite those
+ * into a short, actionable error that points at the system-shell escape hatch;
+ * pass every other error through unchanged.
+ */
+function enrichBuiltinShellError(
+  error: unknown,
+  command: string | string[],
+): unknown {
+  const message = error instanceof Error ? error.message : String(error);
+  if (!/Not implemented:/.test(message)) {
+    /* v8 ignore next */
+    return error;
+  }
+
+  const commandLine = Array.isArray(command) ? command.join(" ") : command;
+  return new Error(
+    "projen's built-in shell can't run this command:\n" +
+      `  ${commandLine}\n` +
+      "To use your system's shell instead, set this task to TaskShell.system().",
+  );
+}
+
+/**
  * Normalized result of `shell()` (a subset of node's `SpawnSyncReturns`).
  */
 interface ShellResult {
@@ -603,12 +627,21 @@ class RunTask {
     // Otherwise run through dax: the "projen" shell or an explicit invocation.
     const builder = this.buildDaxCommand(command, shell);
 
-    const result = await builder
-      .cwd(cwd)
-      .env(env)
-      .stdout(capture ? "piped" : "inherit")
-      .stderr(capture ? "piped" : "inherit")
-      .noThrow();
+    let result;
+    try {
+      result = await builder
+        .cwd(cwd)
+        .env(env)
+        .stdout(capture ? "piped" : "inherit")
+        .stderr(capture ? "piped" : "inherit")
+        .noThrow();
+    } catch (e) {
+      // dax's in-process shell throws a terse `Not implemented: ...` for shell
+      // syntax it does not support (e.g. `$(...)` command substitution); turn
+      // that into an actionable error that points at the system-shell escape
+      // hatch. Other errors pass through unchanged.
+      throw enrichBuiltinShellError(e, command);
+    }
 
     return {
       status: result.code,
