@@ -1923,7 +1923,7 @@ describe("scoped private packages", () => {
     });
   });
 
-  test.only("adds ca:login script when multiple scoped packages defined", () => {
+  test("adds ca:login script when multiple scoped packages defined", () => {
     const accountId2 = "123456789013";
     const domain2 = "my-domain-2";
     const region2 = "my-region-2";
