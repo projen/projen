@@ -195,6 +195,7 @@ export class AutoQueue extends Component {
           "opened",
           "reopened",
           "ready_for_review",
+          "synchronize",
           ...(needsEditedEvent ? ["edited" as const] : []),
         ],
         branches: options.targetBranches,
