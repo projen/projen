@@ -207,9 +207,8 @@ export class TaskWorkflowJob extends Component {
       options.runsOnGroup,
     );
     this.runsOn = (runsOnInputs as { runsOn: string[] })?.runsOn;
-    this.runsOnGroup = (
-      runsOnInputs as { runsOnGroup: GroupRunnerOptions }
-    )?.runsOnGroup;
+    this.runsOnGroup = (runsOnInputs as { runsOnGroup: GroupRunnerOptions })
+      ?.runsOnGroup;
     this.container = options.container;
     this.env = options.env;
     this.permissions = options.permissions;
