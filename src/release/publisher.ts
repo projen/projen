@@ -630,22 +630,19 @@ export class Publisher extends Component {
       };
     }
 
-    this.addPublishJob(
-      "pypi",
-      (_branch, branchOptions): PublishJobOptions => ({
-        registryName: "PyPI",
-        publishTools: PUBLIB_TOOLCHAIN.python,
-        permissions,
-        prePublishSteps,
-        postPublishSteps: options.postPublishSteps ?? [],
-        environment: options.githubEnvironment ?? branchOptions.environment,
-        run: this.publibCommand("publib-pypi"),
-        env: {
-          TWINE_REPOSITORY_URL: options.twineRegistryUrl,
-        },
-        workflowEnv,
-      }),
-    );
+    this.addPublishJob("pypi", (_branch, branchOptions): PublishJobOptions => ({
+      registryName: "PyPI",
+      publishTools: PUBLIB_TOOLCHAIN.python,
+      permissions,
+      prePublishSteps,
+      postPublishSteps: options.postPublishSteps ?? [],
+      environment: options.githubEnvironment ?? branchOptions.environment,
+      run: this.publibCommand("publib-pypi"),
+      env: {
+        TWINE_REPOSITORY_URL: options.twineRegistryUrl,
+      },
+      workflowEnv,
+    }));
   }
 
   /**

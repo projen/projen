@@ -6,12 +6,10 @@
 import { inc, parse } from "semver";
 
 export type BumpType =
-  | RelativeBumpType
-  | { bump: "absolute"; absolute: string };
+  RelativeBumpType | { bump: "absolute"; absolute: string };
 
 export type RelativeBumpType =
-  | { bump: "none" }
-  | { bump: "relative"; relative: MajorMinorPatch };
+  { bump: "none" } | { bump: "relative"; relative: MajorMinorPatch };
 
 // The only relative types that CATV supports
 export type MajorMinorPatch = "major" | "minor" | "patch";
