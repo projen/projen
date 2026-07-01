@@ -1,5 +1,5 @@
 import type { Task } from "../src";
-import { Component } from "../src";
+import { Component, TaskShell } from "../src";
 import type { JavaVersion, LanguageVersions } from "./integ-versions";
 import { INTEG_TEST_VERSIONS } from "./integ-versions";
 import { GithubWorkflow, WorkflowSteps } from "../src/github";
@@ -118,9 +118,18 @@ export class IntegrationTests extends Component {
     ];
 
     // Create individual tasks for each language
+    //
+    // The scripts are bash - Windows has no shebang support at all (unlike
+    // POSIX, where the kernel dispatches on `#!/bin/bash`), so dax's default
+    // shell fails with `spawn EFTYPE` if asked to exec a bare `.sh` path
+    // directly. `TaskShell.bash()` runs the command through `bash -c`
+    // instead, which works everywhere: real bash on POSIX, and the
+    // Git-for-Windows bash that ships on GitHub's `windows-latest` runners
+    // (and is a common enough dev-machine dependency) on Windows.
     for (const config of languageConfigs) {
       this.tasks[config.name] = project.addTask(`integ:${config.name}`, {
         exec: config.script,
+        shell: TaskShell.bash(),
         description: config.description,
       });
     }
@@ -131,6 +140,7 @@ export class IntegrationTests extends Component {
     // job - see `createNodeMatrixJob`.
     this.tasks.eject = project.addTask("integ:eject", {
       exec: "scripts/integ-eject.sh",
+      shell: TaskShell.bash(),
       description: "Run projen eject integration test",
     });
 
