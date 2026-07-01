@@ -7,7 +7,7 @@ on:
   merge_group: {}
 jobs:
   integ-node:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     env:
@@ -38,6 +38,9 @@ jobs:
           - lts/-2
           - lts/-1
           - lts/*
+        os:
+          - ubuntu-latest
+          - windows-latest
   integ-python:
     runs-on: ubuntu-latest
     permissions:

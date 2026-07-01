@@ -251,6 +251,10 @@
         {
           "exec": "scripts/integ-eject.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:go": {
@@ -260,6 +264,10 @@
         {
           "exec": "scripts/integ-go.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:java": {
@@ -269,6 +277,10 @@
         {
           "exec": "scripts/integ-java.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:node": {
@@ -278,6 +290,10 @@
         {
           "exec": "scripts/integ-node.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:python": {
@@ -287,6 +303,10 @@
         {
           "exec": "scripts/integ-python.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "package": {
