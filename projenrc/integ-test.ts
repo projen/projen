@@ -292,6 +292,16 @@ export class IntegrationTests extends Component {
 
   /**
    * Creates a Node.js matrix job for JavaScript integration tests
+   *
+   * Runs on both `ubuntu-latest` and `windows-latest`: this is the job that
+   * bootstraps a real project and runs its tasks end-to-end, including a
+   * `.projenrc.ts` step executed through `ts-node`/`tsx`/`node` - exactly the
+   * code path dax has to resolve Windows `.cmd`/`.ps1` shims for (see
+   * https://github.com/projen/projen/issues/4789). Without a real Windows
+   * run here, dax's Windows behavior is only ever exercised through Jest,
+   * which fakes `process.platform` but still spawns the real process on
+   * whatever OS the test runner happens to be - so it can assert *that* dax
+   * was invoked, but not that dax actually works on Windows.
    */
   private createNodeMatrixJob(
     project: NodeProject,
@@ -301,12 +311,13 @@ export class IntegrationTests extends Component {
       permissions: {
         contents: JobPermission.READ,
       },
-      runsOn: ["ubuntu-latest"],
+      runsOn: ["${{ matrix.os }}"],
       strategy: {
         failFast: false,
         matrix: {
           domain: {
             "node-version": this.versions.node,
+            os: ["ubuntu-latest", "windows-latest"],
           },
         },
       },
