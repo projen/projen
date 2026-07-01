@@ -355,7 +355,13 @@
           "construct": "LicenseChecker"
         }
       },
-      "TypescriptConfig#AutoId21": {
+      "AutoId21": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypeScriptRunner"
+        }
+      },
+      "TypescriptConfig#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -368,7 +374,7 @@
           "path": "tsconfig.json"
         }
       },
-      "TypescriptConfig#AutoId22": {
+      "TypescriptConfig#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -381,7 +387,7 @@
           "path": "test/tsconfig.json"
         }
       },
-      "Eslint#AutoId23": {
+      "Eslint#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -394,13 +400,13 @@
           "path": ".eslintrc.json"
         }
       },
-      "Projenrc#AutoId24": {
+      "Projenrc#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "TypescriptConfig#AutoId25": {
+      "TypescriptConfig#AutoId26": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -413,25 +419,31 @@
           "path": "projenrc/tsconfig.json"
         }
       },
-      "SampleCode#AutoId26": {
+      "AutoId27": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypeScriptRunner"
+        }
+      },
+      "SampleCode#AutoId28": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
         }
       },
-      "SampleDir#AutoId27": {
+      "SampleDir#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "SampleDir#AutoId28": {
+      "SampleDir#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId29": {
+      "JsiiDocgen#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -458,7 +470,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId30": {
+      "UpgradeDependencies#AutoId32": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -477,7 +489,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId31": {
+      "UpgradeDependencies#AutoId33": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -510,7 +522,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId32": {
+      "VsCodeLaunchConfig#AutoId34": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -523,7 +535,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId33": {
+      "IntegrationTests#AutoId35": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -576,7 +588,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId34": {
+      "AiInstructions#AutoId36": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"

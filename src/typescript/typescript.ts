@@ -22,7 +22,11 @@ import { SampleDir } from "../sample-file";
 import type { Task } from "../task";
 import { TextFile } from "../textfile";
 import type { ProjenrcOptions as ProjenrcTsOptions } from "../typescript";
-import { Projenrc as ProjenrcTs, TypedocDocgen } from "../typescript";
+import {
+  Projenrc as ProjenrcTs,
+  TypedocDocgen,
+  TypeScriptRunner,
+} from "../typescript";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 
 /**
@@ -361,6 +365,16 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly projenrcTsOptions?: ProjenrcTsOptions;
 
   /**
+   * The TypeScript runner to use for executing TypeScript files.
+   *
+   * This is a project-level setting that components (e.g. projenrc) will
+   * use as their default runner.
+   *
+   * @default TypeScriptRunner.tsNode()
+   */
+  readonly runner?: TypeScriptRunner;
+
+  /**
    * Options for ts-jest
    */
   readonly tsJestOptions?: TsJestOptions;
@@ -400,6 +414,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly testdir: string;
 
   /**
+   * The TypeScript runner used for executing TypeScript files.
+   */
+  public readonly runner: TypeScriptRunner;
+
+  /**
    * The "watch" task.
    */
   public readonly watchTask: Task;
@@ -422,6 +441,8 @@ export class TypeScriptProject extends NodeProject {
 
     this.srcdir = options.srcdir ?? "src";
     this.libdir = options.libdir ?? "lib";
+    this.runner = options.runner ?? TypeScriptRunner.tsNode();
+    this.runner.tryAttach(this);
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? "docs/";

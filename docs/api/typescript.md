@@ -4,7 +4,9 @@
 
 ### Projenrc <a name="Projenrc" id="projen.typescript.Projenrc"></a>
 
-Sets up a typescript project to use TypeScript for projenrc.
+A projenrc file written in TypeScript.
+
+This component is used within TypeScriptProject.
 
 #### Initializers <a name="Initializers" id="projen.typescript.Projenrc.Initializer"></a>
 
@@ -238,8 +240,6 @@ A projenrc file written in TypeScript.
 
 This component can be instantiated in any type of project
 and has no expectations around the project's main language.
-
-Requires that `npx` is available.
 
 #### Initializers <a name="Initializers" id="projen.typescript.ProjenrcTs.Initializer"></a>
 
@@ -1117,6 +1117,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.runner">runner</a></code> | <code><a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a></code> | The TypeScript runner used for executing TypeScript files. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
@@ -1720,6 +1721,18 @@ public readonly libdir: string;
 - *Type:* string
 
 The directory in which compiled .js files reside.
+
+---
+
+##### `runner`<sup>Required</sup> <a name="runner" id="projen.typescript.TypeScriptAppProject.property.runner"></a>
+
+```typescript
+public readonly runner: TypeScriptRunner;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a>
+
+The TypeScript runner used for executing TypeScript files.
 
 ---
 
@@ -2493,6 +2506,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
+| <code><a href="#projen.typescript.TypeScriptProject.property.runner">runner</a></code> | <code><a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a></code> | The TypeScript runner used for executing TypeScript files. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which the .ts sources reside. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.testdir">testdir</a></code> | <code>string</code> | The directory in which tests reside. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfig</code> | A typescript configuration file which covers all files (sources, tests, projen). |
@@ -3099,6 +3113,18 @@ The directory in which compiled .js files reside.
 
 ---
 
+##### `runner`<sup>Required</sup> <a name="runner" id="projen.typescript.TypeScriptProject.property.runner"></a>
+
+```typescript
+public readonly runner: TypeScriptRunner;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a>
+
+The TypeScript runner used for executing TypeScript files.
+
+---
+
 ##### `srcdir`<sup>Required</sup> <a name="srcdir" id="projen.typescript.TypeScriptProject.property.srcdir"></a>
 
 ```typescript
@@ -3221,7 +3247,399 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ---
 
+### TypeScriptRunner <a name="TypeScriptRunner" id="projen.typescript.TypeScriptRunner"></a>
+
+The runner used to execute TypeScript files.
+
+A runner is a {@link FutureComponent }: create it standalone (e.g. via one of
+the static factories) and it is attached to a project by the component that
+consumes it. Use {@link TypeScriptRunner.copy} to derive a new runner with
+adjusted options.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.typescript.TypeScriptRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.typescript.TypeScriptRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.typescript.TypeScriptRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.typescript.TypeScriptRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.typescript.TypeScriptRunner.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
+| <code><a href="#projen.typescript.TypeScriptRunner.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
+| <code><a href="#projen.typescript.TypeScriptRunner.configFor">configFor</a></code> | Produce the {@link RunScriptConfig} to run the given entrypoint with this runner. |
+| <code><a href="#projen.typescript.TypeScriptRunner.copy">copy</a></code> | Returns a new (detached) runner of the same kind, with `overrides` merged over the current options. |
+
+---
+
+##### `toString` <a name="toString" id="projen.typescript.TypeScriptRunner.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.typescript.TypeScriptRunner.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.typescript.TypeScriptRunner.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.typescript.TypeScriptRunner.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.typescript.TypeScriptRunner.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `synthesize` <a name="synthesize" id="projen.typescript.TypeScriptRunner.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `attach` <a name="attach" id="projen.typescript.TypeScriptRunner.attach"></a>
+
+```typescript
+public attach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component to a scope. Only now does it become usable.
+
+Returns the real, unwrapped component (not the proxy). A component may be
+attached exactly once; attaching an already-attached component throws (copy
+it first to attach a variant elsewhere). Use `tryAttach()` if you don't care
+whether it has already been attached.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.typescript.TypeScriptRunner.attach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.typescript.TypeScriptRunner.attach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `tryAttach` <a name="tryAttach" id="projen.typescript.TypeScriptRunner.tryAttach"></a>
+
+```typescript
+public tryAttach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component if it isn't already, without caring *where*.
+
+Unlike `attach()`, never throws on an already-attached component: if attached
+anywhere at all, the existing instance is returned and `scope` is ignored.
+Use `attach()` when attaching to a specific scope is part of your contract
+and a pre-existing attachment elsewhere would be a bug.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.typescript.TypeScriptRunner.tryAttach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.typescript.TypeScriptRunner.tryAttach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `configFor` <a name="configFor" id="projen.typescript.TypeScriptRunner.configFor"></a>
+
+```typescript
+public configFor(entrypoint: string): RunScriptConfig
+```
+
+Produce the {@link RunScriptConfig} to run the given entrypoint with this runner.
+
+###### `entrypoint`<sup>Required</sup> <a name="entrypoint" id="projen.typescript.TypeScriptRunner.configFor.parameter.entrypoint"></a>
+
+- *Type:* string
+
+---
+
+##### `copy` <a name="copy" id="projen.typescript.TypeScriptRunner.copy"></a>
+
+```typescript
+public copy(overrides?: TypeScriptRunnerOptions): TypeScriptRunner
+```
+
+Returns a new (detached) runner of the same kind, with `overrides` merged over the current options.
+
+Safe to call while detached.
+
+###### `overrides`<sup>Optional</sup> <a name="overrides" id="projen.typescript.TypeScriptRunner.copy.parameter.overrides"></a>
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunnerOptions">TypeScriptRunnerOptions</a>
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.typescript.TypeScriptRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.typescript.TypeScriptRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.typescript.TypeScriptRunner.nodejs">nodejs</a></code> | Use the native Node.js TypeScript support. |
+| <code><a href="#projen.typescript.TypeScriptRunner.tsNode">tsNode</a></code> | Use ts-node to execute TypeScript files. |
+| <code><a href="#projen.typescript.TypeScriptRunner.tsx">tsx</a></code> | Use tsx to execute TypeScript files. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.typescript.TypeScriptRunner.isConstruct"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptRunner.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.typescript.TypeScriptRunner.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.typescript.TypeScriptRunner.isComponent"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptRunner.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.typescript.TypeScriptRunner.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `nodejs` <a name="nodejs" id="projen.typescript.TypeScriptRunner.nodejs"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptRunner.nodejs(options?: NodeRunnerOptions)
+```
+
+Use the native Node.js TypeScript support.
+
+Requires Node.js 22.18.0 or later.
+The script must use ESM style imports (no directories, include file endings, etc.).
+
+Named `nodejs` (not `node`) because a runner is a construct, and `node` is
+reserved by `constructs.Construct` for the construct's tree node.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.typescript.TypeScriptRunner.nodejs.parameter.options"></a>
+
+- *Type:* <a href="#projen.typescript.NodeRunnerOptions">NodeRunnerOptions</a>
+
+---
+
+##### `tsNode` <a name="tsNode" id="projen.typescript.TypeScriptRunner.tsNode"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptRunner.tsNode(options?: TsNodeRunnerOptions)
+```
+
+Use ts-node to execute TypeScript files.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.typescript.TypeScriptRunner.tsNode.parameter.options"></a>
+
+- *Type:* <a href="#projen.typescript.TsNodeRunnerOptions">TsNodeRunnerOptions</a>
+
+---
+
+##### `tsx` <a name="tsx" id="projen.typescript.TypeScriptRunner.tsx"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+typescript.TypeScriptRunner.tsx(options?: TsxRunnerOptions)
+```
+
+Use tsx to execute TypeScript files.
+
+tsx is a fast TypeScript runtime that does not perform type-checking.
+You may opt-in to an explicit type-checking step before the script is run.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.typescript.TypeScriptRunner.tsx.parameter.options"></a>
+
+- *Type:* <a href="#projen.typescript.TsxRunnerOptions">TsxRunnerOptions</a>
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypeScriptRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.typescript.TypeScriptRunner.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.typescript.TypeScriptRunner.property.attached">attached</a></code> | <code>boolean</code> | Whether `attach()` has been called. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.typescript.TypeScriptRunner.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.typescript.TypeScriptRunner.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `attached`<sup>Required</sup> <a name="attached" id="projen.typescript.TypeScriptRunner.property.attached"></a>
+
+```typescript
+public readonly attached: boolean;
+```
+
+- *Type:* boolean
+
+Whether `attach()` has been called.
+
+A convenience for tests/introspection;
+prefer `tryAttach()` over reading this and branching.
+
+---
+
+
 ## Structs <a name="Structs" id="Structs"></a>
+
+### NodeRunnerOptions <a name="NodeRunnerOptions" id="projen.typescript.NodeRunnerOptions"></a>
+
+Options for the native Node.js TypeScript runner.
+
+#### Initializer <a name="Initializer" id="projen.typescript.NodeRunnerOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const nodeRunnerOptions: typescript.NodeRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes">experimentalTransformTypes</a></code> | <code>boolean</code> | Whether to also enable `--experimental-transform-types`. |
+| <code><a href="#projen.typescript.NodeRunnerOptions.property.tsconfig">tsconfig</a></code> | <code>string</code> | Path to the tsconfig file for type-checking. |
+| <code><a href="#projen.typescript.NodeRunnerOptions.property.typeCheck">typeCheck</a></code> | <code>boolean</code> | Whether to type-check the entrypoint before executing. |
+
+---
+
+##### `experimentalTransformTypes`<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes"></a>
+
+```typescript
+public readonly experimentalTransformTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to also enable `--experimental-transform-types`.
+
+---
+
+##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.NodeRunnerOptions.property.tsconfig"></a>
+
+```typescript
+public readonly tsconfig: string;
+```
+
+- *Type:* string
+- *Default:* typescript default discovery
+
+Path to the tsconfig file for type-checking.
+
+When specified, will use this tsconfig for type-checking (if enabled).
+
+---
+
+##### `typeCheck`<sup>Optional</sup> <a name="typeCheck" id="projen.typescript.NodeRunnerOptions.property.typeCheck"></a>
+
+```typescript
+public readonly typeCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to type-check the entrypoint before executing.
+
+Because the native Node.js TypeScript does not type check code,
+you may want to enable this for additional type safety.
+When enabled, runs `tsc --noEmit`, using the provided tsconfig.
+
+---
 
 ### ProjenrcOptions <a name="ProjenrcOptions" id="projen.typescript.ProjenrcOptions"></a>
 
@@ -3239,6 +3657,7 @@ const projenrcOptions: typescript.ProjenrcOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. |
+| <code><a href="#projen.typescript.ProjenrcOptions.property.runner">runner</a></code> | <code><a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a></code> | The runner to use for executing TypeScript files. |
 | <code><a href="#projen.typescript.ProjenrcOptions.property.swc">swc</a></code> | <code>boolean</code> | Whether to use `SWC` for ts-node. |
 
 ---
@@ -3269,7 +3688,22 @@ A directory tree that may contain *.ts files that can be referenced from your pr
 
 ---
 
-##### `swc`<sup>Optional</sup> <a name="swc" id="projen.typescript.ProjenrcOptions.property.swc"></a>
+##### `runner`<sup>Optional</sup> <a name="runner" id="projen.typescript.ProjenrcOptions.property.runner"></a>
+
+```typescript
+public readonly runner: TypeScriptRunner;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a>
+- *Default:* the project's runner
+
+The runner to use for executing TypeScript files.
+
+---
+
+##### ~~`swc`~~<sup>Optional</sup> <a name="swc" id="projen.typescript.ProjenrcOptions.property.swc"></a>
+
+- *Deprecated:* Use `runner: TypeScriptRunner.tsNode({ swc: true })` instead.
 
 ```typescript
 public readonly swc: boolean;
@@ -3298,7 +3732,8 @@ const projenrcTsOptions: typescript.ProjenrcTsOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.filename">filename</a></code> | <code>string</code> | The name of the projenrc file. |
 | <code><a href="#projen.typescript.ProjenrcTsOptions.property.projenCodeDir">projenCodeDir</a></code> | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. |
-| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by ts-node when compiling projen source files. |
+| <code><a href="#projen.typescript.ProjenrcTsOptions.property.runner">runner</a></code> | <code><a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a></code> | The runner to use for executing TypeScript files. |
+| <code><a href="#projen.typescript.ProjenrcTsOptions.property.tsconfigFileName">tsconfigFileName</a></code> | <code>string</code> | The name of the tsconfig file that will be used by the runner when compiling projen source files. |
 
 ---
 
@@ -3328,7 +3763,22 @@ A directory tree that may contain *.ts files that can be referenced from your pr
 
 ---
 
-##### `tsconfigFileName`<sup>Optional</sup> <a name="tsconfigFileName" id="projen.typescript.ProjenrcTsOptions.property.tsconfigFileName"></a>
+##### `runner`<sup>Optional</sup> <a name="runner" id="projen.typescript.ProjenrcTsOptions.property.runner"></a>
+
+```typescript
+public readonly runner: TypeScriptRunner;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a>
+- *Default:* TypeScriptRunner.tsNode()
+
+The runner to use for executing TypeScript files.
+
+---
+
+##### ~~`tsconfigFileName`~~<sup>Optional</sup> <a name="tsconfigFileName" id="projen.typescript.ProjenrcTsOptions.property.tsconfigFileName"></a>
+
+- *Deprecated:* Use `runner` to configure the tsconfigFileName directly.
 
 ```typescript
 public readonly tsconfigFileName: string;
@@ -3337,7 +3787,7 @@ public readonly tsconfigFileName: string;
 - *Type:* string
 - *Default:* "tsconfig.projen.json"
 
-The name of the tsconfig file that will be used by ts-node when compiling projen source files.
+The name of the tsconfig file that will be used by the runner when compiling projen source files.
 
 ---
 
@@ -3522,6 +3972,125 @@ Enable ESM support.
 
 ---
 
+### TsNodeRunnerOptions <a name="TsNodeRunnerOptions" id="projen.typescript.TsNodeRunnerOptions"></a>
+
+Options for the ts-node runner.
+
+#### Initializer <a name="Initializer" id="projen.typescript.TsNodeRunnerOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const tsNodeRunnerOptions: typescript.TsNodeRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TsNodeRunnerOptions.property.swc">swc</a></code> | <code>boolean</code> | Whether to use SWC for transpilation. |
+| <code><a href="#projen.typescript.TsNodeRunnerOptions.property.tsconfig">tsconfig</a></code> | <code>string</code> | Path to the tsconfig file to use. |
+| <code><a href="#projen.typescript.TsNodeRunnerOptions.property.typeCheck">typeCheck</a></code> | <code>boolean</code> | Whether to type-check the script during executing. |
+
+---
+
+##### `swc`<sup>Optional</sup> <a name="swc" id="projen.typescript.TsNodeRunnerOptions.property.swc"></a>
+
+```typescript
+public readonly swc: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to use SWC for transpilation.
+
+This will disable type-checking.
+
+> [https://github.com/TypeStrong/ts-node#swc](https://github.com/TypeStrong/ts-node#swc)
+
+---
+
+##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.TsNodeRunnerOptions.property.tsconfig"></a>
+
+```typescript
+public readonly tsconfig: string;
+```
+
+- *Type:* string
+- *Default:* ts-node default discovery
+
+Path to the tsconfig file to use.
+
+---
+
+##### `typeCheck`<sup>Optional</sup> <a name="typeCheck" id="projen.typescript.TsNodeRunnerOptions.property.typeCheck"></a>
+
+```typescript
+public readonly typeCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether to type-check the script during executing.
+
+> [https://github.com/TypeStrong/ts-node#typecheck](https://github.com/TypeStrong/ts-node#typecheck)
+
+---
+
+### TsxRunnerOptions <a name="TsxRunnerOptions" id="projen.typescript.TsxRunnerOptions"></a>
+
+Options for the tsx runner.
+
+#### Initializer <a name="Initializer" id="projen.typescript.TsxRunnerOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const tsxRunnerOptions: typescript.TsxRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TsxRunnerOptions.property.tsconfig">tsconfig</a></code> | <code>string</code> | Path to the tsconfig file to use. |
+| <code><a href="#projen.typescript.TsxRunnerOptions.property.typeCheck">typeCheck</a></code> | <code>boolean</code> | Whether to type-check the entrypoint before executing. |
+
+---
+
+##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.TsxRunnerOptions.property.tsconfig"></a>
+
+```typescript
+public readonly tsconfig: string;
+```
+
+- *Type:* string
+- *Default:* tsx/typescript default discovery
+
+Path to the tsconfig file to use.
+
+When specified, will use this tsconfig for running tsx and type-checking (if enabled).
+
+---
+
+##### `typeCheck`<sup>Optional</sup> <a name="typeCheck" id="projen.typescript.TsxRunnerOptions.property.typeCheck"></a>
+
+```typescript
+public readonly typeCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to type-check the entrypoint before executing.
+
+Because tsx does not type check code, you may want to enable this for additional type safety.
+When enabled, runs `tsc --noEmit`, using the provided tsconfig.
+
+---
+
 ### TypeScriptProjectOptions <a name="TypeScriptProjectOptions" id="projen.typescript.TypeScriptProjectOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.typescript.TypeScriptProjectOptions.Initializer"></a>
@@ -3675,6 +4244,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.libdir">libdir</a></code> | <code>string</code> | Typescript  artifacts output directory. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.projenrcTs">projenrcTs</a></code> | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`). |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.projenrcTsOptions">projenrcTsOptions</a></code> | <code><a href="#projen.typescript.ProjenrcOptions">ProjenrcOptions</a></code> | Options for .projenrc.ts. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.runner">runner</a></code> | <code><a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a></code> | The TypeScript runner to use for executing TypeScript files. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.sampleCode">sampleCode</a></code> | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.srcdir">srcdir</a></code> | <code>string</code> | Typescript sources directory. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.testdir">testdir</a></code> | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`. |
@@ -5680,6 +6250,22 @@ Options for .projenrc.ts.
 
 ---
 
+##### `runner`<sup>Optional</sup> <a name="runner" id="projen.typescript.TypeScriptProjectOptions.property.runner"></a>
+
+```typescript
+public readonly runner: TypeScriptRunner;
+```
+
+- *Type:* <a href="#projen.typescript.TypeScriptRunner">TypeScriptRunner</a>
+- *Default:* TypeScriptRunner.tsNode()
+
+The TypeScript runner to use for executing TypeScript files.
+
+This is a project-level setting that components (e.g. projenrc) will
+use as their default runner.
+
+---
+
 ##### `sampleCode`<sup>Optional</sup> <a name="sampleCode" id="projen.typescript.TypeScriptProjectOptions.property.sampleCode"></a>
 
 ```typescript
@@ -5792,6 +6378,56 @@ TypeScript version to use.
 
 NOTE: Typescript is not semantically versioned and should remain on the
 same minor, so we recommend using a `~` dependency (e.g. `~1.2.3`).
+
+---
+
+### TypeScriptRunnerOptions <a name="TypeScriptRunnerOptions" id="projen.typescript.TypeScriptRunnerOptions"></a>
+
+The options that can be adjusted on any {@link TypeScriptRunner}, regardless of its runtime.
+
+This is the override type for {@link TypeScriptRunner.copy}. Runtime-specific
+creation options (such as `swc` for ts-node) are set via the static factories
+and are preserved - but cannot be changed - by `copy`, so a copy can never
+change the runtime of a runner.
+
+#### Initializer <a name="Initializer" id="projen.typescript.TypeScriptRunnerOptions.Initializer"></a>
+
+```typescript
+import { typescript } from 'projen'
+
+const typeScriptRunnerOptions: typescript.TypeScriptRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.typescript.TypeScriptRunnerOptions.property.tsconfig">tsconfig</a></code> | <code>string</code> | Path to the tsconfig file to use. |
+| <code><a href="#projen.typescript.TypeScriptRunnerOptions.property.typeCheck">typeCheck</a></code> | <code>boolean</code> | Whether to type-check the entrypoint. |
+
+---
+
+##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.typescript.TypeScriptRunnerOptions.property.tsconfig"></a>
+
+```typescript
+public readonly tsconfig: string;
+```
+
+- *Type:* string
+
+Path to the tsconfig file to use.
+
+---
+
+##### `typeCheck`<sup>Optional</sup> <a name="typeCheck" id="projen.typescript.TypeScriptRunnerOptions.property.typeCheck"></a>
+
+```typescript
+public readonly typeCheck: boolean;
+```
+
+- *Type:* boolean
+
+Whether to type-check the entrypoint.
 
 ---
 

@@ -2,6 +2,7 @@ import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import type { InventoryProjectType } from "../inventory";
 import { TypescriptConfig } from "../javascript";
+import { TypeScriptRunner } from "./typescript-runner";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import type { Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
@@ -22,12 +23,20 @@ export interface ProjenrcTsOptions {
   readonly projenCodeDir?: string;
 
   /**
-   * The name of the tsconfig file that will be used by ts-node
+   * The name of the tsconfig file that will be used by the runner
    * when compiling projen source files.
    *
    * @default "tsconfig.projen.json"
+   * @deprecated Use `runner` to configure the tsconfigFileName directly.
    */
   readonly tsconfigFileName?: string;
+
+  /**
+   * The runner to use for executing TypeScript files.
+   *
+   * @default TypeScriptRunner.tsNode()
+   */
+  readonly runner?: TypeScriptRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
@@ -37,8 +46,6 @@ const DEFAULT_FILENAME = ".projenrc.ts";
  *
  * This component can be instantiated in any type of project
  * and has no expectations around the project's main language.
- *
- * Requires that `npx` is available.
  */
 export class ProjenrcTs extends ProjenrcFile {
   /**
@@ -46,7 +53,9 @@ export class ProjenrcTs extends ProjenrcFile {
    */
   public readonly tsconfig: TypescriptConfig;
   public readonly filePath: string;
+
   private readonly _projenCodeDir: string;
+  private readonly _runner: TypeScriptRunner;
 
   constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
@@ -62,12 +71,45 @@ export class ProjenrcTs extends ProjenrcFile {
       compilerOptions: {},
     });
 
-    // Use npx since project's deps manager is not guaranteed to be JS-based
-    project.defaultTask?.exec(
-      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.filePath}`,
-    );
+    // A runner is a future component, make sure it is attached
+    this._runner = this.getRunner(options).tryAttach(project);
+
+    // Build the run config
+    const { dependencies, steps } = this._runner.configFor(this.filePath);
+
+    // If the runner has dependencies, run each step through an `npx` shell
+    // (`npx -y -p <deps> -c "<command>"`) to make them available without install.
+    if (dependencies.length > 0) {
+      const shell = [
+        "npx",
+        "-y",
+        ...dependencies.flatMap((d) => [
+          "-p",
+          d.version ? `${d.name}@${d.version}` : d.name,
+        ]),
+        "-c",
+      ];
+      for (const step of steps) {
+        project.defaultTask?.addSteps({ ...step, shell });
+      }
+    } else {
+      project.defaultTask?.addSteps(...steps);
+    }
 
     this.generateProjenrc();
+  }
+
+  private getRunner(options: ProjenrcTsOptions): TypeScriptRunner {
+    // use a provide runner as is
+    if (options.runner) {
+      return options.runner;
+    }
+
+    // use a default runner with the correct tsconfig and type-checking enabled
+    return TypeScriptRunner.tsNode({
+      tsconfig: this.tsconfig.fileName,
+      typeCheck: true,
+    });
   }
 
   public override preSynthesize(): void {

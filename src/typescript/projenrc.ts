@@ -1,10 +1,11 @@
-import { existsSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, posix, resolve } from "path";
 import type { InventoryProjectType } from "../inventory";
 import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
+import type { TypeScriptProject } from "./typescript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
-import type { TypeScriptProject } from "../typescript";
+import { TypeScriptRunner } from "./typescript-runner";
 
 export interface ProjenrcOptions {
   /**
@@ -25,14 +26,24 @@ export interface ProjenrcOptions {
    * Whether to use `SWC` for ts-node.
    *
    * @default false
+   * @deprecated Use `runner: TypeScriptRunner.tsNode({ swc: true })` instead.
    */
   readonly swc?: boolean;
+
+  /**
+   * The runner to use for executing TypeScript files.
+   *
+   * @default - the project's runner
+   */
+  readonly runner?: TypeScriptRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * A projenrc file written in TypeScript
+ *
+ * This component is used within TypeScriptProject.
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
@@ -40,7 +51,7 @@ export class Projenrc extends ProjenrcFile {
 
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
-  private readonly _swc: boolean;
+  private readonly _runner: TypeScriptRunner;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
@@ -48,7 +59,6 @@ export class Projenrc extends ProjenrcFile {
 
     this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
-    this._swc = options.swc ?? false;
 
     // Give the projenrc source tree its own `tsconfig.json` so the eslint
     // project service (and editors) resolve it as the nearest config for those
@@ -58,7 +68,7 @@ export class Projenrc extends ProjenrcFile {
     const baseTsconfig = project.tsconfig ?? project.tsconfigDev;
     this.tsconfig = new TypescriptConfig(project, {
       fileName: `${this._projenCodeDir}/tsconfig.json`,
-      include: ["**/*.ts"],
+      include: ["**/*.ts", posix.relative(this._projenCodeDir, this.filePath)],
       extends: TypescriptConfigExtends.fromTypescriptConfigs([baseTsconfig]),
       compilerOptions: {
         noEmit: true,
@@ -66,30 +76,47 @@ export class Projenrc extends ProjenrcFile {
       },
     });
 
+    // A runner is a future component, make sure it is attached
+    this._runner = this.getRunner(options).tryAttach(this._tsProject);
+
     this.addDefaultTask();
 
     this.generateProjenrc();
   }
 
   private addDefaultTask() {
-    const deps = ["ts-node"];
-    if (this._swc) {
-      deps.push("@swc/core");
+    // Render the run config for the entrypoint
+    const { dependencies, steps } = this._runner.configFor(this.filePath);
+
+    // Request runner dependencies
+    for (const dep of dependencies) {
+      this._tsProject.deps.requestDependency(dep);
     }
 
-    // this is the task projen executes when running `projen` without a
-    // specific task (if this task is not defined, projen falls back to
-    // running "node .projenrc.js").
-    this._tsProject.addDevDeps(...deps);
+    // Add runner steps
+    this._tsProject.defaultTask?.addSteps(...steps);
+  }
 
-    const tsNode = this._swc ? "ts-node --swc" : "ts-node";
+  private getRunner(options: ProjenrcOptions): TypeScriptRunner {
+    // use a provide runner as is
+    if (options.runner) {
+      return options.runner;
+    }
 
-    // ts-node compiles the entrypoint and its imports on demand using the dev
-    // tsconfig's compiler options, so projen source files may reside anywhere
-    // in the project tree regardless of the config's `include`.
-    this._tsProject.defaultTask?.exec(
-      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`,
-    );
+    // swc implies ts-node runner for backwards compatibility
+    if (options.swc) {
+      return TypeScriptRunner.tsNode({
+        swc: true,
+        typeCheck: true,
+        tsconfig: this.tsconfig.fileName,
+      }).tryAttach(this._tsProject);
+    }
+
+    // we use the project's default runner with the correct tsconfig and type-checking enabled
+    return this._tsProject.runner.copy({
+      tsconfig: this.tsconfig.fileName,
+      typeCheck: true,
+    });
   }
 
   public override preSynthesize(): void {

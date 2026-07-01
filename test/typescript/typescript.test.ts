@@ -188,7 +188,16 @@ test("projenrc.ts", () => {
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
-    steps: [{ exec: "ts-node --project test/tsconfig.json .projenrc.ts" }],
+    steps: [
+      {
+        execArgs: [
+          "ts-node",
+          "--project",
+          "projenrc/tsconfig.json",
+          ".projenrc.ts",
+        ],
+      },
+    ],
   });
 });
 
@@ -609,7 +618,16 @@ describe("tsconfigDev", () => {
     expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
-        steps: [{ exec: "ts-node --project test/tsconfig.json .projenrc.ts" }],
+        steps: [
+          {
+            execArgs: [
+              "ts-node",
+              "--project",
+              "projenrc/tsconfig.json",
+              ".projenrc.ts",
+            ],
+          },
+        ],
       }),
     );
   });
@@ -628,7 +646,16 @@ describe("tsconfigDev", () => {
     expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
-        steps: [{ exec: "ts-node --project tsconfig.json .projenrc.ts" }],
+        steps: [
+          {
+            execArgs: [
+              "ts-node",
+              "--project",
+              "projenrc/tsconfig.json",
+              ".projenrc.ts",
+            ],
+          },
+        ],
       }),
     );
   });

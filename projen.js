@@ -15,8 +15,8 @@ function execCommand(command) {
 
 const isBuild = existsSync("lib/cli/index.js");
 const hasJsii = existsSync("node_modules/.bin/jsii");
-const hasTsNode = existsSync("node_modules/.bin/ts-node");
-const needsBootstrapping = !isBuild || !hasTsNode;
+const hasDeps = existsSync("node_modules/tsx");
+const needsBootstrapping = !isBuild || !hasDeps;
 
 const installCommand = "npm ci";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
@@ -24,7 +24,7 @@ const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-de
 function bootstrap() {
   console.info("bootstrapping...");
 
-  if (!hasTsNode || !hasJsii) {
+  if (!hasDeps || !hasJsii) {
     execCommand(installCommand);
   }
 
