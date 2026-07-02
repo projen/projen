@@ -15,6 +15,15 @@ export interface MergifyConditionalOperator {
 
 export type MergifyCondition = string | MergifyConditionalOperator;
 
+export type MergifyCommitTrailer =
+  "co-authored-by" | "approved-by" | "merged-by";
+
+export interface MergifyCommitMessageFormat {
+  readonly title: "inherit" | "pr-title";
+  readonly body: "inherit" | "pr-body" | "empty";
+  readonly trailers?: MergifyCommitTrailer[];
+}
+
 export interface MergifyRule {
   /**
    * The name of the rule. This is not used by the engine directly,
@@ -81,9 +90,16 @@ export interface MergifyQueue {
   readonly mergeConditions?: MergifyCondition[];
 
   /**
-   * Template to use as the commit message when using the merge or squash merge method.
+   * When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
+   * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
    */
-  readonly commitMessageTemplate: string;
+  readonly commitMessageFormat?: MergifyCommitMessageFormat;
+
+  /**
+   * Template to use as the commit message when using the merge or squash merge method.
+   * @deprecated Use `commitMessageFormat` instead.
+   */
+  readonly commitMessageTemplate?: string;
 }
 
 /**
@@ -143,6 +159,15 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
+    if (
+      (queue.commitMessageFormat == null) ===
+      (queue.commitMessageTemplate == null)
+    ) {
+      throw new Error(
+        "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
+      );
+    }
+
     this.queues.push(queue);
     this.createYamlFile();
   }

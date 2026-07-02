@@ -8711,6 +8711,56 @@ The branches that can be merged into using MergeQueue.
 
 ---
 
+### MergifyCommitMessageFormat <a name="MergifyCommitMessageFormat" id="projen.github.MergifyCommitMessageFormat"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.MergifyCommitMessageFormat.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const mergifyCommitMessageFormat: github.MergifyCommitMessageFormat = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.body">body</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.title">title</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.trailers">trailers</a></code> | <code>string[]</code> | *No description.* |
+
+---
+
+##### `body`<sup>Required</sup> <a name="body" id="projen.github.MergifyCommitMessageFormat.property.body"></a>
+
+```typescript
+public readonly body: string;
+```
+
+- *Type:* string
+
+---
+
+##### `title`<sup>Required</sup> <a name="title" id="projen.github.MergifyCommitMessageFormat.property.title"></a>
+
+```typescript
+public readonly title: string;
+```
+
+- *Type:* string
+
+---
+
+##### `trailers`<sup>Optional</sup> <a name="trailers" id="projen.github.MergifyCommitMessageFormat.property.trailers"></a>
+
+```typescript
+public readonly trailers: string[];
+```
+
+- *Type:* string[]
+
+---
+
 ### MergifyConditionalOperator <a name="MergifyConditionalOperator" id="projen.github.MergifyConditionalOperator"></a>
 
 The Mergify conditional operators that can be used are: `or` and `and`.
@@ -8819,24 +8869,13 @@ const mergifyQueue: github.MergifyQueue = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueue.property.commitMessageFormat">commitMessageFormat</a></code> | <code><a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a></code> | When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit. |
+| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
 | <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
 | <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
-
----
-
-##### `commitMessageTemplate`<sup>Required</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
-
-```typescript
-public readonly commitMessageTemplate: string;
-```
-
-- *Type:* string
-
-Template to use as the commit message when using the merge or squash merge method.
 
 ---
 
@@ -8849,6 +8888,34 @@ public readonly name: string;
 - *Type:* string
 
 The name of the queue.
+
+---
+
+##### `commitMessageFormat`<sup>Optional</sup> <a name="commitMessageFormat" id="projen.github.MergifyQueue.property.commitMessageFormat"></a>
+
+```typescript
+public readonly commitMessageFormat: MergifyCommitMessageFormat;
+```
+
+- *Type:* <a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a>
+
+When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
+
+> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
+
+---
+
+##### ~~`commitMessageTemplate`~~<sup>Optional</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
+
+- *Deprecated:* Use `commitMessageFormat` instead.
+
+```typescript
+public readonly commitMessageTemplate: string;
+```
+
+- *Type:* string
+
+Template to use as the commit message when using the merge or squash merge method.
 
 ---
 

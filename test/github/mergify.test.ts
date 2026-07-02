@@ -67,6 +67,65 @@ describe("mergify", () => {
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
+
+  test("queue fails when commit message config is missing", () => {
+    expect(() =>
+      createProject({
+        autoMerge: false,
+        githubOptions: {
+          mergifyOptions: {
+            queues: [{ name: "default" }],
+          },
+        },
+      }),
+    ).toThrow(
+      "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
+    );
+  });
+
+  test("queue fails when both commit message config options are set", () => {
+    expect(() =>
+      createProject({
+        autoMerge: false,
+        githubOptions: {
+          mergifyOptions: {
+            queues: [
+              {
+                name: "default",
+                commitMessageFormat: {
+                  title: "pr-title",
+                  body: "pr-body",
+                },
+                commitMessageTemplate: "{{ title }}",
+              },
+            ],
+          },
+        },
+      }),
+    ).toThrow(
+      "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
+    );
+  });
+
+  test("queue accepts commit message template only", () => {
+    const project = createProject({
+      autoMerge: false,
+      githubOptions: {
+        mergifyOptions: {
+          queues: [
+            {
+              name: "default",
+              commitMessageTemplate: "{{ title }}\\n\\n{{ body }}",
+            },
+          ],
+        },
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).toContain("commit_message_template");
+  });
 });
 
 type ProjectOptions = Omit<
