@@ -28,7 +28,7 @@ export interface MergifyCommitMessageFormat {
    * Commit title format.
    *
    * - `inherit`: use the GitHub repository default merge commit title format
-   * - `pr-title`: use the pull request title
+   * - `pr-title`: use the pull request title (with the PR number appended)
    */
   readonly title: "inherit" | "pr-title";
 
