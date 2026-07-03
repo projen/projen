@@ -18,12 +18,12 @@ export type MergifyCondition = string | MergifyConditionalOperator;
 export type MergifyCommitTrailer =
   "co-authored-by" | "approved-by" | "merged-by";
 
- /**
-  * Declarative configuration for Mergify `commit_message_format`.
-  * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
-  */
- 
- export interface MergifyCommitMessageFormat {
+/**
+ * Declarative configuration for Mergify `commit_message_format`.
+ * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
+ */
+
+export interface MergifyCommitMessageFormat {
   /**
    * Commit title format.
    *
@@ -190,7 +190,8 @@ export class Mergify extends Component {
 
   public addQueue(queue: MergifyQueue) {
     const hasCommitMessageFormat = (queue as any).commitMessageFormat != null;
-    const hasCommitMessageTemplate = (queue as any).commitMessageTemplate != null;
+    const hasCommitMessageTemplate =
+      (queue as any).commitMessageTemplate != null;
 
     if (hasCommitMessageFormat === hasCommitMessageTemplate) {
       throw new Error(
