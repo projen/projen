@@ -19,8 +19,26 @@ export type MergifyCommitTrailer =
   "co-authored-by" | "approved-by" | "merged-by";
 
 export interface MergifyCommitMessageFormat {
+  /**
+   * Commit title format.
+   *
+   * - `inherit`: use the GitHub repository default merge commit title format
+   * - `pr-title`: use the pull request title
+   */
   readonly title: "inherit" | "pr-title";
+
+  /**
+   * Commit body format.
+   *
+   * - `inherit`: use the GitHub repository default merge commit body format
+   * - `pr-body`: use the pull request body
+   * - `empty`: set the commit body to be empty
+   */
   readonly body: "inherit" | "pr-body" | "empty";
+
+  /**
+   * Optional list of trailers to append to the commit message.
+   */
   readonly trailers?: MergifyCommitTrailer[];
 }
 
