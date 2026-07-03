@@ -189,9 +189,15 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
-    const hasCommitMessageFormat = (queue as any).commitMessageFormat != null;
+    const queueWithCommitMessageFormat =
+      queue as Partial<MergifyQueueWithCommitMessageFormat>;
+    const queueWithCommitMessageTemplate =
+      queue as Partial<MergifyQueueWithCommitMessageTemplate>;
+
+    const hasCommitMessageFormat =
+      queueWithCommitMessageFormat.commitMessageFormat != null;
     const hasCommitMessageTemplate =
-      (queue as any).commitMessageTemplate != null;
+      queueWithCommitMessageTemplate.commitMessageTemplate != null;
 
     if (hasCommitMessageFormat === hasCommitMessageTemplate) {
       throw new Error(
