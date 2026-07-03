@@ -18,10 +18,11 @@ export type MergifyCondition = string | MergifyConditionalOperator;
 export type MergifyCommitTrailer =
   "co-authored-by" | "approved-by" | "merged-by";
 
-/**
+ /**
   * Declarative configuration for Mergify `commit_message_format`.
   * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
   */
+ 
  export interface MergifyCommitMessageFormat {
   /**
    * Commit title format.
