@@ -8713,6 +8713,10 @@ The branches that can be merged into using MergeQueue.
 
 ### MergifyCommitMessageFormat <a name="MergifyCommitMessageFormat" id="projen.github.MergifyCommitMessageFormat"></a>
 
+Declarative configuration for Mergify `commit_message_format`.
+
+> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
+
 #### Initializer <a name="Initializer" id="projen.github.MergifyCommitMessageFormat.Initializer"></a>
 
 ```typescript
@@ -8725,9 +8729,9 @@ const mergifyCommitMessageFormat: github.MergifyCommitMessageFormat = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyCommitMessageFormat.property.body">body</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.github.MergifyCommitMessageFormat.property.title">title</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.github.MergifyCommitMessageFormat.property.trailers">trailers</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.body">body</a></code> | <code>string</code> | Commit body format. |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.title">title</a></code> | <code>string</code> | Commit title format. |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.trailers">trailers</a></code> | <code>string[]</code> | Optional list of trailers to append to the commit message. |
 
 ---
 
@@ -8739,6 +8743,12 @@ public readonly body: string;
 
 - *Type:* string
 
+Commit body format.
+
+`inherit`: use the GitHub repository default merge commit body format
+- `pr-body`: use the pull request body
+- `empty`: set the commit body to be empty
+
 ---
 
 ##### `title`<sup>Required</sup> <a name="title" id="projen.github.MergifyCommitMessageFormat.property.title"></a>
@@ -8749,6 +8759,11 @@ public readonly title: string;
 
 - *Type:* string
 
+Commit title format.
+
+`inherit`: use the GitHub repository default merge commit title format
+- `pr-title`: use the pull request title
+
 ---
 
 ##### `trailers`<sup>Optional</sup> <a name="trailers" id="projen.github.MergifyCommitMessageFormat.property.trailers"></a>
@@ -8758,6 +8773,8 @@ public readonly trailers: string[];
 ```
 
 - *Type:* string[]
+
+Optional list of trailers to append to the commit message.
 
 ---
 
