@@ -74,7 +74,7 @@ describe("mergify", () => {
         autoMerge: false,
         githubOptions: {
           mergifyOptions: {
-            queues: [{ name: "default" }],
+            queues: [{ name: "default" } as any],
           },
         },
       }),
