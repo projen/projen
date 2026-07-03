@@ -62,7 +62,7 @@ export interface MergifyRule {
   readonly actions: { [action: string]: any };
 }
 
-export interface MergifyQueue {
+export interface MergifyQueueBase {
   /**
    * The name of the queue.
    */
@@ -106,19 +106,26 @@ export interface MergifyQueue {
    * @see https://docs.mergify.com/conditions/#conditions
    */
   readonly mergeConditions?: MergifyCondition[];
+}
 
+export interface MergifyQueueWithCommitMessageFormat extends MergifyQueueBase {
   /**
    * When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
    * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
    */
-  readonly commitMessageFormat?: MergifyCommitMessageFormat;
+  readonly commitMessageFormat: MergifyCommitMessageFormat;
+}
 
+export interface MergifyQueueWithCommitMessageTemplate extends MergifyQueueBase {
   /**
    * Template to use as the commit message when using the merge or squash merge method.
    * @deprecated Use `commitMessageFormat` instead.
    */
-  readonly commitMessageTemplate?: string;
+  readonly commitMessageTemplate: string;
 }
+
+export type MergifyQueue =
+  MergifyQueueWithCommitMessageFormat | MergifyQueueWithCommitMessageTemplate;
 
 /**
  * Configure Mergify.
@@ -177,10 +184,10 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
-    if (
-      (queue.commitMessageFormat == null) ===
-      (queue.commitMessageTemplate == null)
-    ) {
+    const hasCommitMessageFormat = "commitMessageFormat" in queue;
+    const hasCommitMessageTemplate = "commitMessageTemplate" in queue;
+
+    if (hasCommitMessageFormat === hasCommitMessageTemplate) {
       throw new Error(
         "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
       );

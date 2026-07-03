@@ -3401,12 +3401,12 @@ Synthesizes files to the project output directory.
 ##### `addQueue` <a name="addQueue" id="projen.github.Mergify.addQueue"></a>
 
 ```typescript
-public addQueue(queue: MergifyQueue): void
+public addQueue(queue: MergifyQueueWithCommitMessageFormat | MergifyQueueWithCommitMessageTemplate): void
 ```
 
 ###### `queue`<sup>Required</sup> <a name="queue" id="projen.github.Mergify.addQueue.parameter.queue"></a>
 
-- *Type:* <a href="#projen.github.MergifyQueue">MergifyQueue</a>
+- *Type:* <a href="#projen.github.MergifyQueueWithCommitMessageFormat">MergifyQueueWithCommitMessageFormat</a> | <a href="#projen.github.MergifyQueueWithCommitMessageTemplate">MergifyQueueWithCommitMessageTemplate</a>
 
 ---
 
@@ -8826,7 +8826,7 @@ const mergifyOptions: github.MergifyOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueue">MergifyQueue</a>[]</code> | The available merge queues. |
+| <code><a href="#projen.github.MergifyOptions.property.queues">queues</a></code> | <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat">MergifyQueueWithCommitMessageFormat</a> \| <a href="#projen.github.MergifyQueueWithCommitMessageTemplate">MergifyQueueWithCommitMessageTemplate</a>[]</code> | The available merge queues. |
 | <code><a href="#projen.github.MergifyOptions.property.rules">rules</a></code> | <code><a href="#projen.github.MergifyRule">MergifyRule</a>[]</code> | Pull request automation rules. |
 
 ---
@@ -8834,10 +8834,10 @@ const mergifyOptions: github.MergifyOptions = { ... }
 ##### `queues`<sup>Optional</sup> <a name="queues" id="projen.github.MergifyOptions.property.queues"></a>
 
 ```typescript
-public readonly queues: MergifyQueue[];
+public readonly queues: (MergifyQueueWithCommitMessageFormat | MergifyQueueWithCommitMessageTemplate)[];
 ```
 
-- *Type:* <a href="#projen.github.MergifyQueue">MergifyQueue</a>[]
+- *Type:* <a href="#projen.github.MergifyQueueWithCommitMessageFormat">MergifyQueueWithCommitMessageFormat</a> | <a href="#projen.github.MergifyQueueWithCommitMessageTemplate">MergifyQueueWithCommitMessageTemplate</a>[]
 
 The available merge queues.
 
@@ -8855,31 +8855,29 @@ Pull request automation rules.
 
 ---
 
-### MergifyQueue <a name="MergifyQueue" id="projen.github.MergifyQueue"></a>
+### MergifyQueueBase <a name="MergifyQueueBase" id="projen.github.MergifyQueueBase"></a>
 
-#### Initializer <a name="Initializer" id="projen.github.MergifyQueue.Initializer"></a>
+#### Initializer <a name="Initializer" id="projen.github.MergifyQueueBase.Initializer"></a>
 
 ```typescript
 import { github } from 'projen'
 
-const mergifyQueue: github.MergifyQueue = { ... }
+const mergifyQueueBase: github.MergifyQueueBase = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
-| <code><a href="#projen.github.MergifyQueue.property.commitMessageFormat">commitMessageFormat</a></code> | <code><a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a></code> | When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit. |
-| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
-| <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
-| <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
-| <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
-| <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
+| <code><a href="#projen.github.MergifyQueueBase.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueueBase.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
+| <code><a href="#projen.github.MergifyQueueBase.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
+| <code><a href="#projen.github.MergifyQueueBase.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueueBase.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueue.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueueBase.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -8891,35 +8889,7 @@ The name of the queue.
 
 ---
 
-##### `commitMessageFormat`<sup>Optional</sup> <a name="commitMessageFormat" id="projen.github.MergifyQueue.property.commitMessageFormat"></a>
-
-```typescript
-public readonly commitMessageFormat: MergifyCommitMessageFormat;
-```
-
-- *Type:* <a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a>
-
-When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
-
-> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
-
----
-
-##### ~~`commitMessageTemplate`~~<sup>Optional</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
-
-- *Deprecated:* Use `commitMessageFormat` instead.
-
-```typescript
-public readonly commitMessageTemplate: string;
-```
-
-- *Type:* string
-
-Template to use as the commit message when using the merge or squash merge method.
-
----
-
-##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueue.property.mergeConditions"></a>
+##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueueBase.property.mergeConditions"></a>
 
 ```typescript
 public readonly mergeConditions: (string | MergifyConditionalOperator)[];
@@ -8936,7 +8906,7 @@ In case of speculative merge pull request, the merge conditions are evaluated ag
 
 ---
 
-##### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.github.MergifyQueue.property.mergeMethod"></a>
+##### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.github.MergifyQueueBase.property.mergeMethod"></a>
 
 ```typescript
 public readonly mergeMethod: string;
@@ -8952,7 +8922,7 @@ Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
 
 ---
 
-##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueue.property.queueConditions"></a>
+##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueueBase.property.queueConditions"></a>
 
 ```typescript
 public readonly queueConditions: (string | MergifyConditionalOperator)[];
@@ -8966,7 +8936,7 @@ The list of conditions that needs to match to queue the pull request.
 
 ---
 
-##### `updateMethod`<sup>Optional</sup> <a name="updateMethod" id="projen.github.MergifyQueue.property.updateMethod"></a>
+##### `updateMethod`<sup>Optional</sup> <a name="updateMethod" id="projen.github.MergifyQueueBase.property.updateMethod"></a>
 
 ```typescript
 public readonly updateMethod: string;
@@ -8984,6 +8954,240 @@ Possible values:
 Note that the `rebase` method has some drawbacks, see Mergify docs for details.
 
 > [https://docs.mergify.com/actions/queue/#queue-rules](https://docs.mergify.com/actions/queue/#queue-rules)
+
+---
+
+### MergifyQueueWithCommitMessageFormat <a name="MergifyQueueWithCommitMessageFormat" id="projen.github.MergifyQueueWithCommitMessageFormat"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.MergifyQueueWithCommitMessageFormat.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const mergifyQueueWithCommitMessageFormat: github.MergifyQueueWithCommitMessageFormat = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageFormat.property.commitMessageFormat">commitMessageFormat</a></code> | <code><a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a></code> | When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueueWithCommitMessageFormat.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the queue.
+
+---
+
+##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueueWithCommitMessageFormat.property.mergeConditions"></a>
+
+```typescript
+public readonly mergeConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions to match to get the queued pull request merged.
+
+This automatically includes the queueConditions.
+In case of speculative merge pull request, the merge conditions are evaluated against the temporary pull request instead of the original one.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
+
+---
+
+##### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.github.MergifyQueueWithCommitMessageFormat.property.mergeMethod"></a>
+
+```typescript
+public readonly mergeMethod: string;
+```
+
+- *Type:* string
+- *Default:* "merge"
+
+Merge method to use.
+
+Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
+`fast-forward` is not supported on queues with `speculative_checks` > 1, `batch_size` > 1, or with `allow_inplace_checks` set to false.
+
+---
+
+##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueueWithCommitMessageFormat.property.queueConditions"></a>
+
+```typescript
+public readonly queueConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
+
+---
+
+##### `updateMethod`<sup>Optional</sup> <a name="updateMethod" id="projen.github.MergifyQueueWithCommitMessageFormat.property.updateMethod"></a>
+
+```typescript
+public readonly updateMethod: string;
+```
+
+- *Type:* string
+- *Default:* `merge` for all merge methods except `fast-forward` where `rebase` is used
+
+Method to use to update the pull request with its base branch when the speculative check is done in-place.
+
+Possible values:
+ - `merge` to merge the base branch into the pull request.
+ - `rebase` to rebase the pull request against its base branch.
+
+Note that the `rebase` method has some drawbacks, see Mergify docs for details.
+
+> [https://docs.mergify.com/actions/queue/#queue-rules](https://docs.mergify.com/actions/queue/#queue-rules)
+
+---
+
+##### `commitMessageFormat`<sup>Required</sup> <a name="commitMessageFormat" id="projen.github.MergifyQueueWithCommitMessageFormat.property.commitMessageFormat"></a>
+
+```typescript
+public readonly commitMessageFormat: MergifyCommitMessageFormat;
+```
+
+- *Type:* <a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a>
+
+When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
+
+> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
+
+---
+
+### MergifyQueueWithCommitMessageTemplate <a name="MergifyQueueWithCommitMessageTemplate" id="projen.github.MergifyQueueWithCommitMessageTemplate"></a>
+
+#### Initializer <a name="Initializer" id="projen.github.MergifyQueueWithCommitMessageTemplate.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const mergifyQueueWithCommitMessageTemplate: github.MergifyQueueWithCommitMessageTemplate = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.name">name</a></code> | <code>string</code> | The name of the queue. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
+| <code><a href="#projen.github.MergifyQueueWithCommitMessageTemplate.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name of the queue.
+
+---
+
+##### `mergeConditions`<sup>Optional</sup> <a name="mergeConditions" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.mergeConditions"></a>
+
+```typescript
+public readonly mergeConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions to match to get the queued pull request merged.
+
+This automatically includes the queueConditions.
+In case of speculative merge pull request, the merge conditions are evaluated against the temporary pull request instead of the original one.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
+
+---
+
+##### `mergeMethod`<sup>Optional</sup> <a name="mergeMethod" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.mergeMethod"></a>
+
+```typescript
+public readonly mergeMethod: string;
+```
+
+- *Type:* string
+- *Default:* "merge"
+
+Merge method to use.
+
+Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
+`fast-forward` is not supported on queues with `speculative_checks` > 1, `batch_size` > 1, or with `allow_inplace_checks` set to false.
+
+---
+
+##### `queueConditions`<sup>Optional</sup> <a name="queueConditions" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.queueConditions"></a>
+
+```typescript
+public readonly queueConditions: (string | MergifyConditionalOperator)[];
+```
+
+- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+
+The list of conditions that needs to match to queue the pull request.
+
+> [https://docs.mergify.com/conditions/#conditions](https://docs.mergify.com/conditions/#conditions)
+
+---
+
+##### `updateMethod`<sup>Optional</sup> <a name="updateMethod" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.updateMethod"></a>
+
+```typescript
+public readonly updateMethod: string;
+```
+
+- *Type:* string
+- *Default:* `merge` for all merge methods except `fast-forward` where `rebase` is used
+
+Method to use to update the pull request with its base branch when the speculative check is done in-place.
+
+Possible values:
+ - `merge` to merge the base branch into the pull request.
+ - `rebase` to rebase the pull request against its base branch.
+
+Note that the `rebase` method has some drawbacks, see Mergify docs for details.
+
+> [https://docs.mergify.com/actions/queue/#queue-rules](https://docs.mergify.com/actions/queue/#queue-rules)
+
+---
+
+##### ~~`commitMessageTemplate`~~<sup>Required</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueueWithCommitMessageTemplate.property.commitMessageTemplate"></a>
+
+- *Deprecated:* Use `commitMessageFormat` instead.
+
+```typescript
+public readonly commitMessageTemplate: string;
+```
+
+- *Type:* string
+
+Template to use as the commit message when using the merge or squash merge method.
 
 ---
 
