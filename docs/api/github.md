@@ -8735,7 +8735,7 @@ const mergifyCommitMessageFormat: github.MergifyCommitMessageFormat = { ... }
 
 ---
 
-##### `body`<sup>Required</sup> <a name="body" id="projen.github.MergifyCommitMessageFormat.property.body"></a>
+##### `body`<sup>Optional</sup> <a name="body" id="projen.github.MergifyCommitMessageFormat.property.body"></a>
 
 ```typescript
 public readonly body: string;
@@ -8751,7 +8751,7 @@ Commit body format.
 
 ---
 
-##### `title`<sup>Required</sup> <a name="title" id="projen.github.MergifyCommitMessageFormat.property.title"></a>
+##### `title`<sup>Optional</sup> <a name="title" id="projen.github.MergifyCommitMessageFormat.property.title"></a>
 
 ```typescript
 public readonly title: string;

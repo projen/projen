@@ -30,7 +30,7 @@ export interface MergifyCommitMessageFormat {
    * - `inherit`: use the GitHub repository default merge commit title format
    * - `pr-title`: use the pull request title (with the PR number appended)
    */
-  readonly title: "inherit" | "pr-title";
+  readonly title?: "inherit" | "pr-title";
 
   /**
    * Commit body format.
@@ -39,7 +39,7 @@ export interface MergifyCommitMessageFormat {
    * - `pr-body`: use the pull request body
    * - `empty`: set the commit body to be empty
    */
-  readonly body: "inherit" | "pr-body" | "empty";
+  readonly body?: "inherit" | "pr-body" | "empty";
 
   /**
    * Optional list of trailers to append to the commit message.
