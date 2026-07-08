@@ -532,13 +532,59 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,tsx"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--cooldown=2",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,tsx"
+          ]
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest tsx typescript"
+          "execArgs": [
+            "npm",
+            "update",
+            "@biomejs/biome",
+            "@jsii/check-node",
+            "@types/conventional-changelog-config-spec",
+            "@types/ini",
+            "@types/jest",
+            "@types/node",
+            "@types/parse-conflict-json",
+            "@types/semver",
+            "@types/yargs",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "aws-cdk-lib",
+            "commit-and-tag-version",
+            "esbuild",
+            "eslint-config-prettier",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint-plugin-prettier",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "jsii-diff",
+            "jsii-docgen",
+            "jsii-pacmak",
+            "jsii-rosetta",
+            "jsii",
+            "json2jsii",
+            "license-checker",
+            "markmac",
+            "prettier",
+            "ts-jest",
+            "tsx",
+            "typescript"
+          ]
         },
         {
           "exec": "node ./projen.js"
@@ -557,13 +603,40 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,dax,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,xmlbuilder2,yargs"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--cooldown=2",
+            "--peer",
+            "--no-deprecated",
+            "--dep=prod",
+            "--filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,dax,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,xmlbuilder2,yargs"
+          ]
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @iarna/toml case chalk comment-json conventional-changelog-config-spec dax fast-glob fast-json-patch ini parse-conflict-json semver xmlbuilder2 yaml yargs"
+          "execArgs": [
+            "npm",
+            "update",
+            "@iarna/toml",
+            "case",
+            "chalk",
+            "comment-json",
+            "conventional-changelog-config-spec",
+            "dax",
+            "fast-glob",
+            "fast-json-patch",
+            "ini",
+            "parse-conflict-json",
+            "semver",
+            "xmlbuilder2",
+            "yaml",
+            "yargs"
+          ]
         },
         {
           "exec": "node ./projen.js"

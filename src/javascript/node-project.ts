@@ -1044,7 +1044,7 @@ export class NodeProject extends GitHubProject {
       authProvider: codeArtifactOptions?.authProvider,
     };
 
-    const executeProjenCommand = `${executeCommandPriorInstallation(this.package.packageManager)} projen`;
+    const executeProjenCommand = `${executeCommandPriorInstallation(this.package.packageManager).join(" ")} projen`;
 
     if (
       parsedCodeArtifactOptions.authProvider ===
