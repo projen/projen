@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import * as path from "node:path";
+import * as path from "node:path/posix";
 import { TypeGenerator } from "json2jsii";
 import type { FileBaseOptions, IResolver, Project, Task } from "../src";
 import { Component, JsonPatch, TextFile } from "../src";

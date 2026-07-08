@@ -1,5 +1,5 @@
 import type { Project } from "../src";
-import { DependencyType, JsonFile, TextFile } from "../src";
+import { DependencyType, JsonFile, TaskShell, TextFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 import { TaskWorkflow } from "../src/github";
 import type { NodeProject } from "../src/javascript";
@@ -174,7 +174,7 @@ export function setupUpgradeDependencies(project: NodeProject) {
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
-  new UpgradeDependencies(project, {
+  const bundled = new UpgradeDependencies(project, {
     taskName: "upgrade-bundled",
     types: [DependencyType.BUNDLED],
     cooldown,
@@ -186,6 +186,8 @@ export function setupUpgradeDependencies(project: NodeProject) {
       schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
     },
   });
+  bundled.upgradeTask.shell = TaskShell.system();
+
   new UpgradeDependencies(project, {
     taskName: "upgrade",
     exclude: [

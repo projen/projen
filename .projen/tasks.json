@@ -658,7 +658,8 @@
         {
           "spawn": "post-upgrade"
         }
-      ]
+      ],
+      "shell": "system"
     },
     "watch": {
       "name": "watch",
