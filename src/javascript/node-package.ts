@@ -8,6 +8,8 @@ import {
 } from "fs";
 import { join, resolve } from "path";
 import * as semver from "semver";
+import type { PnpmWorkspaceYamlOptions } from "./pnpm-workspace";
+import { PnpmWorkspaceYaml } from "./pnpm-workspace";
 import {
   execCommand,
   extractCodeArtifactDetails,
@@ -358,6 +360,13 @@ export interface NodePackageOptions {
   readonly yarnBerryOptions?: YarnBerryOptions;
 
   /**
+   * Options for pnpm
+   *
+   * @default - all default options
+   */
+  readonly pnpmOptions?: PnpmOptions;
+
+  /**
    * Configure the `devEngines` field in `package.json`.
    *
    * The `devEngines.packageManager` field is automatically populated based on
@@ -386,6 +395,40 @@ export interface NodePackageOptions {
    * @default true
    */
   readonly deleteOrphanedLockFiles?: boolean;
+
+  /**
+   * List of dependency (package) names that are allowed to run lifecycle
+   * install scripts (`preinstall`, `install`, `postinstall`, `prepare`)
+   * during dependency installation.
+   *
+   * These scripts can execute arbitrary code, making them a common
+   * supply-chain attack vector. Package managers are moving toward
+   * blocking them by default and requiring an explicit allowlist.
+   * Configuring `allowScripts` sets up that allowlist so scripts only run
+   * for the packages you have explicitly reviewed and trust.
+   *
+   * Support for this setting depends on the configured `packageManager`:
+   *
+   * - `NPM`: written to the native `allowScripts` field in `package.json`
+   *   (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+   * - `BUN`: written to the native `trustedDependencies` field in
+   *   `package.json` (see https://bun.com/docs/pm/lifecycle).
+   * - `PNPM`: written to the `onlyBuiltDependencies` setting in
+   *   `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+   * - `YARN2`, `YARN_BERRY`: written to the native
+   *   `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+   *   with `enableScripts: false` in `.yarnrc.yml` (see
+   *   https://yarnpkg.com/features/security#postinstalls). If you set
+   *   `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+   *   is respected instead of being overridden.
+   * - `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+   *   mechanism to allowlist install scripts for specific dependencies.
+   *   Setting this option with one of these package managers throws an
+   *   error at synthesis time.
+   *
+   * @default - all install scripts are allowed to run (package manager default)
+   */
+  readonly allowScripts?: string[];
 }
 
 /**
@@ -686,6 +729,7 @@ export class NodePackage extends Component {
   private readonly scripts: Record<string, string> = {};
   private readonly scriptsToBeRemoved = new Set<string>();
   private readonly keywords: Set<string> = new Set();
+  private readonly allowedScripts: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -784,6 +828,17 @@ export class NodePackage extends Component {
       stability: options.stability,
       publishConfig: () => this.renderPublishConfig(),
       typesVersions: this._prev?.typesVersions,
+      allowScripts:
+        this.packageManager === NodePackageManager.NPM
+          ? () => this.renderNpmAllowScripts()
+          : undefined,
+      trustedDependencies:
+        this.packageManager === NodePackageManager.BUN
+          ? () => this.renderBunTrustedDependencies()
+          : undefined,
+      dependenciesMeta: isYarnBerry(this.packageManager)
+        ? () => this.renderYarnBerryDependenciesMeta()
+        : undefined,
 
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
@@ -803,10 +858,16 @@ export class NodePackage extends Component {
     this._bunVersion = options.bunVersion ?? "latest";
     this._yarnBerryVersion =
       options.yarnBerryOptions?.version ?? DEFAULT_YARN_BERRY_VERSION;
+    this.addAllowedScripts(...(options.allowScripts ?? []));
 
     // Configure Yarn Berry if using
     if (isYarnBerry(this.packageManager)) {
       this.configureYarnBerry(project, options);
+    }
+
+    // Configure pnpm if using
+    if (this.packageManager === NodePackageManager.PNPM) {
+      this.configurePnpm(project, options);
     }
 
     this.file = new JsonFile(this, "package.json", {
@@ -947,6 +1008,37 @@ export class NodePackage extends Component {
   public addKeywords(...keywords: string[]) {
     for (const k of keywords) {
       this.keywords.add(k);
+    }
+  }
+
+  /**
+   * Allows the given dependency (package) names to run lifecycle install
+   * scripts (`preinstall`, `install`, `postinstall`, `prepare`), in addition
+   * to any already allowed via the `allowScripts` option or previous calls.
+   *
+   * Useful for project types that want to allowlist a package by default
+   * while still letting consumers add further packages via `allowScripts`.
+   *
+   * @param packages The dependency (package) names to allow.
+   * @see NodePackageOptions.allowScripts
+   */
+  public addAllowedScripts(...packages: string[]) {
+    for (const pkg of packages) {
+      this.allowedScripts.add(pkg);
+    }
+  }
+
+  /**
+   * Removes the given dependency (package) names from the `allowScripts`
+   * allowlist, whether they were added via the `allowScripts` option, a
+   * project type default, or a previous call to `addAllowedScripts`.
+   *
+   * @param packages The dependency (package) names to remove.
+   * @see NodePackageOptions.allowScripts
+   */
+  public removeAllowedScripts(...packages: string[]) {
+    for (const pkg of packages) {
+      this.allowedScripts.delete(pkg);
     }
   }
 
@@ -1665,6 +1757,121 @@ export class NodePackage extends Component {
     }
   }
 
+  /**
+   * Renders the native npm `allowScripts` field (`{ "pkg": true }`) from the
+   * `allowScripts` allowlist.
+   *
+   * @see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts
+   */
+  private renderNpmAllowScripts() {
+    if (this.allowedScripts.size === 0) {
+      return undefined;
+    }
+
+    return Object.fromEntries(
+      [...this.allowedScripts].sort().map((pkg) => [pkg, true]),
+    );
+  }
+
+  /**
+   * Renders the native bun `trustedDependencies` field from the
+   * `allowScripts` allowlist.
+   *
+   * @see https://bun.com/docs/pm/lifecycle
+   */
+  private renderBunTrustedDependencies() {
+    if (this.allowedScripts.size === 0) {
+      return undefined;
+    }
+
+    return [...this.allowedScripts].sort();
+  }
+
+  /**
+   * Renders the native yarn berry per-package script allowlist via
+   * `dependenciesMeta.<pkg>.built = true`. Combined with the global
+   * `enableScripts: false` yarnrc setting (set in `configureYarnBerry`),
+   * this allows install scripts to run only for the listed packages.
+   *
+   * @see https://yarnpkg.com/configuration/manifest#dependenciesMeta.built
+   * @see https://yarnpkg.com/features/security#postinstalls
+   */
+  private renderYarnBerryDependenciesMeta() {
+    if (this.allowedScripts.size === 0) {
+      return undefined;
+    }
+
+    return Object.fromEntries(
+      [...this.allowedScripts].sort().map((pkg) => [pkg, { built: true }]),
+    );
+  }
+
+  /**
+   * Validates and configures the `allowScripts` allowlist for the resolved
+   * package manager, throwing a descriptive error for package managers that
+   * have no native way to allowlist install scripts per-dependency.
+   */
+  private configureAllowScripts() {
+    if (this.allowedScripts.size === 0) {
+      return;
+    }
+
+    switch (this.packageManager) {
+      case NodePackageManager.NPM:
+      case NodePackageManager.BUN:
+        // handled via the `allowScripts` / `trustedDependencies` manifest fields
+        return;
+
+      case NodePackageManager.YARN2:
+      case NodePackageManager.YARN_BERRY:
+        // handled via `dependenciesMeta.<pkg>.built` + `enableScripts: false`
+        // in `renderYarnBerryDependenciesMeta` and `configureYarnBerry`
+        return;
+
+      case NodePackageManager.PNPM:
+        // handled via `configurePnpm`
+        return;
+
+      default:
+        throw new Error(
+          `"allowScripts" is not supported for packageManager "${this.packageManager}". ` +
+            "Switch to a modern package manager that supports this option.",
+        );
+    }
+  }
+
+  /**
+   * Configures the `PnpmWorkspaceYaml` component, merging `onlyBuiltDependencies`
+   * from `allowScripts` and any explicit `pnpmOptions.workspaceYamlOptions`.
+   * The merge is resolved lazily (at synthesis time), so calls to
+   * `addAllowedScripts`/`removeAllowedScripts` made after this runs are
+   * still reflected. The file is only written if it ends up with actual
+   * content (see `omitEmpty`), so this is safe to call unconditionally for
+   * every pnpm project.
+   */
+  private configurePnpm(project: Project, options: NodePackageOptions) {
+    const { workspaceYamlOptions = {} } = options.pnpmOptions ?? {};
+
+    const renderOnlyBuiltDependencies = () => {
+      const merged = new Set([
+        ...this.allowedScripts,
+        ...(workspaceYamlOptions.onlyBuiltDependencies ?? []),
+      ]);
+      return merged.size > 0 ? [...merged].sort() : undefined;
+    };
+
+    new PnpmWorkspaceYaml(project, {
+      ...workspaceYamlOptions,
+      // `onlyBuiltDependencies` is typed as `string[]`, but defining it as a
+      // getter lets us resolve the merged allowlist lazily (at synthesis
+      // time), so `addAllowedScripts`/`removeAllowedScripts` calls made
+      // after this runs are still reflected.
+      get onlyBuiltDependencies(): string[] | undefined {
+        return renderOnlyBuiltDependencies();
+      },
+    });
+  }
+
   private renderPublishConfig() {
     // When npm provenance is enabled, we need to always render the public access
     // But when npmAccess is the set to the default, we prefer to omit it
@@ -1792,6 +1999,11 @@ export class NodePackage extends Component {
   }
 
   private renderScripts() {
+    // Validate the `allowScripts` allowlist lazily (at synthesis time, since
+    // `scripts` is always resolved regardless of package manager), so
+    // `addAllowedScripts` calls made after construction are also checked.
+    this.configureAllowScripts();
+
     const result: any = {};
     const tasks = this.project.tasks.all
       .filter(
@@ -1910,7 +2122,19 @@ export class NodePackage extends Component {
 
     this.configureYarnBerryGitignore(zeroInstalls);
 
-    new Yarnrc(project, yarnRcOptions);
+    // When an allowlist is provided, disable scripts globally so that only
+    // the packages explicitly marked via `dependenciesMeta.<pkg>.built` are
+    // allowed to run their install scripts. Resolved lazily (at synthesis
+    // time, via a getter) so that later calls to
+    // `addAllowedScripts`/`removeAllowedScripts` are reflected. Has no
+    // effect if the user set `enableScripts` explicitly.
+    const nodePackage = this;
+    new Yarnrc(project, {
+      get enableScripts(): boolean | undefined {
+        return nodePackage.allowedScripts.size > 0 ? false : undefined;
+      },
+      ...yarnRcOptions,
+    });
   }
 
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
@@ -2049,6 +2273,18 @@ export interface YarnBerryOptions {
    * @default false
    */
   readonly zeroInstalls?: boolean;
+}
+
+/**
+ * Configure pnpm
+ */
+export interface PnpmOptions {
+  /**
+   * The `pnpm-workspace.yaml` configuration.
+   *
+   * @default - a blank pnpm-workspace.yaml file
+   */
+  readonly workspaceYamlOptions?: PnpmWorkspaceYamlOptions;
 }
 
 interface NpmDependencies {

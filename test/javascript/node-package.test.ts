@@ -1232,3 +1232,423 @@ describe("npm provenance", () => {
     ).toThrow(`"npmProvenance" can only be enabled for public packages`);
   });
 });
+
+describe("allowScripts", () => {
+  test("npm: writes native allowScripts field to package.json", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+      esbuild: true,
+    });
+  });
+
+  test("npm: allowScripts is omitted when not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("npm: allowScripts is omitted for an empty array", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: [],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("bun: writes native trustedDependencies field to package.json", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.BUN,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].trustedDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("bun: trustedDependencies is omitted when not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.BUN,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].trustedDependencies).toBeUndefined();
+  });
+
+  test("pnpm: writes onlyBuiltDependencies to pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["pnpm-workspace.yaml"]).toBeDefined();
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("pnpm: does not create pnpm-workspace.yaml when allowScripts is not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["pnpm-workspace.yaml"]).toBeUndefined();
+  });
+
+  test("pnpm: pnpmOptions.workspaceYamlOptions passes through arbitrary pnpm-workspace.yaml settings", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild"],
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          packages: ["packages/*"],
+          neverBuiltDependencies: ["fsevents"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml).toStrictEqual({
+      packages: ["packages/*"],
+      onlyBuiltDependencies: ["esbuild"],
+      neverBuiltDependencies: ["fsevents"],
+    });
+  });
+
+  test("pnpm: merges allowScripts with an explicit onlyBuiltDependencies list", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild"],
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          onlyBuiltDependencies: ["@biomejs/biome"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("pnpm: creates pnpm-workspace.yaml from pnpmOptions even without allowScripts", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          packages: ["packages/*"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml).toStrictEqual({ packages: ["packages/*"] });
+  });
+
+  test.each([NodePackageManager.YARN2, NodePackageManager.YARN_BERRY])(
+    "%s: writes native dependenciesMeta.<pkg>.built allowlist and disables scripts globally",
+    (packageManager) => {
+      const project = new TestProject();
+
+      new NodePackage(project, {
+        packageManager,
+        allowScripts: ["esbuild", "@biomejs/biome"],
+      });
+
+      const files = synthSnapshot(project);
+      expect(files["package.json"].dependenciesMeta).toStrictEqual({
+        "@biomejs/biome": { built: true },
+        esbuild: { built: true },
+      });
+      expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(false);
+    },
+  );
+
+  test("yarn berry: dependenciesMeta is omitted when allowScripts is not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toBeUndefined();
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBeUndefined();
+  });
+
+  test("yarn berry: respects an explicit enableScripts setting", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild"],
+      yarnBerryOptions: {
+        yarnRcOptions: {
+          enableScripts: true,
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(true);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      esbuild: { built: true },
+    });
+  });
+
+  test("yarn berry: supports version-pinned entries (e.g. esbuild@0.25.1)", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild@0.25.1"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      "esbuild@0.25.1": { built: true },
+    });
+  });
+
+  test.each([NodePackageManager.YARN, NodePackageManager.YARN_CLASSIC])(
+    "%s: throws a descriptive error since yarn classic has no native allowlist",
+    (packageManager) => {
+      const project = new TestProject();
+
+      new NodePackage(project, {
+        packageManager,
+        allowScripts: ["esbuild"],
+      });
+
+      expect(() => project.synth()).toThrow(
+        /"allowScripts" is not supported for packageManager/,
+      );
+    },
+  );
+
+  test("yarn classic: throws a descriptive error", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      allowScripts: ["esbuild"],
+    });
+
+    expect(() => project.synth()).toThrow(
+      /"allowScripts" is not supported for packageManager "yarn_classic"/,
+    );
+  });
+
+  test("addAllowedScripts adds to the allowlist set via the allowScripts option", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.addAllowedScripts("@biomejs/biome");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+      esbuild: true,
+    });
+  });
+
+  test("addAllowedScripts works without the allowScripts option (e.g. a project type default)", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      esbuild: true,
+    });
+  });
+
+  test("removeAllowedScripts removes a package that was set via the allowScripts option", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+    });
+  });
+
+  test("removeAllowedScripts removes a package added via addAllowedScripts (e.g. a project type default)", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+    pkg.addAllowedScripts("esbuild", "@biomejs/biome");
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+    });
+  });
+
+  test("removeAllowedScripts clearing every entry omits the field entirely", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("removeAllowedScripts is a no-op for a package that was never allowed", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("not-in-the-list");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      esbuild: true,
+    });
+  });
+
+  test("pnpm: addAllowedScripts called after construction (no initial allowScripts) still creates pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual(["esbuild"]);
+  });
+
+  test("pnpm: removeAllowedScripts called after construction is reflected in pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+    ]);
+  });
+
+  test("yarn berry: addAllowedScripts called after construction (no initial allowScripts) still disables scripts globally", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      esbuild: { built: true },
+    });
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(false);
+  });
+
+  test("yarn berry: removeAllowedScripts clearing every entry omits enableScripts", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toBeUndefined();
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBeUndefined();
+  });
+
+  test("yarn classic: addAllowedScripts called after construction (no allowScripts option) still throws at synth time", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    expect(() => project.synth()).toThrow(
+      /"allowScripts" is not supported for packageManager "yarn_classic"/,
+    );
+  });
+
+  test("yarn classic: removeAllowedScripts clearing every entry avoids the synth-time error", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    expect(() => project.synth()).not.toThrow();
+  });
+});

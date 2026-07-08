@@ -2311,6 +2311,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "docs": "The command line to execute in order to synthesize the CDK application (language specific).",
         "featured": false,
         "jsonLike": true,
@@ -4115,6 +4137,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -5330,6 +5371,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -7186,6 +7249,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {
@@ -9724,6 +9806,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""main.ts"",
         "docs": "The CDK8s app's entrypoint (relative to the source directory, which is "src" by default).",
         "featured": false,
@@ -11491,6 +11595,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -12626,6 +12749,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -14415,6 +14560,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -15678,6 +15842,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -17396,6 +17582,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {
@@ -19461,6 +19666,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -21126,6 +21353,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -22389,6 +22635,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -23795,6 +24063,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -24785,6 +25072,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -26329,6 +26638,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -27481,6 +27809,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -28867,6 +29217,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {
@@ -31078,6 +31447,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -32464,6 +32855,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -33459,6 +33869,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -34983,6 +35415,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {
@@ -36146,6 +36597,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -37667,6 +38140,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {
@@ -38808,6 +39300,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -40329,6 +40843,25 @@ exports[`inventory 1`] = `
             },
             "kind": "array",
           },
+        },
+      },
+      {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
         },
       },
       {

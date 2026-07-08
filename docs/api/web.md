@@ -5863,6 +5863,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -5895,6 +5896,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -6387,6 +6389,44 @@ Allow the project to include `peerDependencies` and `bundledDependencies`.
 
 This is normally only allowed for libraries. For apps, there's no meaning
 for specifying these.
+
+---
+
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.web.NextJsProjectOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
 
 ---
 
@@ -6898,6 +6938,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.web.NextJsProjectOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 
@@ -7932,6 +7985,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -7964,6 +8018,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -8476,6 +8531,44 @@ for specifying these.
 
 ---
 
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.web.NextJsTypeScriptProjectOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
+
+---
+
 ##### `authorEmail`<sup>Optional</sup> <a name="authorEmail" id="projen.web.NextJsTypeScriptProjectOptions.property.authorEmail"></a>
 
 ```typescript
@@ -8984,6 +9077,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.web.NextJsTypeScriptProjectOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 
@@ -10377,6 +10483,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.web.ReactProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.web.ReactProjectOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.web.ReactProjectOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -10409,6 +10516,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.web.ReactProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.web.ReactProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.web.ReactProjectOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.web.ReactProjectOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -10874,6 +10982,44 @@ Allow the project to include `peerDependencies` and `bundledDependencies`.
 
 This is normally only allowed for libraries. For apps, there's no meaning
 for specifying these.
+
+---
+
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.web.ReactProjectOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
 
 ---
 
@@ -11385,6 +11531,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.web.ReactProjectOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 
@@ -12513,6 +12672,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -12545,6 +12705,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -13027,6 +13188,44 @@ Allow the project to include `peerDependencies` and `bundledDependencies`.
 
 This is normally only allowed for libraries. For apps, there's no meaning
 for specifying these.
+
+---
+
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.web.ReactTypeScriptProjectOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
 
 ---
 
@@ -13538,6 +13737,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.web.ReactTypeScriptProjectOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 

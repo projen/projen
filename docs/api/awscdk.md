@@ -8496,6 +8496,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -8528,6 +8529,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -9039,6 +9041,44 @@ for specifying these.
 
 ---
 
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
+
+---
+
 ##### `authorEmail`<sup>Optional</sup> <a name="authorEmail" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.authorEmail"></a>
 
 ```typescript
@@ -9547,6 +9587,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 
@@ -13360,6 +13413,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.vscode">vscode</a></code> | <code>boolean</code> | Enable VSCode integration. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.addPackageManagerToDevEngines">addPackageManagerToDevEngines</a></code> | <code>boolean</code> | Automatically add the resolved `packageManager` to `devEngines.packageManager` in `package.json`, setting `onFail` to `ignore`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.allowLibraryDependencies">allowLibraryDependencies</a></code> | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.allowScripts">allowScripts</a></code> | <code>string[]</code> | List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.authorEmail">authorEmail</a></code> | <code>string</code> | Author's e-mail. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.authorName">authorName</a></code> | <code>string</code> | Author's name. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.authorOrganization">authorOrganization</a></code> | <code>boolean</code> | Is the author an organization. |
@@ -13392,6 +13446,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.pnpmVersion">pnpmVersion</a></code> | <code>string</code> | The version of PNPM to use if using PNPM as a package manager. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.repository">repository</a></code> | <code>string</code> | The repository is the location where the actual code for your package lives. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.repositoryDirectory">repositoryDirectory</a></code> | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. |
@@ -13893,6 +13948,44 @@ Allow the project to include `peerDependencies` and `bundledDependencies`.
 
 This is normally only allowed for libraries. For apps, there's no meaning
 for specifying these.
+
+---
+
+##### `allowScripts`<sup>Optional</sup> <a name="allowScripts" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.allowScripts"></a>
+
+```typescript
+public readonly allowScripts: string[];
+```
+
+- *Type:* string[]
+- *Default:* all install scripts are allowed to run (package manager default)
+
+List of dependency (package) names that are allowed to run lifecycle install scripts (`preinstall`, `install`, `postinstall`, `prepare`) during dependency installation.
+
+These scripts can execute arbitrary code, making them a common
+supply-chain attack vector. Package managers are moving toward
+blocking them by default and requiring an explicit allowlist.
+Configuring `allowScripts` sets up that allowlist so scripts only run
+for the packages you have explicitly reviewed and trust.
+
+Support for this setting depends on the configured `packageManager`:
+
+- `NPM`: written to the native `allowScripts` field in `package.json`
+  (requires npm >= 11.16; see https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts).
+- `BUN`: written to the native `trustedDependencies` field in
+  `package.json` (see https://bun.com/docs/pm/lifecycle).
+- `PNPM`: written to the `onlyBuiltDependencies` setting in
+  `pnpm-workspace.yaml` (see https://pnpm.io/settings#onlybuiltdependencies).
+- `YARN2`, `YARN_BERRY`: written to the native
+  `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined
+  with `enableScripts: false` in `.yarnrc.yml` (see
+  https://yarnpkg.com/features/security#postinstalls). If you set
+  `yarnBerryOptions.yarnRcOptions.enableScripts` explicitly, that value
+  is respected instead of being overridden.
+- `YARN`, `YARN_CLASSIC`: not supported. Yarn Classic has no native
+  mechanism to allowlist install scripts for specific dependencies.
+  Setting this option with one of these package managers throws an
+  error at synthesis time.
 
 ---
 
@@ -14404,6 +14497,19 @@ Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &
 test your module against the lowest peer version required.
+
+---
+
+##### `pnpmOptions`<sup>Optional</sup> <a name="pnpmOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.pnpmOptions"></a>
+
+```typescript
+public readonly pnpmOptions: PnpmOptions;
+```
+
+- *Type:* projen.javascript.PnpmOptions
+- *Default:* all default options
+
+Options for pnpm.
 
 ---
 
