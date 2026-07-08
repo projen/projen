@@ -300,7 +300,12 @@ export class Project extends Construct {
 
     this._projenCommand = options.projenCommand;
     if (this.ejected) {
-      this._projenCommand = "scripts/run-task.cjs";
+      // `scripts/run-task.cjs` relies on its `#!/usr/bin/env node` shebang and
+      // the executable bit to run directly - neither exists on Windows, where
+      // there is no shebang support and npm invokes package.json scripts
+      // through cmd.exe. Prefixing with `node` resolves the script explicitly
+      // and works identically on every platform.
+      this._projenCommand = "node scripts/run-task.cjs";
     }
 
     this.outdir = outdir;

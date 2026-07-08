@@ -240,6 +240,9 @@
           "spawn": "integ:java"
         },
         {
+          "spawn": "integ:windows-shell-syntax"
+        },
+        {
           "spawn": "integ:eject"
         }
       ]
@@ -251,6 +254,10 @@
         {
           "exec": "scripts/integ-eject.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:go": {
@@ -260,6 +267,10 @@
         {
           "exec": "scripts/integ-go.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:java": {
@@ -269,6 +280,10 @@
         {
           "exec": "scripts/integ-java.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:node": {
@@ -278,6 +293,10 @@
         {
           "exec": "scripts/integ-node.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:python": {
@@ -286,6 +305,21 @@
       "steps": [
         {
           "exec": "scripts/integ-python.sh"
+        }
+      ],
+      "shell": [
+        "bash",
+        "-c"
+      ]
+    },
+    "integ:windows-shell-syntax": {
+      "name": "integ:windows-shell-syntax",
+      "description": "Run Windows task shell syntax tests",
+      "steps": [
+        {
+          "exec": "scripts\\integ-windows-shell-syntax.cmd",
+          "condition": "node -e \"process.exit(process.platform === 'win32' ? 0 : 1)\"",
+          "shell": "system"
         }
       ]
     },
