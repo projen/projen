@@ -502,6 +502,70 @@ export interface JobStepConfiguration extends StepConfiguration {
    * The maximum number of minutes to run the step before killing the process.
    */
   readonly timeoutMinutes?: number;
+
+  /**
+   * Runs a step asynchronously so the job continues to the next step without
+   * waiting for it to finish. Use for long-running processes, such as
+   * databases, servers, or monitoring tasks, that need to run alongside other
+   * steps.
+   *
+   * Synchronize with background steps later using `wait` or `waitAll`, or
+   * stop them with `cancel`. Give the step an `id` so it can be referenced.
+   *
+   * A maximum of 10 background steps can run concurrently in a single job;
+   * additional background steps are queued until a slot is free.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground
+   */
+  readonly background?: boolean;
+
+  /**
+   * Pauses the job until one or more background steps complete. Provide the
+   * `id`s of the background steps to wait for.
+   *
+   * This step performs no work itself; it only blocks until the referenced
+   * background steps finish. If a referenced background step failed, the
+   * `wait` step fails too.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait
+   */
+  readonly wait?: string[];
+
+  /**
+   * Pauses the job until all active background steps complete. Fails if any
+   * of the background steps it waits on failed, unless `continueOnError` is
+   * set on this step.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all
+   */
+  readonly waitAll?: boolean;
+
+  /**
+   * Gracefully terminates a running background step, referenced by its `id`.
+   * The runner sends the step's process a termination signal (SIGTERM) so it
+   * can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+   * a short grace period.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel
+   */
+  readonly cancel?: string;
+
+  /**
+   * Runs a group of steps concurrently, then waits for all of them to finish
+   * before continuing. This is shorthand for declaring each step with
+   * `background: true` followed by a `wait` step.
+   *
+   * Use this when you have a self-contained group of independent steps that
+   * can all run at the same time and don't need to be referenced
+   * individually. Use `background` instead when you need finer control, such
+   * as starting a long-running process that stays up while later steps run.
+   *
+   * Each step in the group is subject to the same 10-step concurrency limit
+   * as other background steps. Cannot be used inside a composite action.
+   *
+   * @see https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel
+   */
+  readonly parallel?: JobStep[];
 }
 
 /**
