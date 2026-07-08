@@ -523,6 +523,20 @@
         }
       ]
     },
+    "update-schemas": {
+      "name": "update-schemas",
+      "description": "Updates vendored JSON schemas from their source URL",
+      "steps": [
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/pyproject.json schemas/pyproject.json",
+          "name": "update schema: schemas/pyproject.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/uv.json schemas/uv.json",
+          "name": "update schema: schemas/uv.json"
+        }
+      ]
+    },
     "upgrade": {
       "name": "upgrade",
       "description": "upgrade dependencies",

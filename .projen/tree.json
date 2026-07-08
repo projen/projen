@@ -568,6 +568,12 @@
           "path": "src/python/pyproject-toml.ts"
         }
       },
+      "UpdateSchemasTask": {
+        "metadata": {
+          "type": "component",
+          "construct": "UpdateSchemasTask"
+        }
+      },
       "JsiiFromJsonSchema@src--python--uv-config.ts": {
         "metadata": {
           "type": "file",
