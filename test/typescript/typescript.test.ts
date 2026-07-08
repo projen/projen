@@ -264,23 +264,51 @@ test("upgrade task ignores pinned versions", () => {
   });
   const tasks = synthSnapshot(prj)[ProjenTaskRunner.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
-    [
-      {
-        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
-      },
-      {
-        "exec": "yarn install --check-files",
-      },
-      {
-        "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript npm",
-      },
-      {
-        "exec": "npx projen",
-      },
-      {
-        "spawn": "post-upgrade",
-      },
-    ]
+   [
+     {
+       "execArgs": [
+         "npx",
+         "npm-check-updates@20",
+         "--upgrade",
+         "--target=minor",
+         "--peer",
+         "--no-deprecated",
+         "--dep=dev,prod,peer,optional",
+         "--filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
+       ],
+     },
+     {
+       "exec": "yarn install --check-files",
+     },
+     {
+       "execArgs": [
+         "yarn",
+         "upgrade",
+         "@stylistic/eslint-plugin",
+         "@types/jest",
+         "@types/node",
+         "@typescript-eslint/eslint-plugin",
+         "@typescript-eslint/parser",
+         "commit-and-tag-version",
+         "constructs",
+         "eslint-import-resolver-typescript",
+         "eslint-plugin-import",
+         "eslint",
+         "jest",
+         "jest-junit",
+         "projen",
+         "ts-jest",
+         "typescript",
+         "npm",
+       ],
+     },
+     {
+       "exec": "npx projen",
+     },
+     {
+       "spawn": "post-upgrade",
+     },
+   ]
   `);
 });
 

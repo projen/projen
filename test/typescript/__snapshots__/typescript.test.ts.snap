@@ -984,13 +984,40 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+            ],
           },
           {
             "exec": "npm install",
           },
           {
-            "exec": "npm update @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript",
+            "execArgs": [
+              "npm",
+              "update",
+              "@stylistic/eslint-plugin",
+              "@types/jest",
+              "@types/node",
+              "@typescript-eslint/eslint-plugin",
+              "@typescript-eslint/parser",
+              "commit-and-tag-version",
+              "constructs",
+              "eslint-import-resolver-typescript",
+              "eslint-plugin-import",
+              "eslint",
+              "jest",
+              "jest-junit",
+              "projen",
+              "ts-jest",
+              "typescript",
+            ],
           },
           {
             "exec": "npx projen",

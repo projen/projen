@@ -68,20 +68,20 @@ export function execCommand(
  */
 export function executeCommandPriorInstallation(
   packageManager: NodePackageManager,
-): string {
+): string[] {
   switch (packageManager) {
     case NodePackageManager.PNPM:
-      return "pnpm dlx";
+      return ["pnpm", "dlx"];
     case NodePackageManager.YARN2:
     case NodePackageManager.YARN_BERRY:
-      return "yarn dlx";
+      return ["yarn", "dlx"];
     case NodePackageManager.BUN:
-      return "bunx";
+      return ["bunx"];
     case NodePackageManager.NPM:
     case NodePackageManager.YARN:
     case NodePackageManager.YARN_CLASSIC:
     default:
-      return "npx";
+      return ["npx"];
   }
 }
 
