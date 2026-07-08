@@ -68,19 +68,20 @@ describe("mergify", () => {
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 
-  test("queue fails when commit message config is missing", () => {
-    expect(() =>
-      createProject({
-        autoMerge: false,
-        githubOptions: {
-          mergifyOptions: {
-            queues: [{ name: "default" } as any],
-          },
+  test("queue accepts neither commit message config option (uses GitHub defaults)", () => {
+    const project = createProject({
+      autoMerge: false,
+      githubOptions: {
+        mergifyOptions: {
+          queues: [{ name: "default" }],
         },
-      }),
-    ).toThrow(
-      "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
-    );
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).not.toContain("commit_message_format");
+    expect(snapshot[".mergify.yml"]).not.toContain("commit_message_template");
   });
 
   test("queue fails when both commit message config options are set", () => {
@@ -103,7 +104,7 @@ describe("mergify", () => {
         },
       }),
     ).toThrow(
-      "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
+      "Only one of 'commitMessageFormat' or 'commitMessageTemplate' may be specified, not both. Remove the deprecated 'commitMessageTemplate'.",
     );
   });
 

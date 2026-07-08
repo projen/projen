@@ -67,7 +67,7 @@ export interface MergifyRule {
   readonly actions: { [action: string]: any };
 }
 
-export interface MergifyQueueBase {
+export interface MergifyQueue {
   /**
    * The name of the queue.
    */
@@ -111,26 +111,19 @@ export interface MergifyQueueBase {
    * @see https://docs.mergify.com/conditions/#conditions
    */
   readonly mergeConditions?: MergifyCondition[];
-}
 
-export interface MergifyQueueWithCommitMessageFormat extends MergifyQueueBase {
   /**
    * When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
    * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
    */
-  readonly commitMessageFormat: MergifyCommitMessageFormat;
-}
+  readonly commitMessageFormat?: MergifyCommitMessageFormat;
 
-export interface MergifyQueueWithCommitMessageTemplate extends MergifyQueueBase {
   /**
    * Template to use as the commit message when using the merge or squash merge method.
    * @deprecated Use `commitMessageFormat` instead.
    */
-  readonly commitMessageTemplate: string;
+  readonly commitMessageTemplate?: string;
 }
-
-export type MergifyQueue =
-  MergifyQueueWithCommitMessageFormat | MergifyQueueWithCommitMessageTemplate;
 
 /**
  * Configure Mergify.
@@ -189,19 +182,9 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
-    const queueWithCommitMessageFormat =
-      queue as Partial<MergifyQueueWithCommitMessageFormat>;
-    const queueWithCommitMessageTemplate =
-      queue as Partial<MergifyQueueWithCommitMessageTemplate>;
-
-    const hasCommitMessageFormat =
-      queueWithCommitMessageFormat.commitMessageFormat != null;
-    const hasCommitMessageTemplate =
-      queueWithCommitMessageTemplate.commitMessageTemplate != null;
-
-    if (hasCommitMessageFormat === hasCommitMessageTemplate) {
+    if (queue.commitMessageFormat && queue.commitMessageTemplate) {
       throw new Error(
-        "Exactly one of 'commitMessageFormat' or 'commitMessageTemplate' must be specified.",
+        "Only one of 'commitMessageFormat' or 'commitMessageTemplate' may be specified, not both. Remove the deprecated 'commitMessageTemplate'.",
       );
     }
 
