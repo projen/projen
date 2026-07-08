@@ -568,11 +568,24 @@
           "path": "src/python/pyproject-toml.ts"
         }
       },
+      "UpdateSchemasTask": {
+        "metadata": {
+          "type": "component",
+          "construct": "UpdateSchemasTask"
+        }
+      },
       "JsiiFromJsonSchema@src--python--uv-config.ts": {
         "metadata": {
           "type": "file",
           "construct": "JsiiFromJsonSchema",
           "path": "src/python/uv-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--javascript--pnpm-workspace-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/javascript/pnpm-workspace-config.ts"
         }
       },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {

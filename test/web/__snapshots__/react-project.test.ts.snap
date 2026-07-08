@@ -668,13 +668,36 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
+            ],
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event commit-and-tag-version constructs projen react-scripts react react-dom web-vitals",
+            "execArgs": [
+              "yarn",
+              "upgrade",
+              "@testing-library/dom",
+              "@testing-library/jest-dom",
+              "@testing-library/react",
+              "@testing-library/user-event",
+              "commit-and-tag-version",
+              "constructs",
+              "projen",
+              "react-scripts",
+              "react",
+              "react-dom",
+              "web-vitals",
+            ],
           },
           {
             "exec": "npx projen",

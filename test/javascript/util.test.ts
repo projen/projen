@@ -192,17 +192,17 @@ test.each([
 });
 
 test.each([
-  [NodePackageManager.NPM, "npx"],
-  [NodePackageManager.YARN, "npx"],
-  [NodePackageManager.YARN_CLASSIC, "npx"],
-  [NodePackageManager.YARN_BERRY, "yarn dlx"],
-  [NodePackageManager.YARN2, "yarn dlx"],
-  [NodePackageManager.PNPM, "pnpm dlx"],
-  [NodePackageManager.BUN, "bunx"],
+  [NodePackageManager.NPM, ["npx"]],
+  [NodePackageManager.YARN, ["npx"]],
+  [NodePackageManager.YARN_CLASSIC, ["npx"]],
+  [NodePackageManager.YARN_BERRY, ["yarn", "dlx"]],
+  [NodePackageManager.YARN2, ["yarn", "dlx"]],
+  [NodePackageManager.PNPM, ["pnpm", "dlx"]],
+  [NodePackageManager.BUN, ["bunx"]],
 ])(
   "executeCommandPriorInstallation(%p) should return %p",
-  (packageManager: NodePackageManager, expectedCommand: string) => {
+  (packageManager: NodePackageManager, expectedCommand: string[]) => {
     const result = executeCommandPriorInstallation(packageManager);
-    expect(result).toBe(expectedCommand);
+    expect(result).toStrictEqual(expectedCommand);
   },
 );

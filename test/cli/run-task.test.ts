@@ -304,22 +304,18 @@ describe("environment variables", () => {
   });
 });
 
-describe("built-in shell unsupported syntax", () => {
-  test("command substitution produces an actionable error", async () => {
-    // GIVEN a task that uses `$(...)`, which the built-in cross-platform shell
-    // does not implement
+describe("command substitution", () => {
+  test("$(...) is supported by the built-in shell", async () => {
     const p = new TestProject();
     p.addTask("subst", { exec: 'echo "dir is $(pwd)"' });
     p.synth();
 
-    // THEN the error explains the limitation and how to opt into the system shell
-    await expect(new TaskRuntime(p.outdir).runTask("subst")).rejects.toThrow(
-      /projen's built-in shell[\s\S]*TaskShell\.system\(\)/,
-    );
+    await expect(
+      new TaskRuntime(p.outdir).runTask("subst"),
+    ).resolves.toBeUndefined();
   });
 
-  test("running the same command through the system shell works", async () => {
-    // GIVEN the same command, but opted into the system shell
+  test("$(...) is supported by the system shell", async () => {
     const p = new TestProject();
     p.addTask("subst", {
       exec: 'echo "dir is $(pwd)"',
@@ -327,7 +323,6 @@ describe("built-in shell unsupported syntax", () => {
     });
     p.synth();
 
-    // THEN it runs without the built-in-shell error
     await expect(
       new TaskRuntime(p.outdir).runTask("subst"),
     ).resolves.toBeUndefined();

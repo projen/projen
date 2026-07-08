@@ -31,6 +31,7 @@
     "projenrc/tsconfig.json",
     "src/awscdk/private/feature-flags-v2.const.ts",
     "src/javascript/biome/biome-config.ts",
+    "src/javascript/pnpm-workspace-config.ts",
     "src/python/pyproject-toml.ts",
     "src/python/uv-config.ts",
     "test/tsconfig.json",

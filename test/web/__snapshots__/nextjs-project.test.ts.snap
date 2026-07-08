@@ -709,13 +709,34 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=projen,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=projen,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            ],
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade commit-and-tag-version constructs projen autoprefixer next postcss react react-dom tailwindcss",
+            "execArgs": [
+              "yarn",
+              "upgrade",
+              "commit-and-tag-version",
+              "constructs",
+              "projen",
+              "autoprefixer",
+              "next",
+              "postcss",
+              "react",
+              "react-dom",
+              "tailwindcss",
+            ],
           },
           {
             "exec": "npx projen",

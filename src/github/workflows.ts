@@ -641,7 +641,7 @@ function renderJobs(
     return rendered;
   }
 
-  function renderStep(step: workflows.JobStep) {
+  function renderStep(step: workflows.JobStep): Record<string, unknown> {
     return {
       name: step.name,
       id: step.id,
@@ -654,6 +654,11 @@ function renderJobs(
       "continue-on-error": step.continueOnError,
       "timeout-minutes": step.timeoutMinutes,
       "working-directory": step.workingDirectory,
+      background: step.background,
+      wait: step.wait,
+      "wait-all": step.waitAll,
+      cancel: step.cancel,
+      parallel: step.parallel?.map(renderStep),
     };
   }
 }

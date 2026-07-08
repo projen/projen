@@ -38,6 +38,7 @@
 /projenrc/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /src/awscdk/private/feature-flags-v2.const.ts linguist-generated
 /src/javascript/biome/biome-config.ts linguist-generated
+/src/javascript/pnpm-workspace-config.ts linguist-generated
 /src/python/pyproject-toml.ts linguist-generated
 /src/python/uv-config.ts linguist-generated
 /test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments

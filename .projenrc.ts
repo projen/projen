@@ -111,6 +111,7 @@ const project = new TypeScriptProject({
   auditDepsOptions: {
     prodOnly: true,
   },
+  allowScripts: ["esbuild", "fsevents", "unrs-resolver"], // we need this to build & test projen
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
@@ -317,7 +318,7 @@ new JsiiFromJsonSchema(project, {
 
 new JsiiFromJsonSchema(project, {
   structName: "PyprojectToml",
-  schemaPath: "schemas/pyproject.json",
+  schemaPath: "https://json.schemastore.org/pyproject.json",
   filePath: path.join("src", "python", "pyproject-toml.ts"),
   transform: (schema) => (
     (schema.properties.tool.properties = Object.fromEntries(
@@ -331,7 +332,7 @@ new JsiiFromJsonSchema(project, {
 
 new JsiiFromJsonSchema(project, {
   structName: "UvConfiguration",
-  schemaPath: "schemas/uv.json",
+  schemaPath: "https://json.schemastore.org/uv.json",
   filePath: path.join("src", "python", "uv-config.ts"),
   transform: (schema) => (
     (schema.properties["cache-dir"].description = schema.properties[
@@ -341,6 +342,12 @@ new JsiiFromJsonSchema(project, {
       .at(0)),
     schema
   ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PnpmWorkspaceYamlSchema",
+  schemaPath: "schemas/pnpm-workspace.json",
+  filePath: path.join("src", "javascript", "pnpm-workspace-config.ts"),
 });
 
 new JsonConst(project, {

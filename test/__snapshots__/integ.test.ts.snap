@@ -1277,13 +1277,47 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@types/jest,aws-sdk,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,projen,ts-jest,typescript"
+          ]
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-sdk commit-and-tag-version eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii projen ts-jest typescript aws-cdk-lib constructs"
+          "execArgs": [
+            "yarn",
+            "upgrade",
+            "@stylistic/eslint-plugin",
+            "@types/jest",
+            "@types/node",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "aws-sdk",
+            "commit-and-tag-version",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "jsii-diff",
+            "jsii-docgen",
+            "jsii-pacmak",
+            "jsii-rosetta",
+            "jsii",
+            "projen",
+            "ts-jest",
+            "typescript",
+            "aws-cdk-lib",
+            "constructs"
+          ]
         },
         {
           "exec": "npx projen"
@@ -2370,13 +2404,52 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@types/follow-redirects,@types/jest,@types/json-stable-stringify,@types/yaml,eslint-import-resolver-typescript,eslint-plugin-import,jest,jsii-diff,jsii-pacmak,json-schema-to-typescript,projen,ts-jest,typescript,fast-json-patch,follow-redirects,json-stable-stringify,yaml,constructs"
+          ]
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json-schema-to-typescript projen ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml"
+          "execArgs": [
+            "yarn",
+            "upgrade",
+            "@stylistic/eslint-plugin",
+            "@types/follow-redirects",
+            "@types/jest",
+            "@types/json-stable-stringify",
+            "@types/node",
+            "@types/yaml",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "constructs",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "jsii-diff",
+            "jsii-docgen",
+            "jsii-pacmak",
+            "jsii-rosetta",
+            "jsii",
+            "json-schema-to-typescript",
+            "projen",
+            "ts-jest",
+            "typescript",
+            "fast-json-patch",
+            "follow-redirects",
+            "json-stable-stringify",
+            "yaml"
+          ]
         },
         {
           "exec": "npx projen"
@@ -3522,13 +3595,51 @@ tsconfig.tsbuildinfo
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@types/fs-extra,@types/jest,@types/json-schema,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@types/node,codemaker,colors,constructs,fs-extra,jsii-pacmak,jsii-srcmak,json2jsii,sscaff,yaml,yargs"
+          ]
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript cdk8s codemaker colors fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs"
+          "execArgs": [
+            "yarn",
+            "upgrade",
+            "@stylistic/eslint-plugin",
+            "@types/fs-extra",
+            "@types/jest",
+            "@types/json-schema",
+            "@types/node",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "constructs",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "projen",
+            "ts-jest",
+            "typescript",
+            "cdk8s",
+            "codemaker",
+            "colors",
+            "fs-extra",
+            "jsii-pacmak",
+            "jsii-srcmak",
+            "json2jsii",
+            "sscaff",
+            "yaml",
+            "yargs"
+          ]
         },
         {
           "exec": "npx projen"
@@ -4031,7 +4142,8 @@ exports[`pnpm 1`] = `
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
-/pnpm-lock.yaml linguist-generated",
+/pnpm-lock.yaml linguist-generated
+/pnpm-workspace.yaml linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
   ".github/workflows/build.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run "pnpm exec projen".
 
@@ -4340,6 +4452,7 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
+!/pnpm-workspace.yaml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -4662,13 +4775,33 @@ permissions-backup.acl
       },
       "steps": [
         {
-          "exec": "pnpm dlx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=aws-sdk,jest,projen,esbuild"
+          "execArgs": [
+            "pnpm",
+            "dlx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=aws-sdk,jest,projen,esbuild"
+          ]
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"
         },
         {
-          "exec": "pnpm update aws-sdk commit-and-tag-version constructs jest jest-junit projen esbuild"
+          "execArgs": [
+            "pnpm",
+            "update",
+            "aws-sdk",
+            "commit-and-tag-version",
+            "constructs",
+            "jest",
+            "jest-junit",
+            "projen",
+            "esbuild"
+          ]
         },
         {
           "exec": "pnpm exec projen"
