@@ -111,6 +111,7 @@ const project = new TypeScriptProject({
   auditDepsOptions: {
     prodOnly: true,
   },
+  allowScripts: ["esbuild", "fsevents", "unrs-resolver"], // we need this to build & test projen
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
@@ -341,6 +342,12 @@ new JsiiFromJsonSchema(project, {
       .at(0)),
     schema
   ),
+});
+
+new JsiiFromJsonSchema(project, {
+  structName: "PnpmWorkspaceYamlSchema",
+  schemaPath: "schemas/pnpm-workspace.json",
+  filePath: path.join("src", "javascript", "pnpm-workspace-config.ts"),
 });
 
 new JsonConst(project, {
