@@ -5,7 +5,9 @@ import type { Project } from "../src";
 import { installPackage } from "../src/cli/util";
 import type { GitHubProjectOptions } from "../src/github/github-project";
 import { GitHubProject } from "../src/github/github-project";
+import { renderProjenInitOptions } from "../src/javascript/render-options";
 import * as logging from "../src/logging";
+import { InitProjectOptionHints } from "../src/option-hints";
 import type { Task } from "../src/task";
 import { git, node } from "../src/util/exec";
 import { directorySnapshot } from "../src/util/synth";
@@ -34,16 +36,98 @@ export class TestProject extends GitHubProject {
   }
 }
 
+interface SimulateProjenNewOptions {
+  /**
+   * Project constructor args, as if passed to `projen new`.
+   * @default {}
+   */
+  args?: Record<string, any>;
+
+  /**
+   * Whether `projen new` would have called `project.synth()`.
+   * @default true
+   */
+  synth?: boolean;
+
+  /**
+   * Whether `projen new` would have run post-synthesis steps.
+   * @default true
+   */
+  post?: boolean;
+}
+
+/**
+ * Constructs a project via `ProjectClass`, in-process, so it behaves as if it
+ * had just been created by `projen new` for `fqn` - i.e. `project.initProject`
+ * is populated, and (once `synth()` runs) so are the
+ * `projectCreation()`/`postProjectCreation()` component hooks.
+ *
+ * `fqn` must resolve to a real, registered project type.
+ */
+export function simulateProjenNew<T>(
+  ProjectClass: new (options: any) => T,
+  fqn: string,
+  options: SimulateProjenNewOptions = {},
+): T {
+  return new ProjectClass(
+    renderProjenInitOptions(
+      fqn,
+      options.args ?? {},
+      InitProjectOptionHints.NONE,
+      options.synth ?? true,
+      options.post ?? true,
+    ),
+  );
+}
+
 interface ProjenCLIExecOptions {
+  /**
+   * Capture and return the CLI's output instead of inheriting it.
+   * Useful for asserting on task output (e.g. that a specific task ran).
+   * When set, STDERR is interleaved into the returned string too (see
+   * `captureStderr` on `ExecFileOptions`), since task-runner banners are
+   * logged there.
+   * @default false
+   */
+  capture?: boolean;
+
+  /**
+   * Enable debug logging for additional output.
+   *
+   * @default false
+   */
+  debug?: boolean;
+
+  /**
+   * Additional env variables to be set.
+   *
+   * @default - none
+   */
+  env?: Record<string, string>;
+
+  /**
+   * Pre-install the local projen library package into the workdir.
+   * @default true
+   */
   preInstallProjen?: boolean;
 }
 
 export async function execProjenCLI(
   workdir: string,
   args: string[] = [],
-  env?: Record<string, string>,
-  { preInstallProjen = true }: ProjenCLIExecOptions = {},
+  {
+    capture = false,
+    debug = false,
+    env,
+    preInstallProjen = true,
+  }: ProjenCLIExecOptions = {},
 ) {
+  // enable debug mode
+  if (debug) {
+    env ??= {};
+    env.DEBUG = "true";
+  }
+
   // For "projen new" commands we need to pre-install the current library,
   // to ensure the latest code is used in test cases
   // https://github.com/projen/projen/issues/3410
@@ -56,6 +140,14 @@ export async function execProjenCLI(
   }
 
   // run the CLI shell-free via node
+  if (capture) {
+    return node.capture([PROJEN_CLI, ...args], {
+      cwd: workdir,
+      env,
+      captureStderr: true,
+    });
+  }
+
   return node.run([PROJEN_CLI, ...args], {
     cwd: workdir,
     env,

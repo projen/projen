@@ -37,8 +37,10 @@ new web.NextComponent(project: NodeProject, options: NextComponentOptions)
 | --- | --- |
 | <code><a href="#projen.web.NextComponent.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.NextComponent.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.web.NextComponent.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.web.NextComponent.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.web.NextComponent.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.web.NextComponent.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.web.NextComponent.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -72,6 +74,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.web.NextComponent.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.web.NextComponent.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.web.NextComponent.postSynthesize"></a>
 
 ```typescript
@@ -89,6 +112,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.web.NextComponent.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.web.NextComponent.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.web.NextComponent.synthesize"></a>
 
@@ -438,8 +480,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.web.NextJsProject.tryFindFile"></a>
 
@@ -1106,7 +1150,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.web.NextJsProject.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.web.NextJsProject.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -1724,8 +1770,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.web.NextJsTypeScriptProject.tryFindFile"></a>
 
@@ -2402,7 +2450,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.web.NextJsTypeScriptProject.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.web.NextJsTypeScriptProject.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -2925,8 +2975,10 @@ new web.ReactComponent(project: NodeProject, options: ReactComponentOptions)
 | --- | --- |
 | <code><a href="#projen.web.ReactComponent.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.web.ReactComponent.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.web.ReactComponent.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.web.ReactComponent.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.web.ReactComponent.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.web.ReactComponent.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.web.ReactComponent.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -2960,6 +3012,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.web.ReactComponent.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.web.ReactComponent.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.web.ReactComponent.postSynthesize"></a>
 
 ```typescript
@@ -2977,6 +3050,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.web.ReactComponent.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.web.ReactComponent.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.web.ReactComponent.synthesize"></a>
 
@@ -3326,8 +3418,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.web.ReactProject.tryFindFile"></a>
 
@@ -3992,7 +4086,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.web.ReactProject.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.web.ReactProject.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -4585,8 +4681,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.web.ReactTypeScriptProject.tryFindFile"></a>
 
@@ -5261,7 +5359,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.web.ReactTypeScriptProject.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.web.ReactTypeScriptProject.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;

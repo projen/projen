@@ -4,7 +4,7 @@ import {
   TypeScriptProject,
   TypeScriptRunner,
 } from "../../src/typescript";
-import { withProjectDir, synthSnapshot } from "../util";
+import { simulateProjenNew, withProjectDir, synthSnapshot } from "../util";
 
 test("assert new Typescript project in foo outdir", async () => {
   await withProjectDir(async (projectdir) => {
@@ -294,4 +294,20 @@ test("tsx runner with typeCheck disabled produces single step", () => {
   const snapshot = synthSnapshot(prj);
   const steps = snapshot[".projen/tasks.json"].tasks.default.steps;
   expect(steps).toStrictEqual([{ execArgs: ["tsx", ".projenrc.ts"] }]);
+});
+
+test("generates the bootstrap .projenrc.ts file on project creation", () => {
+  // GIVEN
+  const fqn = "projen.typescript.TypeScriptProject";
+  const prj = simulateProjenNew(TypeScriptProject, fqn, {
+    args: { name: "test", defaultReleaseBranch: "main", projenrcTs: false },
+  });
+
+  // WHEN
+  new Projenrc(prj);
+
+  // THEN
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot[".projenrc.ts"]).toContain("project.synth();");
+  expect(snapshot[".projenrc.ts"]).toContain(fqn.split(".").pop());
 });

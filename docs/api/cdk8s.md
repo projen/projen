@@ -39,8 +39,10 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 | --- | --- |
 | <code><a href="#projen.cdk8s.AutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.AutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.cdk8s.AutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.AutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.AutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk8s.AutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.AutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -74,6 +76,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.cdk8s.AutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.AutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.AutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -91,6 +114,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.cdk8s.AutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.AutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.cdk8s.AutoDiscover.synthesize"></a>
 
@@ -226,8 +268,10 @@ new cdk8s.Cdk8sDeps(project: Project, options: Cdk8sDepsOptions)
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sDeps.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk8s.Cdk8sDeps.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.Cdk8sDeps.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -261,6 +305,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.cdk8s.Cdk8sDeps.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.Cdk8sDeps.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.Cdk8sDeps.postSynthesize"></a>
 
 ```typescript
@@ -278,6 +343,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.cdk8s.Cdk8sDeps.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.Cdk8sDeps.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.cdk8s.Cdk8sDeps.synthesize"></a>
 
@@ -450,8 +534,10 @@ new cdk8s.Cdk8sDepsPy(project: Project, options: Cdk8sDepsOptions)
 | --- | --- |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.cdk8s.Cdk8sDepsPy.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk8s.Cdk8sDepsPy.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.Cdk8sDepsPy.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -485,6 +571,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.cdk8s.Cdk8sDepsPy.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.Cdk8sDepsPy.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.Cdk8sDepsPy.postSynthesize"></a>
 
 ```typescript
@@ -502,6 +609,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.cdk8s.Cdk8sDepsPy.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.Cdk8sDepsPy.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.cdk8s.Cdk8sDepsPy.synthesize"></a>
 
@@ -883,8 +1009,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.cdk8s.Cdk8sPythonApp.tryFindFile"></a>
 
@@ -1361,7 +1489,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.Cdk8sPythonApp.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.Cdk8sPythonApp.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -1842,8 +1972,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.cdk8s.Cdk8sTypeScriptApp.tryFindFile"></a>
 
@@ -2520,7 +2652,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.Cdk8sTypeScriptApp.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.Cdk8sTypeScriptApp.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -3259,8 +3393,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.cdk8s.ConstructLibraryCdk8s.tryFindFile"></a>
 
@@ -3937,7 +4073,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.ConstructLibraryCdk8s.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.cdk8s.ConstructLibraryCdk8s.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -4460,8 +4598,10 @@ new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
 | --- | --- |
 | <code><a href="#projen.cdk8s.IntegrationTest.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.IntegrationTest.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.cdk8s.IntegrationTest.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.IntegrationTest.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk8s.IntegrationTest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.IntegrationTest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -4495,6 +4635,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.cdk8s.IntegrationTest.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.IntegrationTest.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.IntegrationTest.postSynthesize"></a>
 
 ```typescript
@@ -4512,6 +4673,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.cdk8s.IntegrationTest.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.IntegrationTest.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.cdk8s.IntegrationTest.synthesize"></a>
 
@@ -4686,8 +4866,10 @@ new cdk8s.IntegrationTestAutoDiscover(project: Project, options: IntegrationTest
 | --- | --- |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.cdk8s.IntegrationTestAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -4721,6 +4903,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.cdk8s.IntegrationTestAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.IntegrationTestAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.cdk8s.IntegrationTestAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -4738,6 +4941,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.cdk8s.IntegrationTestAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.cdk8s.IntegrationTestAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.cdk8s.IntegrationTestAutoDiscover.synthesize"></a>
 

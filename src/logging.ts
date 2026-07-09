@@ -1,10 +1,11 @@
 import chalk from "chalk";
 import { IS_TEST_RUN } from "./common";
+import { isTruthy } from "./util";
 
 export const ICON = "👾"; //'✨';
 
 // disable logs if running inside a test
-let enabled = IS_TEST_RUN ? false : true;
+let enabled = IS_TEST_RUN ? isTruthy(process.env.DEBUG) : true;
 
 function log(isError: boolean, color: chalk.ChalkFunction, ...text: any[]) {
   // errors are always emitted, even if logs are disabled

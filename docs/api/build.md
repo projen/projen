@@ -37,8 +37,10 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
 | --- | --- |
 | <code><a href="#projen.build.BuildWorkflow.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.build.BuildWorkflow.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.build.BuildWorkflow.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.build.BuildWorkflow.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.build.BuildWorkflow.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.build.BuildWorkflow.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.build.BuildWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.build.BuildWorkflow.addPostBuildJob">addPostBuildJob</a></code> | Adds another job to the build workflow which is executed after the build job succeeded. |
 | <code><a href="#projen.build.BuildWorkflow.addPostBuildJobCommands">addPostBuildJobCommands</a></code> | Run a sequence of commands as a job within the build workflow which is executed after the build job succeeded. |
@@ -76,6 +78,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.build.BuildWorkflow.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.build.BuildWorkflow.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.build.BuildWorkflow.postSynthesize"></a>
 
 ```typescript
@@ -93,6 +116,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.build.BuildWorkflow.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.build.BuildWorkflow.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.build.BuildWorkflow.synthesize"></a>
 

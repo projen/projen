@@ -41,8 +41,10 @@ new release.Publisher(project: Project, options: PublisherOptions)
 | --- | --- |
 | <code><a href="#projen.release.Publisher.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.release.Publisher.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.release.Publisher.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.release.Publisher.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.release.Publisher.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.release.Publisher.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.release.Publisher.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.release.Publisher.addGitHubPostPublishingSteps">addGitHubPostPublishingSteps</a></code> | Adds post publishing steps for the GitHub release job. |
 | <code><a href="#projen.release.Publisher.addGitHubPrePublishingSteps">addGitHubPrePublishingSteps</a></code> | Adds pre publishing steps for the GitHub release job. |
@@ -85,6 +87,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.release.Publisher.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.release.Publisher.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.release.Publisher.postSynthesize"></a>
 
 ```typescript
@@ -102,6 +125,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.release.Publisher.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.release.Publisher.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.release.Publisher.synthesize"></a>
 
@@ -450,8 +492,10 @@ options to configure the Release Component.
 | --- | --- |
 | <code><a href="#projen.release.Release.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.release.Release.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.release.Release.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.release.Release.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.release.Release.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.release.Release.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.release.Release.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.release.Release.addBranch">addBranch</a></code> | Adds a release branch. |
 | <code><a href="#projen.release.Release.addJobs">addJobs</a></code> | Adds jobs to all release workflows. |
@@ -487,6 +531,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.release.Release.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.release.Release.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.release.Release.postSynthesize"></a>
 
 ```typescript
@@ -504,6 +569,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.release.Release.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.release.Release.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.release.Release.synthesize"></a>
 

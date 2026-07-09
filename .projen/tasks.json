@@ -534,6 +534,10 @@
         {
           "exec": "node scripts/update-schema.js https://json.schemastore.org/uv.json schemas/uv.json",
           "name": "update schema: schemas/uv.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/pnpm-workspace.json schemas/pnpm-workspace.json",
+          "name": "update schema: schemas/pnpm-workspace.json"
         }
       ]
     },

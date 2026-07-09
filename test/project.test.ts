@@ -1,5 +1,5 @@
 import * as path from "path";
-import { synthSnapshot, TestProject } from "./util";
+import { simulateProjenNew, synthSnapshot, TestProject } from "./util";
 import { JsonFile, Project, Testing, TextFile } from "../src";
 
 test("file paths are relative to the project outdir", () => {
@@ -28,6 +28,17 @@ test("all files added to the project can be enumerated", () => {
     expect(result.map((x) => x.path).includes(e)).toBeTruthy();
   exp("my.txt");
   exp("your/file/me.json");
+});
+
+test("the deprecated initProject getter reflects how the project was created", () => {
+  // GIVEN
+  const fqn = "projen.javascript.NodeProject";
+  const createdProject = simulateProjenNew(TestProject, fqn);
+  const plainProject = new TestProject();
+
+  // THEN
+  expect(createdProject.initProject?.fqn).toEqual(fqn);
+  expect(plainProject.initProject).toBeUndefined();
 });
 
 test("generated files are committed if commitGenerated is undefined", () => {

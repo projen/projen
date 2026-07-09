@@ -4,7 +4,7 @@ import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
 import type { InventoryProjectType } from "../inventory";
-import type { Project } from "../project";
+import type { InitProject, Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 import { Biome } from "./biome/biome";
 
@@ -32,8 +32,6 @@ export class Projenrc extends ProjenrcFile {
 
     // this is the task projen executes when running `projen`
     project.defaultTask?.execArgs(["node", this.filePath]);
-
-    this.generateProjenrc();
   }
 
   public override preSynthesize(): void {
@@ -54,15 +52,14 @@ export class Projenrc extends ProjenrcFile {
     biome?.addFilePattern(this.filePath);
   }
 
-  private generateProjenrc() {
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
+  }
+
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const parts = bootstrap.fqn.split(".");

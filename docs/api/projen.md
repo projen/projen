@@ -91,8 +91,10 @@ new AiInstructions(project: Project, options?: AiInstructionsOptions)
 | --- | --- |
 | <code><a href="#projen.AiInstructions.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.AiInstructions.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.AiInstructions.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.AiInstructions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.AiInstructions.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.AiInstructions.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.AiInstructions.addAgentSpecificInstructions">addAgentSpecificInstructions</a></code> | Add instructions for a specific AI agent. |
 | <code><a href="#projen.AiInstructions.addInstructions">addInstructions</a></code> | Adds instructions that will be included for all selected AI agents. |
@@ -128,6 +130,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.AiInstructions.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.AiInstructions.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.AiInstructions.postSynthesize"></a>
 
 ```typescript
@@ -145,6 +168,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.AiInstructions.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.AiInstructions.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.AiInstructions.synthesize"></a>
 
@@ -376,8 +418,10 @@ new AiInstructionsFile(scope: IConstruct, filePath: string, options?: FileBaseOp
 | --- | --- |
 | <code><a href="#projen.AiInstructionsFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.AiInstructionsFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.AiInstructionsFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.AiInstructionsFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.AiInstructionsFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.AiInstructionsFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.AiInstructionsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.AiInstructionsFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.AiInstructionsFile.addInstructions">addInstructions</a></code> | Adds instructions to the instruction file. |
@@ -413,6 +457,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.AiInstructionsFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.AiInstructionsFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.AiInstructionsFile.postSynthesize"></a>
 
 ```typescript
@@ -430,6 +495,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.AiInstructionsFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.AiInstructionsFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.AiInstructionsFile.synthesize"></a>
 
@@ -705,8 +789,10 @@ new Component(scope: IConstruct, id?: string)
 | --- | --- |
 | <code><a href="#projen.Component.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Component.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Component.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Component.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Component.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Component.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Component.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -740,6 +826,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Component.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Component.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Component.postSynthesize"></a>
 
 ```typescript
@@ -757,6 +864,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Component.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Component.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Component.synthesize"></a>
 
@@ -890,8 +1016,10 @@ The parent project.
 | --- | --- |
 | <code><a href="#projen.Dependencies.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Dependencies.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Dependencies.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Dependencies.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Dependencies.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Dependencies.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Dependencies.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Dependencies.addDependency">addDependency</a></code> | Adds a dependency to this project. |
 | <code><a href="#projen.Dependencies.getDependency">getDependency</a></code> | Returns a dependency by name. |
@@ -931,6 +1059,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Dependencies.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Dependencies.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Dependencies.postSynthesize"></a>
 
 ```typescript
@@ -948,6 +1097,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Dependencies.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Dependencies.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Dependencies.synthesize"></a>
 
@@ -1310,8 +1478,10 @@ new DockerCompose(project: Project, props?: DockerComposeProps)
 | --- | --- |
 | <code><a href="#projen.DockerCompose.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.DockerCompose.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.DockerCompose.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.DockerCompose.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.DockerCompose.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.DockerCompose.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.DockerCompose.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.DockerCompose.addService">addService</a></code> | Add a service to the docker-compose file. |
 
@@ -1346,6 +1516,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.DockerCompose.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.DockerCompose.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.DockerCompose.postSynthesize"></a>
 
 ```typescript
@@ -1363,6 +1554,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.DockerCompose.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.DockerCompose.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.DockerCompose.synthesize"></a>
 
@@ -1689,8 +1899,10 @@ new FileBase(scope: IConstruct, filePath: string, options?: FileBaseOptions)
 | --- | --- |
 | <code><a href="#projen.FileBase.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.FileBase.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.FileBase.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.FileBase.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.FileBase.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.FileBase.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.FileBase.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.FileBase.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
@@ -1725,6 +1937,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.FileBase.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.FileBase.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.FileBase.postSynthesize"></a>
 
 ```typescript
@@ -1742,6 +1975,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.FileBase.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.FileBase.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.FileBase.synthesize"></a>
 
@@ -2022,8 +2274,10 @@ new FutureComponent()
 | --- | --- |
 | <code><a href="#projen.FutureComponent.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.FutureComponent.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.FutureComponent.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.FutureComponent.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.FutureComponent.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.FutureComponent.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.FutureComponent.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.FutureComponent.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
 | <code><a href="#projen.FutureComponent.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
@@ -2059,6 +2313,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.FutureComponent.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.FutureComponent.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.FutureComponent.postSynthesize"></a>
 
 ```typescript
@@ -2076,6 +2351,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.FutureComponent.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.FutureComponent.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.FutureComponent.synthesize"></a>
 
@@ -2279,8 +2573,10 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | --- | --- |
 | <code><a href="#projen.GitAttributesFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.GitAttributesFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.GitAttributesFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.GitAttributesFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.GitAttributesFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.GitAttributesFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.GitAttributesFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.GitAttributesFile.addAttributes">addAttributes</a></code> | Maps a set of attributes to a set of files. |
@@ -2318,6 +2614,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.GitAttributesFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.GitAttributesFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.GitAttributesFile.postSynthesize"></a>
 
 ```typescript
@@ -2335,6 +2652,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.GitAttributesFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.GitAttributesFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.GitAttributesFile.synthesize"></a>
 
@@ -2688,8 +3024,10 @@ new Gitpod(project: Project, options?: GitpodOptions)
 | --- | --- |
 | <code><a href="#projen.Gitpod.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Gitpod.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Gitpod.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Gitpod.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Gitpod.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Gitpod.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Gitpod.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Gitpod.addCustomTask">addCustomTask</a></code> | Add a task with more granular options. |
 | <code><a href="#projen.Gitpod.addDockerImage">addDockerImage</a></code> | Add a custom Docker image or Dockerfile for the container. |
@@ -2729,6 +3067,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Gitpod.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Gitpod.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Gitpod.postSynthesize"></a>
 
 ```typescript
@@ -2746,6 +3105,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Gitpod.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Gitpod.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Gitpod.synthesize"></a>
 
@@ -3016,8 +3394,10 @@ the relative path in the project to put the file.
 | --- | --- |
 | <code><a href="#projen.IgnoreFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.IgnoreFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.IgnoreFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IgnoreFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IgnoreFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.IgnoreFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IgnoreFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.IgnoreFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.IgnoreFile.addPatterns">addPatterns</a></code> | Add ignore patterns. |
@@ -3056,6 +3436,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.IgnoreFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.IgnoreFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.IgnoreFile.postSynthesize"></a>
 
 ```typescript
@@ -3073,6 +3474,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.IgnoreFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.IgnoreFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.IgnoreFile.synthesize"></a>
 
@@ -3436,8 +3856,10 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 | --- | --- |
 | <code><a href="#projen.IniFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.IniFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.IniFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IniFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.IniFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.IniFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IniFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.IniFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.IniFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -3476,6 +3898,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.IniFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.IniFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.IniFile.postSynthesize"></a>
 
 ```typescript
@@ -3493,6 +3936,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.IniFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.IniFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.IniFile.synthesize"></a>
 
@@ -3945,8 +4407,10 @@ new JsonFile(scope: IConstruct, filePath: string, options: JsonFileOptions)
 | --- | --- |
 | <code><a href="#projen.JsonFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.JsonFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.JsonFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.JsonFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.JsonFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.JsonFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.JsonFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.JsonFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.JsonFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -3985,6 +4449,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.JsonFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.JsonFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.JsonFile.postSynthesize"></a>
 
 ```typescript
@@ -4002,6 +4487,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.JsonFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.JsonFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.JsonFile.synthesize"></a>
 
@@ -4458,8 +4962,10 @@ new License(project: Project, options: LicenseOptions)
 | --- | --- |
 | <code><a href="#projen.License.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.License.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.License.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.License.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.License.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.License.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.License.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.License.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
@@ -4494,6 +5000,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.License.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.License.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.License.postSynthesize"></a>
 
 ```typescript
@@ -4511,6 +5038,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.License.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.License.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.License.synthesize"></a>
 
@@ -4772,8 +5318,10 @@ new Logger(scope: IConstruct, options?: LoggerOptions)
 | --- | --- |
 | <code><a href="#projen.Logger.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Logger.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Logger.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Logger.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Logger.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Logger.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Logger.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Logger.debug">debug</a></code> | Log a message to stderr with DEBUG severity. |
 | <code><a href="#projen.Logger.error">error</a></code> | Log a message to stderr with ERROR severity. |
@@ -4813,6 +5361,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Logger.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Logger.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Logger.postSynthesize"></a>
 
 ```typescript
@@ -4830,6 +5399,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Logger.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Logger.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Logger.synthesize"></a>
 
@@ -5079,8 +5667,10 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 | --- | --- |
 | <code><a href="#projen.Makefile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Makefile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Makefile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Makefile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Makefile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Makefile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Makefile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.Makefile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.Makefile.addAll">addAll</a></code> | Add a target to all. |
@@ -5119,6 +5709,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Makefile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Makefile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Makefile.postSynthesize"></a>
 
 ```typescript
@@ -5136,6 +5747,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Makefile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Makefile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Makefile.synthesize"></a>
 
@@ -5473,8 +6103,10 @@ new ObjectFile(scope: IConstruct, filePath: string, options: ObjectFileOptions)
 | --- | --- |
 | <code><a href="#projen.ObjectFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ObjectFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ObjectFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ObjectFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ObjectFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ObjectFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ObjectFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.ObjectFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.ObjectFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -5513,6 +6145,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ObjectFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ObjectFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ObjectFile.postSynthesize"></a>
 
 ```typescript
@@ -5530,6 +6183,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ObjectFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ObjectFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ObjectFile.synthesize"></a>
 
@@ -6178,8 +6850,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.Project.tryFindFile"></a>
 
@@ -6610,7 +7284,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.Project.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.Project.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -6701,8 +7377,10 @@ new ProjectBuild(project: Project)
 | --- | --- |
 | <code><a href="#projen.ProjectBuild.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ProjectBuild.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ProjectBuild.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjectBuild.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjectBuild.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ProjectBuild.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjectBuild.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -6736,6 +7414,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ProjectBuild.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjectBuild.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjectBuild.postSynthesize"></a>
 
 ```typescript
@@ -6753,6 +7452,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ProjectBuild.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjectBuild.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ProjectBuild.synthesize"></a>
 
@@ -6966,8 +7684,10 @@ new ProjectTree(project: Project)
 | --- | --- |
 | <code><a href="#projen.ProjectTree.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ProjectTree.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ProjectTree.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjectTree.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjectTree.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ProjectTree.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjectTree.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7001,6 +7721,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ProjectTree.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjectTree.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjectTree.postSynthesize"></a>
 
 ```typescript
@@ -7018,6 +7759,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ProjectTree.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjectTree.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ProjectTree.synthesize"></a>
 
@@ -7164,8 +7924,10 @@ new ProjenrcFile(scope: IConstruct, id?: string)
 | --- | --- |
 | <code><a href="#projen.ProjenrcFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ProjenrcFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ProjenrcFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjenrcFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjenrcFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ProjenrcFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjenrcFile.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7199,6 +7961,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ProjenrcFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjenrcFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjenrcFile.postSynthesize"></a>
 
 ```typescript
@@ -7216,6 +7999,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ProjenrcFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjenrcFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ProjenrcFile.synthesize"></a>
 
@@ -7383,8 +8185,10 @@ new ProjenrcJson(project: Project, options?: ProjenrcJsonOptions)
 | --- | --- |
 | <code><a href="#projen.ProjenrcJson.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ProjenrcJson.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ProjenrcJson.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjenrcJson.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ProjenrcJson.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ProjenrcJson.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ProjenrcJson.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7418,6 +8222,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ProjenrcJson.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjenrcJson.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ProjenrcJson.postSynthesize"></a>
 
 ```typescript
@@ -7435,6 +8260,23 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ProjenrcJson.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ProjenrcJson.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ProjenrcJson.synthesize"></a>
 
@@ -7604,8 +8446,10 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
 | --- | --- |
 | <code><a href="#projen.Renovatebot.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Renovatebot.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Renovatebot.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Renovatebot.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Renovatebot.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Renovatebot.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Renovatebot.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7639,6 +8483,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Renovatebot.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Renovatebot.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Renovatebot.postSynthesize"></a>
 
 ```typescript
@@ -7656,6 +8521,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Renovatebot.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Renovatebot.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Renovatebot.synthesize"></a>
 
@@ -7821,8 +8705,10 @@ options for which files to create.
 | --- | --- |
 | <code><a href="#projen.SampleDir.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.SampleDir.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.SampleDir.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleDir.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleDir.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.SampleDir.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleDir.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7856,6 +8742,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.SampleDir.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleDir.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleDir.postSynthesize"></a>
 
 ```typescript
@@ -7873,6 +8780,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.SampleDir.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleDir.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.SampleDir.synthesize"></a>
 
@@ -8023,8 +8949,10 @@ the options for the file.
 | --- | --- |
 | <code><a href="#projen.SampleFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.SampleFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.SampleFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.SampleFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleFile.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -8058,6 +8986,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.SampleFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleFile.postSynthesize"></a>
 
 ```typescript
@@ -8075,6 +9024,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.SampleFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.SampleFile.synthesize"></a>
 
@@ -8210,8 +9178,10 @@ new SampleReadme(project: Project, props?: SampleReadmeProps)
 | --- | --- |
 | <code><a href="#projen.SampleReadme.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.SampleReadme.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.SampleReadme.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleReadme.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SampleReadme.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.SampleReadme.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SampleReadme.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -8245,6 +9215,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.SampleReadme.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleReadme.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SampleReadme.postSynthesize"></a>
 
 ```typescript
@@ -8262,6 +9253,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.SampleReadme.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SampleReadme.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.SampleReadme.synthesize"></a>
 
@@ -8388,8 +9398,10 @@ new ScriptRunner()
 | --- | --- |
 | <code><a href="#projen.ScriptRunner.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.ScriptRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.ScriptRunner.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ScriptRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.ScriptRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.ScriptRunner.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ScriptRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.ScriptRunner.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
 | <code><a href="#projen.ScriptRunner.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
@@ -8426,6 +9438,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.ScriptRunner.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ScriptRunner.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.ScriptRunner.postSynthesize"></a>
 
 ```typescript
@@ -8443,6 +9476,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.ScriptRunner.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.ScriptRunner.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.ScriptRunner.synthesize"></a>
 
@@ -8665,8 +9717,10 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 | --- | --- |
 | <code><a href="#projen.SourceCode.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.SourceCode.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.SourceCode.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SourceCode.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.SourceCode.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.SourceCode.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.SourceCode.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.SourceCode.close">close</a></code> | Decreases the indentation level and closes a code block. |
 | <code><a href="#projen.SourceCode.line">line</a></code> | Emit a line of code. |
@@ -8703,6 +9757,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.SourceCode.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SourceCode.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.SourceCode.postSynthesize"></a>
 
 ```typescript
@@ -8720,6 +9795,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.SourceCode.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.SourceCode.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.SourceCode.synthesize"></a>
 
@@ -8921,8 +10015,10 @@ new Tasks(project: Project)
 | --- | --- |
 | <code><a href="#projen.Tasks.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Tasks.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Tasks.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Tasks.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Tasks.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Tasks.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Tasks.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Tasks.addEnvironment">addEnvironment</a></code> | Adds global environment. |
 | <code><a href="#projen.Tasks.addTask">addTask</a></code> | Adds a task to a project. |
@@ -8962,6 +10058,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Tasks.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Tasks.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Tasks.postSynthesize"></a>
 
 ```typescript
@@ -8979,6 +10096,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Tasks.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Tasks.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Tasks.synthesize"></a>
 
@@ -9288,8 +10424,10 @@ Options.
 | --- | --- |
 | <code><a href="#projen.TextFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.TextFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.TextFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TextFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TextFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.TextFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TextFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.TextFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.TextFile.addLine">addLine</a></code> | Adds a line to the text file. |
@@ -9325,6 +10463,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.TextFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TextFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.TextFile.postSynthesize"></a>
 
 ```typescript
@@ -9342,6 +10501,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.TextFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TextFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.TextFile.synthesize"></a>
 
@@ -9626,8 +10804,10 @@ new TomlFile(scope: IConstruct, filePath: string, options: TomlFileOptions)
 | --- | --- |
 | <code><a href="#projen.TomlFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.TomlFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.TomlFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TomlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.TomlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.TomlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.TomlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.TomlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -9666,6 +10846,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.TomlFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TomlFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.TomlFile.postSynthesize"></a>
 
 ```typescript
@@ -9683,6 +10884,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.TomlFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TomlFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.TomlFile.synthesize"></a>
 
@@ -10126,8 +11346,10 @@ new Version(scope: IConstruct, options: VersionOptions)
 | --- | --- |
 | <code><a href="#projen.Version.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.Version.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.Version.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Version.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.Version.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.Version.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Version.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.Version.envForBranch">envForBranch</a></code> | Return the environment variables to modify the bump command for release branches. |
 
@@ -10162,6 +11384,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.Version.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Version.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.Version.postSynthesize"></a>
 
 ```typescript
@@ -10179,6 +11422,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.Version.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.Version.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.Version.synthesize"></a>
 
@@ -10421,8 +11683,10 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 | --- | --- |
 | <code><a href="#projen.XmlFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.XmlFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.XmlFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.XmlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.XmlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.XmlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.XmlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.XmlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.XmlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -10461,6 +11725,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.XmlFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.XmlFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.XmlFile.postSynthesize"></a>
 
 ```typescript
@@ -10478,6 +11763,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.XmlFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.XmlFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.XmlFile.synthesize"></a>
 
@@ -10930,8 +12234,10 @@ new YamlFile(scope: IConstruct, filePath: string, options: YamlFileOptions)
 | --- | --- |
 | <code><a href="#projen.YamlFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.YamlFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.YamlFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.YamlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.YamlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.YamlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.YamlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.YamlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.YamlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -10970,6 +12276,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.YamlFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.YamlFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.YamlFile.postSynthesize"></a>
 
 ```typescript
@@ -10987,6 +12314,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.YamlFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.YamlFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.YamlFile.synthesize"></a>
 
@@ -13578,6 +14924,8 @@ const initProject: InitProject = { ... }
 | <code><a href="#projen.InitProject.property.args">args</a></code> | <code>{[ key: string ]: any}</code> | Initial arguments passed to `projen new`. |
 | <code><a href="#projen.InitProject.property.comments">comments</a></code> | <code><a href="#projen.InitProjectOptionHints">InitProjectOptionHints</a></code> | Include commented out options. |
 | <code><a href="#projen.InitProject.property.fqn">fqn</a></code> | <code>string</code> | The JSII FQN of the project type. |
+| <code><a href="#projen.InitProject.property.post">post</a></code> | <code>boolean</code> | Whether `projen new` should run post-synthesis steps (e.g. package manager install). |
+| <code><a href="#projen.InitProject.property.synth">synth</a></code> | <code>boolean</code> | Whether `projen new` should call `project.synth()` after construction. |
 | <code><a href="#projen.InitProject.property.type">type</a></code> | <code><a href="#projen.ProjectType">ProjectType</a></code> | Project metadata. |
 
 ---
@@ -13618,6 +14966,32 @@ public readonly fqn: string;
 - *Type:* string
 
 The JSII FQN of the project type.
+
+---
+
+##### `post`<sup>Required</sup> <a name="post" id="projen.InitProject.property.post"></a>
+
+```typescript
+public readonly post: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether `projen new` should run post-synthesis steps (e.g. package manager install).
+
+---
+
+##### `synth`<sup>Required</sup> <a name="synth" id="projen.InitProject.property.synth"></a>
+
+```typescript
+public readonly synth: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether `projen new` should call `project.synth()` after construction.
 
 ---
 

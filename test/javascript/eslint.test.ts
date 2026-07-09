@@ -2,7 +2,7 @@ import { javascript } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
 import { ProjenTaskRunner } from "../../src/task-runner";
 import { TypeScriptProject } from "../../src/typescript";
-import { execProjenCLI, synthSnapshot } from "../util";
+import { execProjenCLI, simulateProjenNew, synthSnapshot } from "../util";
 
 test.each([
   ["prettier is off", false],
@@ -506,5 +506,67 @@ describe("eslint settings", () => {
 
     // THEN
     expect(eslint.eslintTask.steps[0].args).toContain(newTestArg);
+  });
+});
+
+describe("postProjectCreation", () => {
+  test("runs the eslint task once the project is created via `projen new`", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN
+    expect(runTask).toHaveBeenCalledWith(eslint.eslintTask.name);
+  });
+
+  test("does not run the eslint task for a project not created via `projen new`", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN: other tasks (e.g. "install") may run, but not eslint
+    expect(runTask).not.toHaveBeenCalledWith(eslint.eslintTask.name);
+  });
+
+  test("does not run the eslint task when post-synthesis steps are disabled", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    synthSnapshot(project);
+
+    // THEN
+    expect(runTask).not.toHaveBeenCalledWith(eslint.eslintTask.name);
   });
 });

@@ -84,6 +84,36 @@ describe("tool (shell-free)", () => {
   test("git helper invokes git", () => {
     expect(git.capture(["--version"], { cwd })).toMatch(/git version/);
   });
+
+  test("captureStderr interleaves STDOUT and STDERR in write order", () => {
+    const out = node.capture(
+      ["-e", "console.log('one'); console.error('two'); console.log('three');"],
+      { cwd, captureStderr: true },
+    );
+    expect(out).toBe("one\ntwo\nthree");
+  });
+
+  test("captureStderr attaches the combined output to the error on failure", () => {
+    let error: any;
+    try {
+      node.capture(
+        ["-e", "console.log('before'); console.error('fail'); process.exit(1)"],
+        { cwd, captureStderr: true },
+      );
+    } catch (e) {
+      error = e;
+    }
+    expect(error).toBeDefined();
+    expect(error.stdout.toString("utf-8")).toBe("before\nfail\n");
+  });
+
+  test("tryCapture supports captureStderr", () => {
+    const out = node.tryCapture(
+      ["-e", "console.log('a'); console.error('b');"],
+      { cwd, captureStderr: true },
+    );
+    expect(out).toBe("a\nb");
+  });
 });
 
 describe("rawShell (system shell)", () => {

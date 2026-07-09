@@ -14,7 +14,7 @@ import {
 import { Component } from "../../component";
 import type { NodeProject } from "../../javascript/node-project";
 import { JsonFile } from "../../json";
-import type { Project } from "../../project";
+import type { InitProject, Project } from "../../project";
 import type { Task } from "../../task";
 import { deepMerge, normalizePersistedPath } from "../../util";
 import { tryResolveModule } from "../util";
@@ -236,6 +236,13 @@ export class Biome extends Component {
 
     this.task = this.createLocalBiomeTask();
     project.testTask.spawn(this.task);
+  }
+
+  /**
+   * Runs biome once, right after the project is first created, so the generated code is linted and formatted immediately.
+   */
+  public postProjectCreation(_initProject: InitProject) {
+    this.project.tasks.runTask(this.task.name);
   }
 
   /**
