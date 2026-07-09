@@ -85,7 +85,9 @@ export function findJsiiFilePath(
     if (
       error instanceof Error &&
       "code" in error &&
-      error.code === "MODULE_NOT_FOUND"
+      ["MODULE_NOT_FOUND", "ERR_PACKAGE_PATH_NOT_EXPORTED"].includes(
+        error.code as any,
+      )
     ) {
       // the provided module is not a jsii module
       return undefined;
