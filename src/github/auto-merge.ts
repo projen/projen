@@ -87,11 +87,10 @@ export class AutoMerge extends Component {
       // squash all commits into a single commit when merging
       mergeMethod: "squash",
       // use PR title+body as the commit message
-      commitMessageTemplate: [
-        "{{ title }} (#{{ number }})",
-        "",
-        "{{ body }}",
-      ].join("\n"),
+      commitMessageFormat: {
+        title: "pr-title",
+        body: "pr-body",
+      },
     });
 
     this.project.addPackageIgnore("/.mergify.yml");
