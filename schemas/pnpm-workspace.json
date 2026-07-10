@@ -76,12 +76,18 @@
       "$comment": "https://pnpm.io/catalogs",
       "$ref": "#/definitions/dependency",
       "description": "Define dependency version ranges as reusable constants,\nfor later reference in package.json files.\nThis (singular) field creates a catalog named default.\n",
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "minProperties": 1
     },
     "catalogs": {
       "description": "Define arbitrarily named catalogs",
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "minProperties": 1,
       "additionalProperties": {
         "$ref": "#/definitions/catalog"
@@ -92,7 +98,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["strict", "prefer", "manual"]
+          "enum": [
+            "strict",
+            "prefer",
+            "manual"
+          ]
         }
       ]
     },
@@ -331,7 +341,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["isolated", "hoisted", "pnp"]
+          "enum": [
+            "isolated",
+            "hoisted",
+            "pnp"
+          ]
         }
       ]
     },
@@ -356,7 +370,13 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["auto", "hardlink", "copy", "clone", "clone-or-copy"]
+          "enum": [
+            "auto",
+            "hardlink",
+            "copy",
+            "clone",
+            "clone-or-copy"
+          ]
         }
       ]
     },
@@ -402,7 +422,10 @@
     },
     "mergeGitBranchLockfilesBranchPattern": {
       "description": "This configuration matches the current branch name to determine whether to merge all git branch lockfile files. ",
-      "type": ["array", "null"]
+      "type": [
+        "array",
+        "null"
+      ]
     },
     "peersSuffixMaxLength": {
       "description": "Max length of the peer IDs suffix added to dependency keys in the lockfile. If the suffix is longer, it is replaced with a hash.",
@@ -504,7 +527,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["always", "auto", "never"]
+          "enum": [
+            "always",
+            "auto",
+            "never"
+          ]
         }
       ]
     },
@@ -513,14 +540,24 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["debug", "info", "warn", "error"]
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error"
+          ]
         }
       ]
     },
     "reporter": {
       "description": "Allows you to customize the output style of the logs.\nhttps://pnpm.io/cli/install#--reportername",
       "type": "string",
-      "enum": ["silent", "default", "append-only", "ndjson"]
+      "enum": [
+        "silent",
+        "default",
+        "append-only",
+        "ndjson"
+      ]
     },
     "useBetaCli": {
       "description": "Experimental option that enables beta features of the CLI.",
@@ -582,8 +619,17 @@
       "description": "This setting allows the checking of the state of dependencies before running scripts.",
       "oneOf": [
         {
-          "type": ["string", "boolean"],
-          "enum": ["install", "warn", "error", "prompt", false]
+          "type": [
+            "string",
+            "boolean"
+          ],
+          "enum": [
+            "install",
+            "warn",
+            "error",
+            "prompt",
+            false
+          ]
         }
       ]
     },
@@ -607,7 +653,9 @@
         },
         {
           "type": "string",
-          "enum": ["deep"]
+          "enum": [
+            "deep"
+          ]
         }
       ]
     },
@@ -639,7 +687,9 @@
         },
         {
           "type": "string",
-          "enum": ["rolling"]
+          "enum": [
+            "rolling"
+          ]
         }
       ]
     },
@@ -678,7 +728,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["^", "~", ""]
+          "enum": [
+            "^",
+            "~",
+            ""
+          ]
         }
       ]
     },
@@ -723,7 +777,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["highest", "time-based", "lowest-direct"]
+          "enum": [
+            "highest",
+            "time-based",
+            "lowest-direct"
+          ]
         }
       ]
     },
@@ -824,7 +882,10 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["off", "no-downgrade"]
+          "enum": [
+            "off",
+            "no-downgrade"
+          ]
         }
       ]
     },
@@ -853,7 +914,12 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["low", "moderate", "high", "critical"]
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "critical"
+          ]
         }
       ]
     },
@@ -885,7 +951,12 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["download", "error", "warn", "ignore"]
+          "enum": [
+            "download",
+            "error",
+            "warn",
+            "ignore"
+          ]
         }
       ]
     },
@@ -894,7 +965,12 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["download", "error", "warn", "ignore"]
+          "enum": [
+            "download",
+            "error",
+            "warn",
+            "ignore"
+          ]
         }
       ]
     },
@@ -914,7 +990,11 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": ["node", "workspaces", "dependencies"]
+          "enum": [
+            "node",
+            "workspaces",
+            "dependencies"
+          ]
         }
       ]
     }
