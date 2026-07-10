@@ -15,6 +15,7 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
   IntegrationTests,
+  setupIntegHarness,
 } from "./projenrc";
 import {
   AiAgent,
@@ -308,6 +309,10 @@ setupNpmignore(project);
 setupBundleTaskRunner(project);
 
 new IntegrationTests(project);
+
+// The cross-platform integration test harness, as a non-published child
+// project rooted at test/integ.
+setupIntegHarness(project);
 
 new JsiiFromJsonSchema(project, {
   structName: "BiomeConfiguration",

@@ -554,6 +554,174 @@
           "path": ".github/workflows/integ.yml"
         }
       },
+      "TypeScriptProject#@projen--integ@test--integ": {
+        "metadata": {
+          "type": "project",
+          "construct": "TypeScriptProject",
+          "projen.version": "0.0.0"
+        },
+        "nodes": {
+          "GitAttributesFile@.gitattributes": {
+            "metadata": {
+              "type": "file",
+              "construct": "GitAttributesFile",
+              "path": "test/integ/.gitattributes"
+            }
+          },
+          "IgnoreFile@.gitignore": {
+            "metadata": {
+              "type": "file",
+              "construct": "IgnoreFile",
+              "path": "test/integ/.gitignore"
+            }
+          },
+          "Tasks#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "Tasks"
+            },
+            "nodes": {
+              "ProjenTaskRunner#AutoId1": {
+                "metadata": {
+                  "type": "component",
+                  "construct": "ProjenTaskRunner"
+                }
+              }
+            }
+          },
+          "JsonFile@.projen--tasks.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/.projen/tasks.json"
+            }
+          },
+          "ProjectBuild#AutoId2": {
+            "metadata": {
+              "type": "component",
+              "construct": "ProjectBuild"
+            }
+          },
+          "Dependencies#AutoId3": {
+            "metadata": {
+              "type": "component",
+              "construct": "Dependencies"
+            }
+          },
+          "JsonFile@.projen--deps.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/.projen/deps.json"
+            }
+          },
+          "Logger#@projen--integ": {
+            "metadata": {
+              "type": "component",
+              "construct": "Logger"
+            }
+          },
+          "JsonFile@.projen--files.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/.projen/files.json"
+            }
+          },
+          "SampleReadme#AutoId4": {
+            "metadata": {
+              "type": "component",
+              "construct": "SampleReadme"
+            }
+          },
+          "NodePackage#AutoId5": {
+            "metadata": {
+              "type": "component",
+              "construct": "NodePackage"
+            },
+            "nodes": {
+              "JsonFile@package.json": {
+                "metadata": {
+                  "type": "file",
+                  "construct": "JsonFile",
+                  "path": "test/integ/package.json"
+                }
+              }
+            }
+          },
+          "IgnoreFile@.npmignore": {
+            "metadata": {
+              "type": "file",
+              "construct": "IgnoreFile",
+              "path": "test/integ/.npmignore"
+            }
+          },
+          "Jest#AutoId6": {
+            "metadata": {
+              "type": "component",
+              "construct": "Jest"
+            }
+          },
+          "JsonFile@jest.config.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/jest.config.json"
+            }
+          },
+          "Bundler#AutoId7": {
+            "metadata": {
+              "type": "component",
+              "construct": "Bundler"
+            }
+          },
+          "AutoId8": {
+            "metadata": {
+              "type": "component",
+              "construct": "TypeScriptRunner"
+            }
+          },
+          "TypescriptConfig#AutoId9": {
+            "metadata": {
+              "type": "component",
+              "construct": "TypescriptConfig"
+            }
+          },
+          "JsonFile@tsconfig.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/tsconfig.json"
+            }
+          },
+          "TypescriptConfig#AutoId10": {
+            "metadata": {
+              "type": "component",
+              "construct": "TypescriptConfig"
+            }
+          },
+          "JsonFile@test--tsconfig.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/test/tsconfig.json"
+            }
+          },
+          "Eslint#AutoId11": {
+            "metadata": {
+              "type": "component",
+              "construct": "Eslint"
+            }
+          },
+          "JsonFile@.eslintrc.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/.eslintrc.json"
+            }
+          }
+        }
+      },
       "JsiiFromJsonSchema@src--javascript--biome--biome-config.ts": {
         "metadata": {
           "type": "file",
