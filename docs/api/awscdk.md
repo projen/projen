@@ -39,8 +39,10 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.AutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.AutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.AutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.AutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -74,6 +76,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.AutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.AutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -91,6 +114,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.AutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.AutoDiscover.synthesize"></a>
 
@@ -444,8 +486,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.awscdk.AwsCdkConstructLibrary.tryFindFile"></a>
 
@@ -1122,7 +1166,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkConstructLibrary.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkConstructLibrary.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -1643,8 +1689,10 @@ new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDeps.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkDeps.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.AwsCdkDeps.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDeps.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkDeps.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkDeps.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDeps.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -1678,6 +1726,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.AwsCdkDeps.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDeps.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.AwsCdkDeps.postSynthesize"></a>
 
 ```typescript
@@ -1695,6 +1764,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.AwsCdkDeps.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDeps.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.AwsCdkDeps.synthesize"></a>
 
@@ -1884,8 +1972,10 @@ new awscdk.AwsCdkDepsJava(project: Project, options: AwsCdkDepsOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.AwsCdkDepsJava.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkDepsJava.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJava.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -1919,6 +2009,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.AwsCdkDepsJava.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsJava.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.AwsCdkDepsJava.postSynthesize"></a>
 
 ```typescript
@@ -1936,6 +2047,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.AwsCdkDepsJava.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsJava.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.AwsCdkDepsJava.synthesize"></a>
 
@@ -2125,8 +2255,10 @@ new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.AwsCdkDepsJs.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkDepsJs.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsJs.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -2160,6 +2292,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.AwsCdkDepsJs.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsJs.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.AwsCdkDepsJs.postSynthesize"></a>
 
 ```typescript
@@ -2177,6 +2330,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.AwsCdkDepsJs.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsJs.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.AwsCdkDepsJs.synthesize"></a>
 
@@ -2366,8 +2538,10 @@ new awscdk.AwsCdkDepsPy(project: Project, options: AwsCdkDepsOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.AwsCdkDepsPy.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.AwsCdkDepsPy.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.AwsCdkDepsPy.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -2401,6 +2575,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.AwsCdkDepsPy.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsPy.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.AwsCdkDepsPy.postSynthesize"></a>
 
 ```typescript
@@ -2418,6 +2613,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.AwsCdkDepsPy.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.AwsCdkDepsPy.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.AwsCdkDepsPy.synthesize"></a>
 
@@ -2815,8 +3029,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.awscdk.AwsCdkJavaApp.tryFindFile"></a>
 
@@ -3322,7 +3538,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkJavaApp.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkJavaApp.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -3831,8 +4049,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.awscdk.AwsCdkPythonApp.tryFindFile"></a>
 
@@ -4312,7 +4532,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkPythonApp.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkPythonApp.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -4828,8 +5050,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.awscdk.AwsCdkTypeScriptApp.tryFindFile"></a>
 
@@ -5509,7 +5733,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkTypeScriptApp.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.awscdk.AwsCdkTypeScriptApp.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -6066,8 +6292,10 @@ new awscdk.CdkConfig(project: Project, options: CdkConfigOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.CdkConfig.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.CdkConfig.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.CdkConfig.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.CdkConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.CdkConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.CdkConfig.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.CdkConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.awscdk.CdkConfig.addExcludes">addExcludes</a></code> | Add excludes to `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfig.addIncludes">addIncludes</a></code> | Add includes to `cdk.json`. |
@@ -6103,6 +6331,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.CdkConfig.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.CdkConfig.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.CdkConfig.postSynthesize"></a>
 
 ```typescript
@@ -6120,6 +6369,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.CdkConfig.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.CdkConfig.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.CdkConfig.synthesize"></a>
 
@@ -6345,8 +6613,10 @@ new awscdk.CdkTasks(project: Project)
 | --- | --- |
 | <code><a href="#projen.awscdk.CdkTasks.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.CdkTasks.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.CdkTasks.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.CdkTasks.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.CdkTasks.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.CdkTasks.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.CdkTasks.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -6380,6 +6650,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.CdkTasks.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.CdkTasks.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.CdkTasks.postSynthesize"></a>
 
 ```typescript
@@ -6397,6 +6688,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.CdkTasks.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.CdkTasks.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.CdkTasks.synthesize"></a>
 
@@ -6610,8 +6920,10 @@ new awscdk.EdgeLambdaAutoDiscover(project: Project, options: EdgeLambdaAutoDisco
 | --- | --- |
 | <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.EdgeLambdaAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -6645,6 +6957,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.EdgeLambdaAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.EdgeLambdaAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.EdgeLambdaAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -6662,6 +6995,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.EdgeLambdaAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.EdgeLambdaAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.EdgeLambdaAutoDiscover.synthesize"></a>
 
@@ -6810,8 +7162,10 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.IntegrationTest.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.IntegrationTest.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.IntegrationTest.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.IntegrationTest.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.IntegrationTest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.IntegrationTest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.IntegrationTest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -6845,6 +7199,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.IntegrationTest.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.IntegrationTest.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.IntegrationTest.postSynthesize"></a>
 
 ```typescript
@@ -6862,6 +7237,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.IntegrationTest.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.IntegrationTest.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.IntegrationTest.synthesize"></a>
 
@@ -7062,8 +7456,10 @@ new awscdk.IntegrationTestAutoDiscover(project: Project, options: IntegrationTes
 | --- | --- |
 | <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.IntegrationTestAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7097,6 +7493,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.IntegrationTestAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.IntegrationTestAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.IntegrationTestAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -7114,6 +7531,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.IntegrationTestAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.IntegrationTestAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.IntegrationTestAutoDiscover.synthesize"></a>
 
@@ -7262,8 +7698,10 @@ new awscdk.LambdaAutoDiscover(project: Project, options: LambdaAutoDiscoverOptio
 | --- | --- |
 | <code><a href="#projen.awscdk.LambdaAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.LambdaAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.LambdaAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.LambdaAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.LambdaAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7297,6 +7735,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.LambdaAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.LambdaAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -7314,6 +7773,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.LambdaAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.LambdaAutoDiscover.synthesize"></a>
 
@@ -7462,8 +7940,10 @@ new awscdk.LambdaExtension(project: Project, options: LambdaExtensionOptions)
 | --- | --- |
 | <code><a href="#projen.awscdk.LambdaExtension.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.LambdaExtension.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.LambdaExtension.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaExtension.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.LambdaExtension.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.LambdaExtension.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaExtension.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7497,6 +7977,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.LambdaExtension.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaExtension.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.LambdaExtension.postSynthesize"></a>
 
 ```typescript
@@ -7514,6 +8015,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.LambdaExtension.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaExtension.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.LambdaExtension.synthesize"></a>
 
@@ -7649,8 +8169,10 @@ new awscdk.LambdaExtensionAutoDiscover(project: Project, options: LambdaExtensio
 | --- | --- |
 | <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaExtensionAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7684,6 +8206,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.LambdaExtensionAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaExtensionAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.LambdaExtensionAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -7701,6 +8244,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.LambdaExtensionAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaExtensionAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.LambdaExtensionAutoDiscover.synthesize"></a>
 
@@ -7873,8 +8435,10 @@ Options.
 | --- | --- |
 | <code><a href="#projen.awscdk.LambdaFunction.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.LambdaFunction.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.LambdaFunction.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaFunction.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.LambdaFunction.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.LambdaFunction.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.LambdaFunction.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -7908,6 +8472,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.LambdaFunction.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaFunction.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.LambdaFunction.postSynthesize"></a>
 
 ```typescript
@@ -7925,6 +8510,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.LambdaFunction.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.LambdaFunction.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.LambdaFunction.synthesize"></a>
 
@@ -8060,8 +8664,10 @@ new awscdk.SingletonLambdaAutoDiscover(project: Project, options: SingletonLambd
 | --- | --- |
 | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.awscdk.SingletonLambdaAutoDiscover.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -8095,6 +8701,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.awscdk.SingletonLambdaAutoDiscover.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.SingletonLambdaAutoDiscover.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.awscdk.SingletonLambdaAutoDiscover.postSynthesize"></a>
 
 ```typescript
@@ -8112,6 +8739,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.awscdk.SingletonLambdaAutoDiscover.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.awscdk.SingletonLambdaAutoDiscover.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.awscdk.SingletonLambdaAutoDiscover.synthesize"></a>
 

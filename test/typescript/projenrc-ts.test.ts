@@ -3,7 +3,7 @@ import {
   TypeScriptProject,
   TypeScriptRunner,
 } from "../../src/typescript";
-import { synthSnapshot, TestProject } from "../util";
+import { simulateProjenNew, synthSnapshot, TestProject } from "../util";
 
 describe("Creating rc file within a non-TypeScript project", () => {
   test("defaults to ts-node", () => {
@@ -256,5 +256,21 @@ describe("Creating rc file within a non-TypeScript project", () => {
     const snapshot = synthSnapshot(p);
     expect(snapshot[".gitignore"]).toContain("!/.projenrc.ts"); // Don't ignore here
     expect(snapshot[".npmignore"]).toContain("/.projenrc.ts"); // Ignore here
+  });
+
+  test("generates the bootstrap .projenrc.ts file on project creation", () => {
+    // GIVEN
+    const fqn = "projen.typescript.TypeScriptProject";
+    const p = simulateProjenNew(TestProject, fqn, {
+      args: { name: "test" },
+    });
+
+    // WHEN
+    new ProjenrcTs(p, {});
+
+    // THEN
+    const snapshot = synthSnapshot(p);
+    expect(snapshot[".projenrc.ts"]).toContain("project.synth();");
+    expect(snapshot[".projenrc.ts"]).toContain(fqn.split(".").pop());
   });
 });

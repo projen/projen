@@ -3,9 +3,10 @@ import { dirname, posix, resolve } from "path";
 import type { InventoryProjectType } from "../inventory";
 import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
 import type { TypeScriptProject } from "./typescript";
-import { renderJavaScriptOptions } from "../javascript/render-options";
-import { ProjenrcFile } from "../projenrc";
 import { TypeScriptRunner } from "./typescript-runner";
+import { renderJavaScriptOptions } from "../javascript/render-options";
+import type { InitProject } from "../project";
+import { ProjenrcFile } from "../projenrc";
 
 export interface ProjenrcOptions {
   /**
@@ -80,8 +81,10 @@ export class Projenrc extends ProjenrcFile {
     this._runner = this.getRunner(options).tryAttach(this._tsProject);
 
     this.addDefaultTask();
+  }
 
-    this.generateProjenrc();
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
   }
 
   private addDefaultTask() {
@@ -159,15 +162,10 @@ export class Projenrc extends ProjenrcFile {
     );
   }
 
-  private generateProjenrc() {
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const parts = bootstrap.fqn.split(".");

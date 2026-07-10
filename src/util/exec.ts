@@ -1,4 +1,7 @@
 import * as child_process from "child_process";
+import * as fs from "fs";
+import * as os from "os";
+import * as path from "path";
 import { $ } from "dax";
 import * as logging from "../logging";
 
@@ -31,6 +34,14 @@ export interface ExecFileOptions {
    * Additional environment variables, merged on top of `process.env`.
    */
   readonly env?: Record<string, string | undefined>;
+
+  /**
+   * For `capture`/`tryCapture`: interleave STDERR into the captured output
+   * instead of only capturing STDOUT.
+   *
+   * @default false
+   */
+  readonly captureStderr?: boolean;
 }
 
 /**
@@ -77,8 +88,9 @@ function run(file: string, args: string[], options: RunOptions): void {
 }
 
 /**
- * Runs a program and returns its trimmed STDOUT. Throws if the command exits
- * with a non-zero status.
+ * Runs a program and returns its trimmed STDOUT (or STDOUT+STDERR interleaved
+ * in their original write order, if `captureStderr` is set). Throws if the
+ * command exits with a non-zero status.
  */
 function capture(
   file: string,
@@ -86,6 +98,33 @@ function capture(
   options: ExecFileOptions,
 ): string {
   logging.debug(`${file} ${args.join(" ")} (cwd: ${options.cwd})`);
+
+  if (options.captureStderr) {
+    // Same fd for both streams so they interleave in write order. A shared
+    // in-memory Writable won't work here - execFileSync only accepts stdio
+    // streams backed by a real fd (tty/file/socket/pipe).
+    const combinedFile = path.join(
+      fs.mkdtempSync(path.join(os.tmpdir(), "projen-capture-")),
+      "output",
+    );
+    const fd = fs.openSync(combinedFile, "w+");
+    try {
+      try {
+        child_process.execFileSync(file, args, {
+          ...spawnOpts(options),
+          stdio: ["inherit", fd, fd],
+        });
+      } catch (e: any) {
+        // mirrors execFileSync's own behavior of attaching output to the error
+        e.stdout = fs.readFileSync(combinedFile);
+        throw e;
+      }
+      return fs.readFileSync(combinedFile, "utf-8").trim();
+    } finally {
+      fs.closeSync(fd);
+      fs.rmSync(path.dirname(combinedFile), { recursive: true, force: true });
+    }
+  }
 
   return child_process
     .execFileSync(file, args, {
@@ -97,24 +136,17 @@ function capture(
 }
 
 /**
- * Runs a program and returns its trimmed STDOUT, or `undefined` if the command
- * failed or produced no output.
+ * Runs a program and returns its trimmed STDOUT (or STDOUT+STDERR interleaved
+ * in their original write order, if `captureStderr` is set), or `undefined`
+ * if the command failed or produced no output.
  */
 function tryCapture(
   file: string,
   args: string[],
   options: ExecFileOptions,
 ): string | undefined {
-  logging.debug(`${file} ${args.join(" ")} (cwd: ${options.cwd})`);
-
   try {
-    const value = child_process
-      .execFileSync(file, args, {
-        ...spawnOpts(options),
-        stdio: ["inherit", "pipe", "pipe"], // "pipe" for STDERR means it appears in exceptions
-      })
-      .toString("utf-8")
-      .trim();
+    const value = capture(file, args, options);
 
     // an empty string is the same as undefined
     return value || undefined;

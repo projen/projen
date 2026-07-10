@@ -2,6 +2,7 @@
 // and compare against a golden snapshot.
 import { mkdirSync, existsSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
+import { stripVTControlCharacters } from "util";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -500,7 +501,7 @@ describe("projen new --from", () => {
             "@pepperize/projen-awscdk-app-ts@0.0.333",
             "--no-post",
           ],
-          { ...process.env, NODE_ENV: "production" },
+          { env: { NODE_ENV: "production" } },
         );
       });
     });
@@ -628,13 +629,12 @@ describe("git", () => {
         // Simulate git config using env variables
         // We don't want to change the user's git config
         const env = {
-          ...process.env,
           GIT_CONFIG_COUNT: "1",
           GIT_CONFIG_KEY_0: "init.defaultBranch",
           GIT_CONFIG_VALUE_0: defaultBranch,
         };
 
-        await execProjenCLI(projectdir, ["new", "project"], env);
+        await execProjenCLI(projectdir, ["new", "project"], { env });
         expect(
           git.capture(["rev-parse", "--abbrev-ref", "HEAD"], {
             cwd: projectdir,
@@ -673,7 +673,6 @@ describe("regressions", () => {
           "--no-post",
           "--no-git",
         ],
-        undefined,
         {
           preInstallProjen: false,
         },
@@ -727,5 +726,36 @@ describe("regressions", () => {
         tmpdir: pathWithSpace,
       },
     );
+  });
+
+  // eslint used to run via `npm run eslint --if-present`, which silently
+  // no-ops for non-npm package managers. It now runs via the task runner.
+  test("eslint runs on project creation", async () => {
+    await withProjectDir(async (projectdir) => {
+      const output = (await execProjenCLI(
+        projectdir,
+        ["new", "typescript", "--package-manager=npm"],
+        { capture: true, debug: true },
+      )) as string;
+
+      expect(stripVTControlCharacters(output)).toContain(
+        "👾 eslint | eslint --ext .ts,.tsx --fix",
+      );
+    });
+  });
+
+  // --post is the default; eslint must NOT run when it's disabled.
+  test("eslint does not run on project creation when --no-post is set", async () => {
+    await withProjectDir(async (projectdir) => {
+      const output = (await execProjenCLI(
+        projectdir,
+        ["new", "typescript", "--package-manager=npm", "--no-post"],
+        { capture: true, debug: true },
+      )) as string;
+
+      expect(stripVTControlCharacters(output)).not.toContain(
+        "👾 eslint | eslint --ext .ts,.tsx",
+      );
+    });
   });
 });

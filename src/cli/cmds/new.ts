@@ -1,5 +1,3 @@
-import * as fs from "fs";
-import * as path from "path";
 import * as semver from "semver";
 import * as yargs from "yargs";
 import * as inventory from "../../inventory";
@@ -479,12 +477,6 @@ async function initProject(
     synth: args.synth,
     post: args.post,
   });
-
-  if (fs.existsSync(path.join(baseDir, "package.json")) && args.post) {
-    await npm.run(["run", "eslint", "--if-present"], {
-      cwd: baseDir,
-    });
-  }
 
   if (args.git) {
     const opts = { cwd: baseDir };

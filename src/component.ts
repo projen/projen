@@ -1,6 +1,6 @@
 import type { IConstruct } from "constructs";
 import { Construct, Node, RootConstruct } from "constructs";
-import type { Project } from "./project";
+import type { InitProject, Project } from "./project";
 import {
   isComponent,
   findClosestProject,
@@ -53,6 +53,32 @@ export class Component extends Construct {
    * Called after synthesis. Order is *not* guaranteed.
    */
   public postSynthesize() {}
+
+  /**
+   * Called once, right after `synthesize()`, only when the project is created for the first time.
+   *
+   * It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+   * Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+   *
+   * @param initProject Details about how the project was created, e.g. its type and the original CLI args.
+   */
+  public projectCreation(initProject: InitProject) {
+    initProject;
+  }
+
+  /**
+   * Called once, right after `postSynthesize()`, only when the project is created for the first time.
+   *
+   * It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+   * It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+   * Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+   * feedback on their new project. Order across components is not guaranteed.
+   *
+   * @param initProject Details about how the project was created, e.g. its type and the original CLI args.
+   */
+  public postProjectCreation(initProject: InitProject) {
+    initProject;
+  }
 }
 
 /**

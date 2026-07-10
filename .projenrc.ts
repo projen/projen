@@ -346,7 +346,7 @@ new JsiiFromJsonSchema(project, {
 
 new JsiiFromJsonSchema(project, {
   structName: "PnpmWorkspaceYamlSchema",
-  schemaPath: "schemas/pnpm-workspace.json",
+  schemaPath: "https://json.schemastore.org/pnpm-workspace.json",
   filePath: path.join("src", "javascript", "pnpm-workspace-config.ts"),
 });
 

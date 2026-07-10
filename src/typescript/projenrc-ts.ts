@@ -4,7 +4,7 @@ import type { InventoryProjectType } from "../inventory";
 import { TypescriptConfig } from "../javascript";
 import { TypeScriptRunner } from "./typescript-runner";
 import { renderJavaScriptOptions } from "../javascript/render-options";
-import type { Project } from "../project";
+import type { InitProject, Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 
 export interface ProjenrcTsOptions {
@@ -95,8 +95,10 @@ export class ProjenrcTs extends ProjenrcFile {
     } else {
       project.defaultTask?.addSteps(...steps);
     }
+  }
 
-    this.generateProjenrc();
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
   }
 
   private getRunner(options: ProjenrcTsOptions): TypeScriptRunner {
@@ -119,15 +121,10 @@ export class ProjenrcTs extends ProjenrcFile {
     this.tsconfig.addInclude(`${this._projenCodeDir}/**/*.ts`);
   }
 
-  private generateProjenrc() {
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const parts = bootstrap.fqn.split(".");

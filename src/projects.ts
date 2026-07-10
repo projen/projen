@@ -116,6 +116,8 @@ function createProject(opts: CreateProjectOptions) {
     args: opts.projectOptions,
     omitFromBootstrap: ["outdir"],
     prefixImports: optionsImports,
+    synth: opts.synth ?? true,
+    post: opts.post ?? true,
   });
 
   const initProjectCode = new Array<string>();
@@ -131,9 +133,9 @@ function createProject(opts: CreateProjectOptions) {
     `const ${varName} = new ${projectType.typename}(${renderedOptions});`,
   );
 
-  if (opts.synth ?? true) {
-    initProjectCode.push(`${varName}.synth();`);
-  }
+  // always synth; Project.synth() itself detects `--no-synth` and only runs
+  // the project-creation hooks (e.g. Projenrc writing its bootstrap file).
+  initProjectCode.push(`${varName}.synth();`);
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const mainModule = require(mod);

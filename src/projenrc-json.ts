@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
-import type { Project } from "./project";
+import type { InitProject, Project } from "./project";
 import { ProjenrcFile } from "./projenrc";
 
 export interface ProjenrcJsonOptions {
@@ -25,19 +25,16 @@ export class ProjenrcJson extends ProjenrcFile {
     // this is the task projen executes when running `projen`
     project.defaultTask?.env("FILENAME", this.filePath);
     project.defaultTask?.builtin("run-projenrc-json");
-
-    this.generateProjenrc();
   }
 
-  private generateProjenrc() {
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
+  }
+
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const json = {

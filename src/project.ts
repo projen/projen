@@ -235,8 +235,12 @@ export class Project extends Construct {
    * The options used when this project is bootstrapped via `projen new`. It
    * includes the original set of options passed to the CLI and also the JSII
    * FQN of the project type.
+   *
+   * @deprecated use the `initProject` argument passed to `Component.projectCreation()` instead.
    */
-  public readonly initProject?: InitProject;
+  public get initProject(): InitProject | undefined {
+    return this._initProject;
+  }
 
   /**
    * The command to use in order to run the projen CLI.
@@ -269,9 +273,9 @@ export class Project extends Construct {
    */
   public readonly commitGenerated: boolean;
 
-  private readonly excludeFromCleanup: string[];
+  private readonly _excludeFromCleanup: string[];
   private readonly _ejected: boolean;
-  /** projenCommand without default value */
+  private readonly _initProject?: InitProject;
   private readonly _projenCommand?: string;
 
   constructor(options: ProjectOptions) {
@@ -290,11 +294,11 @@ export class Project extends Construct {
     this.node.addMetadata("construct", new.target.name);
     this.node.addMetadata("projen.version", PROJEN_VERSION);
 
-    this.initProject = resolveInitProject(options);
+    this._initProject = resolveInitProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
-    this.excludeFromCleanup = [];
+    this._excludeFromCleanup = [];
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
@@ -547,7 +551,7 @@ export class Project extends Construct {
    * @param globs The glob patterns to match
    */
   public addExcludeFromCleanup(...globs: string[]) {
-    this.excludeFromCleanup.push(...globs);
+    this._excludeFromCleanup.push(...globs);
   }
 
   /**
@@ -598,10 +602,20 @@ export class Project extends Construct {
    * 2. Delete all generated files
    * 3. Synthesize all subprojects
    * 4. Synthesize all components of this project
-   * 5. Call "postSynthesize()" for all components of this project
-   * 6. Call "this.postSynthesize()"
+   * 5. Call "projectCreation()" for all components, only if the project is being created for the first time
+   * 6. Call "postSynthesize()" for all components of this project
+   * 7. Call "this.postSynthesize()"
+   * 8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
    */
   public synth(): void {
+    if (this._initProject?.synth === false) {
+      // user request to not run full synth, instead we only run projectCreation hooks
+      for (const comp of this.components) {
+        comp.projectCreation(this._initProject);
+      }
+      return;
+    }
+
     const outdir = this.outdir;
     this.logger.debug("Synthesizing project...");
 
@@ -621,7 +635,7 @@ export class Project extends Construct {
     cleanup(
       outdir,
       this.files.map((f) => normalizePersistedPath(f.path)),
-      this.excludeFromCleanup,
+      this._excludeFromCleanup,
     );
 
     for (const subproject of this.subprojects) {
@@ -632,6 +646,12 @@ export class Project extends Construct {
       comp.synthesize();
     }
 
+    if (this._initProject) {
+      for (const comp of this.components) {
+        comp.projectCreation(this._initProject);
+      }
+    }
+
     if (!isTruthy(process.env.PROJEN_DISABLE_POST)) {
       for (const comp of this.components) {
         comp.postSynthesize();
@@ -639,6 +659,12 @@ export class Project extends Construct {
 
       // project-level hook
       this.postSynthesize();
+
+      if (this._initProject) {
+        for (const comp of this.components) {
+          comp.postProjectCreation(this._initProject);
+        }
+      }
     }
 
     if (this.ejected) {
@@ -704,6 +730,18 @@ export interface InitProject {
    * @default InitProjectOptionHints.FEATURED
    */
   readonly comments: InitProjectOptionHints;
+
+  /**
+   * Whether `projen new` should call `project.synth()` after construction.
+   * @default true
+   */
+  readonly synth: boolean;
+
+  /**
+   * Whether `projen new` should run post-synthesis steps (e.g. package manager install).
+   * @default true
+   */
+  readonly post: boolean;
 }
 
 /**

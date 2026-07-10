@@ -4,7 +4,7 @@ import { Component } from "../component";
 import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import type { ObjectFile } from "../object-file";
-import type { Project } from "../project";
+import type { InitProject, Project } from "../project";
 import type { Task } from "../task";
 import type { TaskStepOptions } from "../task-model";
 import { YamlFile } from "../yaml";
@@ -584,6 +584,13 @@ export class Eslint extends Component {
 
   private renderDevDepsAllowList() {
     return Array.from(this._allowDevDeps);
+  }
+
+  /**
+   * Runs eslint once, right after the project is first created, so the generated code is linted (and auto-fixed) immediately.
+   */
+  public postProjectCreation(_initProject: InitProject) {
+    this.nodeProject.tasks.runTask(this.eslintTask.name);
   }
 
   /**

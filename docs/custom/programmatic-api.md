@@ -42,7 +42,12 @@ through the CLI, like `eslintOptions` (because the field requires an object
 value).
 
 In the above example, the provided option `post: false` was also added to
-disable post-installation steps such as installing NPM dependencies.
+disable post-installation steps such as installing NPM dependencies. This also
+skips any component's `postProjectCreation()` hook (see
+[Lifecycle hooks](./custom-components.md#lifecycle-hooks)), since those run
+alongside post-synthesis steps. Setting `synth: false` skips synthesis
+entirely, but components' `projectCreation()` hooks still run (e.g. so
+`Projenrc` can still write its bootstrap file).
 
 > **Note:** It is important that you provide all fields that are required by the
 project type, otherwise the project may not synthesize properly.
