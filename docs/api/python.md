@@ -5948,7 +5948,7 @@ const pyprojectToml: python.PyprojectToml = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectToml.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
 | <code><a href="#projen.python.PyprojectToml.property.dependencyGroups">dependencyGroups</a></code> | <code><a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a></code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
-| <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are two kinds of metadata: _static_ and _dynamic_. |
+| <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_. |
 | <code><a href="#projen.python.PyprojectToml.property.tool">tool</a></code> | <code><a href="#projen.python.PyprojectTomlTool">PyprojectTomlTool</a></code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
 
 ---
@@ -5983,10 +5983,11 @@ public readonly project: PyprojectTomlProject;
 
 - *Type:* <a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a>
 
-There are two kinds of metadata: _static_ and _dynamic_.
+There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
 
 Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
 - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+- Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
 
 ---
 
@@ -6036,10 +6037,11 @@ public readonly dev: any[];
 
 ### PyprojectTomlProject <a name="PyprojectTomlProject" id="projen.python.PyprojectTomlProject"></a>
 
-There are two kinds of metadata: _static_ and _dynamic_.
+There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
 
 Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
 - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+- Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
 
 #### Initializer <a name="Initializer" id="projen.python.PyprojectTomlProject.Initializer"></a>
 
@@ -6064,7 +6066,7 @@ const pyprojectTomlProject: python.PyprojectTomlProject = { ... }
 | <code><a href="#projen.python.PyprojectTomlProject.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
-| <code><a href="#projen.python.PyprojectTomlProject.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.license">license</a></code> | <code>any</code> | A string containing a valid [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) (recommended), or a table with either: - `file` key specifying a relative path to a license file (deprecated per PEP 639), or - `text` key containing full license content (deprecated per PEP 639). |
 | <code><a href="#projen.python.PyprojectTomlProject.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'maintainers' of the project. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
@@ -6152,7 +6154,7 @@ public readonly dynamic: PyprojectTomlProjectDynamic[];
 
 Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
 
-Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]` unless the key is a list or table with arbitrary entries (PEP 808), in which case the build backend may extend it.
 One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
 
 ---
@@ -6227,9 +6229,7 @@ public readonly license: any;
 
 - *Type:* any
 
-For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
-
-Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+A string containing a valid [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) (recommended), or a table with either: - `file` key specifying a relative path to a license file (deprecated per PEP 639), or - `text` key containing full license content (deprecated per PEP 639).
 
 ---
 
@@ -6357,16 +6357,22 @@ const pyprojectTomlTool: python.PyprojectTomlTool = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectTomlTool.property.black">black</a></code> | <code>any</code> | The uncompromising Python code formatter. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.cibuildwheel">cibuildwheel</a></code> | <code>any</code> | Build Python wheels for all platforms. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.dfc">dfc</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.docstringFormatChecker">docstringFormatChecker</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.fastapi">fastapi</a></code> | <code>any</code> | FastAPI web framework configuration. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.hatch">hatch</a></code> | <code>any</code> | Modern, extensible Python project management. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.maturin">maturin</a></code> | <code>any</code> | Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.mypy">mypy</a></code> | <code>any</code> | Optional static typing for Python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pdm">pdm</a></code> | <code>any</code> | A modern Python package manager with PEP 621 support. |
-| <code><a href="#projen.python.PyprojectTomlTool.property.poe">poe</a></code> | <code>any</code> | A task runner that works well with pyproject.toml files. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.pixi">pixi</a></code> | <code>any</code> | A package manager and task runner. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.poe">poe</a></code> | <code>any</code> | A task runner that works well with `pyproject.toml` files. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.poetry">poetry</a></code> | <code>any</code> | Python dependency management and packaging made easy. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pyright">pyright</a></code> | <code>any</code> | Static type checker for Python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pytest">pytest</a></code> | <code>any</code> | Standardized automated testing of Python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.quikrun">quikrun</a></code> | <code>any</code> | A CLI tool to run code files instantly without typing complex commands in terminal. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.repoReview">repoReview</a></code> | <code>any</code> | Review a repository for best practices. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.ruff">ruff</a></code> | <code>any</code> | An extremely fast Python linter and formatter, written in Rust. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.scheduled">scheduled</a></code> | <code>any</code> | Scheduled jobs in Python's `pyproject.toml`. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.scikitBuild">scikitBuild</a></code> | <code>any</code> | Improved build system generator for Python C/C++/Fortran extensions. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptools">setuptools</a></code> | <code>any</code> | Easily download, build, install, upgrade, and uninstall Python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptoolsScm">setuptoolsScm</a></code> | <code>any</code> | Manage Python package versions using SCM (e.g. Git). |
@@ -6399,6 +6405,42 @@ public readonly cibuildwheel: any;
 - *Type:* any
 
 Build Python wheels for all platforms.
+
+---
+
+##### `dfc`<sup>Optional</sup> <a name="dfc" id="projen.python.PyprojectTomlTool.property.dfc"></a>
+
+```typescript
+public readonly dfc: any;
+```
+
+- *Type:* any
+
+A CLI tool to check and validate Python docstring formatting and completeness.
+
+---
+
+##### `docstringFormatChecker`<sup>Optional</sup> <a name="docstringFormatChecker" id="projen.python.PyprojectTomlTool.property.docstringFormatChecker"></a>
+
+```typescript
+public readonly docstringFormatChecker: any;
+```
+
+- *Type:* any
+
+A CLI tool to check and validate Python docstring formatting and completeness.
+
+---
+
+##### `fastapi`<sup>Optional</sup> <a name="fastapi" id="projen.python.PyprojectTomlTool.property.fastapi"></a>
+
+```typescript
+public readonly fastapi: any;
+```
+
+- *Type:* any
+
+FastAPI web framework configuration.
 
 ---
 
@@ -6450,6 +6492,18 @@ A modern Python package manager with PEP 621 support.
 
 ---
 
+##### `pixi`<sup>Optional</sup> <a name="pixi" id="projen.python.PyprojectTomlTool.property.pixi"></a>
+
+```typescript
+public readonly pixi: any;
+```
+
+- *Type:* any
+
+A package manager and task runner.
+
+---
+
 ##### `poe`<sup>Optional</sup> <a name="poe" id="projen.python.PyprojectTomlTool.property.poe"></a>
 
 ```typescript
@@ -6458,7 +6512,7 @@ public readonly poe: any;
 
 - *Type:* any
 
-A task runner that works well with pyproject.toml files.
+A task runner that works well with `pyproject.toml` files.
 
 ---
 
@@ -6498,6 +6552,18 @@ Standardized automated testing of Python packages.
 
 ---
 
+##### `quikrun`<sup>Optional</sup> <a name="quikrun" id="projen.python.PyprojectTomlTool.property.quikrun"></a>
+
+```typescript
+public readonly quikrun: any;
+```
+
+- *Type:* any
+
+A CLI tool to run code files instantly without typing complex commands in terminal.
+
+---
+
 ##### `repoReview`<sup>Optional</sup> <a name="repoReview" id="projen.python.PyprojectTomlTool.property.repoReview"></a>
 
 ```typescript
@@ -6519,6 +6585,39 @@ public readonly ruff: any;
 - *Type:* any
 
 An extremely fast Python linter and formatter, written in Rust.
+
+---
+
+##### `scheduled`<sup>Optional</sup> <a name="scheduled" id="projen.python.PyprojectTomlTool.property.scheduled"></a>
+
+```typescript
+public readonly scheduled: any;
+```
+
+- *Type:* any
+
+Scheduled jobs in Python's `pyproject.toml`.
+
+This is a specification for declaring recurring scheduled jobs in Python projects, in `pyproject.toml`.
+
+It defines how jobs are declared and how providers would run them.
+
+It does not provide a specific implementation for running scheduled jobs, because that is provider specific.
+
+For example, a file at `app/jobs.py` could define:
+
+```python
+def clean_files():
+print("Running cleanup...")
+```
+
+You could define a scheduled job to run that function once per day with:
+
+```toml
+[tool.scheduled.clean-files]
+every = "day"
+entrypoint = "app.jobs:clean_files"
+```
 
 ---
 
