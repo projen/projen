@@ -50,7 +50,10 @@ describe("file assertions", () => {
   });
 
   test("fileContains / fileNotContains", () => {
-    const p = ws.write("package.json", '{"devDependencies":{"projen":"1.0.0"}}');
+    const p = ws.write(
+      "package.json",
+      '{"devDependencies":{"projen":"1.0.0"}}',
+    );
     expect(fileContains(p, '"projen"')).toBe(true);
     expect(fileNotContains(p, "scripts/run-task.cjs")).toBe(true);
   });
@@ -75,7 +78,9 @@ describe("snapshot + sanitize", () => {
   test("directorySnapshot captures files and honors excludes", () => {
     ws.write("keep.txt", "content");
     ws.write(path.join("node_modules", "dep", "index.js"), "x");
-    const snap = directorySnapshot(ws.dir, { excludeGlobs: ["node_modules/**"] });
+    const snap = directorySnapshot(ws.dir, {
+      excludeGlobs: ["node_modules/**"],
+    });
     expect(snap["keep.txt"]).toBe("content");
     expect(Object.keys(snap)).not.toContain("node_modules/dep/index.js");
   });
@@ -90,8 +95,10 @@ describe("snapshot + sanitize", () => {
       JSON.stringify({ dependencies: [{ name: "projen", version: "1.2.3" }] }),
     );
     sanitizeProjenVersion(ws.dir);
-    expect(JSON.parse(fs.readFileSync(ws.path("package.json"), "utf-8"))
-      .devDependencies.projen).toBe("*");
+    expect(
+      JSON.parse(fs.readFileSync(ws.path("package.json"), "utf-8"))
+        .devDependencies.projen,
+    ).toBe("*");
     expect(
       JSON.parse(fs.readFileSync(ws.path(".projen", "deps.json"), "utf-8"))
         .dependencies[0].version,

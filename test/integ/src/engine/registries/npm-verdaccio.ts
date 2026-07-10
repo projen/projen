@@ -1,8 +1,8 @@
 import type { ChildProcess } from "child_process";
 import { spawn } from "child_process";
+import * as fs from "fs";
 import * as http from "http";
 import * as net from "net";
-import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { run } from "../command";
@@ -85,14 +85,18 @@ export class NpmRegistry {
       ].join("\n"),
     );
 
-    run("npm", ["publish", tarball, "--registry", this.url, "--fetch-retries=0"], {
-      env: {
-        npm_config_userconfig: npmrc,
-        npm_config_globalconfig: path.join(this.storageDir, "empty-global"),
+    run(
+      "npm",
+      ["publish", tarball, "--registry", this.url, "--fetch-retries=0"],
+      {
+        env: {
+          npm_config_userconfig: npmrc,
+          npm_config_globalconfig: path.join(this.storageDir, "empty-global"),
+        },
+        throwOnError: true,
+        timeout: 60_000,
       },
-      throwOnError: true,
-      timeout: 60_000,
-    });
+    );
   }
 
   /**

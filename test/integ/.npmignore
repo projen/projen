@@ -4,6 +4,8 @@
 junit.xml
 /jest.config.json
 /coverage/
+/.prettierignore
+/.prettierrc.json
 /test/
 /test/tsconfig.json
 /src/

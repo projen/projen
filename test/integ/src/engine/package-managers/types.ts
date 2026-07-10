@@ -1,4 +1,4 @@
-import type { CommandResult } from '../command';
+import type { CommandResult } from "../command";
 
 /**
  * A language-native package manager the harness can drive.

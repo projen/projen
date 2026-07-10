@@ -7,7 +7,7 @@ on:
   merge_group: {}
 jobs:
   integ-node:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     env:
@@ -25,21 +25,28 @@ jobs:
         run: node ./projen.js compile
       - name: Bundle task runner
         run: node ./projen.js bundle:task-runner
-      - name: Package
+      - name: Package js
         run: node ./projen.js package:js
-      - name: Run Node integration test
+      - name: Install harness
+        run: node ./projen.js integ:install
+      - name: Run node suite
         run: node ./projen.js integ:node
-      - name: Run eject integration test
+      - name: Run eject suite
         run: node ./projen.js integ:eject
+      - name: Run snapshot suite
+        run: node ./projen.js integ:snapshot
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
         node-version:
           - lts/-2
           - lts/-1
           - lts/*
   integ-python:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     env:
@@ -49,7 +56,7 @@ jobs:
         uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.14"
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
@@ -58,51 +65,20 @@ jobs:
         run: npm ci
       - name: Compile
         run: node ./projen.js compile
-      - name: Package
+      - name: Package python
         run: node ./projen.js package:python
-      - name: Run Python integration test
+      - name: Install harness
+        run: node ./projen.js integ:install
+      - name: Run python suite
         run: node ./projen.js integ:python
     strategy:
       fail-fast: false
       matrix:
-        python-version:
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
-          - "3.14"
-  integ-go:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    env:
-      CI: "0"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
-        with:
-          go-version: ${{ matrix.go-version }}
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          package-manager-cache: false
-      - name: Install dependencies
-        run: npm ci
-      - name: Compile
-        run: node ./projen.js compile
-      - name: Package
-        run: node ./projen.js package:go
-      - name: Run Go integration test
-        run: node ./projen.js integ:go
-    strategy:
-      fail-fast: false
-      matrix:
-        go-version:
-          - 1.25.x
-          - 1.26.x
+        os:
+          - ubuntu-latest
+          - windows-latest
   integ-java:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     env:
@@ -112,8 +88,8 @@ jobs:
         uses: actions/checkout@v6
       - uses: actions/setup-java@v5
         with:
-          java-version: ${{ matrix.java-version }}
-          distribution: ${{ matrix.java-distribution }}
+          java-version: "25"
+          distribution: corretto
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
@@ -122,36 +98,56 @@ jobs:
         run: npm ci
       - name: Compile
         run: node ./projen.js compile
-      - name: Package
+      - name: Package java
         run: node ./projen.js package:java
-      - name: Run Java integration test
+      - name: Install harness
+        run: node ./projen.js integ:install
+      - name: Run java suite
         run: node ./projen.js integ:java
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - java-version: "8"
-            java-distribution: corretto
-          - java-version: "11"
-            java-distribution: corretto
-          - java-version: "17"
-            java-distribution: corretto
-          - java-version: "21"
-            java-distribution: corretto
-          - java-version: "25"
-            java-distribution: corretto
-        java-version:
-          - "8"
-          - "11"
-          - "17"
-          - "21"
-          - "25"
+        os:
+          - ubuntu-latest
+          - windows-latest
+  integ-go:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    env:
+      CI: "0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.x
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Compile
+        run: node ./projen.js compile
+      - name: Package go
+        run: node ./projen.js package:go
+      - name: Install harness
+        run: node ./projen.js integ:install
+      - name: Run go suite
+        run: node ./projen.js integ:go
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
   integ:
     needs:
       - integ-node
       - integ-python
-      - integ-go
       - integ-java
+      - integ-go
     runs-on: ubuntu-latest
     permissions: {}
     if: always()
@@ -160,10 +156,10 @@ jobs:
         run: echo ${{ needs.integ-node.result }}
       - name: integ-python result
         run: echo ${{ needs.integ-python.result }}
-      - name: integ-go result
-        run: echo ${{ needs.integ-go.result }}
       - name: integ-java result
         run: echo ${{ needs.integ-java.result }}
+      - name: integ-go result
+        run: echo ${{ needs.integ-go.result }}
       - name: Set status based on integ tests
-        if: ${{ needs.integ-node.result != 'success' || needs.integ-python.result != 'success' || needs.integ-go.result != 'success' || needs.integ-java.result != 'success' }}
+        if: ${{ needs.integ-node.result != 'success' || needs.integ-python.result != 'success' || needs.integ-java.result != 'success' || needs.integ-go.result != 'success' }}
         run: exit 1

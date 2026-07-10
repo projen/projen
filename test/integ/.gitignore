@@ -32,6 +32,8 @@ jspm_packages/
 junit.xml
 !/jest.config.json
 /coverage/
+!/.prettierignore
+!/.prettierrc.json
 !/test/
 !/tsconfig.json
 !/test/tsconfig.json

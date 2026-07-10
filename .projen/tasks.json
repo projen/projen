@@ -225,69 +225,103 @@
           "spawn": "compile"
         },
         {
+          "spawn": "bundle:task-runner"
+        },
+        {
           "spawn": "package-all"
+        },
+        {
+          "spawn": "integ:install"
         },
         {
           "spawn": "integ:node"
         },
         {
-          "spawn": "integ:python"
+          "spawn": "integ:eject"
         },
         {
-          "spawn": "integ:go"
+          "spawn": "integ:snapshot"
+        },
+        {
+          "spawn": "integ:python"
         },
         {
           "spawn": "integ:java"
         },
         {
-          "spawn": "integ:eject"
+          "spawn": "integ:go"
         }
       ]
     },
     "integ:eject": {
       "name": "integ:eject",
-      "description": "Run projen eject integration test",
+      "description": "Run the eject integration suite",
       "steps": [
         {
-          "exec": "scripts/integ-eject.sh"
+          "exec": "npx jest tests/eject.integ.test.ts --ci"
         }
-      ]
+      ],
+      "cwd": "test/integ"
     },
     "integ:go": {
       "name": "integ:go",
-      "description": "Run Go integration test",
+      "description": "Run the go integration suite",
       "steps": [
         {
-          "exec": "scripts/integ-go.sh"
+          "exec": "npx jest tests/go.integ.test.ts --ci"
         }
-      ]
+      ],
+      "cwd": "test/integ"
+    },
+    "integ:install": {
+      "name": "integ:install",
+      "description": "Install the integration test harness dependencies",
+      "steps": [
+        {
+          "exec": "npm ci"
+        }
+      ],
+      "cwd": "test/integ"
     },
     "integ:java": {
       "name": "integ:java",
-      "description": "Run Java integration test",
+      "description": "Run the java integration suite",
       "steps": [
         {
-          "exec": "scripts/integ-java.sh"
+          "exec": "npx jest tests/java.integ.test.ts --ci"
         }
-      ]
+      ],
+      "cwd": "test/integ"
     },
     "integ:node": {
       "name": "integ:node",
-      "description": "Run Node.js integration test",
+      "description": "Run the node integration suite",
       "steps": [
         {
-          "exec": "scripts/integ-node.sh"
+          "exec": "npx jest tests/node-typescript.integ.test.ts --ci"
         }
-      ]
+      ],
+      "cwd": "test/integ"
     },
     "integ:python": {
       "name": "integ:python",
-      "description": "Run Python integration test",
+      "description": "Run the python integration suite",
       "steps": [
         {
-          "exec": "scripts/integ-python.sh"
+          "exec": "npx jest tests/python.integ.test.ts --ci"
         }
-      ]
+      ],
+      "cwd": "test/integ"
+    },
+    "integ:snapshot": {
+      "name": "integ:snapshot",
+      "description": "Run the snapshot integration suite",
+      "steps": [
+        {
+          "exec": "npx jest tests/projenrc-snapshot.integ.test.ts --ci"
+        }
+      ],
+      "cwd": "test/integ"
     },
     "package": {
       "name": "package",

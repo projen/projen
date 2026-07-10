@@ -541,19 +541,6 @@
           "construct": "IntegrationTests"
         }
       },
-      "GithubWorkflow#integ": {
-        "metadata": {
-          "type": "component",
-          "construct": "GithubWorkflow"
-        }
-      },
-      "YamlFile@.github--workflows--integ.yml": {
-        "metadata": {
-          "type": "file",
-          "construct": "YamlFile",
-          "path": ".github/workflows/integ.yml"
-        }
-      },
       "TypeScriptProject#@projen--integ@test--integ": {
         "metadata": {
           "type": "project",
@@ -675,13 +662,33 @@
               "construct": "Bundler"
             }
           },
-          "AutoId8": {
+          "Prettier#AutoId8": {
+            "metadata": {
+              "type": "component",
+              "construct": "Prettier"
+            }
+          },
+          "IgnoreFile@.prettierignore": {
+            "metadata": {
+              "type": "file",
+              "construct": "IgnoreFile",
+              "path": "test/integ/.prettierignore"
+            }
+          },
+          "JsonFile@.prettierrc.json": {
+            "metadata": {
+              "type": "file",
+              "construct": "JsonFile",
+              "path": "test/integ/.prettierrc.json"
+            }
+          },
+          "AutoId9": {
             "metadata": {
               "type": "component",
               "construct": "TypeScriptRunner"
             }
           },
-          "TypescriptConfig#AutoId9": {
+          "TypescriptConfig#AutoId10": {
             "metadata": {
               "type": "component",
               "construct": "TypescriptConfig"
@@ -694,7 +701,7 @@
               "path": "test/integ/tsconfig.json"
             }
           },
-          "TypescriptConfig#AutoId10": {
+          "TypescriptConfig#AutoId11": {
             "metadata": {
               "type": "component",
               "construct": "TypescriptConfig"
@@ -707,7 +714,7 @@
               "path": "test/integ/test/tsconfig.json"
             }
           },
-          "Eslint#AutoId11": {
+          "Eslint#AutoId12": {
             "metadata": {
               "type": "component",
               "construct": "Eslint"
@@ -720,6 +727,19 @@
               "path": "test/integ/.eslintrc.json"
             }
           }
+        }
+      },
+      "GithubWorkflow#integ": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--integ.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/integ.yml"
         }
       },
       "JsiiFromJsonSchema@src--javascript--biome--biome-config.ts": {

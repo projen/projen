@@ -15,7 +15,9 @@ import { TypeScriptProject as TypeScriptProjectImpl } from "../src/typescript";
  * This child project is intentionally NOT released/published and does not run
  * as part of the parent's normal `build`/`test`.
  */
-export function setupIntegHarness(parent: TypeScriptProject): TypeScriptProject {
+export function setupIntegHarness(
+  parent: TypeScriptProject,
+): TypeScriptProject {
   const integ = new TypeScriptProjectImpl({
     parent,
     outdir: "test/integ",
@@ -24,6 +26,9 @@ export function setupIntegHarness(parent: TypeScriptProject): TypeScriptProject 
       "Cross-platform integration test harness for projen (not published)",
     defaultReleaseBranch: "main",
     packageManager: NodePackageManager.NPM,
+
+    // Match the parent repo's formatting (prettier, double quotes).
+    prettier: true,
 
     // This project is managed by the parent's .projenrc.ts - it has no
     // projenrc of its own, is never released, and owns no CI (the parent

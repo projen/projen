@@ -17,9 +17,13 @@ describe("run", () => {
   });
 
   test("overlays env and can remove variables", () => {
-    const result = run("node", ["-e", "process.stdout.write(process.env.FOO ?? 'unset')"], {
-      env: { FOO: "bar" },
-    });
+    const result = run(
+      "node",
+      ["-e", "process.stdout.write(process.env.FOO ?? 'unset')"],
+      {
+        env: { FOO: "bar" },
+      },
+    );
     expect(result.stdout).toBe("bar");
   });
 

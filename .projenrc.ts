@@ -15,7 +15,6 @@ import {
   JsiiFromJsonSchema,
   JsonConst,
   IntegrationTests,
-  setupIntegHarness,
 } from "./projenrc";
 import {
   AiAgent,
@@ -310,10 +309,6 @@ setupBundleTaskRunner(project);
 
 new IntegrationTests(project);
 
-// The cross-platform integration test harness, as a non-published child
-// project rooted at test/integ.
-setupIntegHarness(project);
-
 new JsiiFromJsonSchema(project, {
   structName: "BiomeConfiguration",
   schemaPath: require.resolve("@biomejs/biome/configuration_schema.json"),
@@ -384,9 +379,10 @@ new AiInstructions(project, {
 
     `## Integration tests
 
-    - **Integration tests use the packaged build output**: End-to-end behavior that depends on the published artifacts (e.g. \`projen new\`, \`projen eject\`, cross-language synthesis) must be tested via the \`scripts/integ-*.sh\` scripts
-    - Wire them through the \`IntegrationTests\` component in \`projenrc/integ-test.ts\`.
-    - These tests will be run against the standard build output (the npm tarball in \`dist/js\`, wheels in \`dist/python\`, etc.).
+    - **Integration tests use the packaged build output**: End-to-end behavior that depends on the published artifacts (e.g. \`projen new\`, \`projen eject\`, cross-language synthesis) is tested by the cross-platform Jest harness in \`test/integ\` (a non-published projen child project).
+    - Suites live in \`test/integ/tests/*.integ.test.ts\`; shared helpers (command runner, temp workspaces, artifact resolution, local registries, package-manager abstraction, assertions) live in \`test/integ/src\`.
+    - The harness is wired through the \`IntegrationTests\` component in \`projenrc/integ-test.ts\`, which also generates the \`integ\` workflow (runs on Ubuntu AND Windows, across the Node version matrix and representative Python/Java/Go versions).
+    - Run locally with \`node ./projen.js integ\` (or a single suite, e.g. \`node ./projen.js integ:node\`). These consume the standard build output (npm tarball in \`dist/js\`, wheel in \`dist/python\`, Maven repo in \`dist/java\`, Go module in \`dist/go\`), served from local registries (Verdaccio for npm, \`--find-links\` for pip, \`file://\` for Maven, a \`replace\` directive for Go).
     - Do NOT write Jest tests that rebuild projen or bundle their own artifacts - always consume the build output so the tests exercise what is actually shipped.`,
   ],
 });

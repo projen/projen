@@ -50,7 +50,10 @@ interface NodePmSpec {
  */
 function writeNpmrc(dir: string, url: string, _hostPort: string): void {
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, ".npmrc"), [`registry=${url}`, ""].join("\n"));
+  fs.writeFileSync(
+    path.join(dir, ".npmrc"),
+    [`registry=${url}`, ""].join("\n"),
+  );
 }
 
 const NODE_PMS: NodePmSpec[] = [
@@ -119,9 +122,7 @@ class NodePackageManagerImpl implements PackageManager {
   }
 
   public configureRegistry(dir: string, registryUrl: string): void {
-    const hostPort = registryUrl
-      .replace(/^https?:\/\//, "")
-      .replace(/\/$/, "");
+    const hostPort = registryUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
     this.spec.writeRegistry(dir, registryUrl, hostPort);
   }
 

@@ -123,7 +123,11 @@ function resolveCommand(command: string): string {
     return command;
   }
   // Leave explicit paths and executables that already carry an extension alone.
-  if (command.includes("/") || command.includes("\\") || command.includes(".")) {
+  if (
+    command.includes("/") ||
+    command.includes("\\") ||
+    command.includes(".")
+  ) {
     return command;
   }
   // `node` is a real .exe on Windows; everything else npm installs as `.cmd`.
