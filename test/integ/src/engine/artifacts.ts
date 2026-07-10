@@ -76,13 +76,14 @@ export class Artifacts {
   }
 
   /**
-   * The version that was built, parsed from the npm tarball filename
-   * (`projen-<version>.tgz`). npm always names packed tarballs
-   * `<name>-<version>.tgz`.
+   * The version that was built, parsed from the npm tarball filename.
+   *
+   * Handles both npm's `projen-<version>.tgz` and jsii-pacmak's
+   * `projen@<version>.jsii.tgz` naming.
    */
   public get version(): string {
     const file = path.basename(this.npmTarball);
-    const match = /^projen-(.+)\.tgz$/.exec(file);
+    const match = /^projen[@-](.+?)(?:\.jsii)?\.tgz$/.exec(file);
     if (!match) {
       throw new Error(
         `Unable to parse projen version from tarball name "${file}"`,

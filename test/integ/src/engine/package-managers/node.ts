@@ -157,5 +157,13 @@ export function runProjenCli(
   options: RunOptions = {},
 ): CommandResult {
   const cli = path.join(dir, "node_modules", "projen", "bin", "projen");
-  return run("node", [cli, ...args], { cwd: dir, ...options });
+  return run("node", [cli, ...args], {
+    cwd: dir,
+    ...options,
+    // Jest sets NODE_ENV=test, which makes projen report the sentinel version
+    // "99.99.99" (see src/common.ts IS_TEST_RUN). We are exercising the real
+    // packaged artifact, so strip it to get production behavior / the real
+    // built version.
+    env: { NODE_ENV: undefined, ...options.env },
+  });
 }

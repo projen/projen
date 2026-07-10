@@ -207,7 +207,7 @@ function freePort(): Promise<number> {
   });
 }
 
-/** Renders a minimal, offline, anonymous-publish Verdaccio config. */
+/** Renders a Verdaccio config: projen served locally, everything else proxied. */
 function renderConfig(storage: string): string {
   return [
     `storage: ${path.join(storage, "storage")}`,
@@ -215,12 +215,26 @@ function renderConfig(storage: string): string {
     `  htpasswd:`,
     `    file: ${path.join(storage, "htpasswd")}`,
     `    max_users: 1000`,
-    `uplinks: {}`,
+    `uplinks:`,
+    `  npmjs:`,
+    `    url: https://registry.npmjs.org/`,
+    `    cache: true`,
+    `    maxage: 30m`,
     `packages:`,
-    `  '**':`,
+    // projen is served ONLY from local storage (our freshly published build).
+    `  'projen':`,
     `    access: $all`,
     `    publish: $all`,
     `    unpublish: $all`,
+    // Everything else (the project's other deps) proxies to the public registry.
+    `  '@*/*':`,
+    `    access: $all`,
+    `    publish: $all`,
+    `    proxy: npmjs`,
+    `  '**':`,
+    `    access: $all`,
+    `    publish: $all`,
+    `    proxy: npmjs`,
     `log: { type: stdout, format: pretty, level: error }`,
     ``,
   ].join("\n");
