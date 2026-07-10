@@ -2,7 +2,7 @@ import * as child_process from "child_process";
 import { $ } from "dax";
 import * as logging from "../logging";
 
-const MAX_BUFFER = 10 * 1024 * 1024;
+export const MAX_BUFFER = 10 * 1024 * 1024;
 
 //
 // ---------------------------------------------------------------------------
@@ -323,56 +323,3 @@ export const rawShell = {
     return out || undefined;
   },
 };
-
-//
-// ---------------------------------------------------------------------------
-// systemShell: the operating system's native shell.
-//
-// Runs an opaque command string through the OS default shell (`/bin/sh` on
-// POSIX, `cmd.exe` on Windows) via `child_process` with `shell: true`. This
-// backs the `"@system"` task shell, which lets a task opt out of the built-in
-// cross-platform shell and use the host's native shell instead.
-// ---------------------------------------------------------------------------
-//
-
-/**
- * Normalized result of running a command through the system shell (a subset of
- * node's `SpawnSyncReturns`).
- */
-export interface SystemShellResult {
-  /** Exit code, or `null` if terminated by a signal or never spawned. */
-  readonly status: number | null;
-  /** Captured stdout, or `null` when stdout was inherited. */
-  readonly stdout: Buffer | null;
-  /** Captured stderr, or `null` when stderr was inherited. */
-  readonly stderr: Buffer | null;
-  /** An error raised while attempting to spawn (not a non-zero exit). */
-  readonly error?: Error;
-}
-
-/**
- * Runs a command line through the operating system's default shell (`/bin/sh`
- * on POSIX, `cmd.exe` on Windows). Never throws for a non-zero exit (that is
- * reported via `status`); a spawn failure is reported via `error`. The caller
- * supplies the full `env`.
- */
-export function systemShell(
-  command: string,
-  options: { cwd: string; env?: NodeJS.ProcessEnv; capture?: boolean },
-): SystemShellResult {
-  logging.debug(`${command} (cwd: ${options.cwd})`);
-  const result = child_process.spawnSync(command, {
-    cwd: options.cwd,
-    shell: true,
-    maxBuffer: MAX_BUFFER,
-    env: options.env,
-    // "pipe" for STDERR (when capturing) means it appears in exceptions.
-    stdio: options.capture ? ["inherit", "pipe", "pipe"] : "inherit",
-  });
-  return {
-    status: result.status,
-    stdout: result.stdout ?? null,
-    stderr: result.stderr ?? null,
-    error: result.error,
-  };
-}
