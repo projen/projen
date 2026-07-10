@@ -400,6 +400,101 @@ describe("step condition", () => {
   });
 });
 
+describe("outputEnv", () => {
+  test("captures a step's stdout into an env var for later steps", () => {
+    // GIVEN
+    const p = new TestProject();
+    const t = p.addTask("cap");
+
+    // WHEN
+    t.addSteps({ exec: "echo captured-value", outputEnv: "MY_OUT" });
+    t.exec(`node -e "console.log('got:' + process.env.MY_OUT)"`);
+
+    // THEN (the captured step still streams live, then the consumer reads it)
+    expect(executeTask(p, "cap")).toEqual([
+      "captured-value",
+      "got:captured-value",
+    ]);
+  });
+
+  test("a skipped step leaves the var unset", () => {
+    // GIVEN
+    const p = new TestProject();
+    const t = p.addTask("cap");
+
+    // WHEN
+    t.addSteps({
+      exec: "echo should-not-run",
+      outputEnv: "MY_OUT",
+      condition: 'node -e "process.exit(1)"',
+    });
+    t.exec(
+      `node -e "console.log('val:[' + (process.env.MY_OUT ?? 'UNSET') + ']')"`,
+    );
+
+    // THEN
+    expect(executeTask(p, "cap")).toEqual(["val:[UNSET]"]);
+  });
+
+  test("captures a spawned task's stdout", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("child", { exec: "echo child-output" });
+    const parent = p.addTask("parent");
+
+    // WHEN
+    parent.addSteps({ spawn: "child", outputEnv: "CHILD_OUT" });
+    parent.exec(
+      `node -e "console.log('parent-sees:' + process.env.CHILD_OUT)"`,
+    );
+
+    // THEN
+    expect(executeTask(p, "parent")).toEqual([
+      "child-output",
+      "parent-sees:child-output",
+    ]);
+  });
+
+  test("captures a multi-step spawned task's output in order", () => {
+    // GIVEN
+    const p = new TestProject();
+    const child = p.addTask("child");
+    child.exec("echo line1");
+    child.exec("echo line2");
+    const parent = p.addTask("parent");
+
+    // WHEN
+    parent.addSteps({ spawn: "child", outputEnv: "CHILD_OUT" });
+    parent.exec(`node -e "console.log(JSON.stringify(process.env.CHILD_OUT))"`);
+
+    // THEN
+    expect(executeTask(p, "parent")).toEqual([
+      "line1",
+      "line2",
+      JSON.stringify("line1\nline2"),
+    ]);
+  });
+
+  test("nested spawn capture is transitive", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("grandchild", { exec: "echo grandchild-out" });
+    const child = p.addTask("child");
+    child.addSteps({ spawn: "grandchild" });
+    const parent = p.addTask("parent");
+
+    // WHEN
+    parent.addSteps({ spawn: "child", outputEnv: "GC" });
+    parent.exec(`node -e "console.log('got:' + process.env.GC)"`);
+
+    // THEN
+    expect(executeTask(p, "parent")).toEqual([
+      "grandchild-out",
+      "got:grandchild-out",
+    ]);
+  });
+});
+
 describe("cwd", () => {
   test("default cwd is project root", () => {
     const p = new TestProject();
