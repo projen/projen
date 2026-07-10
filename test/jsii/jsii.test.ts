@@ -56,6 +56,21 @@ describe("JsiiProject with default settings", () => {
 
     await execProjenCLI(project.outdir, ["compile"]);
   });
+
+  // https://github.com/projen/projen/issues/4806
+  it("supports running jest tests", async () => {
+    const project = new TestJsiiProject();
+
+    project.synth();
+
+    // Add a trivial test file, mirroring the issue's reproduction steps.
+    fs.writeFileSync(
+      path.join(project.outdir, project.testdir, "dummy.test.ts"),
+      "test('dummy', () => { expect(true).toBe(true); });\n",
+    );
+
+    await execProjenCLI(project.outdir, ["test"]);
+  });
 });
 
 describe("JsiiProject with modern jsiiVersion", () => {

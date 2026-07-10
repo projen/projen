@@ -211,6 +211,7 @@ export class JsiiProject extends TypeScriptProject {
       tsconfigDev: {
         compilerOptions: {
           stripInternal: true,
+          isolatedModules: true,
         },
       },
     };
