@@ -493,6 +493,25 @@ describe("outputEnv", () => {
       "got:grandchild-out",
     ]);
   });
+
+  test("a captured var is propagated into a spawned subtask's env", () => {
+    // GIVEN
+    const p = new TestProject();
+    p.addTask("child", {
+      exec: `node -e "console.log('child-got:' + process.env.CAP)"`,
+    });
+    const parent = p.addTask("parent");
+
+    // WHEN
+    parent.addSteps({ exec: "echo the-value", outputEnv: "CAP" });
+    parent.addSteps({ spawn: "child" });
+
+    // THEN
+    expect(executeTask(p, "parent")).toEqual([
+      "the-value",
+      "child-got:the-value",
+    ]);
+  });
 });
 
 describe("cwd", () => {

@@ -10274,9 +10274,11 @@ Test whether the given construct is a component.
 | <code><a href="#projen.Version.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The package used to bump package versions, as a dependency string. |
 | <code><a href="#projen.Version.property.bumpTask">bumpTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Version.property.changelogFileName">changelogFileName</a></code> | <code>string</code> | The name of the changelog file (under `artifactsDirectory`). |
+| <code><a href="#projen.Version.property.releasableCommitsTask">releasableCommitsTask</a></code> | <code><a href="#projen.Task">Task</a></code> | The task that prints the releasable commits since the latest tag. |
 | <code><a href="#projen.Version.property.releaseTagFileName">releaseTagFileName</a></code> | <code>string</code> | The name of the file that contains the release tag (under `artifactsDirectory`). |
 | <code><a href="#projen.Version.property.unbumpTask">unbumpTask</a></code> | <code><a href="#projen.Task">Task</a></code> | *No description.* |
 | <code><a href="#projen.Version.property.versionFileName">versionFileName</a></code> | <code>string</code> | The name of the file that contains the version (under `artifactsDirectory`). |
+| <code><a href="#projen.Version.property.nextVersionTask">nextVersionTask</a></code> | <code><a href="#projen.Task">Task</a></code> | The task that runs the user's `nextVersionCommand`, if configured. |
 
 ---
 
@@ -10338,6 +10340,21 @@ The name of the changelog file (under `artifactsDirectory`).
 
 ---
 
+##### `releasableCommitsTask`<sup>Required</sup> <a name="releasableCommitsTask" id="projen.Version.property.releasableCommitsTask"></a>
+
+```typescript
+public readonly releasableCommitsTask: Task;
+```
+
+- *Type:* <a href="#projen.Task">Task</a>
+
+The task that prints the releasable commits since the latest tag.
+
+Spawned
+by `bump`; its shell can be overridden via `task.shell`.
+
+---
+
 ##### `releaseTagFileName`<sup>Required</sup> <a name="releaseTagFileName" id="projen.Version.property.releaseTagFileName"></a>
 
 ```typescript
@@ -10369,6 +10386,21 @@ public readonly versionFileName: string;
 - *Type:* string
 
 The name of the file that contains the version (under `artifactsDirectory`).
+
+---
+
+##### `nextVersionTask`<sup>Optional</sup> <a name="nextVersionTask" id="projen.Version.property.nextVersionTask"></a>
+
+```typescript
+public readonly nextVersionTask: Task;
+```
+
+- *Type:* <a href="#projen.Task">Task</a>
+
+The task that runs the user's `nextVersionCommand`, if configured.
+
+Spawned
+by `bump`; its shell can be overridden via `task.shell`.
 
 ---
 
@@ -15710,6 +15742,7 @@ const taskStep: TaskStep = { ... }
 | <code><a href="#projen.TaskStep.property.exec">exec</a></code> | <code>string</code> | Shell command to execute. |
 | <code><a href="#projen.TaskStep.property.execArgs">execArgs</a></code> | <code>string[]</code> | Shell command to execute, provided as a list of the program followed by its arguments (an "argv"). |
 | <code><a href="#projen.TaskStep.property.name">name</a></code> | <code>string</code> | Step name. |
+| <code><a href="#projen.TaskStep.property.outputEnv">outputEnv</a></code> | <code>string</code> | Capture this step's standard output and expose it to later steps as an environment variable with this name. |
 | <code><a href="#projen.TaskStep.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
 | <code><a href="#projen.TaskStep.property.say">say</a></code> | <code>string</code> | Print a message. |
 | <code><a href="#projen.TaskStep.property.shell">shell</a></code> | <code>string \| string[]</code> | The step shell in `tasks.json` form: a keyword (`"projen"` or `"system"`) or an invocation argument list. |
@@ -15857,6 +15890,21 @@ Step name.
 
 ---
 
+##### `outputEnv`<sup>Optional</sup> <a name="outputEnv" id="projen.TaskStep.property.outputEnv"></a>
+
+```typescript
+public readonly outputEnv: string;
+```
+
+- *Type:* string
+- *Default:* stdout is not captured
+
+Capture this step's standard output and expose it to later steps as an environment variable with this name.
+
+> [{@link TaskStepOptions.outputEnv }]({@link TaskStepOptions.outputEnv })
+
+---
+
 ##### `receiveArgs`<sup>Optional</sup> <a name="receiveArgs" id="projen.TaskStep.property.receiveArgs"></a>
 
 ```typescript
@@ -15932,6 +15980,7 @@ const taskStepOptions: TaskStepOptions = { ... }
 | <code><a href="#projen.TaskStepOptions.property.cwd">cwd</a></code> | <code>string</code> | The working directory for this step. |
 | <code><a href="#projen.TaskStepOptions.property.env">env</a></code> | <code>{[ key: string ]: string}</code> | Defines environment variables for the execution of this step (`exec` and `builtin` only). |
 | <code><a href="#projen.TaskStepOptions.property.name">name</a></code> | <code>string</code> | Step name. |
+| <code><a href="#projen.TaskStepOptions.property.outputEnv">outputEnv</a></code> | <code>string</code> | Capture this step's (trimmed) stdout into an environment variable of this name, visible to all later steps of the task run. |
 | <code><a href="#projen.TaskStepOptions.property.receiveArgs">receiveArgs</a></code> | <code>boolean</code> | Should this step receive args passed to the task. |
 | <code><a href="#projen.TaskStepOptions.property.shell">shell</a></code> | <code><a href="#projen.TaskShell">TaskShell</a></code> | The shell used to run this step, overriding the task/project shell. |
 
@@ -16031,6 +16080,25 @@ public readonly name: string;
 - *Default:* no name
 
 Step name.
+
+---
+
+##### `outputEnv`<sup>Optional</sup> <a name="outputEnv" id="projen.TaskStepOptions.property.outputEnv"></a>
+
+```typescript
+public readonly outputEnv: string;
+```
+
+- *Type:* string
+- *Default:* stdout is not captured
+
+Capture this step's (trimmed) stdout into an environment variable of this name, visible to all later steps of the task run.
+
+For `spawn` steps the
+spawned subtask's combined stdout is captured.
+
+Set only when the step runs (a skipped step leaves it unset) and always
+overwrites. The step's output still streams live.
 
 ---
 

@@ -270,6 +270,10 @@ class RunTask {
   private captureAll = false;
   private readonly captured: string[] = [];
 
+  // `outputEnv` captures, propagated to spawned subtasks (exec/builtin steps
+  // see them via `this.env`).
+  private readonly capturedEnv: { [name: string]: string } = {};
+
   constructor(
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
@@ -289,6 +293,21 @@ class RunTask {
     this.captureAll = true;
     await this.run();
     return this.captured.join("\n").trim();
+  }
+
+  /**
+   * Records a step's captured (trimmed) stdout: into `outputEnv` for later
+   * steps (and propagated to spawned subtasks), and into the run's aggregate
+   * output when capturing everything.
+   */
+  private recordCapture(outputEnv: string | undefined, value: string) {
+    if (outputEnv) {
+      this.env[outputEnv] = value;
+      this.capturedEnv[outputEnv] = value;
+    }
+    if (this.captureAll) {
+      this.captured.push(value);
+    }
   }
 
   /**
@@ -367,16 +386,11 @@ class RunTask {
           step.spawn,
           [...this.parents, this.task.name],
           argsList,
-          step.env,
+          { ...this.capturedEnv, ...step.env },
           { captureOutput: capture },
         );
         if (typeof output === "string") {
-          if (step.outputEnv) {
-            this.env[step.outputEnv] = output;
-          }
-          if (this.captureAll) {
-            this.captured.push(output);
-          }
+          this.recordCapture(step.outputEnv, output);
         }
       }
 
@@ -451,13 +465,8 @@ class RunTask {
           );
         }
         if (capture) {
-          const stdout = result.stdout?.toString("utf-8") ?? "";
-          if (step.outputEnv) {
-            this.env[step.outputEnv] = stdout.trim();
-          }
-          if (this.captureAll) {
-            this.captured.push(stdout.trim());
-          }
+          const stdout = result.stdout?.toString("utf-8").trim() ?? "";
+          this.recordCapture(step.outputEnv, stdout);
         }
       }
     }

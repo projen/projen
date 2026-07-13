@@ -135,6 +135,22 @@ I.e. to not not bump the version, the command must print nothing and exit succes
 releasableCommits: ReleasableCommits.exec("./custom-script.sh"),
 ```
 
+### The `bump:releasable-commits` and `bump:next-version` tasks
+
+The `bump` task runs `releasableCommits` and `nextVersionCommand` as two
+standalone tasks — `bump:releasable-commits` and `bump:next-version` — that it
+spawns and reads the output of. This means you can run them on their own to
+inspect what they do (e.g. `projen bump:releasable-commits`), and configure each
+independently, including its shell (see
+[Tasks](../concepts/tasks.md#shell)):
+
+```ts
+import { TaskShell } from "projen";
+
+// e.g. if a command uses bash-specific syntax
+project.tasks.tryFind("bump:next-version")?.shell = TaskShell.bash();
+```
+
 ## Manual Releases
 
 If you don't want projen to automatically release your project, you can configure a manual release trigger:

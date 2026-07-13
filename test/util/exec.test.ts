@@ -1,4 +1,4 @@
-import { git, node, npm, rawShell, tool } from "../../src/util/exec";
+import { git, node, npm, tool } from "../../src/util/exec";
 
 // Use the current Node.js executable as a deterministic, cross-platform test
 // binary: it is always present, needs no network, and behaves identically on
@@ -83,43 +83,6 @@ describe("tool (shell-free)", () => {
 
   test("git helper invokes git", () => {
     expect(git.capture(["--version"], { cwd })).toMatch(/git version/);
-  });
-});
-
-describe("rawShell (system shell)", () => {
-  test("capture runs a command string and strips the trailing newline", async () => {
-    const out = await rawShell.capture(`node -e "console.log('shell-ok')"`, {
-      cwd,
-    });
-    expect(out).toBe("shell-ok");
-  });
-
-  test("capture rejects on a non-zero exit", async () => {
-    await expect(
-      rawShell.capture(`node -e "process.exit(4)"`, { cwd }),
-    ).rejects.toMatchObject({ exitCode: 4 });
-  });
-
-  test("tryCapture returns the trimmed value on success", async () => {
-    expect(
-      await rawShell.tryCapture(`node -e "process.stdout.write('ok')"`, {
-        cwd,
-      }),
-    ).toBe("ok");
-  });
-
-  test("tryCapture returns undefined on a non-zero exit", async () => {
-    expect(
-      await rawShell.tryCapture(`node -e "process.exit(1)"`, { cwd }),
-    ).toBeUndefined();
-  });
-
-  test("additional env is merged over process.env", async () => {
-    const out = await rawShell.capture(
-      `node -e "process.stdout.write(process.env.RS_VAR ?? '')"`,
-      { cwd, env: { RS_VAR: "yes" } },
-    );
-    expect(out).toBe("yes");
   });
 });
 

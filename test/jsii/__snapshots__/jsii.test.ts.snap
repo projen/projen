@@ -892,7 +892,29 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -1499,6 +1521,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "scripts": {
       "build": "projen build",
       "bump": "projen bump",
+      "bump:releasable-commits": "projen bump:releasable-commits",
       "clobber": "projen clobber",
       "compat": "projen compat",
       "compile": "projen compile",
@@ -2477,7 +2500,29 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -3084,6 +3129,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "scripts": {
       "build": "projen build",
       "bump": "projen bump",
+      "bump:releasable-commits": "projen bump:releasable-commits",
       "clobber": "projen clobber",
       "compat": "projen compat",
       "compile": "projen compile",
@@ -4064,7 +4110,29 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -4671,6 +4739,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "scripts": {
       "build": "projen build",
       "bump": "projen bump",
+      "bump:releasable-commits": "projen bump:releasable-commits",
       "clobber": "projen clobber",
       "compat": "projen compat",
       "compile": "projen compile",

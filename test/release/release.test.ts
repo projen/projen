@@ -142,8 +142,14 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     expect(
-      outdir[".projen/tasks.json"].tasks.bump.env.NEXT_VERSION_COMMAND,
+      outdir[".projen/tasks.json"].tasks["bump:next-version"].steps[0].exec,
     ).toEqual("NEXT-VERSION-COMMAND");
+    expect(
+      outdir[".projen/tasks.json"].tasks.bump.steps.some(
+        (s: any) =>
+          s.spawn === "bump:next-version" && s.outputEnv === "BUMP_TYPE",
+      ),
+    ).toBe(true);
   });
 
   test("nextVersionCommand and minMajorVersion do not go together", () => {
