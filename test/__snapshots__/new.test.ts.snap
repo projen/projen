@@ -161,6 +161,7 @@ exports[`projen new --from using registry existing package 1`] = `
   "scripts": {
     "build": "projen build",
     "bump": "projen bump",
+    "bump:releasable-commits": "projen bump:releasable-commits",
     "bundle": "projen bundle",
     "clobber": "projen clobber",
     "compile": "projen compile",
@@ -300,6 +301,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
   "scripts": {
     "build": "projen build",
     "bump": "projen bump",
+    "bump:releasable-commits": "projen bump:releasable-commits",
     "bundle": "projen bundle",
     "clobber": "projen clobber",
     "compile": "projen compile",
@@ -439,6 +441,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
   "scripts": {
     "build": "projen build",
     "bump": "projen bump",
+    "bump:releasable-commits": "projen bump:releasable-commits",
     "bundle": "projen bundle",
     "clobber": "projen clobber",
     "compile": "projen compile",
@@ -578,6 +581,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
   "scripts": {
     "build": "projen build",
     "bump": "projen bump",
+    "bump:releasable-commits": "projen bump:releasable-commits",
     "bundle": "projen bundle",
     "clobber": "projen clobber",
     "compile": "projen compile",
