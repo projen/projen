@@ -9,7 +9,7 @@ describe("IntegrationTest", () => {
   const project = new awscdk.AwsCdkTypeScriptApp({
     name: "test",
     defaultReleaseBranch: "main",
-    cdkVersion: "1.134.0",
+    cdkVersion: "2.189.1",
   });
 
   // WHEN
@@ -82,7 +82,7 @@ test("installs ts-node if needed", () => {
     entrypoint: "test/foo.integ.ts",
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: new AwsCdkDepsJs(project, {
-      cdkVersion: "1.0.0",
+      cdkVersion: "2.189.1",
       dependencyType: DependencyType.RUNTIME,
     }),
   });
@@ -90,28 +90,6 @@ test("installs ts-node if needed", () => {
   expect(project.deps.getDependency("ts-node")).toStrictEqual({
     name: "ts-node",
     type: "build",
-  });
-});
-
-test("installs aws-cdk v1 if needed", () => {
-  const project = new TypeScriptProject({
-    name: "test",
-    defaultReleaseBranch: "main",
-  });
-
-  new IntegrationTest(project, {
-    entrypoint: "test/foo.integ.ts",
-    tsconfigPath: project.tsconfigDev.fileName,
-    cdkDeps: new AwsCdkDepsJs(project, {
-      cdkVersion: "1.0.0",
-      dependencyType: DependencyType.RUNTIME,
-    }),
-  });
-
-  expect(project.deps.getDependency("aws-cdk")).toStrictEqual({
-    name: "aws-cdk",
-    type: "build",
-    version: "^1",
   });
 });
 

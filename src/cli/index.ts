@@ -1,19 +1,15 @@
-import { resolve } from "path";
-import * as yargs from "yargs";
-import newCommand from "./cmds/new";
-import { synth } from "./synth";
-import { discoverTaskCommands } from "./tasks";
-import {
-  PROJEN_DIR,
-  DEFAULT_PROJEN_RC_JS_FILENAME,
-  PROJEN_VERSION,
-} from "../common";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { PROJEN_DIR, PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
-import { TaskRuntime } from "../task-runtime";
 import { findUp, getNodeMajorVersion } from "../util";
+import newCommand from "./cmds/new";
+import { discoverTaskCommands } from "./cmds/run-task";
+import { synth } from "./cmds/synth";
+import { TaskRuntime } from "./task-runtime";
 
 async function main() {
-  const ya = yargs;
+  const ya = yargs(hideBin(process.argv));
   ya.command(newCommand);
 
   const pathToProjenDir = findUp(PROJEN_DIR, process.cwd());
@@ -23,7 +19,7 @@ async function main() {
   ya.recommendCommands();
   ya.strictCommands();
   ya.showHelpOnFail(false);
-  ya.wrap(yargs.terminalWidth());
+  ya.wrap(ya.terminalWidth());
   ya.option("post", {
     type: "boolean",
     default: true,
@@ -36,16 +32,6 @@ async function main() {
     alias: "w",
   });
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
-  ya.options("rc", {
-    deprecated: true,
-    desc: "path to .projenrc.js file",
-    // must be `defaultDescription` and not an actual `default` value,
-    // since a default would make the CLI think --rc was passed
-    // and later skip a perfectly fine modern default task.
-    // The actual default value is set again later on.
-    defaultDescription: resolve(DEFAULT_PROJEN_RC_JS_FILENAME),
-    type: "string",
-  });
   ya.completion();
   ya.help();
 
@@ -80,7 +66,6 @@ async function main() {
     await synth(runtime, {
       post: args.post as boolean,
       watch: args.watch as boolean,
-      rcfile: args.rc as string,
     });
   }
 }

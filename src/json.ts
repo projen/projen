@@ -1,6 +1,7 @@
-import { IConstruct } from "constructs";
-import { IResolver } from "./file";
-import { ObjectFile, ObjectFileOptions } from "./object-file";
+import type { IConstruct } from "constructs";
+import type { IResolver } from "./file";
+import type { ObjectFileOptions } from "./object-file";
+import { ObjectFile } from "./object-file";
 
 /**
  * Options for `JsonFile`.
@@ -24,32 +25,50 @@ export interface JsonFileOptions extends ObjectFileOptions {
  */
 export class JsonFile extends ObjectFile {
   private readonly newline: boolean;
-  readonly supportsComments: boolean;
+  private allowComments: boolean = true;
+
+  /**
+   * Indicates if the files supports comments.
+   */
+  public get supportsComments(): boolean {
+    return this.allowComments;
+  }
 
   constructor(scope: IConstruct, filePath: string, options: JsonFileOptions) {
     super(scope, filePath, options);
 
     this.newline = options.newline ?? true;
-    this.supportsComments =
+    this.configureComments(
       options.allowComments ??
-      (filePath.toLowerCase().endsWith("json5") ||
-        filePath.toLowerCase().endsWith("jsonc"));
+        (filePath.toLowerCase().endsWith("json5") ||
+          filePath.toLowerCase().endsWith("jsonc")),
+    );
+
+    if (!options.obj) {
+      throw new Error('"obj" cannot be undefined');
+    }
+  }
+
+  /**
+   * Helper to enable/disable supportsComments from other parts of the codebase.
+   */
+  private configureComments(allowed: boolean) {
+    this.allowComments = allowed;
 
     // Add linguist-language=JSON-with-Comments attribute for files that support comments
     // This helps GitHub render them correctly with syntax highlighting
-    if (this.supportsComments) {
-      const committed =
-        options.committed ?? this.project.commitGenerated ?? true;
-      if (committed) {
+    if (this.committed) {
+      if (allowed) {
         this.project.gitattributes.addAttributes(
           `/${this.path}`,
           "linguist-language=JSON-with-Comments",
         );
+      } else {
+        this.project.gitattributes.removeAttributes(
+          `/${this.path}`,
+          "linguist-language=JSON-with-Comments",
+        );
       }
-    }
-
-    if (!options.obj) {
-      throw new Error('"obj" cannot be undefined');
     }
   }
 

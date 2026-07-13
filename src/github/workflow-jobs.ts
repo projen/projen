@@ -1,13 +1,10 @@
-import {
-  CheckoutWithPatchOptions,
-  CreatePullRequestOptions,
-  WorkflowActions,
-  WorkflowSteps,
-  workflows,
-} from ".";
+import type { CheckoutWithPatchOptions, CreatePullRequestOptions } from ".";
+import { WorkflowActions, WorkflowSteps, workflows } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
-import { Job, JobPermission, JobStep } from "./workflows-model";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Job, JobStep } from "./workflows-model";
+import { JobPermission } from "./workflows-model";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 /**
  * A set of utility functions for creating jobs in GitHub Workflows.

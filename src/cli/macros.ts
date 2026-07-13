@@ -1,5 +1,6 @@
 import * as path from "path";
-import { execOrUndefined, formatAsPythonModule } from "../util";
+import { formatAsPythonModule } from "../util";
+import { git } from "../util/exec";
 
 export function tryProcessMacro(cwd: string, macro: string) {
   if (!macro.startsWith("$")) {
@@ -12,7 +13,7 @@ export function tryProcessMacro(cwd: string, macro: string) {
     case "$BASEDIR":
       return basedir;
     case "$GIT_REMOTE":
-      const origin = execOrUndefined("git remote get-url origin", { cwd });
+      const origin = git.tryCapture(["remote", "get-url", "origin"], { cwd });
       if (origin) {
         return origin;
       }
@@ -39,8 +40,8 @@ export function tryProcessMacro(cwd: string, macro: string) {
  */
 function getFromGitConfig(cwd: string, key: string): string | undefined {
   return (
-    execOrUndefined(`git config --get --includes ${key}`, { cwd }) ??
-    execOrUndefined(`git config --get --global --includes ${key}`, { cwd })
+    git.tryCapture(["config", "--get", "--includes", key], { cwd }) ??
+    git.tryCapture(["config", "--get", "--global", "--includes", key], { cwd })
   );
 }
 

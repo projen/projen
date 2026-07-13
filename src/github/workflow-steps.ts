@@ -1,6 +1,26 @@
-import { GitIdentity } from "./task-workflow";
-import { JobStepConfiguration, JobStep } from "./workflows-model";
+import type { GitIdentity } from "./task-workflow";
+import type { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
+
+/**
+ * Whether to checkout Git submodules in CI workflows.
+ */
+export enum CheckoutSubmodules {
+  /**
+   * Don't checkout submodules.
+   */
+  DISABLED = "false",
+
+  /**
+   * Checkout only top-level submodules.
+   */
+  ENABLED = "true",
+
+  /**
+   * Checkout submodules recursively.
+   */
+  RECURSIVE = "recursive",
+}
 
 /**
  * A collection of very commonly used, individual, GitHub Workflow Job steps.
@@ -20,6 +40,15 @@ export class WorkflowSteps {
       repository: options?.with?.repository,
       path: options?.with?.path,
       ...(options?.with?.lfs ? { lfs: true } : {}),
+      ...(options?.with?.submodules &&
+      options.with.submodules !== CheckoutSubmodules.DISABLED
+        ? {
+            submodules:
+              options.with.submodules === CheckoutSubmodules.RECURSIVE
+                ? "recursive"
+                : true,
+          }
+        : {}),
     });
 
     return {
@@ -125,6 +154,7 @@ export class WorkflowSteps {
     const downloadArtifactWith: DownloadArtifactWith | undefined = options?.with
       ? removeNullOrUndefinedProperties({
           name: options?.with?.name,
+          "artifact-ids": options?.with?.artifactIds?.join(",") || undefined, // || undefined will remove an empty list
           path: options?.with?.path,
           pattern: options?.with?.pattern,
           repository: options?.with?.repository,
@@ -184,6 +214,13 @@ export interface CheckoutWith {
    * @default false
    */
   readonly lfs?: boolean;
+
+  /**
+   * Whether to checkout Git submodules.
+   *
+   * @default CheckoutSubmodules.DISABLED
+   */
+  readonly submodules?: CheckoutSubmodules;
 
   /**
    * Branch or tag name.
@@ -298,6 +335,12 @@ export interface DownloadArtifactWith {
    * @default - If unspecified, all artifacts for the run are downloaded
    */
   readonly name?: string;
+
+  /**
+   * IDs of the artifacts to download.
+   * Either inputs `artifact-ids` or `name` can be used, but not both.
+   */
+  readonly artifactIds?: string[];
 
   /**
    * A file, directory or wildcard pattern that describes what to download. Supports basic tilde expansion.

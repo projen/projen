@@ -1,6 +1,6 @@
-import { Pom } from "./pom";
+import type { Pom } from "./pom";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for `MavenCompile`.
@@ -37,6 +37,6 @@ export class MavenCompile extends Component {
       },
     });
 
-    project.compileTask.exec("mvn compiler:compile");
+    project.compileTask.execArgs(["mvn", "compiler:compile"]);
   }
 }

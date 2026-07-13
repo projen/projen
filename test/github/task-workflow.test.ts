@@ -1,5 +1,6 @@
 import * as yaml from "yaml";
 import { TaskWorkflow } from "../../src/github/task-workflow";
+import { CheckoutSubmodules } from "../../src/github/workflow-steps";
 import { Task } from "../../src/task";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -113,6 +114,46 @@ describe("task-workflow", () => {
       "lfs: true",
     );
     expect(snapshot[".gitattributes"]).toContain("*.bin filter=lfs");
+  });
+
+  test("enabling submodule download adds the submodules property to workflows", () => {
+    const project = new TestProject({
+      githubOptions: {
+        checkoutSubmodules: CheckoutSubmodules.ENABLED,
+      },
+    });
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
+      "submodules: true",
+    );
+  });
+
+  test("checkoutSubmodules: 'recursive' is preserved in the workflow", () => {
+    const project = new TestProject({
+      githubOptions: {
+        checkoutSubmodules: CheckoutSubmodules.RECURSIVE,
+      },
+    });
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
+      "submodules: recursive",
+    );
   });
 
   test("with custom runner, multiple labels", () => {

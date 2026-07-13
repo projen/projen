@@ -1,15 +1,15 @@
 import * as path from "path";
 import { Component } from "../component";
-import { FileBase, FileBaseOptions, IResolver } from "../file";
+import type { NodeProjectOptions } from "../javascript";
 import {
   NodeProject,
-  NodeProjectOptions,
   TypeScriptJsxMode,
   TypeScriptModuleResolution,
 } from "../javascript";
 import { SampleDir } from "../sample-file";
 import { SourceCode } from "../source-code";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import type { TypeScriptProjectOptions } from "../typescript";
+import { TypeScriptAppProject } from "../typescript";
 import { deepMerge } from "../util";
 
 export interface ReactRewireOptions {
@@ -248,12 +248,12 @@ export class ReactComponent extends Component {
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask("dev", {
       description: "Starts the react application",
-      exec: `${reactScripts} start`,
+      execArgs: [reactScripts, "start"],
     });
 
-    project.compileTask.exec(`${reactScripts} build`);
+    project.compileTask.execArgs([reactScripts, "build"]);
 
-    project.testTask.exec(`${reactScripts} test --watchAll=false`);
+    project.testTask.execArgs([reactScripts, "test", "--watchAll=false"]);
 
     const testWatch = project.tasks.tryFind("test:watch");
     testWatch?.reset(`${reactScripts} test`);
@@ -479,27 +479,5 @@ class ReactSampleCode extends Component {
         ["setupTests." + fileExtWithoutX]: setupTestsJs.join("\n"),
       },
     });
-  }
-}
-
-/**
- * @deprecated No longer used.
- */
-export interface ReactTypeDefOptions extends FileBaseOptions {}
-
-/**
- * @deprecated No longer used.
- */
-export class ReactTypeDef extends FileBase {
-  constructor(
-    project: ReactTypeScriptProject,
-    filePath: string,
-    options: ReactTypeDefOptions = {},
-  ) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver): string | undefined {
-    return ['/// <reference types="react-scripts" />'].join("\n");
   }
 }

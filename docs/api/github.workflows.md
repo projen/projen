@@ -62,7 +62,6 @@ const appPermissions: github.workflows.AppPermissions = { ... }
 | <code><a href="#projen.github.workflows.AppPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.profile">profile</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners">repositoryAnnouncementBanners</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryCustomProperties">repositoryCustomProperties</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryHooks">repositoryHooks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
@@ -442,18 +441,6 @@ public readonly profile: AppPermission;
 
 ```typescript
 public readonly pullRequests: AppPermission;
-```
-
-- *Type:* projen.github.workflows.AppPermission
-
----
-
-##### ~~`repositoryAnnouncementBanners`~~<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryAnnouncementBanners: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -1189,6 +1176,77 @@ Which activity types to trigger on.
 
 ---
 
+### JavaToolRequirement <a name="JavaToolRequirement" id="projen.github.workflows.JavaToolRequirement"></a>
+
+Version requirement for Java tools.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.JavaToolRequirement.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const javaToolRequirement: github.workflows.JavaToolRequirement = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.distribution">distribution</a></code> | <code>string</code> | The JDK distribution to use. |
+| <code><a href="#projen.github.workflows.JavaToolRequirement.property.packageManager">packageManager</a></code> | <code>string</code> | The package manager to use for caching (e.g. "maven", "gradle", "sbt"). Required when `cache` is true. |
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.github.workflows.JavaToolRequirement.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.JavaToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
+
+---
+
+##### `distribution`<sup>Optional</sup> <a name="distribution" id="projen.github.workflows.JavaToolRequirement.property.distribution"></a>
+
+```typescript
+public readonly distribution: string;
+```
+
+- *Type:* string
+- *Default:* "corretto"
+
+The JDK distribution to use.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.github.workflows.JavaToolRequirement.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: string;
+```
+
+- *Type:* string
+
+The package manager to use for caching (e.g. "maven", "gradle", "sbt"). Required when `cache` is true.
+
+---
+
 ### Job <a name="Job" id="projen.github.workflows.Job"></a>
 
 A GitHub Workflow job definition.
@@ -1814,7 +1872,6 @@ const jobPermissions: github.workflows.JobPermissions = { ... }
 | <code><a href="#projen.github.workflows.JobPermissions.property.packages">packages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.JobPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.securityEvents">securityEvents</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.statuses">statuses</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 
@@ -1940,18 +1997,6 @@ public readonly pullRequests: JobPermission;
 
 ---
 
-##### ~~`repositoryProjects`~~<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryProjects: JobPermission;
-```
-
-- *Type:* projen.github.workflows.JobPermission
-
----
-
 ##### `securityEvents`<sup>Optional</sup> <a name="securityEvents" id="projen.github.workflows.JobPermissions.property.securityEvents"></a>
 
 ```typescript
@@ -1999,8 +2044,13 @@ const jobStep: github.workflows.JobStep = { ... }
 | <code><a href="#projen.github.workflows.JobStep.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.JobStep.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
 | <code><a href="#projen.github.workflows.JobStep.property.with">with</a></code> | <code>{[ key: string ]: any}</code> | A map of the input parameters defined by the action. |
+| <code><a href="#projen.github.workflows.JobStep.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.workflows.JobStep.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.workflows.JobStep.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.workflows.JobStep.property.parallel">parallel</a></code> | <code>projen.github.workflows.JobStep[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.workflows.JobStep.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.workflows.JobStep.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.workflows.JobStep.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 
 ---
 
@@ -2139,6 +2189,48 @@ The variable is prefixed with INPUT_ and converted to upper case.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.workflows.JobStep.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.workflows.JobStep.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStep.property.continueOnError"></a>
 
 ```typescript
@@ -2154,6 +2246,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.workflows.JobStep.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStep.property.timeoutMinutes"></a>
 
 ```typescript
@@ -2163,6 +2280,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.workflows.JobStep.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.workflows.JobStep.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -2188,8 +2341,13 @@ const jobStepConfiguration: github.workflows.JobStepConfiguration = { ... }
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.parallel">parallel</a></code> | <code>projen.github.workflows.JobStep[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 
 ---
 
@@ -2279,6 +2437,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.workflows.JobStepConfiguration.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.workflows.JobStepConfiguration.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStepConfiguration.property.continueOnError"></a>
 
 ```typescript
@@ -2294,6 +2494,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.workflows.JobStepConfiguration.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStepConfiguration.property.timeoutMinutes"></a>
 
 ```typescript
@@ -2303,6 +2528,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.workflows.JobStepConfiguration.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.workflows.JobStepConfiguration.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -2970,6 +3231,63 @@ Git ref.
 
 ---
 
+### PythonToolRequirement <a name="PythonToolRequirement" id="projen.github.workflows.PythonToolRequirement"></a>
+
+Version requirement for Python tools.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.PythonToolRequirement.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const pythonToolRequirement: github.workflows.PythonToolRequirement = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
+| <code><a href="#projen.github.workflows.PythonToolRequirement.property.packageManager">packageManager</a></code> | <code>string</code> | The package manager to use for caching (e.g. "pip", "pipenv", "poetry"). Required when `cache` is true. |
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="projen.github.workflows.PythonToolRequirement.property.version"></a>
+
+```typescript
+public readonly version: string;
+```
+
+- *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.PythonToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
+
+---
+
+##### `packageManager`<sup>Optional</sup> <a name="packageManager" id="projen.github.workflows.PythonToolRequirement.property.packageManager"></a>
+
+```typescript
+public readonly packageManager: string;
+```
+
+- *Type:* string
+
+The package manager to use for caching (e.g. "pip", "pipenv", "poetry"). Required when `cache` is true.
+
+---
+
 ### RegistryPackageOptions <a name="RegistryPackageOptions" id="projen.github.workflows.RegistryPackageOptions"></a>
 
 Registry package options.
@@ -3432,6 +3750,7 @@ const toolRequirement: github.workflows.ToolRequirement = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.ToolRequirement.property.version">version</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.ToolRequirement.property.cache">cache</a></code> | <code>boolean</code> | Whether to enable automatic dependency caching. |
 
 ---
 
@@ -3442,6 +3761,19 @@ public readonly version: string;
 ```
 
 - *Type:* string
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.github.workflows.ToolRequirement.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable automatic dependency caching.
 
 ---
 
@@ -3463,9 +3795,9 @@ const tools: github.workflows.Tools = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.Tools.property.dotnet">dotnet</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup .NET Core. |
 | <code><a href="#projen.github.workflows.Tools.property.go">go</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup golang. |
-| <code><a href="#projen.github.workflows.Tools.property.java">java</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup java (temurin distribution). |
+| <code><a href="#projen.github.workflows.Tools.property.java">java</a></code> | <code>projen.github.workflows.JavaToolRequirement</code> | Setup java. |
 | <code><a href="#projen.github.workflows.Tools.property.node">node</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup node.js. |
-| <code><a href="#projen.github.workflows.Tools.property.python">python</a></code> | <code>projen.github.workflows.ToolRequirement</code> | Setup python. |
+| <code><a href="#projen.github.workflows.Tools.property.python">python</a></code> | <code>projen.github.workflows.PythonToolRequirement</code> | Setup python. |
 
 ---
 
@@ -3498,13 +3830,13 @@ Setup golang.
 ##### `java`<sup>Optional</sup> <a name="java" id="projen.github.workflows.Tools.property.java"></a>
 
 ```typescript
-public readonly java: ToolRequirement;
+public readonly java: JavaToolRequirement;
 ```
 
-- *Type:* projen.github.workflows.ToolRequirement
+- *Type:* projen.github.workflows.JavaToolRequirement
 - *Default:* not installed
 
-Setup java (temurin distribution).
+Setup java.
 
 ---
 
@@ -3524,10 +3856,10 @@ Setup node.js.
 ##### `python`<sup>Optional</sup> <a name="python" id="projen.github.workflows.Tools.property.python"></a>
 
 ```typescript
-public readonly python: ToolRequirement;
+public readonly python: PythonToolRequirement;
 ```
 
-- *Type:* projen.github.workflows.ToolRequirement
+- *Type:* projen.github.workflows.PythonToolRequirement
 - *Default:* not installed
 
 Setup python.
@@ -4101,9 +4433,97 @@ const workflowCallOptions: github.workflows.WorkflowCallOptions = { ... }
 ```
 
 
+### WorkflowDispatchInput <a name="WorkflowDispatchInput" id="projen.github.workflows.WorkflowDispatchInput"></a>
+
+An input for a workflow_dispatch event.
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowDispatchInput.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const workflowDispatchInput: github.workflows.WorkflowDispatchInput = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.description">description</a></code> | <code>string</code> | A description of the input. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.default">default</a></code> | <code>string</code> | The default value of the input. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.options">options</a></code> | <code>string[]</code> | Options for the input if type is 'choice'. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.required">required</a></code> | <code>boolean</code> | Whether the input is required. |
+| <code><a href="#projen.github.workflows.WorkflowDispatchInput.property.type">type</a></code> | <code>string</code> | The type of the input. |
+
+---
+
+##### `description`<sup>Required</sup> <a name="description" id="projen.github.workflows.WorkflowDispatchInput.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A description of the input.
+
+---
+
+##### `default`<sup>Optional</sup> <a name="default" id="projen.github.workflows.WorkflowDispatchInput.property.default"></a>
+
+```typescript
+public readonly default: string;
+```
+
+- *Type:* string
+- *Default:* no default
+
+The default value of the input.
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.workflows.WorkflowDispatchInput.property.options"></a>
+
+```typescript
+public readonly options: string[];
+```
+
+- *Type:* string[]
+- *Default:* no options
+
+Options for the input if type is 'choice'.
+
+---
+
+##### `required`<sup>Optional</sup> <a name="required" id="projen.github.workflows.WorkflowDispatchInput.property.required"></a>
+
+```typescript
+public readonly required: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the input is required.
+
+---
+
+##### `type`<sup>Optional</sup> <a name="type" id="projen.github.workflows.WorkflowDispatchInput.property.type"></a>
+
+```typescript
+public readonly type: string;
+```
+
+- *Type:* string
+- *Default:* "string"
+
+The type of the input.
+
+---
+
 ### WorkflowDispatchOptions <a name="WorkflowDispatchOptions" id="projen.github.workflows.WorkflowDispatchOptions"></a>
 
-The Workflow dispatch event accepts no options.
+The Workflow dispatch event options.
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowDispatchOptions.Initializer"></a>
 
@@ -4113,6 +4533,25 @@ import { github } from 'projen'
 const workflowDispatchOptions: github.workflows.WorkflowDispatchOptions = { ... }
 ```
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowDispatchOptions.property.inputs">inputs</a></code> | <code>{[ key: string ]: projen.github.workflows.WorkflowDispatchInput}</code> | Inputs for the workflow_dispatch event. |
+
+---
+
+##### `inputs`<sup>Optional</sup> <a name="inputs" id="projen.github.workflows.WorkflowDispatchOptions.property.inputs"></a>
+
+```typescript
+public readonly inputs: {[ key: string ]: WorkflowDispatchInput};
+```
+
+- *Type:* {[ key: string ]: projen.github.workflows.WorkflowDispatchInput}
+
+Inputs for the workflow_dispatch event.
+
+---
 
 ### WorkflowRunOptions <a name="WorkflowRunOptions" id="projen.github.workflows.WorkflowRunOptions"></a>
 

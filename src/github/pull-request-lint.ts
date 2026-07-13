@@ -1,7 +1,10 @@
-import { GitHub, PullRequestTemplate } from ".";
-import { Job, JobPermission } from "./workflows-model";
+import type { GitHub } from ".";
+import { PullRequestTemplate } from ".";
+import type { Job } from "./workflows-model";
+import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 /**
  * Options for PullRequestLint
@@ -184,15 +187,15 @@ export class PullRequestLint extends Component {
         conditions.push(`!(${exclusions.join(" || ")})`);
       }
 
-      const script = (core: any) => {
-        const actual = process.env.PR_BODY!.replace(/\r?\n/g, "\n");
-        const expected = process.env.EXPECTED!.replace(/\r?\n/g, "\n");
-        if (!actual.includes(expected)) {
-          console.log("%j", actual);
-          console.log("%j", expected);
-          core.setFailed(`${process.env.HELP}: ${expected}`);
-        }
-      };
+      const scriptBody = [
+        'const actual = process.env.PR_BODY.replace(/\\r?\\n/g, "\\n");',
+        'const expected = process.env.EXPECTED.replace(/\\r?\\n/g, "\\n");',
+        "if (!actual.includes(expected)) {",
+        '    console.log("%j", actual);',
+        '    console.log("%j", expected);',
+        "    core.setFailed(`${process.env.HELP}: ${expected}`);",
+        "}",
+      ].join("\n");
 
       const helpMessage =
         "Contributor statement missing from PR description. Please include the following text in the PR description";
@@ -212,7 +215,7 @@ export class PullRequestLint extends Component {
           {
             uses: "actions/github-script@v8",
             with: {
-              script: fnBody(script),
+              script: scriptBody,
             },
           },
         ],
@@ -234,25 +237,4 @@ export class PullRequestLint extends Component {
       prTemplate?.addLine("");
     }
   }
-}
-
-/**
- * Helper to generate a JS script as string from a function object
- * @returns A prettified string of the function's body
- */
-function fnBody(fn: (...args: any[]) => any) {
-  const def = fn.toString().replace(/\r?\n/g, "\n");
-  const body = def
-    .substring(def.indexOf("{") + 1, def.lastIndexOf("}"))
-    .split("\n");
-  const minIndentation = Math.min(
-    ...body
-      .filter((l) => l.trim()) // ignore empty lines
-      .map((l) => l.search(/\S|$/)),
-  );
-
-  return body
-    .map((l) => l.replace(" ".repeat(minIndentation), ""))
-    .join("\n")
-    .trim();
 }

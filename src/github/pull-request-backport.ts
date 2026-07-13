@@ -1,4 +1,4 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { AutoApprove } from "./auto-approve";
 import { GitHub } from "./github";
 import { GithubWorkflow } from "./workflows";

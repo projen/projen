@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 
 /**
  * This component adds support for using `integ-runner` and `integ-tests`
@@ -22,12 +22,18 @@ export class IntegRunner extends Component {
     const integSnapshotTask = project.addTask("integ", {
       description: "Run integration snapshot tests",
       receiveArgs: true,
-      exec: "integ-runner $@ --language typescript",
+      execArgs: ["integ-runner", "$@", "--language", "typescript"],
     });
 
     project.addTask("integ:update", {
       description: "Run and update integration snapshot tests",
-      exec: "integ-runner $@ --language typescript --update-on-failed",
+      execArgs: [
+        "integ-runner",
+        "$@",
+        "--language",
+        "typescript",
+        "--update-on-failed",
+      ],
       receiveArgs: true,
     });
 

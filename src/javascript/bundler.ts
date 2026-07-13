@@ -3,8 +3,8 @@ import { join as pathJoin } from "path";
 import { renderBundleName } from "./util";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 // Parts of this file inspired by @aws-cdk-lib/aws-lambda-nodejs
 //   https://github.com/aws/aws-cdk/blob/c3c771c6f6f6790f2298a85a549bded640d2e35b/packages/aws-cdk-lib/aws-lambda-nodejs/lib/bundling.ts#L195
@@ -25,14 +25,6 @@ export interface BundlerOptions {
    * @default "assets"
    */
   readonly assetsDir?: string;
-
-  /**
-   * Install the `bundle` command as a pre-compile phase.
-   *
-   * @default true
-   * @deprecated Use `runBundleTask` instead.
-   */
-  readonly addToPreCompile?: boolean;
 
   /**
    * Choose which phase (if any) to add the `bundle` command to.
@@ -93,11 +85,7 @@ export class Bundler extends Component {
     this.bundledir = options.assetsDir ?? "assets";
     this.loaders = options.loaders;
 
-    this.runBundleTask =
-      options.runBundleTask ??
-      (options.addToPreCompile === false
-        ? RunBundleTask.MANUAL
-        : RunBundleTask.PRE_COMPILE);
+    this.runBundleTask = options.runBundleTask ?? RunBundleTask.PRE_COMPILE;
   }
 
   /**
@@ -231,7 +219,7 @@ export class Bundler extends Component {
     this.bundleTask.spawn(bundleTask);
 
     if (options.executable ?? false) {
-      bundleTask.exec(`chmod +x ${outfile}`);
+      bundleTask.execArgs(["chmod", "+x", outfile]);
     }
 
     let watchTask;
@@ -577,7 +565,6 @@ export enum RunBundleTask {
    * // to go to the "lib" directory:
    * const project = new TypeScriptProject({
    *   name: "test",
-   *   defaultReleaseBranch: "main",
    *   tsconfig: {
    *     compilerOptions: {
    *       outDir: "lib",

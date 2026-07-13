@@ -1,9 +1,9 @@
-import * as chalk from "chalk";
-import * as yargs from "yargs";
+import chalk from "chalk";
+import type * as yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import * as logging from "../logging";
-import { TaskSpec } from "../task-model";
-import { TaskRuntime } from "../task-runtime";
+import * as logging from "../../logging";
+import type { TaskSpec } from "../../task-model";
+import type { TaskRuntime } from "../task-runtime";
 
 /**
  * Reads .projen/tasks.json and adds CLI commands for all tasks.
@@ -16,7 +16,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
   }
 
   function taskCommandHandler(task: TaskSpec) {
-    return (args: yargs.Argv) => {
+    return async (args: yargs.Argv) => {
       const taskReceivesArgs = task.steps?.reduce(
         (receiveArgs, step) => receiveArgs || (step.receiveArgs ?? false),
         false,
@@ -40,9 +40,9 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         return inspectTask(task.name);
       } else {
         try {
-          runtime.runTask(task.name, [], taskArgs);
+          await runtime.runTask(task.name, [], taskArgs);
         } catch (e: any) {
-          logging.error(e.message);
+          logging.error(e.message ?? e.stack ?? String(e));
           process.exit(1);
         }
       }
@@ -71,6 +71,8 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
         inspectTask(step.spawn, indent + 2);
       } else if (step.exec) {
         writeln(`- exec: ${step.exec}`);
+      } else if (step.execArgs) {
+        writeln(`- execArgs: ${step.execArgs.join(" ")}`);
       } else if (step.builtin) {
         writeln(`- builtin: ${step.builtin}`);
       }

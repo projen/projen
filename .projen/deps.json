@@ -88,7 +88,7 @@
     },
     {
       "name": "jest-junit",
-      "version": "^16",
+      "version": "^17",
       "type": "build"
     },
     {
@@ -106,12 +106,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
@@ -135,12 +135,12 @@
       "type": "build"
     },
     {
-      "name": "ts-node",
+      "name": "tsx",
       "type": "build"
     },
     {
       "name": "typescript",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
@@ -165,6 +165,10 @@
       "type": "bundled"
     },
     {
+      "name": "dax",
+      "type": "bundled"
+    },
+    {
       "name": "fast-glob",
       "type": "bundled"
     },
@@ -185,10 +189,6 @@
       "type": "bundled"
     },
     {
-      "name": "shx",
-      "type": "bundled"
-    },
-    {
       "name": "xmlbuilder2",
       "type": "bundled"
     },
@@ -203,12 +203,12 @@
     },
     {
       "name": "constructs",
-      "version": "^10.0.0",
+      "version": "^10.5.0",
       "type": "peer"
     },
     {
       "name": "constructs",
-      "version": "^10.0.0",
+      "version": "^10.5.0",
       "type": "runtime"
     }
   ],

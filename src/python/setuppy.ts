@@ -1,5 +1,6 @@
-import { FileBase, IResolver } from "../file";
-import { Project } from "../project";
+import type { IResolver } from "../file";
+import { FileBase } from "../file";
+import type { Project } from "../project";
 
 /**
  * Fields to pass in the setup() function of setup.py
@@ -58,15 +59,6 @@ export interface SetupPyOptions {
    * Escape hatch to allow any value
    */
   readonly additionalOptions?: { [name: string]: any };
-
-  /**
-   * Escape hatch to allow any value (JS/TS only)
-   *
-   * @deprecated Prefer using `additionalOptions` instead.
-   *
-   * @jsii ignore
-   */
-  readonly [name: string]: any;
 }
 
 /**

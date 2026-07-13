@@ -36,6 +36,11 @@ export interface UvConfiguration {
   readonly allowInsecureHost?: string[];
 
   /**
+   * @schema UvConfiguration#audit
+   */
+  readonly audit?: AuditOptions;
+
+  /**
    * Configuration for the uv build backend.
    *
    * Note that those settings only apply when using the `uv_build` backend, other build backends
@@ -260,24 +265,41 @@ export interface UvConfiguration {
   readonly excludeDependencies?: string[];
 
   /**
-   * Limit candidate packages to those that were uploaded prior to a given point in time.
+   * Limit candidate packages to those that were uploaded prior to the given date.
    *
-   * Accepts a superset of [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339.html) (e.g.,
-   * `2006-12-02T02:07:43Z`). A full timestamp is required to ensure that the resolver will
-   * behave consistently across timezones.
+   * The date is compared against the upload time of each individual distribution artifact
+   * (i.e., when each file was uploaded to the package index), not the release date of the
+   * package version.
+   *
+   * Accepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g.,
+   * `24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+   *
+   * Durations do not respect semantics of the local time zone and are always resolved to a fixed
+   * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+   * Calendar units such as months and years are not allowed.
    *
    * @schema UvConfiguration#exclude-newer
    */
   readonly excludeNewer?: string;
 
   /**
-   * Limit candidate packages for specific packages to those that were uploaded prior to the given date.
+   * Limit candidate packages for specific packages to those that were uploaded prior to the
+   * given date.
    *
-   * Accepts package-date pairs in a dictionary format.
+   * Accepts a dictionary format of `PACKAGE = "DATE"` pairs, where `DATE` is an RFC 3339
+   * timestamp (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g., `24 hours`, `1 week`,
+   * `30 days`), or a ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+   *
+   * Durations do not respect semantics of the local time zone and are always resolved to a fixed
+   * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+   * Calendar units such as months and years are not allowed.
+   *
+   * Set a package to `false` to exempt it from the global [`exclude-newer`](#exclude-newer)
+   * constraint entirely.
    *
    * @schema UvConfiguration#exclude-newer-package
    */
-  readonly excludeNewerPackage?: { [key: string]: string };
+  readonly excludeNewerPackage?: { [key: string]: ExcludeNewerOverride };
 
   /**
    * Additional build dependencies for packages.
@@ -350,6 +372,20 @@ export interface UvConfiguration {
   readonly forkStrategy?: ForkStrategy;
 
   /**
+   * The URL of the HTTP proxy to use.
+   *
+   * @schema UvConfiguration#http-proxy
+   */
+  readonly httpProxy?: string;
+
+  /**
+   * The URL of the HTTPS proxy to use.
+   *
+   * @schema UvConfiguration#https-proxy
+   */
+  readonly httpsProxy?: string;
+
+  /**
    * The indexes to use when resolving dependencies.
    *
    * Accepts either a repository compliant with [PEP 503](https://peps.python.org/pep-0503/)
@@ -367,7 +403,7 @@ export interface UvConfiguration {
    * ```toml
    * [[tool.uv.index]]
    * name = "pytorch"
-   * url = "https://download.pytorch.org/whl/cu121"
+   * url = "https://download.pytorch.org/whl/cu130"
    * explicit = true
    *
    * [tool.uv.sources]
@@ -422,7 +458,7 @@ export interface UvConfiguration {
   /**
    * The method to use when installing packages from the global cache.
    *
-   * Defaults to `clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+   * Defaults to `clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
    * Windows.
    *
    * WARNING: The use of symlink link mode is discouraged, as they create tight coupling between
@@ -430,7 +466,7 @@ export interface UvConfiguration {
    * will break all installed packages by way of removing the underlying source files. Use
    * symlinks with caution.
    *
-   * @default clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+   * @default clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
    * @schema UvConfiguration#link-mode
    */
   readonly linkMode?: LinkMode;
@@ -446,13 +482,10 @@ export interface UvConfiguration {
   /**
    * Whether to load TLS certificates from the platform's native certificate store.
    *
-   * By default, uv loads certificates from the bundled `webpki-roots` crate. The
-   * `webpki-roots` are a reliable set of trust roots from Mozilla, and including them in uv
-   * improves portability and performance (especially on macOS).
+   * By default, uv uses bundled Mozilla root certificates. When enabled, this loads
+   * certificates from the platform's native certificate store instead.
    *
-   * However, in some cases, you may want to use the platform's native certificate store,
-   * especially if you're relying on a corporate trust root (e.g., for a mandatory proxy) that's
-   * included in your system's certificate store.
+   * (Deprecated: use `system-certs` instead.)
    *
    * @schema UvConfiguration#native-tls
    */
@@ -530,6 +563,13 @@ export interface UvConfiguration {
   readonly noIndex?: boolean;
 
   /**
+   * A list of hosts to exclude from proxying.
+   *
+   * @schema UvConfiguration#no-proxy
+   */
+  readonly noProxy?: string[];
+
+  /**
    * Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the
    * standards-compliant, publishable package metadata, as opposed to using any local or Git
    * sources.
@@ -537,6 +577,13 @@ export interface UvConfiguration {
    * @schema UvConfiguration#no-sources
    */
   readonly noSources?: boolean;
+
+  /**
+   * Ignore `tool.uv.sources` for the specified packages.
+   *
+   * @schema UvConfiguration#no-sources-package
+   */
+  readonly noSourcesPackage?: string[];
 
   /**
    * Disable network access, relying only on locally cached data and locally available files.
@@ -623,8 +670,6 @@ export interface UvConfiguration {
   /**
    * URL pointing to JSON of custom Python installations.
    *
-   * Note that currently, only local paths are supported.
-   *
    * @schema UvConfiguration#python-downloads-json-url
    */
   readonly pythonDownloadsJsonUrl?: string;
@@ -708,6 +753,36 @@ export interface UvConfiguration {
   readonly sources?: { [key: string]: any[] };
 
   /**
+   * Whether to load TLS certificates from the platform's native certificate store.
+   *
+   * By default, uv uses bundled Mozilla root certificates. When enabled, this loads
+   * certificates from the platform's native certificate store instead.
+   *
+   * @schema UvConfiguration#system-certs
+   */
+  readonly systemCerts?: boolean;
+
+  /**
+   * The backend to use when fetching packages in the PyTorch ecosystem.
+   *
+   * When set, uv will ignore the configured index URLs for packages in the PyTorch ecosystem,
+   * and will instead use the defined backend.
+   *
+   * For example, when set to `cpu`, uv will use the CPU-only PyTorch index; when set to `cu126`,
+   * uv will use the PyTorch index for CUDA 12.6.
+   *
+   * The `auto` mode will attempt to detect the appropriate PyTorch index based on the currently
+   * installed CUDA drivers.
+   *
+   * This setting is only respected by `uv pip` commands.
+   *
+   * This option is in preview and may change in any future release.
+   *
+   * @schema UvConfiguration#torch-backend
+   */
+  readonly torchBackend?: TorchMode;
+
+  /**
    * Configure trusted publishing.
    *
    * By default, uv checks for trusted publishing when running in a supported environment, but
@@ -754,6 +829,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
   const result = {
     'add-bounds': obj.addBounds,
     'allow-insecure-host': obj.allowInsecureHost?.map(y => y),
+    'audit': toJson_AuditOptions(obj.audit),
     'build-backend': toJson_BuildBackendSettings(obj.buildBackend),
     'build-constraint-dependencies': obj.buildConstraintDependencies?.map(y => y),
     'cache-dir': obj.cacheDir,
@@ -774,12 +850,14 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'environments': obj.environments?.map(y => y),
     'exclude-dependencies': obj.excludeDependencies?.map(y => y),
     'exclude-newer': obj.excludeNewer,
-    'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.value }), {})),
     'extra-build-dependencies': ((obj.extraBuildDependencies) === undefined) ? undefined : (Object.entries(obj.extraBuildDependencies).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
     'extra-build-variables': ((obj.extraBuildVariables) === undefined) ? undefined : (Object.entries(obj.extraBuildVariables).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ((i[1]) === undefined) ? undefined : (Object.entries(i[1]).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})) }), {})),
     'extra-index-url': obj.extraIndexUrl?.map(y => y),
     'find-links': obj.findLinks?.map(y => y),
     'fork-strategy': obj.forkStrategy,
+    'http-proxy': obj.httpProxy,
+    'https-proxy': obj.httpsProxy,
     'index': obj.index?.map(y => toJson_Index(y)),
     'index-strategy': obj.indexStrategy,
     'index-url': obj.indexUrl,
@@ -795,7 +873,9 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'no-build-package': obj.noBuildPackage?.map(y => y),
     'no-cache': obj.noCache,
     'no-index': obj.noIndex,
+    'no-proxy': obj.noProxy?.map(y => y),
     'no-sources': obj.noSources,
+    'no-sources-package': obj.noSourcesPackage?.map(y => y),
     'offline': obj.offline,
     'override-dependencies': obj.overrideDependencies?.map(y => y),
     'package': obj.package,
@@ -814,6 +894,8 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'required-version': obj.requiredVersion,
     'resolution': obj.resolution,
     'sources': ((obj.sources) === undefined) ? undefined : (Object.entries(obj.sources).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
+    'system-certs': obj.systemCerts,
+    'torch-backend': obj.torchBackend,
     'trusted-publishing': obj.trustedPublishing,
     'upgrade': obj.upgrade,
     'upgrade-package': obj.upgradePackage?.map(y => y),
@@ -845,6 +927,48 @@ Leading zeroes are skipped, e.g. `>=0.1.2, <0.1.3`. (minor) */
 This option is not recommended, as versions are already pinned in the uv lockfile. (exact) */
   EXACT = "exact",
 }
+
+/**
+ * @schema AuditOptions
+ */
+export interface AuditOptions {
+  /**
+   * A list of vulnerability IDs to ignore during auditing.
+   *
+   * Vulnerabilities matching any of the provided IDs (including aliases) will be excluded from
+   * the audit results.
+   *
+   * @schema AuditOptions#ignore
+   */
+  readonly ignore?: string[];
+
+  /**
+   * A list of vulnerability IDs to ignore during auditing, but only while no fix is available.
+   *
+   * Vulnerabilities matching any of the provided IDs (including aliases) will be excluded from
+   * the audit results as long as they have no known fix versions. Once a fix version becomes
+   * available, the vulnerability will be reported again.
+   *
+   * @schema AuditOptions#ignore-until-fixed
+   */
+  readonly ignoreUntilFixed?: string[];
+}
+
+/**
+ * Converts an object of type 'AuditOptions' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_AuditOptions(obj: AuditOptions | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ignore': obj.ignore?.map(y => y),
+    'ignore-until-fixed': obj.ignoreUntilFixed?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Settings for the uv build backend (`uv_build`).
@@ -978,6 +1102,9 @@ export interface BuildBackendSettings {
 
   /**
    * Glob expressions which files and directories to exclude from the source distribution.
+   *
+   * These exclusions are also applied to wheels to ensure that a wheel built from a source tree
+   * is consistent with a wheel built from a source distribution.
    *
    * @schema BuildBackendSettings#source-exclude
    */
@@ -1149,6 +1276,20 @@ export function toJson_StaticMetadata(obj: StaticMetadata | undefined): Record<s
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema ExcludeNewerOverride
+ */
+export class ExcludeNewerOverride {
+  public static fromBoolean(value: boolean): ExcludeNewerOverride {
+    return new ExcludeNewerOverride(value);
+  }
+  public static fromString(value: string): ExcludeNewerOverride {
+    return new ExcludeNewerOverride(value);
+  }
+  private constructor(public readonly value: boolean | string) {
+  }
+}
+
+/**
  * @schema ForkStrategy
  */
 export enum ForkStrategy {
@@ -1212,6 +1353,32 @@ export interface Index {
   readonly default?: boolean;
 
   /**
+   * An index-specific `exclude-newer` cutoff.
+   *
+   * Accepts the same date, timestamp, and duration values as the global `exclude-newer`
+   * setting. Set this to `false` to disable `exclude-newer` for this index entirely.
+   *
+   * When set to a value, packages resolved from this index will use that cutoff instead of the
+   * globally-specified value, unless a package-specific `exclude-newer-package` override is
+   * present.
+   *
+   * This option is in preview and may change in any future release.
+   *
+   * ```toml
+   * [tool.uv]
+   * exclude-newer = "2025-01-01T00:00:00Z"
+   *
+   * [[tool.uv.index]]
+   * name = "internal"
+   * url = "https://internal.example.com/simple"
+   * exclude-newer = "7 days"
+   * ```
+   *
+   * @schema Index#exclude-newer
+   */
+  readonly excludeNewer?: ExcludeNewerOverride;
+
+  /**
    * Mark the index as explicit.
    *
    * Explicit indexes will _only_ be used when explicitly requested via a `[tool.uv.sources]`
@@ -1220,7 +1387,7 @@ export interface Index {
    * ```toml
    * [[tool.uv.index]]
    * name = "pytorch"
-   * url = "https://download.pytorch.org/whl/cu121"
+   * url = "https://download.pytorch.org/whl/cu130"
    * explicit = true
    *
    * [tool.uv.sources]
@@ -1266,7 +1433,7 @@ export interface Index {
    * ```toml
    * [[tool.uv.index]]
    * name = "pytorch"
-   * url = "https://download.pytorch.org/whl/cu121"
+   * url = "https://download.pytorch.org/whl/cu130"
    *
    * [tool.uv.sources]
    * torch = { index = "pytorch" }
@@ -1315,6 +1482,7 @@ export function toJson_Index(obj: Index | undefined): Record<string, any> | unde
     'authenticate': obj.authenticate,
     'cache-control': toJson_IndexCacheControl(obj.cacheControl),
     'default': obj.default,
+    'exclude-newer': obj.excludeNewer?.value,
     'explicit': obj.explicit,
     'format': obj.format,
     'ignore-error-codes': obj.ignoreErrorCodes?.map(y => y),
@@ -1377,16 +1545,23 @@ export enum KeyringProviderType {
 }
 
 /**
+ * The method to use when linking.
+ *
+ * Defaults to [`LinkMode::Clone`] on macOS and Linux (which support copy-on-write on
+ * APFS and btrfs/xfs/bcachefs respectively), and [`LinkMode::Hardlink`] on other
+ * platforms.
+ *
+ * @default LinkMode::Clone`] on macOS and Linux (which support copy-on-write on
  * @schema LinkMode
  */
 export enum LinkMode {
-  /** Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone) */
+  /** Clone (i.e., copy-on-write) packages from the source into the destination. (clone) */
   CLONE = "clone",
-  /** Copy packages from the wheel into the `site-packages` directory. (copy) */
+  /** Copy packages from the source into the destination. (copy) */
   COPY = "copy",
-  /** Hard link packages from the wheel into the `site-packages` directory. (hardlink) */
+  /** Hard link packages from the source into the destination. (hardlink) */
   HARDLINK = "hardlink",
-  /** Symbolically link packages from the wheel into the `site-packages` directory. (symlink) */
+  /** Symbolically link packages from the source into the destination. (symlink) */
   SYMLINK = "symlink",
 }
 
@@ -1540,9 +1715,16 @@ export interface PipOptions {
   /**
    * Limit candidate packages to those that were uploaded prior to a given point in time.
    *
-   * Accepts a superset of [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339.html) (e.g.,
-   * `2006-12-02T02:07:43Z`). A full timestamp is required to ensure that the resolver will
-   * behave consistently across timezones.
+   * The date is compared against the upload time of each individual distribution artifact
+   * (i.e., when each file was uploaded to the package index), not the release date of the
+   * package version.
+   *
+   * Accepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g.,
+   * `24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+   *
+   * Durations do not respect semantics of the local time zone and are always resolved to a fixed
+   * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+   * Calendar units such as months and years are not allowed.
    *
    * @schema PipOptions#exclude-newer
    */
@@ -1551,11 +1733,20 @@ export interface PipOptions {
   /**
    * Limit candidate packages for specific packages to those that were uploaded prior to the given date.
    *
-   * Accepts package-date pairs in a dictionary format.
+   * Accepts a dictionary format of `PACKAGE = "DATE"` pairs, where `DATE` is an RFC 3339
+   * timestamp (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g., `24 hours`, `1 week`,
+   * `30 days`), or a ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+   *
+   * Durations do not respect semantics of the local time zone and are always resolved to a fixed
+   * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+   * Calendar units such as months and years are not allowed.
+   *
+   * Set a package to `false` to exempt it from the global [`exclude-newer`](#exclude-newer)
+   * constraint entirely.
    *
    * @schema PipOptions#exclude-newer-package
    */
-  readonly excludeNewerPackage?: { [key: string]: string };
+  readonly excludeNewerPackage?: { [key: string]: ExcludeNewerOverride };
 
   /**
    * Include optional dependencies from the specified extra; may be provided more than once.
@@ -1685,7 +1876,7 @@ export interface PipOptions {
   /**
    * The method to use when installing packages from the global cache.
    *
-   * Defaults to `clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+   * Defaults to `clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
    * Windows.
    *
    * WARNING: The use of symlink link mode is discouraged, as they create tight coupling between
@@ -1693,7 +1884,7 @@ export interface PipOptions {
    * will break all installed packages by way of removing the underlying source files. Use
    * symlinks with caution.
    *
-   * @default clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+   * @default clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
    * @schema PipOptions#link-mode
    */
   readonly linkMode?: LinkMode;
@@ -1798,6 +1989,13 @@ export interface PipOptions {
    * @schema PipOptions#no-sources
    */
   readonly noSources?: boolean;
+
+  /**
+   * Ignore `tool.uv.sources` for the specified packages.
+   *
+   * @schema PipOptions#no-sources-package
+   */
+  readonly noSourcesPackage?: string[];
 
   /**
    * Include extras in the output file.
@@ -1993,6 +2191,8 @@ export interface PipOptions {
    * The `auto` mode will attempt to detect the appropriate PyTorch index based on the currently
    * installed CUDA drivers.
    *
+   * This setting is only respected by `uv pip` commands.
+   *
    * This option is in preview and may change in any future release.
    *
    * @schema PipOptions#torch-backend
@@ -2064,7 +2264,7 @@ export function toJson_PipOptions(obj: PipOptions | undefined): Record<string, a
     'emit-index-url': obj.emitIndexUrl,
     'emit-marker-expression': obj.emitMarkerExpression,
     'exclude-newer': obj.excludeNewer,
-    'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.value }), {})),
     'extra': obj.extra?.map(y => y),
     'extra-build-dependencies': ((obj.extraBuildDependencies) === undefined) ? undefined : (Object.entries(obj.extraBuildDependencies).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
     'extra-build-variables': ((obj.extraBuildVariables) === undefined) ? undefined : (Object.entries(obj.extraBuildVariables).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ((i[1]) === undefined) ? undefined : (Object.entries(i[1]).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})) }), {})),
@@ -2088,6 +2288,7 @@ export function toJson_PipOptions(obj: PipOptions | undefined): Record<string, a
     'no-header': obj.noHeader,
     'no-index': obj.noIndex,
     'no-sources': obj.noSources,
+    'no-sources-package': obj.noSourcesPackage?.map(y => y),
     'no-strip-extras': obj.noStripExtras,
     'no-strip-markers': obj.noStripMarkers,
     'only-binary': obj.onlyBinary?.map(y => y),
@@ -2175,6 +2376,112 @@ export enum ResolutionMode {
   /** Resolve the lowest compatible version of any direct dependencies, and the highest
 compatible version of any transitive dependencies. (lowest-direct) */
   LOWEST_HYPHEN_DIRECT = "lowest-direct",
+}
+
+/**
+ * The strategy to use when determining the appropriate PyTorch index.
+ *
+ * @schema TorchMode
+ */
+export enum TorchMode {
+  /** Select the appropriate PyTorch index based on the operating system and CUDA driver version. (auto) */
+  AUTO = "auto",
+  /** Use the CPU-only PyTorch index. (cpu) */
+  CPU = "cpu",
+  /** Use the PyTorch index for CUDA 13.0. (cu130) */
+  CU130 = "cu130",
+  /** Use the PyTorch index for CUDA 12.9. (cu129) */
+  CU129 = "cu129",
+  /** Use the PyTorch index for CUDA 12.8. (cu128) */
+  CU128 = "cu128",
+  /** Use the PyTorch index for CUDA 12.6. (cu126) */
+  CU126 = "cu126",
+  /** Use the PyTorch index for CUDA 12.5. (cu125) */
+  CU125 = "cu125",
+  /** Use the PyTorch index for CUDA 12.4. (cu124) */
+  CU124 = "cu124",
+  /** Use the PyTorch index for CUDA 12.3. (cu123) */
+  CU123 = "cu123",
+  /** Use the PyTorch index for CUDA 12.2. (cu122) */
+  CU122 = "cu122",
+  /** Use the PyTorch index for CUDA 12.1. (cu121) */
+  CU121 = "cu121",
+  /** Use the PyTorch index for CUDA 12.0. (cu120) */
+  CU120 = "cu120",
+  /** Use the PyTorch index for CUDA 11.8. (cu118) */
+  CU118 = "cu118",
+  /** Use the PyTorch index for CUDA 11.7. (cu117) */
+  CU117 = "cu117",
+  /** Use the PyTorch index for CUDA 11.6. (cu116) */
+  CU116 = "cu116",
+  /** Use the PyTorch index for CUDA 11.5. (cu115) */
+  CU115 = "cu115",
+  /** Use the PyTorch index for CUDA 11.4. (cu114) */
+  CU114 = "cu114",
+  /** Use the PyTorch index for CUDA 11.3. (cu113) */
+  CU113 = "cu113",
+  /** Use the PyTorch index for CUDA 11.2. (cu112) */
+  CU112 = "cu112",
+  /** Use the PyTorch index for CUDA 11.1. (cu111) */
+  CU111 = "cu111",
+  /** Use the PyTorch index for CUDA 11.0. (cu110) */
+  CU110 = "cu110",
+  /** Use the PyTorch index for CUDA 10.2. (cu102) */
+  CU102 = "cu102",
+  /** Use the PyTorch index for CUDA 10.1. (cu101) */
+  CU101 = "cu101",
+  /** Use the PyTorch index for CUDA 10.0. (cu100) */
+  CU100 = "cu100",
+  /** Use the PyTorch index for CUDA 9.2. (cu92) */
+  CU92 = "cu92",
+  /** Use the PyTorch index for CUDA 9.1. (cu91) */
+  CU91 = "cu91",
+  /** Use the PyTorch index for CUDA 9.0. (cu90) */
+  CU90 = "cu90",
+  /** Use the PyTorch index for CUDA 8.0. (cu80) */
+  CU80 = "cu80",
+  /** Use the PyTorch index for ROCm 7.2. (rocm7.2) */
+  ROCM7_2 = "rocm7.2",
+  /** Use the PyTorch index for ROCm 7.1. (rocm7.1) */
+  ROCM7_1 = "rocm7.1",
+  /** Use the PyTorch index for ROCm 7.0. (rocm7.0) */
+  ROCM7_0 = "rocm7.0",
+  /** Use the PyTorch index for ROCm 6.4. (rocm6.4) */
+  ROCM6_4 = "rocm6.4",
+  /** Use the PyTorch index for ROCm 6.3. (rocm6.3) */
+  ROCM6_3 = "rocm6.3",
+  /** Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4) */
+  ROCM6_2_4 = "rocm6.2.4",
+  /** Use the PyTorch index for ROCm 6.2. (rocm6.2) */
+  ROCM6_2 = "rocm6.2",
+  /** Use the PyTorch index for ROCm 6.1. (rocm6.1) */
+  ROCM6_1 = "rocm6.1",
+  /** Use the PyTorch index for ROCm 6.0. (rocm6.0) */
+  ROCM6_0 = "rocm6.0",
+  /** Use the PyTorch index for ROCm 5.7. (rocm5.7) */
+  ROCM5_7 = "rocm5.7",
+  /** Use the PyTorch index for ROCm 5.6. (rocm5.6) */
+  ROCM5_6 = "rocm5.6",
+  /** Use the PyTorch index for ROCm 5.5. (rocm5.5) */
+  ROCM5_5 = "rocm5.5",
+  /** Use the PyTorch index for ROCm 5.4.2. (rocm5.4.2) */
+  ROCM5_4_2 = "rocm5.4.2",
+  /** Use the PyTorch index for ROCm 5.4. (rocm5.4) */
+  ROCM5_4 = "rocm5.4",
+  /** Use the PyTorch index for ROCm 5.3. (rocm5.3) */
+  ROCM5_3 = "rocm5.3",
+  /** Use the PyTorch index for ROCm 5.2. (rocm5.2) */
+  ROCM5_2 = "rocm5.2",
+  /** Use the PyTorch index for ROCm 5.1.1. (rocm5.1.1) */
+  ROCM5_1_1 = "rocm5.1.1",
+  /** Use the PyTorch index for ROCm 4.2. (rocm4.2) */
+  ROCM4_2 = "rocm4.2",
+  /** Use the PyTorch index for ROCm 4.1. (rocm4.1) */
+  ROCM4_1 = "rocm4.1",
+  /** Use the PyTorch index for ROCm 4.0.1. (rocm4.0.1) */
+  ROCM4_0_1 = "rocm4.0.1",
+  /** Use the PyTorch index for Intel XPU. (xpu) */
+  XPU = "xpu",
 }
 
 /**
@@ -2527,102 +2834,4 @@ environment variable if set. (arm64-apple-ios-simulator) */
 By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
 environment variable if set. (x86_64-apple-ios-simulator) */
   X86_UNDERSCORE_64_HYPHEN_APPLE_HYPHEN_IOS_HYPHEN_SIMULATOR = "x86_64-apple-ios-simulator",
-}
-
-/**
- * The strategy to use when determining the appropriate PyTorch index.
- *
- * @schema TorchMode
- */
-export enum TorchMode {
-  /** Select the appropriate PyTorch index based on the operating system and CUDA driver version. (auto) */
-  AUTO = "auto",
-  /** Use the CPU-only PyTorch index. (cpu) */
-  CPU = "cpu",
-  /** Use the PyTorch index for CUDA 13.0. (cu130) */
-  CU130 = "cu130",
-  /** Use the PyTorch index for CUDA 12.9. (cu129) */
-  CU129 = "cu129",
-  /** Use the PyTorch index for CUDA 12.8. (cu128) */
-  CU128 = "cu128",
-  /** Use the PyTorch index for CUDA 12.6. (cu126) */
-  CU126 = "cu126",
-  /** Use the PyTorch index for CUDA 12.5. (cu125) */
-  CU125 = "cu125",
-  /** Use the PyTorch index for CUDA 12.4. (cu124) */
-  CU124 = "cu124",
-  /** Use the PyTorch index for CUDA 12.3. (cu123) */
-  CU123 = "cu123",
-  /** Use the PyTorch index for CUDA 12.2. (cu122) */
-  CU122 = "cu122",
-  /** Use the PyTorch index for CUDA 12.1. (cu121) */
-  CU121 = "cu121",
-  /** Use the PyTorch index for CUDA 12.0. (cu120) */
-  CU120 = "cu120",
-  /** Use the PyTorch index for CUDA 11.8. (cu118) */
-  CU118 = "cu118",
-  /** Use the PyTorch index for CUDA 11.7. (cu117) */
-  CU117 = "cu117",
-  /** Use the PyTorch index for CUDA 11.6. (cu116) */
-  CU116 = "cu116",
-  /** Use the PyTorch index for CUDA 11.5. (cu115) */
-  CU115 = "cu115",
-  /** Use the PyTorch index for CUDA 11.4. (cu114) */
-  CU114 = "cu114",
-  /** Use the PyTorch index for CUDA 11.3. (cu113) */
-  CU113 = "cu113",
-  /** Use the PyTorch index for CUDA 11.2. (cu112) */
-  CU112 = "cu112",
-  /** Use the PyTorch index for CUDA 11.1. (cu111) */
-  CU111 = "cu111",
-  /** Use the PyTorch index for CUDA 11.0. (cu110) */
-  CU110 = "cu110",
-  /** Use the PyTorch index for CUDA 10.2. (cu102) */
-  CU102 = "cu102",
-  /** Use the PyTorch index for CUDA 10.1. (cu101) */
-  CU101 = "cu101",
-  /** Use the PyTorch index for CUDA 10.0. (cu100) */
-  CU100 = "cu100",
-  /** Use the PyTorch index for CUDA 9.2. (cu92) */
-  CU92 = "cu92",
-  /** Use the PyTorch index for CUDA 9.1. (cu91) */
-  CU91 = "cu91",
-  /** Use the PyTorch index for CUDA 9.0. (cu90) */
-  CU90 = "cu90",
-  /** Use the PyTorch index for CUDA 8.0. (cu80) */
-  CU80 = "cu80",
-  /** Use the PyTorch index for ROCm 6.3. (rocm6.3) */
-  ROCM6_3 = "rocm6.3",
-  /** Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4) */
-  ROCM6_2_4 = "rocm6.2.4",
-  /** Use the PyTorch index for ROCm 6.2. (rocm6.2) */
-  ROCM6_2 = "rocm6.2",
-  /** Use the PyTorch index for ROCm 6.1. (rocm6.1) */
-  ROCM6_1 = "rocm6.1",
-  /** Use the PyTorch index for ROCm 6.0. (rocm6.0) */
-  ROCM6_0 = "rocm6.0",
-  /** Use the PyTorch index for ROCm 5.7. (rocm5.7) */
-  ROCM5_7 = "rocm5.7",
-  /** Use the PyTorch index for ROCm 5.6. (rocm5.6) */
-  ROCM5_6 = "rocm5.6",
-  /** Use the PyTorch index for ROCm 5.5. (rocm5.5) */
-  ROCM5_5 = "rocm5.5",
-  /** Use the PyTorch index for ROCm 5.4.2. (rocm5.4.2) */
-  ROCM5_4_2 = "rocm5.4.2",
-  /** Use the PyTorch index for ROCm 5.4. (rocm5.4) */
-  ROCM5_4 = "rocm5.4",
-  /** Use the PyTorch index for ROCm 5.3. (rocm5.3) */
-  ROCM5_3 = "rocm5.3",
-  /** Use the PyTorch index for ROCm 5.2. (rocm5.2) */
-  ROCM5_2 = "rocm5.2",
-  /** Use the PyTorch index for ROCm 5.1.1. (rocm5.1.1) */
-  ROCM5_1_1 = "rocm5.1.1",
-  /** Use the PyTorch index for ROCm 4.2. (rocm4.2) */
-  ROCM4_2 = "rocm4.2",
-  /** Use the PyTorch index for ROCm 4.1. (rocm4.1) */
-  ROCM4_1 = "rocm4.1",
-  /** Use the PyTorch index for ROCm 4.0.1. (rocm4.0.1) */
-  ROCM4_0_1 = "rocm4.0.1",
-  /** Use the PyTorch index for Intel XPU. (xpu) */
-  XPU = "xpu",
 }

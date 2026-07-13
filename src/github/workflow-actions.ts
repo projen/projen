@@ -1,8 +1,9 @@
-import { GitIdentity, GithubCredentials } from ".";
+import type { GitIdentity, GithubCredentials } from ".";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { context, isHiddenPath } from "./private/util";
-import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
-import { JobStep } from "./workflows-model";
+import type { CheckoutWith } from "./workflow-steps";
+import { WorkflowSteps } from "./workflow-steps";
+import type { JobStep } from "./workflows-model";
 
 const REPO = context("github.repository");
 const RUN_ID = context("github.run_id");
@@ -142,20 +143,11 @@ export class WorkflowActions {
           author: committer,
           committer: committer,
           signoff: options.signoff ?? true,
+          "add-paths": options.addPaths?.join("\n") || undefined,
+          "delete-branch": options.deleteBranch ?? undefined,
         },
       },
     ];
-  }
-
-  /**
-   * Configures the git identity (user name and email).
-   * @param id The identity to use
-   * @returns Job steps
-   *
-   * @deprecated use `WorkflowSteps.setupGitIdentity` instead
-   */
-  public static setupGitIdentity(id: GitIdentity): JobStep[] {
-    return [WorkflowSteps.setupGitIdentity({ gitIdentity: id })];
   }
 }
 
@@ -255,6 +247,21 @@ export interface CreatePullRequestOptions {
    * @default `github-actions/${options.workflowName}`
    */
   readonly branchName?: string;
+
+  /**
+   * Paths to add to the commit, mapping to the action's `add-paths` input.
+   *
+   * @default - all paths
+   */
+  readonly addPaths?: string[];
+
+  /**
+   * Whether to delete the pull request branch when the pull request is closed,
+   * mapping to the action's `delete-branch` input.
+   *
+   * @default false
+   */
+  readonly deleteBranch?: boolean;
 
   /**
    * The git identity used to create the commit.

@@ -1,4 +1,5 @@
-import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import type { NodeProjectOptions } from "../../src/javascript";
+import { NodeProject } from "../../src/javascript";
 import { NpmConfig } from "../../src/javascript/npm-config";
 import { synthSnapshot } from "../util";
 

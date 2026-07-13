@@ -1,7 +1,8 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import * as YAML from "yaml";
-import { IResolver } from "./file";
-import { ObjectFile, ObjectFileOptions } from "./object-file";
+import type { IResolver } from "./file";
+import type { ObjectFileOptions } from "./object-file";
+import { ObjectFile } from "./object-file";
 
 /**
  * Options for `JsonFile`.

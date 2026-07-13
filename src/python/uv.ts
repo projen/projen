@@ -1,16 +1,17 @@
-import { IConstruct } from "constructs";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging } from "./python-packaging";
-import { Component } from "../component";
-import { toJson_UvConfiguration, UvConfiguration } from "./uv-config";
-import { Dependency, DependencyType } from "../dependencies";
-import { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
-import { exec, execOrUndefined } from "../util";
-import { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
+import type { IConstruct } from "constructs";
+import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
-import { PythonExecutableOptions } from "./python-project";
+import type { IPythonDeps } from "./python-deps";
+import type { IPythonEnv } from "./python-env";
+import type { IPythonPackaging } from "./python-packaging";
+import { Component } from "../component";
+import type { PythonExecutableOptions } from "./python-project";
+import type { UvConfiguration } from "./uv-config";
+import { toJson_UvConfiguration } from "./uv-config";
+import type { Dependency } from "../dependencies";
+import { DependencyType } from "../dependencies";
+import type { Task } from "../task";
+import { uv } from "../util/exec";
 
 /**
  * Options for UV project
@@ -65,22 +66,22 @@ export class Uv
 
     this.installCiTask = this.project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "uv sync",
+      execArgs: ["uv", "sync"],
     });
 
     this.project.tasks.addEnvironment("VIRTUAL_ENV", ".venv");
     this.project.tasks.addEnvironment("PATH", "$(echo .venv/bin:$PATH)");
 
-    this.project.packageTask.exec("uv build");
+    this.project.packageTask.execArgs(["uv", "build"]);
 
     this.publishTestTask = this.project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
-      exec: "uv publish --index testpypi",
+      execArgs: ["uv", "publish", "--index", "testpypi"],
     });
 
     this.publishTask = this.project.addTask("publish", {
       description: "Uploads the package to PyPI.",
-      exec: "uv publish",
+      execArgs: ["uv", "publish"],
     });
 
     this.file = new PyprojectTomlFile(this.project, {
@@ -173,7 +174,7 @@ export class Uv
   }
 
   public setupEnvironment(): void {
-    const result = execOrUndefined("which uv", {
+    const result = uv.tryCapture(["--version"], {
       cwd: this.project.outdir,
     });
     if (!result) {
@@ -185,7 +186,7 @@ export class Uv
 
     // Create venv with the specific Python version
     // this will install the requested python version if needed
-    exec(`uv venv --python "${this.venvPython}" --clear .venv`, {
+    uv.run(["venv", "--python", this.venvPython, "--clear", ".venv"], {
       cwd: this.project.outdir,
     });
     this.project.logger.info(
@@ -195,11 +196,10 @@ export class Uv
 
   public installDependencies(): void {
     this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
     if (this.file.changed) {
-      runtime.runTask(this.installTask.name);
+      this.project.tasks.runTask(this.installTask.name);
     } else {
-      runtime.runTask(this.installCiTask.name);
+      this.project.tasks.runTask(this.installCiTask.name);
     }
   }
 }

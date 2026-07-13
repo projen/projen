@@ -1,7 +1,8 @@
 import { Component, DependencyType, YamlFile, SampleFile } from "..";
-import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
+import type { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
 import { Cdk8sDepsPy } from "./cdk8s-deps-py";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import type { PythonProjectOptions } from "../python/python-project";
+import { PythonProject } from "../python/python-project";
 
 /**
  * Options for `Cdk8sPythonApp`
@@ -61,7 +62,7 @@ export class Cdk8sPythonApp extends PythonProject {
 
     const synth = this.addTask("synth", {
       description: "Synthesizes your cdk8s app into dist",
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     });
 
     // add synth to the build

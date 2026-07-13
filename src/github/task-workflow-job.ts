@@ -1,8 +1,9 @@
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
-import { GitIdentity } from "./task-workflow";
-import { CheckoutWith, WorkflowSteps } from "./workflow-steps";
-import {
+import type { GitIdentity } from "./task-workflow";
+import type { CheckoutWith } from "./workflow-steps";
+import { CheckoutSubmodules, WorkflowSteps } from "./workflow-steps";
+import type {
   ContainerOptions,
   Job,
   JobDefaults,
@@ -13,8 +14,9 @@ import {
   Tools,
 } from "./workflows-model";
 import { Component } from "../component";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
+import type { Task } from "../task";
 import { ensureNotHiddenPath } from "./private/util";
 
 /**
@@ -115,6 +117,13 @@ export interface TaskWorkflowJobOptions {
   readonly downloadLfs?: boolean;
 
   /**
+   * Whether to checkout Git submodules.
+   *
+   * @default - Use the setting on the corresponding GitHub project
+   */
+  readonly checkoutSubmodules?: CheckoutSubmodules;
+
+  /**
    * Default settings for all steps in the TaskWorkflow Job.
    */
   readonly jobDefaults?: JobDefaults;
@@ -161,11 +170,17 @@ export class TaskWorkflowJob extends Component {
     super(scope, `${new.target.name}#${task.name}`);
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
-    const checkoutWith: { lfs?: boolean } = {};
+    const checkoutWith: { lfs?: boolean; submodules?: CheckoutSubmodules } = {};
     if (options.downloadLfs) {
       checkoutWith.lfs = true;
     }
-    // 'checkoutWith' can override 'lfs'
+    if (
+      options.checkoutSubmodules &&
+      options.checkoutSubmodules !== CheckoutSubmodules.DISABLED
+    ) {
+      checkoutWith.submodules = options.checkoutSubmodules;
+    }
+    // 'checkoutWith' can override 'lfs' and 'submodules'
     Object.assign(checkoutWith, options.checkoutWith ?? {});
 
     const preBuildSteps = options.preBuildSteps ?? [];
@@ -192,9 +207,8 @@ export class TaskWorkflowJob extends Component {
       options.runsOnGroup,
     );
     this.runsOn = (runsOnInputs as { runsOn: string[] })?.runsOn;
-    this.runsOnGroup = (
-      runsOnInputs as { runsOnGroup: GroupRunnerOptions }
-    )?.runsOnGroup;
+    this.runsOnGroup = (runsOnInputs as { runsOnGroup: GroupRunnerOptions })
+      ?.runsOnGroup;
     this.container = options.container;
     this.env = options.env;
     this.permissions = options.permissions;

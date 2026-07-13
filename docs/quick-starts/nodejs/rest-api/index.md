@@ -155,13 +155,13 @@ const project = new javascript.NodeProject({
 
 project.addTask('start', {
   receiveArgs: true,
-  exec: 'node src/index.js'
+  execArgs: ['node', 'src/index.js']
 })
 
 project.synth();
 ```
 
-The `exec` field just defines the shell command to run. The `receiveArgs` field tells projen to pass any arguments through
+The `execArgs` field just defines the shell command to run. The `receiveArgs` field tells projen to pass any arguments through
 to the command. This is useful if you want to pass additional arguments to the node command, like `--inspect` for example.
 
 

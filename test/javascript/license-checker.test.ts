@@ -1,3 +1,4 @@
+import { javascript } from "../../src";
 import { NodeProject } from "../../src/javascript";
 import { execProjenCLI } from "../util";
 
@@ -7,7 +8,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             production: false,
             development: false,
@@ -23,7 +25,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             allow: [],
             deny: [],
@@ -38,7 +41,8 @@ describe("license checker", () => {
       expect(() => {
         new NodeProject({
           name: "test",
-          defaultReleaseBranch: "master",
+          defaultReleaseBranch: "main",
+          packageManager: javascript.NodePackageManager.NPM,
           checkLicenses: {
             allow: ["MIT"],
             deny: ["BSD"],
@@ -50,11 +54,12 @@ describe("license checker", () => {
     });
   });
 
-  test("will fail task if denied license is found", () => {
+  test("will fail task if denied license is found", async () => {
     // GIVEN
     const project = new NodeProject({
       name: "test",
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       checkLicenses: {
         production: true,
         development: true,
@@ -65,18 +70,21 @@ describe("license checker", () => {
     project.synth();
 
     // THEN
-    expect(() => execProjenCLI(project.outdir, ["check-licenses"])).toThrow(
+    await expect(
+      execProjenCLI(project.outdir, ["check-licenses"]),
+    ).rejects.toThrow(
       `Found license defined by the --failOn flag: "Apache-2.0"`,
     );
   });
 
-  test("will pass if only allowed licenses are found", () => {
+  test("will pass if only allowed licenses are found", async () => {
     // GIVEN
     const project = new NodeProject({
       name: "test",
       license: "MIT",
       copyrightOwner: "Jane Doe",
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       deps: ["find-up-simple"], // this package is MIT licensed
       checkLicenses: {
         production: true,
@@ -88,6 +96,6 @@ describe("license checker", () => {
     project.synth();
 
     // THEN
-    execProjenCLI(project.outdir, ["check-licenses"]);
+    await execProjenCLI(project.outdir, ["check-licenses"]);
   });
 });

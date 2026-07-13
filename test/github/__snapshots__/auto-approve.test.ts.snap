@@ -21,7 +21,9 @@ jobs:
     steps:
       - env:
           GH_TOKEN: \${{ secrets.MY_SECRET }}
-        run: gh pr review --approve "\${{ github.event.pull_request.number }}" --repo "\${{ github.repository }}"
+          GH_REPO: \${{ github.repository }}
+          PR_NUMBER: \${{ github.event.pull_request.number }}
+        run: gh pr review --approve "$PR_NUMBER" --repo "$GH_REPO"
 "
 `;
 
@@ -46,7 +48,9 @@ jobs:
     steps:
       - env:
           GH_TOKEN: \${{ secrets.MY_SECRET }}
-        run: gh pr review --approve "\${{ github.event.pull_request.number }}" --repo "\${{ github.repository }}"
+          GH_REPO: \${{ github.repository }}
+          PR_NUMBER: \${{ github.event.pull_request.number }}
+        run: gh pr review --approve "$PR_NUMBER" --repo "$GH_REPO"
 "
 `;
 
@@ -71,6 +75,8 @@ jobs:
     steps:
       - env:
           GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: gh pr review --approve "\${{ github.event.pull_request.number }}" --repo "\${{ github.repository }}"
+          GH_REPO: \${{ github.repository }}
+          PR_NUMBER: \${{ github.event.pull_request.number }}
+        run: gh pr review --approve "$PR_NUMBER" --repo "$GH_REPO"
 "
 `;

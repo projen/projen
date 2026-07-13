@@ -1,5 +1,6 @@
-import { IConstruct } from "constructs";
-import { FileBase, FileBaseOptions, IResolver } from "./file";
+import type { IConstruct } from "constructs";
+import type { FileBaseOptions, IResolver } from "./file";
+import { FileBase } from "./file";
 
 /**
  * Options for `TextFile`.

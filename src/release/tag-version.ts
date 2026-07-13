@@ -1,6 +1,7 @@
 import { existsSync } from "fs";
 import { join } from "path";
 import * as utils from "../util";
+import { git } from "../util/exec";
 
 export interface TagOptions {
   /**
@@ -35,8 +36,6 @@ export interface TagOptions {
  * @param options options
  */
 export async function tag(cwd: string, options: TagOptions) {
-  const git = (cmd: string) => utils.exec(`git ${cmd}`, { cwd: cwd });
-
   const releaseTagFilePath = join(cwd, options.releaseTagFile);
   const changelogFilePath = join(cwd, options.changelog);
 
@@ -54,5 +53,5 @@ export async function tag(cwd: string, options: TagOptions) {
     throw new Error(`No version present in file at ${releaseTagFilePath}`);
   }
 
-  git(`tag ${releaseTag} -a -F ${changelogFilePath}`);
+  git.run(["tag", releaseTag, "-a", "-F", changelogFilePath], { cwd });
 }

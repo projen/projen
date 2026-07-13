@@ -166,6 +166,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -200,7 +201,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -221,13 +225,30 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "python -m pip install --upgrade pip",
+            "execArgs": [
+              "python",
+              "-m",
+              "pip",
+              "install",
+              "--upgrade",
+              "pip",
+            ],
           },
           {
-            "exec": "pip install -r requirements.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements.txt",
+            ],
           },
           {
-            "exec": "pip install -r requirements-dev.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements-dev.txt",
+            ],
           },
         ],
       },
@@ -479,6 +500,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -513,7 +535,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -534,13 +559,30 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "python -m pip install --upgrade pip",
+            "execArgs": [
+              "python",
+              "-m",
+              "pip",
+              "install",
+              "--upgrade",
+              "pip",
+            ],
           },
           {
-            "exec": "pip install -r requirements.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements.txt",
+            ],
           },
           {
-            "exec": "pip install -r requirements-dev.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements-dev.txt",
+            ],
           },
         ],
       },
@@ -794,6 +836,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -828,7 +871,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -849,13 +895,30 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "python -m pip install --upgrade pip",
+            "execArgs": [
+              "python",
+              "-m",
+              "pip",
+              "install",
+              "--upgrade",
+              "pip",
+            ],
           },
           {
-            "exec": "pip install -r requirements.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements.txt",
+            ],
           },
           {
-            "exec": "pip install -r requirements-dev.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements-dev.txt",
+            ],
           },
         ],
       },
@@ -1090,6 +1153,7 @@ cython_debug/
       "PATH": "$(python -c "import os, sys; python_dir = 'Scripts' if sys.platform == 'win32' else 'bin'; print('{0}/.env/{1}{2}{3}'.format(os.getcwd(), python_dir, os.pathsep, os.environ['PATH']))")",
       "VIRTUAL_ENV": "$(python -c "import os; print('{0}/.env'.format(os.getcwd()))")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -1124,7 +1188,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -1145,13 +1212,30 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "python -m pip install --upgrade pip",
+            "execArgs": [
+              "python",
+              "-m",
+              "pip",
+              "install",
+              "--upgrade",
+              "pip",
+            ],
           },
           {
-            "exec": "pip install -r requirements.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements.txt",
+            ],
           },
           {
-            "exec": "pip install -r requirements-dev.txt",
+            "execArgs": [
+              "pip",
+              "install",
+              "-r",
+              "requirements-dev.txt",
+            ],
           },
         ],
       },

@@ -1,11 +1,11 @@
 import * as posixPath from "node:path/posix";
-import { Task } from "..";
+import type { Task } from "..";
 import { Component } from "../component";
+import type { GitIdentity, workflows } from "../github";
 import {
+  CheckoutSubmodules,
   GitHub,
   GithubWorkflow,
-  GitIdentity,
-  workflows,
   WorkflowSteps,
 } from "../github";
 import {
@@ -18,18 +18,20 @@ import {
   projectPathRelativeToRepoRoot,
 } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
-import {
+import type {
   Job,
-  JobPermission,
   JobPermissions,
   JobStep,
   Tools,
   Triggers,
 } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
-import { Project } from "../project";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import {
+  ARTIFACT_ID_OUTPUT,
   BUILD_JOBID,
   DEFAULT_ARTIFACTS_DIRECTORY,
   NOT_FORK,
@@ -38,6 +40,7 @@ import {
   SELF_MUTATION_CONDITION,
   SELF_MUTATION_HAPPENED_OUTPUT,
   SELF_MUTATION_STEP,
+  UPLOAD_ARTIFACT_STEP,
 } from "./private/consts";
 import { workflowNameForProject } from "../util/name";
 
@@ -109,6 +112,16 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly mutableBuild?: boolean;
 
   /**
+   * Perform a mutable (non-frozen) install during builds. This will update the
+   * package lockfile during installs, which is useful when build steps modify
+   * dependencies. Set to `false` to use frozen lockfile installs even when
+   * `mutableBuild` is enabled.
+   *
+   * @default - value of `mutableBuild`
+   */
+  readonly mutableInstall?: boolean;
+
+  /**
    * Steps to execute after build.
    * @default []
    */
@@ -129,6 +142,14 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly runsOn?: string[];
 
   /**
+   * Github Runner selection labels
+   * @default - runsOn
+   * @description Defines a target Runner by labels for just the build job
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly buildRunsOn?: string[];
+
+  /**
    * Github Runner Group selection options
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
@@ -142,12 +163,16 @@ export class BuildWorkflow extends Component {
    */
   public readonly name: string;
 
+  /**
+   * The underlying GitHub Actions workflow
+   */
+  public readonly workflow: GithubWorkflow;
+
   private readonly postBuildSteps: JobStep[];
   private readonly preBuildSteps: JobStep[];
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
   private readonly github: GitHub;
-  private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
 
   private readonly _postBuildJobs: string[] = [];
@@ -197,7 +222,10 @@ export class BuildWorkflow extends Component {
       this.project,
     );
     const jobConfig: workflows.Job = {
-      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      ...filteredRunsOnOptions(
+        options.buildRunsOn ?? options.runsOn,
+        options.runsOnGroup,
+      ),
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -258,14 +286,15 @@ export class BuildWorkflow extends Component {
     const steps = [];
 
     steps.push(
-      {
+      WorkflowSteps.downloadArtifact({
         name: "Download build artifacts",
-        uses: "actions/download-artifact@v8",
         with: {
-          name: BUILD_ARTIFACT_NAME,
+          artifactIds: [
+            `\${{ needs.${BUILD_JOBID}.outputs.${ARTIFACT_ID_OUTPUT} }}`,
+          ],
           path: this.artifactsDirectory,
         },
-      },
+      }),
       {
         name: "Restore build artifact permissions",
         continueOnError: true,
@@ -287,6 +316,15 @@ export class BuildWorkflow extends Component {
 
     // add to the list of build job IDs
     this._postBuildJobs.push(id);
+
+    // add artifact_id output to the build job (only needed when post-build jobs exist)
+    const buildJob = this.workflow.getJob(BUILD_JOBID) as Job;
+    if (buildJob.outputs && !buildJob.outputs[ARTIFACT_ID_OUTPUT]) {
+      (buildJob.outputs as Record<string, unknown>)[ARTIFACT_ID_OUTPUT] = {
+        stepId: UPLOAD_ARTIFACT_STEP,
+        outputName: "artifact-id",
+      };
+    }
   }
 
   /**
@@ -342,6 +380,9 @@ export class BuildWorkflow extends Component {
             ref: PULL_REQUEST_REF,
             repository: PULL_REQUEST_REPOSITORY,
             ...(this.github.downloadLfs ? { lfs: true } : {}),
+            ...(this.github.checkoutSubmodules !== CheckoutSubmodules.DISABLED
+              ? { submodules: this.github.checkoutSubmodules }
+              : {}),
           },
         }),
       );
@@ -415,6 +456,9 @@ export class BuildWorkflow extends Component {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           ...(this.github.downloadLfs ? { lfs: true } : {}),
+          ...(this.github.checkoutSubmodules
+            ? { submodules: this.github.checkoutSubmodules }
+            : {}),
         },
       }),
 
@@ -445,6 +489,7 @@ export class BuildWorkflow extends Component {
               run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
             },
             WorkflowSteps.uploadArtifact({
+              id: UPLOAD_ARTIFACT_STEP,
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.project.parent

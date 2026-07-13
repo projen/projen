@@ -37,8 +37,10 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
 | --- | --- |
 | <code><a href="#projen.build.BuildWorkflow.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.build.BuildWorkflow.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.build.BuildWorkflow.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.build.BuildWorkflow.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.build.BuildWorkflow.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.build.BuildWorkflow.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.build.BuildWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.build.BuildWorkflow.addPostBuildJob">addPostBuildJob</a></code> | Adds another job to the build workflow which is executed after the build job succeeded. |
 | <code><a href="#projen.build.BuildWorkflow.addPostBuildJobCommands">addPostBuildJobCommands</a></code> | Run a sequence of commands as a job within the build workflow which is executed after the build job succeeded. |
@@ -76,6 +78,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.build.BuildWorkflow.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.build.BuildWorkflow.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.build.BuildWorkflow.postSynthesize"></a>
 
 ```typescript
@@ -93,6 +116,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.build.BuildWorkflow.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.build.BuildWorkflow.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.build.BuildWorkflow.synthesize"></a>
 
@@ -272,6 +314,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.build.BuildWorkflow.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.build.BuildWorkflow.property.buildJobIds">buildJobIds</a></code> | <code>string[]</code> | Returns a list of job IDs that are part of the build. |
 | <code><a href="#projen.build.BuildWorkflow.property.name">name</a></code> | <code>string</code> | Name of generated github workflow. |
+| <code><a href="#projen.build.BuildWorkflow.property.workflow">workflow</a></code> | <code>projen.github.GithubWorkflow</code> | The underlying GitHub Actions workflow. |
 
 ---
 
@@ -318,6 +361,18 @@ public readonly name: string;
 - *Type:* string
 
 Name of generated github workflow.
+
+---
+
+##### `workflow`<sup>Required</sup> <a name="workflow" id="projen.build.BuildWorkflow.property.workflow"></a>
+
+```typescript
+public readonly workflow: GithubWorkflow;
+```
+
+- *Type:* projen.github.GithubWorkflow
+
+The underlying GitHub Actions workflow.
 
 ---
 
@@ -580,9 +635,11 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildTask">buildTask</a></code> | <code>projen.Task</code> | The task to execute in order to build the project. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A name of a directory that includes build artifacts. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.buildRunsOn">buildRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -679,6 +736,19 @@ A name of a directory that includes build artifacts.
 
 ---
 
+##### `buildRunsOn`<sup>Optional</sup> <a name="buildRunsOn" id="projen.build.BuildWorkflowOptions.property.buildRunsOn"></a>
+
+```typescript
+public readonly buildRunsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* runsOn
+
+Github Runner selection labels.
+
+---
+
 ##### `containerImage`<sup>Optional</sup> <a name="containerImage" id="projen.build.BuildWorkflowOptions.property.containerImage"></a>
 
 ```typescript
@@ -724,6 +794,24 @@ Implies that PR builds do not have anti-tamper checks.
 This is enabled by default only if `githubTokenSecret` is set. Otherwise it
 is disabled, which implies that file changes that happen during build will
 not be pushed back to the branch.
+
+---
+
+##### `mutableInstall`<sup>Optional</sup> <a name="mutableInstall" id="projen.build.BuildWorkflowOptions.property.mutableInstall"></a>
+
+```typescript
+public readonly mutableInstall: boolean;
+```
+
+- *Type:* boolean
+- *Default:* value of `mutableBuild`
+
+Perform a mutable (non-frozen) install during builds.
+
+This will update the
+package lockfile during installs, which is useful when build steps modify
+dependencies. Set to `false` to use frozen lockfile installs even when
+`mutableBuild` is enabled.
 
 ---
 

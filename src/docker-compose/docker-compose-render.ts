@@ -1,11 +1,11 @@
-import { DockerComposeBuild } from "./docker-compose";
-import {
+import type { DockerComposeBuild } from "./docker-compose";
+import type {
   DockerComposeNetworkConfig,
   IDockerComposeNetworkConfig,
 } from "./docker-compose-network";
-import { DockerComposeServicePort } from "./docker-compose-port";
-import { DockerComposeService } from "./docker-compose-service";
-import {
+import type { DockerComposeServicePort } from "./docker-compose-port";
+import type { DockerComposeService } from "./docker-compose-service";
+import type {
   DockerComposeVolumeConfig,
   DockerComposeVolumeMount,
   IDockerComposeVolumeConfig,

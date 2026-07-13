@@ -1,6 +1,6 @@
 import * as yaml from "yaml";
-import { TaskRuntime } from "../../src";
 import { Cdk8sTypeScriptApp } from "../../src/cdk8s";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { synthSnapshot } from "../util";
 
 test("test if cdk8s synth is possible", () => {
@@ -8,26 +8,26 @@ test("test if cdk8s synth is possible", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
   const output = synthSnapshot(project);
 
   // expect a synth script
-  expect(output["package.json"].scripts.synth).toContain("npx projen synth");
+  expect(output["package.json"].scripts.synth).toContain("projen synth");
 
   // expect a synth task
   expect(output[".projen/tasks.json"].tasks.synth.steps).toStrictEqual([
     {
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     },
   ]);
 
   // expect an import task
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      execArgs: ["cdk8s", "import", "-o", "src/imports"],
     },
   ]);
 
@@ -55,7 +55,7 @@ test("adding cdk8sImports", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     k8sSpecVersion: "1.20.0",
     cdk8sImports: ["github:crossplane/crossplane@0.14.0"],
@@ -67,7 +67,7 @@ test("adding cdk8sImports", () => {
   // THEN
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      execArgs: ["cdk8s", "import", "-o", "src/imports"],
     },
   ]);
   expect(yaml.parse(output["cdk8s.yaml"])).toStrictEqual({
@@ -82,7 +82,7 @@ test("constructs version undefined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
   });
 
   const output = synthSnapshot(project);
@@ -99,7 +99,7 @@ test("constructs version pinning", () => {
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     constructsVersionPinning: true,
   });
@@ -118,7 +118,7 @@ test("cdk8sPlusVersion undefined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
@@ -136,7 +136,7 @@ test("cdk8sPlusVersion defined", () => {
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
     cdk8sPlusVersion: "1.0.0-beta.200",
   });
@@ -156,7 +156,7 @@ test("cdk8sPlusVersion pinning", () => {
     name: "project",
     defaultReleaseBranch: "main",
     cdk8sPlusVersionPinning: true,
-    releaseWorkflow: true,
+    release: true,
     constructsVersion: "3.3.75",
   });
 
@@ -181,25 +181,55 @@ test("upgrade task ignores pinned versions", () => {
     release: true,
     constructsVersion: "3.3.75",
   });
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[ProjenTaskRunner.MANIFEST_FILE].tasks;
   // notice cdk8s and constructs isn't here
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
-    [
-      {
-        "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
-      },
-      {
-        "exec": "yarn install --check-files",
-      },
-      {
-        "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cdk8s-cli commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript cdk8s-plus-22 cdk8s",
-      },
-      {
-        "exec": "npx projen",
-      },
-      {
-        "spawn": "post-upgrade",
-      },
-    ]
+   [
+     {
+       "execArgs": [
+         "npx",
+         "npm-check-updates@20",
+         "--upgrade",
+         "--target=minor",
+         "--peer",
+         "--no-deprecated",
+         "--dep=dev,prod,peer,optional",
+         "--filter=@types/jest,@types/node,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript",
+       ],
+     },
+     {
+       "exec": "yarn install --check-files",
+     },
+     {
+       "execArgs": [
+         "yarn",
+         "upgrade",
+         "@stylistic/eslint-plugin",
+         "@types/jest",
+         "@types/node",
+         "@typescript-eslint/eslint-plugin",
+         "@typescript-eslint/parser",
+         "cdk8s-cli",
+         "commit-and-tag-version",
+         "constructs",
+         "eslint-import-resolver-typescript",
+         "eslint-plugin-import",
+         "eslint",
+         "jest",
+         "jest-junit",
+         "projen",
+         "ts-jest",
+         "typescript",
+         "cdk8s-plus-22",
+         "cdk8s",
+       ],
+     },
+     {
+       "exec": "npx projen",
+     },
+     {
+       "spawn": "post-upgrade",
+     },
+   ]
   `);
 });

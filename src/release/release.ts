@@ -1,5 +1,5 @@
 import * as posixPath from "node:path/posix";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
@@ -18,28 +18,27 @@ import {
   ensureNotHiddenPath,
   projectPathRelativeToRepoRoot,
 } from "../github/private/util";
+import type { Job, JobPermissions, JobStep } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
 import {
-  Job,
-  JobPermission,
-  JobPermissions,
-  JobStep,
-} from "../github/workflows-model";
-import { Project } from "../project";
-import {
-  GroupRunnerOptions,
   filteredRunsOnOptions,
   filteredWorkflowRunsOnOptions,
 } from "../runner-options";
-import { Task } from "../task";
+import type { Task } from "../task";
 import { workflowNameForProject } from "../util/name";
-import { ReleasableCommits, Version } from "../version";
+import type { ReleasableCommits } from "../version";
+import { Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
 const TAG_EXISTS_STEPID = "check_tag_exists";
+const UPLOAD_ARTIFACT_STEP = "upload_artifact";
 
 const LATEST_COMMIT_OUTPUT = "latest_commit";
 const TAG_EXISTS_OUTPUT = "tag_exists";
+const ARTIFACT_ID_OUTPUT = "artifact_id";
 
 /**
  * Conditional (Github Workflow Job `if`) to check if a release job should be run.
@@ -52,24 +51,6 @@ type BranchHook = (branch: string) => void;
  * Project options for release.
  */
 export interface ReleaseProjectOptions {
-  /**
-   * Automatically release new versions every commit to one of branches in `releaseBranches`.
-   *
-   * @default true
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
-   */
-  readonly releaseEveryCommit?: boolean;
-
-  /**
-   * CRON schedule to trigger new releases.
-   *
-   * @default - no scheduled releases
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
-   */
-  readonly releaseSchedule?: string;
-
   /**
    * The release trigger to use.
    *
@@ -301,15 +282,6 @@ export interface ReleaseProjectOptions {
  */
 export interface ReleaseOptions extends ReleaseProjectOptions {
   /**
-   * The task to execute in order to create the release artifacts. Artifacts are
-   * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
-   * build is complete.
-   *
-   * @deprecated Use `tasks` instead
-   */
-  readonly task?: Task;
-
-  /**
    * The tasks to execute in order to create the release artifacts. Artifacts are
    * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
    * build is complete.
@@ -424,15 +396,11 @@ export class Release extends Component {
 
     this.github = GitHub.of(this.project.root);
 
-    // Handle both deprecated task and new tasks options
-    if (options.tasks) {
+    // Determine the tasks to use to create the release artifacts
+    if (options.tasks && options.tasks.length > 0) {
       this.buildTasks = options.tasks;
-    } else if (options.task) {
-      this.buildTasks = [options.task];
     } else {
-      throw new Error(
-        "Either 'tasks' or 'task' must be provided, but not both.",
-      );
+      throw new Error("'tasks' must be provided.");
     }
 
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
@@ -452,28 +420,6 @@ export class Release extends Component {
     this.releaseWorkflowEnv = options.releaseWorkflowEnv;
     this._branchHooks = [];
 
-    /**
-     * Use manual releases with no changelog if releaseEveryCommit is explicitly
-     * disabled and no other trigger is set.
-     *
-     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
-     */
-    if (
-      !(
-        (options.releaseEveryCommit ?? true) ||
-        options.releaseSchedule ||
-        options.releaseTrigger
-      )
-    ) {
-      this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
-    }
-
-    if (options.releaseSchedule) {
-      this.releaseTrigger = ReleaseTrigger.scheduled({
-        schedule: options.releaseSchedule,
-      });
-    }
-
     this.version = new Version(this.project, {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
@@ -492,7 +438,7 @@ export class Release extends Component {
       artifactName: this.artifactsDirectory,
       condition: DEPENDENT_JOB_CONDITIONAL,
       buildJobId: BUILD_JOBID,
-      jsiiReleaseVersion: options.jsiiReleaseVersion,
+      publibVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       ...filteredWorkflowRunsOnOptions(
@@ -762,6 +708,7 @@ export class Release extends Component {
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       WorkflowSteps.uploadArtifact({
+        id: UPLOAD_ARTIFACT_STEP,
         if: noNewCommits,
         with: {
           name: BUILD_ARTIFACT_NAME,
@@ -778,6 +725,9 @@ export class Release extends Component {
         // see https://github.com/projen/projen/issues/3761
         limitConcurrency: true,
       });
+      // When run-name evaluates to empty string, GitHub falls back to the
+      // default event-specific name (e.g. commit message for push events).
+      workflow.runName = `$\{{ inputs.dry_run && format('[DRY RUN] ${workflowName} by @{0}', github.actor) || '' }}`;
       workflow.on({
         schedule: this.releaseTrigger.schedule
           ? [{ cron: this.releaseTrigger.schedule }]
@@ -790,7 +740,15 @@ export class Release extends Component {
                 paths: this.releaseTrigger.paths,
               }
             : undefined,
-        workflowDispatch: {}, // allow manual triggering
+        workflowDispatch: {
+          inputs: {
+            dry_run: {
+              description: "Dry run (skip actual publishing)",
+              required: false,
+              type: "boolean",
+            },
+          },
+        },
       });
 
       // Create job based on child (only?) project GitHub
@@ -803,6 +761,10 @@ export class Release extends Component {
           [TAG_EXISTS_OUTPUT]: {
             stepId: TAG_EXISTS_STEPID,
             outputName: "exists",
+          },
+          [ARTIFACT_ID_OUTPUT]: {
+            stepId: UPLOAD_ARTIFACT_STEP,
+            outputName: "artifact-id",
           },
         },
         container: this.containerImage

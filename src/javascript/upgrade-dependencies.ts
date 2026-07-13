@@ -1,29 +1,39 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import {
+import type {
   GithubCredentials,
-  GitHub,
   GithubWorkflow,
   GitIdentity,
   workflows,
+} from "../github";
+import {
+  CheckoutSubmodules,
+  GitHub,
   WorkflowJobs,
   WorkflowSteps,
 } from "../github";
-import { isYarnClassic, isYarnBerry, isNpm } from "./util";
+import {
+  isYarnClassic,
+  isYarnBerry,
+  isNpm,
+  executeCommandPriorInstallation,
+} from "./util";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
-import {
+import type {
   ContainerOptions,
   JobStep,
-  JobPermission,
   JobPermissions,
 } from "../github/workflows-model";
-import { NodePackageManager, NodeProject } from "../javascript";
+import { JobPermission } from "../github/workflows-model";
+import type { NodeProject } from "../javascript";
+import { NodePackageManager } from "../javascript";
 import { Release } from "../release";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
-import { Task } from "../task";
-import { TaskStep } from "../task-model";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
+import type { Task } from "../task";
+import type { TaskStep } from "../task-model";
 import { workflowNameForProject } from "../util/name";
 
 const CREATE_PATCH_STEP_ID = "create_patch";
@@ -247,6 +257,13 @@ export class UpgradeDependencies extends Component {
 
     const taskEnv: Record<string, string> = { CI: "0" };
 
+    // Yarn berry treats any non-empty CI value as truthy and auto-enables
+    // immutable installs. Explicitly disable it so yarn dlx/up can modify
+    // the lockfile during upgrades.
+    if (isYarnBerry(project.package.packageManager)) {
+      taskEnv.YARN_ENABLE_IMMUTABLE_INSTALLS = "false";
+    }
+
     // Set yarn berry cooldown via environment variable, expects minutes
     if (options.cooldown && isYarnBerry(project.package.packageManager)) {
       taskEnv.YARN_NPM_MINIMAL_AGE_GATE = String(
@@ -312,7 +329,7 @@ export class UpgradeDependencies extends Component {
     // Package Manager upgrade should always include all deps
     const includeForPackageManagerUpgrade = this.buildDependencyList(true);
     if (includeForPackageManagerUpgrade.length === 0) {
-      return [{ exec: "echo No dependencies to upgrade." }];
+      return [{ execArgs: ["echo", "No dependencies to upgrade."] }];
     }
 
     // Removing `npm-check-updates` from our dependency tree because it depends on a package
@@ -326,7 +343,7 @@ export class UpgradeDependencies extends Component {
         upgrade: true,
         target: this.upgradeTarget,
       });
-      steps.push({ exec: ncuCommand });
+      steps.push({ execArgs: ncuCommand });
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
@@ -334,7 +351,9 @@ export class UpgradeDependencies extends Component {
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
-      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
+      execArgs: this.renderUpgradePackagesCommand(
+        includeForPackageManagerUpgrade,
+      ),
     });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
@@ -355,27 +374,10 @@ export class UpgradeDependencies extends Component {
       format?: string;
       removeRange?: boolean;
     } = {},
-  ): string {
-    function executeCommand(packageManager: NodePackageManager): string {
-      switch (packageManager) {
-        case NodePackageManager.NPM:
-        case NodePackageManager.YARN:
-        case NodePackageManager.YARN_CLASSIC:
-          return "npx";
-        case NodePackageManager.PNPM:
-          return "pnpm dlx";
-        case NodePackageManager.YARN2:
-        case NodePackageManager.YARN_BERRY:
-          return "yarn dlx";
-        case NodePackageManager.BUN:
-          return "bunx";
-      }
-    }
-
+  ): string[] {
     const command = [
-      `${executeCommand(
-        this.project.package.packageManager,
-      )} npm-check-updates@18`,
+      ...executeCommandPriorInstallation(this.project.package.packageManager),
+      "npm-check-updates@20",
     ];
 
     if (options.upgrade) {
@@ -401,7 +403,7 @@ export class UpgradeDependencies extends Component {
     command.push(`--dep=${this.renderNcuDependencyTypes(this.depTypes)}`);
     command.push(`--filter=${includePackages.join(",")}`);
 
-    return command.join(" ");
+    return command;
   }
 
   /**
@@ -426,6 +428,7 @@ export class UpgradeDependencies extends Component {
                 return "dev";
 
               case DependencyType.BUNDLED:
+                return "prod";
               default:
                 return false;
             }
@@ -438,14 +441,14 @@ export class UpgradeDependencies extends Component {
   /**
    * Render a package manager specific command to upgrade all requested dependencies.
    */
-  private renderUpgradePackagesCommand(include: string[]): string {
-    function upgradePackages(command: string, cooldownFlag?: string) {
+  private renderUpgradePackagesCommand(include: string[]): string[] {
+    function upgradePackages(command: string[], cooldownFlag?: string) {
       return () => {
-        const parts = [command, ...include];
+        const parts = [...command, ...include];
         if (cooldownFlag) {
           parts.push(cooldownFlag);
         }
-        return parts.join(" ");
+        return parts;
       };
     }
 
@@ -456,21 +459,21 @@ export class UpgradeDependencies extends Component {
     switch (packageManager) {
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_CLASSIC:
-        lazy = upgradePackages("yarn upgrade");
+        lazy = upgradePackages(["yarn", "upgrade"]);
         break;
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
         // Yarn Berry cooldown set via task env
-        lazy = upgradePackages("yarn up");
+        lazy = upgradePackages(["yarn", "up", "-R"]);
         break;
       case NodePackageManager.NPM:
         // npm cooldown set via NPM_CONFIG_BEFORE env
-        lazy = upgradePackages("npm update");
+        lazy = upgradePackages(["npm", "update"]);
         break;
       case NodePackageManager.PNPM:
         // pnpm expects minutes
         lazy = upgradePackages(
-          "pnpm update",
+          ["pnpm", "update"],
           cooldown !== undefined
             ? `--config.minimum-release-age=${daysToMinutes(cooldown)}`
             : undefined,
@@ -479,7 +482,7 @@ export class UpgradeDependencies extends Component {
       case NodePackageManager.BUN:
         // bun expects seconds
         lazy = upgradePackages(
-          "bun update",
+          ["bun", "update"],
           cooldown
             ? `--minimum-release-age=${daysToSeconds(cooldown)}`
             : undefined,
@@ -491,7 +494,7 @@ export class UpgradeDependencies extends Component {
 
     // return a lazy function so that dependencies include ones that were
     // added post project instantiation (i.e using project.addDeps)
-    return lazy as unknown as string;
+    return lazy as unknown as string[];
   }
 
   private buildDependencyList(includeDependenciesWithConstraint: boolean) {
@@ -581,6 +584,9 @@ export class UpgradeDependencies extends Component {
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
+      ...(github.checkoutSubmodules !== CheckoutSubmodules.DISABLED
+        ? { submodules: github.checkoutSubmodules }
+        : {}),
     };
 
     const steps: workflows.JobStep[] = [

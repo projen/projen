@@ -21,7 +21,7 @@ exports[`defaults 1`] = `
 /package.json linguist-generated
 /postcss.config.json linguist-generated
 /tailwind.config.json linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -267,7 +267,7 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/pages/
 /lib
 /dist/
@@ -286,10 +286,9 @@ queue_rules:
       - -label~=(do-not-merge)
       - status-success=build
     merge_method: squash
-    commit_message_template: |-
-      {{ title }} (#{{ number }})
-
-      {{ body }}
+    commit_message_format:
+      title: pr-title
+      body: pr-body
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
@@ -307,7 +306,7 @@ merge_queue:
 permissions-backup.acl
 /.mergify.yml
 /test/
-/tsconfig.dev.json
+/test/tsconfig.json
 /pages/
 !/lib/
 !/lib/**/*.js
@@ -396,7 +395,7 @@ tsconfig.tsbuildinfo
       "LICENSE",
       "postcss.config.json",
       "tailwind.config.json",
-      "tsconfig.dev.json",
+      "test/tsconfig.json",
     ],
   },
   ".projen/tasks.json": {
@@ -404,6 +403,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -434,10 +434,16 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": [
           {
-            "exec": "tsc --build",
+            "execArgs": [
+              "tsc",
+              "--build",
+            ],
           },
           {
-            "exec": "next build",
+            "execArgs": [
+              "next",
+              "build",
+            ],
           },
         ],
       },
@@ -446,7 +452,10 @@ tsconfig.tsbuildinfo
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -455,7 +464,10 @@ tsconfig.tsbuildinfo
         "name": "dev",
         "steps": [
           {
-            "exec": "next dev",
+            "execArgs": [
+              "next",
+              "dev",
+            ],
           },
         ],
       },
@@ -476,7 +488,10 @@ tsconfig.tsbuildinfo
         "name": "export",
         "steps": [
           {
-            "exec": "next export",
+            "execArgs": [
+              "next",
+              "export",
+            ],
           },
         ],
       },
@@ -519,7 +534,10 @@ tsconfig.tsbuildinfo
         "name": "server",
         "steps": [
           {
-            "exec": "next start",
+            "execArgs": [
+              "next",
+              "start",
+            ],
           },
         ],
       },
@@ -528,7 +546,10 @@ tsconfig.tsbuildinfo
         "name": "telemetry",
         "steps": [
           {
-            "exec": "next telemetry",
+            "execArgs": [
+              "next",
+              "telemetry",
+            ],
           },
         ],
       },
@@ -544,13 +565,37 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@18 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/react,@types/react-dom,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=@types/react,@types/react-dom,projen,typescript,autoprefixer,next,postcss,react,react-dom,tailwindcss",
+            ],
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @types/node @types/react @types/react-dom constructs projen typescript autoprefixer next postcss react react-dom tailwindcss",
+            "execArgs": [
+              "yarn",
+              "upgrade",
+              "@types/node",
+              "@types/react",
+              "@types/react-dom",
+              "constructs",
+              "projen",
+              "typescript",
+              "autoprefixer",
+              "next",
+              "postcss",
+              "react",
+              "react-dom",
+              "tailwindcss",
+            ],
           },
           {
             "exec": "npx projen",
@@ -565,7 +610,11 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w",
+            "execArgs": [
+              "tsc",
+              "--build",
+              "-w",
+            ],
           },
         ],
       },
@@ -808,22 +857,22 @@ tsconfig.tsbuildinfo
       "access": "public",
     },
     "scripts": {
-      "build": "npx projen build",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "dev": "npx projen dev",
-      "eject": "npx projen eject",
-      "export": "npx projen export",
-      "package": "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "server": "npx projen server",
-      "telemetry": "npx projen telemetry",
-      "test": "npx projen test",
-      "upgrade": "npx projen upgrade",
-      "watch": "npx projen watch",
+      "build": "projen build",
+      "compile": "projen compile",
+      "default": "projen default",
+      "dev": "projen dev",
+      "eject": "projen eject",
+      "export": "projen export",
+      "package": "projen package",
+      "post-compile": "projen post-compile",
+      "post-upgrade": "projen post-upgrade",
+      "pre-compile": "projen pre-compile",
+      "projen": "projen",
+      "server": "projen server",
+      "telemetry": "projen telemetry",
+      "test": "projen test",
+      "upgrade": "projen upgrade",
+      "watch": "projen watch",
     },
     "version": "0.0.0",
   },
@@ -1061,68 +1110,18 @@ export default function Home() {
       "extend": {},
     },
   },
-  "tsconfig.dev.json": {
+  "test/tsconfig.json": {
     "compilerOptions": {
-      "allowJs": true,
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "incremental": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "isolatedModules": true,
-      "jsx": "preserve",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext",
-      ],
       "module": "commonjs",
-      "moduleResolution": "bundler",
       "noEmit": true,
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "paths": {
-        "@/*": [
-          "./*",
-        ],
-      },
-      "plugins": [
-        {
-          "name": "next",
-        },
-      ],
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "es5",
-      "types": [
-        "node",
-        "react",
-        "react-dom",
-      ],
+      "rootDir": "..",
     },
     "exclude": [
       "node_modules",
     ],
+    "extends": "../tsconfig.json",
     "include": [
-      "pages/**/*.ts",
-      "test/**/*.ts",
       "**/*.ts",
-      "**/*.tsx",
-      "next-env.d.ts",
-      ".next/types/**/*.ts",
-      ".projenrc.js",
     ],
   },
   "tsconfig.json": {
@@ -1178,7 +1177,9 @@ export default function Home() {
         "react-dom",
       ],
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
       "pages/**/*.ts",
       "**/*.ts",

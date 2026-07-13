@@ -3,7 +3,7 @@ import * as semver from "semver";
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { normalizePersistedPath } from "../util";
 
 export interface TypescriptConfigOptions {
@@ -204,6 +204,17 @@ export interface TypeScriptCompilerOptions {
    */
   readonly allowArbitraryExtensions?: boolean;
 
+  /**
+   * Silence deprecation warnings for options scheduled for removal in a future
+   * TypeScript release (for example `moduleResolution: "node10"`, which became
+   * an error in TypeScript 6.0).
+   *
+   * Set to the TypeScript version that introduced the deprecation, e.g. `"6.0"`.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/#ignoreDeprecations
+   * @default undefined
+   */
+  readonly ignoreDeprecations?: string;
   /**
    * Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict”
    * for each source file.

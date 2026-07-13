@@ -1,10 +1,10 @@
-import { IPackageProvider, IPythonDeps } from "./python-deps";
+import type { IPackageProvider, IPythonDeps } from "./python-deps";
 import { RequirementsFile } from "./requirements-file";
 import { Component } from "../component";
-import { Dependency, DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
+import type { Dependency } from "../dependencies";
+import { DependencyType } from "../dependencies";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 /**
  * Options for pip
@@ -30,9 +30,21 @@ export class Pip extends Component implements IPythonDeps {
     this.installCiTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
     });
-    this.installCiTask.exec("python -m pip install --upgrade pip");
-    this.installCiTask.exec("pip install -r requirements.txt");
-    this.installCiTask.exec("pip install -r requirements-dev.txt");
+    this.installCiTask.execArgs([
+      "python",
+      "-m",
+      "pip",
+      "install",
+      "--upgrade",
+      "pip",
+    ]);
+    this.installCiTask.execArgs(["pip", "install", "-r", "requirements.txt"]);
+    this.installCiTask.execArgs([
+      "pip",
+      "install",
+      "-r",
+      "requirements-dev.txt",
+    ]);
   }
 
   /**
@@ -59,8 +71,7 @@ export class Pip extends Component implements IPythonDeps {
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
 
-    const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installCiTask.name);
+    this.project.tasks.runTask(this.installCiTask.name);
   }
 }
 

@@ -1,7 +1,7 @@
 import { join } from "path";
-import { Pom } from "./pom";
+import type { Pom } from "./pom";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { SampleDir } from "../sample-file";
 
 const TESTDIR = join("src", "test", "java");
@@ -42,7 +42,7 @@ export class Junit extends Component {
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-api@${version}`);
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-engine@${version}`);
 
-    project.testTask.exec("mvn test");
+    project.testTask.execArgs(["mvn", "test"]);
 
     const javaPackage = options.sampleJavaPackage ?? "org.acme";
     const javaPackagePath = javaPackage.split(".");

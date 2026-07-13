@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { StaleBehavior } from "../../src/github";
+import type { StaleBehavior } from "../../src/github";
 import { renderBehavior } from "../../src/github/stale-util";
 import { synthSnapshot, TestProject } from "../util";
 

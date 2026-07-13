@@ -1,9 +1,9 @@
-import { IConstruct } from "constructs";
-import { AutoQueue, AutoQueueOptions } from "./auto-queue";
+import type { IConstruct } from "constructs";
+import { AutoQueue } from "./auto-queue";
+import type { AutoQueueOptions } from "./auto-queue";
 import { Component } from "../component";
-import { MergeGroupOptions } from "./workflows-model";
-import * as gh from "../github";
-import { GitHub } from "../github";
+import { GitHub } from "./github";
+import type { MergeGroupOptions } from "./workflows-model";
 
 /**
  * Options for 'MergeQueue'
@@ -39,7 +39,7 @@ export class MergeQueue extends Component {
   ) {
     super(scope);
 
-    const workflowEngine = gh.GitHub.of(this.project);
+    const workflowEngine = GitHub.of(this.project);
     if (!workflowEngine) {
       throw new Error(
         `Cannot add ${

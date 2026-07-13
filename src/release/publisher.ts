@@ -1,20 +1,22 @@
-import { BranchOptions } from "./release";
+import type { BranchOptions } from "./release";
+import { ARTIFACT_ID_OUTPUT } from "../build/private/consts";
 import { Component } from "../component";
+import { WorkflowSteps } from "../github";
 import {
-  BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import {
+import type {
   Job,
-  JobPermission,
   JobPermissions,
   JobStep,
   Tools,
 } from "../github/workflows-model";
+import { JobPermission } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
-import { Project } from "../project";
-import { GroupRunnerOptions, filteredRunsOnOptions } from "../runner-options";
+import type { Project } from "../project";
+import type { GroupRunnerOptions } from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
@@ -77,11 +79,6 @@ export interface PublisherOptions {
    * @see https://github.com/cdklabs/publib
    */
   readonly artifactName: string;
-
-  /**
-   * @deprecated use `publibVersion` instead
-   */
-  readonly jsiiReleaseVersion?: string;
 
   /**
    * Node version to setup in GitHub workflows if any node-based CLI utilities
@@ -167,9 +164,6 @@ export class Publisher extends Component {
   public readonly publibVersion: string;
   public readonly condition?: string;
 
-  /** @deprecated use `publibVersion` */
-  public readonly jsiiReleaseVersion: string;
-
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
   private readonly runsOn?: string[];
@@ -196,9 +190,7 @@ export class Publisher extends Component {
 
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
-    this.publibVersion =
-      options.publibVersion ?? options.jsiiReleaseVersion ?? PUBLIB_VERSION;
-    this.jsiiReleaseVersion = this.publibVersion;
+    this.publibVersion = options.publibVersion ?? PUBLIB_VERSION;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
     this.workflowNodeVersion = options.workflowNodeVersion ?? "lts/*";
@@ -318,6 +310,8 @@ export class Publisher extends Component {
           .map(([_, job]) => job),
         environment: options.githubEnvironment ?? branchOptions.environment,
         run: this.githubReleaseCommand(options, branchOptions),
+        releaseStepIf: "${{ !inputs.dry_run }}",
+        isPubLib: false,
         workflowEnv: {
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
         },
@@ -356,12 +350,6 @@ export class Publisher extends Component {
       ? undefined
       : defaultNpmToken(options.npmTokenSecret, options.registry);
 
-    if (options.distTag) {
-      this.project.logger.warn(
-        "The `distTag` option is deprecated. Use the npmDistTag option instead.",
-      );
-    }
-
     const prePublishSteps: JobStep[] = options.prePublishSteps ?? [];
 
     if (isAwsCodeArtifactWithOidc) {
@@ -390,12 +378,6 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob("npm", (_branch, branchOptions): PublishJobOptions => {
-      if (branchOptions.npmDistTag && options.distTag) {
-        throw new Error(
-          "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()",
-        );
-      }
-
       return {
         publishTools: PUBLIB_TOOLCHAIN.js,
         prePublishSteps,
@@ -404,7 +386,7 @@ export class Publisher extends Component {
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
-          NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
+          NPM_DIST_TAG: branchOptions.npmDistTag ?? "latest",
           NPM_REGISTRY: options.registry,
           NPM_CONFIG_PROVENANCE: npmProvenance,
           NPM_TRUSTED_PUBLISHER: trustedPublisher,
@@ -648,22 +630,19 @@ export class Publisher extends Component {
       };
     }
 
-    this.addPublishJob(
-      "pypi",
-      (_branch, branchOptions): PublishJobOptions => ({
-        registryName: "PyPI",
-        publishTools: PUBLIB_TOOLCHAIN.python,
-        permissions,
-        prePublishSteps,
-        postPublishSteps: options.postPublishSteps ?? [],
-        environment: options.githubEnvironment ?? branchOptions.environment,
-        run: this.publibCommand("publib-pypi"),
-        env: {
-          TWINE_REPOSITORY_URL: options.twineRegistryUrl,
-        },
-        workflowEnv,
-      }),
-    );
+    this.addPublishJob("pypi", (_branch, branchOptions): PublishJobOptions => ({
+      registryName: "PyPI",
+      publishTools: PUBLIB_TOOLCHAIN.python,
+      permissions,
+      prePublishSteps,
+      postPublishSteps: options.postPublishSteps ?? [],
+      environment: options.githubEnvironment ?? branchOptions.environment,
+      run: this.publibCommand("publib-pypi"),
+      env: {
+        TWINE_REPOSITORY_URL: options.twineRegistryUrl,
+      },
+      workflowEnv,
+    }));
   }
 
   /**
@@ -771,14 +750,15 @@ export class Publisher extends Component {
       }
 
       const steps: JobStep[] = [
-        {
+        WorkflowSteps.downloadArtifact({
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v8",
           with: {
-            name: BUILD_ARTIFACT_NAME,
+            artifactIds: [
+              `\${{ needs.${this.buildJobId}.outputs.${ARTIFACT_ID_OUTPUT} }}`,
+            ],
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
           },
-        },
+        }),
         {
           name: "Restore build artifact permissions",
           continueOnError: true,
@@ -790,8 +770,14 @@ export class Publisher extends Component {
         {
           name: "Release",
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+          if: opts.releaseStepIf,
           run: commandToRun,
-          env: jobEnv,
+          env: {
+            ...jobEnv,
+            ...((opts.isPubLib ?? true)
+              ? { PUBLIB_DRYRUN: "${{ inputs.dry_run }}" }
+              : {}),
+          },
         },
         ...opts.postPublishSteps,
       ];
@@ -885,6 +871,7 @@ export class Publisher extends Component {
       "exit $exitcode;",
       "fi",
     ].join(" ");
+
     return idempotentRelease;
   }
 }
@@ -945,6 +932,18 @@ interface PublishJobOptions {
    * @default - no environment used
    */
   readonly environment?: string;
+
+  /**
+   * A condition for the release step.
+   * @default - no condition
+   */
+  readonly releaseStepIf?: string;
+
+  /**
+   * Whether this job uses publib (and thus supports PUBLIB_DRYRUN).
+   * @default true
+   */
+  readonly isPubLib?: boolean;
 }
 
 /**
@@ -991,33 +990,9 @@ export interface CommonPublishOptions {
 }
 
 /**
- * @deprecated Use `NpmPublishOptions` instead.
- */
-export interface JsiiReleaseNpm extends NpmPublishOptions {}
-
-/**
  * Options for npm release
  */
 export interface NpmPublishOptions extends CommonPublishOptions {
-  /**
-   * Tags can be used to provide an alias instead of version numbers.
-   *
-   * For example, a project might choose to have multiple streams of development
-   * and use a different tag for each stream, e.g., stable, beta, dev, canary.
-   *
-   * By default, the `latest` tag is used by npm to identify the current version
-   * of a package, and `npm install <pkg>` (without any `@<version>` or `@<tag>`
-   * specifier) installs the latest tag. Typically, projects only use the
-   * `latest` tag for stable release versions, and use other tags for unstable
-   * versions such as prereleases.
-   *
-   * The `next` tag is used by some projects to identify the upcoming version.
-   *
-   * @default "latest"
-   * @deprecated Use `npmDistTag` for each release branch instead.
-   */
-  readonly distTag?: string;
-
   /**
    * The domain name of the npm package registry.
    *
@@ -1134,11 +1109,6 @@ export interface CodeArtifactOptions {
 }
 
 /**
- * @deprecated Use `PyPiPublishOptions` instead.
- */
-export interface JsiiReleasePyPi extends PyPiPublishOptions {}
-
-/**
  * Options for PyPI release
  */
 export interface PyPiPublishOptions extends CommonPublishOptions {
@@ -1190,11 +1160,6 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
 }
 
 /**
- * @deprecated Use `NugetPublishOptions` instead.
- */
-export interface JsiiReleaseNuget extends NugetPublishOptions {}
-
-/**
  * Options for NuGet releases
  */
 export interface NugetPublishOptions extends CommonPublishOptions {
@@ -1228,11 +1193,6 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    */
   readonly nugetUsernameSecret?: string;
 }
-
-/**
- * @deprecated Use `MavenPublishOptions` instead.
- */
-export interface JsiiReleaseMaven extends MavenPublishOptions {}
 
 /**
  * Options for Maven releases
@@ -1317,11 +1277,6 @@ export interface MavenPublishOptions extends CommonPublishOptions {
    */
   readonly mavenStagingProfileId?: string;
 }
-
-/**
- * @deprecated Use `GoPublishOptions` instead.
- */
-export interface JsiiReleaseGo extends GoPublishOptions {}
 
 /**
  * Options for Go releases.

@@ -183,6 +183,34 @@ send it to the OpenAI API to rewrite in a different language (please check
 with your company's Cybersecurity team before implementing this `Component`).
 The sky is the limit!
 
+### Lifecycle hooks
+
+`Component` exposes a handful of methods you can override to hook into different
+points of a project's lifecycle. None are required - override only what you need.
+
+- `preSynthesize()` - called before any component is synthesized.
+- `synthesize()` - called to write files to the project's output directory. This
+  is the one used in the `SampleFile` example below.
+- `postSynthesize()` - called after every component has synthesized. Runs on
+  every `projen` invocation, but is skipped when post-synthesis steps are
+  disabled (`--no-post` / `PROJEN_DISABLE_POST`). Useful for side effects like
+  running `npm install`.
+- `projectCreation(initProject)` - called once, right after `synthesize()`,
+  but **only** when the project is being created for the first time (i.e. via
+  `projen new`). Unlike `postSynthesize()`, it never runs again on later
+  `projen` invocations. Use it for one-off, deterministic file generation -
+  for example, `Projenrc` uses this to write the initial `.projenrc.*` file.
+- `postProjectCreation(initProject)` - the project-creation counterpart to
+  `postSynthesize()`: called once, right after `postSynthesize()`, only on
+  project creation, and skipped along with it when post-synthesis steps are
+  disabled. Use it for one-off setup with side effects, such as running a task
+  to give the user immediate feedback - for example, `Eslint` and `Biome` use
+  this to lint the generated code right after `projen new`.
+
+Both `projectCreation()` and `postProjectCreation()` receive an `initProject`
+argument (an `InitProject`) with details about how the project was created,
+such as its JSII FQN and the original CLI arguments.
+
 ### Example
 
 As an example, let's review the source code for the `SampleFile` component. We

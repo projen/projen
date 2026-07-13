@@ -1,6 +1,7 @@
 import * as yaml from "yaml";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
-import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import type { NodeProjectOptions } from "../../src/javascript";
+import { NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 test("default", () => {

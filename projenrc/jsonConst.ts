@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { basename } from "node:path";
-import { FileBaseOptions, Project, TextFile } from "../src";
+import type { FileBaseOptions, Project } from "../src";
+import { TextFile } from "../src";
 import { Biome, Eslint, Jest } from "../src/javascript";
 
 export interface JsonConstOptions extends FileBaseOptions {

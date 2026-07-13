@@ -1,10 +1,12 @@
 import { join } from "path";
 import { DependencyType, SampleDir } from "..";
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import type { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJava } from "./awscdk-deps-java";
-import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
+import type { CdkConfigCommonOptions } from "./cdk-config";
+import { CdkConfig } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
-import { JavaProject, JavaProjectOptions } from "../java";
+import type { JavaProjectOptions } from "../java";
+import { JavaProject } from "../java";
 
 export interface AwsCdkJavaAppOptions
   extends JavaProjectOptions, CdkConfigCommonOptions, AwsCdkDepsCommonOptions {
@@ -86,18 +88,6 @@ export class AwsCdkJavaApp extends JavaProject {
     }
   }
 
-  /**
-   * Adds an AWS CDK module dependencies
-   *
-   * @param modules The list of modules to depend on (e.g. "software.amazon.awscdk/aws-lambda", "software.amazon.awscdk/aws-iam", etc)
-   * @deprecated In CDK 2.x all modules are available by default. Alpha modules should be added using the standard 'deps'
-   */
-  public addCdkDependency(...modules: string[]) {
-    for (const m of modules) {
-      this.cdkDeps.addV1Dependencies(m);
-    }
-  }
-
   private addSample() {
     const pkg = this.mainPackage.split(".");
     const javaFile = `${this.mainClassName}.java`;
@@ -106,12 +96,8 @@ export class AwsCdkJavaApp extends JavaProject {
         [javaFile]: [
           `package ${pkg.join(".")};`,
           "",
-          this.cdkDeps.cdkMajorVersion == 1
-            ? "import software.amazon.awscdk.core.App;"
-            : "import software.amazon.awscdk.App;",
-          this.cdkDeps.cdkMajorVersion == 1
-            ? "import software.amazon.awscdk.core.Stack;"
-            : "import software.amazon.awscdk.Stack;",
+          "import software.amazon.awscdk.App;",
+          "import software.amazon.awscdk.Stack;",
           "",
           `public class ${this.mainClassName} {`,
           "  public static void main(final String[] args) {",

@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { IniFile } from "../ini";
-import { NodeProject } from "../javascript";
+import type { NodeProject } from "../javascript";
 
 /**
  * Options to configure the local NPM config

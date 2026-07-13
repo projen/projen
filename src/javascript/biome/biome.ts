@@ -3,7 +3,7 @@ import { deepClone } from "fast-json-patch";
 import { Component } from "../../component";
 import type { NodeProject } from "../../javascript/node-project";
 import { JsonFile } from "../../json";
-import type { Project } from "../../project";
+import type { InitProject, Project } from "../../project";
 import type { Task } from "../../task";
 import { deepMerge, normalizePersistedPath } from "../../util";
 import { tryResolveModule } from "../util";
@@ -239,16 +239,23 @@ export class Biome extends Component {
 		project.testTask.spawn(this.task);
 	}
 
-	/**
-	 * Add a file pattern to biome.
-	 *
-	 * Use ! or !! to ignore a file pattern.
-	 * @param pattern Biome glob pattern
-	 * @see https://biomejs.dev/guides/configure-biome/#control-files-via-configuration
-	 */
-	public addFilePattern(pattern: string) {
-		this._filePatterns.add(pattern);
-	}
+  /**
+   * Runs biome once, right after the project is first created, so the generated code is linted and formatted immediately.
+   */
+  public postProjectCreation(_initProject: InitProject) {
+    this.project.tasks.runTask(this.task.name);
+  }
+
+  /**
+   * Add a file pattern to biome.
+   *
+   * Use ! or !! to ignore a file pattern.
+   * @param pattern Biome glob pattern
+   * @see https://biomejs.dev/guides/configure-biome/#control-files-via-configuration
+   */
+  public addFilePattern(pattern: string) {
+    this._filePatterns.add(pattern);
+  }
 
 	/**
 	 * Add a biome override to set rules for a specific file pattern.

@@ -1,13 +1,12 @@
 import { Prettier } from "./prettier";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
-import { ICompareString } from "../compare";
+import type { ICompareString } from "../compare";
 import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
-import { ObjectFile } from "../object-file";
-import { Project } from "../project";
-import { Task } from "../task";
-import { TaskStepOptions } from "../task-model";
+import type { ObjectFile } from "../object-file";
+import type { InitProject, Project } from "../project";
+import type { Task } from "../task";
+import type { TaskStepOptions } from "../task-model";
 import { YamlFile } from "../yaml";
 
 export interface EslintOptions {
@@ -16,6 +15,23 @@ export interface EslintOptions {
    * @default "./tsconfig.json"
    */
   readonly tsconfigPath?: string;
+
+  /**
+   * Use the typescript-eslint "project service" for typed linting instead of a
+   * single `parserOptions.project`.
+   *
+   * When enabled, typescript-eslint resolves the nearest `tsconfig.json` for
+   * each linted file (the same resolution model used by the TypeScript language
+   * service / `tsserver`). This allows files in different directories (e.g.
+   * `src` and `test`) to be linted against the `tsconfig.json` that actually
+   * includes them, without maintaining a single config that lists every file.
+   *
+   * Requires `@typescript-eslint/*` v8 or newer.
+   *
+   * @see https://typescript-eslint.io/blog/project-service/
+   * @default false
+   */
+  readonly projectService?: boolean;
 
   /**
    * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
@@ -47,21 +63,6 @@ export interface EslintOptions {
    * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
    */
   readonly ignorePatterns?: string[];
-
-  /**
-   * Projenrc file to lint. Use empty string to disable.
-   * @default "projenrc.js"
-   * @deprecated provide as `devdirs`
-   */
-  readonly lintProjenRcFile?: string;
-
-  /**
-   * Should we lint .projenrc.js
-   *
-   * @default true
-   * @deprecated set to `false` to remove any automatic rules and add manually
-   */
-  readonly lintProjenRc?: boolean;
 
   /**
    * Enable prettier for code formatting
@@ -196,6 +197,7 @@ export class Eslint extends Component {
 
   private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
+  private readonly _allowDefaultProject = new Set<string>();
   private readonly _plugins = new Set<string>();
   private readonly _extends = new Set<string>();
   private readonly _fileExtensions: Set<string>;
@@ -221,17 +223,9 @@ export class Eslint extends Component {
       project.addDevDeps("eslint-import-resolver-alias");
     }
 
-    const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile =
-      options.lintProjenRcFile ?? DEFAULT_PROJEN_RC_JS_FILENAME;
-
     const devdirs = options.devdirs ?? [];
 
-    this._lintPatterns = new Set([
-      ...options.dirs,
-      ...devdirs,
-      ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-    ]);
+    this._lintPatterns = new Set([...options.dirs, ...devdirs]);
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
@@ -387,26 +381,8 @@ export class Eslint extends Component {
       ],
     };
 
-    // Overrides for .projenrc.js
-    // @deprecated
-    if (lintProjenRc) {
-      this.overrides = [
-        {
-          files: [lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME],
-          rules: {
-            "@typescript-eslint/no-require-imports": "off",
-            "import/no-extraneous-dependencies": "off",
-          },
-        },
-      ];
-    }
-
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      // @deprecated
-      ...(lintProjenRc
-        ? [`!${lintProjenRcFile || DEFAULT_PROJEN_RC_JS_FILENAME}`]
-        : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
@@ -414,6 +390,7 @@ export class Eslint extends Component {
     ];
 
     const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
+    const projectService = options.projectService ?? false;
 
     this.addPlugins("@typescript-eslint");
     this.addPlugins("import");
@@ -430,7 +407,11 @@ export class Eslint extends Component {
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: "module",
-        project: tsconfig,
+        // Either let typescript-eslint resolve the nearest tsconfig per file
+        // (project service), or pin all files to a single project.
+        ...(projectService
+          ? { projectService: () => this.renderProjectService(tsconfig) }
+          : { project: tsconfig }),
       },
       extends: () =>
         Array.from(this._extends).sort((a, b) =>
@@ -554,6 +535,39 @@ export class Eslint extends Component {
   }
 
   /**
+   * Allow files matching these patterns to be linted with the typescript-eslint
+   * "default project" when they are not included by any `tsconfig.json`.
+   *
+   * Only has an effect when the project service is enabled (see
+   * `EslintOptions.projectService`). This is typically used for loose files
+   * that live outside `src`/`test` (e.g. `.projenrc.ts`).
+   *
+   * @see https://typescript-eslint.io/packages/parser/#allowdefaultproject
+   * @param patterns glob patterns, relative to the project root.
+   */
+  public allowDefaultProjectFiles(...patterns: string[]) {
+    for (const pattern of patterns) {
+      this._allowDefaultProject.add(pattern);
+    }
+  }
+
+  /**
+   * Render the value of `parserOptions.projectService`. When loose files have
+   * been registered via `allowDefaultProjectFiles`, an options object is
+   * emitted; otherwise the plain `true` shorthand is used.
+   * @internal
+   */
+  private renderProjectService(defaultProject: string): boolean | object {
+    if (this._allowDefaultProject.size === 0) {
+      return true;
+    }
+    return {
+      allowDefaultProject: Array.from(this._allowDefaultProject),
+      defaultProject,
+    };
+  }
+
+  /**
    * Enables prettier for code formatting.
    */
   private enablePrettier() {
@@ -570,6 +584,13 @@ export class Eslint extends Component {
 
   private renderDevDepsAllowList() {
     return Array.from(this._allowDevDeps);
+  }
+
+  /**
+   * Runs eslint once, right after the project is first created, so the generated code is linted (and auto-fixed) immediately.
+   */
+  public postProjectCreation(_initProject: InitProject) {
+    this.nodeProject.tasks.runTask(this.eslintTask.name);
   }
 
   /**

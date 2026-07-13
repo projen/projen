@@ -1,4 +1,4 @@
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 
 /**
   Adds a simple Typescript documentation generator
@@ -9,7 +9,13 @@ export class TypedocDocgen {
 
     const docgen = project.addTask("docgen", {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
-      exec: `typedoc ${project.srcdir} --disableSources --out ${project.docsDirectory}`,
+      execArgs: [
+        "typedoc",
+        project.srcdir,
+        "--disableSources",
+        "--out",
+        project.docsDirectory,
+      ],
     });
 
     // spawn after a successful compile

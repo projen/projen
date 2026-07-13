@@ -1,17 +1,22 @@
 import { GitHubActionsProvider } from "./actions-provider";
-import { Dependabot, DependabotOptions } from "./dependabot";
+import type { DependabotOptions } from "./dependabot";
+import { Dependabot } from "./dependabot";
+import type { DependencyReviewOptions } from "./dependency-review";
+import { DependencyReview } from "./dependency-review";
 import { GithubCredentials } from "./github-credentials";
-import { MergeQueue, MergeQueueOptions } from "./merge-queue";
-import { Mergify, MergifyOptions } from "./mergify";
+import type { MergeQueueOptions } from "./merge-queue";
+import { MergeQueue } from "./merge-queue";
+import type { MergifyOptions } from "./mergify";
+import { Mergify } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
-import {
-  PullRequestBackport,
-  PullRequestBackportOptions,
-} from "./pull-request-backport";
-import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import type { PullRequestBackportOptions } from "./pull-request-backport";
+import { PullRequestBackport } from "./pull-request-backport";
+import type { PullRequestLintOptions } from "./pull-request-lint";
+import { PullRequestLint } from "./pull-request-lint";
+import { CheckoutSubmodules } from "./workflow-steps";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 export interface GitHubOptions {
   /**
@@ -91,21 +96,38 @@ export interface GitHubOptions {
   readonly projenCredentials?: GithubCredentials;
 
   /**
-   * The name of a secret which includes a GitHub Personal Access Token to be
-   * used by projen workflows. This token needs to have the `repo`, `workflows`
-   * and `packages` scope.
-   *
-   * @default "PROJEN_GITHUB_TOKEN"
-   * @deprecated - use `projenCredentials`
-   */
-  readonly projenTokenSecret?: string;
-
-  /**
    * Download files in LFS in workflows
    *
    * @default true if the associated project has `lfsPatterns`, `false` otherwise
    */
   readonly downloadLfs?: boolean;
+
+  /**
+   * Enable the dependency-review-action workflow on pull requests.
+   *
+   * Adds a separate workflow that runs `actions/dependency-review-action`
+   * to scan pull requests for newly introduced vulnerable or non-compliant
+   * dependencies.
+   *
+   * @default false
+   */
+  readonly dependencyReview?: boolean;
+
+  /**
+   * Options for the dependency review workflow.
+   *
+   * Only used when `dependencyReview` is `true`.
+   *
+   * @default - default options
+   */
+  readonly dependencyReviewOptions?: DependencyReviewOptions;
+
+  /**
+   * Whether to checkout Git submodules.
+   *
+   * @default CheckoutSubmodules.DISABLED
+   */
+  readonly checkoutSubmodules?: CheckoutSubmodules;
 }
 
 export class GitHub extends Component {
@@ -146,6 +168,7 @@ export class GitHub extends Component {
   public readonly actions: GitHubActionsProvider;
 
   private readonly _downloadLfs?: boolean;
+  private readonly _checkoutSubmodules?: CheckoutSubmodules;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
@@ -155,19 +178,9 @@ export class GitHub extends Component {
     this.workflowsEnabled = options.workflows ?? true;
 
     this._downloadLfs = options.downloadLfs;
+    this._checkoutSubmodules = options.checkoutSubmodules;
 
-    if (options.projenCredentials && options.projenTokenSecret) {
-      throw new Error(
-        "projenTokenSecret is deprecated, please use projenCredentials instead",
-      );
-    }
-
-    // @deprecated
-    if (options.projenTokenSecret) {
-      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
-        secret: options.projenTokenSecret,
-      });
-    } else if (options.projenCredentials) {
+    if (options.projenCredentials) {
       this.projenCredentials = options.projenCredentials;
     } else {
       // default
@@ -195,6 +208,10 @@ export class GitHub extends Component {
         );
       }
       new PullRequestBackport(this, options.pullRequestBackportOptions);
+    }
+
+    if (options.dependencyReview ?? false) {
+      new DependencyReview(this, options.dependencyReviewOptions);
     }
   }
 
@@ -240,5 +257,12 @@ export class GitHub extends Component {
    */
   public get downloadLfs() {
     return this._downloadLfs ?? this.project.gitattributes.hasLfsPatterns;
+  }
+
+  /**
+   * Whether checking out Git submodules is enabled for this GitHub project.
+   */
+  public get checkoutSubmodules(): CheckoutSubmodules {
+    return this._checkoutSubmodules ?? CheckoutSubmodules.DISABLED;
   }
 }

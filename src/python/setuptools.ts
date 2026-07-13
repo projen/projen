@@ -1,10 +1,13 @@
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonExecutableOptions } from "./python-project";
+import type {
+  IPythonPackaging,
+  PythonPackagingOptions,
+} from "./python-packaging";
+import type { PythonExecutableOptions } from "./python-project";
 import { SetupPy } from "./setuppy";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
-import { Task } from "../task";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 export interface SetuptoolsOptions
   extends PythonPackagingOptions, PythonExecutableOptions {}
@@ -29,7 +32,12 @@ export class Setuptools extends Component implements IPythonPackaging {
     project.deps.addDependency("wheel@0.36.2", DependencyType.DEVENV);
     project.deps.addDependency("twine@3.3.0", DependencyType.DEVENV);
 
-    project.packageTask.exec(`${this.pythonExec} setup.py sdist bdist_wheel`);
+    project.packageTask.execArgs([
+      this.pythonExec,
+      "setup.py",
+      "sdist",
+      "bdist_wheel",
+    ]);
 
     this.publishTestTask = project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",

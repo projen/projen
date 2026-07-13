@@ -39,8 +39,10 @@ new github.AutoApprove(github: GitHub, options?: AutoApproveOptions)
 | --- | --- |
 | <code><a href="#projen.github.AutoApprove.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.AutoApprove.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.AutoApprove.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoApprove.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.AutoApprove.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.AutoApprove.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoApprove.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -74,6 +76,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.AutoApprove.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoApprove.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.AutoApprove.postSynthesize"></a>
 
 ```typescript
@@ -91,6 +114,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.AutoApprove.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoApprove.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.AutoApprove.synthesize"></a>
 
@@ -249,8 +291,10 @@ new github.AutoMerge(github: GitHub, options?: AutoMergeOptions)
 | --- | --- |
 | <code><a href="#projen.github.AutoMerge.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.AutoMerge.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.AutoMerge.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoMerge.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.AutoMerge.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.AutoMerge.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoMerge.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.AutoMerge.addConditions">addConditions</a></code> | Adds conditions to the auto merge rule. |
 | <code><a href="#projen.github.AutoMerge.addConditionsLater">addConditionsLater</a></code> | Adds conditions that will be rendered only during synthesis. |
@@ -286,6 +330,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.AutoMerge.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoMerge.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.AutoMerge.postSynthesize"></a>
 
 ```typescript
@@ -303,6 +368,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.AutoMerge.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoMerge.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.AutoMerge.synthesize"></a>
 
@@ -470,8 +554,10 @@ new github.AutoQueue(scope: IConstruct, options?: AutoQueueOptions)
 | --- | --- |
 | <code><a href="#projen.github.AutoQueue.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.AutoQueue.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.AutoQueue.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoQueue.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.AutoQueue.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.AutoQueue.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoQueue.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -505,6 +591,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.AutoQueue.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoQueue.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.AutoQueue.postSynthesize"></a>
 
 ```typescript
@@ -522,6 +629,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.AutoQueue.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.AutoQueue.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.AutoQueue.synthesize"></a>
 
@@ -661,8 +787,10 @@ new github.Dependabot(github: GitHub, options?: DependabotOptions)
 | --- | --- |
 | <code><a href="#projen.github.Dependabot.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.Dependabot.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.Dependabot.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Dependabot.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.Dependabot.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.Dependabot.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Dependabot.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.Dependabot.addAllow">addAllow</a></code> | Allows a dependency from automatic updates. |
 | <code><a href="#projen.github.Dependabot.addIgnore">addIgnore</a></code> | Ignores a dependency from automatic updates. |
@@ -698,6 +826,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.Dependabot.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Dependabot.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.Dependabot.postSynthesize"></a>
 
 ```typescript
@@ -715,6 +864,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.Dependabot.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Dependabot.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.Dependabot.synthesize"></a>
 
@@ -885,6 +1053,240 @@ Whether or not projen is also upgraded in this config,.
 ---
 
 
+### DependencyReview <a name="DependencyReview" id="projen.github.DependencyReview"></a>
+
+Adds a GitHub workflow that runs the dependency-review-action on pull requests.
+
+This action scans pull requests for dependency changes and raises an error
+if any vulnerabilities or invalid licenses are introduced.
+
+> [https://github.com/actions/dependency-review-action](https://github.com/actions/dependency-review-action)
+
+#### Initializers <a name="Initializers" id="projen.github.DependencyReview.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.DependencyReview(github: GitHub, options?: DependencyReviewOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReview.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
+| <code><a href="#projen.github.DependencyReview.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | *No description.* |
+
+---
+
+##### `github`<sup>Required</sup> <a name="github" id="projen.github.DependencyReview.Initializer.parameter.github"></a>
+
+- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.DependencyReview.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependencyReview.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.DependencyReview.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.DependencyReview.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.DependencyReview.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.DependencyReview.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.DependencyReview.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.DependencyReview.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.DependencyReview.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.github.DependencyReview.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.github.DependencyReview.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.DependencyReview.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.DependencyReview.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.DependencyReview.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.DependencyReview.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.DependencyReview.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.DependencyReview.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.github.DependencyReview.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.DependencyReview.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.DependencyReview.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.DependencyReview.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.DependencyReview.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.DependencyReview.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.DependencyReview.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.DependencyReview.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.DependencyReview.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReview.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.DependencyReview.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.DependencyReview.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.DependencyReview.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+
 ### GitHub <a name="GitHub" id="projen.github.GitHub"></a>
 
 #### Initializers <a name="Initializers" id="projen.github.GitHub.Initializer"></a>
@@ -920,8 +1322,10 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 | --- | --- |
 | <code><a href="#projen.github.GitHub.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.GitHub.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.GitHub.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.GitHub.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.GitHub.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.GitHub.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.GitHub.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.GitHub.addDependabot">addDependabot</a></code> | *No description.* |
 | <code><a href="#projen.github.GitHub.addPullRequestTemplate">addPullRequestTemplate</a></code> | *No description.* |
@@ -959,6 +1363,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.GitHub.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GitHub.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.GitHub.postSynthesize"></a>
 
 ```typescript
@@ -976,6 +1401,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.GitHub.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GitHub.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.GitHub.synthesize"></a>
 
@@ -1124,6 +1568,7 @@ Returns the `GitHub` component of a project or `undefined` if the project does n
 | <code><a href="#projen.github.GitHub.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.GitHub.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.GitHub.property.actions">actions</a></code> | <code><a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a></code> | The GitHub Actions provider used to manage the versions of actions used in steps. |
+| <code><a href="#projen.github.GitHub.property.checkoutSubmodules">checkoutSubmodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether checking out Git submodules is enabled for this GitHub project. |
 | <code><a href="#projen.github.GitHub.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Whether downloading from LFS is enabled for this GitHub project. |
 | <code><a href="#projen.github.GitHub.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GitHub.property.workflows">workflows</a></code> | <code><a href="#projen.github.GithubWorkflow">GithubWorkflow</a>[]</code> | All workflows. |
@@ -1164,6 +1609,18 @@ public readonly actions: GitHubActionsProvider;
 - *Type:* <a href="#projen.github.GitHubActionsProvider">GitHubActionsProvider</a>
 
 The GitHub Actions provider used to manage the versions of actions used in steps.
+
+---
+
+##### `checkoutSubmodules`<sup>Required</sup> <a name="checkoutSubmodules" id="projen.github.GitHub.property.checkoutSubmodules"></a>
+
+```typescript
+public readonly checkoutSubmodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+
+Whether checking out Git submodules is enabled for this GitHub project.
 
 ---
 
@@ -1274,7 +1731,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
 | <code><a href="#projen.github.GitHubProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.github.GitHubProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.github.GitHubProject.addTask">addTask</a></code> | Adds a new task to this project. |
-| <code><a href="#projen.github.GitHubProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.github.GitHubProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
 | <code><a href="#projen.github.GitHubProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.github.GitHubProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
@@ -1282,7 +1738,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
 | <code><a href="#projen.github.GitHubProject.runTaskCommand">runTaskCommand</a></code> | Returns the shell command to execute in order to run a task. |
 | <code><a href="#projen.github.GitHubProject.synth">synth</a></code> | Synthesize all project files into `outdir`. |
 | <code><a href="#projen.github.GitHubProject.tryFindFile">tryFindFile</a></code> | Finds a file at the specified relative path within this project and all its subprojects. |
-| <code><a href="#projen.github.GitHubProject.tryFindJsonFile">tryFindJsonFile</a></code> | Finds a json file by name. |
 | <code><a href="#projen.github.GitHubProject.tryFindObjectFile">tryFindObjectFile</a></code> | Finds an object file (like JsonFile, YamlFile, etc.) by name. |
 | <code><a href="#projen.github.GitHubProject.tryRemoveFile">tryRemoveFile</a></code> | Finds a file at the specified relative path within this project and removes it. |
 
@@ -1398,22 +1853,6 @@ Task properties.
 
 ---
 
-##### ~~`addTip`~~ <a name="addTip" id="projen.github.GitHubProject.addTip"></a>
-
-```typescript
-public addTip(message: string): void
-```
-
-Prints a "tip" message during synthesis.
-
-###### `message`<sup>Required</sup> <a name="message" id="projen.github.GitHubProject.addTip.parameter.message"></a>
-
-- *Type:* string
-
-The message.
-
----
-
 ##### ~~`annotateGenerated`~~ <a name="annotateGenerated" id="projen.github.GitHubProject.annotateGenerated"></a>
 
 ```typescript
@@ -1500,8 +1939,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### ~~`tryFindFile`~~ <a name="tryFindFile" id="projen.github.GitHubProject.tryFindFile"></a>
 
@@ -1519,22 +1960,6 @@ The file path.
 
 If this path is relative, it will be resolved
 from the root of _this_ project.
-
----
-
-##### ~~`tryFindJsonFile`~~ <a name="tryFindJsonFile" id="projen.github.GitHubProject.tryFindJsonFile"></a>
-
-```typescript
-public tryFindJsonFile(filePath: string): JsonFile
-```
-
-Finds a json file by name.
-
-###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.github.GitHubProject.tryFindJsonFile.parameter.filePath"></a>
-
-- *Type:* string
-
-The file path.
 
 ---
 
@@ -1678,7 +2103,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.github.GitHubProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
 | <code><a href="#projen.github.GitHubProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.github.GitHubProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
-| <code><a href="#projen.github.GitHubProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
 | <code><a href="#projen.github.GitHubProject.property.autoApprove">autoApprove</a></code> | <code><a href="#projen.github.AutoApprove">AutoApprove</a></code> | Auto approve set up for this project. |
 | <code><a href="#projen.github.GitHubProject.property.devContainer">devContainer</a></code> | <code>projen.vscode.DevContainer</code> | Access for .devcontainer.json (used for GitHub Codespaces). |
 | <code><a href="#projen.github.GitHubProject.property.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | Access all github components. |
@@ -2094,11 +2518,7 @@ the project is being ejected.
 
 ##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.github.GitHubProject.property.initProject"></a>
 
-- *Deprecated:* This is a *temporary* class. At the moment, our base project
-types such as `NodeProject` and `JavaProject` are derived from this, but we
-want to be able to use these project types outside of GitHub as well. One of
-the next steps to address this is to abstract workflows so that different
-"engines" can be used to implement our CI/CD solutions.
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -2131,22 +2551,6 @@ public readonly parent: Project;
 A parent project.
 
 If undefined, this is the root project.
-
----
-
-##### ~~`projectType`~~<sup>Required</sup> <a name="projectType" id="projen.github.GitHubProject.property.projectType"></a>
-
-- *Deprecated:* This is a *temporary* class. At the moment, our base project
-types such as `NodeProject` and `JavaProject` are derived from this, but we
-want to be able to use these project types outside of GitHub as well. One of
-the next steps to address this is to abstract workflows so that different
-"engines" can be used to implement our CI/CD solutions.
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
 
 ---
 
@@ -2331,14 +2735,23 @@ Additional options to configure the workflow.
 | --- | --- |
 | <code><a href="#projen.github.GithubWorkflow.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.GithubWorkflow.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.GithubWorkflow.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.GithubWorkflow.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.GithubWorkflow.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.GithubWorkflow.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.GithubWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.GithubWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.appendStep">appendStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.GithubWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
+| <code><a href="#projen.github.GithubWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
+| <code><a href="#projen.github.GithubWorkflow.insertStepBefore">insertStepBefore</a></code> | Inserts a step before an existing step, identified by ID. |
 | <code><a href="#projen.github.GithubWorkflow.on">on</a></code> | Add events to triggers the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.patchStep">patchStep</a></code> | Applies a surgical modification to an existing step. |
 | <code><a href="#projen.github.GithubWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
+| <code><a href="#projen.github.GithubWorkflow.removeStep">removeStep</a></code> | Removes a step from a job by step ID. |
+| <code><a href="#projen.github.GithubWorkflow.replaceStep">replaceStep</a></code> | Replaces an existing step in a job, preserving its position. |
 | <code><a href="#projen.github.GithubWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
 | <code><a href="#projen.github.GithubWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
@@ -2373,6 +2786,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.GithubWorkflow.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GithubWorkflow.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.GithubWorkflow.postSynthesize"></a>
 
 ```typescript
@@ -2390,6 +2824,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.GithubWorkflow.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GithubWorkflow.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.GithubWorkflow.synthesize"></a>
 
@@ -2439,6 +2892,32 @@ Jobs to add.
 
 ---
 
+##### `appendStep` <a name="appendStep" id="projen.github.GithubWorkflow.appendStep"></a>
+
+```typescript
+public appendStep(jobId: string, step: JobStep): void
+```
+
+Appends a step to the end of a job's step list.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.appendStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.appendStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to add.
+
+Must have an `id` set.
+
+---
+
 ##### `getJob` <a name="getJob" id="projen.github.GithubWorkflow.getJob"></a>
 
 ```typescript
@@ -2452,6 +2931,101 @@ Get a single job from the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `getStep` <a name="getStep" id="projen.github.GithubWorkflow.getStep"></a>
+
+```typescript
+public getStep(jobId: string, stepId: string): JobStep
+```
+
+Gets a single step from a job by step ID.
+
+The returned object is frozen and read-only. Use `replaceStep` or
+`patchStep` to modify a step.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.getStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.getStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The step ID to look up.
+
+---
+
+##### `insertStepAfter` <a name="insertStepAfter" id="projen.github.GithubWorkflow.insertStepAfter"></a>
+
+```typescript
+public insertStepAfter(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step after an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.insertStepAfter.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.GithubWorkflow.insertStepAfter.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert after.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.insertStepAfter.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
+
+---
+
+##### `insertStepBefore` <a name="insertStepBefore" id="projen.github.GithubWorkflow.insertStepBefore"></a>
+
+```typescript
+public insertStepBefore(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step before an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.insertStepBefore.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.GithubWorkflow.insertStepBefore.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert before.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.GithubWorkflow.insertStepBefore.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
 
 ---
 
@@ -2471,6 +3045,53 @@ The event(s) to trigger the workflow.
 
 ---
 
+##### `patchStep` <a name="patchStep" id="projen.github.GithubWorkflow.patchStep"></a>
+
+```typescript
+public patchStep(jobId: string, stepId: string, patch: JobStep): void
+```
+
+Applies a surgical modification to an existing step.
+
+The provided patch is shallow-merged onto the existing step. Fields not
+present in the patch are preserved unchanged. Use `getStep` to read the
+current step values before constructing the patch.
+
+*Example*
+
+```typescript
+// Add an env var without replacing existing ones:
+const step = workflow.getStep("build", "install");
+workflow.patchStep("build", "install", {
+  env: { ...step.env, NODE_AUTH_TOKEN: "${{ steps.jfrog.outputs.oidc-token }}" },
+});
+```
+
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.patchStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.patchStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to patch.
+
+---
+
+###### `patch`<sup>Required</sup> <a name="patch" id="projen.github.GithubWorkflow.patchStep.parameter.patch"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+A partial step object whose fields are shallow-merged onto the existing step.
+
+---
+
 ##### `removeJob` <a name="removeJob" id="projen.github.GithubWorkflow.removeJob"></a>
 
 ```typescript
@@ -2484,6 +3105,64 @@ Removes a single job to the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `removeStep` <a name="removeStep" id="projen.github.GithubWorkflow.removeStep"></a>
+
+```typescript
+public removeStep(jobId: string, stepId: string): void
+```
+
+Removes a step from a job by step ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.removeStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.removeStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to remove.
+
+---
+
+##### `replaceStep` <a name="replaceStep" id="projen.github.GithubWorkflow.replaceStep"></a>
+
+```typescript
+public replaceStep(jobId: string, stepId: string, replacementStep: JobStep): void
+```
+
+Replaces an existing step in a job, preserving its position.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.GithubWorkflow.replaceStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.GithubWorkflow.replaceStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to replace.
+
+---
+
+###### `replacementStep`<sup>Required</sup> <a name="replacementStep" id="projen.github.GithubWorkflow.replaceStep.parameter.replacementStep"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The replacement step.
+
+If `id` is omitted, it inherits the original step's ID.
 
 ---
 
@@ -2763,8 +3442,10 @@ new github.MergeQueue(scope: IConstruct, options?: MergeQueueOptions)
 | --- | --- |
 | <code><a href="#projen.github.MergeQueue.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.MergeQueue.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.MergeQueue.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.MergeQueue.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.MergeQueue.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.MergeQueue.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.MergeQueue.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -2798,6 +3479,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.MergeQueue.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.MergeQueue.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.MergeQueue.postSynthesize"></a>
 
 ```typescript
@@ -2815,6 +3517,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.MergeQueue.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.MergeQueue.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.MergeQueue.synthesize"></a>
 
@@ -2948,8 +3669,10 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 | --- | --- |
 | <code><a href="#projen.github.Mergify.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.Mergify.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.Mergify.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Mergify.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.Mergify.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.Mergify.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Mergify.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.Mergify.addQueue">addQueue</a></code> | *No description.* |
 | <code><a href="#projen.github.Mergify.addRule">addRule</a></code> | *No description.* |
@@ -2985,6 +3708,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.Mergify.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Mergify.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.Mergify.postSynthesize"></a>
 
 ```typescript
@@ -3002,6 +3746,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.Mergify.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Mergify.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.Mergify.synthesize"></a>
 
@@ -3159,8 +3922,10 @@ new github.PullRequestBackport(scope: IConstruct, options?: PullRequestBackportO
 | --- | --- |
 | <code><a href="#projen.github.PullRequestBackport.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.PullRequestBackport.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.PullRequestBackport.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestBackport.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.PullRequestBackport.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.PullRequestBackport.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestBackport.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -3194,6 +3959,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.PullRequestBackport.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestBackport.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.PullRequestBackport.postSynthesize"></a>
 
 ```typescript
@@ -3211,6 +3997,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.PullRequestBackport.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestBackport.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.PullRequestBackport.synthesize"></a>
 
@@ -3370,8 +4175,10 @@ new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
 | --- | --- |
 | <code><a href="#projen.github.PullRequestLint.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.PullRequestLint.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.PullRequestLint.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestLint.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.PullRequestLint.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.PullRequestLint.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestLint.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -3405,6 +4212,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.PullRequestLint.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestLint.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.PullRequestLint.postSynthesize"></a>
 
 ```typescript
@@ -3422,6 +4250,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.PullRequestLint.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestLint.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.PullRequestLint.synthesize"></a>
 
@@ -3557,9 +4404,12 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 | --- | --- |
 | <code><a href="#projen.github.PullRequestTemplate.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.PullRequestTemplate.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.PullRequestTemplate.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestTemplate.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.PullRequestTemplate.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.PullRequestTemplate.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestTemplate.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.github.PullRequestTemplate.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.github.PullRequestTemplate.addLine">addLine</a></code> | Adds a line to the text file. |
 
 ---
@@ -3593,6 +4443,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.PullRequestTemplate.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestTemplate.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.PullRequestTemplate.postSynthesize"></a>
 
 ```typescript
@@ -3611,6 +4482,25 @@ public preSynthesize(): void
 
 Called before synthesis.
 
+##### `projectCreation` <a name="projectCreation" id="projen.github.PullRequestTemplate.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.PullRequestTemplate.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `synthesize` <a name="synthesize" id="projen.github.PullRequestTemplate.synthesize"></a>
 
 ```typescript
@@ -3618,6 +4508,35 @@ public synthesize(): void
 ```
 
 Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.github.PullRequestTemplate.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.github.PullRequestTemplate.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.github.PullRequestTemplate.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
 
 ##### `addLine` <a name="addLine" id="projen.github.PullRequestTemplate.addLine"></a>
 
@@ -3718,6 +4637,7 @@ The project.
 | <code><a href="#projen.github.PullRequestTemplate.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.github.PullRequestTemplate.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.github.PullRequestTemplate.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.github.PullRequestTemplate.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.github.PullRequestTemplate.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.github.PullRequestTemplate.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.github.PullRequestTemplate.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3757,6 +4677,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.github.PullRequestTemplate.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3872,8 +4804,10 @@ new github.Stale(github: GitHub, options?: StaleOptions)
 | --- | --- |
 | <code><a href="#projen.github.Stale.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.Stale.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.Stale.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Stale.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.Stale.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.Stale.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.Stale.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -3907,6 +4841,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.Stale.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Stale.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.Stale.postSynthesize"></a>
 
 ```typescript
@@ -3924,6 +4879,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.Stale.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Stale.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.Stale.synthesize"></a>
 
@@ -4059,14 +5033,23 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 | --- | --- |
 | <code><a href="#projen.github.TaskWorkflow.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.TaskWorkflow.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.TaskWorkflow.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.TaskWorkflow.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.TaskWorkflow.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.TaskWorkflow.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.TaskWorkflow.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.github.TaskWorkflow.addJob">addJob</a></code> | Adds a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.addJobs">addJobs</a></code> | Add jobs to the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.appendStep">appendStep</a></code> | Appends a step to the end of a job's step list. |
 | <code><a href="#projen.github.TaskWorkflow.getJob">getJob</a></code> | Get a single job from the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.getStep">getStep</a></code> | Gets a single step from a job by step ID. |
+| <code><a href="#projen.github.TaskWorkflow.insertStepAfter">insertStepAfter</a></code> | Inserts a step after an existing step, identified by ID. |
+| <code><a href="#projen.github.TaskWorkflow.insertStepBefore">insertStepBefore</a></code> | Inserts a step before an existing step, identified by ID. |
 | <code><a href="#projen.github.TaskWorkflow.on">on</a></code> | Add events to triggers the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.patchStep">patchStep</a></code> | Applies a surgical modification to an existing step. |
 | <code><a href="#projen.github.TaskWorkflow.removeJob">removeJob</a></code> | Removes a single job to the workflow. |
+| <code><a href="#projen.github.TaskWorkflow.removeStep">removeStep</a></code> | Removes a step from a job by step ID. |
+| <code><a href="#projen.github.TaskWorkflow.replaceStep">replaceStep</a></code> | Replaces an existing step in a job, preserving its position. |
 | <code><a href="#projen.github.TaskWorkflow.updateJob">updateJob</a></code> | Updates a single job to the workflow. |
 | <code><a href="#projen.github.TaskWorkflow.updateJobs">updateJobs</a></code> | Updates jobs for this workflow Does a complete replace, it does not try to merge the jobs. |
 
@@ -4101,6 +5084,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.TaskWorkflow.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.TaskWorkflow.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.TaskWorkflow.postSynthesize"></a>
 
 ```typescript
@@ -4118,6 +5122,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.TaskWorkflow.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.TaskWorkflow.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.TaskWorkflow.synthesize"></a>
 
@@ -4167,6 +5190,32 @@ Jobs to add.
 
 ---
 
+##### `appendStep` <a name="appendStep" id="projen.github.TaskWorkflow.appendStep"></a>
+
+```typescript
+public appendStep(jobId: string, step: JobStep): void
+```
+
+Appends a step to the end of a job's step list.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.appendStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.appendStep.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to add.
+
+Must have an `id` set.
+
+---
+
 ##### `getJob` <a name="getJob" id="projen.github.TaskWorkflow.getJob"></a>
 
 ```typescript
@@ -4180,6 +5229,101 @@ Get a single job from the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `getStep` <a name="getStep" id="projen.github.TaskWorkflow.getStep"></a>
+
+```typescript
+public getStep(jobId: string, stepId: string): JobStep
+```
+
+Gets a single step from a job by step ID.
+
+The returned object is frozen and read-only. Use `replaceStep` or
+`patchStep` to modify a step.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.getStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.getStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The step ID to look up.
+
+---
+
+##### `insertStepAfter` <a name="insertStepAfter" id="projen.github.TaskWorkflow.insertStepAfter"></a>
+
+```typescript
+public insertStepAfter(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step after an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.insertStepAfter.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.TaskWorkflow.insertStepAfter.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert after.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.insertStepAfter.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
+
+---
+
+##### `insertStepBefore` <a name="insertStepBefore" id="projen.github.TaskWorkflow.insertStepBefore"></a>
+
+```typescript
+public insertStepBefore(jobId: string, referenceStepId: string, step: JobStep): void
+```
+
+Inserts a step before an existing step, identified by ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.insertStepBefore.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `referenceStepId`<sup>Required</sup> <a name="referenceStepId" id="projen.github.TaskWorkflow.insertStepBefore.parameter.referenceStepId"></a>
+
+- *Type:* string
+
+The ID of the step to insert before.
+
+---
+
+###### `step`<sup>Required</sup> <a name="step" id="projen.github.TaskWorkflow.insertStepBefore.parameter.step"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The step to insert.
+
+Must have an `id` set.
 
 ---
 
@@ -4199,6 +5343,53 @@ The event(s) to trigger the workflow.
 
 ---
 
+##### `patchStep` <a name="patchStep" id="projen.github.TaskWorkflow.patchStep"></a>
+
+```typescript
+public patchStep(jobId: string, stepId: string, patch: JobStep): void
+```
+
+Applies a surgical modification to an existing step.
+
+The provided patch is shallow-merged onto the existing step. Fields not
+present in the patch are preserved unchanged. Use `getStep` to read the
+current step values before constructing the patch.
+
+*Example*
+
+```typescript
+// Add an env var without replacing existing ones:
+const step = workflow.getStep("build", "install");
+workflow.patchStep("build", "install", {
+  env: { ...step.env, NODE_AUTH_TOKEN: "${{ steps.jfrog.outputs.oidc-token }}" },
+});
+```
+
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.patchStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.patchStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to patch.
+
+---
+
+###### `patch`<sup>Required</sup> <a name="patch" id="projen.github.TaskWorkflow.patchStep.parameter.patch"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+A partial step object whose fields are shallow-merged onto the existing step.
+
+---
+
 ##### `removeJob` <a name="removeJob" id="projen.github.TaskWorkflow.removeJob"></a>
 
 ```typescript
@@ -4212,6 +5403,64 @@ Removes a single job to the workflow.
 - *Type:* string
 
 The job name (unique within the workflow).
+
+---
+
+##### `removeStep` <a name="removeStep" id="projen.github.TaskWorkflow.removeStep"></a>
+
+```typescript
+public removeStep(jobId: string, stepId: string): void
+```
+
+Removes a step from a job by step ID.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.removeStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.removeStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to remove.
+
+---
+
+##### `replaceStep` <a name="replaceStep" id="projen.github.TaskWorkflow.replaceStep"></a>
+
+```typescript
+public replaceStep(jobId: string, stepId: string, replacementStep: JobStep): void
+```
+
+Replaces an existing step in a job, preserving its position.
+
+###### `jobId`<sup>Required</sup> <a name="jobId" id="projen.github.TaskWorkflow.replaceStep.parameter.jobId"></a>
+
+- *Type:* string
+
+The job name (unique within the workflow).
+
+---
+
+###### `stepId`<sup>Required</sup> <a name="stepId" id="projen.github.TaskWorkflow.replaceStep.parameter.stepId"></a>
+
+- *Type:* string
+
+The ID of the step to replace.
+
+---
+
+###### `replacementStep`<sup>Required</sup> <a name="replacementStep" id="projen.github.TaskWorkflow.replaceStep.parameter.replacementStep"></a>
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>
+
+The replacement step.
+
+If `id` is omitted, it inherits the original step's ID.
 
 ---
 
@@ -4526,8 +5775,10 @@ options to configure the TaskWorkflowJob.
 | --- | --- |
 | <code><a href="#projen.github.TaskWorkflowJob.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.github.TaskWorkflowJob.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.TaskWorkflowJob.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.TaskWorkflowJob.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.github.TaskWorkflowJob.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.TaskWorkflowJob.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.TaskWorkflowJob.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -4561,6 +5812,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.TaskWorkflowJob.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.TaskWorkflowJob.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.github.TaskWorkflowJob.postSynthesize"></a>
 
 ```typescript
@@ -4578,6 +5850,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.TaskWorkflowJob.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.TaskWorkflowJob.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.github.TaskWorkflowJob.synthesize"></a>
 
@@ -5200,8 +6491,13 @@ const checkoutOptions: github.CheckoutOptions = { ... }
 | <code><a href="#projen.github.CheckoutOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.CheckoutOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.CheckoutOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.CheckoutOptions.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.CheckoutOptions.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.CheckoutOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.CheckoutOptions.property.parallel">parallel</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.CheckoutOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.CheckoutOptions.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.CheckoutOptions.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 | <code><a href="#projen.github.CheckoutOptions.property.with">with</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Options for `checkout`. |
 
 ---
@@ -5292,6 +6588,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.CheckoutOptions.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.CheckoutOptions.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.CheckoutOptions.property.continueOnError"></a>
 
 ```typescript
@@ -5307,6 +6645,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.CheckoutOptions.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.CheckoutOptions.property.timeoutMinutes"></a>
 
 ```typescript
@@ -5316,6 +6679,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.CheckoutOptions.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.CheckoutOptions.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -5352,6 +6751,7 @@ const checkoutWith: github.CheckoutWith = { ... }
 | <code><a href="#projen.github.CheckoutWith.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWith.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWith.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.CheckoutWith.property.submodules">submodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWith.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 
 ---
@@ -5423,6 +6823,19 @@ The repository (owner/repo) to use.
 
 ---
 
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.CheckoutWith.property.submodules"></a>
+
+```typescript
+public readonly submodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* CheckoutSubmodules.DISABLED
+
+Whether to checkout Git submodules.
+
+---
+
 ##### `token`<sup>Optional</sup> <a name="token" id="projen.github.CheckoutWith.property.token"></a>
 
 ```typescript
@@ -5460,6 +6873,7 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.CheckoutWithPatchOptions.property.submodules">submodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 
@@ -5529,6 +6943,19 @@ public readonly repository: string;
 - *Default:* the default repository is implicitly used
 
 The repository (owner/repo) to use.
+
+---
+
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.CheckoutWithPatchOptions.property.submodules"></a>
+
+```typescript
+public readonly submodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* CheckoutSubmodules.DISABLED
+
+Whether to checkout Git submodules.
 
 ---
 
@@ -5677,10 +7104,12 @@ const createPullRequestOptions: github.CreatePullRequestOptions = { ... }
 | <code><a href="#projen.github.CreatePullRequestOptions.property.pullRequestDescription">pullRequestDescription</a></code> | <code>string</code> | Description added to the pull request. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.pullRequestTitle">pullRequestTitle</a></code> | <code>string</code> | The full title used to create the pull request. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow that will create the PR. |
+| <code><a href="#projen.github.CreatePullRequestOptions.property.addPaths">addPaths</a></code> | <code>string[]</code> | Paths to add to the commit, mapping to the action's `add-paths` input. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.baseBranch">baseBranch</a></code> | <code>string</code> | Sets the pull request base branch. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.branchName">branchName</a></code> | <code>string</code> | The pull request branch name. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.credentials">credentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | The job credentials used to create the pull request. |
+| <code><a href="#projen.github.CreatePullRequestOptions.property.deleteBranch">deleteBranch</a></code> | <code>boolean</code> | Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity used to create the commit. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.github.CreatePullRequestOptions.property.signoff">signoff</a></code> | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message. |
@@ -5726,6 +7155,19 @@ public readonly workflowName: string;
 - *Type:* string
 
 The name of the workflow that will create the PR.
+
+---
+
+##### `addPaths`<sup>Optional</sup> <a name="addPaths" id="projen.github.CreatePullRequestOptions.property.addPaths"></a>
+
+```typescript
+public readonly addPaths: string[];
+```
+
+- *Type:* string[]
+- *Default:* all paths
+
+Paths to add to the commit, mapping to the action's `add-paths` input.
 
 ---
 
@@ -5779,6 +7221,19 @@ public readonly credentials: GithubCredentials;
 The job credentials used to create the pull request.
 
 Provided credentials must have permissions to create a pull request on the repository.
+
+---
+
+##### `deleteBranch`<sup>Optional</sup> <a name="deleteBranch" id="projen.github.CreatePullRequestOptions.property.deleteBranch"></a>
+
+```typescript
+public readonly deleteBranch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input.
 
 ---
 
@@ -5881,6 +7336,116 @@ Use to allow updates for dependencies with matching names, optionally using `*` 
 
 For Java dependencies, the format of the dependency-name attribute is:
 `groupId:artifactId`, for example: `org.kohsuke:github-api`.
+
+---
+
+### DependabotCooldown <a name="DependabotCooldown" id="projen.github.DependabotCooldown"></a>
+
+Defines a cooldown period for dependency version updates.
+
+> [https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-)
+
+#### Initializer <a name="Initializer" id="projen.github.DependabotCooldown.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const dependabotCooldown: github.DependabotCooldown = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependabotCooldown.property.defaultDays">defaultDays</a></code> | <code>number</code> | Default cooldown period (in days) for all dependencies without specific semver rules. |
+| <code><a href="#projen.github.DependabotCooldown.property.exclude">exclude</a></code> | <code>string[]</code> | List of dependencies excluded from cooldown. |
+| <code><a href="#projen.github.DependabotCooldown.property.include">include</a></code> | <code>string[]</code> | List of dependencies to apply cooldown to. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverMajorDays">semverMajorDays</a></code> | <code>number</code> | Cooldown period (in days) for major version updates. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverMinorDays">semverMinorDays</a></code> | <code>number</code> | Cooldown period (in days) for minor version updates. |
+| <code><a href="#projen.github.DependabotCooldown.property.semverPatchDays">semverPatchDays</a></code> | <code>number</code> | Cooldown period (in days) for patch version updates. |
+
+---
+
+##### `defaultDays`<sup>Optional</sup> <a name="defaultDays" id="projen.github.DependabotCooldown.property.defaultDays"></a>
+
+```typescript
+public readonly defaultDays: number;
+```
+
+- *Type:* number
+- *Default:* no default cooldown
+
+Default cooldown period (in days) for all dependencies without specific semver rules.
+
+---
+
+##### `exclude`<sup>Optional</sup> <a name="exclude" id="projen.github.DependabotCooldown.property.exclude"></a>
+
+```typescript
+public readonly exclude: string[];
+```
+
+- *Type:* string[]
+- *Default:* no exclusions
+
+List of dependencies excluded from cooldown.
+
+Supports wildcards.
+Takes precedence over `include`.
+
+---
+
+##### `include`<sup>Optional</sup> <a name="include" id="projen.github.DependabotCooldown.property.include"></a>
+
+```typescript
+public readonly include: string[];
+```
+
+- *Type:* string[]
+- *Default:* all dependencies
+
+List of dependencies to apply cooldown to.
+
+Supports wildcards.
+
+---
+
+##### `semverMajorDays`<sup>Optional</sup> <a name="semverMajorDays" id="projen.github.DependabotCooldown.property.semverMajorDays"></a>
+
+```typescript
+public readonly semverMajorDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for major version updates.
+
+---
+
+##### `semverMinorDays`<sup>Optional</sup> <a name="semverMinorDays" id="projen.github.DependabotCooldown.property.semverMinorDays"></a>
+
+```typescript
+public readonly semverMinorDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for minor version updates.
+
+---
+
+##### `semverPatchDays`<sup>Optional</sup> <a name="semverPatchDays" id="projen.github.DependabotCooldown.property.semverPatchDays"></a>
+
+```typescript
+public readonly semverPatchDays: number;
+```
+
+- *Type:* number
+- *Default:* uses defaultDays
+
+Cooldown period (in days) for patch version updates.
 
 ---
 
@@ -6049,6 +7614,7 @@ const dependabotOptions: github.DependabotOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.DependabotOptions.property.allow">allow</a></code> | <code><a href="#projen.github.DependabotAllow">DependabotAllow</a>[]</code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#allow. |
 | <code><a href="#projen.github.DependabotOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Specify individual assignees or teams of assignees for all pull requests raised for a package manager. |
+| <code><a href="#projen.github.DependabotOptions.property.cooldown">cooldown</a></code> | <code><a href="#projen.github.DependabotCooldown">DependabotCooldown</a></code> | Defines a cooldown period for dependency version updates. |
 | <code><a href="#projen.github.DependabotOptions.property.groups">groups</a></code> | <code>{[ key: string ]: <a href="#projen.github.DependabotGroup">DependabotGroup</a>}</code> | https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups. |
 | <code><a href="#projen.github.DependabotOptions.property.ignore">ignore</a></code> | <code><a href="#projen.github.DependabotIgnore">DependabotIgnore</a>[]</code> | You can use the `ignore` option to customize which dependencies are updated. |
 | <code><a href="#projen.github.DependabotOptions.property.ignoreProjen">ignoreProjen</a></code> | <code>boolean</code> | Ignores updates to `projen`. |
@@ -6088,6 +7654,24 @@ public readonly assignees: string[];
 - *Default:* []
 
 Specify individual assignees or teams of assignees for all pull requests raised for a package manager.
+
+---
+
+##### `cooldown`<sup>Optional</sup> <a name="cooldown" id="projen.github.DependabotOptions.property.cooldown"></a>
+
+```typescript
+public readonly cooldown: DependabotCooldown;
+```
+
+- *Type:* <a href="#projen.github.DependabotCooldown">DependabotCooldown</a>
+- *Default:* no cooldown
+
+Defines a cooldown period for dependency version updates.
+
+During the cooldown, Dependabot will not propose updates for a dependency.
+This only applies to version updates, not security updates.
+
+> [https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown-)
 
 ---
 
@@ -6364,6 +7948,220 @@ The username that Dependabot uses to access the registry.
 
 ---
 
+### DependencyReviewOptions <a name="DependencyReviewOptions" id="projen.github.DependencyReviewOptions"></a>
+
+Options for the DependencyReview component.
+
+#### Initializer <a name="Initializer" id="projen.github.DependencyReviewOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const dependencyReviewOptions: github.DependencyReviewOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.DependencyReviewOptions.property.allowGhsas">allowGhsas</a></code> | <code>string[]</code> | GitHub Advisory Database IDs that can be skipped during detection. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.allowLicenses">allowLicenses</a></code> | <code>string[]</code> | List of allowed SPDX license identifiers. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.commentSummaryInPr">commentSummaryInPr</a></code> | <code>string</code> | Whether to post a comment summary on the PR. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.configFile">configFile</a></code> | <code>string</code> | Path to an external configuration file. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.denyPackages">denyPackages</a></code> | <code>string[]</code> | Packages to block in a PR (in purl format). |
+| <code><a href="#projen.github.DependencyReviewOptions.property.failOnScopes">failOnScopes</a></code> | <code>string[]</code> | Scopes of dependencies to fail on. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.failOnSeverity">failOnSeverity</a></code> | <code>string</code> | The severity level at which the action will fail. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.licenseCheck">licenseCheck</a></code> | <code>boolean</code> | Enable or disable the license check. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.showOpenSSFScorecard">showOpenSSFScorecard</a></code> | <code>boolean</code> | Show OpenSSF Scorecard scores for dependencies. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.vulnerabilityCheck">vulnerabilityCheck</a></code> | <code>boolean</code> | Enable or disable the vulnerability check. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.warnOnly">warnOnly</a></code> | <code>boolean</code> | When true, the action will only warn and not fail. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.warnOnOpenSSFScorecardLevel">warnOnOpenSSFScorecardLevel</a></code> | <code>number</code> | Score threshold for OpenSSF Scorecard warnings. |
+
+---
+
+##### `allowGhsas`<sup>Optional</sup> <a name="allowGhsas" id="projen.github.DependencyReviewOptions.property.allowGhsas"></a>
+
+```typescript
+public readonly allowGhsas: string[];
+```
+
+- *Type:* string[]
+- *Default:* no advisories are skipped
+
+GitHub Advisory Database IDs that can be skipped during detection.
+
+---
+
+##### `allowLicenses`<sup>Optional</sup> <a name="allowLicenses" id="projen.github.DependencyReviewOptions.property.allowLicenses"></a>
+
+```typescript
+public readonly allowLicenses: string[];
+```
+
+- *Type:* string[]
+- *Default:* no license allow-list
+
+List of allowed SPDX license identifiers.
+
+---
+
+##### `commentSummaryInPr`<sup>Optional</sup> <a name="commentSummaryInPr" id="projen.github.DependencyReviewOptions.property.commentSummaryInPr"></a>
+
+```typescript
+public readonly commentSummaryInPr: string;
+```
+
+- *Type:* string
+- *Default:* "always"
+
+Whether to post a comment summary on the PR.
+
+---
+
+##### `configFile`<sup>Optional</sup> <a name="configFile" id="projen.github.DependencyReviewOptions.property.configFile"></a>
+
+```typescript
+public readonly configFile: string;
+```
+
+- *Type:* string
+- *Default:* no external config
+
+Path to an external configuration file.
+
+---
+
+##### `denyPackages`<sup>Optional</sup> <a name="denyPackages" id="projen.github.DependencyReviewOptions.property.denyPackages"></a>
+
+```typescript
+public readonly denyPackages: string[];
+```
+
+- *Type:* string[]
+- *Default:* no packages are denied
+
+Packages to block in a PR (in purl format).
+
+---
+
+##### `failOnScopes`<sup>Optional</sup> <a name="failOnScopes" id="projen.github.DependencyReviewOptions.property.failOnScopes"></a>
+
+```typescript
+public readonly failOnScopes: string[];
+```
+
+- *Type:* string[]
+- *Default:* no scopes filter (action default is "runtime")
+
+Scopes of dependencies to fail on.
+
+---
+
+##### `failOnSeverity`<sup>Optional</sup> <a name="failOnSeverity" id="projen.github.DependencyReviewOptions.property.failOnSeverity"></a>
+
+```typescript
+public readonly failOnSeverity: string;
+```
+
+- *Type:* string
+- *Default:* no minimum severity (action default is "low")
+
+The severity level at which the action will fail.
+
+---
+
+##### `licenseCheck`<sup>Optional</sup> <a name="licenseCheck" id="projen.github.DependencyReviewOptions.property.licenseCheck"></a>
+
+```typescript
+public readonly licenseCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable or disable the license check.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.DependencyReviewOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.DependencyReviewOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
+
+---
+
+##### `showOpenSSFScorecard`<sup>Optional</sup> <a name="showOpenSSFScorecard" id="projen.github.DependencyReviewOptions.property.showOpenSSFScorecard"></a>
+
+```typescript
+public readonly showOpenSSFScorecard: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Show OpenSSF Scorecard scores for dependencies.
+
+---
+
+##### `vulnerabilityCheck`<sup>Optional</sup> <a name="vulnerabilityCheck" id="projen.github.DependencyReviewOptions.property.vulnerabilityCheck"></a>
+
+```typescript
+public readonly vulnerabilityCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Enable or disable the vulnerability check.
+
+---
+
+##### `warnOnly`<sup>Optional</sup> <a name="warnOnly" id="projen.github.DependencyReviewOptions.property.warnOnly"></a>
+
+```typescript
+public readonly warnOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+When true, the action will only warn and not fail.
+
+---
+
+##### `warnOnOpenSSFScorecardLevel`<sup>Optional</sup> <a name="warnOnOpenSSFScorecardLevel" id="projen.github.DependencyReviewOptions.property.warnOnOpenSSFScorecardLevel"></a>
+
+```typescript
+public readonly warnOnOpenSSFScorecardLevel: number;
+```
+
+- *Type:* number
+- *Default:* 3
+
+Score threshold for OpenSSF Scorecard warnings.
+
+---
+
 ### DownloadArtifactOptions <a name="DownloadArtifactOptions" id="projen.github.DownloadArtifactOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.github.DownloadArtifactOptions.Initializer"></a>
@@ -6384,8 +8182,13 @@ const downloadArtifactOptions: github.DownloadArtifactOptions = { ... }
 | <code><a href="#projen.github.DownloadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.parallel">parallel</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.DownloadArtifactOptions.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 | <code><a href="#projen.github.DownloadArtifactOptions.property.with">with</a></code> | <code><a href="#projen.github.DownloadArtifactWith">DownloadArtifactWith</a></code> | Options for `download-artifact`. |
 
 ---
@@ -6476,6 +8279,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.DownloadArtifactOptions.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.DownloadArtifactOptions.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.DownloadArtifactOptions.property.continueOnError"></a>
 
 ```typescript
@@ -6491,6 +8336,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.DownloadArtifactOptions.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.DownloadArtifactOptions.property.timeoutMinutes"></a>
 
 ```typescript
@@ -6500,6 +8370,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.DownloadArtifactOptions.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.DownloadArtifactOptions.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -6529,6 +8435,7 @@ const downloadArtifactWith: github.DownloadArtifactWith = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.DownloadArtifactWith.property.artifactIds">artifactIds</a></code> | <code>string[]</code> | IDs of the artifacts to download. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.mergeMultiple">mergeMultiple</a></code> | <code>boolean</code> | When multiple artifacts are matched, this changes the behavior of the destination directories If true, the downloaded artifacts will be in the same directory specified by path If false, the downloaded artifacts will be extracted into individual named directories within the specified path. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.name">name</a></code> | <code>string</code> | Name of the artifact to download. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.path">path</a></code> | <code>string</code> | A file, directory or wildcard pattern that describes what to download. |
@@ -6536,6 +8443,20 @@ const downloadArtifactWith: github.DownloadArtifactWith = { ... }
 | <code><a href="#projen.github.DownloadArtifactWith.property.repository">repository</a></code> | <code>string</code> | The repository owner and the repository name joined together by "/" If github-token is specified, this is the repository that artifacts will be downloaded from. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.runId">runId</a></code> | <code>string</code> | The id of the workflow run where the desired download artifact was uploaded from If github-token is specified, this is the run that artifacts will be downloaded from. |
 | <code><a href="#projen.github.DownloadArtifactWith.property.token">token</a></code> | <code>string</code> | The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run. |
+
+---
+
+##### `artifactIds`<sup>Optional</sup> <a name="artifactIds" id="projen.github.DownloadArtifactWith.property.artifactIds"></a>
+
+```typescript
+public readonly artifactIds: string[];
+```
+
+- *Type:* string[]
+
+IDs of the artifacts to download.
+
+Either inputs `artifact-ids` or `name` can be used, but not both.
 
 ---
 
@@ -6801,18 +8722,65 @@ const gitHubOptions: github.GitHubOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.GitHubOptions.property.checkoutSubmodules">checkoutSubmodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
+| <code><a href="#projen.github.GitHubOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable the dependency-review-action workflow on pull requests. |
+| <code><a href="#projen.github.GitHubOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | Options for the dependency review workflow. |
 | <code><a href="#projen.github.GitHubOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Download files in LFS in workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueue">mergeQueue</a></code> | <code>boolean</code> | Whether a merge queue should be used on this repository to merge pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueueOptions">mergeQueueOptions</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | Options for MergeQueue. |
 | <code><a href="#projen.github.GitHubOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
 | <code><a href="#projen.github.GitHubOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for Mergify. |
 | <code><a href="#projen.github.GitHubOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
-| <code><a href="#projen.github.GitHubOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestBackport">pullRequestBackport</a></code> | <code>boolean</code> | Add a workflow that allows backport of PRs to other branches using labels. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestBackportOptions">pullRequestBackportOptions</a></code> | <code><a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a></code> | Options for configuring pull request backport. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLint">pullRequestLint</a></code> | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLintOptions">pullRequestLintOptions</a></code> | <code><a href="#projen.github.PullRequestLintOptions">PullRequestLintOptions</a></code> | Options for configuring a pull request linter. |
 | <code><a href="#projen.github.GitHubOptions.property.workflows">workflows</a></code> | <code>boolean</code> | Enables GitHub workflows. |
+
+---
+
+##### `checkoutSubmodules`<sup>Optional</sup> <a name="checkoutSubmodules" id="projen.github.GitHubOptions.property.checkoutSubmodules"></a>
+
+```typescript
+public readonly checkoutSubmodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* CheckoutSubmodules.DISABLED
+
+Whether to checkout Git submodules.
+
+---
+
+##### `dependencyReview`<sup>Optional</sup> <a name="dependencyReview" id="projen.github.GitHubOptions.property.dependencyReview"></a>
+
+```typescript
+public readonly dependencyReview: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable the dependency-review-action workflow on pull requests.
+
+Adds a separate workflow that runs `actions/dependency-review-action`
+to scan pull requests for newly introduced vulnerable or non-compliant
+dependencies.
+
+---
+
+##### `dependencyReviewOptions`<sup>Optional</sup> <a name="dependencyReviewOptions" id="projen.github.GitHubOptions.property.dependencyReviewOptions"></a>
+
+```typescript
+public readonly dependencyReviewOptions: DependencyReviewOptions;
+```
+
+- *Type:* <a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a>
+- *Default:* default options
+
+Options for the dependency review workflow.
+
+Only used when `dependencyReview` is `true`.
 
 ---
 
@@ -6893,24 +8861,6 @@ public readonly projenCredentials: GithubCredentials;
 - *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
 
 Choose a method of providing GitHub API access for projen workflows.
-
----
-
-##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubOptions.property.projenTokenSecret"></a>
-
-- *Deprecated:* - use `projenCredentials`
-
-```typescript
-public readonly projenTokenSecret: string;
-```
-
-- *Type:* string
-- *Default:* "PROJEN_GITHUB_TOKEN"
-
-The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
-
-This token needs to have the `repo`, `workflows`
-and `packages` scope.
 
 ---
 
@@ -7023,11 +8973,7 @@ const gitHubProjectOptions: github.GitHubProjectOptions = { ... }
 | <code><a href="#projen.github.GitHubProjectOptions.property.github">github</a></code> | <code>boolean</code> | Enable GitHub integration. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.githubOptions">githubOptions</a></code> | <code><a href="#projen.github.GitHubOptions">GitHubOptions</a></code> | Options for GitHub integration. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.gitpod">gitpod</a></code> | <code>boolean</code> | Add a Gitpod development environment. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.mergifyOptions">mergifyOptions</a></code> | <code><a href="#projen.github.MergifyOptions">MergifyOptions</a></code> | Options for mergify. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.github.GitHubProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method of providing GitHub API access for projen workflows. |
-| <code><a href="#projen.github.GitHubProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.github.GitHubProjectOptions.property.staleOptions">staleOptions</a></code> | <code><a href="#projen.github.StaleOptions">StaleOptions</a></code> | Auto-close stale issues and pull requests. |
@@ -7321,51 +9267,6 @@ Add a Gitpod development environment.
 
 ---
 
-##### ~~`mergify`~~<sup>Optional</sup> <a name="mergify" id="projen.github.GitHubProjectOptions.property.mergify"></a>
-
-- *Deprecated:* use `githubOptions.mergify` instead
-
-```typescript
-public readonly mergify: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Whether mergify should be enabled on this repository or not.
-
----
-
-##### ~~`mergifyOptions`~~<sup>Optional</sup> <a name="mergifyOptions" id="projen.github.GitHubProjectOptions.property.mergifyOptions"></a>
-
-- *Deprecated:* use `githubOptions.mergifyOptions` instead
-
-```typescript
-public readonly mergifyOptions: MergifyOptions;
-```
-
-- *Type:* <a href="#projen.github.MergifyOptions">MergifyOptions</a>
-- *Default:* default options
-
-Options for mergify.
-
----
-
-##### ~~`projectType`~~<sup>Optional</sup> <a name="projectType" id="projen.github.GitHubProjectOptions.property.projectType"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
-- *Default:* ProjectType.UNKNOWN
-
-Which type of project this is (library/app).
-
----
-
 ##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.github.GitHubProjectOptions.property.projenCredentials"></a>
 
 ```typescript
@@ -7376,24 +9277,6 @@ public readonly projenCredentials: GithubCredentials;
 - *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
 
 Choose a method of providing GitHub API access for projen workflows.
-
----
-
-##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.github.GitHubProjectOptions.property.projenTokenSecret"></a>
-
-- *Deprecated:* use `projenCredentials`
-
-```typescript
-public readonly projenTokenSecret: string;
-```
-
-- *Type:* string
-- *Default:* "PROJEN_GITHUB_TOKEN"
-
-The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
-
-This token needs to have the `repo`, `workflows`
-and `packages` scope.
 
 ---
 
@@ -7672,6 +9555,73 @@ The branches that can be merged into using MergeQueue.
 
 ---
 
+### MergifyCommitMessageFormat <a name="MergifyCommitMessageFormat" id="projen.github.MergifyCommitMessageFormat"></a>
+
+Declarative configuration for Mergify `commit_message_format`.
+
+> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
+
+#### Initializer <a name="Initializer" id="projen.github.MergifyCommitMessageFormat.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const mergifyCommitMessageFormat: github.MergifyCommitMessageFormat = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.body">body</a></code> | <code>string</code> | Commit body format. |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.title">title</a></code> | <code>string</code> | Commit title format. |
+| <code><a href="#projen.github.MergifyCommitMessageFormat.property.trailers">trailers</a></code> | <code>string[]</code> | Optional list of trailers to append to the commit message. |
+
+---
+
+##### `body`<sup>Optional</sup> <a name="body" id="projen.github.MergifyCommitMessageFormat.property.body"></a>
+
+```typescript
+public readonly body: string;
+```
+
+- *Type:* string
+
+Commit body format.
+
+`inherit`: use the GitHub repository default merge commit body format
+- `pr-body`: use the pull request body
+- `empty`: set the commit body to be empty
+
+---
+
+##### `title`<sup>Optional</sup> <a name="title" id="projen.github.MergifyCommitMessageFormat.property.title"></a>
+
+```typescript
+public readonly title: string;
+```
+
+- *Type:* string
+
+Commit title format.
+
+`inherit`: use the GitHub repository default merge commit title format
+- `pr-title`: use the pull request title (with the PR number appended)
+
+---
+
+##### `trailers`<sup>Optional</sup> <a name="trailers" id="projen.github.MergifyCommitMessageFormat.property.trailers"></a>
+
+```typescript
+public readonly trailers: string[];
+```
+
+- *Type:* string[]
+
+Optional list of trailers to append to the commit message.
+
+---
+
 ### MergifyConditionalOperator <a name="MergifyConditionalOperator" id="projen.github.MergifyConditionalOperator"></a>
 
 The Mergify conditional operators that can be used are: `or` and `and`.
@@ -7780,25 +9730,13 @@ const mergifyQueue: github.MergifyQueue = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.name">name</a></code> | <code>string</code> | The name of the queue. |
-| <code><a href="#projen.github.MergifyQueue.property.conditions">conditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
+| <code><a href="#projen.github.MergifyQueue.property.commitMessageFormat">commitMessageFormat</a></code> | <code><a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a></code> | When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit. |
+| <code><a href="#projen.github.MergifyQueue.property.commitMessageTemplate">commitMessageTemplate</a></code> | <code>string</code> | Template to use as the commit message when using the merge or squash merge method. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeConditions">mergeConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions to match to get the queued pull request merged. |
 | <code><a href="#projen.github.MergifyQueue.property.mergeMethod">mergeMethod</a></code> | <code>string</code> | Merge method to use. |
 | <code><a href="#projen.github.MergifyQueue.property.queueConditions">queueConditions</a></code> | <code>string \| <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]</code> | The list of conditions that needs to match to queue the pull request. |
 | <code><a href="#projen.github.MergifyQueue.property.updateMethod">updateMethod</a></code> | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place. |
-
----
-
-##### `commitMessageTemplate`<sup>Required</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
-
-```typescript
-public readonly commitMessageTemplate: string;
-```
-
-- *Type:* string
-
-Template to use as the commit message when using the merge or squash merge method.
 
 ---
 
@@ -7814,19 +9752,31 @@ The name of the queue.
 
 ---
 
-##### ~~`conditions`~~<sup>Optional</sup> <a name="conditions" id="projen.github.MergifyQueue.property.conditions"></a>
-
-- *Deprecated:* use `queueConditions` instead
+##### `commitMessageFormat`<sup>Optional</sup> <a name="commitMessageFormat" id="projen.github.MergifyQueue.property.commitMessageFormat"></a>
 
 ```typescript
-public readonly conditions: (string | MergifyConditionalOperator)[];
+public readonly commitMessageFormat: MergifyCommitMessageFormat;
 ```
 
-- *Type:* string | <a href="#projen.github.MergifyConditionalOperator">MergifyConditionalOperator</a>[]
+- *Type:* <a href="#projen.github.MergifyCommitMessageFormat">MergifyCommitMessageFormat</a>
 
-The list of conditions that needs to match to queue the pull request.
+When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
 
-> [https://docs.mergify.com/configuration/file-format/#queue-rules](https://docs.mergify.com/configuration/file-format/#queue-rules)
+> [https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message](https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message)
+
+---
+
+##### ~~`commitMessageTemplate`~~<sup>Optional</sup> <a name="commitMessageTemplate" id="projen.github.MergifyQueue.property.commitMessageTemplate"></a>
+
+- *Deprecated:* Use `commitMessageFormat` instead.
+
+```typescript
+public readonly commitMessageTemplate: string;
+```
+
+- *Type:* string
+
+Template to use as the commit message when using the merge or squash merge method.
 
 ---
 
@@ -8098,10 +10048,12 @@ const pullRequestFromPatchOptions: github.PullRequestFromPatchOptions = { ... }
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.pullRequestDescription">pullRequestDescription</a></code> | <code>string</code> | Description added to the pull request. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.pullRequestTitle">pullRequestTitle</a></code> | <code>string</code> | The full title used to create the pull request. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow that will create the PR. |
+| <code><a href="#projen.github.PullRequestFromPatchOptions.property.addPaths">addPaths</a></code> | <code>string[]</code> | Paths to add to the commit, mapping to the action's `add-paths` input. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.assignees">assignees</a></code> | <code>string[]</code> | Assignees to add on the PR. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.baseBranch">baseBranch</a></code> | <code>string</code> | Sets the pull request base branch. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.branchName">branchName</a></code> | <code>string</code> | The pull request branch name. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.credentials">credentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | The job credentials used to create the pull request. |
+| <code><a href="#projen.github.PullRequestFromPatchOptions.property.deleteBranch">deleteBranch</a></code> | <code>boolean</code> | Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The git identity used to create the commit. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.labels">labels</a></code> | <code>string[]</code> | Labels to apply on the PR. |
 | <code><a href="#projen.github.PullRequestFromPatchOptions.property.signoff">signoff</a></code> | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message. |
@@ -8151,6 +10103,19 @@ public readonly workflowName: string;
 - *Type:* string
 
 The name of the workflow that will create the PR.
+
+---
+
+##### `addPaths`<sup>Optional</sup> <a name="addPaths" id="projen.github.PullRequestFromPatchOptions.property.addPaths"></a>
+
+```typescript
+public readonly addPaths: string[];
+```
+
+- *Type:* string[]
+- *Default:* all paths
+
+Paths to add to the commit, mapping to the action's `add-paths` input.
 
 ---
 
@@ -8204,6 +10169,19 @@ public readonly credentials: GithubCredentials;
 The job credentials used to create the pull request.
 
 Provided credentials must have permissions to create a pull request on the repository.
+
+---
+
+##### `deleteBranch`<sup>Optional</sup> <a name="deleteBranch" id="projen.github.PullRequestFromPatchOptions.property.deleteBranch"></a>
+
+```typescript
+public readonly deleteBranch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to delete the pull request branch when the pull request is closed, mapping to the action's `delete-branch` input.
 
 ---
 
@@ -8449,6 +10427,7 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 | <code><a href="#projen.github.PullRequestPatchSource.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.ref">ref</a></code> | <code>string</code> | Branch or tag name. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
+| <code><a href="#projen.github.PullRequestPatchSource.property.submodules">submodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.jobId">jobId</a></code> | <code>string</code> | The id of the job that created the patch file. |
@@ -8520,6 +10499,19 @@ public readonly repository: string;
 - *Default:* the default repository is implicitly used
 
 The repository (owner/repo) to use.
+
+---
+
+##### `submodules`<sup>Optional</sup> <a name="submodules" id="projen.github.PullRequestPatchSource.property.submodules"></a>
+
+```typescript
+public readonly submodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* CheckoutSubmodules.DISABLED
+
+Whether to checkout Git submodules.
 
 ---
 
@@ -8698,8 +10690,13 @@ const setupGitIdentityOptions: github.SetupGitIdentityOptions = { ... }
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.parallel">parallel</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.SetupGitIdentityOptions.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 | <code><a href="#projen.github.SetupGitIdentityOptions.property.gitIdentity">gitIdentity</a></code> | <code><a href="#projen.github.GitIdentity">GitIdentity</a></code> | The identity to use. |
 
 ---
@@ -8790,6 +10787,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.SetupGitIdentityOptions.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.SetupGitIdentityOptions.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.SetupGitIdentityOptions.property.continueOnError"></a>
 
 ```typescript
@@ -8805,6 +10844,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.SetupGitIdentityOptions.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.SetupGitIdentityOptions.property.timeoutMinutes"></a>
 
 ```typescript
@@ -8814,6 +10878,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.SetupGitIdentityOptions.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.SetupGitIdentityOptions.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -9046,6 +11146,7 @@ const taskWorkflowJobOptions: github.TaskWorkflowJobOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | Permissions for the build job. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. |
+| <code><a href="#projen.github.TaskWorkflowJobOptions.property.checkoutSubmodules">checkoutSubmodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.checkoutWith">checkoutWith</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Override for the `with` property of the source code checkout step. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
 | <code><a href="#projen.github.TaskWorkflowJobOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
@@ -9085,6 +11186,19 @@ public readonly artifactsDirectory: string;
 - *Default:* not set
 
 A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail.
+
+---
+
+##### `checkoutSubmodules`<sup>Optional</sup> <a name="checkoutSubmodules" id="projen.github.TaskWorkflowJobOptions.property.checkoutSubmodules"></a>
+
+```typescript
+public readonly checkoutSubmodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* Use the setting on the corresponding GitHub project
+
+Whether to checkout Git submodules.
 
 ---
 
@@ -9283,6 +11397,7 @@ const taskWorkflowOptions: github.TaskWorkflowOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.permissions">permissions</a></code> | <code><a href="#projen.github.workflows.JobPermissions">JobPermissions</a></code> | Permissions for the build job. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.artifactsDirectory">artifactsDirectory</a></code> | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. |
+| <code><a href="#projen.github.TaskWorkflowOptions.property.checkoutSubmodules">checkoutSubmodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.checkoutWith">checkoutWith</a></code> | <code><a href="#projen.github.CheckoutWith">CheckoutWith</a></code> | Override for the `with` property of the source code checkout step. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.condition">condition</a></code> | <code>string</code> | Adds an 'if' condition to the workflow. |
 | <code><a href="#projen.github.TaskWorkflowOptions.property.container">container</a></code> | <code><a href="#projen.github.workflows.ContainerOptions">ContainerOptions</a></code> | *No description.* |
@@ -9326,6 +11441,19 @@ public readonly artifactsDirectory: string;
 - *Default:* not set
 
 A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail.
+
+---
+
+##### `checkoutSubmodules`<sup>Optional</sup> <a name="checkoutSubmodules" id="projen.github.TaskWorkflowOptions.property.checkoutSubmodules"></a>
+
+```typescript
+public readonly checkoutSubmodules: CheckoutSubmodules;
+```
+
+- *Type:* <a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a>
+- *Default:* Use the setting on the corresponding GitHub project
+
+Whether to checkout Git submodules.
 
 ---
 
@@ -9576,8 +11704,13 @@ const uploadArtifactOptions: github.UploadArtifactOptions = { ... }
 | <code><a href="#projen.github.UploadArtifactOptions.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.parallel">parallel</a></code> | <code><a href="#projen.github.workflows.JobStep">JobStep</a>[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.UploadArtifactOptions.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 | <code><a href="#projen.github.UploadArtifactOptions.property.with">with</a></code> | <code><a href="#projen.github.UploadArtifactWith">UploadArtifactWith</a></code> | Options for `upload-artifact`. |
 
 ---
@@ -9668,6 +11801,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.UploadArtifactOptions.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.UploadArtifactOptions.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.UploadArtifactOptions.property.continueOnError"></a>
 
 ```typescript
@@ -9683,6 +11858,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.UploadArtifactOptions.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* <a href="#projen.github.workflows.JobStep">JobStep</a>[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.UploadArtifactOptions.property.timeoutMinutes"></a>
 
 ```typescript
@@ -9692,6 +11892,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.UploadArtifactOptions.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.UploadArtifactOptions.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -10139,7 +12375,6 @@ new github.WorkflowActions()
 | --- | --- |
 | <code><a href="#projen.github.WorkflowActions.checkoutWithPatch">checkoutWithPatch</a></code> | Checks out a repository and applies a git patch that was created using `uploadGitPatch`. |
 | <code><a href="#projen.github.WorkflowActions.createPullRequest">createPullRequest</a></code> | A step that creates a pull request based on the current repo state. |
-| <code><a href="#projen.github.WorkflowActions.setupGitIdentity">setupGitIdentity</a></code> | Configures the git identity (user name and email). |
 | <code><a href="#projen.github.WorkflowActions.uploadGitPatch">uploadGitPatch</a></code> | Creates a .patch file from the current git diff and uploads it as an artifact. Use `checkoutWithPatch` to download and apply in another job. |
 
 ---
@@ -10177,24 +12412,6 @@ A step that creates a pull request based on the current repo state.
 - *Type:* <a href="#projen.github.CreatePullRequestOptions">CreatePullRequestOptions</a>
 
 Options.
-
----
-
-##### ~~`setupGitIdentity`~~ <a name="setupGitIdentity" id="projen.github.WorkflowActions.setupGitIdentity"></a>
-
-```typescript
-import { github } from 'projen'
-
-github.WorkflowActions.setupGitIdentity(id: GitIdentity)
-```
-
-Configures the git identity (user name and email).
-
-###### `id`<sup>Required</sup> <a name="id" id="projen.github.WorkflowActions.setupGitIdentity.parameter.id"></a>
-
-- *Type:* <a href="#projen.github.GitIdentity">GitIdentity</a>
-
-The identity to use.
 
 ---
 
@@ -10423,6 +12640,41 @@ public render(): string[]
 
 
 ## Enums <a name="Enums" id="Enums"></a>
+
+### CheckoutSubmodules <a name="CheckoutSubmodules" id="projen.github.CheckoutSubmodules"></a>
+
+Whether to checkout Git submodules in CI workflows.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.CheckoutSubmodules.DISABLED">DISABLED</a></code> | Don't checkout submodules. |
+| <code><a href="#projen.github.CheckoutSubmodules.ENABLED">ENABLED</a></code> | Checkout only top-level submodules. |
+| <code><a href="#projen.github.CheckoutSubmodules.RECURSIVE">RECURSIVE</a></code> | Checkout submodules recursively. |
+
+---
+
+##### `DISABLED` <a name="DISABLED" id="projen.github.CheckoutSubmodules.DISABLED"></a>
+
+Don't checkout submodules.
+
+---
+
+
+##### `ENABLED` <a name="ENABLED" id="projen.github.CheckoutSubmodules.ENABLED"></a>
+
+Checkout only top-level submodules.
+
+---
+
+
+##### `RECURSIVE` <a name="RECURSIVE" id="projen.github.CheckoutSubmodules.RECURSIVE"></a>
+
+Checkout submodules recursively.
+
+---
+
 
 ### DependabotGroupAppliesTo <a name="DependabotGroupAppliesTo" id="projen.github.DependabotGroupAppliesTo"></a>
 

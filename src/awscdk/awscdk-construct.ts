@@ -1,10 +1,10 @@
-import * as semver from "semver";
 import { AutoDiscover } from "./auto-discover";
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import type { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
 import { IntegRunner } from "./integ-runner";
-import { LambdaFunctionCommonOptions } from "./lambda-function";
-import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import type { LambdaFunctionCommonOptions } from "./lambda-function";
+import type { ConstructLibraryOptions } from "../cdk";
+import { ConstructLibrary } from "../cdk";
 import { DependencyType } from "../dependencies";
 
 /**
@@ -86,15 +86,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   public readonly cdkDeps: AwsCdkDeps;
 
   constructor(options: AwsCdkConstructLibraryOptions) {
-    const cdkMajorVersion = semver.parse(options.cdkVersion)?.major;
-
     super({
-      peerDependencyOptions:
-        cdkMajorVersion === 1
-          ? {
-              pinnedDevDependency: false,
-            }
-          : undefined,
       workflowNodeVersion: options.minNodeVersion ?? "lts/*",
       ...options,
     });
@@ -129,39 +121,4 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   public get cdkVersion() {
     return this.cdkDeps.cdkVersion;
   }
-
-  /**
-   * @deprecated use `cdkVersion`
-   */
-  public get version() {
-    return this.cdkVersion;
-  }
-
-  /**
-   * Adds dependencies to AWS CDK modules.
-   *
-   * Since this is a library project, dependencies will be added as peer dependencies.
-   *
-   * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1Dependencies()`
-   */
-  public addCdkDependencies(...deps: string[]) {
-    return this.cdkDeps.addV1Dependencies(...deps);
-  }
-
-  /**
-   * Adds AWS CDK modules as dev dependencies.
-   *
-   * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1DevDependencies()`
-   */
-  public addCdkTestDependencies(...deps: string[]) {
-    return this.cdkDeps.addV1DevDependencies(...deps);
-  }
 }
-
-/** @deprecated use `AwsCdkConstructLibraryOptions` */
-export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions {}
-
-/** @deprecated use `AwsCdkConstructLibrary` */
-export class ConstructLibraryAws extends AwsCdkConstructLibrary {}

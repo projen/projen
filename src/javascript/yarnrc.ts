@@ -1,6 +1,5 @@
-import * as semver from "semver";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 /** https://yarnpkg.com/configuration/yarnrc#checksumBehavior */
@@ -36,8 +35,6 @@ export interface YarnLogFilter {
 
 /** https://yarnpkg.com/configuration/yarnrc#networkSettings */
 export interface YarnNetworkSetting {
-  /** @deprecated - use httpsCaFilePath in Yarn v4 and newer */
-  readonly caFilePath?: string;
   readonly httpsCaFilePath?: string;
   readonly enableNetwork?: boolean;
   readonly httpProxy?: string;
@@ -231,12 +228,6 @@ export interface YarnrcOptions {
   readonly httpsKeyFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#httpsProxy */
   readonly httpsProxy?: string;
-  /**
-   * https://v3.yarnpkg.com/configuration/yarnrc#ignoreCwd
-   *
-   * @deprecated - removed in Yarn v4 and newer
-   */
-  readonly ignoreCwd?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#ignorePath */
   readonly ignorePath?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#immutablePatterns */
@@ -251,12 +242,6 @@ export interface YarnrcOptions {
   readonly installStatePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#logFilters */
   readonly logFilters?: YarnLogFilter[];
-  /**
-   * https://v3.yarnpkg.com/configuration/yarnrc#lockfileFilename
-   *
-   * @deprecated - removed in Yarn v4 and newer
-   */
-  readonly lockfileFilename?: string;
   /** https://yarnpkg.com/configuration/yarnrc#networkConcurrency */
   readonly networkConcurrency?: number;
   /** https://yarnpkg.com/configuration/yarnrc#networkSettings */
@@ -297,12 +282,6 @@ export interface YarnrcOptions {
   readonly packageExtensions?: Record<string, YarnPackageExtension>;
   /** https://yarnpkg.com/configuration/yarnrc#patchFolder */
   readonly patchFolder?: string;
-  /**
-   * https://v3.yarnpkg.com/configuration/yarnrc#pnpDataPath
-   *
-   * @deprecated - removed in Yarn v4 and newer
-   */
-  readonly pnpDataPath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableEsmLoader */
   readonly pnpEnableEsmLoader?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#pnpEnableInlining */
@@ -317,12 +296,6 @@ export interface YarnrcOptions {
   readonly pnpShebang?: string;
   /** https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder */
   readonly pnpUnpluggedFolder?: string;
-  /**
-   * https://v3.yarnpkg.com/configuration/yarnrc#preferAggregateCacheInfo
-   *
-   * @deprecated - removed in Yarn v4 and newer
-   */
-  readonly preferAggregateCacheInfo?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions */
   readonly preferDeferredVersions?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#preferInteractive */
@@ -356,10 +329,9 @@ export interface YarnrcOptions {
 }
 
 export class Yarnrc extends Component {
-  constructor(project: Project, version: string, options: YarnrcOptions = {}) {
+  constructor(project: Project, options: YarnrcOptions = {}) {
     super(project);
 
-    this.validateOptionsForVersion(semver.major(version), options);
     this.updateGitAttributes();
 
     new YamlFile(project, ".yarnrc.yml", {
@@ -379,66 +351,5 @@ export class Yarnrc extends Component {
       "binary",
       "linguist-vendored",
     );
-  }
-
-  private validateOptionsForVersion(
-    majorVersion: number,
-    options: YarnrcOptions,
-  ) {
-    const removedInV4: Array<keyof YarnrcOptions> = [
-      "ignoreCwd",
-      "lockfileFilename",
-      "pnpDataPath",
-      "preferAggregateCacheInfo",
-    ];
-    const newInV4: Array<keyof YarnrcOptions> = [
-      "cacheMigrationMode",
-      "httpsCaFilePath",
-      "enableConstraintsCheck",
-      "enableHardenedMode",
-      "enableInlineHunks",
-      "enableOfflineMode",
-      "injectEnvironmentFiles",
-      "winLinkType",
-      "preferReuse",
-      "taskPoolConcurrency",
-      "workerPoolMode",
-      "tsEnableAutoTypes",
-    ];
-
-    if (majorVersion >= 4) {
-      const invalidOptions = Object.keys(options).filter((option) =>
-        (removedInV4 as string[]).includes(option),
-      );
-
-      if (invalidOptions.length > 0) {
-        throw new Error(
-          `The following options are not available in Yarn >= 4: ${invalidOptions.join(
-            ", ",
-          )}`,
-        );
-      }
-    } else {
-      const invalidOptions = Object.keys(options).filter((option) =>
-        (newInV4 as string[]).includes(option),
-      );
-
-      if (invalidOptions.length > 0) {
-        throw new Error(
-          `The following options are only available in Yarn v4 and newer: ${invalidOptions.join(
-            ", ",
-          )}`,
-        );
-      }
-
-      if (
-        options.checksumBehavior &&
-        options.checksumBehavior === YarnChecksumBehavior.RESET
-      ) {
-        throw new Error(
-          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer.",
-        );
-      }
-    }
   }
 }

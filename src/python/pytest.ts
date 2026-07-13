@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 export interface PytestOptions {
   /**
@@ -9,15 +9,6 @@ export interface PytestOptions {
    * @default "7.4.3"
    */
   readonly version?: string;
-
-  /**
-   * Location of sample tests.
-   * Typically the same directory where project tests will be located.
-   *
-   * @default "tests"
-   * @deprecated Reference `sampleTestdir` on the project instead; to change the directory where tests are discovered from, use `testMatch`.
-   */
-  readonly testdir?: string;
 
   /**
    * Stop the testing process after the first N failures
@@ -39,18 +30,12 @@ export interface PytestOptions {
 }
 
 export class Pytest extends Component {
-  /**
-   * @deprecated Use `sampleTestdir` on the project instead.
-   */
-  readonly testdir: string;
   readonly testMatch: string[];
 
   constructor(project: Project, options: PytestOptions = {}) {
     super(project);
 
     const version = options.version ?? "7.4.3";
-
-    this.testdir = options.testdir ?? "tests";
 
     this.testMatch = options.testMatch ?? [];
 

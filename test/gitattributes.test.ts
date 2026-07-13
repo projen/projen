@@ -1,9 +1,5 @@
-import {
-  SynthOutput,
-  synthSnapshot,
-  TestProject,
-  withProjectDir,
-} from "./util";
+import type { SynthOutput } from "./util";
+import { synthSnapshot, TestProject, withProjectDir } from "./util";
 import { EndOfLine } from "../src/gitattributes";
 
 describe("GitAttributesFile", () => {
@@ -13,8 +9,8 @@ describe("GitAttributesFile", () => {
       .map((line: string) => line.trim());
   };
 
-  test("should set endOfLine to LF by default", () => {
-    withProjectDir((outdir) => {
+  test("should set endOfLine to LF by default", async () => {
+    await withProjectDir(async (outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -27,8 +23,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("does not at the endOfLine configuration when disabled", () => {
-    withProjectDir((outdir) => {
+  test("does not at the endOfLine configuration when disabled", async () => {
+    await withProjectDir(async (outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -44,8 +40,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("applies the endOfLine option when defined", () => {
-    withProjectDir((outdir) => {
+  test("applies the endOfLine option when defined", async () => {
+    await withProjectDir(async (outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -61,8 +57,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should add attributes to files", () => {
-    withProjectDir((outdir) => {
+  test("should add attributes to files", async () => {
+    await withProjectDir(async (outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,
@@ -79,8 +75,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should remove all attributes when none specified", () => {
-    withProjectDir((outdir) => {
+  test("should remove all attributes when none specified", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -97,8 +93,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should remove a single attribute when specified", () => {
-    withProjectDir((outdir) => {
+  test("should remove a single attribute when specified", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -114,8 +110,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should remove the mapping when no attributes left", () => {
-    withProjectDir((outdir) => {
+  test("should remove the mapping when no attributes left", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -131,8 +127,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should leave mapping unchanged when non-existent attributes are removed", () => {
-    withProjectDir((outdir) => {
+  test("should leave mapping unchanged when non-existent attributes are removed", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -155,8 +151,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should do nothing when trying to remove attributes from a non-existent mapping", () => {
-    withProjectDir((outdir) => {
+  test("should do nothing when trying to remove attributes from a non-existent mapping", async () => {
+    await withProjectDir(async (outdir) => {
       const project = new TestProject({
         outdir,
       });
@@ -170,8 +166,8 @@ describe("GitAttributesFile", () => {
     });
   });
 
-  test("should add a LFS pattern", () => {
-    withProjectDir((outdir) => {
+  test("should add a LFS pattern", async () => {
+    await withProjectDir(async (outdir) => {
       // The TestProject already contains a .gitattributes file
       const project = new TestProject({
         outdir,

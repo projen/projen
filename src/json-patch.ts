@@ -1,8 +1,6 @@
 // inspired by https://github.com/cdk8s-team/cdk8s-core/blob/2.x/src/json-patch.ts
 // under Apache 2.0 license
-import {
-  applyPatch,
-  deepClone,
+import type {
   Operation,
   AddOperation,
   RemoveOperation,
@@ -10,6 +8,10 @@ import {
   MoveOperation,
   CopyOperation,
   TestOperation,
+} from "fast-json-patch";
+import {
+  applyPatch,
+  deepClone,
   escapePathComponent,
   JsonPatchError,
 } from "fast-json-patch";

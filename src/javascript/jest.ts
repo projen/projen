@@ -1,15 +1,15 @@
 import * as path from "path";
-import { IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { normalizePersistedPath } from "../util";
 import { closestProjectMustBe } from "../util/constructs";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
-// Pulled from https://jestjs.io/docs/en/configuration
+// Pulled from https://jestjs.io/docs/configuration
 export interface JestConfigOptions {
   /**
    * This option tells Jest that all imported modules in your tests should be mocked automatically.
@@ -76,7 +76,7 @@ export interface JestConfigOptions {
 
   /**
    * A list of reporter names that Jest uses when writing coverage reports. Any istanbul reporter can be used
-   * @default - ["json", "lcov", "text", "clover", "cobertura"]
+   * @default - ["json", "lcov", "clover", "cobertura", "text"]
    */
   readonly coverageReporters?: string[];
 
@@ -108,11 +108,27 @@ export interface JestConfigOptions {
   readonly errorOnDeprecated?: boolean;
 
   /**
+   * Jest will run `.mjs` and `.js` files with nearest package.json's `type` field set to `module` as
+   * ECMAScript Modules. If you have any other files that should run with native ESM, you need to specify
+   * their file extension here.
+   * @default - []
+   */
+  readonly extensionsToTreatAsEsm?: string[];
+
+  /**
    * Test files run inside a vm, which slows calls to global context properties (e.g. Math).
    * With this option you can specify extra properties to be defined inside the vm for faster lookups.
    * @default - undefined
+   * @deprecated Renamed to `sandboxInjectedGlobals` in Jest 28. Use `sandboxInjectedGlobals` instead.
    */
   readonly extraGlobals?: string[];
+
+  /**
+   * The fake timers may be useful when a piece of code sets a long timeout that we don't want to wait for
+   * in a test. This option provides the default configuration of fake timers for all tests.
+   * @default - {}
+   */
+  readonly fakeTimers?: FakeTimers;
 
   /**
    * Test files are normally ignored from collecting code coverage.
@@ -227,6 +243,13 @@ export interface JestConfigOptions {
     | "failure-change";
 
   /**
+   * Print a warning indicating that there are probable open handles if Jest does not exit cleanly this
+   * number of milliseconds after it completes. Use `0` to disable the warning.
+   * @default - 1000
+   */
+  readonly openHandlesTimeout?: number;
+
+  /**
    * A preset that is used as a base for Jest's configuration. A preset should point to an npm module
    * that has a jest-preset.json or jest-preset.js file at the root.
    * @default - undefined
@@ -246,6 +269,12 @@ export interface JestConfigOptions {
    * @default - undefined
    */
   readonly projects?: Array<string | { [key: string]: any }>;
+
+  /**
+   * The equivalent of the `--randomize` flag to randomize the order of the tests in a file.
+   * @default - false
+   */
+  readonly randomize?: boolean;
 
   /**
    * Use this configuration option to add custom reporters to Jest. A custom reporter is a class
@@ -300,10 +329,24 @@ export interface JestConfigOptions {
   readonly roots?: string[];
 
   /**
+   * This option allows the use of a custom runtime to execute test files. A custom runtime can be
+   * provided by specifying a path to a runtime implementation.
+   * @default - "jest-runtime"
+   */
+  readonly runtime?: string;
+
+  /**
    * This option allows you to use a custom runner instead of Jest's default test runner.
    * @default - "jest-runner"
    */
   readonly runner?: string;
+
+  /**
+   * Test files run inside a vm, which slows calls to global context properties (e.g. Math).
+   * With this option you can specify extra properties to be defined inside the vm for faster lookups.
+   * @default - undefined
+   */
+  readonly sandboxInjectedGlobals?: string[];
 
   /**
    * A list of paths to modules that run some code to configure or set up the testing environment.
@@ -324,10 +367,23 @@ export interface JestConfigOptions {
   readonly setupFilesAfterEnv?: string[];
 
   /**
+   * The equivalent of the `--showSeed` flag to print the seed in the test report summary.
+   * @default - false
+   */
+  readonly showSeed?: boolean;
+
+  /**
    * The number of seconds after which a test is considered as slow and reported as such in the results.
    * @default - 5
    */
   readonly slowTestThreshold?: number;
+
+  /**
+   * Allows overriding specific snapshot formatting options documented in the pretty-format readme,
+   * with the exceptions of `compareKeys` and `plugins`.
+   * @default - {escapeString: false, printBasicPrototype: false}
+   */
+  readonly snapshotFormat?: SnapshotFormatOptions;
 
   /**
    * The path to a module that can resolve test<->snapshot path. This config option lets you customize
@@ -344,9 +400,9 @@ export interface JestConfigOptions {
 
   /**
    * The test environment that will be used for testing. The default environment in Jest is a
-   * browser-like environment through jsdom. If you are building a node service, you can use the node
-   * option to use a node-like environment instead.
-   * @default - "jsdom"
+   * Node.js environment. If you are building a web app, you can use a browser-like environment
+   * through jsdom instead.
+   * @default - "node"
    */
   readonly testEnvironment?: string;
 
@@ -393,9 +449,9 @@ export interface JestConfigOptions {
   readonly testResultsProcessor?: string;
 
   /**
-   * This option allows the use of a custom test runner. The default is jasmine2. A custom test runner
+   * This option allows the use of a custom test runner. The default is jest-circus. A custom test runner
    * can be provided by specifying a path to a test runner implementation.
-   * @default - "jasmine2"
+   * @default - "jest-circus/runner"
    */
   readonly testRunner?: string;
 
@@ -415,6 +471,7 @@ export interface JestConfigOptions {
   /**
    * This option sets the URL for the jsdom environment. It is reflected in properties such as location.href.
    * @default - "http://localhost"
+   * @deprecated Removed in Jest 28. Use `testEnvironmentOptions.url` instead.
    */
   readonly testURL?: string;
 
@@ -422,6 +479,7 @@ export interface JestConfigOptions {
    * Setting this value to legacy or fake allows the use of fake timers for functions such as setTimeout.
    * Fake timers are useful when a piece of code sets a long timeout that we don't want to wait for in a test.
    * @default - "real"
+   * @deprecated Renamed to `fakeTimers` in Jest 27. Use `fakeTimers` instead.
    */
   readonly timers?: string;
 
@@ -456,10 +514,18 @@ export interface JestConfigOptions {
   readonly verbose?: boolean;
 
   /**
+   * Gives one event loop turn to handle `rejectionHandled`, `uncaughtException` or `unhandledRejection`.
+   * Without this flag Jest may report false-positive errors or fail to report actually unhandled rejections.
+   * This option may add a noticeable overhead for fast test suites.
+   * @default - false
+   */
+  readonly waitForUnhandledRejections?: boolean;
+
+  /**
    * An array of RegExp patterns that are matched against all source file paths before re-running tests
    * in watch mode. If the file path matches any of the patterns, when it is updated, it will not trigger
    * a re-run of tests.
-   * @default - []
+   * @default - ["/node_modules/"]
    */
   readonly watchPathIgnorePatterns?: string[];
 
@@ -476,18 +542,31 @@ export interface JestConfigOptions {
   readonly watchman?: boolean;
 
   /**
+   * Timeout in milliseconds for a worker process to exit gracefully after all tests have completed.
+   * If a worker does not exit within this timeout, it is force-killed.
+   * @default - 500
+   */
+  readonly workerGracefulExitTimeout?: number;
+
+  /**
+   * Specifies the memory limit for workers before they are recycled and is primarily a work-around for
+   * memory leaks. The limit can be specified as a percentage of system memory (e.g. `0.5` or `"50%"`)
+   * or as a fixed byte value (e.g. `"512MB"`).
+   * @default - undefined
+   */
+  readonly workerIdleMemoryLimit?: number | string;
+
+  /**
+   * Whether to use worker threads for parallelization. Child processes are used by default.
+   * Using worker threads may help to improve performance.
+   * @default - false
+   */
+  readonly workerThreads?: boolean;
+
+  /**
    * Escape hatch to allow any value
    */
   readonly additionalOptions?: { [name: string]: any };
-
-  /**
-   * Escape hatch to allow any value (JS/TS only)
-   *
-   * @deprecated use `additionalOptions` instead.
-   *
-   * @jsii ignore
-   */
-  readonly [name: string]: any;
 }
 
 /**
@@ -536,26 +615,12 @@ export class WatchPlugin {
 
 export interface JestOptions {
   /**
-   * Collect coverage. Deprecated
-   * @default true
-   * @deprecated use jestConfig.collectCoverage
-   */
-  readonly coverage?: boolean;
-
-  /**
    * Include the `text` coverage reporter, which means that coverage summary is printed
    * at the end of the jest execution.
    *
    * @default true
    */
   readonly coverageText?: boolean;
-
-  /**
-   * Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`
-   * @default ["/node_modules/"]
-   * @deprecated use jestConfig.coveragePathIgnorePatterns or jestConfig.testPathIgnorePatterns respectively
-   */
-  readonly ignorePatterns?: string[];
 
   /**
    * Result processing with jest-junit.
@@ -643,6 +708,118 @@ export interface HasteConfig {
   readonly hasteImplModulePath?: string;
   readonly platforms?: Array<string>;
   readonly throwOnModuleCollision?: boolean;
+}
+
+/**
+ * The default configuration of fake timers for all tests.
+ *
+ * @see https://jestjs.io/docs/configuration#faketimers-object
+ */
+export interface FakeTimers {
+  /**
+   * If set to `true` all timers will be advanced automatically by 20 milliseconds every 20 milliseconds.
+   * A custom time delta may be provided by passing a number.
+   * @default - false
+   */
+  readonly advanceTimers?: boolean | number;
+
+  /**
+   * List of names of APIs (e.g. `Date`, `nextTick`, `setTimeout`) that should not be faked.
+   * @default - [] (all APIs are faked)
+   */
+  readonly doNotFake?: string[];
+
+  /**
+   * Whether fake timers should be enabled for all test files.
+   * @default - false
+   */
+  readonly enableGlobally?: boolean;
+
+  /**
+   * Use the old fake timers implementation instead of one backed by `@sinonjs/fake-timers`.
+   * @default - false
+   */
+  readonly legacyFakeTimers?: boolean;
+
+  /**
+   * Sets current system time to be used by fake timers, in milliseconds.
+   * @default - Date.now()
+   */
+  readonly now?: number;
+
+  /**
+   * Maximum number of recursive timers that will be run.
+   * @default - 100000
+   */
+  readonly timerLimit?: number;
+}
+
+/**
+ * Snapshot formatting options. Mirrors the pretty-format options, with the exceptions of
+ * `compareKeys` and `plugins`.
+ *
+ * @see https://jestjs.io/docs/configuration#snapshotformat-object
+ */
+export interface SnapshotFormatOptions {
+  /**
+   * Calls `toJSON` on objects that have such a method.
+   * @default - true
+   */
+  readonly callToJSON?: boolean;
+
+  /**
+   * Escapes special characters in regular expressions.
+   * @default - false
+   */
+  readonly escapeRegex?: boolean;
+
+  /**
+   * Escapes quotes in strings.
+   * @default - false
+   */
+  readonly escapeString?: boolean;
+
+  /**
+   * Highlights syntax with colors in terminal (some plugins).
+   * @default - false
+   */
+  readonly highlight?: boolean;
+
+  /**
+   * Spaces of indentation between levels of nesting.
+   * @default - 2
+   */
+  readonly indent?: number;
+
+  /**
+   * Maximum number of levels to print.
+   * @default - Infinity
+   */
+  readonly maxDepth?: number;
+
+  /**
+   * Maximum number of elements to print at a given level.
+   * @default - Infinity
+   */
+  readonly maxWidth?: number;
+
+  /**
+   * Prints objects on a single line when `true`.
+   * @default - false
+   */
+  readonly min?: boolean;
+
+  /**
+   * Prints the prototype for basic objects and arrays.
+   * @default - false
+   */
+  readonly printBasicPrototype?: boolean;
+
+  /**
+   * Prints the name of functions.
+   * @default - true
+   */
+  readonly printFunctionName?: boolean;
 }
 
 export class JestReporter {
@@ -739,8 +916,9 @@ export class Jest extends Component {
     this.extraCliOptions = options.extraCliOptions ?? [];
     this.passWithNoTests = options.passWithNoTests ?? true;
 
-    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
-      options.ignorePatterns ?? ["/node_modules/"];
+    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
+      "/node_modules/",
+    ];
     this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? [
       "/node_modules/",
     ];
@@ -768,8 +946,7 @@ export class Jest extends Component {
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
-      collectCoverage:
-        options.coverage ?? this.jestConfig?.collectCoverage ?? true,
+      collectCoverage: this.jestConfig?.collectCoverage ?? true,
       coverageReporters: this.coverageReporters,
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns:
@@ -792,7 +969,7 @@ export class Jest extends Component {
         new JestReporter("jest-junit", { outputDirectory: reportsDir }),
       );
 
-      this.project.addDevDeps("jest-junit@^16");
+      this.project.addDevDeps("jest-junit@^17");
 
       this.project.gitignore.exclude(
         "# jest-junit artifacts",

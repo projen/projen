@@ -1,25 +1,27 @@
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
-import {
-  Projenrc as ProjenrcPython,
-  ProjenrcOptions as ProjenrcPythonOptions,
-} from "./projenrc";
-import { Pytest, PytestOptions } from "./pytest";
+import type { ProjenrcOptions as ProjenrcPythonOptions } from "./projenrc";
+import { Projenrc as ProjenrcPython } from "./projenrc";
+import type { PytestOptions } from "./pytest";
+import { Pytest } from "./pytest";
 import { PytestSample } from "./pytest-sample";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import type { IPythonDeps } from "./python-deps";
+import type { IPythonEnv } from "./python-env";
+import type {
+  IPythonPackaging,
+  PythonPackagingOptions,
+} from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
 import { Uv } from "./uv";
-import { Venv, VenvOptions } from "./venv";
-import { GitHubProject, GitHubProjectOptions } from "../github";
-import {
-  Projenrc as ProjenrcJs,
-  ProjenrcOptions as ProjenrcJsOptions,
-} from "../javascript/projenrc";
-import { ProjectType } from "../project";
-import { ProjenrcTs, ProjenrcTsOptions } from "../typescript";
+import type { VenvOptions } from "./venv";
+import { Venv } from "./venv";
+import type { GitHubProjectOptions } from "../github";
+import { GitHubProject } from "../github";
+import type { ProjenrcOptions as ProjenrcJsOptions } from "../javascript/projenrc";
+import { Projenrc as ProjenrcJs } from "../javascript/projenrc";
+import type { ProjenrcTsOptions } from "../typescript";
+import { ProjenrcTs } from "../typescript";
 import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */
@@ -195,7 +197,7 @@ export interface PythonProjectOptions
    * Use projenrc in TypeScript.
    *
    * This will create a tsconfig file (default: `tsconfig.projen.json`)
-   * and use `ts-node` in the default task to parse the project source files.
+   * and use a typescript runner in the default task to parse the project source files.
    *
    * @default false
    */
@@ -287,9 +289,7 @@ export class PythonProject extends GitHubProject {
     // Assume venv if not using poetry or uv
     const venv = options.venv ?? not_poetry_or_uv;
 
-    const setuptools =
-      options.setuptools ??
-      (not_poetry_or_uv && this.projectType === ProjectType.LIB);
+    const setuptools = options.setuptools ?? false;
 
     const tools = {
       poetry: poetry,
@@ -409,12 +409,6 @@ export class PythonProject extends GitHubProject {
     if (!this.depsManager) {
       throw new Error(
         "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).",
-      );
-    }
-
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry).",
       );
     }
 

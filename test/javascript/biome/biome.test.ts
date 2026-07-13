@@ -1,11 +1,12 @@
-import { Project } from "../../../src";
-import { Biome, biome_config } from "../../../src/javascript";
+import type { Project } from "../../../src";
+import type { biome_config } from "../../../src/javascript";
+import { Biome } from "../../../src/javascript";
 import { NodeProject } from "../../../src/javascript/node-project";
 import {
   TypeScriptProject,
   type TypeScriptProjectOptions,
 } from "../../../src/typescript";
-import { synthSnapshot } from "../../../src/util/synth";
+import { simulateProjenNew, synthSnapshot } from "../../util";
 
 const getTestProject = (
   projenOptions: Partial<TypeScriptProjectOptions>,
@@ -14,9 +15,7 @@ const getTestProject = (
     name: "test-project",
     defaultReleaseBranch: "main",
     sampleCode: false,
-    githubOptions: {
-      mergify: false,
-    },
+    githubOptions: { mergify: false },
     ...projenOptions,
   });
 };
@@ -337,6 +336,68 @@ describe("Configuration", () => {
         nursery: { "standard-rule": "error", "test-rule": "warn" },
       });
     });
+  });
+});
+
+describe("postProjectCreation", () => {
+  test("runs the biome task once the project is created via `projen new`", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN
+    expect(runTask).toHaveBeenCalledWith(biome.task.name);
+  });
+
+  test("does not run the biome task for a project not created via `projen new`", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN: other tasks (e.g. "install") may run, but not biome
+    expect(runTask).not.toHaveBeenCalledWith(biome.task.name);
+  });
+
+  test("does not run the biome task when post-synthesis steps are disabled", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    synthSnapshot(project);
+
+    // THEN
+    expect(runTask).not.toHaveBeenCalledWith(biome.task.name);
   });
 });
 

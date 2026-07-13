@@ -1,15 +1,15 @@
-import {
+import type {
   AwsCdkDeps,
   AwsCdkDepsCommonOptions,
-  CdkConfig,
   CdkConfigCommonOptions,
-  CdkTasks,
 } from ".";
+import { CdkConfig, CdkTasks } from ".";
 import { Component, DependencyType, SampleDir, SampleFile } from "..";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 import { Pytest } from "../python/pytest";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import type { PythonProjectOptions } from "../python/python-project";
+import { PythonProject } from "../python/python-project";
 
 /**
  * Options for `AwsCdkPythonApp`
@@ -26,13 +26,6 @@ export interface AwsCdkPythonAppOptions
    * @default "app.py"
    */
   readonly appEntrypoint?: string;
-  /**
-   * Python sources directory.
-   *
-   * @default "tests"
-   * @deprecated Use `sampleTestdir` instead.
-   */
-  readonly testdir?: string;
 }
 
 /**
@@ -59,12 +52,6 @@ export class AwsCdkPythonApp extends PythonProject {
   public readonly appEntrypoint: string;
 
   /**
-   * The directory in which the python tests reside.
-   * @deprecated Use `sampleTestdir` instead.
-   */
-  public readonly testdir: string;
-
-  /**
    * The directory in which the python sample tests reside.
    */
   public readonly sampleTestdir: string;
@@ -84,8 +71,7 @@ export class AwsCdkPythonApp extends PythonProject {
       ...options,
     });
     this.appEntrypoint = options.appEntrypoint ?? "app.py";
-    this.testdir = this.sampleTestdir =
-      options.sampleTestdir ?? options.testdir ?? "tests";
+    this.sampleTestdir = options.sampleTestdir ?? "tests";
 
     this.cdkTasks = new CdkTasks(this);
     this.postCompileTask.spawn(this.cdkTasks.synthSilent);
@@ -106,8 +92,8 @@ export class AwsCdkPythonApp extends PythonProject {
     });
 
     if (options.sample ?? true) {
-      new AppCode(this, this.appEntrypoint, this.cdkDeps.cdkMajorVersion);
-      new MyStackCode(this, this.moduleName, this.cdkDeps.cdkMajorVersion);
+      new AppCode(this, this.appEntrypoint);
+      new MyStackCode(this, this.moduleName);
     }
 
     if (options.pytest ?? true) {
@@ -118,15 +104,10 @@ export class AwsCdkPythonApp extends PythonProject {
 }
 
 class AppCode extends Component {
-  constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
+  constructor(project: AwsCdkPythonApp, fileName: string) {
     super(project);
 
-    let versionImport: string;
-    if (cdkVersion < 2) {
-      versionImport = "from aws_cdk.core import App, Environment";
-    } else {
-      versionImport = "from aws_cdk import App, Environment";
-    }
+    const versionImport = "from aws_cdk import App, Environment";
 
     new SampleFile(project, fileName, {
       contents: [
@@ -151,17 +132,13 @@ class AppCode extends Component {
 }
 
 class MyStackCode extends Component {
-  constructor(project: AwsCdkPythonApp, dir: string, cdkMajorVersion: number) {
+  constructor(project: AwsCdkPythonApp, dir: string) {
     super(project);
 
     let appFile: string[] = [];
     appFile.push("import os");
-    if (cdkMajorVersion < 2) {
-      appFile.push("from aws_cdk.core import Construct, Stack");
-    } else {
-      appFile.push("from aws_cdk import Stack");
-      appFile.push("from constructs import Construct");
-    }
+    appFile.push("from aws_cdk import Stack");
+    appFile.push("from constructs import Construct");
     appFile.push("");
     appFile.push("");
     appFile.push("class MyStack(Stack):");

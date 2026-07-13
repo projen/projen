@@ -1,9 +1,10 @@
 import * as path from "path";
+import { underline } from "chalk";
 import * as semver from "semver";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
 import { JsonFile } from "./json";
-import { Project } from "./project";
+import type { Project } from "./project";
 
 /**
  * The `Dependencies` component is responsible to track the list of dependencies
@@ -32,7 +33,7 @@ export class Dependencies extends Component {
   public static parseDependency(spec: string): DependencyCoordinates {
     const scope = spec.startsWith("@");
     if (scope) {
-      spec = spec.substr(1);
+      spec = spec.substring(1);
     }
 
     const [module, ...version] = spec.split("@");
@@ -137,7 +138,9 @@ export class Dependencies extends Component {
     type: DependencyType,
     metadata: { [key: string]: any } = {},
   ): Dependency {
-    this.project.logger.debug(`${type}-dep ${spec}`);
+    this.project.logger.verbose(
+      `${underline("Dependency")} | Adding ${type}-dep \`${spec}\``,
+    );
 
     const dep: Dependency = {
       ...Dependencies.parseDependency(spec),
@@ -149,7 +152,7 @@ export class Dependencies extends Component {
 
     if (existingDepIndex !== -1) {
       this.project.logger.debug(
-        `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`,
+        `${underline("Dependency")} | Updating existing ${dep.type}-dep \`${dep.name}\` with more specific request.`,
       );
       this._deps[existingDepIndex] = dep;
     } else {
@@ -190,6 +193,81 @@ export class Dependencies extends Component {
   ): boolean {
     const dep = this.tryGetDependency(name, type);
     return dep?.version != null && semver.subset(dep.version, expectedRange);
+  }
+
+  /**
+   * Request a dependency. Unlike `addDependency`, this merges intelligently
+   * with existing dependencies of the same name and type:
+   *
+   * - If the dep exists with a version that already satisfies the request,
+   *   the version is not changed.
+   * - If the dep doesn't exist, it is added with the requested type/version.
+   * - If the dep exists but the versions don't intersect, an error is thrown.
+   * - If no type is provided, an existing dependency of any type will satisfy
+   *   the request. If none exists, it is added as BUILD.
+   *
+   * @param request The dependency request.
+   * @returns The resulting dependency after merging.
+   */
+  public requestDependency(request: DependencyRequest): Dependency {
+    // When type is not specified, find any existing dep with this name
+    const requestedType =
+      request.type ??
+      this.findExistingInstallableType(request.name) ??
+      DependencyType.BUILD;
+    const existing = this.tryGetDependency(request.name, requestedType);
+
+    if (!existing) {
+      const spec = request.version
+        ? `${request.name}@${request.version}`
+        : request.name;
+      return this.addDependency(spec, requestedType, request.metadata ?? {});
+    }
+
+    // Version merging
+    let effectiveVersion: string | undefined;
+
+    if (!request.version) {
+      effectiveVersion = existing.version;
+    } else if (
+      this.isDependencySatisfied(request.name, requestedType, request.version)
+    ) {
+      effectiveVersion = existing.version;
+    } else if (!existing.version) {
+      effectiveVersion = request.version;
+    } else if (semver.intersects(existing.version, request.version)) {
+      effectiveVersion = request.version;
+    } else {
+      throw new Error(
+        `Dependency "${request.name}" version conflict: existing "${existing.version}" ` +
+          `does not intersect with requested "${request.version}"`,
+      );
+    }
+
+    const spec = effectiveVersion
+      ? `${request.name}@${effectiveVersion}`
+      : request.name;
+    return this.addDependency(spec, requestedType, {
+      ...existing.metadata,
+      ...request.metadata,
+    });
+  }
+
+  /**
+   * Finds the type of an existing installable dependency by name.
+   * Excludes PEER, OVERRIDE, and OPTIONAL types.
+   * Returns undefined if no dependency with this name exists.
+   */
+  private findExistingInstallableType(
+    name: string,
+  ): DependencyType | undefined {
+    return this._deps.find(
+      (d) =>
+        d.name === name &&
+        d.type !== DependencyType.PEER &&
+        d.type !== DependencyType.OVERRIDE &&
+        d.type !== DependencyType.OPTIONAL,
+    )?.type;
   }
 
   private tryGetDependencyIndex(name: string, type?: DependencyType): number {
@@ -347,4 +425,35 @@ export enum DependencyType {
    * It is expected to be installed by the consumer.
    */
   OPTIONAL = "optional",
+}
+
+/**
+ * A request for a dependency. Unlike adding a dependency directly,
+ * requesting a dependency will intelligently merge with existing
+ * dependencies of the same name and type.
+ */
+export interface DependencyRequest {
+  /**
+   * The package name.
+   */
+  readonly name: string;
+
+  /**
+   * Semantic version constraint.
+   * @default - any version
+   */
+  readonly version?: string;
+
+  /**
+   * Dependency type. If not provided, an existing dependency of any type
+   * will satisfy the request. If none exists, it is added as BUILD.
+   * @default - any existing type, or DependencyType.BUILD
+   */
+  readonly type?: DependencyType;
+
+  /**
+   * Additional metadata.
+   * @default - none
+   */
+  readonly metadata?: Record<string, any>;
 }

@@ -3,7 +3,8 @@ import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../common";
-import type { Project } from "../project";
+import type { InventoryProjectType } from "../inventory";
+import type { InitProject, Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 import { Biome } from "./biome/biome";
 
@@ -30,9 +31,7 @@ export class Projenrc extends ProjenrcFile {
     this.filePath = options.filename ?? DEFAULT_PROJEN_RC_JS_FILENAME;
 
     // this is the task projen executes when running `projen`
-    project.defaultTask?.exec(`node ${this.filePath}`);
-
-    this.generateProjenrc();
+    project.defaultTask?.execArgs(["node", this.filePath]);
   }
 
   public override preSynthesize(): void {
@@ -53,15 +52,14 @@ export class Projenrc extends ProjenrcFile {
     biome?.addFilePattern(this.filePath);
   }
 
-  private generateProjenrc() {
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
+  }
+
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const parts = bootstrap.fqn.split(".");
@@ -72,7 +70,7 @@ export class Projenrc extends ProjenrcFile {
     const { renderedOptions, imports } = renderJavaScriptOptions({
       comments: bootstrap.comments,
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
     });
 
     imports.add(moduleName, importName);

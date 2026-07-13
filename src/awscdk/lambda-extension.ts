@@ -1,14 +1,15 @@
 import { basename, dirname, join, relative } from "path";
 import { pascal } from "case";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
 } from "./internal";
 import { LambdaRuntime } from "./lambda-function";
 import { Component } from "../component";
-import { Bundler, BundlingOptions, Eslint } from "../javascript";
-import { Project } from "../project";
+import type { BundlingOptions } from "../javascript";
+import { Bundler, Eslint } from "../javascript";
+import type { Project } from "../project";
 import { SourceCode } from "../source-code";
 
 /**
@@ -102,7 +103,6 @@ export class LambdaExtension extends Component {
       LambdaRuntime.NODEJS_18_X,
       LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,
-      LambdaRuntime.NODEJS_12_X,
     ];
 
     if (compatibleRuntimes.length === 0) {
@@ -161,7 +161,6 @@ class LambdaLayerConstruct extends SourceCode {
     super(project, options.constructFile);
 
     const src = this;
-    const cdkDeps = options.cdkDeps;
 
     const constructName =
       options.constructName ?? pascal(basename(options.constructFile, ".ts"));
@@ -174,15 +173,8 @@ class LambdaLayerConstruct extends SourceCode {
     }
     src.line("import * as path from 'path';");
 
-    if (cdkDeps.cdkMajorVersion === 1) {
-      src.line("import * as lambda from '@aws-cdk/aws-lambda';");
-      src.line("import { Construct } from '@aws-cdk/core';");
-      cdkDeps.addV1Dependencies("@aws-cdk/aws-lambda");
-      cdkDeps.addV1Dependencies("@aws-cdk/core");
-    } else {
-      src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
-      src.line("import { Construct } from 'constructs';");
-    }
+    src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
+    src.line("import { Construct } from 'constructs';");
 
     src.line();
 

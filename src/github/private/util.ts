@@ -1,5 +1,5 @@
 import { relative } from "node:path";
-import { Project } from "../../project";
+import type { Project } from "../../project";
 import { normalizePersistedPath } from "../../util";
 import { ensureRelativePathStartsWithDot } from "../../util/path";
 

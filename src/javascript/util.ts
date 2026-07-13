@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
 import { NodePackage, NodePackageManager } from "./node-package";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { findUp } from "../util";
 
 /**
@@ -30,6 +30,59 @@ export function isYarnBerry(packageManager: NodePackageManager): boolean {
  */
 export function isNpm(packageManager: NodePackageManager): boolean {
   return packageManager === NodePackageManager.NPM;
+}
+
+/**
+ * Returns the exec command prefix for the given package manager, or defaults to npx if non provided.
+ * Optionally followed by a binary name.
+ */
+export function execCommand(
+  packageManager?: NodePackageManager,
+  bin?: string,
+): string {
+  let cmd: string;
+  switch (packageManager) {
+    case NodePackageManager.PNPM:
+      cmd = "pnpm exec";
+      break;
+    case NodePackageManager.YARN2:
+    case NodePackageManager.YARN_BERRY:
+      cmd = "yarn";
+      break;
+    case NodePackageManager.BUN:
+      cmd = "bunx";
+      break;
+    case NodePackageManager.NPM:
+    case NodePackageManager.YARN:
+    case NodePackageManager.YARN_CLASSIC:
+    default:
+      cmd = "npx";
+      break;
+  }
+  return bin ? `${cmd} ${bin}` : cmd;
+}
+
+/**
+ * Returns the command to execute a binary with the given package manager, without requiring installation of that binary as a project dependency.
+ * @param packageManager The package manager to use when executing the command.
+ */
+export function executeCommandPriorInstallation(
+  packageManager: NodePackageManager,
+): string[] {
+  switch (packageManager) {
+    case NodePackageManager.PNPM:
+      return ["pnpm", "dlx"];
+    case NodePackageManager.YARN2:
+    case NodePackageManager.YARN_BERRY:
+      return ["yarn", "dlx"];
+    case NodePackageManager.BUN:
+      return ["bunx"];
+    case NodePackageManager.NPM:
+    case NodePackageManager.YARN:
+    case NodePackageManager.YARN_CLASSIC:
+    default:
+      return ["npx"];
+  }
 }
 
 /**

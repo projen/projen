@@ -1,5 +1,6 @@
-import { FileBase, FileBaseOptions, IResolver } from "./file";
-import { Project } from "./project";
+import type { FileBaseOptions, IResolver } from "./file";
+import { FileBase } from "./file";
+import type { Project } from "./project";
 
 /**
  * A Make rule.

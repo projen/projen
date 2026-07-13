@@ -1,23 +1,23 @@
 import * as yaml from "yaml";
-import { Component } from "../../src";
+import { type Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
 import { secretToString } from "../../src/github/private/util";
 import { JobPermission } from "../../src/github/workflows-model";
+import type { NodeProjectOptions } from "../../src/javascript";
 import {
   CodeArtifactAuthProvider,
   NodePackage,
   NodePackageManager,
   NodeProject,
-  NodeProjectOptions,
   NpmAccess,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
-import { TaskRuntime } from "../../src/task-runtime";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { synthSnapshot, TestProject } from "../util";
 
 logging.disable();
@@ -401,7 +401,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
       });
 
       // THEN
@@ -444,7 +444,7 @@ describe("npm publishing options", () => {
 
       // WHEN
       const npm = new NodePackage(project, {
-        packageName: "scoped@my-package",
+        packageName: "@projen/my-package",
         npmRegistryUrl: "https://foo.bar",
         npmAccess: NpmAccess.PUBLIC,
         npmTokenSecret: "GITHUB_TOKEN",
@@ -715,14 +715,14 @@ describe("npm publishing options", () => {
     );
   });
 
-  test("deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed", () => {
+  test("npmRegistryUrl without trailing slash normalizes correctly", () => {
     // GIVEN
     const project = new TestProject();
 
     // WHEN
     const npm = new NodePackage(project, {
-      packageName: "scoped@my-package",
-      npmRegistry: "foo.bar.com",
+      packageName: "@projen/my-package",
+      npmRegistryUrl: "https://foo.bar.com",
     });
 
     // THEN
@@ -854,6 +854,36 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
 });
 
+test("mutableInstall defaults to mutableBuild value", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual("yarn install --check-files");
+});
+
+test("mutableInstall can be disabled independently of mutableBuild", () => {
+  const project = new TestNodeProject({
+    buildWorkflowOptions: { mutableBuild: true, mutableInstall: false },
+  });
+
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  const installStep = workflow.jobs.build.steps.find(
+    (s: any) => s.name === "Install dependencies",
+  );
+  expect(installStep.run).toEqual(
+    "yarn install --check-files --frozen-lockfile",
+  );
+  // self-mutation job should still exist
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
+});
+
 test("provided preBuildSteps for build workflow get combined with setup steps", () => {
   // WHEN
   const project = new TestNodeProject({
@@ -925,7 +955,7 @@ test("enabling dependabot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
     dependabot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   // THEN
@@ -940,7 +970,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
     renovatebot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   // THEN
@@ -967,7 +997,7 @@ test("renovatebot ignored dependency overrides", () => {
   // WHEN
   const project = new TestNodeProject({
     renovatebot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   project.package.addPackageResolutions(
@@ -1375,6 +1405,44 @@ describe("workflowRunsOn", () => {
   });
 });
 
+describe("buildWorkflowOptions.runsOn", () => {
+  test("overrides workflowRunsOn for the build job", () => {
+    const project = new TestNodeProject({
+      workflowRunsOn: ["ubuntu-latest"],
+      buildWorkflowOptions: {
+        runsOn: ["self-hosted"],
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("overrides workflowRunsOnGroup for the build job", () => {
+    const project = new TestNodeProject({
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux"],
+      },
+      buildWorkflowOptions: {
+        runsOnGroup: {
+          group: "Custom",
+          labels: ["self-hosted", "arm64"],
+        },
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(build).toHaveProperty("jobs.build.runs-on.group", "Custom");
+    expect(build).toHaveProperty("jobs.build.runs-on.labels", [
+      "self-hosted",
+      "arm64",
+    ]);
+  });
+});
+
 describe("buildWorkflowTriggers", () => {
   test("default to pull request and workflow dispatch", () => {
     // WHEN
@@ -1418,7 +1486,7 @@ test("post-upgrade workflow", () => {
 
   // THEN
   const snapshot = synthSnapshot(project);
-  const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = snapshot[ProjenTaskRunner.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
     spawn: "post-upgrade",
   });
@@ -1493,7 +1561,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
@@ -1521,7 +1589,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
             env: {
               AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
               AWS_SECRET_ACCESS_KEY: secretToString(
@@ -1584,7 +1652,7 @@ describe("scoped private packages", () => {
           },
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
           },
           {
             name: "Install dependencies",
@@ -1622,7 +1690,7 @@ describe("scoped private packages", () => {
           },
           {
             name: "AWS CodeArtifact Login",
-            run: "yarn run ca:login",
+            run: "npx projen ca:login",
           },
           {
             name: "Install dependencies",
@@ -1677,7 +1745,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
           env: {
             AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
             AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
@@ -1712,7 +1780,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
           env: {
             AWS_ACCESS_KEY_ID: secretToString(accessKeyIdSecret),
             AWS_SECRET_ACCESS_KEY: secretToString(secretAccessKeySecret),
@@ -1759,7 +1827,7 @@ describe("scoped private packages", () => {
         },
         {
           name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
+          run: "npx projen ca:login",
         },
         {
           name: "Install dependencies",
@@ -1809,7 +1877,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [
@@ -1817,7 +1885,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          env: {
+            CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+          },
+          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
         },
       ],
     });
@@ -1835,7 +1906,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [
@@ -1843,7 +1914,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+          env: {
+            CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+          },
+          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
         },
       ],
     });
@@ -1871,7 +1945,7 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    const tasks = output[ProjenTaskRunner.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
       name: "ca:login",
       steps: [
@@ -1879,13 +1953,51 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          env: {
+            CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+          },
+          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
         },
         {
-          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text); npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
+          env: {
+            CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text)`,
+          },
+          exec: `npm config set ${scope2}:registry ${registryUrl2}; npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
         },
       ],
     });
+  });
+
+  test("adds AWS Code Artifact Login step prior to install to workflow with specific package manager command when package manager is pnpm", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      packageManager: NodePackageManager.PNPM,
+    });
+    const output = synthSnapshot(project);
+
+    const expectedSteps = [
+      {
+        name: "AWS CodeArtifact Login",
+        run: "pnpm dlx projen ca:login",
+        env: {
+          AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+          AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+        },
+      },
+    ];
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining(expectedSteps),
+    );
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining(expectedSteps),
+    );
   });
 });
 

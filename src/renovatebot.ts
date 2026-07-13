@@ -50,6 +50,25 @@ export interface RenovatebotOptions {
   readonly overrideConfig?: any;
 
   readonly marker?: boolean;
+
+  /**
+   * Minimum release age for packages before Renovate will propose an update.
+   *
+   * This is a supply chain security feature to avoid updating to newly published,
+   * potentially malicious versions.
+   *
+   * @see https://docs.renovatebot.com/configuration-options/#minimumreleaseage
+   * @default - no minimum release age
+   */
+  readonly minimumReleaseAge?: string;
+
+  /**
+   * Controls whether a release timestamp is required when using `minimumReleaseAge`.
+   *
+   * @see https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour
+   * @default RenovatebotMinimumReleaseAgeBehaviour.TIMESTAMP_REQUIRED
+   */
+  readonly minimumReleaseAgeBehaviour?: RenovatebotMinimumReleaseAgeBehaviour;
 }
 
 /**
@@ -101,6 +120,23 @@ export enum RenovatebotScheduleInterval {
 }
 
 /**
+ * Behaviour when a release timestamp is missing for `minimumReleaseAge`.
+ *
+ * @see https://docs.renovatebot.com/configuration-options/#minimumreleaseagebehaviour
+ */
+export enum RenovatebotMinimumReleaseAgeBehaviour {
+  /**
+   * A release without a timestamp is not treated as stable.
+   */
+  TIMESTAMP_REQUIRED = "timestamp-required",
+
+  /**
+   * A release without a timestamp is treated as stable.
+   */
+  TIMESTAMP_OPTIONAL = "timestamp-optional",
+}
+
+/**
  * Defines renovatebot configuration for projen project.
  *
  * Ignores the versions controlled by Projen.
@@ -123,6 +159,10 @@ export class Renovatebot extends Component {
 
   private readonly overrideConfig?: any;
 
+  private readonly minimumReleaseAge?: string;
+
+  private readonly minimumReleaseAgeBehaviour?: RenovatebotMinimumReleaseAgeBehaviour;
+
   constructor(project: Project, options: RenovatebotOptions = {}) {
     super(project);
 
@@ -135,6 +175,8 @@ export class Renovatebot extends Component {
     (options.ignoreProjen ?? true) && this.explicitIgnores.push("projen");
     this.overrideConfig = options.overrideConfig ?? {};
     this.marker = options.marker ?? true;
+    this.minimumReleaseAge = options.minimumReleaseAge;
+    this.minimumReleaseAgeBehaviour = options.minimumReleaseAgeBehaviour;
 
     this.file = new JsonFile(this._project, "renovate.json5", {
       obj: () => this.createRenovateConfiguration(),
@@ -171,16 +213,27 @@ export class Renovatebot extends Component {
       renovateIgnore.push(...new Set(reusableWorkflows));
     }
 
+    const extendsPresets = [
+      ":preserveSemverRanges",
+      "config:recommended",
+      "group:allNonMajor",
+      "group:recommended",
+      "group:monorepos",
+    ];
+
+    // Add Biome custom manager if Biome is configured
+    // Lazy require to avoid circular dependency (renovatebot -> biome -> project -> renovatebot)
+    const { Biome } = require("./javascript/biome/biome"); // eslint-disable-line @typescript-eslint/no-require-imports
+    if (Biome.of(this._project)) {
+      extendsPresets.push("customManagers:biomeVersions");
+    }
+
     return {
       labels: this.labels,
       schedule: this.scheduleInterval,
-      extends: [
-        ":preserveSemverRanges",
-        "config:recommended",
-        "group:allNonMajor",
-        "group:recommended",
-        "group:monorepos",
-      ],
+      minimumReleaseAge: this.minimumReleaseAge,
+      minimumReleaseAgeBehaviour: this.minimumReleaseAgeBehaviour,
+      extends: extendsPresets,
       packageRules: [
         {
           matchDepTypes: ["devDependencies"],

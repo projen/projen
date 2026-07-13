@@ -1,6 +1,6 @@
-import { WorkflowJob, Workflow, Job } from "./model";
+import type { WorkflowJob, Workflow, Job } from "./model";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 import { snakeCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 

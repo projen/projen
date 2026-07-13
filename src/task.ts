@@ -1,17 +1,37 @@
 import { warn } from "./logging";
-import {
+import type {
   TaskCommonOptions,
   TaskSpec,
   TaskStep,
   TaskStepOptions,
 } from "./task-model";
+import type { TaskShell } from "./task-shell";
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
    * Shell command to execute as the first command of the task.
+   *
+   * Mutually exclusive with `execArgs`.
+   *
    * @default - add steps using `task.exec(command)` or `task.spawn(subtask)`
    */
   readonly exec?: string;
+
+  /**
+   * Shell command to execute as the first command of the task, provided as a
+   * list of the program followed by its arguments (an "argv").
+   *
+   * A convenient alternative to `exec`: arguments with spaces or special
+   * characters are passed through as-is, with no quoting needed. The elements
+   * are not run through a shell, so environment variables (`$FOO`) are not
+   * expanded and other shell features are unavailable.
+   * @see TaskStep.execArgs
+   *
+   * Mutually exclusive with `exec`.
+   *
+   * @default - add steps using `task.execArgs(args)`, `task.exec(command)` or `task.spawn(subtask)`
+   */
+  readonly execArgs?: string[];
 
   /**
    * List of task steps to run.
@@ -49,6 +69,7 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private _cwd?: string | undefined;
+  private _shell?: TaskShell | undefined;
 
   private readonly requiredEnv?: string[];
   private _locked: boolean;
@@ -59,6 +80,7 @@ export class Task {
     this._description = props.description;
     this._conditions = props.condition ? [props.condition] : [];
     this._cwd = props.cwd;
+    this._shell = props.shell;
     this._locked = false;
     this._env = props.env ?? {};
 
@@ -69,8 +91,20 @@ export class Task {
       throw new Error("cannot specify both exec and steps");
     }
 
+    if (props.execArgs && props.steps) {
+      throw new Error("cannot specify both execArgs and steps");
+    }
+
+    if (props.exec && props.execArgs) {
+      throw new Error("cannot specify both exec and execArgs");
+    }
+
     if (props.exec) {
       this.exec(props.exec, { receiveArgs: props.receiveArgs });
+    }
+
+    if (props.execArgs) {
+      this.execArgs(props.execArgs, { receiveArgs: props.receiveArgs });
     }
   }
 
@@ -93,6 +127,22 @@ export class Task {
    */
   public set cwd(cwd: string | undefined) {
     this._cwd = cwd;
+  }
+
+  /**
+   * The shell used to run this task's commands, or `undefined` when inheriting
+   * the built-in default shell.
+   * @see {@link TaskCommonOptions.shell}
+   */
+  public get shell(): TaskShell | undefined {
+    return this._shell;
+  }
+
+  /**
+   * Sets the shell used to run this task's commands.
+   */
+  public set shell(shell: TaskShell | undefined) {
+    this._shell = shell;
   }
 
   /**
@@ -153,19 +203,42 @@ export class Task {
   }
 
   /**
+   * Adds steps to this task. This is a generic method that accepts any
+   * task step (exec, spawn, say, builtin).
+   *
+   * @param steps The steps to add.
+   */
+  public addSteps(...steps: TaskStep[]) {
+    this._pushSteps("addSteps", steps);
+  }
+
+  /**
    * Executes a shell command
    * @param command Shell command
    * @param options Options
    */
   public exec(command: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
+    this._pushSteps("exec", [this.renderStep({ exec: command, ...options })]);
+  }
 
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add exec to");
-      return;
-    }
-
-    this._steps.push({ exec: command, ...options });
+  /**
+   * Executes a command provided as a list of the program followed by its
+   * arguments (an "argv").
+   *
+   * A convenient alternative to `Task.exec`: arguments with spaces or
+   * special characters are passed through as-is, with no quoting needed. The
+   * elements are not run through a shell, so environment variables (`$FOO`) are
+   * not expanded and other shell features are unavailable.
+   *
+   * @example task.execArgs(["echo", "hello world"]);
+   *
+   * @param command The program followed by its arguments.
+   * @param options Options
+   */
+  public execArgs(command: string[], options: TaskStepOptions = {}) {
+    this._pushSteps("execArgs", [
+      this.renderStep({ execArgs: command, ...options }),
+    ]);
   }
 
   /**
@@ -180,14 +253,7 @@ export class Task {
    * `release/resolve-version`).
    */
   public builtin(name: string) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add builtin to");
-      return;
-    }
-
-    this._steps.push({ builtin: name });
+    this._pushSteps("builtin", [{ builtin: name }]);
   }
 
   /**
@@ -196,25 +262,7 @@ export class Task {
    * @param options Options
    */
   public say(message: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add say to");
-      return;
-    }
-
-    this._steps.push({ say: message, ...options });
-  }
-
-  /**
-   * Adds a command at the beginning of the task.
-   * @param shell The command to add.
-   *
-   * @deprecated use `prependExec()`
-   */
-  public prepend(shell: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-    this.prependExec(shell, options);
+    this._pushSteps("say", [this.renderStep({ say: message, ...options })]);
   }
 
   /**
@@ -222,32 +270,28 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
+    this._pushSteps("spawn", [
+      this.renderStep({ spawn: subtask.name, ...options }),
+    ]);
+  }
 
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("add spawn to");
-      return;
-    }
-
-    this._steps.push({ spawn: subtask.name, ...options });
+  /**
+   * Adds steps at the beginning of this task.
+   *
+   * @param steps The steps to add.
+   */
+  public prependSteps(...steps: TaskStep[]) {
+    this._unshiftSteps("prependSteps", steps);
   }
 
   /**
    * Adds a command at the beginning of the task.
-   * @param shell The command to add.
+   * @param command The command to add.
    */
-  public prependExec(shell: string, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependExec to");
-      return;
-    }
-
-    this._steps.unshift({
-      exec: shell,
-      ...options,
-    });
+  public prependExec(command: string, options: TaskStepOptions = {}) {
+    this._unshiftSteps("prependExec", [
+      this.renderStep({ exec: command, ...options }),
+    ]);
   }
 
   /**
@@ -255,17 +299,9 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
-    this.assertUnlocked();
-
-    if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependSpawn to");
-      return;
-    }
-
-    this._steps.unshift({
-      spawn: subtask.name,
-      ...options,
-    });
+    this._unshiftSteps("prependSpawn", [
+      this.renderStep({ spawn: subtask.name, ...options }),
+    ]);
   }
 
   /**
@@ -273,17 +309,42 @@ export class Task {
    * @param message Your message
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
+    this._unshiftSteps("prependSay", [
+      this.renderStep({ say: message, ...options }),
+    ]);
+  }
+
+  /**
+   * Renders step options (with a {@link TaskShell}) to the manifest
+   * {@link TaskStep} form, where `shell` is its `string | string[]` rendering.
+   */
+  private renderStep(
+    step: { readonly shell?: TaskShell } & Omit<TaskStep, "shell">,
+  ): TaskStep {
+    const { shell, ...rest } = step;
+    return shell ? { ...rest, shell: shell._render() } : rest;
+  }
+
+  private _pushSteps(method: string, steps: TaskStep[]) {
     this.assertUnlocked();
 
     if (!Array.isArray(this._steps)) {
-      this.warnForLazyValue("prependSay to");
+      this.warnForLazyValue(`${method} to`);
       return;
     }
 
-    this._steps.unshift({
-      say: message,
-      ...options,
-    });
+    this._steps.push(...steps);
+  }
+
+  private _unshiftSteps(method: string, steps: TaskStep[]) {
+    this.assertUnlocked();
+
+    if (!Array.isArray(this._steps)) {
+      this.warnForLazyValue(`${method} to`);
+      return;
+    }
+
+    this._steps.unshift(...steps);
   }
 
   /**
@@ -427,6 +488,7 @@ export class Task {
       steps: steps,
       condition: this.condition,
       cwd: this._cwd,
+      shell: this._shell?._render(),
     };
   }
 

@@ -1,22 +1,24 @@
-import { TaskRuntime } from "../../src";
+import { javascript } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import { TypeScriptProject } from "../../src/typescript";
-import { execProjenCLI, synthSnapshot } from "../util";
+import { execProjenCLI, simulateProjenNew, synthSnapshot } from "../util";
 
 test.each([
   ["prettier is off", false],
   ["prettier is on", true],
-])("eslint task passes with default config: %s", (_, prettier) => {
+])("eslint task passes with default config: %s", async (_, prettier) => {
   const project = new TypeScriptProject({
     name: "test",
     defaultReleaseBranch: "master",
+    packageManager: javascript.NodePackageManager.NPM,
     eslint: true,
     prettier,
   });
   project.synth();
 
   // THEN
-  execProjenCLI(project.outdir, ["eslint"]);
+  await execProjenCLI(project.outdir, ["eslint"]);
 });
 
 test("can acceess file", () => {
@@ -28,7 +30,6 @@ test("can acceess file", () => {
 
   const eslint = new Eslint(project, {
     dirs: ["mysrc"],
-    lintProjenRc: false,
   });
 
   // WHEN
@@ -37,6 +38,90 @@ test("can acceess file", () => {
   // THEN
   const output = synthSnapshot(project)[".eslintrc.json"];
   expect(output.env).toHaveProperty("foo", "bar");
+});
+
+describe("project service", () => {
+  test("pins all files to a single project by default", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    new Eslint(project, {
+      dirs: ["mysrc"],
+      tsconfigPath: "tsconfig.json",
+    });
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.project).toEqual("tsconfig.json");
+    expect(parserOptions.projectService).toBeUndefined();
+  });
+
+  test("enables the typescript-eslint project service", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    new Eslint(project, {
+      dirs: ["mysrc"],
+      projectService: true,
+    });
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.projectService).toBe(true);
+    expect(parserOptions.project).toBeUndefined();
+  });
+
+  test("registers default project files when provided", () => {
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+
+    const eslint = new Eslint(project, {
+      dirs: ["mysrc"],
+      projectService: true,
+      tsconfigPath: "./tsconfig.json",
+    });
+    eslint.allowDefaultProjectFiles(".projenrc.ts", "scripts/run.ts");
+
+    const parserOptions =
+      synthSnapshot(project)[".eslintrc.json"].parserOptions;
+    expect(parserOptions.projectService).toStrictEqual({
+      allowDefaultProject: [".projenrc.ts", "scripts/run.ts"],
+      defaultProject: "./tsconfig.json",
+    });
+  });
+});
+
+test("lintPatterns reflects the configured dirs and devdirs", () => {
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  const eslint = new Eslint(project, {
+    dirs: ["mysrc"],
+    devdirs: ["mytest"],
+  });
+
+  expect(eslint.lintPatterns).toEqual(
+    expect.arrayContaining(["mysrc", "mytest"]),
+  );
+});
+
+test("lintPatterns is empty when no patterns are configured", () => {
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+  });
+
+  const eslint = new Eslint(project, { dirs: [] });
+
+  expect(eslint.lintPatterns).toEqual([]);
 });
 
 describe("prettier", () => {
@@ -51,7 +136,6 @@ describe("prettier", () => {
     new Eslint(project, {
       dirs: ["mysrc"],
       prettier: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -75,7 +159,6 @@ describe("alias", () => {
         "@foo": "./src/foo",
       },
       aliasExtensions: [".ts", ".js"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -105,7 +188,6 @@ describe("eslint settings", () => {
     new Eslint(project, {
       devdirs: ["foo", "bar"],
       dirs: ["mysrc"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -123,7 +205,6 @@ describe("eslint settings", () => {
     const eslint = new Eslint(project, {
       dirs: ["mysrc"],
       tsAlwaysTryTypes: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -144,7 +225,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     eslint.addExtends("plugin:some-plugin/recommended");
@@ -171,7 +251,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // Add the prettier plugins in the incorrect order
@@ -210,7 +289,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       sortExtends: {
         compare: () => 0,
       },
@@ -241,7 +319,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       sortExtends: {
         // Backwards alphanumeric
         compare: (a, b) => b.localeCompare(a),
@@ -274,7 +351,6 @@ describe("eslint settings", () => {
     new Eslint(project, {
       dirs: ["src"],
       yaml: true,
-      lintProjenRc: false,
     });
 
     // THEN
@@ -294,7 +370,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
     eslint.addOverride({
       files: ["*.json", "*.json5", "*.jsonc"],
@@ -320,11 +395,10 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // THEN
-    const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
+    const manifest = synthSnapshot(project)[ProjenTaskRunner.MANIFEST_FILE];
     expect(eslint.eslintTask._renderSpec()).toMatchObject(
       manifest.tasks.eslint,
     );
@@ -363,7 +437,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
       fileExtensions: [],
     });
 
@@ -386,7 +459,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     // THEN
@@ -424,7 +496,6 @@ describe("eslint settings", () => {
     // WHEN
     const eslint = new Eslint(project, {
       dirs: ["src"],
-      lintProjenRc: false,
     });
 
     const taskStep = eslint.eslintTask.steps[0];
@@ -435,5 +506,67 @@ describe("eslint settings", () => {
 
     // THEN
     expect(eslint.eslintTask.steps[0].args).toContain(newTestArg);
+  });
+});
+
+describe("postProjectCreation", () => {
+  test("runs the eslint task once the project is created via `projen new`", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN
+    expect(runTask).toHaveBeenCalledWith(eslint.eslintTask.name);
+  });
+
+  test("does not run the eslint task for a project not created via `projen new`", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN: other tasks (e.g. "install") may run, but not eslint
+    expect(runTask).not.toHaveBeenCalledWith(eslint.eslintTask.name);
+  });
+
+  test("does not run the eslint task when post-synthesis steps are disabled", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const eslint = new Eslint(project, { dirs: ["src"] });
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    synthSnapshot(project);
+
+    // THEN
+    expect(runTask).not.toHaveBeenCalledWith(eslint.eslintTask.name);
   });
 });

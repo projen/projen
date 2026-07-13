@@ -2,7 +2,7 @@ import * as path from "path";
 import * as glob from "fast-glob";
 import { TYPESCRIPT_INTEG_EXT } from "./internal";
 import { Component } from "../component";
-import { Project } from "../project";
+import type { Project } from "../project";
 
 /**
  * Options for `AutoDiscoverBase`

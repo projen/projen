@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { NodeRelease } from "@jsii/check-node";
+import type { JsiiProjectOptions } from "../../src/cdk";
 import { JsiiProject } from "../../src/cdk";
 import { NodePackageManager } from "../../src/javascript";
 import { execProjenCLI, synthSnapshot } from "../util";
@@ -36,13 +37,7 @@ function getSupportedNodeVersions(): string[] {
 
 describe("JsiiProject with default settings", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-    });
+    const project = new TestJsiiProject();
 
     const output = synthSnapshot(project);
     expect(output).toMatchSnapshot({
@@ -54,30 +49,34 @@ describe("JsiiProject with default settings", () => {
     });
   });
 
-  it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-    });
+  it("compiles", async () => {
+    const project = new TestJsiiProject();
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
+  });
+
+  // https://github.com/projen/projen/issues/4806
+  it("supports running jest tests", async () => {
+    const project = new TestJsiiProject();
+
+    project.synth();
+
+    // Add a trivial test file, mirroring the issue's reproduction steps.
+    fs.writeFileSync(
+      path.join(project.outdir, project.testdir, "dummy.test.ts"),
+      "test('dummy', () => { expect(true).toBe(true); });\n",
+    );
+
+    await execProjenCLI(project.outdir, ["test"]);
   });
 });
 
 describe("JsiiProject with modern jsiiVersion", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-      jsiiVersion: "~5.0.0",
+    const project = new TestJsiiProject({
+      jsiiVersion: "~5.9.0",
     });
 
     const output = synthSnapshot(project);
@@ -85,37 +84,28 @@ describe("JsiiProject with modern jsiiVersion", () => {
       "package.json": {
         devDependencies: {
           jest: "*",
-          jsii: "~5.0.0",
+          jsii: "~5.9.0",
         },
       },
     });
     expect(output["package.json"].resolutions).toBeUndefined();
   });
 
-  it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
-      jsiiVersion: "~5.0.0",
+  it("compiles", async () => {
+    const project = new TestJsiiProject({
+      jsiiVersion: "~5.9.0",
+      devDeps: ["jsii-pacmak@1.135.0"],
     });
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
 describe("JsiiProject with jsiiVersion: '*'", () => {
   it("synthesizes", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
+    const project = new TestJsiiProject({
       jsiiVersion: "*",
     });
 
@@ -131,19 +121,14 @@ describe("JsiiProject with jsiiVersion: '*'", () => {
     expect(output["package.json"].resolutions).toBeUndefined();
   });
 
-  it("compiles", () => {
-    const project = new JsiiProject({
-      defaultReleaseBranch: "main",
-      name: "test",
-      repositoryUrl: "github.com/projen/projen.dummy",
-      author: "Test",
-      authorAddress: "test@projen",
+  it("compiles", async () => {
+    const project = new TestJsiiProject({
       jsiiVersion: "*",
     });
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -162,23 +147,41 @@ describe.each(getSupportedJsiiVersions().map((version) => [`~${version}.0`]))(
         process.env.CI = originalCI;
       });
 
-      it("compiles", () => {
-        const project = new JsiiProject({
-          defaultReleaseBranch: "main",
-          name: "test",
-          repositoryUrl: "github.com/projen/projen.dummy",
-          author: "Test",
-          authorAddress: "test@projen",
+      it("compiles", async () => {
+        const project = new TestJsiiProject({
           minNodeVersion,
-          packageManager: NodePackageManager.NPM,
           docgen: false,
           jsiiVersion,
         });
 
         project.synth();
 
-        execProjenCLI(project.outdir, ["compile"]);
+        await execProjenCLI(project.outdir, ["compile"]);
       });
     });
   },
 );
+
+class TestJsiiProject extends JsiiProject {
+  public constructor(
+    options: Omit<
+      JsiiProjectOptions,
+      | "defaultReleaseBranch"
+      | "name"
+      | "repositoryUrl"
+      | "author"
+      | "authorAddress"
+      | "packageManager"
+    > = {},
+  ) {
+    super({
+      defaultReleaseBranch: "main",
+      name: "@projen/test",
+      repositoryUrl: "github.com/projen/projen.dummy",
+      author: "Test",
+      authorAddress: "test@projen",
+      packageManager: NodePackageManager.NPM,
+      ...options,
+    });
+  }
+}

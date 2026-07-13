@@ -1,26 +1,32 @@
 import { mkdtempSync, realpathSync, renameSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
-import { Construct, IConstruct } from "constructs";
+import type { IConstruct } from "constructs";
+import { Construct } from "constructs";
 import * as glob from "fast-glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
-import { Component } from "./component";
+import type { Component } from "./component";
 import { Dependencies } from "./dependencies";
 import { FileBase } from "./file";
-import { EndOfLine, GitAttributesFile } from "./gitattributes";
-import { IgnoreFile, IgnoreFileOptions } from "./ignore-file";
-import * as inventory from "./inventory";
+import type { EndOfLine } from "./gitattributes";
+import { GitAttributesFile } from "./gitattributes";
+import type { IgnoreFileOptions } from "./ignore-file";
+import { IgnoreFile } from "./ignore-file";
+import type * as inventory from "./inventory";
 import { resolveInitProject } from "./javascript/render-options";
 import { JsonFile } from "./json";
-import { Logger, LoggerOptions } from "./logger";
+import type { LoggerOptions } from "./logger";
+import { Logger } from "./logger";
 import { ObjectFile } from "./object-file";
-import { InitProjectOptionHints } from "./option-hints";
+import type { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
 import { ProjectTree } from "./project-tree";
-import { ProjenrcJson, ProjenrcJsonOptions } from "./projenrc-json";
-import { Renovatebot, RenovatebotOptions } from "./renovatebot";
-import { Task, TaskOptions } from "./task";
+import type { ProjenrcJsonOptions } from "./projenrc-json";
+import { ProjenrcJson } from "./projenrc-json";
+import type { RenovatebotOptions } from "./renovatebot";
+import { Renovatebot } from "./renovatebot";
+import type { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy, normalizePersistedPath } from "./util";
 import {
@@ -229,8 +235,12 @@ export class Project extends Construct {
    * The options used when this project is bootstrapped via `projen new`. It
    * includes the original set of options passed to the CLI and also the JSII
    * FQN of the project type.
+   *
+   * @deprecated use the `initProject` argument passed to `Component.projectCreation()` instead.
    */
-  public readonly initProject?: InitProject;
+  public get initProject(): InitProject | undefined {
+    return this._initProject;
+  }
 
   /**
    * The command to use in order to run the projen CLI.
@@ -263,10 +273,9 @@ export class Project extends Construct {
    */
   public readonly commitGenerated: boolean;
 
-  private readonly tips = new Array<string>();
-  private readonly excludeFromCleanup: string[];
+  private readonly _excludeFromCleanup: string[];
   private readonly _ejected: boolean;
-  /** projenCommand without default value */
+  private readonly _initProject?: InitProject;
   private readonly _projenCommand?: string;
 
   constructor(options: ProjectOptions) {
@@ -285,17 +294,22 @@ export class Project extends Construct {
     this.node.addMetadata("construct", new.target.name);
     this.node.addMetadata("projen.version", PROJEN_VERSION);
 
-    this.initProject = resolveInitProject(options);
+    this._initProject = resolveInitProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
-    this.excludeFromCleanup = [];
+    this._excludeFromCleanup = [];
 
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
     this._projenCommand = options.projenCommand;
     if (this.ejected) {
-      this._projenCommand = "scripts/run-task.cjs";
+      // `scripts/run-task.cjs` relies on its `#!/usr/bin/env node` shebang and
+      // the executable bit to run directly - neither exists on Windows, where
+      // there is no shebang support and npm invokes package.json scripts
+      // through cmd.exe. Prefixing with `node` resolves the script explicitly
+      // and works identically on every platform.
+      this._projenCommand = "node scripts/run-task.cjs";
     }
 
     this.outdir = outdir;
@@ -492,26 +506,6 @@ export class Project extends Construct {
   }
 
   /**
-   * Finds a json file by name.
-   * @param filePath The file path.
-   * @deprecated use `tryFindObjectFile`
-   */
-  public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindObjectFile(filePath);
-    if (!file) {
-      return undefined;
-    }
-
-    if (!(file instanceof JsonFile)) {
-      throw new Error(
-        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`,
-      );
-    }
-
-    return file;
-  }
-
-  /**
    * Finds an object file (like JsonFile, YamlFile, etc.) by name.
    * @param filePath The file path.
    */
@@ -551,22 +545,13 @@ export class Project extends Construct {
   }
 
   /**
-   * Prints a "tip" message during synthesis.
-   * @param message The message
-   * @deprecated - use `project.logger.info(message)` to show messages during synthesis
-   */
-  public addTip(message: string) {
-    this.tips.push(message);
-  }
-
-  /**
    * Exclude the matching files from pre-synth cleanup. Can be used when, for example, some
    * source files include the projen marker and we don't want them to be erased during synth.
    *
    * @param globs The glob patterns to match
    */
   public addExcludeFromCleanup(...globs: string[]) {
-    this.excludeFromCleanup.push(...globs);
+    this._excludeFromCleanup.push(...globs);
   }
 
   /**
@@ -617,10 +602,20 @@ export class Project extends Construct {
    * 2. Delete all generated files
    * 3. Synthesize all subprojects
    * 4. Synthesize all components of this project
-   * 5. Call "postSynthesize()" for all components of this project
-   * 6. Call "this.postSynthesize()"
+   * 5. Call "projectCreation()" for all components, only if the project is being created for the first time
+   * 6. Call "postSynthesize()" for all components of this project
+   * 7. Call "this.postSynthesize()"
+   * 8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
    */
   public synth(): void {
+    if (this._initProject?.synth === false) {
+      // user request to not run full synth, instead we only run projectCreation hooks
+      for (const comp of this.components) {
+        comp.projectCreation(this._initProject);
+      }
+      return;
+    }
+
     const outdir = this.outdir;
     this.logger.debug("Synthesizing project...");
 
@@ -640,7 +635,7 @@ export class Project extends Construct {
     cleanup(
       outdir,
       this.files.map((f) => normalizePersistedPath(f.path)),
-      this.excludeFromCleanup,
+      this._excludeFromCleanup,
     );
 
     for (const subproject of this.subprojects) {
@@ -651,6 +646,12 @@ export class Project extends Construct {
       comp.synthesize();
     }
 
+    if (this._initProject) {
+      for (const comp of this.components) {
+        comp.projectCreation(this._initProject);
+      }
+    }
+
     if (!isTruthy(process.env.PROJEN_DISABLE_POST)) {
       for (const comp of this.components) {
         comp.postSynthesize();
@@ -658,6 +659,12 @@ export class Project extends Construct {
 
       // project-level hook
       this.postSynthesize();
+
+      if (this._initProject) {
+        for (const comp of this.components) {
+          comp.postProjectCreation(this._initProject);
+        }
+      }
     }
 
     if (this.ejected) {
@@ -699,30 +706,6 @@ export class Project extends Construct {
 }
 
 /**
- * Which type of project this is.
- *
- * @deprecated no longer supported at the base project level
- */
-export enum ProjectType {
-  /**
-   * This module may be a either a library or an app.
-   */
-  UNKNOWN = "unknown",
-
-  /**
-   * This is a library, intended to be published to a package manager and
-   * consumed by other projects.
-   */
-  LIB = "lib",
-
-  /**
-   * This is an app (service, tool, website, etc). Its artifacts are intended to
-   * be deployed or published for end-user consumption.
-   */
-  APP = "app",
-}
-
-/**
  * Information passed from `projen new` to the project object when the project
  * is first created. It is used to generate projenrc files in various languages.
  */
@@ -747,6 +730,18 @@ export interface InitProject {
    * @default InitProjectOptionHints.FEATURED
    */
   readonly comments: InitProjectOptionHints;
+
+  /**
+   * Whether `projen new` should call `project.synth()` after construction.
+   * @default true
+   */
+  readonly synth: boolean;
+
+  /**
+   * Whether `projen new` should run post-synthesis steps (e.g. package manager install).
+   * @default true
+   */
+  readonly post: boolean;
 }
 
 /**

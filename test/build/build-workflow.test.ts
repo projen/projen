@@ -1,5 +1,6 @@
+import * as yaml from "yaml";
 import { BuildWorkflow } from "../../src/build";
-import { Project } from "../../src/project";
+import type { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
 describe("name", () => {
@@ -50,6 +51,93 @@ describe("name", () => {
         workflows[".github/workflows/build_my-project.yml"],
       ).toMatchSnapshot();
     });
+  });
+});
+
+describe("buildRunsOn", () => {
+  test("defaults to runsOn value", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "./foo",
+      runsOn: ["self-hosted"],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("overrides runsOn for the build job", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "./foo",
+      runsOn: ["ubuntu-latest"],
+      buildRunsOn: ["self-hosted", "linux"],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build["runs-on"]).toEqual(["self-hosted", "linux"]);
+  });
+});
+
+describe("addPostBuildJob", () => {
+  test("downloads artifact by id", () => {
+    const p = new TestProject();
+    const bw = new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    bw.addPostBuildJob("post-job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    const postJob = build.jobs["post-job"];
+    const downloadStep = postJob.steps[0];
+    expect(downloadStep.name).toBe("Download build artifacts");
+    expect(downloadStep.with["artifact-ids"]).toBe(
+      "${{ needs.build.outputs.artifact_id }}",
+    );
+    expect(downloadStep.with.name).toBeUndefined();
+  });
+
+  test("artifact_id output is not present without post-build jobs", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build.outputs.artifact_id).toBeUndefined();
+  });
+
+  test("artifact_id output is present with post-build jobs", () => {
+    const p = new TestProject();
+    const bw = new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    bw.addPostBuildJob("post-job", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    expect(build.jobs.build.outputs.artifact_id).toBe(
+      "${{ steps.upload_artifact.outputs.artifact-id }}",
+    );
   });
 });
 

@@ -17,7 +17,8 @@
  * - BUMP_PACKAGE: (optional) the bump package to use
  * - NEXT_VERSION_COMMAND: (optional) a command to decide the version to release
  */
-import { bump, BumpOptions } from "./bump-version";
+import type { BumpOptions } from "./bump-version";
+import { bump } from "./bump-version";
 import * as logging from "../logging";
 
 const versionFile = process.env.OUTFILE;

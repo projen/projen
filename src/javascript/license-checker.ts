@@ -1,7 +1,7 @@
-import { Construct } from "constructs";
+import type { Construct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Task } from "../task";
+import type { Task } from "../task";
 
 /**
  * Options to configure the license checker
@@ -88,16 +88,16 @@ export class LicenseChecker extends Component {
     }
     if (allowedLicenses.length) {
       cmd.push("--onlyAllow");
-      cmd.push(`"${allowedLicenses.join(";")}"`);
+      cmd.push(allowedLicenses.join(";"));
     }
     if (prohibitedLicenses.length) {
       cmd.push("--failOn");
-      cmd.push(`"${prohibitedLicenses.join(";")}"`);
+      cmd.push(prohibitedLicenses.join(";"));
     }
 
     this.project.deps.addDependency("license-checker", DependencyType.BUILD);
     this.task = this.project.addTask(taskName, {
-      exec: cmd.join(" "),
+      execArgs: cmd,
       receiveArgs: true,
     });
     this.project.preCompileTask.spawn(this.task);

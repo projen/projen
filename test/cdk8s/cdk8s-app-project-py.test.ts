@@ -20,7 +20,7 @@ test("basic options", () => {
   // expect a synth task
   expect(output[".projen/tasks.json"].tasks.synth.steps).toStrictEqual([
     {
-      exec: "cdk8s synth",
+      execArgs: ["cdk8s", "synth"],
     },
   ]);
 

@@ -3,81 +3,29 @@
 exports[`projen new --from project options --outdir path/to/mydir 1`] = `
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
-`;
-
-exports[`projen new --from project options creating java project with enum-typed CLI arg 1`] = `
-"import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
-import io.github.cdklabs.projen.ProjectType;
-
-public class projenrc {
-    public static void main(String[] args) {
-        JavaProject project = new JavaProject(JavaProjectOptions.builder()
-            .artifactId("my-app")
-            .groupId("org.acme")
-            .name("my-project")
-            .projectType(ProjectType.LIB)
-            .projenrcJava(true)
-            .version("0.1.0")
-            .build());
-        project.synth();
-    }
-}"
 `;
 
 exports[`projen new --from project options creating node project with enum-typed CLI arg 1`] = `
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-});
-project.synth();"
-`;
-
-exports[`projen new --from project options creating python project with enum-typed CLI arg 1`] = `
-"from projen.python import PythonProject
-from projen import ProjectType
-
-project = PythonProject(
-    author_email="my@user.email.com",
-    author_name="My User Name",
-    module_name="my_project",
-    name="my-project",
-    project_type=ProjectType.LIB,
-    projenrc_python=True,
-    version="0.1.0",
-)
-
-project.synth()"
-`;
-
-exports[`projen new --from project options projen new with unknown option works 1`] = `
-"const { javascript } = require("projen");
-const project = new javascript.NodeProject({
-  defaultReleaseBranch: "main",
-  name: "my-project",
-  packageManager: javascript.NodePackageManager.NPM,
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;
@@ -85,7 +33,6 @@ project.synth();"
 exports[`projen new --from project options projenrc-json creates external project type 1`] = `
 {
   "cdkVersion": "2.189.1",
-  "defaultReleaseBranch": "main",
   "devDeps": [
     "@pepperize/projen-awscdk-app-ts@0.0.333",
   ],
@@ -112,7 +59,6 @@ exports[`projen new --from project options projenrc-json creates java project 1`
 
 exports[`projen new --from project options projenrc-json creates node-project 1`] = `
 {
-  "defaultReleaseBranch": "main",
   "name": "my-project",
   "packageManager": "npm",
   "projenrcJson": true,
@@ -148,7 +94,7 @@ exports[`projen new --from using registry existing package 1`] = `
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
     "jest": "*",
-    "jest-junit": "^16",
+    "jest-junit": "^17",
     "prettier": "*",
     "projen": "*",
     "ts-jest": "*",
@@ -199,7 +145,7 @@ exports[`projen new --from using registry existing package 1`] = `
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.dev.json",
+          "tsconfig": "test/tsconfig.json",
         },
       ],
     },
@@ -213,29 +159,29 @@ exports[`projen new --from using registry existing package 1`] = `
     "access": "public",
   },
   "scripts": {
-    "build": "npx projen build",
-    "bump": "npx projen bump",
-    "bundle": "npx projen bundle",
-    "clobber": "npx projen clobber",
-    "compile": "npx projen compile",
-    "default": "npx projen default",
-    "deploy": "npx projen deploy",
-    "destroy": "npx projen destroy",
-    "diff": "npx projen diff",
-    "eject": "npx projen eject",
-    "eslint": "npx projen eslint",
-    "format": "npx projen format",
-    "package": "npx projen package",
-    "post-compile": "npx projen post-compile",
-    "pre-compile": "npx projen pre-compile",
-    "projen": "npx projen",
-    "release": "npx projen release",
-    "synth": "npx projen synth",
-    "synth:silent": "npx projen synth:silent",
-    "test": "npx projen test",
-    "test:watch": "npx projen test:watch",
-    "unbump": "npx projen unbump",
-    "watch": "npx projen watch",
+    "build": "projen build",
+    "bump": "projen bump",
+    "bundle": "projen bundle",
+    "clobber": "projen clobber",
+    "compile": "projen compile",
+    "default": "projen default",
+    "deploy": "projen deploy",
+    "destroy": "projen destroy",
+    "diff": "projen diff",
+    "eject": "projen eject",
+    "eslint": "projen eslint",
+    "format": "projen format",
+    "package": "projen package",
+    "post-compile": "projen post-compile",
+    "pre-compile": "projen pre-compile",
+    "projen": "projen",
+    "release": "projen release",
+    "synth": "projen synth",
+    "synth:silent": "projen synth:silent",
+    "test": "projen test",
+    "test:watch": "projen test:watch",
+    "unbump": "projen unbump",
+    "watch": "projen watch",
   },
   "version": "0.0.0",
 }
@@ -246,15 +192,15 @@ exports[`projen new --from using registry existing package 2`] = `
 import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@0.0.333"],
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;
@@ -287,7 +233,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
     "jest": "*",
-    "jest-junit": "^16",
+    "jest-junit": "^17",
     "prettier": "*",
     "projen": "*",
     "ts-jest": "*",
@@ -338,7 +284,7 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.dev.json",
+          "tsconfig": "test/tsconfig.json",
         },
       ],
     },
@@ -352,29 +298,29 @@ exports[`projen new --from using tarball projen new --from named tarball  1`] = 
     "access": "public",
   },
   "scripts": {
-    "build": "npx projen build",
-    "bump": "npx projen bump",
-    "bundle": "npx projen bundle",
-    "clobber": "npx projen clobber",
-    "compile": "npx projen compile",
-    "default": "npx projen default",
-    "deploy": "npx projen deploy",
-    "destroy": "npx projen destroy",
-    "diff": "npx projen diff",
-    "eject": "npx projen eject",
-    "eslint": "npx projen eslint",
-    "format": "npx projen format",
-    "package": "npx projen package",
-    "post-compile": "npx projen post-compile",
-    "pre-compile": "npx projen pre-compile",
-    "projen": "npx projen",
-    "release": "npx projen release",
-    "synth": "npx projen synth",
-    "synth:silent": "npx projen synth:silent",
-    "test": "npx projen test",
-    "test:watch": "npx projen test:watch",
-    "unbump": "npx projen unbump",
-    "watch": "npx projen watch",
+    "build": "projen build",
+    "bump": "projen bump",
+    "bundle": "projen bundle",
+    "clobber": "projen clobber",
+    "compile": "projen compile",
+    "default": "projen default",
+    "deploy": "projen deploy",
+    "destroy": "projen destroy",
+    "diff": "projen diff",
+    "eject": "projen eject",
+    "eslint": "projen eslint",
+    "format": "projen format",
+    "package": "projen package",
+    "post-compile": "projen post-compile",
+    "pre-compile": "projen pre-compile",
+    "projen": "projen",
+    "release": "projen release",
+    "synth": "projen synth",
+    "synth:silent": "projen synth:silent",
+    "test": "projen test",
+    "test:watch": "projen test:watch",
+    "unbump": "projen unbump",
+    "watch": "projen watch",
   },
   "version": "0.0.0",
 }
@@ -385,15 +331,15 @@ exports[`projen new --from using tarball projen new --from named tarball  2`] = 
 import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
   devDeps: ["@pepperize/projen-awscdk-app-ts@file:./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;
@@ -426,7 +372,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
     "jest": "*",
-    "jest-junit": "^16",
+    "jest-junit": "^17",
     "prettier": "*",
     "projen": "*",
     "ts-jest": "*",
@@ -477,7 +423,7 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.dev.json",
+          "tsconfig": "test/tsconfig.json",
         },
       ],
     },
@@ -491,29 +437,29 @@ exports[`projen new --from using tarball projen new --from relative path  1`] = 
     "access": "public",
   },
   "scripts": {
-    "build": "npx projen build",
-    "bump": "npx projen bump",
-    "bundle": "npx projen bundle",
-    "clobber": "npx projen clobber",
-    "compile": "npx projen compile",
-    "default": "npx projen default",
-    "deploy": "npx projen deploy",
-    "destroy": "npx projen destroy",
-    "diff": "npx projen diff",
-    "eject": "npx projen eject",
-    "eslint": "npx projen eslint",
-    "format": "npx projen format",
-    "package": "npx projen package",
-    "post-compile": "npx projen post-compile",
-    "pre-compile": "npx projen pre-compile",
-    "projen": "npx projen",
-    "release": "npx projen release",
-    "synth": "npx projen synth",
-    "synth:silent": "npx projen synth:silent",
-    "test": "npx projen test",
-    "test:watch": "npx projen test:watch",
-    "unbump": "npx projen unbump",
-    "watch": "npx projen watch",
+    "build": "projen build",
+    "bump": "projen bump",
+    "bundle": "projen bundle",
+    "clobber": "projen clobber",
+    "compile": "projen compile",
+    "default": "projen default",
+    "deploy": "projen deploy",
+    "destroy": "projen destroy",
+    "diff": "projen diff",
+    "eject": "projen eject",
+    "eslint": "projen eslint",
+    "format": "projen format",
+    "package": "projen package",
+    "post-compile": "projen post-compile",
+    "pre-compile": "projen pre-compile",
+    "projen": "projen",
+    "release": "projen release",
+    "synth": "projen synth",
+    "synth:silent": "projen synth:silent",
+    "test": "projen test",
+    "test:watch": "projen test:watch",
+    "unbump": "projen unbump",
+    "watch": "projen watch",
   },
   "version": "0.0.0",
 }
@@ -524,15 +470,15 @@ exports[`projen new --from using tarball projen new --from relative path  2`] = 
 import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
   devDeps: ["./pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;
@@ -564,7 +510,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "eslint-plugin-import": "*",
     "eslint-plugin-prettier": "*",
     "jest": "*",
-    "jest-junit": "^16",
+    "jest-junit": "^17",
     "pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "prettier": "*",
     "projen": "*",
@@ -616,7 +562,7 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
       "^.+\\.[t]sx?$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.dev.json",
+          "tsconfig": "test/tsconfig.json",
         },
       ],
     },
@@ -630,29 +576,29 @@ exports[`projen new --from using tarball projen new --from tarball  1`] = `
     "access": "public",
   },
   "scripts": {
-    "build": "npx projen build",
-    "bump": "npx projen bump",
-    "bundle": "npx projen bundle",
-    "clobber": "npx projen clobber",
-    "compile": "npx projen compile",
-    "default": "npx projen default",
-    "deploy": "npx projen deploy",
-    "destroy": "npx projen destroy",
-    "diff": "npx projen diff",
-    "eject": "npx projen eject",
-    "eslint": "npx projen eslint",
-    "format": "npx projen format",
-    "package": "npx projen package",
-    "post-compile": "npx projen post-compile",
-    "pre-compile": "npx projen pre-compile",
-    "projen": "npx projen",
-    "release": "npx projen release",
-    "synth": "npx projen synth",
-    "synth:silent": "npx projen synth:silent",
-    "test": "npx projen test",
-    "test:watch": "npx projen test:watch",
-    "unbump": "npx projen unbump",
-    "watch": "npx projen watch",
+    "build": "projen build",
+    "bump": "projen bump",
+    "bundle": "projen bundle",
+    "clobber": "projen clobber",
+    "compile": "projen compile",
+    "default": "projen default",
+    "deploy": "projen deploy",
+    "destroy": "projen destroy",
+    "diff": "projen diff",
+    "eject": "projen eject",
+    "eslint": "projen eslint",
+    "format": "projen format",
+    "package": "projen package",
+    "post-compile": "projen post-compile",
+    "pre-compile": "projen pre-compile",
+    "projen": "projen",
+    "release": "projen release",
+    "synth": "projen synth",
+    "synth:silent": "projen synth:silent",
+    "test": "projen test",
+    "test:watch": "projen test:watch",
+    "unbump": "projen unbump",
+    "watch": "projen watch",
   },
   "version": "0.0.0",
 }
@@ -663,15 +609,15 @@ exports[`projen new --from using tarball projen new --from tarball  2`] = `
 import { AwsCdkTypeScriptApp } from "@pepperize/projen-awscdk-app-ts";
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
   devDeps: ["pepperize-projen-awscdk-app-ts-0.0.333.tgz"],
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;
@@ -719,15 +665,15 @@ exports[`projen new awscdk-app-ts 1`] = `
   ".projenrc.ts": "import { awscdk, javascript } from "projen";
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -740,17 +686,17 @@ const project = new awscdk.AwsCdkConstructLibrary({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   cdkVersion: "2.189.1",
-  defaultReleaseBranch: "main",
-  jsiiVersion: "~5.9.0",
+  jsiiVersion: "~6.0.0",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -778,15 +724,15 @@ exports[`projen new cdk8s-app-ts 1`] = `
   ".projenrc.ts": "import { cdk8s, javascript } from "projen";
 const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: "2.3.33",
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -799,17 +745,17 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   cdk8sVersion: "1.4.10",
-  defaultReleaseBranch: "main",
-  jsiiVersion: "~5.9.0",
+  jsiiVersion: "~6.0.0",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -822,17 +768,17 @@ const project = new cdktf.ConstructLibraryCdktf({
   author: "My User Name",
   authorAddress: "my@user.email.com",
   cdktfVersion: "^0.13.0",
-  defaultReleaseBranch: "main",
-  jsiiVersion: "~5.9.0",
+  jsiiVersion: "~6.0.0",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -863,17 +809,17 @@ exports[`projen new jsii 1`] = `
 const project = new cdk.JsiiProject({
   author: "My User Name",
   authorAddress: "my@user.email.com",
-  defaultReleaseBranch: "main",
-  jsiiVersion: "~5.9.0",
+  jsiiVersion: "~6.0.0",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
   repositoryUrl: "git@boom.com:foo/bar.git",
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -883,15 +829,15 @@ exports[`projen new nextjs 1`] = `
 {
   ".projenrc.js": "const { javascript, web } = require("projen");
 const project = new web.NextJsProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
+  // tailwind: true,                /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -901,16 +847,16 @@ exports[`projen new nextjs-ts 1`] = `
 {
   ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.NextJsTypeScriptProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
+  // tailwind: true,                /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -920,14 +866,14 @@ exports[`projen new node 1`] = `
 {
   ".projenrc.js": "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -955,14 +901,14 @@ exports[`projen new react 1`] = `
 {
   ".projenrc.js": "const { javascript, web } = require("projen");
 const project = new web.ReactProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -972,15 +918,15 @@ exports[`projen new react-ts 1`] = `
 {
   ".projenrc.ts": "import { javascript, web } from "projen";
 const project = new web.ReactTypeScriptProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -990,15 +936,15 @@ exports[`projen new typescript 1`] = `
 {
   ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -1008,15 +954,15 @@ exports[`projen new typescript-app 1`] = `
 {
   ".projenrc.ts": "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptAppProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();",
 }
@@ -1025,15 +971,15 @@ project.synth();",
 exports[`typescript project projenrc-ts creates typescript projenrc 1`] = `
 "import { javascript, typescript } from "projen";
 const project = new typescript.TypeScriptProject({
-  defaultReleaseBranch: "main",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
   projenrcTs: true,
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // defaultReleaseBranch: "main",  /* The name of the main release branch. */
+  // deps: [],                      /* Runtime dependencies of this module. */
+  // description: undefined,        /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                   /* Build dependencies for this module. */
+  // packageName: undefined,        /* The "name" in package.json. */
 });
 project.synth();"
 `;

@@ -1,6 +1,6 @@
 import * as path from "path";
 import { pascal } from "case";
-import { AwsCdkDeps } from "./awscdk-deps";
+import type { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
   TYPESCRIPT_EDGE_LAMBDA_EXT,
@@ -8,10 +8,11 @@ import {
   TYPESCRIPT_SINGLETON_LAMBDA_EXT,
 } from "./internal";
 import { Component } from "../component";
-import { Bundler, BundlingOptions, Eslint } from "../javascript";
-import { Project } from "../project";
+import type { BundlingOptions } from "../javascript";
+import { Bundler, Eslint } from "../javascript";
+import type { Project } from "../project";
 import { SourceCode } from "../source-code";
-import { TypeScriptProject } from "../typescript";
+import type { TypeScriptProject } from "../typescript";
 import { normalizePersistedPath } from "../util";
 
 /**
@@ -150,7 +151,6 @@ export class LambdaFunction extends Component {
   constructor(project: Project, options: LambdaFunctionOptions) {
     super(project);
 
-    const cdkDeps = options.cdkDeps;
     const bundler = Bundler.of(project);
     if (!bundler) {
       throw new Error(
@@ -236,28 +236,17 @@ export class LambdaFunction extends Component {
     }
     src.line("import * as path from 'path';");
 
-    if (cdkDeps.cdkMajorVersion === 1) {
-      if (options.edgeLambda) {
-        src.line("import * as cloudfront from '@aws-cdk/aws-cloudfront';");
-        cdkDeps.addV1Dependencies("@aws-cdk/aws-cloudfront");
-      }
-      src.line("import * as lambda from '@aws-cdk/aws-lambda';");
-      src.line("import { Construct } from '@aws-cdk/core';");
-      cdkDeps.addV1Dependencies("@aws-cdk/aws-lambda");
-      cdkDeps.addV1Dependencies("@aws-cdk/core");
-    } else {
-      if (options.edgeLambda) {
-        src.line("import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';");
-      }
-      src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
-      // Import determineLatestNodeRuntime if using NODEJS_REGIONAL_LATEST
-      if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
-        src.line(
-          "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';",
-        );
-      }
-      src.line("import { Construct } from 'constructs';");
+    if (options.edgeLambda) {
+      src.line("import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';");
     }
+    src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
+    // Import determineLatestNodeRuntime if using NODEJS_REGIONAL_LATEST
+    if (runtime === LambdaRuntime.NODEJS_REGIONAL_LATEST) {
+      src.line(
+        "import { determineLatestNodeRuntime } from 'aws-cdk-lib/aws-lambda';",
+      );
+    }
+    src.line("import { Construct } from 'constructs';");
 
     src.line();
     src.line("/**");
@@ -381,26 +370,6 @@ export interface LambdaRuntimeOptions {
  * The runtime for the AWS Lambda function.
  */
 export class LambdaRuntime {
-  /**
-   * Node.js 10.x
-   * @deprecated Node.js 10 runtime has been deprecated on Jul 30, 2021
-   */
-  public static readonly NODEJS_10_X = new LambdaRuntime(
-    "nodejs10.x",
-    "node10",
-    { defaultExternals: ["aws-sdk"] },
-  );
-
-  /**
-   * Node.js 12.x
-   * @deprecated Node.js 12 runtime has been deprecated on Mar 31, 2023
-   */
-  public static readonly NODEJS_12_X = new LambdaRuntime(
-    "nodejs12.x",
-    "node12",
-    { defaultExternals: ["aws-sdk"] },
-  );
-
   /**
    * Node.js 14.x
    * @deprecated Node.js 14 runtime has been deprecated on Dec 4, 2023

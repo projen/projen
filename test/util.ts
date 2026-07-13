@@ -1,16 +1,15 @@
-import * as cp from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { Project } from "../src";
+import type { Project } from "../src";
 import { installPackage } from "../src/cli/util";
-import {
-  GitHubProject,
-  GitHubProjectOptions,
-} from "../src/github/github-project";
+import type { GitHubProjectOptions } from "../src/github/github-project";
+import { GitHubProject } from "../src/github/github-project";
+import { renderProjenInitOptions } from "../src/javascript/render-options";
 import * as logging from "../src/logging";
-import { Task } from "../src/task";
-import { exec } from "../src/util";
+import { InitProjectOptionHints } from "../src/option-hints";
+import type { Task } from "../src/task";
+import { git, node } from "../src/util/exec";
 import { directorySnapshot } from "../src/util/synth";
 
 const PROJEN_CLI = require.resolve("../lib/cli/index.js");
@@ -37,30 +36,122 @@ export class TestProject extends GitHubProject {
   }
 }
 
+interface SimulateProjenNewOptions {
+  /**
+   * Project constructor args, as if passed to `projen new`.
+   * @default {}
+   */
+  args?: Record<string, any>;
+
+  /**
+   * Whether `projen new` would have called `project.synth()`.
+   * @default true
+   */
+  synth?: boolean;
+
+  /**
+   * Whether `projen new` would have run post-synthesis steps.
+   * @default true
+   */
+  post?: boolean;
+}
+
+/**
+ * Constructs a project via `ProjectClass`, in-process, so it behaves as if it
+ * had just been created by `projen new` for `fqn` - i.e. `project.initProject`
+ * is populated, and (once `synth()` runs) so are the
+ * `projectCreation()`/`postProjectCreation()` component hooks.
+ *
+ * `fqn` must resolve to a real, registered project type.
+ */
+export function simulateProjenNew<T>(
+  ProjectClass: new (options: any) => T,
+  fqn: string,
+  options: SimulateProjenNewOptions = {},
+): T {
+  return new ProjectClass(
+    renderProjenInitOptions(
+      fqn,
+      options.args ?? {},
+      InitProjectOptionHints.NONE,
+      options.synth ?? true,
+      options.post ?? true,
+    ),
+  );
+}
+
 interface ProjenCLIExecOptions {
+  /**
+   * Capture and return the CLI's output instead of inheriting it.
+   * Useful for asserting on task output (e.g. that a specific task ran).
+   * When set, STDERR is interleaved into the returned string too (see
+   * `captureStderr` on `ExecFileOptions`), since task-runner banners are
+   * logged there.
+   * @default false
+   */
+  capture?: boolean;
+
+  /**
+   * Enable debug logging for additional output.
+   *
+   * @default false
+   */
+  debug?: boolean;
+
+  /**
+   * Additional env variables to be set.
+   *
+   * @default - none
+   */
+  env?: Record<string, string>;
+
+  /**
+   * Pre-install the local projen library package into the workdir.
+   * @default true
+   */
   preInstallProjen?: boolean;
 }
 
-export function execProjenCLI(
+export async function execProjenCLI(
   workdir: string,
   args: string[] = [],
-  env?: Record<string, string>,
-  { preInstallProjen = true }: ProjenCLIExecOptions = {},
+  {
+    capture = false,
+    debug = false,
+    env,
+    preInstallProjen = true,
+  }: ProjenCLIExecOptions = {},
 ) {
-  const command = [process.execPath, PROJEN_CLI, ...args];
+  // enable debug mode
+  if (debug) {
+    env ??= {};
+    env.DEBUG = "true";
+  }
 
   // For "projen new" commands we need to pre-install the current library,
   // to ensure the latest code is used in test cases
   // https://github.com/projen/projen/issues/3410
   if (preInstallProjen && args.includes("new")) {
-    installPackage(
+    await installPackage(
       workdir,
       `file:${path.normalize(path.join(__dirname, ".."))}`,
       true,
     );
   }
 
-  return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir, env });
+  // run the CLI shell-free via node
+  if (capture) {
+    return node.capture([PROJEN_CLI, ...args], {
+      cwd: workdir,
+      env,
+      captureStderr: true,
+    });
+  }
+
+  return node.run([PROJEN_CLI, ...args], {
+    cwd: workdir,
+    env,
+  });
 }
 
 const autoRemove = new Set<string>();
@@ -99,8 +190,8 @@ export function synthSnapshotWithPost(project: Project) {
   }
 }
 
-export function withProjectDir(
-  code: (workdir: string) => void,
+export async function withProjectDir(
+  code: (workdir: string) => void | Promise<void>,
   options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {},
 ) {
   const origDir = process.cwd();
@@ -110,31 +201,36 @@ export function withProjectDir(
     const projectdir = path.join(outdir, "my-project");
     fs.mkdirSync(projectdir);
 
-    const shell = (command: string) =>
-      cp.execSync(command, { cwd: projectdir });
+    const runGit = (args: string[]) => git.run(args, { cwd: projectdir });
     if (options.git ?? true) {
-      shell("git init -b main");
-      shell("git remote add origin git@boom.com:foo/bar.git");
-      shell('git config user.name "My User Name"');
-      shell('git config user.email "my@user.email.com"');
-      shell("git config commit.gpgsign false");
-      shell("git config tag.gpgsign false");
-    } else if (process.env.CI) {
-      // if "git" is set to "false", we still want to make sure global user is defined
-      // (relevant in CI context)
-      shell(
-        'git config user.name || git config --global user.name "My User Name"',
-      );
-      shell(
-        'git config user.email || git config --global user.email "my@user.email.com"',
-      );
+      runGit(["init", "-b", "main"]);
+      runGit(["remote", "add", "origin", "git@boom.com:foo/bar.git"]);
+      runGit(["config", "user.name", "My User Name"]);
+      runGit(["config", "user.email", "my@user.email.com"]);
+      runGit(["config", "commit.gpgsign", "false"]);
+      runGit(["config", "tag.gpgsign", "false"]);
+    } else if (process.env.GITHUB_ACTIONS) {
+      // if "git" is set to "false", we still want to make sure a global user is
+      // defined (relevant in our GITHUB_ACTIONS context): only set the global
+      // value if none is configured yet (`git config <key>` exits non-zero when
+      // unset).
+      try {
+        runGit(["config", "user.name"]);
+      } catch {
+        runGit(["config", "--global", "user.name", "My User Name"]);
+      }
+      try {
+        runGit(["config", "user.email"]);
+      } catch {
+        runGit(["config", "--global", "user.email", "my@user.email.com"]);
+      }
     }
 
     if (options.chdir ?? false) {
       process.chdir(projectdir);
     }
 
-    code(projectdir);
+    await code(projectdir);
   } finally {
     process.chdir(origDir);
     fs.rmSync(outdir, { force: true, recursive: true });
@@ -171,9 +267,5 @@ export function sanitizeOutput(dir: string) {
   fs.writeFileSync(depsPath, JSON.stringify(deps));
 }
 
-export {
-  DirectorySnapshotOptions,
-  SynthOutput,
-  directorySnapshot,
-  synthSnapshot,
-} from "../src/util/synth";
+export type { DirectorySnapshotOptions, SynthOutput } from "../src/util/synth";
+export { directorySnapshot, synthSnapshot } from "../src/util/synth";

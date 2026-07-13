@@ -1,5 +1,6 @@
-import { FileBase, IResolver } from "./file";
-import { Project } from "./project";
+import type { IResolver } from "./file";
+import { FileBase } from "./file";
+import type { Project } from "./project";
 import { normalizePersistedPath } from "./util";
 
 export interface IgnoreFileOptions {

@@ -1,4 +1,4 @@
-import { GitIdentity } from ".";
+import type { GitIdentity } from ".";
 
 /**
  * Name of the artifact produced by the build job. Its contains the entire

@@ -2,21 +2,24 @@ import * as fs from "fs";
 import * as path from "path";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import type { TypescriptConfigOptions } from "../javascript";
 import {
   NodePackageManager,
   RunBundleTask,
   TypeScriptModuleResolution,
-  TypescriptConfigOptions,
 } from "../javascript";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import type { TypeScriptProjectOptions } from "../typescript";
+import { TypeScriptAppProject } from "../typescript";
 import { deepMerge } from "../util";
 import { AutoDiscover } from "./auto-discover";
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import type { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
-import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
+import type { CdkConfigCommonOptions } from "./cdk-config";
+import { CdkConfig } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { IntegRunner } from "./integ-runner";
-import { LambdaFunctionCommonOptions } from "./lambda-function";
+import type { LambdaFunctionCommonOptions } from "./lambda-function";
+import { dirContainsFile } from "../util/fs";
 
 export interface AwsCdkTypeScriptAppOptions
   extends
@@ -242,7 +245,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addDevDeps("ts-node");
     if (options.sampleCode ?? true) {
-      new SampleCode(this, this.cdkDeps.cdkMajorVersion);
+      new SampleCode(this);
     }
 
     new AutoDiscover(this, {
@@ -261,14 +264,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (options.experimentalIntegRunner) {
       new IntegRunner(this);
     }
-  }
-
-  /**
-   * Adds an AWS CDK module dependencies
-   * @param modules The list of modules to depend on
-   */
-  public addCdkDependency(...modules: string[]) {
-    return this.cdkDeps.addV1Dependencies(...modules);
   }
 
   private getCdkApp(options: AwsCdkTypeScriptAppOptions): string {
@@ -335,10 +330,7 @@ function ensureRelativePathPrefix(filePath: string) {
 class SampleCode extends Component {
   private readonly appProject: AwsCdkTypeScriptApp;
 
-  constructor(
-    project: AwsCdkTypeScriptApp,
-    private readonly cdkMajorVersion: number,
-  ) {
+  constructor(project: AwsCdkTypeScriptApp) {
     super(project);
     this.appProject = project;
   }
@@ -346,24 +338,20 @@ class SampleCode extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
-    if (
-      fs.existsSync(srcdir) &&
-      fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
-    ) {
-      return;
-    }
 
-    const srcImports = new Array<string>();
-    if (this.cdkMajorVersion < 2) {
-      srcImports.push(
-        "import { App, Construct, Stack, StackProps } from '@aws-cdk/core';",
-      );
-    } else {
+    // Don't generate the sample app if the user already has TypeScript source
+    // files in the source directory - we don't want to pollute something they
+    // have worked on. We check recursively so that an existing entrypoint
+    // located in a subdirectory (e.g. an `appEntrypoint` of "bin/main.ts") is
+    // also detected. As an extra safeguard, never overwrite an existing
+    // entrypoint file.
+    const entrypointPath = path.join(srcdir, this.appProject.appEntrypoint);
+    if (!dirContainsFile(srcdir, ".ts") && !fs.existsSync(entrypointPath)) {
+      const srcImports = new Array<string>();
       srcImports.push("import { App, Stack, StackProps } from 'aws-cdk-lib';");
       srcImports.push("import { Construct } from 'constructs';");
-    }
 
-    const srcCode = `${srcImports.join("\n")}
+      const srcCode = `${srcImports.join("\n")}
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
@@ -386,32 +374,35 @@ new MyStack(app, '${this.project.name}-dev', { env: devEnv });
 
 app.synth();`;
 
-    fs.mkdirSync(srcdir, { recursive: true });
-    fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
+      // create the entrypoint's directory (which may be a subdirectory of `srcdir`) before writing the file.
+      fs.mkdirSync(path.dirname(entrypointPath), { recursive: true });
+      fs.writeFileSync(entrypointPath, srcCode);
+    }
 
     const testdir = path.join(outdir, this.appProject.testdir);
-    if (
-      fs.existsSync(testdir) &&
-      fs.readdirSync(testdir).filter((x) => x.endsWith(".ts"))
-    ) {
-      return;
-    }
-
-    const testImports = new Array<string>();
-    if (this.cdkMajorVersion < 2) {
-      testImports.push("import { App } from '@aws-cdk/core';");
-      testImports.push("import { Template } from '@aws-cdk/assertions';");
-    } else {
-      testImports.push("import { App } from 'aws-cdk-lib';");
-      testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
-    }
-
     const appEntrypointName = path.basename(
       this.appProject.appEntrypoint,
       ".ts",
     );
-    const testCode = `${testImports.join("\n")}
-import { MyStack } from '../${this.appProject.srcdir}/${appEntrypointName}';
+    const testPath = path.join(testdir, `${appEntrypointName}.test.ts`);
+
+    // import path to the stack, preserving any subdirectory in the entrypoint
+    // (e.g. "bin/main.ts" -> "../src/bin/main") and using posix separators.
+    const entrypointImport = this.appProject.appEntrypoint
+      .replace(/\.ts$/, "")
+      .split(path.sep)
+      .join(path.posix.sep);
+
+    // Likewise, don't generate the sample test if the user already has
+    // TypeScript files in the test directory, and never overwrite an existing
+    // test file.
+    if (!dirContainsFile(testdir, ".ts") && !fs.existsSync(testPath)) {
+      const testImports = new Array<string>();
+      testImports.push("import { App } from 'aws-cdk-lib';");
+      testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
+
+      const testCode = `${testImports.join("\n")}
+import { MyStack } from '../${this.appProject.srcdir}/${entrypointImport}';
 
 test('Snapshot', () => {
   const app = new App();
@@ -421,10 +412,8 @@ test('Snapshot', () => {
   expect(template.toJSON()).toMatchSnapshot();
 });`;
 
-    fs.mkdirSync(testdir, { recursive: true });
-    fs.writeFileSync(
-      path.join(testdir, `${appEntrypointName}.test.ts`),
-      testCode,
-    );
+      fs.mkdirSync(path.dirname(testPath), { recursive: true });
+      fs.writeFileSync(testPath, testCode);
+    }
   }
 }
