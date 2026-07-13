@@ -6043,7 +6043,7 @@ public readonly version: string;
 ```
 
 - *Type:* string
-- *Default:* "^2"
+- *Default:* "^2.5"
 
 Version of Biome to use.
 
