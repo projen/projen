@@ -28,6 +28,7 @@ jobs:
         id: compile
         run: node ./projen.js compile
       - name: Bundle task runner
+        id: bundle_task_runner
         run: node ./projen.js bundle:task-runner
       - name: Package
         id: package
@@ -36,8 +37,10 @@ jobs:
         id: run_node_integration_test
         run: node ./projen.js integ:node
       - name: Run Windows task shell syntax tests
+        id: run_windows_task_shell_syntax_tests
         run: node ./projen.js integ:windows-shell-syntax
       - name: Run eject integration test
+        id: run_eject_integration_test
         run: node ./projen.js integ:eject
     strategy:
       fail-fast: false
