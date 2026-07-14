@@ -98,41 +98,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
-        "deprecated": true,
-        "docs": "Warning: NodeJS only.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssert",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssert",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assert",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the assertions library?",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssertions",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssertions",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assertions",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
@@ -150,46 +115,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Which AWS CDKv1 modules this project requires.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependenciesAsDeps",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependenciesAsDeps",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-dependencies-as-deps",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -204,28 +129,6 @@ exports[`inventory 1`] = `
         "switch": "cdkout",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "AWS CDK modules required for testing.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkTestDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkTestDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-test-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
         },
       },
       {
@@ -624,44 +527,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "featured": true,
@@ -785,26 +650,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
-        },
-      },
-      {
         "default": ""npx projen"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "featured": false,
@@ -910,24 +755,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-json-options",
         "type": {
           "fqn": "projen.ProjenrcJsonOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -1324,41 +1151,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
-        "deprecated": true,
-        "docs": "Warning: NodeJS only.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssert",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssert",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assert",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the assertions library?",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssertions",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssertions",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assertions",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
@@ -1376,46 +1168,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Which AWS CDKv1 modules this project requires.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependenciesAsDeps",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependenciesAsDeps",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-dependencies-as-deps",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -1430,28 +1182,6 @@ exports[`inventory 1`] = `
         "switch": "cdkout",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "AWS CDK modules required for testing.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkTestDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkTestDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-test-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
         },
       },
       {
@@ -1819,44 +1549,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "$PYTHON_MODULE_NAME",
         "docs": "Name of the python package as used in imports and filenames.",
         "featured": false,
@@ -2008,26 +1700,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -2208,24 +1880,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcTsOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -2464,24 +2118,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tests"",
-        "deprecated": true,
-        "docs": "Python sources directory.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "testdir",
-        "optional": true,
-        "parent": "AwsCdkPythonAppOptions",
-        "path": [
-          "testdir",
-        ],
-        "simpleType": "string",
-        "switch": "testdir",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
         "default": "false",
         "docs": "Use uv to manage your project dependencies, virtual environment, and (optional) packaging/publishing.",
         "featured": true,
@@ -2672,6 +2308,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -3055,26 +2713,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -3148,41 +2786,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
-        "deprecated": true,
-        "docs": "Warning: NodeJS only.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssert",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssert",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assert",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the assertions library?",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssertions",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssertions",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assertions",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
@@ -3200,46 +2803,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Which AWS CDKv1 modules this project requires.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependenciesAsDeps",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependenciesAsDeps",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-dependencies-as-deps",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""cdk.out"",
         "docs": "cdk.out directory.",
         "featured": false,
@@ -3254,28 +2817,6 @@ exports[`inventory 1`] = `
         "switch": "cdkout",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "AWS CDK modules required for testing.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkTestDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkTestDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-test-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
         },
       },
       {
@@ -3494,10 +3035,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -3711,7 +3252,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -4258,44 +3799,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -4327,24 +3830,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -4420,28 +3905,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -4491,23 +3954,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -4691,6 +4137,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -4797,26 +4262,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -4978,24 +4423,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -5184,24 +4611,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -5231,24 +4640,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -5304,24 +4695,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -5472,6 +4845,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -5507,29 +4899,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -5675,8 +5044,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -6002,6 +5371,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -6369,26 +5760,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -6481,41 +5852,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
-        "deprecated": true,
-        "docs": "Warning: NodeJS only.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssert",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssert",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assert",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the assertions library?",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkAssertions",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkAssertions",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assertions",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": ""^2"",
         "docs": "Version range of the AWS CDK CLI to depend on.",
         "featured": false,
@@ -6530,68 +5866,6 @@ exports[`inventory 1`] = `
         "switch": "cdk-cli-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "Which AWS CDKv1 modules this project requires.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkDependenciesAsDeps",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkDependenciesAsDeps",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-dependencies-as-deps",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "AWS CDK modules required for testing.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "cdkTestDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": [
-          "cdkTestDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-test-dependencies",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
         },
       },
       {
@@ -6839,10 +6113,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -7056,7 +6330,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -7120,24 +6394,6 @@ exports[`inventory 1`] = `
         "switch": "docs-directory",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiDotNetTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "dotnet",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "dotnet",
-        ],
-        "simpleType": "JsiiDotNetTarget",
-        "switch": "dotnet",
-        "type": {
-          "fqn": "projen.cdk.JsiiDotNetTarget",
         },
       },
       {
@@ -7465,7 +6721,7 @@ exports[`inventory 1`] = `
         "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -7658,44 +6914,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -7727,24 +6945,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -7820,28 +7020,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -7891,23 +7069,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -8091,6 +7252,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -8197,26 +7377,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -8378,24 +7538,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -8565,24 +7707,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiPythonTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "python",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "python",
-        ],
-        "simpleType": "JsiiPythonTarget",
-        "switch": "python",
-        "type": {
-          "fqn": "projen.cdk.JsiiPythonTarget",
-        },
-      },
-      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -8678,24 +7802,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -8725,24 +7831,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -8798,24 +7886,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -8980,6 +8050,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -9015,29 +8104,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -9183,8 +8249,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -9232,6 +8298,25 @@ exports[`inventory 1`] = `
         "switch": "typescript-version",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
+        "type": {
+          "fqn": "projen.cdk.ValidateTsconfig",
         },
       },
       {
@@ -10022,44 +9107,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "$PYTHON_MODULE_NAME",
         "docs": "Name of the python package as used in imports and filenames.",
         "featured": false,
@@ -10211,26 +9258,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -10411,24 +9438,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcTsOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -10797,6 +9806,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""main.ts"",
         "docs": "The CDK8s app's entrypoint (relative to the source directory, which is "src" by default).",
         "featured": false,
@@ -11141,26 +10172,6 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-options",
         "type": {
           "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-      },
-      {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
         },
       },
       {
@@ -11554,10 +10565,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -11771,7 +10782,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -12246,44 +11257,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -12315,24 +11288,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -12408,28 +11363,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -12479,23 +11412,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -12679,6 +11595,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -12785,26 +11720,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -12966,24 +11881,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -13172,24 +12069,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -13219,24 +12098,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -13292,24 +12153,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -13441,6 +12284,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -13476,29 +12338,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -13627,8 +12466,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -13910,6 +12749,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -14274,26 +13135,6 @@ exports[`inventory 1`] = `
         "switch": "build-workflow-options",
         "type": {
           "fqn": "projen.javascript.BuildWorkflowOptions",
-        },
-      },
-      {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
         },
       },
       {
@@ -14667,10 +13508,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -14884,7 +13725,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -14948,24 +13789,6 @@ exports[`inventory 1`] = `
         "switch": "docs-directory",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiDotNetTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "dotnet",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "dotnet",
-        ],
-        "simpleType": "JsiiDotNetTarget",
-        "switch": "dotnet",
-        "type": {
-          "fqn": "projen.cdk.JsiiDotNetTarget",
         },
       },
       {
@@ -15259,7 +14082,7 @@ exports[`inventory 1`] = `
         "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -15399,44 +14222,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -15468,24 +14253,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -15561,28 +14328,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -15632,23 +14377,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -15832,6 +14560,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -15938,26 +14685,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -16119,24 +14846,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -16306,24 +15015,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiPythonTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "python",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "python",
-        ],
-        "simpleType": "JsiiPythonTarget",
-        "switch": "python",
-        "type": {
-          "fqn": "projen.cdk.JsiiPythonTarget",
-        },
-      },
-      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -16419,24 +15110,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -16466,24 +15139,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -16539,24 +15194,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -16721,6 +15358,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -16756,29 +15412,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -16907,8 +15540,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -16956,6 +15589,25 @@ exports[`inventory 1`] = `
         "switch": "typescript-version",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
+        "type": {
+          "fqn": "projen.cdk.ValidateTsconfig",
         },
       },
       {
@@ -17190,6 +15842,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -17557,26 +16231,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -17896,10 +16550,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -18113,7 +16767,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -18177,24 +16831,6 @@ exports[`inventory 1`] = `
         "switch": "docs-directory",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiDotNetTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "dotnet",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "dotnet",
-        ],
-        "simpleType": "JsiiDotNetTarget",
-        "switch": "dotnet",
-        "type": {
-          "fqn": "projen.cdk.JsiiDotNetTarget",
         },
       },
       {
@@ -18471,7 +17107,7 @@ exports[`inventory 1`] = `
         "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -18611,44 +17247,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -18680,24 +17278,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -18773,28 +17353,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -18844,23 +17402,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -19044,6 +17585,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -19150,26 +17710,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -19331,24 +17871,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -19518,24 +18040,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiPythonTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "python",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "python",
-        ],
-        "simpleType": "JsiiPythonTarget",
-        "switch": "python",
-        "type": {
-          "fqn": "projen.cdk.JsiiPythonTarget",
-        },
-      },
-      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -19631,24 +18135,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -19678,24 +18164,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -19751,24 +18219,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -19933,6 +18383,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -19968,29 +18437,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -20119,8 +18565,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -20168,6 +18614,25 @@ exports[`inventory 1`] = `
         "switch": "typescript-version",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
+        "type": {
+          "fqn": "projen.cdk.ValidateTsconfig",
         },
       },
       {
@@ -20729,44 +19194,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "featured": true,
@@ -20890,26 +19317,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
-        },
-      },
-      {
         "default": ""npx projen"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "featured": false,
@@ -21015,24 +19422,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-json-options",
         "type": {
           "fqn": "projen.ProjenrcJsonOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -21274,6 +19663,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -21641,26 +20052,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -21927,10 +20318,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -22144,7 +20535,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -22208,24 +20599,6 @@ exports[`inventory 1`] = `
         "switch": "docs-directory",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiDotNetTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "dotnet",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "dotnet",
-        ],
-        "simpleType": "JsiiDotNetTarget",
-        "switch": "dotnet",
-        "type": {
-          "fqn": "projen.cdk.JsiiDotNetTarget",
         },
       },
       {
@@ -22502,7 +20875,7 @@ exports[`inventory 1`] = `
         "default": ""~5.9.0"",
         "docs": "Version of the jsii compiler to use.",
         "featured": false,
-        "initialValue": ""~5.9.0"",
+        "initialValue": ""~6.0.0"",
         "jsonLike": true,
         "name": "jsiiVersion",
         "optional": true,
@@ -22642,44 +21015,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -22711,24 +21046,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -22804,28 +21121,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -22875,23 +21170,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -23075,6 +21353,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -23181,26 +21478,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -23362,24 +21639,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -23549,24 +21808,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "featured": false,
-        "fqn": "projen.cdk.JsiiPythonTarget",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "python",
-        "optional": true,
-        "parent": "JsiiProjectOptions",
-        "path": [
-          "python",
-        ],
-        "simpleType": "JsiiPythonTarget",
-        "switch": "python",
-        "type": {
-          "fqn": "projen.cdk.JsiiPythonTarget",
-        },
-      },
-      {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -23662,24 +21903,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -23709,24 +21932,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -23782,24 +21987,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -23964,6 +22151,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -23999,29 +22205,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -24150,8 +22333,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -24199,6 +22382,25 @@ exports[`inventory 1`] = `
         "switch": "typescript-version",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "ValidateTsconfig.STRICT",
+        "docs": "Level of tsconfig validation jsii should perform on the user-provided tsconfig.",
+        "featured": false,
+        "fqn": "projen.cdk.ValidateTsconfig",
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "validateTsconfig",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": [
+          "validateTsconfig",
+        ],
+        "simpleType": "ValidateTsconfig",
+        "switch": "validate-tsconfig",
+        "type": {
+          "fqn": "projen.cdk.ValidateTsconfig",
         },
       },
       {
@@ -24433,6 +22635,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -24783,26 +23007,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -25018,10 +23222,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -25521,44 +23725,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -25590,24 +23756,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -25683,28 +23831,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -25754,23 +23880,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -25954,6 +24063,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -26060,26 +24188,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -26205,24 +24313,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-js-options",
         "type": {
           "fqn": "projen.javascript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -26411,24 +24501,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -26458,24 +24530,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -26531,24 +24585,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -26715,29 +24751,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -27062,6 +25075,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -27409,26 +25444,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -27644,10 +25659,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -27861,7 +25876,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -28285,44 +26300,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -28354,24 +26331,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -28447,28 +26406,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -28518,23 +26455,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -28718,6 +26638,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -28824,26 +26763,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -29005,24 +26924,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -29211,24 +27112,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -29258,24 +27141,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -29331,24 +27196,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -29480,6 +27327,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -29515,29 +27381,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -29683,8 +27526,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -29966,6 +27809,28 @@ exports[`inventory 1`] = `
         "switch": "allow-library-dependencies",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {
@@ -30299,26 +28164,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -30534,10 +28379,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -31037,44 +28882,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -31106,24 +28913,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -31199,28 +28988,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -31270,23 +29037,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -31470,6 +29220,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -31576,26 +29345,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -31721,24 +29470,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-js-options",
         "type": {
           "fqn": "projen.javascript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -31927,24 +29658,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -31974,24 +29687,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -32047,24 +29742,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -32214,29 +29891,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -33094,44 +30748,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "$PYTHON_MODULE_NAME",
         "docs": "Name of the python package as used in imports and filenames.",
         "featured": false,
@@ -33283,26 +30899,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -33483,24 +31079,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcTsOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -33869,6 +31447,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -34199,26 +31799,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -34434,10 +32014,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -34937,44 +32517,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -35006,24 +32548,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -35099,28 +32623,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -35170,23 +32672,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -35370,6 +32855,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -35476,26 +32980,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -35621,24 +33105,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-js-options",
         "type": {
           "fqn": "projen.javascript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -35827,24 +33293,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -35874,24 +33322,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -35947,24 +33377,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -36153,29 +33565,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -36483,6 +33872,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -36813,26 +34224,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -37048,10 +34439,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -37265,7 +34656,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -37689,44 +35080,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -37758,24 +35111,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -37851,28 +35186,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -37922,23 +35235,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -38122,6 +35418,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -38228,26 +35543,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -38409,24 +35704,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -38615,24 +35892,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -38662,24 +35921,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -38735,24 +35976,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -38906,6 +36129,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -38941,29 +36183,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -39092,8 +36311,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -39378,6 +36597,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -39708,26 +36949,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -39943,10 +37164,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -40160,7 +37381,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -40584,44 +37805,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -40653,24 +37836,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -40746,28 +37911,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -40817,23 +37960,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -41017,6 +38143,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -41123,26 +38268,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -41304,24 +38429,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -41510,24 +38617,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -41557,24 +38646,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -41630,24 +38701,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -41779,6 +38832,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -41814,29 +38886,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -41965,8 +39014,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
@@ -42251,6 +39300,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all install scripts are allowed to run (package manager default)",
+        "docs": "List of dependency (package) names that are allowed to run lifecycle install scripts (\`preinstall\`, \`install\`, \`postinstall\`, \`prepare\`) during dependency installation.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "allowScripts",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "allowScripts",
+        ],
+        "simpleType": "unknown",
+        "switch": "allow-scripts",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": ""dist"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -42581,26 +39652,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""{ pullRequest: {}, workflowDispatch: {} }"",
-        "deprecated": true,
-        "docs": "Build workflow triggers.",
-        "featured": false,
-        "fqn": "projen.github.workflows.Triggers",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "buildWorkflowTriggers",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "buildWorkflowTriggers",
-        ],
-        "simpleType": "Triggers",
-        "switch": "build-workflow-triggers",
-        "type": {
-          "fqn": "projen.github.workflows.Triggers",
-        },
-      },
-      {
         "default": "- A recent version of "commit-and-tag-version"",
         "docs": "The \`commit-and-tag-version\` compatible package used to bump the package version, as a dependency string.",
         "featured": false,
@@ -42816,10 +39867,10 @@ exports[`inventory 1`] = `
       {
         "default": ""main"",
         "docs": "The name of the main release branch.",
-        "featured": false,
-        "initialValue": ""main"",
+        "featured": true,
         "jsonLike": true,
         "name": "defaultReleaseBranch",
+        "optional": true,
         "parent": "NodeProjectOptions",
         "path": [
           "defaultReleaseBranch",
@@ -43033,7 +40084,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "false",
-        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "docs": "Do not generate a development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "disableTsconfigDev",
@@ -43457,44 +40508,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Whether mergify should be enabled on this repository or not.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mergify",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergify",
-        ],
-        "simpleType": "boolean",
-        "switch": "mergify",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
-        "default": "- default options",
-        "deprecated": true,
-        "docs": "Options for mergify.",
-        "featured": false,
-        "fqn": "projen.github.MergifyOptions",
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "mergifyOptions",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "mergifyOptions",
-        ],
-        "simpleType": "MergifyOptions",
-        "switch": "mergify-options",
-        "type": {
-          "fqn": "projen.github.MergifyOptions",
-        },
-      },
-      {
         "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
@@ -43526,24 +40539,6 @@ exports[`inventory 1`] = `
         "switch": "min-node-version",
         "type": {
           "primitive": "string",
-        },
-      },
-      {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "mutableBuild",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "mutableBuild",
-        ],
-        "simpleType": "boolean",
-        "switch": "mutable-build",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -43619,28 +40614,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "deprecated": true,
-        "docs": "Additional entries to .npmignore.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmignore",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "npmignore",
-        ],
-        "simpleType": "unknown",
-        "switch": "npmignore",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-      },
-      {
         "default": "true",
         "docs": "Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.",
         "featured": false,
@@ -43690,23 +40663,6 @@ exports[`inventory 1`] = `
         "switch": "npm-provenance",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "deprecated": true,
-        "docs": "The host name of the npm registry to publish to.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "npmRegistry",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "npmRegistry",
-        ],
-        "simpleType": "string",
-        "switch": "npm-registry",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -43890,6 +40846,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- all default options",
+        "docs": "Options for pnpm.",
+        "featured": false,
+        "fqn": "projen.javascript.PnpmOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pnpmOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "pnpmOptions",
+        ],
+        "simpleType": "PnpmOptions",
+        "switch": "pnpm-options",
+        "type": {
+          "fqn": "projen.javascript.PnpmOptions",
+        },
+      },
+      {
         "default": ""10.33.0"",
         "docs": "The version of PNPM to use if using PNPM as a package manager.",
         "featured": false,
@@ -43996,26 +40971,6 @@ exports[`inventory 1`] = `
         "switch": "project-tree",
         "type": {
           "primitive": "boolean",
-        },
-      },
-      {
-        "default": "ProjectType.UNKNOWN",
-        "deprecated": true,
-        "docs": "Which type of project this is (library/app).",
-        "featured": false,
-        "fqn": "projen.ProjectType",
-        "jsonLike": true,
-        "kind": "enum",
-        "name": "projectType",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projectType",
-        ],
-        "simpleType": "ProjectType",
-        "switch": "project-type",
-        "type": {
-          "fqn": "projen.ProjectType",
         },
       },
       {
@@ -44177,24 +41132,6 @@ exports[`inventory 1`] = `
         "switch": "projenrc-ts-options",
         "type": {
           "fqn": "projen.typescript.ProjenrcOptions",
-        },
-      },
-      {
-        "default": ""PROJEN_GITHUB_TOKEN"",
-        "deprecated": true,
-        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "projenTokenSecret",
-        "optional": true,
-        "parent": "GitHubProjectOptions",
-        "path": [
-          "projenTokenSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-token-secret",
-        "type": {
-          "primitive": "string",
         },
       },
       {
@@ -44383,24 +41320,6 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": "true",
-        "deprecated": true,
-        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseEveryCommit",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseEveryCommit",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-every-commit",
-        "type": {
-          "primitive": "boolean",
-        },
-      },
-      {
         "default": "false",
         "docs": "Create a github issue on every failed publishing task.",
         "featured": false,
@@ -44430,24 +41349,6 @@ exports[`inventory 1`] = `
         ],
         "simpleType": "string",
         "switch": "release-failure-issue-label",
-        "type": {
-          "primitive": "string",
-        },
-      },
-      {
-        "default": "- no scheduled releases",
-        "deprecated": true,
-        "docs": "CRON schedule to trigger new releases.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseSchedule",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": [
-          "releaseSchedule",
-        ],
-        "simpleType": "string",
-        "switch": "release-schedule",
         "type": {
           "primitive": "string",
         },
@@ -44503,24 +41404,6 @@ exports[`inventory 1`] = `
         "switch": "release-trigger",
         "type": {
           "fqn": "projen.release.ReleaseTrigger",
-        },
-      },
-      {
-        "default": "- true if not a subproject",
-        "deprecated": true,
-        "docs": "DEPRECATED: renamed to \`release\`.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "releaseWorkflow",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": [
-          "releaseWorkflow",
-        ],
-        "simpleType": "boolean",
-        "switch": "release-workflow",
-        "type": {
-          "primitive": "boolean",
         },
       },
       {
@@ -44652,6 +41535,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "TypeScriptRunner.tsNode()",
+        "docs": "The TypeScript runner to use for executing TypeScript files.",
+        "featured": false,
+        "fqn": "projen.typescript.TypeScriptRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "runner",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "runner",
+        ],
+        "simpleType": "TypeScriptRunner",
+        "switch": "runner",
+        "type": {
+          "fqn": "projen.typescript.TypeScriptRunner",
+        },
+      },
+      {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "featured": false,
@@ -44687,29 +41589,6 @@ exports[`inventory 1`] = `
               "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
-          },
-        },
-      },
-      {
-        "default": "{}",
-        "deprecated": true,
-        "docs": "npm scripts to include.",
-        "featured": false,
-        "jsonLike": true,
-        "name": "scripts",
-        "optional": true,
-        "parent": "NodePackageOptions",
-        "path": [
-          "scripts",
-        ],
-        "simpleType": "unknown",
-        "switch": "scripts",
-        "type": {
-          "collection": {
-            "elementtype": {
-              "primitive": "string",
-            },
-            "kind": "map",
           },
         },
       },
@@ -44838,8 +41717,8 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""tsconfig.dev.json"",
-        "docs": "The name of the development tsconfig.json file.",
+        "default": "- "{testdir}/tsconfig.json"",
+        "docs": "The name (and path) of the development tsconfig file.",
         "featured": false,
         "jsonLike": true,
         "name": "tsconfigDevFile",
