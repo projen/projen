@@ -97,7 +97,7 @@ const project = new TypeScriptProject({
     "esbuild",
     "json2jsii",
     // Needed to generate biome config
-    "@biomejs/biome@^2",
+    "@biomejs/biome@^2.5",
     // used to get current node versions in tests
     "@jsii/check-node",
     // used to get CDK V2 feature flags

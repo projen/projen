@@ -44,7 +44,7 @@ describe("biome", () => {
 
       const config = snapshotBiomeConfig(project);
       expect(config.linter?.enabled).toBeTruthy();
-      expect(config.linter?.rules?.recommended).toBeTruthy();
+      expect(config.linter?.rules?.preset).toBe("recommended");
     });
 
     it("formatter enabled", () => {
@@ -69,7 +69,7 @@ describe("biome", () => {
 
       const config = snapshotBiomeConfig(project);
       expect(config.assist?.enabled).toBeTruthy();
-      expect(config.assist?.actions?.recommended).toBeTruthy();
+      expect(config.assist?.actions?.preset).toBe("recommended");
     });
 
     it("custom overrides", () => {
@@ -270,7 +270,7 @@ describe("Configuration", () => {
 
       expect(mergedConfig.linter?.rules).toBeDefined();
       expect(mergedConfig.linter?.rules).toMatchObject({
-        recommended: true,
+        preset: "recommended",
         security: {
           noBlankTarget: "error",
         },
@@ -331,7 +331,7 @@ describe("Configuration", () => {
 
       expect(mergedConfig.linter?.rules).toBeDefined();
       expect(mergedConfig.linter?.rules).toEqual({
-        recommended: true,
+        preset: "recommended",
         complexity: { "another-rule": "warn" },
         nursery: { "standard-rule": "error", "test-rule": "warn" },
       });
