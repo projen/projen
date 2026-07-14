@@ -327,6 +327,15 @@ describe("command substitution", () => {
       new TaskRuntime(p.outdir).runTask("subst"),
     ).resolves.toBeUndefined();
   });
+
+  test("surfaces an error for syntax the built-in shell cannot run", async () => {
+    const p = new TestProject();
+    // dax rejects async commands - the built-in shell should propagate the error.
+    p.addTask("boom", { exec: "echo hi &" });
+    p.synth();
+
+    await expect(new TaskRuntime(p.outdir).runTask("boom")).rejects.toThrow();
+  });
 });
 
 describe("task condition", () => {
@@ -401,116 +410,129 @@ describe("step condition", () => {
 });
 
 describe("outputEnv", () => {
-  test("captures a step's stdout into an env var for later steps", () => {
+  // These run the runtime in-process so the capture/stream code paths in
+  // `task-runtime.ts` are exercised directly (the `executeTask` helper spawns
+  // the CLI as a subprocess, which coverage cannot instrument).
+
+  test("captures a step's stdout into an env var for later steps", async () => {
     // GIVEN
     const p = new TestProject();
     const t = p.addTask("cap");
+    t.exec("echo captured-value", { outputEnv: "MY_OUT" });
+    t.exec(
+      `node -e "require('fs').writeFileSync('result.txt', process.env.MY_OUT)"`,
+    );
+    p.synth();
 
     // WHEN
-    t.addSteps({ exec: "echo captured-value", outputEnv: "MY_OUT" });
-    t.exec(`node -e "console.log('got:' + process.env.MY_OUT)"`);
+    await new TaskRuntime(p.outdir).runTask("cap");
 
-    // THEN (the captured step still streams live, then the consumer reads it)
-    expect(executeTask(p, "cap")).toEqual([
+    // THEN
+    expect(readFileSync(join(p.outdir, "result.txt"), "utf8")).toBe(
       "captured-value",
-      "got:captured-value",
-    ]);
+    );
   });
 
-  test("a skipped step leaves the var unset", () => {
+  test("a skipped step leaves the var unset", async () => {
     // GIVEN
     const p = new TestProject();
     const t = p.addTask("cap");
-
-    // WHEN
     t.addSteps({
       exec: "echo should-not-run",
       outputEnv: "MY_OUT",
       condition: 'node -e "process.exit(1)"',
     });
     t.exec(
-      `node -e "console.log('val:[' + (process.env.MY_OUT ?? 'UNSET') + ']')"`,
+      `node -e "require('fs').writeFileSync('r.txt', process.env.MY_OUT ?? 'UNSET')"`,
     );
-
-    // THEN
-    expect(executeTask(p, "cap")).toEqual(["val:[UNSET]"]);
-  });
-
-  test("captures a spawned task's stdout", () => {
-    // GIVEN
-    const p = new TestProject();
-    p.addTask("child", { exec: "echo child-output" });
-    const parent = p.addTask("parent");
+    p.synth();
 
     // WHEN
-    parent.addSteps({ spawn: "child", outputEnv: "CHILD_OUT" });
-    parent.exec(
-      `node -e "console.log('parent-sees:' + process.env.CHILD_OUT)"`,
-    );
+    await new TaskRuntime(p.outdir).runTask("cap");
 
     // THEN
-    expect(executeTask(p, "parent")).toEqual([
-      "child-output",
-      "parent-sees:child-output",
-    ]);
+    expect(readFileSync(join(p.outdir, "r.txt"), "utf8")).toBe("UNSET");
   });
 
-  test("captures a multi-step spawned task's output in order", () => {
+  test("captures a spawned task's aggregate stdout", async () => {
     // GIVEN
     const p = new TestProject();
     const child = p.addTask("child");
     child.exec("echo line1");
     child.exec("echo line2");
     const parent = p.addTask("parent");
+    parent.spawn(child, { outputEnv: "CHILD_OUT" });
+    p.synth();
 
-    // WHEN
-    parent.addSteps({ spawn: "child", outputEnv: "CHILD_OUT" });
-    parent.exec(`node -e "console.log(JSON.stringify(process.env.CHILD_OUT))"`);
+    // WHEN capturing the parent's output, the spawned task's steps are
+    // aggregated in order.
+    const out = await new TaskRuntime(p.outdir).runTask(
+      "parent",
+      [],
+      [],
+      {},
+      { captureOutput: true },
+    );
 
     // THEN
-    expect(executeTask(p, "parent")).toEqual([
-      "line1",
-      "line2",
-      JSON.stringify("line1\nline2"),
-    ]);
+    expect(out).toBe("line1\nline2");
   });
 
-  test("nested spawn capture is transitive", () => {
+  test("nested spawn capture is transitive", async () => {
     // GIVEN
     const p = new TestProject();
-    p.addTask("grandchild", { exec: "echo grandchild-out" });
+    const grandchild = p.addTask("grandchild", { exec: "echo gc-out" });
     const child = p.addTask("child");
-    child.addSteps({ spawn: "grandchild" });
+    child.spawn(grandchild);
     const parent = p.addTask("parent");
+    parent.spawn(child, { outputEnv: "GC" });
+    p.synth();
 
-    // WHEN
-    parent.addSteps({ spawn: "child", outputEnv: "GC" });
-    parent.exec(`node -e "console.log('got:' + process.env.GC)"`);
-
-    // THEN
-    expect(executeTask(p, "parent")).toEqual([
-      "grandchild-out",
-      "got:grandchild-out",
-    ]);
+    // WHEN / THEN
+    await expect(
+      new TaskRuntime(p.outdir).runTask(
+        "parent",
+        [],
+        [],
+        {},
+        {
+          captureOutput: true,
+        },
+      ),
+    ).resolves.toBe("gc-out");
   });
 
-  test("a captured var is propagated into a spawned subtask's env", () => {
+  test("a captured var is propagated into a spawned subtask's env", async () => {
     // GIVEN
     const p = new TestProject();
-    p.addTask("child", {
-      exec: `node -e "console.log('child-got:' + process.env.CAP)"`,
+    const child = p.addTask("child", {
+      exec: `node -e "require('fs').writeFileSync('c.txt', process.env.CAP)"`,
     });
     const parent = p.addTask("parent");
+    parent.exec("echo the-value", { outputEnv: "CAP" });
+    parent.spawn(child);
+    p.synth();
 
     // WHEN
-    parent.addSteps({ exec: "echo the-value", outputEnv: "CAP" });
-    parent.addSteps({ spawn: "child" });
+    await new TaskRuntime(p.outdir).runTask("parent");
 
     // THEN
-    expect(executeTask(p, "parent")).toEqual([
-      "the-value",
-      "child-got:the-value",
-    ]);
+    expect(readFileSync(join(p.outdir, "c.txt"), "utf8")).toBe("the-value");
+  });
+
+  test("captures output when running through the system shell", async () => {
+    // GIVEN
+    const p = new TestProject();
+    const t = p.addTask("cap-sys", { shell: TaskShell.system() });
+    t.exec("echo sys-value", { outputEnv: "SV" });
+    t.exec(`node -e "require('fs').writeFileSync('s.txt', process.env.SV)"`);
+    p.synth();
+
+    // WHEN
+    await new TaskRuntime(p.outdir).runTask("cap-sys");
+
+    // THEN
+    expect(readFileSync(join(p.outdir, "s.txt"), "utf8")).toBe("sys-value");
   });
 });
 
