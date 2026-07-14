@@ -121,16 +121,16 @@ Next, we'll set up some task scripts to make it easier to run our Angular applic
 the `project.synth()` line, add the following:
 
 ```ts
-project.addTask("ng", { exec: "ng", receiveArgs: true });
-project.addTask("start", { exec: "ng serve", receiveArgs: true });
+project.addTask("ng", { execArgs: ["ng"], receiveArgs: true });
+project.addTask("start", { execArgs: ["ng", "serve"], receiveArgs: true });
 // projen already has build, but it calls compile, which is empty
 project.tasks.tryFind("compile")?.reset("ng build", { receiveArgs: true });
 project.addTask("ng:watch", {
-  exec: "ng build --watch --configuration development",
+  execArgs: ["ng", "build", "--watch", "--configuration", "development"],
   receiveArgs: true,
 });
 project.tasks.tryFind("test")?.reset("ng test", { receiveArgs: true });
-project.addTask("e2e", { exec: "ng e2e", receiveArgs: true });
+project.addTask("e2e", { execArgs: ["ng", "se2e"], receiveArgs: true });
 
 project.synth();
 ```
@@ -140,7 +140,7 @@ Let's go over the two types of tasks we've added here:
 ### project.addTask()
 
 When you're adding an entirely new task, you'll use `project.addTask()`. This method takes two
-arguments: the name of the task, and an object with the task's configuration. The `exec` property
+arguments: the name of the task, and an object with the task's configuration. The `execArgs` property
 is the command that will be run when you run the task. The `receiveArgs` property tells projen
 whether to pass any arguments you provide to the task to the command. For example, if you run
 `pnpm projen start --port 3000`, projen will run `ng serve --port 3000`.
@@ -149,7 +149,7 @@ whether to pass any arguments you provide to the task to the command. For exampl
 
 When you're modifying an existing task, you'll use `project.tasks.tryFind().reset()`. Generally,
 you'll want to do this when projen already has the task you're looking for defined in the
-`.projen/tasks.json` file. If the task doesn't have an `exec` parameter, you can simply reset it
+`.projen/tasks.json` file. If the task doesn't have an `exec`/`execArgs` parameter, you can simply reset it
 as we've done here.
 If it does, which is the case with `build`, it becomes more complicated. [Read the docs on
 tasks](/docs/concepts/tasks/) for more information on those cases.

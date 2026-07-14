@@ -229,6 +229,7 @@ cython_debug/
       "PATH": "$(echo $(poetry env info -p)/bin:$PATH)",
       "VIRTUAL_ENV": "$(poetry env info -p || poetry run poetry env info -p)",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -263,7 +264,10 @@ cython_debug/
         "name": "default",
         "steps": [
           {
-            "exec": "python .projenrc.py",
+            "execArgs": [
+              "python",
+              ".projenrc.py",
+            ],
           },
         ],
       },
@@ -284,7 +288,10 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "poetry update",
+            "execArgs": [
+              "poetry",
+              "update",
+            ],
           },
         ],
       },
@@ -302,7 +309,10 @@ cython_debug/
         "name": "package",
         "steps": [
           {
-            "exec": "poetry build",
+            "execArgs": [
+              "poetry",
+              "build",
+            ],
           },
         ],
       },
@@ -319,7 +329,10 @@ cython_debug/
         "name": "publish",
         "steps": [
           {
-            "exec": "poetry publish",
+            "execArgs": [
+              "poetry",
+              "publish",
+            ],
           },
         ],
       },
@@ -328,7 +341,12 @@ cython_debug/
         "name": "publish:test",
         "steps": [
           {
-            "exec": "poetry publish -r testpypi",
+            "execArgs": [
+              "poetry",
+              "publish",
+              "-r",
+              "testpypi",
+            ],
           },
         ],
       },

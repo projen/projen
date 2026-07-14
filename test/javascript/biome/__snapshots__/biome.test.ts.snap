@@ -5,7 +5,7 @@ exports[`Configuration should match snapshot without overrides with all features
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -23,7 +23,7 @@ exports[`Configuration should match snapshot without overrides with all features
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -39,7 +39,7 @@ exports[`Configuration should match snapshot without overrides with all features
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {
@@ -55,7 +55,7 @@ exports[`Configuration should match snapshot without overrides with assist 1`] =
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -73,7 +73,7 @@ exports[`Configuration should match snapshot without overrides with assist 1`] =
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -89,7 +89,7 @@ exports[`Configuration should match snapshot without overrides with assist 1`] =
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {
@@ -105,7 +105,7 @@ exports[`Configuration should match snapshot without overrides with formatter 1`
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -123,7 +123,7 @@ exports[`Configuration should match snapshot without overrides with formatter 1`
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -139,7 +139,7 @@ exports[`Configuration should match snapshot without overrides with formatter 1`
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {
@@ -155,7 +155,7 @@ exports[`Configuration should match snapshot without overrides with linter 1`] =
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -173,7 +173,7 @@ exports[`Configuration should match snapshot without overrides with linter 1`] =
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -189,7 +189,7 @@ exports[`Configuration should match snapshot without overrides with linter 1`] =
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {
@@ -205,7 +205,7 @@ exports[`Configuration should match snapshot without overrides without options 1
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -223,7 +223,7 @@ exports[`Configuration should match snapshot without overrides without options 1
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -239,7 +239,7 @@ exports[`Configuration should match snapshot without overrides without options 1
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {
@@ -255,7 +255,7 @@ exports[`biome with default configuration generates correct snapshot for biome.j
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
-      "recommended": true,
+      "preset": "recommended",
     },
     "enabled": true,
   },
@@ -276,7 +276,8 @@ exports[`biome with default configuration generates correct snapshot for biome.j
       "!.projen/deps.json",
       "!.projen/files.json",
       "!.projen/tasks.json",
-      "!tsconfig.dev.json",
+      "!projenrc/tsconfig.json",
+      "!test/tsconfig.json",
       "!tsconfig.json",
     ],
   },
@@ -292,7 +293,7 @@ exports[`biome with default configuration generates correct snapshot for biome.j
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
     },
   },
   "vcs": {

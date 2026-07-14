@@ -1,6 +1,5 @@
 import { join } from "path/posix";
 import type { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS_V1 } from "./internal";
 import type { IntegrationTestBaseOptions } from "../cdk";
 import { IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
@@ -85,32 +84,20 @@ export class IntegrationTest extends IntegrationTestBase {
       opts.push("--no-path-metadata");
     }
 
-    if (options.cdkDeps.cdkMajorVersion === 1) {
-      // add all feature flags
-      const features = {
-        ...FEATURE_FLAGS_V1,
-        "@aws-cdk/core:newStyleStackSynthesis": true, // simplifies asset coordinates in synth output
-      };
-
-      for (const feature of Object.keys(features)) {
-        opts.push(`--context ${feature}=true`);
-      }
-    }
-
     const cdkopts = opts.join(" ");
 
     // Determine which stacks to deploy
     const stacks = options.stacks ?? ["**"];
     const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
 
-    this.deployTask.exec(`rm -fr ${deployDir}`);
+    this.deployTask.execArgs(["rm", "-fr", deployDir]);
     this.deployTask.exec(
       `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deployDir}`,
     );
 
     // if deployment was successful, copy the deploy dir to the expected dir
-    this.deployTask.exec(`rm -fr ${this.snapshotDir}`);
-    this.deployTask.exec(`mv ${deployDir} ${this.snapshotDir}`);
+    this.deployTask.execArgs(["rm", "-fr", this.snapshotDir]);
+    this.deployTask.execArgs(["mv", deployDir, this.snapshotDir]);
 
     this.watchTask = project.addTask(`integ:${this.name}:watch`, {
       description: `watch integration test '${this.name}' (without updating snapshots)`,
@@ -134,11 +121,13 @@ export class IntegrationTest extends IntegrationTestBase {
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
     this.assertTask.exec(`cdk synth ${cdkopts} -o ${assertDir} > /dev/null`);
-    this.assertTask.exec(
-      `diff -r ${exclude.map((x) => `-x ${x}`).join(" ")} ${
-        this.snapshotDir
-      }/ ${assertDir}/`,
-    );
+    this.assertTask.execArgs([
+      "diff",
+      "-r",
+      ...exclude.flatMap((x) => ["-x", x]),
+      `${this.snapshotDir}/`,
+      `${assertDir}/`,
+    ]);
 
     // do not commit all files we are excluding
     for (const x of exclude) {

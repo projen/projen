@@ -1,16 +1,17 @@
 import * as fs from "fs";
 import * as path from "path";
 import { Component } from "./component";
-import { JsonFile } from "./json";
+import type { IResolver } from "./file";
 import { warn } from "./logging";
 import type { Project } from "./project";
 import type { TaskOptions } from "./task";
 import { Task } from "./task";
 import type { TasksManifest, TaskSpec } from "./task-model";
-import { TaskRuntime } from "./task-runtime";
+import { ProjenTaskRunner, type ITaskRunner } from "./task-runner";
+import type { TaskShell } from "./task-shell";
 
 /**
- * Defines project tasks.
+ * Defines and manages project tasks.
  *
  * Tasks extend the projen CLI by adding subcommands to it. Task definitions are
  * synthesized into `.projen/tasks.json`.
@@ -18,6 +19,8 @@ import { TaskRuntime } from "./task-runtime";
 export class Tasks extends Component {
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
+  private _shell?: TaskShell;
+  private _runner: ITaskRunner;
 
   constructor(project: Project) {
     super(project);
@@ -25,13 +28,10 @@ export class Tasks extends Component {
     this._tasks = {};
     this._env = {};
 
-    new JsonFile(project, TaskRuntime.MANIFEST_FILE, {
-      omitEmpty: true,
-      obj: {
-        tasks: (() => this.renderTasks()) as any,
-        env: (() => this.renderEnv()) as any,
-      } as TasksManifest,
-    });
+    // Eagerly create the default task runner. The runner is a component that
+    // owns the `.projen/tasks.json` manifest, so it must be part of the
+    // construct tree for the manifest to be synthesized.
+    this._runner = new ProjenTaskRunner(this);
   }
 
   /**
@@ -103,11 +103,42 @@ export class Tasks extends Component {
   }
 
   /**
+   * The default shell used to run all task commands, or `undefined` for the
+   * built-in cross-platform projen shell. Individual tasks and steps can
+   * override this.
+   * @see {@link TaskCommonOptions.shell}
+   */
+  public get shell(): TaskShell | undefined {
+    return this._shell;
+  }
+
+  /**
+   * Sets the default shell used to run all task commands.
+   */
+  public set shell(shell: TaskShell | undefined) {
+    this._shell = shell;
+  }
+
+  /**
    * Finds a task by name. Returns `undefined` if the task cannot be found.
    * @param name The name of the task
    */
   public tryFind(name: string): undefined | Task {
     return this._tasks[name];
+  }
+
+  /**
+   * Runs the specified task.
+   *
+   * @param name The name of the task to run.
+   * @param args Arguments to pass to the task.
+   */
+  public runTask(name: string, args?: (string | number)[]) {
+    const task = this._tasks[name];
+    if (!task) {
+      throw new Error(`cannot find command ${name}`);
+    }
+    this._runner.runTask(task, args);
   }
 
   public synthesize(): void {
@@ -117,6 +148,9 @@ export class Tasks extends Component {
         recursive: true,
       });
       fs.copyFileSync(
+        // The bundled task runner lives at <pkg>/lib/run-task.cjs. This file is
+        // at src/ (ts-jest) or lib/ (compiled); in both cases
+        // "../lib/run-task.cjs" resolves to the real bundle under lib/.
         path.join(__dirname, "..", "lib", "run-task.cjs"),
         path.join(this.project.outdir, "scripts", "run-task.cjs"),
       );
@@ -125,6 +159,20 @@ export class Tasks extends Component {
         "755",
       );
     }
+  }
+
+  public resolveTasksManifest(resolver: IResolver): TasksManifest {
+    const obj = {
+      env: (() => this.renderEnv()) as any,
+      shell: (() => this._shell?._render()) as any,
+      tasks: (() => this.renderTasks()) as any,
+    };
+
+    return (
+      resolver.resolve(obj, {
+        omitEmpty: true,
+      }) ?? undefined
+    );
   }
 
   private renderTasks() {

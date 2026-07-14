@@ -33,7 +33,7 @@ export class Dependencies extends Component {
   public static parseDependency(spec: string): DependencyCoordinates {
     const scope = spec.startsWith("@");
     if (scope) {
-      spec = spec.substr(1);
+      spec = spec.substring(1);
     }
 
     const [module, ...version] = spec.split("@");

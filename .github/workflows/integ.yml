@@ -7,7 +7,7 @@ on:
   merge_group: {}
 jobs:
   integ-node:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     env:
@@ -27,12 +27,18 @@ jobs:
       - name: Compile
         id: compile
         run: node ./projen.js compile
+      - name: Bundle task runner
+        run: node ./projen.js bundle:task-runner
       - name: Package
         id: package
         run: node ./projen.js package:js
       - name: Run Node integration test
         id: run_node_integration_test
         run: node ./projen.js integ:node
+      - name: Run Windows task shell syntax tests
+        run: node ./projen.js integ:windows-shell-syntax
+      - name: Run eject integration test
+        run: node ./projen.js integ:eject
     strategy:
       fail-fast: false
       matrix:
@@ -40,6 +46,9 @@ jobs:
           - lts/-2
           - lts/-1
           - lts/*
+        os:
+          - ubuntu-latest
+          - windows-latest
   integ-python:
     runs-on: ubuntu-latest
     permissions:

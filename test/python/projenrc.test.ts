@@ -1,6 +1,5 @@
 import * as path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { ProjectType } from "../../src/project";
 import { Projenrc, resolvePythonImportName } from "../../src/python/projenrc";
 import { synthSnapshot, TestProject, withProjectDir } from "../util";
 
@@ -41,7 +40,6 @@ test("javascript values are translated to python", () => {
       undefinedArg: undefined,
       nullArg: null,
       objectArg: { foo: "bar" },
-      projectType: ProjectType.LIB,
     }),
   );
 
@@ -91,8 +89,8 @@ test("ensure python import is correctly resolved to jsiiFqn when python module i
   expect(resolvedImportName).toEqual(jsiiFqn);
 });
 
-test("generate projenrc in python with a given outdir", () => {
-  withProjectDir((projectdir) => {
+test("generate projenrc in python with a given outdir", async () => {
+  await withProjectDir(async (projectdir) => {
     const newOutDir = path.join(projectdir, "foo");
     const project = new TestProject(
       renderProjenInitOptions("projen.python.PythonProject", {

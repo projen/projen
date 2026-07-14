@@ -1,9 +1,9 @@
 {
   "//": "Experimental. Expect frequent changes to the structure of this file.",
-  "JsiiProject#projen@<root>": {
+  "TypeScriptProject#projen@<root>": {
     "metadata": {
       "type": "project",
-      "construct": "JsiiProject",
+      "construct": "TypeScriptProject",
       "projen.version": "https://github.com/projen/projen"
     },
     "nodes": {
@@ -25,6 +25,14 @@
         "metadata": {
           "type": "component",
           "construct": "Tasks"
+        },
+        "nodes": {
+          "ProjenTaskRunner#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "ProjenTaskRunner"
+            }
+          }
         }
       },
       "JsonFile@.projen--tasks.json": {
@@ -347,20 +355,39 @@
           "construct": "LicenseChecker"
         }
       },
-      "TypescriptConfig#AutoId21": {
+      "AutoId21": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypeScriptRunner"
+        }
+      },
+      "TypescriptConfig#AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
         }
       },
-      "JsonFile@tsconfig.dev.json": {
+      "JsonFile@tsconfig.json": {
         "metadata": {
           "type": "file",
           "construct": "JsonFile",
-          "path": "tsconfig.dev.json"
+          "path": "tsconfig.json"
         }
       },
-      "Eslint#AutoId22": {
+      "TypescriptConfig#AutoId23": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypescriptConfig"
+        }
+      },
+      "JsonFile@test--tsconfig.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": "test/tsconfig.json"
+        }
+      },
+      "Eslint#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -373,31 +400,50 @@
           "path": ".eslintrc.json"
         }
       },
-      "Projenrc#AutoId23": {
+      "Projenrc#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "SampleCode#AutoId24": {
+      "TypescriptConfig#AutoId26": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypescriptConfig"
+        }
+      },
+      "JsonFile@projenrc--tsconfig.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": "projenrc/tsconfig.json"
+        }
+      },
+      "AutoId27": {
+        "metadata": {
+          "type": "component",
+          "construct": "TypeScriptRunner"
+        }
+      },
+      "SampleCode#AutoId28": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
         }
       },
-      "SampleDir#AutoId25": {
+      "SampleDir#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "SampleDir#AutoId26": {
+      "SampleDir#AutoId30": {
         "metadata": {
           "type": "component",
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId27": {
+      "JsiiDocgen#AutoId31": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -424,7 +470,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId28": {
+      "UpgradeDependencies#AutoId32": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -443,7 +489,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId29": {
+      "UpgradeDependencies#AutoId33": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -476,7 +522,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId30": {
+      "VsCodeLaunchConfig#AutoId34": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -489,7 +535,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId31": {
+      "IntegrationTests#AutoId35": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -522,11 +568,24 @@
           "path": "src/python/pyproject-toml.ts"
         }
       },
+      "UpdateSchemasTask": {
+        "metadata": {
+          "type": "component",
+          "construct": "UpdateSchemasTask"
+        }
+      },
       "JsiiFromJsonSchema@src--python--uv-config.ts": {
         "metadata": {
           "type": "file",
           "construct": "JsiiFromJsonSchema",
           "path": "src/python/uv-config.ts"
+        }
+      },
+      "JsiiFromJsonSchema@src--javascript--pnpm-workspace-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/javascript/pnpm-workspace-config.ts"
         }
       },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
@@ -542,45 +601,10 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId32": {
+      "AiInstructions#AutoId36": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"
-        }
-      },
-      "AiInstructionsFile@.github--copilot-instructions.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".github/copilot-instructions.md"
-        }
-      },
-      "AiInstructionsFile@.cursor--rules--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".cursor/rules/project.md"
-        }
-      },
-      "AiInstructionsFile@CLAUDE.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": "CLAUDE.md"
-        }
-      },
-      "AiInstructionsFile@.amazonq--rules--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".amazonq/rules/project.md"
-        }
-      },
-      "AiInstructionsFile@.kiro--steering--project.md": {
-        "metadata": {
-          "type": "file",
-          "construct": "AiInstructionsFile",
-          "path": ".kiro/steering/project.md"
         }
       },
       "AiInstructionsFile@AGENTS.md": {
@@ -588,6 +612,13 @@
           "type": "file",
           "construct": "AiInstructionsFile",
           "path": "AGENTS.md"
+        }
+      },
+      "AiInstructionsFile@CLAUDE.md": {
+        "metadata": {
+          "type": "file",
+          "construct": "AiInstructionsFile",
+          "path": "CLAUDE.md"
         }
       }
     }

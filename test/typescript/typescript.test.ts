@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Logger, TaskRuntime } from "../../src";
-import { DEFAULT_PROJEN_RC_JS_FILENAME } from "../../src/common";
+import { javascript, Logger } from "../../src";
 import { Transform } from "../../src/javascript";
+import { ProjenTaskRunner } from "../../src/task-runner";
 import {
   mergeTsconfigOptions,
   TsJestTsconfig,
@@ -15,6 +15,7 @@ describe("TypeScriptProject with default settings", () => {
   it("synthesizes", () => {
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       name: "test",
     });
 
@@ -22,15 +23,16 @@ describe("TypeScriptProject with default settings", () => {
     expect(output).toMatchSnapshot();
   });
 
-  it("compiles", () => {
+  it("compiles", async () => {
     const project = new TypeScriptProject({
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       name: "test",
     });
 
     project.synth();
 
-    execProjenCLI(project.outdir, ["compile"]);
+    await execProjenCLI(project.outdir, ["compile"]);
   });
 });
 
@@ -123,30 +125,15 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
     }),
   );
 
-  expect(out["tsconfig.dev.json"]).toEqual(
+  // The dev/test tsconfig lives in the test directory, extends the root
+  // tsconfig (inheriting compiler options such as esModuleInterop), and is
+  // type-check only. ts-jest consumes this config.
+  expect(out[`${prj.testdir}/tsconfig.json`]).toEqual(
     expect.objectContaining({
-      include: expect.arrayContaining([
-        DEFAULT_PROJEN_RC_JS_FILENAME,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
+      extends: "../tsconfig.json",
+      include: ["**/*.ts"],
       compilerOptions: expect.objectContaining({
-        esModuleInterop: true,
-      }),
-    }),
-  );
-
-  expect(out["tsconfig.dev.json"]).toEqual(
-    expect.objectContaining({
-      include: expect.arrayContaining([
-        DEFAULT_PROJEN_RC_JS_FILENAME,
-        `${prj.srcdir}/**/*.ts`,
-        `${prj.testdir}/**/*.ts`,
-        "typescript.test.ts",
-      ]),
-      compilerOptions: expect.objectContaining({
-        esModuleInterop: true,
+        noEmit: true,
       }),
     }),
   );
@@ -190,12 +177,27 @@ test("projenrc.ts", () => {
   });
 
   const snapshot = synthSnapshot(prj);
-  expect(snapshot["tsconfig.dev.json"].include).toContain(".projenrc.ts");
-  expect(snapshot["tsconfig.dev.json"].include).not.toContain(".projenrc.js");
+  // projenrc files are no longer added to a build/dev tsconfig include; they
+  // are covered by the eslint project service's default project instead.
+  expect(snapshot[`${prj.testdir}/tsconfig.json`].include).not.toContain(
+    ".projenrc.ts",
+  );
+  expect(
+    snapshot[".eslintrc.json"].parserOptions.projectService.allowDefaultProject,
+  ).toContain(".projenrc.ts");
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
-    steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+    steps: [
+      {
+        execArgs: [
+          "ts-node",
+          "--project",
+          "projenrc/tsconfig.json",
+          ".projenrc.ts",
+        ],
+      },
+    ],
   });
 });
 
@@ -260,25 +262,53 @@ test("upgrade task ignores pinned versions", () => {
     deps: ["npm@^8"],
     typescriptVersion: "4.4.4",
   });
-  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(prj)[ProjenTaskRunner.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps).toMatchInlineSnapshot(`
-    [
-      {
-        "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
-      },
-      {
-        "exec": "yarn install --check-files",
-      },
-      {
-        "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser commit-and-tag-version constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript npm",
-      },
-      {
-        "exec": "npx projen",
-      },
-      {
-        "spawn": "post-upgrade",
-      },
-    ]
+   [
+     {
+       "execArgs": [
+         "npx",
+         "npm-check-updates@20",
+         "--upgrade",
+         "--target=minor",
+         "--peer",
+         "--no-deprecated",
+         "--dep=dev,prod,peer,optional",
+         "--filter=@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest",
+       ],
+     },
+     {
+       "exec": "yarn install --check-files",
+     },
+     {
+       "execArgs": [
+         "yarn",
+         "upgrade",
+         "@stylistic/eslint-plugin",
+         "@types/jest",
+         "@types/node",
+         "@typescript-eslint/eslint-plugin",
+         "@typescript-eslint/parser",
+         "commit-and-tag-version",
+         "constructs",
+         "eslint-import-resolver-typescript",
+         "eslint-plugin-import",
+         "eslint",
+         "jest",
+         "jest-junit",
+         "projen",
+         "ts-jest",
+         "typescript",
+         "npm",
+       ],
+     },
+     {
+       "exec": "npx projen",
+     },
+     {
+       "spawn": "post-upgrade",
+     },
+   ]
   `);
 });
 
@@ -306,7 +336,7 @@ describe("jestConfig", () => {
       expect(transformConfig).toBeDefined();
       expect(transformConfig[0]).toStrictEqual("ts-jest");
       expect(transformConfig[1]).toStrictEqual({
-        tsconfig: "tsconfig.dev.json",
+        tsconfig: "test/tsconfig.json",
       });
     });
 
@@ -334,7 +364,7 @@ describe("jestConfig", () => {
       expect(jestConfig.transform[JS_PATTERN]).toStrictEqual("babel-jest");
     });
 
-    test("allows overriding of ts-jest transform pattern", () => {
+    test("allows overriding of ts-jest transform pattern", async () => {
       const loggerWarnSpy = jest.spyOn(Logger.prototype, "warn");
       const TS_WITH_JS_PATTERN = "^.+\\.[tj]sx?$";
 
@@ -342,8 +372,8 @@ describe("jestConfig", () => {
       // root to ensure that external projects don't trigger the legacy warning.
       // In order to do that, we need to make the folder ourselves instead of
       // relying on the Project calss making one for us.
-      withProjectDir(
-        (projectdir) => {
+      await withProjectDir(
+        async (projectdir) => {
           fs.writeFileSync(
             path.join(projectdir, "package.json"),
             `{"dependencies": {}}`,
@@ -373,7 +403,7 @@ describe("jestConfig", () => {
           expect(transformConfig).toBeDefined();
           expect(transformConfig[0]).toStrictEqual("ts-jest");
           expect(transformConfig[1]).toStrictEqual({
-            tsconfig: "tsconfig.dev.json",
+            tsconfig: "test/tsconfig.json",
           });
         },
         { git: false },
@@ -496,7 +526,7 @@ describe("jestConfig", () => {
       const jestConfig = snapshot["package.json"].jest;
       expect(jestConfig.preset).toStrictEqual("ts-jest");
       expect(jestConfig.globals["ts-jest"].tsconfig).toStrictEqual(
-        "tsconfig.dev.json",
+        "test/tsconfig.json",
       );
       expect(jestConfig.globals["ts-jest"].shouldBePreserved).toStrictEqual(
         true,
@@ -565,8 +595,8 @@ describe("tsconfig", () => {
     const snapshot = synthSnapshot(prj);
     expect(prj.tsconfig?.fileName).toBe("tsconfig.json");
     expect(snapshot["tsconfig.json"]).not.toBeUndefined();
-    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build");
-    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w");
+    expect(prj.compileTask.steps[0].execArgs).toEqual(["tsc", "--build"]);
+    expect(prj.watchTask.steps[0].execArgs).toEqual(["tsc", "--build", "-w"]);
   });
 
   test("Should allow renaming of tsconfig.json", () => {
@@ -587,13 +617,22 @@ describe("tsconfig", () => {
     const snapshot = synthSnapshot(prj);
     expect(prj.tsconfig?.fileName).toBe("foo.json");
     expect(snapshot["foo.json"]).not.toBeUndefined();
-    expect(prj.compileTask.steps[0].exec).toEqual("tsc --build foo.json");
-    expect(prj.watchTask.steps[0].exec).toEqual("tsc --build -w foo.json");
+    expect(prj.compileTask.steps[0].execArgs).toEqual([
+      "tsc",
+      "--build",
+      "foo.json",
+    ]);
+    expect(prj.watchTask.steps[0].execArgs).toEqual([
+      "tsc",
+      "--build",
+      "-w",
+      "foo.json",
+    ]);
   });
 });
 
 describe("tsconfigDev", () => {
-  test("uses tsconfig.dev.json by default", () => {
+  test("places the dev tsconfig in the test directory by default", () => {
     const prj = new TypeScriptProject({
       name: "test",
       projenrcTs: true,
@@ -601,12 +640,22 @@ describe("tsconfigDev", () => {
     });
 
     const snapshot = synthSnapshot(prj);
-    expect(prj.tsconfigDev.fileName).toBe("tsconfig.dev.json");
+    expect(prj.tsconfigDev.fileName).toBe("test/tsconfig.json");
     expect(snapshot["tsconfig.json"]).not.toBeUndefined();
-    expect(snapshot["tsconfig.dev.json"]).not.toBeUndefined();
+    expect(snapshot["test/tsconfig.json"]).not.toBeUndefined();
+    expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
-        steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+        steps: [
+          {
+            execArgs: [
+              "ts-node",
+              "--project",
+              "projenrc/tsconfig.json",
+              ".projenrc.ts",
+            ],
+          },
+        ],
       }),
     );
   });
@@ -625,7 +674,16 @@ describe("tsconfigDev", () => {
     expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
       expect.objectContaining({
-        steps: [{ exec: "ts-node --project tsconfig.json .projenrc.ts" }],
+        steps: [
+          {
+            execArgs: [
+              "ts-node",
+              "--project",
+              "projenrc/tsconfig.json",
+              ".projenrc.ts",
+            ],
+          },
+        ],
       }),
     );
   });
@@ -650,9 +708,10 @@ describe("tsconfigDev", () => {
       name: "test",
       projenrcTs: true,
       defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
       release: true,
     });
-    project.synth();
+    synthSnapshot(project);
 
     expect(project.packageTask.steps.length).not.toBe(0);
   });
@@ -666,7 +725,7 @@ describe("tsconfigDev", () => {
       release: true,
       package: false,
     });
-    project.synth();
+    synthSnapshot(project);
 
     expect(project.packageTask.steps.length).not.toBe(0);
     expect(loggerWarnSpy).toHaveBeenCalledWith(
@@ -748,5 +807,52 @@ describe("only one of components can be enabled", () => {
           name: "test",
         }),
     ).toThrow("Only one of biome and eslint can be enabled.");
+  });
+});
+
+describe("TsJestTsconfig", () => {
+  test("factory methods produce the expected ts-jest tsconfig value", () => {
+    expect(TsJestTsconfig.auto().toJSON()).toBe(true);
+    expect(TsJestTsconfig.builtInDefaults().toJSON()).toBe(false);
+    expect(TsJestTsconfig.fromFile("tsconfig.dev.json").toJSON()).toEqual(
+      "tsconfig.dev.json",
+    );
+    expect(TsJestTsconfig.custom({ strict: true }).toJSON()).toEqual({
+      strict: true,
+    });
+  });
+});
+
+test("compiled tests (testdir under srcdir) generate a jest snapshot resolver", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    srcdir: "src",
+    testdir: "src/__tests__",
+    jest: true,
+  });
+
+  const snapshot = synthSnapshot(project);
+  const resolver = snapshot[".projen/jest-snapshot-resolver.js"];
+  expect(resolver).toContain("resolveSnapshotPath");
+  expect(resolver).toContain("resolveTestPath");
+});
+
+describe("docgen", () => {
+  test("adds a typedoc docgen task defined with execArgs", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      docgen: true,
+    });
+
+    const docgen = prj.tasks.tryFind("docgen");
+    expect(docgen?.steps?.[0]?.execArgs).toStrictEqual([
+      "typedoc",
+      prj.srcdir,
+      "--disableSources",
+      "--out",
+      prj.docsDirectory,
+    ]);
   });
 });

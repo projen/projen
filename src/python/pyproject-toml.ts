@@ -4,9 +4,10 @@
  */
 export interface PyprojectToml {
   /**
-   * There are two kinds of metadata: _static_ and _dynamic_.
+   * There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
    * - Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
    * - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+   * - Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
    *
    * @schema PyprojectToml#project
    */
@@ -51,9 +52,10 @@ export function toJson_PyprojectToml(obj: PyprojectToml | undefined): Record<str
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * There are two kinds of metadata: _static_ and _dynamic_.
+ * There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
  * - Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
  * - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+ * - Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
  *
  * @schema PyprojectTomlProject
  */
@@ -96,11 +98,9 @@ export interface PyprojectTomlProject {
   readonly requiresPython?: string;
 
   /**
-   * For now it is a table with either:
-   * - `file` key specifying a relative path to a license file, or
-   * - `text` key containing full license content
-   *
-   * Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+   * A string containing a valid [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) (recommended), or a table with either:
+   * - `file` key specifying a relative path to a license file (deprecated per PEP 639), or
+   * - `text` key containing full license content (deprecated per PEP 639)
    *
    * @schema PyprojectTomlProject#license
    */
@@ -198,7 +198,7 @@ export interface PyprojectTomlProject {
   readonly importNamespaces?: string[];
 
   /**
-   * Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+   * Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically. Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]` unless the key is a list or table with arbitrary entries (PEP 808), in which case the build backend may extend it.
    * One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
    *
    * @schema PyprojectTomlProject#dynamic
@@ -333,6 +333,41 @@ export interface PyprojectTomlTool {
   readonly cibuildwheel?: any;
 
   /**
+   * FastAPI web framework configuration.
+   *
+   * @schema PyprojectTomlTool#fastapi
+   */
+  readonly fastapi?: any;
+
+  /**
+   * Scheduled jobs in Python's `pyproject.toml`.
+   *
+   * This is a specification for declaring recurring scheduled jobs in Python projects, in `pyproject.toml`.
+   *
+   * It defines how jobs are declared and how providers would run them.
+   *
+   * It does not provide a specific implementation for running scheduled jobs, because that is provider specific.
+   *
+   * For example, a file at `app/jobs.py` could define:
+   *
+   * ```python
+   * def clean_files():
+   * print("Running cleanup...")
+   * ```
+   *
+   * You could define a scheduled job to run that function once per day with:
+   *
+   * ```toml
+   * [tool.scheduled.clean-files]
+   * every = "day"
+   * entrypoint = "app.jobs:clean_files"
+   * ```
+   *
+   * @schema PyprojectTomlTool#scheduled
+   */
+  readonly scheduled?: any;
+
+  /**
    * Optional static typing for Python.
    *
    * @schema PyprojectTomlTool#mypy
@@ -389,7 +424,14 @@ export interface PyprojectTomlTool {
   readonly setuptoolsScm?: any;
 
   /**
-   * A task runner that works well with pyproject.toml files.
+   * A package manager and task runner.
+   *
+   * @schema PyprojectTomlTool#pixi
+   */
+  readonly pixi?: any;
+
+  /**
+   * A task runner that works well with `pyproject.toml` files.
    *
    * @schema PyprojectTomlTool#poe
    */
@@ -457,6 +499,27 @@ export interface PyprojectTomlTool {
    * @schema PyprojectTomlTool#uv
    */
   readonly uv?: any;
+
+  /**
+   * A CLI tool to check and validate Python docstring formatting and completeness
+   *
+   * @schema PyprojectTomlTool#dfc
+   */
+  readonly dfc?: any;
+
+  /**
+   * A CLI tool to check and validate Python docstring formatting and completeness
+   *
+   * @schema PyprojectTomlTool#docstring-format-checker
+   */
+  readonly docstringFormatChecker?: any;
+
+  /**
+   * A CLI tool to run code files instantly without typing complex commands in terminal.
+   *
+   * @schema PyprojectTomlTool#quikrun
+   */
+  readonly quikrun?: any;
 }
 
 /**
@@ -469,6 +532,8 @@ export function toJson_PyprojectTomlTool(obj: PyprojectTomlTool | undefined): Re
   const result = {
     'black': obj.black,
     'cibuildwheel': obj.cibuildwheel,
+    'fastapi': obj.fastapi,
+    'scheduled': obj.scheduled,
     'mypy': obj.mypy,
     'ruff': obj.ruff,
     'ty': obj.ty,
@@ -477,6 +542,7 @@ export function toJson_PyprojectTomlTool(obj: PyprojectTomlTool | undefined): Re
     'scikit-build': obj.scikitBuild,
     'setuptools': obj.setuptools,
     'setuptools_scm': obj.setuptoolsScm,
+    'pixi': obj.pixi,
     'poe': obj.poe,
     'poetry': obj.poetry,
     'pdm': obj.pdm,
@@ -487,6 +553,9 @@ export function toJson_PyprojectTomlTool(obj: PyprojectTomlTool | undefined): Re
     'tombi': obj.tombi,
     'tox': obj.tox,
     'uv': obj.uv,
+    'dfc': obj.dfc,
+    'docstring-format-checker': obj.docstringFormatChecker,
+    'quikrun': obj.quikrun,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});

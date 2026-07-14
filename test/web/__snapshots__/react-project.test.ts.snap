@@ -189,8 +189,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
@@ -385,10 +387,9 @@ queue_rules:
       - -label~=(do-not-merge)
       - status-success=build
     merge_method: squash
-    commit_message_template: |-
-      {{ title }} (#{{ number }})
-
-      {{ body }}
+    commit_message_format:
+      title: pr-title
+      body: pr-body
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
@@ -486,6 +487,7 @@ permissions-backup.acl
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -534,7 +536,10 @@ permissions-backup.acl
         "name": "compile",
         "steps": [
           {
-            "exec": "react-scripts build",
+            "execArgs": [
+              "react-scripts",
+              "build",
+            ],
           },
         ],
       },
@@ -543,7 +548,10 @@ permissions-backup.acl
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -552,7 +560,10 @@ permissions-backup.acl
         "name": "dev",
         "steps": [
           {
-            "exec": "react-scripts start",
+            "execArgs": [
+              "react-scripts",
+              "start",
+            ],
           },
         ],
       },
@@ -591,10 +602,19 @@ permissions-backup.acl
         "name": "package",
         "steps": [
           {
-            "exec": "mkdir -p dist/js",
+            "execArgs": [
+              "mkdir",
+              "-p",
+              "dist/js",
+            ],
           },
           {
-            "exec": "npm pack --pack-destination dist/js",
+            "execArgs": [
+              "npm",
+              "pack",
+              "--pack-destination",
+              "dist/js",
+            ],
           },
         ],
       },
@@ -639,7 +659,11 @@ permissions-backup.acl
         "name": "test",
         "steps": [
           {
-            "exec": "react-scripts test --watchAll=false",
+            "execArgs": [
+              "react-scripts",
+              "test",
+              "--watchAll=false",
+            ],
           },
         ],
       },
@@ -668,13 +692,36 @@ permissions-backup.acl
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,projen,react,react-dom,web-vitals",
+            ],
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event commit-and-tag-version constructs projen react-scripts react react-dom web-vitals",
+            "execArgs": [
+              "yarn",
+              "upgrade",
+              "@testing-library/dom",
+              "@testing-library/jest-dom",
+              "@testing-library/react",
+              "@testing-library/user-event",
+              "commit-and-tag-version",
+              "constructs",
+              "projen",
+              "react-scripts",
+              "react",
+              "react-dom",
+              "web-vitals",
+            ],
           },
           {
             "exec": "npx projen",

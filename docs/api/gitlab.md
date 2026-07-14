@@ -50,8 +50,10 @@ new gitlab.CiConfiguration(project: Project, name: string, options?: CiConfigura
 | --- | --- |
 | <code><a href="#projen.gitlab.CiConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.gitlab.CiConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.gitlab.CiConfiguration.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.CiConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.CiConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.gitlab.CiConfiguration.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.CiConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.CiConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
 | <code><a href="#projen.gitlab.CiConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
@@ -92,6 +94,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.gitlab.CiConfiguration.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.CiConfiguration.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.CiConfiguration.postSynthesize"></a>
 
 ```typescript
@@ -109,6 +132,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.gitlab.CiConfiguration.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.CiConfiguration.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.gitlab.CiConfiguration.synthesize"></a>
 
@@ -604,8 +646,10 @@ new gitlab.GitlabConfiguration(project: Project, options?: CiConfigurationOption
 | --- | --- |
 | <code><a href="#projen.gitlab.GitlabConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.gitlab.GitlabConfiguration.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.gitlab.GitlabConfiguration.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
 | <code><a href="#projen.gitlab.GitlabConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
@@ -647,6 +691,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.gitlab.GitlabConfiguration.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.GitlabConfiguration.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.GitlabConfiguration.postSynthesize"></a>
 
 ```typescript
@@ -664,6 +729,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.gitlab.GitlabConfiguration.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.GitlabConfiguration.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.gitlab.GitlabConfiguration.synthesize"></a>
 
@@ -1206,8 +1290,10 @@ The name of the configuration.
 | --- | --- |
 | <code><a href="#projen.gitlab.NestedConfiguration.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.gitlab.NestedConfiguration.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.gitlab.NestedConfiguration.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.NestedConfiguration.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.gitlab.NestedConfiguration.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.gitlab.NestedConfiguration.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.gitlab.NestedConfiguration.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addDefaultCaches">addDefaultCaches</a></code> | Adds up to 4 default caches configuration to the CI configuration. |
 | <code><a href="#projen.gitlab.NestedConfiguration.addDefaultHooks">addDefaultHooks</a></code> | Specify a list of commands to execute on the runner before cloning the Git repository and any submodules https://docs.gitlab.com/ci/yaml/#hookspre_get_sources_script. |
@@ -1248,6 +1334,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.gitlab.NestedConfiguration.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.NestedConfiguration.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.gitlab.NestedConfiguration.postSynthesize"></a>
 
 ```typescript
@@ -1265,6 +1372,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.gitlab.NestedConfiguration.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.gitlab.NestedConfiguration.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.gitlab.NestedConfiguration.synthesize"></a>
 
@@ -3794,7 +3920,6 @@ const reports: gitlab.Reports = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.gitlab.Reports.property.cobertura">cobertura</a></code> | <code>string[]</code> | Path for file(s) that should be parsed as Cobertura XML coverage report. |
 | <code><a href="#projen.gitlab.Reports.property.codequality">codequality</a></code> | <code>string[]</code> | Path to file or list of files with code quality report(s) (such as Code Climate). |
 | <code><a href="#projen.gitlab.Reports.property.containerScanning">containerScanning</a></code> | <code>string[]</code> | Path to file or list of files with Container scanning vulnerabilities report(s). |
 | <code><a href="#projen.gitlab.Reports.property.coverageReport">coverageReport</a></code> | <code><a href="#projen.gitlab.CoverageReport">CoverageReport</a></code> | Code coverage report information. |
@@ -3811,20 +3936,6 @@ const reports: gitlab.Reports = { ... }
 | <code><a href="#projen.gitlab.Reports.property.sast">sast</a></code> | <code>string[]</code> | Path to file or list of files with SAST vulnerabilities report(s). |
 | <code><a href="#projen.gitlab.Reports.property.secretDetection">secretDetection</a></code> | <code>string[]</code> | Path to file or list of files with secret detection report(s). |
 | <code><a href="#projen.gitlab.Reports.property.terraform">terraform</a></code> | <code>string[]</code> | Path to file or list of files with terraform plan(s). |
-
----
-
-##### ~~`cobertura`~~<sup>Optional</sup> <a name="cobertura" id="projen.gitlab.Reports.property.cobertura"></a>
-
-- *Deprecated:* per {@link https://docs.gitlab.com/ee/update/deprecations.html#artifactsreportscobertura-keyword} use {@link coverageReport } instead
-
-```typescript
-public readonly cobertura: string[];
-```
-
-- *Type:* string[]
-
-Path for file(s) that should be parsed as Cobertura XML coverage report.
 
 ---
 

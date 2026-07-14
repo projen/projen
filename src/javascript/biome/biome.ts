@@ -1,23 +1,24 @@
 import * as path from "node:path";
 import { deepClone } from "fast-json-patch";
+import { Component } from "../../component";
+import type { NodeProject } from "../../javascript/node-project";
+import { JsonFile } from "../../json";
+import type { InitProject, Project } from "../../project";
+import type { Task } from "../../task";
+import { deepMerge, normalizePersistedPath } from "../../util";
+import { tryResolveModule } from "../util";
 import {
+  type BiomeConfiguration,
   IndentStyle,
+  type OverridePattern,
+  PresetConfig,
   QuoteStyle,
+  type Rules,
   toJson_BiomeConfiguration,
   toJson_OverridePattern,
   toJson_Rules,
   VcsClientKind,
-  type BiomeConfiguration,
-  type OverridePattern,
-  type Rules,
 } from "./biome-config";
-import { Component } from "../../component";
-import type { NodeProject } from "../../javascript/node-project";
-import { JsonFile } from "../../json";
-import type { Project } from "../../project";
-import type { Task } from "../../task";
-import { deepMerge, normalizePersistedPath } from "../../util";
-import { tryResolveModule } from "../util";
 
 /**
  * Enabling VCS configuration by default.
@@ -44,7 +45,7 @@ const DEFAULT_LINTER: Pick<BiomeConfiguration, "linter"> = {
   linter: {
     enabled: true,
     rules: {
-      recommended: true,
+      preset: PresetConfig.RECOMMENDED,
     },
   },
 };
@@ -72,7 +73,7 @@ const DEFAULT_ASSIST: Pick<BiomeConfiguration, "assist"> = {
   assist: {
     enabled: true,
     actions: {
-      recommended: true,
+      preset: PresetConfig.RECOMMENDED,
     },
   },
 };
@@ -81,7 +82,7 @@ export interface BiomeOptions {
   /**
    * Version of Biome to use
    *
-   * @default "^2"
+   * @default "^2.5"
    */
   readonly version?: string;
   /**
@@ -158,7 +159,7 @@ export class Biome extends Component {
     super(project);
 
     const biomejs = `@biomejs/biome`;
-    project.addDevDeps(`${biomejs}@${options.version ?? "^2"}`);
+    project.addDevDeps(`${biomejs}@${options.version ?? "^2.5"}`);
 
     const defaultConfig: BiomeConfiguration = {
       ...DEFAULT_CONFIG,
@@ -236,6 +237,13 @@ export class Biome extends Component {
 
     this.task = this.createLocalBiomeTask();
     project.testTask.spawn(this.task);
+  }
+
+  /**
+   * Runs biome once, right after the project is first created, so the generated code is linted and formatted immediately.
+   */
+  public postProjectCreation(_initProject: InitProject) {
+    this.project.tasks.runTask(this.task.name);
   }
 
   /**

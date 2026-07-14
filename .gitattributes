@@ -2,12 +2,9 @@
 
 * text=auto eol=lf
 *.snap linguist-generated
-/.amazonq/rules/project.md linguist-generated
-/.cursor/rules/project.md linguist-generated
 /.devcontainer.json linguist-generated
 /.eslintrc.json linguist-generated linguist-language=JSON-with-Comments
 /.gitattributes linguist-generated
-/.github/copilot-instructions.md linguist-generated
 /.github/pull_request_template.md linguist-generated
 /.github/workflows/auto-approve.yml linguist-generated
 /.github/workflows/auto-queue.yml linguist-generated
@@ -21,7 +18,6 @@
 /.github/workflows/upgrade-main.yml linguist-generated
 /.gitignore linguist-generated
 /.gitpod.yml linguist-generated
-/.kiro/steering/project.md linguist-generated
 /.markdownlint.json linguist-generated
 /.npmignore linguist-generated
 /.prettierignore linguist-generated
@@ -39,8 +35,11 @@
 /package-lock.json linguist-generated
 /package.json linguist-generated
 /projen.js linguist-generated
+/projenrc/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /src/awscdk/private/feature-flags-v2.const.ts linguist-generated
 /src/javascript/biome/biome-config.ts linguist-generated
+/src/javascript/pnpm-workspace-config.ts linguist-generated
 /src/python/pyproject-toml.ts linguist-generated
 /src/python/uv-config.ts linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
+/tsconfig.json linguist-generated

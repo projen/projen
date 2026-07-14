@@ -20,7 +20,6 @@ import type { GitHubProjectOptions } from "../github";
 import { GitHubProject } from "../github";
 import type { ProjenrcOptions as ProjenrcJsOptions } from "../javascript/projenrc";
 import { Projenrc as ProjenrcJs } from "../javascript/projenrc";
-import { ProjectType } from "../project";
 import type { ProjenrcTsOptions } from "../typescript";
 import { ProjenrcTs } from "../typescript";
 import { anySelected, multipleSelected } from "../util";
@@ -198,7 +197,7 @@ export interface PythonProjectOptions
    * Use projenrc in TypeScript.
    *
    * This will create a tsconfig file (default: `tsconfig.projen.json`)
-   * and use `ts-node` in the default task to parse the project source files.
+   * and use a typescript runner in the default task to parse the project source files.
    *
    * @default false
    */
@@ -290,9 +289,7 @@ export class PythonProject extends GitHubProject {
     // Assume venv if not using poetry or uv
     const venv = options.venv ?? not_poetry_or_uv;
 
-    const setuptools =
-      options.setuptools ??
-      (not_poetry_or_uv && this.projectType === ProjectType.LIB);
+    const setuptools = options.setuptools ?? false;
 
     const tools = {
       poetry: poetry,
@@ -412,12 +409,6 @@ export class PythonProject extends GitHubProject {
     if (!this.depsManager) {
       throw new Error(
         "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).",
-      );
-    }
-
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry).",
       );
     }
 

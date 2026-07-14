@@ -1,5 +1,5 @@
 import type { Project } from "../src";
-import { DependencyType, JsonFile, TextFile } from "../src";
+import { DependencyType, JsonFile, TaskShell, TextFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 import { TaskWorkflow } from "../src/github";
 import type { NodeProject } from "../src/javascript";
@@ -7,6 +7,7 @@ import {
   UpgradeDependencies,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
+import type { TypeScriptProject } from "../src/typescript";
 
 export * from "./windows-build";
 export * from "./json2jsii";
@@ -21,19 +22,24 @@ export * from "./integ-test";
  */
 export function setupBundleTaskRunner(project: Project) {
   // build `run-task` script needed for "projen eject" functionality
-  // TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
+  // @TODO: use project.bundler.addBundle instead - currently it's too inflexible on where the output goes
+  //
+  // We intentionally do NOT mark "*/package.json" as external. Bundling it
+  // inlines projen's version (read by src/common.ts) directly into the script,
+  // so the ejected scripts/run-task.cjs does not depend on a sibling
+  // package.json existing at runtime - which it doesn't for non-node projects.
+  // See projen#3679.
   const taskRunnerPath = "lib/run-task.cjs";
   const task = project.addTask("bundle:task-runner", {
     description: 'Bundle the run-task.cjs script needed for "projen eject"',
     exec:
-      `esbuild src/task-runtime.ts ` +
+      `esbuild src/cli/task-runtime.ts ` +
       `--outfile=${taskRunnerPath} ` +
       `--bundle ` +
       `--platform=node ` +
       `--format=cjs ` +
-      `--external:"*/package.json" ` +
       `--banner:js="#!/usr/bin/env node" ` +
-      `--footer:js="const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);"`,
+      `--footer:js="TaskRuntime.main();"`,
   });
   project.postCompileTask.spawn(task);
 }
@@ -45,9 +51,14 @@ export function setupBundleTaskRunner(project: Project) {
  * @param bootstrapScriptFile The path to the bootstrap script
  */
 export function setupProjenBootstrap(
-  project: NodeProject,
+  project: TypeScriptProject,
   bootstrapScriptFile: string,
 ) {
+  const deps = project.runner.configFor(bootstrapScriptFile);
+  const checkDeps = deps.dependencies
+    .map((d) => `existsSync("node_modules/${d.name}")`)
+    .join(" && ");
+
   // this script is what we use as the projen command in this project
   // it will compile the project if needed and then run the cli.
   const bootstrapScript = new TextFile(project, bootstrapScriptFile, {
@@ -70,8 +81,8 @@ function execCommand(command) {
 
 const isBuild = existsSync("lib/cli/index.js");
 const hasJsii = existsSync("node_modules/.bin/jsii");
-const hasTsNode = existsSync("node_modules/.bin/ts-node");
-const needsBootstrapping = !isBuild || !hasTsNode;
+const hasDeps = ${checkDeps};
+const needsBootstrapping = !isBuild || !hasDeps;
 
 const installCommand = "${project.package.installCommand}";
 const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies";
@@ -79,7 +90,7 @@ const buildCommand = "npx jsii --silence-warnings=reserved-word --no-fix-peer-de
 function bootstrap() {
   console.info("bootstrapping...");
 
-  if (!hasTsNode || !hasJsii) {
+  if (!hasDeps || !hasJsii) {
     execCommand(installCommand);
   }
 
@@ -163,7 +174,7 @@ export function setupUpgradeDependencies(project: NodeProject) {
   // Upgrade Dependencies in two parts:
   // a) Upgrade bundled dependencies as a releasable fix
   // b) Upgrade devDependencies as a chore
-  new UpgradeDependencies(project, {
+  const bundled = new UpgradeDependencies(project, {
     taskName: "upgrade-bundled",
     types: [DependencyType.BUNDLED],
     cooldown,
@@ -175,6 +186,8 @@ export function setupUpgradeDependencies(project: NodeProject) {
       schedule: UpgradeDependenciesSchedule.expressions(["0 12 * * *"]),
     },
   });
+  bundled.upgradeTask.shell = TaskShell.system();
+
   new UpgradeDependencies(project, {
     taskName: "upgrade",
     exclude: [

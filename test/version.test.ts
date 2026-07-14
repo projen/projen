@@ -1,4 +1,3 @@
-import { execSync } from "child_process";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join } from "path";
@@ -9,6 +8,7 @@ import {
   withProjectDir,
 } from "./util";
 import { JavaProject } from "../src/java";
+import { git } from "../src/util/exec";
 import { ReleasableCommits, Version } from "../src/version";
 
 describe("Version", () => {
@@ -67,7 +67,7 @@ describe("with JavaProject", () => {
 
 describe("bump task", () => {
   test("will bump if last commit is not a tag", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -78,7 +78,7 @@ describe("bump task", () => {
 
       project.synth();
 
-      const result = testBumpTask({
+      const result = await testBumpTask({
         workdir: project.outdir,
         commits: [
           { message: "chore(release): v0.1.0", tag: "v0.1.0" },
@@ -91,7 +91,7 @@ describe("bump task", () => {
   });
 
   test("will not bump if last commit is a tag", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -103,7 +103,7 @@ describe("bump task", () => {
       project.synth();
 
       // Bump the first time to generate the initial version
-      let result = testBumpTask({
+      let result = await testBumpTask({
         workdir: project.outdir,
         commits: [
           { message: "chore(release): v0.1.0", tag: "v0.1.0" },
@@ -112,7 +112,7 @@ describe("bump task", () => {
       });
 
       // Bump again to see if the version is the same
-      result = testBumpTask({
+      result = await testBumpTask({
         workdir: project.outdir,
       });
 
@@ -121,7 +121,7 @@ describe("bump task", () => {
   });
 
   test("can invoke a shell command to come up with the next version", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -133,7 +133,7 @@ describe("bump task", () => {
 
       project.synth();
 
-      const result = testBumpTask({
+      const result = await testBumpTask({
         workdir: project.outdir,
         commits: [
           { message: "chore(release): v0.1.0", tag: "v0.1.0" },
@@ -161,7 +161,7 @@ describe("bump task", () => {
       releasable: "all" | "featsFixes",
       expectedBump,
     ) => {
-      withProjectDir((projectdir) => {
+      await withProjectDir(async (projectdir) => {
         const project = new TestProject({
           outdir: projectdir,
         });
@@ -178,7 +178,7 @@ describe("bump task", () => {
 
         project.synth();
 
-        const result = testBumpTask({
+        const result = await testBumpTask({
           workdir: project.outdir,
           commits: [
             {
@@ -195,7 +195,7 @@ describe("bump task", () => {
   );
 
   test("if there are 0 commits but the version script outputs a version, bump anyway", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -208,7 +208,7 @@ describe("bump task", () => {
       project.synth();
 
       // Run with no new commits since last release
-      const result = testBumpTask({
+      const result = await testBumpTask({
         workdir: project.outdir,
         commits: [
           // projen will fully skip the 'bump' task if the most recent commit contains the text "chore(release):",
@@ -222,7 +222,7 @@ describe("bump task", () => {
   });
 
   test("throws an error if the bump command output is not valid", async () => {
-    withProjectDir((projectdir) => {
+    await withProjectDir(async (projectdir) => {
       const project = new TestProject({
         outdir: projectdir,
       });
@@ -236,7 +236,7 @@ describe("bump task", () => {
 
       // The exception tested here does not contain the error message, that
       // gets printed to stderr. We can't assert on it, but users will see it.
-      expect(() =>
+      await expect(
         testBumpTask({
           workdir: project.outdir,
           commits: [
@@ -244,12 +244,12 @@ describe("bump task", () => {
             { message: "new change" },
           ],
         }),
-      ).toThrow(/Command failed/);
+      ).rejects.toThrow(/Command failed/);
     });
   });
 });
 
-function testBumpTask(
+async function testBumpTask(
   opts: {
     workdir?: string;
     commits?: { message: string; tag?: string; path?: string }[];
@@ -257,27 +257,21 @@ function testBumpTask(
 ) {
   const workdir = opts.workdir ?? mkdtempSync(join(tmpdir(), "bump-test-"));
 
-  const git = (cmd: string) =>
-    execSync(`git ${cmd}`, {
-      cwd: workdir,
-      stdio: "inherit",
-      // let's try to catch hanging processes sooner than later
-      timeout: 10_000,
-    });
+  const run = (args: string[]) => git.run(args, { cwd: workdir });
 
   // Initialize a git repository
-  git("init -b main");
-  git('config user.email "you@example.com"');
-  git('config user.name "Your Name"');
-  git("config commit.gpgsign false");
-  git("config tag.gpgsign false");
+  run(["init", "-b", "main"]);
+  run(["config", "user.email", "you@example.com"]);
+  run(["config", "user.name", "Your Name"]);
+  run(["config", "commit.gpgsign", "false"]);
+  run(["config", "tag.gpgsign", "false"]);
 
   const commit = (message: string, path: string = "dummy.txt") => {
     const filePath = join(workdir, path);
     mkdirSync(dirname(filePath), { recursive: true });
     writeFileSync(filePath, message);
-    git("add .");
-    git(`commit -F "${filePath}"`);
+    run(["add", "."]);
+    run(["commit", "-F", filePath]);
   };
 
   commit("initial commit");
@@ -285,12 +279,12 @@ function testBumpTask(
   for (const c of opts.commits ?? []) {
     commit(c.message, c.path);
     if (c.tag) {
-      git(`tag ${c.tag}`);
+      run(["tag", c.tag]);
     }
   }
 
   // Bump the version
-  execProjenCLI(workdir, ["bump"]);
+  await execProjenCLI(workdir, ["bump"]);
 
   return {
     version: JSON.parse(readFileSync(join(workdir, "package.json"), "utf-8"))

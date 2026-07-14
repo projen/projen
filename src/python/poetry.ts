@@ -11,10 +11,10 @@ import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import type { Project } from "../project";
 import type { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
-import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import { decamelizeKeysRecursively } from "../util";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
+import { poetry } from "../util/exec";
 
 export interface PoetryOptions
   extends PythonPackagingOptions, PythonExecutableOptions {}
@@ -64,7 +64,7 @@ export class Poetry
 
     this.installTask = project.addTask("install", {
       description: "Install dependencies and update lockfile",
-      exec: "poetry update",
+      execArgs: ["poetry", "update"],
     });
 
     this.installCiTask = project.addTask("install:ci", {
@@ -82,16 +82,16 @@ export class Poetry
       "$(echo $(poetry env info -p)/bin:$PATH)",
     );
 
-    project.packageTask.exec("poetry build");
+    project.packageTask.execArgs(["poetry", "build"]);
 
     this.publishTestTask = project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
-      exec: "poetry publish -r testpypi",
+      execArgs: ["poetry", "publish", "-r", "testpypi"],
     });
 
     this.publishTask = project.addTask("publish", {
       description: "Uploads the package to PyPI.",
-      exec: "poetry publish",
+      execArgs: ["poetry", "publish"],
     });
 
     this.pyProject = new PoetryPyproject(project, {
@@ -217,7 +217,7 @@ export class Poetry
    * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
    */
   public setupEnvironment() {
-    const result = execOrUndefined("which poetry", {
+    const result = poetry.tryCapture(["--version"], {
       cwd: this.project.outdir,
     });
     if (!result) {
@@ -226,13 +226,15 @@ export class Poetry
       );
     }
 
-    let envPath = execOrUndefined("poetry env info -p", {
+    let envPath = poetry.tryCapture(["env", "info", "-p"], {
       cwd: this.project.outdir,
     });
     if (!envPath) {
       this.project.logger.info("Setting up a virtual environment...");
-      exec(`poetry env use ${this.pythonExec}`, { cwd: this.project.outdir });
-      envPath = execOrUndefined("poetry env info -p", {
+      poetry.run(["env", "use", this.pythonExec], {
+        cwd: this.project.outdir,
+      });
+      envPath = poetry.tryCapture(["env", "info", "-p"], {
         cwd: this.project.outdir,
       });
       this.project.logger.info(
@@ -246,12 +248,11 @@ export class Poetry
    */
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
     // If the pyproject.toml file has changed, update the lockfile prior to installation
     if (this.pyProject.file.changed) {
-      runtime.runTask(this.installTask.name);
+      this.project.tasks.runTask(this.installTask.name);
     } else {
-      runtime.runTask(this.installCiTask.name);
+      this.project.tasks.runTask(this.installCiTask.name);
     }
   }
 }

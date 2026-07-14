@@ -3,8 +3,6 @@ import { dirname, join } from "path";
 import type { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
 import * as logging from "../logging";
-import { execCapture, execOrUndefined } from "../util";
-import { ReleasableCommits } from "../version";
 import type { BumpType } from "./bump-type";
 import {
   parseBumpType,
@@ -12,6 +10,8 @@ import {
   relativeBumpType,
   renderBumpType,
 } from "./bump-type";
+import { git, rawShell } from "../util/exec";
+import { ReleasableCommits } from "../version";
 import { CommitAndTagVersion } from "./commit-tag-version";
 
 export interface BumpOptions {
@@ -96,7 +96,7 @@ export interface BumpOptions {
    *
    * A new release will be initiated, if the number of returned commits is greater than zero.
    *
-   * `$LATEST_TAG` will be replaced with the actual latest tag for the given prefix.
+   * `$LATEST_TAG` is available as an environment variable (set to the actual latest tag for the given prefix).
    *
    * @default "git log --oneline $LATEST_TAG..HEAD"
    */
@@ -199,7 +199,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   // if we even should do nothing at all.
   const shouldRelease = isFirstRelease
     ? true
-    : hasNewInterestingCommits({
+    : await hasNewInterestingCommits({
         cwd,
         latestTag,
         releasableCommits: options.releasableCommits,
@@ -225,16 +225,14 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   logging.info(`Bump from commits: ${renderBumpType(bumpType)}`);
   if (options.nextVersionCommand) {
-    const nextVersion = execCapture(options.nextVersionCommand, {
+    const nextVersion = await rawShell.capture(options.nextVersionCommand, {
       cwd,
-      modEnv: {
+      env: {
         VERSION: latestVersion,
         SUGGESTED_BUMP: renderBumpType(bumpType),
         ...(latestTag ? { LATEST_TAG: latestTag } : {}),
       },
-    })
-      .toString()
-      .trim();
+    });
 
     if (nextVersion) {
       try {
@@ -307,18 +305,23 @@ export async function bump(cwd: string, options: BumpOptions) {
 /**
  * Determine based on releaseable commits whether we should release or not
  */
-function hasNewInterestingCommits(options: {
+async function hasNewInterestingCommits(options: {
   releasableCommits?: string;
   latestTag: string;
   cwd: string;
-}) {
-  const findCommits = (
-    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd
-  ).replace("$LATEST_TAG", options.latestTag);
+}): Promise<boolean> {
+  // `$LATEST_TAG` is provided to the command as an environment variable
+  // (rather than interpolated into the command string), consistent with how
+  // `nextVersionCommand` receives it.
+  const findCommits =
+    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd;
 
-  const commitsSinceLastTag = execOrUndefined(findCommits, {
-    cwd: options.cwd,
-  })?.split("\n");
+  const commitsSinceLastTag = (
+    await rawShell.tryCapture(findCommits, {
+      cwd: options.cwd,
+      env: { LATEST_TAG: options.latestTag },
+    })
+  )?.split("\n");
   const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
   logging.info(
     `Number of commits since ${options.latestTag}: ${numCommitsSinceLastTag}`,
@@ -395,16 +398,17 @@ function determineLatestTag(options: LatestTagOptions): {
     prefixFilter = `${prefix}v*`;
   }
 
-  const listGitTags = [
-    "git",
-    '-c "versionsort.suffix=-"', // makes sure pre-release versions are listed after the primary version
-    "tag",
-    '--sort="-version:refname"', // sort as versions and not lexicographically
-    "--list",
-    `"${prefixFilter}"`,
-  ].join(" ");
-
-  const stdout = execCapture(listGitTags, { cwd }).toString("utf8");
+  const stdout = git.capture(
+    [
+      "-c",
+      "versionsort.suffix=-", // makes sure pre-release versions are listed after the primary version
+      "tag",
+      "--sort=-version:refname", // sort as versions and not lexicographically
+      "--list",
+      prefixFilter,
+    ],
+    { cwd },
+  );
 
   let tags = stdout?.split("\n");
 
@@ -462,7 +466,7 @@ function determineLatestTag(options: LatestTagOptions): {
   // remove tag prefix (if exists)
   let latestVersion = latestTag;
   if (prefix && latestVersion.startsWith(prefix)) {
-    latestVersion = latestVersion.substr(prefix.length);
+    latestVersion = latestVersion.substring(prefix.length);
   }
 
   // remove "v" prefix (if exists)

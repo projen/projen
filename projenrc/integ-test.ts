@@ -1,5 +1,5 @@
 import type { Task } from "../src";
-import { Component } from "../src";
+import { Component, TaskShell } from "../src";
 import type { JavaVersion, LanguageVersions } from "./integ-versions";
 import { INTEG_TEST_VERSIONS } from "./integ-versions";
 import { GithubWorkflow, WorkflowSteps } from "../src/github";
@@ -118,12 +118,48 @@ export class IntegrationTests extends Component {
     ];
 
     // Create individual tasks for each language
+    //
+    // The scripts are bash - Windows has no shebang support at all (unlike
+    // POSIX, where the kernel dispatches on `#!/bin/bash`), so dax's default
+    // shell fails with `spawn EFTYPE` if asked to exec a bare `.sh` path
+    // directly. `TaskShell.bash()` runs the command through `bash -c`
+    // instead, which works everywhere: real bash on POSIX, and the
+    // Git-for-Windows bash that ships on GitHub's `windows-latest` runners
+    // (and is a common enough dev-machine dependency) on Windows.
     for (const config of languageConfigs) {
       this.tasks[config.name] = project.addTask(`integ:${config.name}`, {
         exec: config.script,
+        shell: TaskShell.bash(),
         description: config.description,
       });
     }
+
+    // Verifies task shell syntax resolves commands via PATH on Windows;
+    // no-ops elsewhere. Runs as a step of the node matrix job in CI.
+    this.tasks.windowsShellSyntax = project.addTask(
+      "integ:windows-shell-syntax",
+      {
+        description: "Run Windows task shell syntax tests",
+      },
+    );
+    this.tasks.windowsShellSyntax.exec(
+      "scripts\\integ-windows-shell-syntax.cmd",
+      {
+        condition:
+          "node -e \"process.exit(process.platform === 'win32' ? 0 : 1)\"",
+        shell: TaskShell.system(),
+      },
+    );
+
+    // The eject integration test is not language-specific. It is its own task
+    // (so it can be run locally and as part of the aggregate `integ` task) but
+    // in CI it runs as a step of the node matrix job rather than a dedicated
+    // job - see `createNodeMatrixJob`.
+    this.tasks.eject = project.addTask("integ:eject", {
+      exec: "scripts/integ-eject.sh",
+      shell: TaskShell.bash(),
+      description: "Run projen eject integration test",
+    });
 
     // Create main integ task that runs all tests
     this.integTask = project.addTask("integ", {
@@ -141,6 +177,8 @@ export class IntegrationTests extends Component {
     for (const config of languageConfigs) {
       this.integTask.spawn(this.tasks[config.name]);
     }
+    this.integTask.spawn(this.tasks.windowsShellSyntax);
+    this.integTask.spawn(this.tasks.eject);
 
     // Create a separate workflow for integ tests
     if (options.workflow !== false && project.github) {
@@ -282,6 +320,16 @@ export class IntegrationTests extends Component {
 
   /**
    * Creates a Node.js matrix job for JavaScript integration tests
+   *
+   * Runs on both `ubuntu-latest` and `windows-latest`: this is the job that
+   * bootstraps a real project and runs its tasks end-to-end, including a
+   * `.projenrc.ts` step executed through `ts-node`/`tsx`/`node` - exactly the
+   * code path dax has to resolve Windows `.cmd`/`.ps1` shims for (see
+   * https://github.com/projen/projen/issues/4789). Without a real Windows
+   * run here, dax's Windows behavior is only ever exercised through Jest,
+   * which fakes `process.platform` but still spawns the real process on
+   * whatever OS the test runner happens to be - so it can assert *that* dax
+   * was invoked, but not that dax actually works on Windows.
    */
   private createNodeMatrixJob(
     project: NodeProject,
@@ -291,12 +339,13 @@ export class IntegrationTests extends Component {
       permissions: {
         contents: JobPermission.READ,
       },
-      runsOn: ["ubuntu-latest"],
+      runsOn: ["${{ matrix.os }}"],
       strategy: {
         failFast: false,
         matrix: {
           domain: {
             "node-version": this.versions.node,
+            os: ["ubuntu-latest", "windows-latest"],
           },
         },
       },
@@ -305,12 +354,23 @@ export class IntegrationTests extends Component {
         this.setupNodeStep("${{ matrix.node-version }}"),
         this.installDepsStep(project),
         this.compileStep(project),
+        // Build the run-task.cjs bundle (normally a post-compile step) so the
+        // packaged tarball includes it - the eject test below depends on it.
+        this.runTaskStep(project, "Bundle task runner", "bundle:task-runner"),
         this.runTaskStep(project, "Package", config.packageTask),
         this.runTaskStep(
           project,
           `Run Node integration test`,
           taskName(config.name),
         ),
+        this.runTaskStep(
+          project,
+          "Run Windows task shell syntax tests",
+          "integ:windows-shell-syntax",
+        ),
+        // The eject test is run here, within the node matrix, rather than as a
+        // dedicated job (it only needs the node tarball from `package:js`).
+        this.runTaskStep(project, "Run eject integration test", "integ:eject"),
       ],
     };
   }

@@ -15,6 +15,35 @@ export interface MergifyConditionalOperator {
 
 export type MergifyCondition = string | MergifyConditionalOperator;
 
+/**
+ * Declarative configuration for Mergify `commit_message_format`.
+ * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
+ */
+
+export interface MergifyCommitMessageFormat {
+  /**
+   * Commit title format.
+   *
+   * - `inherit`: use the GitHub repository default merge commit title format
+   * - `pr-title`: use the pull request title (with the PR number appended)
+   */
+  readonly title?: "inherit" | "pr-title";
+
+  /**
+   * Commit body format.
+   *
+   * - `inherit`: use the GitHub repository default merge commit body format
+   * - `pr-body`: use the pull request body
+   * - `empty`: set the commit body to be empty
+   */
+  readonly body?: "inherit" | "pr-body" | "empty";
+
+  /**
+   * Optional list of trailers to append to the commit message.
+   */
+  readonly trailers?: Array<"co-authored-by" | "approved-by" | "merged-by">;
+}
+
 export interface MergifyRule {
   /**
    * The name of the rule. This is not used by the engine directly,
@@ -68,14 +97,6 @@ export interface MergifyQueue {
 
   /**
    * The list of conditions that needs to match to queue the pull request.
-   * @see https://docs.mergify.com/configuration/file-format/#queue-rules
-   *
-   * @deprecated use `queueConditions` instead
-   */
-  readonly conditions?: MergifyCondition[];
-
-  /**
-   * The list of conditions that needs to match to queue the pull request.
    * @see https://docs.mergify.com/conditions/#conditions
    */
   readonly queueConditions?: MergifyCondition[];
@@ -89,9 +110,16 @@ export interface MergifyQueue {
   readonly mergeConditions?: MergifyCondition[];
 
   /**
-   * Template to use as the commit message when using the merge or squash merge method.
+   * When merging with the merge or squash method, configure the title, body, and trailers of the resulting commit.
+   * @see https://docs.mergify.com/workflow/actions/merge/#customizing-the-commit-message
    */
-  readonly commitMessageTemplate: string;
+  readonly commitMessageFormat?: MergifyCommitMessageFormat;
+
+  /**
+   * Template to use as the commit message when using the merge or squash merge method.
+   * @deprecated Use `commitMessageFormat` instead.
+   */
+  readonly commitMessageTemplate?: string;
 }
 
 /**
@@ -151,13 +179,12 @@ export class Mergify extends Component {
   }
 
   public addQueue(queue: MergifyQueue) {
-    if (queue.conditions && !queue.queueConditions) {
-      queue = {
-        ...queue,
-        queueConditions: queue.conditions,
-        conditions: undefined,
-      };
+    if (queue.commitMessageFormat && queue.commitMessageTemplate) {
+      throw new Error(
+        "Only one of 'commitMessageFormat' or 'commitMessageTemplate' may be specified, not both. Remove the deprecated 'commitMessageTemplate'.",
+      );
     }
+
     this.queues.push(queue);
     this.createYamlFile();
   }

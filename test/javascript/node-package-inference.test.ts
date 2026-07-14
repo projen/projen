@@ -9,10 +9,7 @@ import { mkdtemp, synthSnapshot } from "../util";
 
 // Suppress install
 jest
-  .spyOn(
-    jest.requireActual("../../src/task-runtime").TaskRuntime.prototype,
-    "runTask",
-  )
+  .spyOn(jest.requireActual("../../src/tasks").Tasks.prototype, "runTask")
   .mockReturnValue(undefined as any);
 
 function createProjectWithPackageJson(

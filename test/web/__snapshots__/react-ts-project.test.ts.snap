@@ -32,7 +32,7 @@ exports[`defaults 1`] = `
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
+      "projectService": true,
       "sourceType": "module",
     },
     "plugins": [
@@ -218,7 +218,7 @@ exports[`defaults 1`] = `
         "node": {},
         "typescript": {
           "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
+          "project": "./tsconfig.json",
         },
       },
     },
@@ -241,7 +241,7 @@ exports[`defaults 1`] = `
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
-/tsconfig.dev.json linguist-generated linguist-language=JSON-with-Comments
+/test/tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /tsconfig.json linguist-generated linguist-language=JSON-with-Comments
 /yarn.lock linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -491,7 +491,7 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-!/tsconfig.dev.json
+!/test/tsconfig.json
 !/src/
 /lib
 /dist/
@@ -509,10 +509,9 @@ queue_rules:
       - -label~=(do-not-merge)
       - status-success=build
     merge_method: squash
-    commit_message_template: |-
-      {{ title }} (#{{ number }})
-
-      {{ body }}
+    commit_message_format:
+      title: pr-title
+      body: pr-body
 pull_request_rules:
   - name: Automatic merge on approval and successful build
     actions:
@@ -530,7 +529,7 @@ merge_queue:
 permissions-backup.acl
 /.mergify.yml
 /test/
-/tsconfig.dev.json
+/test/tsconfig.json
 /src/
 !/lib/
 !/lib/**/*.js
@@ -669,7 +668,7 @@ tsconfig.tsbuildinfo
       ".projen/files.json",
       ".projen/tasks.json",
       "LICENSE",
-      "tsconfig.dev.json",
+      "test/tsconfig.json",
       "tsconfig.json",
     ],
   },
@@ -678,6 +677,7 @@ tsconfig.tsbuildinfo
     "env": {
       "PATH": "$(npx -c "node --print process.env.PATH")",
     },
+    "manifestVersion": 3,
     "tasks": {
       "build": {
         "description": "Full release build",
@@ -708,7 +708,10 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": [
           {
-            "exec": "react-scripts build",
+            "execArgs": [
+              "react-scripts",
+              "build",
+            ],
           },
         ],
       },
@@ -717,7 +720,10 @@ tsconfig.tsbuildinfo
         "name": "default",
         "steps": [
           {
-            "exec": "node .projenrc.js",
+            "execArgs": [
+              "node",
+              ".projenrc.js",
+            ],
           },
         ],
       },
@@ -726,7 +732,10 @@ tsconfig.tsbuildinfo
         "name": "dev",
         "steps": [
           {
-            "exec": "react-scripts start",
+            "execArgs": [
+              "react-scripts",
+              "start",
+            ],
           },
         ],
       },
@@ -798,7 +807,11 @@ tsconfig.tsbuildinfo
             "spawn": "eslint",
           },
           {
-            "exec": "react-scripts test --watchAll=false",
+            "execArgs": [
+              "react-scripts",
+              "test",
+              "--watchAll=false",
+            ],
           },
         ],
       },
@@ -810,13 +823,46 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": [
           {
-            "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
+            "execArgs": [
+              "npx",
+              "npm-check-updates@20",
+              "--upgrade",
+              "--target=minor",
+              "--peer",
+              "--no-deprecated",
+              "--dep=dev,prod,peer,optional",
+              "--filter=@testing-library/dom,@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,react,react-dom,web-vitals",
+            ],
           },
           {
             "exec": "yarn install --check-files",
           },
           {
-            "exec": "yarn upgrade @stylistic/eslint-plugin @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen react-scripts typescript react react-dom web-vitals",
+            "execArgs": [
+              "yarn",
+              "upgrade",
+              "@stylistic/eslint-plugin",
+              "@testing-library/dom",
+              "@testing-library/jest-dom",
+              "@testing-library/react",
+              "@testing-library/user-event",
+              "@types/jest",
+              "@types/node",
+              "@types/react",
+              "@types/react-dom",
+              "@typescript-eslint/eslint-plugin",
+              "@typescript-eslint/parser",
+              "constructs",
+              "eslint-import-resolver-typescript",
+              "eslint-plugin-import",
+              "eslint",
+              "projen",
+              "react-scripts",
+              "typescript",
+              "react",
+              "react-dom",
+              "web-vitals",
+            ],
           },
           {
             "exec": "npx projen",
@@ -831,7 +877,11 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": [
           {
-            "exec": "tsc --build -w",
+            "execArgs": [
+              "tsc",
+              "--build",
+              "-w",
+            ],
           },
         ],
       },
@@ -1324,56 +1374,17 @@ export default reportWebVitals;",
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 ",
-  "tsconfig.dev.json": {
+  "test/tsconfig.json": {
     "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "forceConsistentCasingInFileNames": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "isolatedModules": true,
-      "jsx": "react-jsx",
-      "lib": [
-        "dom",
-        "dom.iterable",
-        "esnext",
-      ],
-      "module": "commonjs",
-      "moduleResolution": "node",
       "noEmit": true,
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "es5",
-      "types": [
-        "jest",
-        "node",
-        "react",
-        "react-dom",
-      ],
+      "rootDir": "..",
     },
     "exclude": [
       "node_modules",
     ],
+    "extends": "../tsconfig.json",
     "include": [
-      "src/**/*.ts",
-      "test/**/*.ts",
-      "src",
-      ".projenrc.js",
+      "**/*.ts",
     ],
   },
   "tsconfig.json": {
@@ -1420,7 +1431,9 @@ import '@testing-library/jest-dom';
         "react-dom",
       ],
     },
-    "exclude": [],
+    "exclude": [
+      "node_modules",
+    ],
     "include": [
       "src/**/*.ts",
       "src",

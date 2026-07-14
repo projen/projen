@@ -41,8 +41,10 @@ new python.Pip(project: Project, _options?: PipOptions)
 | --- | --- |
 | <code><a href="#projen.python.Pip.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Pip.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Pip.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Pip.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Pip.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Pip.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Pip.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.python.Pip.addDependency">addDependency</a></code> | Adds a runtime dependency. |
 | <code><a href="#projen.python.Pip.addDevDependency">addDevDependency</a></code> | Adds a dev dependency. |
@@ -79,6 +81,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Pip.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Pip.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Pip.postSynthesize"></a>
 
 ```typescript
@@ -96,6 +119,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Pip.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Pip.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Pip.synthesize"></a>
 
@@ -286,8 +328,10 @@ new python.Poetry(project: Project, options: PoetryOptions)
 | --- | --- |
 | <code><a href="#projen.python.Poetry.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Poetry.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Poetry.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Poetry.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Poetry.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Poetry.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Poetry.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.python.Poetry.addDependency">addDependency</a></code> | Adds a runtime dependency. |
 | <code><a href="#projen.python.Poetry.addDevDependency">addDevDependency</a></code> | Adds a dev dependency. |
@@ -325,6 +369,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Poetry.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Poetry.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Poetry.postSynthesize"></a>
 
 ```typescript
@@ -342,6 +407,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Poetry.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Poetry.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Poetry.synthesize"></a>
 
@@ -579,8 +663,10 @@ new python.PoetryPyproject(scope: IConstruct, options: PoetryPyprojectOptions)
 | --- | --- |
 | <code><a href="#projen.python.PoetryPyproject.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.PoetryPyproject.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.PoetryPyproject.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PoetryPyproject.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.PoetryPyproject.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.PoetryPyproject.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PoetryPyproject.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -614,6 +700,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.PoetryPyproject.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PoetryPyproject.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.PoetryPyproject.postSynthesize"></a>
 
 ```typescript
@@ -631,6 +738,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.PoetryPyproject.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PoetryPyproject.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.PoetryPyproject.synthesize"></a>
 
@@ -780,8 +906,10 @@ new python.Projenrc(project: Project, options?: ProjenrcOptions)
 | --- | --- |
 | <code><a href="#projen.python.Projenrc.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Projenrc.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Projenrc.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Projenrc.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Projenrc.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Projenrc.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Projenrc.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -815,6 +943,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Projenrc.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Projenrc.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Projenrc.postSynthesize"></a>
 
 ```typescript
@@ -832,6 +981,23 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Projenrc.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Projenrc.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Projenrc.synthesize"></a>
 
@@ -1014,8 +1180,10 @@ new python.PyprojectTomlFile(scope: IConstruct, config: PyprojectToml)
 | --- | --- |
 | <code><a href="#projen.python.PyprojectTomlFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.PyprojectTomlFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.PyprojectTomlFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PyprojectTomlFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.PyprojectTomlFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.PyprojectTomlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PyprojectTomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.python.PyprojectTomlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.python.PyprojectTomlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
@@ -1054,6 +1222,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.PyprojectTomlFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PyprojectTomlFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.PyprojectTomlFile.postSynthesize"></a>
 
 ```typescript
@@ -1071,6 +1260,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.PyprojectTomlFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PyprojectTomlFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.PyprojectTomlFile.synthesize"></a>
 
@@ -1344,6 +1552,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.PyprojectTomlFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.PyprojectTomlFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.PyprojectTomlFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.PyprojectTomlFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -1384,6 +1593,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.PyprojectTomlFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -1501,8 +1722,10 @@ new python.Pytest(project: Project, options?: PytestOptions)
 | --- | --- |
 | <code><a href="#projen.python.Pytest.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Pytest.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Pytest.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Pytest.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Pytest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Pytest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Pytest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -1536,6 +1759,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Pytest.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Pytest.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Pytest.postSynthesize"></a>
 
 ```typescript
@@ -1553,6 +1797,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Pytest.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Pytest.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Pytest.synthesize"></a>
 
@@ -1625,7 +1888,6 @@ Test whether the given construct is a component.
 | --- | --- | --- |
 | <code><a href="#projen.python.Pytest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.Pytest.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
-| <code><a href="#projen.python.Pytest.property.testdir">testdir</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.python.Pytest.property.testMatch">testMatch</a></code> | <code>string[]</code> | *No description.* |
 
 ---
@@ -1649,18 +1911,6 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
-
----
-
-##### ~~`testdir`~~<sup>Required</sup> <a name="testdir" id="projen.python.Pytest.property.testdir"></a>
-
-- *Deprecated:* Use `sampleTestdir` on the project instead.
-
-```typescript
-public readonly testdir: string;
-```
-
-- *Type:* string
 
 ---
 
@@ -1712,8 +1962,10 @@ new python.PytestSample(project: Project, options: PytestSampleOptions)
 | --- | --- |
 | <code><a href="#projen.python.PytestSample.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.PytestSample.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.PytestSample.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PytestSample.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.PytestSample.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.PytestSample.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PytestSample.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -1747,6 +1999,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.PytestSample.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PytestSample.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.PytestSample.postSynthesize"></a>
 
 ```typescript
@@ -1764,6 +2037,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.PytestSample.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PytestSample.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.PytestSample.synthesize"></a>
 
@@ -1896,7 +2188,6 @@ new python.PythonProject(options: PythonProjectOptions)
 | <code><a href="#projen.python.PythonProject.addGitIgnore">addGitIgnore</a></code> | Adds a .gitignore pattern. |
 | <code><a href="#projen.python.PythonProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.python.PythonProject.addTask">addTask</a></code> | Adds a new task to this project. |
-| <code><a href="#projen.python.PythonProject.addTip">addTip</a></code> | Prints a "tip" message during synthesis. |
 | <code><a href="#projen.python.PythonProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
 | <code><a href="#projen.python.PythonProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.python.PythonProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
@@ -1904,7 +2195,6 @@ new python.PythonProject(options: PythonProjectOptions)
 | <code><a href="#projen.python.PythonProject.runTaskCommand">runTaskCommand</a></code> | Returns the shell command to execute in order to run a task. |
 | <code><a href="#projen.python.PythonProject.synth">synth</a></code> | Synthesize all project files into `outdir`. |
 | <code><a href="#projen.python.PythonProject.tryFindFile">tryFindFile</a></code> | Finds a file at the specified relative path within this project and all its subprojects. |
-| <code><a href="#projen.python.PythonProject.tryFindJsonFile">tryFindJsonFile</a></code> | Finds a json file by name. |
 | <code><a href="#projen.python.PythonProject.tryFindObjectFile">tryFindObjectFile</a></code> | Finds an object file (like JsonFile, YamlFile, etc.) by name. |
 | <code><a href="#projen.python.PythonProject.tryRemoveFile">tryRemoveFile</a></code> | Finds a file at the specified relative path within this project and removes it. |
 | <code><a href="#projen.python.PythonProject.addDependency">addDependency</a></code> | Adds a runtime dependency. |
@@ -2022,22 +2312,6 @@ Task properties.
 
 ---
 
-##### ~~`addTip`~~ <a name="addTip" id="projen.python.PythonProject.addTip"></a>
-
-```typescript
-public addTip(message: string): void
-```
-
-Prints a "tip" message during synthesis.
-
-###### `message`<sup>Required</sup> <a name="message" id="projen.python.PythonProject.addTip.parameter.message"></a>
-
-- *Type:* string
-
-The message.
-
----
-
 ##### `annotateGenerated` <a name="annotateGenerated" id="projen.python.PythonProject.annotateGenerated"></a>
 
 ```typescript
@@ -2124,8 +2398,10 @@ Synthesize all project files into `outdir`.
 2. Delete all generated files
 3. Synthesize all subprojects
 4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+5. Call "projectCreation()" for all components, only if the project is being created for the first time
+6. Call "postSynthesize()" for all components of this project
+7. Call "this.postSynthesize()"
+8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
 ##### `tryFindFile` <a name="tryFindFile" id="projen.python.PythonProject.tryFindFile"></a>
 
@@ -2143,22 +2419,6 @@ The file path.
 
 If this path is relative, it will be resolved
 from the root of _this_ project.
-
----
-
-##### ~~`tryFindJsonFile`~~ <a name="tryFindJsonFile" id="projen.python.PythonProject.tryFindJsonFile"></a>
-
-```typescript
-public tryFindJsonFile(filePath: string): JsonFile
-```
-
-Finds a json file by name.
-
-###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.python.PythonProject.tryFindJsonFile.parameter.filePath"></a>
-
-- *Type:* string
-
-The file path.
 
 ---
 
@@ -2334,7 +2594,6 @@ When given a project, this it the project itself.
 | <code><a href="#projen.python.PythonProject.property.defaultTask">defaultTask</a></code> | <code>projen.Task</code> | This is the "default" task, the one that executes "projen". |
 | <code><a href="#projen.python.PythonProject.property.initProject">initProject</a></code> | <code>projen.InitProject</code> | The options used when this project is bootstrapped via `projen new`. |
 | <code><a href="#projen.python.PythonProject.property.parent">parent</a></code> | <code>projen.Project</code> | A parent project. |
-| <code><a href="#projen.python.PythonProject.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | *No description.* |
 | <code><a href="#projen.python.PythonProject.property.autoApprove">autoApprove</a></code> | <code>projen.github.AutoApprove</code> | Auto approve set up for this project. |
 | <code><a href="#projen.python.PythonProject.property.devContainer">devContainer</a></code> | <code>projen.vscode.DevContainer</code> | Access for .devcontainer.json (used for GitHub Codespaces). |
 | <code><a href="#projen.python.PythonProject.property.github">github</a></code> | <code>projen.github.GitHub</code> | Access all github components. |
@@ -2617,7 +2876,9 @@ the project is being ejected.
 
 ---
 
-##### `initProject`<sup>Optional</sup> <a name="initProject" id="projen.python.PythonProject.property.initProject"></a>
+##### ~~`initProject`~~<sup>Optional</sup> <a name="initProject" id="projen.python.PythonProject.property.initProject"></a>
+
+- *Deprecated:* use the `initProject` argument passed to `Component.projectCreation()` instead.
 
 ```typescript
 public readonly initProject: InitProject;
@@ -2644,16 +2905,6 @@ public readonly parent: Project;
 A parent project.
 
 If undefined, this is the root project.
-
----
-
-##### `projectType`<sup>Required</sup> <a name="projectType" id="projen.python.PythonProject.property.projectType"></a>
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
 
 ---
 
@@ -2872,8 +3123,10 @@ new python.PythonSample(project: Project, options: PythonSampleOptions)
 | --- | --- |
 | <code><a href="#projen.python.PythonSample.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.PythonSample.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.PythonSample.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PythonSample.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.PythonSample.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.PythonSample.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.PythonSample.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -2907,6 +3160,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.PythonSample.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PythonSample.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.PythonSample.postSynthesize"></a>
 
 ```typescript
@@ -2924,6 +3198,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.PythonSample.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.PythonSample.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.PythonSample.synthesize"></a>
 
@@ -3068,8 +3361,10 @@ new python.RequirementsFile(project: Project, filePath: string, options: Require
 | --- | --- |
 | <code><a href="#projen.python.RequirementsFile.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.RequirementsFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.RequirementsFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.RequirementsFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.RequirementsFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.RequirementsFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.RequirementsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.python.RequirementsFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 | <code><a href="#projen.python.RequirementsFile.addPackages">addPackages</a></code> | Adds the specified packages provided in semver format. |
@@ -3105,6 +3400,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.RequirementsFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.RequirementsFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.RequirementsFile.postSynthesize"></a>
 
 ```typescript
@@ -3122,6 +3438,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.RequirementsFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.RequirementsFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.RequirementsFile.synthesize"></a>
 
@@ -3242,6 +3577,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.RequirementsFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.RequirementsFile.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.RequirementsFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.RequirementsFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.RequirementsFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.RequirementsFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.RequirementsFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3281,6 +3617,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.RequirementsFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3388,8 +3736,10 @@ new python.SetupPy(project: Project, options: SetupPyOptions)
 | --- | --- |
 | <code><a href="#projen.python.SetupPy.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.SetupPy.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.SetupPy.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.SetupPy.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.SetupPy.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.SetupPy.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.SetupPy.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.python.SetupPy.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
 
@@ -3424,6 +3774,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.SetupPy.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.SetupPy.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.SetupPy.postSynthesize"></a>
 
 ```typescript
@@ -3441,6 +3812,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.SetupPy.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.SetupPy.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.SetupPy.synthesize"></a>
 
@@ -3543,6 +3933,7 @@ Test whether the given construct is a component.
 | <code><a href="#projen.python.SetupPy.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.python.SetupPy.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.python.SetupPy.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.python.SetupPy.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
 | <code><a href="#projen.python.SetupPy.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
 | <code><a href="#projen.python.SetupPy.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
 | <code><a href="#projen.python.SetupPy.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
@@ -3582,6 +3973,18 @@ public readonly absolutePath: string;
 - *Type:* string
 
 The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.python.SetupPy.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
 
 ---
 
@@ -3691,8 +4094,10 @@ new python.Setuptools(project: Project, options: SetuptoolsOptions)
 | --- | --- |
 | <code><a href="#projen.python.Setuptools.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Setuptools.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Setuptools.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Setuptools.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Setuptools.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Setuptools.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Setuptools.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -3726,6 +4131,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Setuptools.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Setuptools.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Setuptools.postSynthesize"></a>
 
 ```typescript
@@ -3743,6 +4169,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Setuptools.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Setuptools.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Setuptools.synthesize"></a>
 
@@ -3906,8 +4351,10 @@ new python.Uv(scope: IConstruct, options: UvOptions)
 | --- | --- |
 | <code><a href="#projen.python.Uv.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Uv.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Uv.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Uv.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Uv.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Uv.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Uv.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.python.Uv.addDependency">addDependency</a></code> | Adds a runtime dependency. |
 | <code><a href="#projen.python.Uv.addDevDependency">addDevDependency</a></code> | Adds a dev dependency. |
@@ -3945,6 +4392,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Uv.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Uv.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Uv.postSynthesize"></a>
 
 ```typescript
@@ -3962,6 +4430,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Uv.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Uv.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Uv.synthesize"></a>
 
@@ -4204,8 +4691,10 @@ new python.Venv(project: Project, options?: VenvOptions)
 | --- | --- |
 | <code><a href="#projen.python.Venv.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.python.Venv.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.python.Venv.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Venv.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.python.Venv.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.python.Venv.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.python.Venv.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.python.Venv.setupEnvironment">setupEnvironment</a></code> | Initializes the virtual environment if it doesn't exist (called during post-synthesis). |
 
@@ -4240,6 +4729,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.python.Venv.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Venv.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.python.Venv.postSynthesize"></a>
 
 ```typescript
@@ -4257,6 +4767,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.python.Venv.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.python.Venv.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.python.Venv.synthesize"></a>
 
@@ -5419,7 +5948,7 @@ const pyprojectToml: python.PyprojectToml = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectToml.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
 | <code><a href="#projen.python.PyprojectToml.property.dependencyGroups">dependencyGroups</a></code> | <code><a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a></code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
-| <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are two kinds of metadata: _static_ and _dynamic_. |
+| <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_. |
 | <code><a href="#projen.python.PyprojectToml.property.tool">tool</a></code> | <code><a href="#projen.python.PyprojectTomlTool">PyprojectTomlTool</a></code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
 
 ---
@@ -5454,10 +5983,11 @@ public readonly project: PyprojectTomlProject;
 
 - *Type:* <a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a>
 
-There are two kinds of metadata: _static_ and _dynamic_.
+There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
 
 Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
 - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+- Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
 
 ---
 
@@ -5507,10 +6037,11 @@ public readonly dev: any[];
 
 ### PyprojectTomlProject <a name="PyprojectTomlProject" id="projen.python.PyprojectTomlProject"></a>
 
-There are two kinds of metadata: _static_ and _dynamic_.
+There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_.
 
 Static metadata is listed in the `[project]` table directly and cannot be specified or changed by a tool.
 - Dynamic metadata key names are listed inside the `dynamic` key and represents metadata that a tool will later provide.
+- Partially dynamic metadata is specified in the `[project]` table as a list or table, and also listed in `dynamic`, allowing the build backend to add entries but not modify or remove existing ones.
 
 #### Initializer <a name="Initializer" id="projen.python.PyprojectTomlProject.Initializer"></a>
 
@@ -5535,7 +6066,7 @@ const pyprojectTomlProject: python.PyprojectTomlProject = { ... }
 | <code><a href="#projen.python.PyprojectTomlProject.property.importNames">importNames</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project exclusively provides when installed. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.importNamespaces">importNamespaces</a></code> | <code>string[]</code> | An array of strings specifying the import names that the project provides when installed, but not exclusively. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.keywords">keywords</a></code> | <code>string[]</code> | List of keywords or tags that describe the project. |
-| <code><a href="#projen.python.PyprojectTomlProject.property.license">license</a></code> | <code>any</code> | For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content. |
+| <code><a href="#projen.python.PyprojectTomlProject.property.license">license</a></code> | <code>any</code> | A string containing a valid [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) (recommended), or a table with either: - `file` key specifying a relative path to a license file (deprecated per PEP 639), or - `text` key containing full license content (deprecated per PEP 639). |
 | <code><a href="#projen.python.PyprojectTomlProject.property.licenseFiles">licenseFiles</a></code> | <code>string[]</code> | Relative paths or globs to paths of license files. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.maintainers">maintainers</a></code> | <code><a href="#projen.python.ProjectAuthor">ProjectAuthor</a>[]</code> | People or organizations considered as 'maintainers' of the project. |
 | <code><a href="#projen.python.PyprojectTomlProject.property.optionalDependencies">optionalDependencies</a></code> | <code>any</code> | Each entry is a key/value pair, with the key specifying [extra feature name](https://packaging.python.org/en/latest/specifications/core-metadata/#provides-extra-multiple-use) (such as `socks` in `requests[socks]`), and value is an array of [dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/) strings. |
@@ -5623,7 +6154,7 @@ public readonly dynamic: PyprojectTomlProjectDynamic[];
 
 Specifies which keys are intentionally unspecified under `[project]` table so build backend can/will provide such metadata dynamically.
 
-Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]`.
+Each key must be listed only once. It is an error to both list a key in `dynamic` and use the key directly in `[project]` unless the key is a list or table with arbitrary entries (PEP 808), in which case the build backend may extend it.
 One of the most common usage is `version`, which allows build backend to retrieve project version from source code or version control system instead of hardcoding it in `pyproject.toml`.
 
 ---
@@ -5698,9 +6229,7 @@ public readonly license: any;
 
 - *Type:* any
 
-For now it is a table with either: - `file` key specifying a relative path to a license file, or - `text` key containing full license content.
-
-Newer tool may accept a single [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) string instead of a table.
+A string containing a valid [SPDX license expression](https://spdx.github.io/spdx-spec/v2.2.2/SPDX-license-expressions/) (recommended), or a table with either: - `file` key specifying a relative path to a license file (deprecated per PEP 639), or - `text` key containing full license content (deprecated per PEP 639).
 
 ---
 
@@ -5828,16 +6357,22 @@ const pyprojectTomlTool: python.PyprojectTomlTool = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectTomlTool.property.black">black</a></code> | <code>any</code> | The uncompromising Python code formatter. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.cibuildwheel">cibuildwheel</a></code> | <code>any</code> | Build Python wheels for all platforms. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.dfc">dfc</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.docstringFormatChecker">docstringFormatChecker</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.fastapi">fastapi</a></code> | <code>any</code> | FastAPI web framework configuration. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.hatch">hatch</a></code> | <code>any</code> | Modern, extensible Python project management. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.maturin">maturin</a></code> | <code>any</code> | Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.mypy">mypy</a></code> | <code>any</code> | Optional static typing for Python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pdm">pdm</a></code> | <code>any</code> | A modern Python package manager with PEP 621 support. |
-| <code><a href="#projen.python.PyprojectTomlTool.property.poe">poe</a></code> | <code>any</code> | A task runner that works well with pyproject.toml files. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.pixi">pixi</a></code> | <code>any</code> | A package manager and task runner. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.poe">poe</a></code> | <code>any</code> | A task runner that works well with `pyproject.toml` files. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.poetry">poetry</a></code> | <code>any</code> | Python dependency management and packaging made easy. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pyright">pyright</a></code> | <code>any</code> | Static type checker for Python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pytest">pytest</a></code> | <code>any</code> | Standardized automated testing of Python packages. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.quikrun">quikrun</a></code> | <code>any</code> | A CLI tool to run code files instantly without typing complex commands in terminal. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.repoReview">repoReview</a></code> | <code>any</code> | Review a repository for best practices. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.ruff">ruff</a></code> | <code>any</code> | An extremely fast Python linter and formatter, written in Rust. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.scheduled">scheduled</a></code> | <code>any</code> | Scheduled jobs in Python's `pyproject.toml`. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.scikitBuild">scikitBuild</a></code> | <code>any</code> | Improved build system generator for Python C/C++/Fortran extensions. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptools">setuptools</a></code> | <code>any</code> | Easily download, build, install, upgrade, and uninstall Python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptoolsScm">setuptoolsScm</a></code> | <code>any</code> | Manage Python package versions using SCM (e.g. Git). |
@@ -5870,6 +6405,42 @@ public readonly cibuildwheel: any;
 - *Type:* any
 
 Build Python wheels for all platforms.
+
+---
+
+##### `dfc`<sup>Optional</sup> <a name="dfc" id="projen.python.PyprojectTomlTool.property.dfc"></a>
+
+```typescript
+public readonly dfc: any;
+```
+
+- *Type:* any
+
+A CLI tool to check and validate Python docstring formatting and completeness.
+
+---
+
+##### `docstringFormatChecker`<sup>Optional</sup> <a name="docstringFormatChecker" id="projen.python.PyprojectTomlTool.property.docstringFormatChecker"></a>
+
+```typescript
+public readonly docstringFormatChecker: any;
+```
+
+- *Type:* any
+
+A CLI tool to check and validate Python docstring formatting and completeness.
+
+---
+
+##### `fastapi`<sup>Optional</sup> <a name="fastapi" id="projen.python.PyprojectTomlTool.property.fastapi"></a>
+
+```typescript
+public readonly fastapi: any;
+```
+
+- *Type:* any
+
+FastAPI web framework configuration.
 
 ---
 
@@ -5921,6 +6492,18 @@ A modern Python package manager with PEP 621 support.
 
 ---
 
+##### `pixi`<sup>Optional</sup> <a name="pixi" id="projen.python.PyprojectTomlTool.property.pixi"></a>
+
+```typescript
+public readonly pixi: any;
+```
+
+- *Type:* any
+
+A package manager and task runner.
+
+---
+
 ##### `poe`<sup>Optional</sup> <a name="poe" id="projen.python.PyprojectTomlTool.property.poe"></a>
 
 ```typescript
@@ -5929,7 +6512,7 @@ public readonly poe: any;
 
 - *Type:* any
 
-A task runner that works well with pyproject.toml files.
+A task runner that works well with `pyproject.toml` files.
 
 ---
 
@@ -5969,6 +6552,18 @@ Standardized automated testing of Python packages.
 
 ---
 
+##### `quikrun`<sup>Optional</sup> <a name="quikrun" id="projen.python.PyprojectTomlTool.property.quikrun"></a>
+
+```typescript
+public readonly quikrun: any;
+```
+
+- *Type:* any
+
+A CLI tool to run code files instantly without typing complex commands in terminal.
+
+---
+
 ##### `repoReview`<sup>Optional</sup> <a name="repoReview" id="projen.python.PyprojectTomlTool.property.repoReview"></a>
 
 ```typescript
@@ -5990,6 +6585,39 @@ public readonly ruff: any;
 - *Type:* any
 
 An extremely fast Python linter and formatter, written in Rust.
+
+---
+
+##### `scheduled`<sup>Optional</sup> <a name="scheduled" id="projen.python.PyprojectTomlTool.property.scheduled"></a>
+
+```typescript
+public readonly scheduled: any;
+```
+
+- *Type:* any
+
+Scheduled jobs in Python's `pyproject.toml`.
+
+This is a specification for declaring recurring scheduled jobs in Python projects, in `pyproject.toml`.
+
+It defines how jobs are declared and how providers would run them.
+
+It does not provide a specific implementation for running scheduled jobs, because that is provider specific.
+
+For example, a file at `app/jobs.py` could define:
+
+```python
+def clean_files():
+print("Running cleanup...")
+```
+
+You could define a scheduled job to run that function once per day with:
+
+```toml
+[tool.scheduled.clean-files]
+every = "day"
+entrypoint = "app.jobs:clean_files"
+```
 
 ---
 
@@ -6106,7 +6734,6 @@ const pytestOptions: python.PytestOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.PytestOptions.property.maxFailures">maxFailures</a></code> | <code>number</code> | Stop the testing process after the first N failures. |
-| <code><a href="#projen.python.PytestOptions.property.testdir">testdir</a></code> | <code>string</code> | Location of sample tests. |
 | <code><a href="#projen.python.PytestOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | List of paths to test files or directories. |
 | <code><a href="#projen.python.PytestOptions.property.version">version</a></code> | <code>string</code> | Pytest version. |
 
@@ -6121,23 +6748,6 @@ public readonly maxFailures: number;
 - *Type:* number
 
 Stop the testing process after the first N failures.
-
----
-
-##### ~~`testdir`~~<sup>Optional</sup> <a name="testdir" id="projen.python.PytestOptions.property.testdir"></a>
-
-- *Deprecated:* Reference `sampleTestdir` on the project instead; to change the directory where tests are discovered from, use `testMatch`.
-
-```typescript
-public readonly testdir: string;
-```
-
-- *Type:* string
-- *Default:* "tests"
-
-Location of sample tests.
-
-Typically the same directory where project tests will be located.
 
 ---
 
@@ -6459,11 +7069,7 @@ const pythonProjectOptions: python.PythonProjectOptions = { ... }
 | <code><a href="#projen.python.PythonProjectOptions.property.github">github</a></code> | <code>boolean</code> | Enable GitHub integration. |
 | <code><a href="#projen.python.PythonProjectOptions.property.githubOptions">githubOptions</a></code> | <code>projen.github.GitHubOptions</code> | Options for GitHub integration. |
 | <code><a href="#projen.python.PythonProjectOptions.property.gitpod">gitpod</a></code> | <code>boolean</code> | Add a Gitpod development environment. |
-| <code><a href="#projen.python.PythonProjectOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
-| <code><a href="#projen.python.PythonProjectOptions.property.mergifyOptions">mergifyOptions</a></code> | <code>projen.github.MergifyOptions</code> | Options for mergify. |
-| <code><a href="#projen.python.PythonProjectOptions.property.projectType">projectType</a></code> | <code>projen.ProjectType</code> | Which type of project this is (library/app). |
 | <code><a href="#projen.python.PythonProjectOptions.property.projenCredentials">projenCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Choose a method of providing GitHub API access for projen workflows. |
-| <code><a href="#projen.python.PythonProjectOptions.property.projenTokenSecret">projenTokenSecret</a></code> | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. |
 | <code><a href="#projen.python.PythonProjectOptions.property.readme">readme</a></code> | <code>projen.SampleReadmeProps</code> | The README setup. |
 | <code><a href="#projen.python.PythonProjectOptions.property.stale">stale</a></code> | <code>boolean</code> | Auto-close of stale issues and pull request. |
 | <code><a href="#projen.python.PythonProjectOptions.property.staleOptions">staleOptions</a></code> | <code>projen.github.StaleOptions</code> | Auto-close stale issues and pull requests. |
@@ -6788,51 +7394,6 @@ Add a Gitpod development environment.
 
 ---
 
-##### ~~`mergify`~~<sup>Optional</sup> <a name="mergify" id="projen.python.PythonProjectOptions.property.mergify"></a>
-
-- *Deprecated:* use `githubOptions.mergify` instead
-
-```typescript
-public readonly mergify: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Whether mergify should be enabled on this repository or not.
-
----
-
-##### ~~`mergifyOptions`~~<sup>Optional</sup> <a name="mergifyOptions" id="projen.python.PythonProjectOptions.property.mergifyOptions"></a>
-
-- *Deprecated:* use `githubOptions.mergifyOptions` instead
-
-```typescript
-public readonly mergifyOptions: MergifyOptions;
-```
-
-- *Type:* projen.github.MergifyOptions
-- *Default:* default options
-
-Options for mergify.
-
----
-
-##### ~~`projectType`~~<sup>Optional</sup> <a name="projectType" id="projen.python.PythonProjectOptions.property.projectType"></a>
-
-- *Deprecated:* no longer supported at the base project level
-
-```typescript
-public readonly projectType: ProjectType;
-```
-
-- *Type:* projen.ProjectType
-- *Default:* ProjectType.UNKNOWN
-
-Which type of project this is (library/app).
-
----
-
 ##### `projenCredentials`<sup>Optional</sup> <a name="projenCredentials" id="projen.python.PythonProjectOptions.property.projenCredentials"></a>
 
 ```typescript
@@ -6843,24 +7404,6 @@ public readonly projenCredentials: GithubCredentials;
 - *Default:* use a personal access token named PROJEN_GITHUB_TOKEN
 
 Choose a method of providing GitHub API access for projen workflows.
-
----
-
-##### ~~`projenTokenSecret`~~<sup>Optional</sup> <a name="projenTokenSecret" id="projen.python.PythonProjectOptions.property.projenTokenSecret"></a>
-
-- *Deprecated:* use `projenCredentials`
-
-```typescript
-public readonly projenTokenSecret: string;
-```
-
-- *Type:* string
-- *Default:* "PROJEN_GITHUB_TOKEN"
-
-The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.
-
-This token needs to have the `repo`, `workflows`
-and `packages` scope.
 
 ---
 
@@ -7227,7 +7770,7 @@ public readonly projenrcTs: boolean;
 Use projenrc in TypeScript.
 
 This will create a tsconfig file (default: `tsconfig.projen.json`)
-and use `ts-node` in the default task to parse the project source files.
+and use a typescript runner in the default task to parse the project source files.
 
 ---
 

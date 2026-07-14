@@ -49,14 +49,16 @@ describe("mergify", () => {
     // GIVEN
     const project = createProject({
       autoMerge: false,
-      mergifyOptions: {
-        rules: [
-          {
-            actions: ["action"],
-            conditions: ["condition"],
-            name: "rule-name",
-          },
-        ],
+      githubOptions: {
+        mergifyOptions: {
+          rules: [
+            {
+              actions: ["action"],
+              conditions: ["condition"],
+              name: "rule-name",
+            },
+          ],
+        },
       },
     });
 
@@ -64,6 +66,66 @@ describe("mergify", () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
+  });
+
+  test("queue accepts neither commit message config option (uses GitHub defaults)", () => {
+    const project = createProject({
+      autoMerge: false,
+      githubOptions: {
+        mergifyOptions: {
+          queues: [{ name: "default" }],
+        },
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).not.toContain("commit_message_format");
+    expect(snapshot[".mergify.yml"]).not.toContain("commit_message_template");
+  });
+
+  test("queue fails when both commit message config options are set", () => {
+    expect(() =>
+      createProject({
+        autoMerge: false,
+        githubOptions: {
+          mergifyOptions: {
+            queues: [
+              {
+                name: "default",
+                commitMessageFormat: {
+                  title: "pr-title",
+                  body: "pr-body",
+                },
+                commitMessageTemplate: "{{ title }}",
+              },
+            ],
+          },
+        },
+      }),
+    ).toThrow(
+      "Only one of 'commitMessageFormat' or 'commitMessageTemplate' may be specified, not both. Remove the deprecated 'commitMessageTemplate'.",
+    );
+  });
+
+  test("queue accepts commit message template only", () => {
+    const project = createProject({
+      autoMerge: false,
+      githubOptions: {
+        mergifyOptions: {
+          queues: [
+            {
+              name: "default",
+              commitMessageTemplate: "{{ title }}\\n\\n{{ body }}",
+            },
+          ],
+        },
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).toContain("commit_message_template");
   });
 });
 

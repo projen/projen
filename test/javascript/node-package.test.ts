@@ -3,19 +3,14 @@ import { dirname, join } from "path";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType, Component } from "../../src";
-import {
-  YarnCacheMigrationMode,
-  YarnChecksumBehavior,
-  YarnNodeLinker,
-  YarnNpmPublishAccess,
-} from "../../src/javascript";
+import { YarnNodeLinker, YarnNpmPublishAccess } from "../../src/javascript";
 import {
   NodePackage,
   NodePackageManager,
   NpmAccess,
 } from "../../src/javascript/node-package";
 import { minVersion } from "../../src/javascript/util";
-import { TaskRuntime } from "../../src/task-runtime";
+import { Tasks } from "../../src/tasks";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
 
 /**
@@ -173,10 +168,10 @@ test("single bugs field present", () => {
 
 test('lockfile updated (install twice) after "*"s are resolved', () => {
   const taskMock = jest
-    .spyOn(TaskRuntime.prototype, "runTask")
-    .mockImplementation(function (this: TaskRuntime, command) {
+    .spyOn(Tasks.prototype, "runTask")
+    .mockImplementation(function (this: Tasks, command) {
       expect(command).toMatch("install");
-      mockYarnInstall(this.workdir, { ms: "2.1.3" });
+      mockYarnInstall(this.project.outdir, { ms: "2.1.3" });
     });
 
   const project = new Project({ name: "test" });
@@ -194,9 +189,7 @@ test('lockfile updated (install twice) after "*"s are resolved', () => {
 });
 
 test("install only once if all versions are resolved", () => {
-  const taskMock = jest
-    .spyOn(TaskRuntime.prototype, "runTask")
-    .mockReturnValueOnce();
+  const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValueOnce();
   const project = new Project({ name: "test" });
   const pkg = new NodePackage(project);
 
@@ -208,9 +201,7 @@ test("install only once if all versions are resolved", () => {
 });
 
 test("no install if package.json did not change at all", () => {
-  const taskMock = jest
-    .spyOn(TaskRuntime.prototype, "runTask")
-    .mockReturnValueOnce();
+  const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValueOnce();
   const outdir = mkdtemp({ cleanup: false });
 
   const orig = {
@@ -251,7 +242,7 @@ test("no install if package.json did not change at all", () => {
 });
 
 test("logs install reason when package.json has changed", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockReturnValue();
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
   const outdir = mkdtemp({ cleanup: false });
 
   // Write a package.json that will differ from what projen generates
@@ -282,7 +273,7 @@ test("logs install reason when package.json has changed", () => {
 });
 
 test("logs package.json diff at debug level", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockReturnValue();
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
   const outdir = mkdtemp({ cleanup: false });
 
   writeFileSync(
@@ -308,7 +299,7 @@ test("logs package.json diff at debug level", () => {
 });
 
 test("logs install reason when node_modules is missing", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockReturnValue();
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
   const outdir = mkdtemp({ cleanup: false });
 
   // Write a matching package.json so file.changed is false
@@ -355,7 +346,7 @@ test("logs install reason when node_modules is missing", () => {
 });
 
 test("prioritizes package.json changed over missing node_modules", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockReturnValue();
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
   const outdir = mkdtemp({ cleanup: false });
 
   // Write a package.json that will differ from what projen generates
@@ -385,12 +376,12 @@ test("prioritizes package.json changed over missing node_modules", () => {
 });
 
 test("logs resolved dependency versions at info level", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "2.1.3" });
+    mockYarnInstall(this.project.outdir, { ms: "2.1.3" });
   });
 
   const project = new Project({ name: "test" });
@@ -410,7 +401,7 @@ test("logs resolved dependency versions at info level", () => {
 });
 
 test("handles missing package.json during dependency resolution gracefully", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockReturnValue();
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
 
   const project = new Project({ name: "test" });
   const pkg = new NodePackage(project);
@@ -422,11 +413,11 @@ test("handles missing package.json during dependency resolution gracefully", () 
 });
 
 test("logs removed dependencies during resolution", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
   ) {
     // Simulate install adding an extra dep that projen doesn't know about
-    const pkgPath = join(this.workdir, "package.json");
+    const pkgPath = join(this.project.outdir, "package.json");
     const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
     pkg.dependencies = { ...pkg.dependencies, leftover: "^1.0.0" };
     writeFileSync(pkgPath, JSON.stringify(pkg, undefined, 2) + "\n");
@@ -450,12 +441,12 @@ test('"*" peer dependencies are pinned in devDependencies', () => {
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "1.2.3" });
+    mockYarnInstall(this.project.outdir, { ms: "1.2.3" });
   });
 
   const project = new Project({ name: "test" });
@@ -481,12 +472,12 @@ test("manually set devDependencies are not changed when a peerDependency is adde
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "1.3.4" });
+    mockYarnInstall(this.project.outdir, { ms: "1.3.4" });
   });
 
   const project = new Project({ name: "test" });
@@ -528,12 +519,12 @@ test("devDependencies are not pinned by peerDependencies if a regular (runtime) 
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "1.3.8" });
+    mockYarnInstall(this.project.outdir, { ms: "1.3.8" });
   });
 
   const project = new Project({ name: "test" });
@@ -561,12 +552,12 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "1.4.0" });
+    mockYarnInstall(this.project.outdir, { ms: "1.4.0" });
   });
 
   const project = new Project({ name: "test" });
@@ -616,12 +607,12 @@ test("file path dependencies are respected", () => {
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "file:../ms" });
+    mockYarnInstall(this.project.outdir, { ms: "file:../ms" });
   });
 
   const project = new Project({ name: "test" });
@@ -650,12 +641,12 @@ test("local dependencies can be specified using 'file:' prefix", () => {
     version: "0.0.0",
   };
 
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: `file:${localDepPath}` });
+    mockYarnInstall(this.project.outdir, { ms: `file:${localDepPath}` });
   });
 
   writeFileSync(
@@ -862,6 +853,10 @@ test("pnpm adds packageManager field to package.json with custom version", () =>
 
 test("typesVersions is not managed by projen, but can be manipulated", () => {
   // ARRANGE
+  // this test triggers a real install during synth; suppress it since this
+  // test only asserts on package.json contents, not on installation.
+  jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
+
   const outdir = mkdtemp();
   const orig = {
     name: "test",
@@ -882,13 +877,8 @@ test("typesVersions is not managed by projen, but can be manipulated", () => {
   const pkg = new NodePackage(project);
   pkg.file.addOverride("typesVersions.>=4\\.0", { "*": ["ts4.0/*"] });
 
-  project.synth();
-
   // ASSERT
-  const pkgFile = JSON.parse(
-    readFileSync(join(project.outdir, "package.json"), "utf-8"),
-  );
-
+  const pkgFile = synthSnapshot(project)["package.json"];
   expect(pkgFile.typesVersions).toStrictEqual({
     "<=3.9": { "*": ["ts3.9/*"] },
     ">=4.0": { "*": ["ts4.0/*"] },
@@ -896,12 +886,12 @@ test("typesVersions is not managed by projen, but can be manipulated", () => {
 });
 
 test("tryResolveDependencyVersion", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
-    mockYarnInstall(this.workdir, { ms: "2.1.3" });
+    mockYarnInstall(this.project.outdir, { ms: "2.1.3" });
   });
   const outdir = mkdtemp();
   const project = new TestProject({ outdir });
@@ -917,13 +907,13 @@ test("tryResolveDependencyVersion", () => {
 });
 
 test("tryResolveDependencyVersion resolves with custom package exports.", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
     mockYarnInstall(
-      this.workdir,
+      this.project.outdir,
       { rollup: "3.21.1" },
       {
         rollup: (manifest, manifestPath) => {
@@ -955,13 +945,13 @@ test("tryResolveDependencyVersion resolves with custom package exports.", () => 
 });
 
 test("tryResolveDependencyVersion resolves with no package.json or default export with default conditions.", () => {
-  jest.spyOn(TaskRuntime.prototype, "runTask").mockImplementation(function (
-    this: TaskRuntime,
+  jest.spyOn(Tasks.prototype, "runTask").mockImplementation(function (
+    this: Tasks,
     command,
   ) {
     expect(command).toMatch("install");
     mockYarnInstall(
-      this.workdir,
+      this.project.outdir,
       { "@types/js-yaml": "4.0.5" },
       {
         "@types/js-yaml": (manifest) => {
@@ -1198,68 +1188,6 @@ describe("yarn berry", () => {
       );
     });
   });
-
-  describe("invalid options", () => {
-    describe("using v4", () => {
-      test("throws an error if a v3 setting is used in v4", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "4.13.0",
-                yarnRcOptions: {
-                  ignoreCwd: true,
-                  lockfileFilename: "something-else.lock",
-                },
-              },
-            }),
-        ).toThrow(
-          "The following options are not available in Yarn >= 4: ignoreCwd, lockfileFilename",
-        );
-      });
-    });
-
-    describe("using v3", () => {
-      test("throws an error if a v4 setting is used in v3", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "3.6.4",
-                yarnRcOptions: {
-                  cacheMigrationMode: YarnCacheMigrationMode.ALWAYS,
-                  httpsCaFilePath: "/etc/foo/bar",
-                },
-              },
-            }),
-        ).toThrow(
-          "The following options are only available in Yarn v4 and newer: cacheMigrationMode, httpsCaFilePath",
-        );
-      });
-
-      test("throws an error if a v4 checksumBehavior setting is used in v3", () => {
-        const project = new TestProject();
-        expect(
-          () =>
-            new NodePackage(project, {
-              packageManager: NodePackageManager.YARN_BERRY,
-              yarnBerryOptions: {
-                version: "3.6.4",
-                yarnRcOptions: {
-                  checksumBehavior: YarnChecksumBehavior.RESET,
-                },
-              },
-            }),
-        ).toThrow(
-          "The YarnChecksumBehavior.RESET is only available in Yarn v4 and newer.",
-        );
-      });
-    });
-  });
 });
 
 describe("npm provenance", () => {
@@ -1302,5 +1230,425 @@ describe("npm provenance", () => {
           npmProvenance: true,
         }),
     ).toThrow(`"npmProvenance" can only be enabled for public packages`);
+  });
+});
+
+describe("allowScripts", () => {
+  test("npm: writes native allowScripts field to package.json", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+      esbuild: true,
+    });
+  });
+
+  test("npm: allowScripts is omitted when not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("npm: allowScripts is omitted for an empty array", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: [],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("bun: writes native trustedDependencies field to package.json", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.BUN,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].trustedDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("bun: trustedDependencies is omitted when not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.BUN,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].trustedDependencies).toBeUndefined();
+  });
+
+  test("pnpm: writes onlyBuiltDependencies to pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["pnpm-workspace.yaml"]).toBeDefined();
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("pnpm: does not create pnpm-workspace.yaml when allowScripts is not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["pnpm-workspace.yaml"]).toBeUndefined();
+  });
+
+  test("pnpm: pnpmOptions.workspaceYamlOptions passes through arbitrary pnpm-workspace.yaml settings", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild"],
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          packages: ["packages/*"],
+          neverBuiltDependencies: ["fsevents"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml).toStrictEqual({
+      packages: ["packages/*"],
+      onlyBuiltDependencies: ["esbuild"],
+      neverBuiltDependencies: ["fsevents"],
+    });
+  });
+
+  test("pnpm: merges allowScripts with an explicit onlyBuiltDependencies list", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild"],
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          onlyBuiltDependencies: ["@biomejs/biome"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+      "esbuild",
+    ]);
+  });
+
+  test("pnpm: creates pnpm-workspace.yaml from pnpmOptions even without allowScripts", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      pnpmOptions: {
+        workspaceYamlOptions: {
+          packages: ["packages/*"],
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml).toStrictEqual({ packages: ["packages/*"] });
+  });
+
+  test.each([NodePackageManager.YARN2, NodePackageManager.YARN_BERRY])(
+    "%s: writes native dependenciesMeta.<pkg>.built allowlist and disables scripts globally",
+    (packageManager) => {
+      const project = new TestProject();
+
+      new NodePackage(project, {
+        packageManager,
+        allowScripts: ["esbuild", "@biomejs/biome"],
+      });
+
+      const files = synthSnapshot(project);
+      expect(files["package.json"].dependenciesMeta).toStrictEqual({
+        "@biomejs/biome": { built: true },
+        esbuild: { built: true },
+      });
+      expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(false);
+    },
+  );
+
+  test("yarn berry: dependenciesMeta is omitted when allowScripts is not set", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toBeUndefined();
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBeUndefined();
+  });
+
+  test("yarn berry: respects an explicit enableScripts setting", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild"],
+      yarnBerryOptions: {
+        yarnRcOptions: {
+          enableScripts: true,
+        },
+      },
+    });
+
+    const files = synthSnapshot(project);
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(true);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      esbuild: { built: true },
+    });
+  });
+
+  test("yarn berry: supports version-pinned entries (e.g. esbuild@0.25.1)", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild@0.25.1"],
+    });
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      "esbuild@0.25.1": { built: true },
+    });
+  });
+
+  test.each([NodePackageManager.YARN, NodePackageManager.YARN_CLASSIC])(
+    "%s: throws a descriptive error since yarn classic has no native allowlist",
+    (packageManager) => {
+      const project = new TestProject();
+
+      new NodePackage(project, {
+        packageManager,
+        allowScripts: ["esbuild"],
+      });
+
+      expect(() => project.synth()).toThrow(
+        /"allowScripts" is not supported for packageManager/,
+      );
+    },
+  );
+
+  test("yarn classic: throws a descriptive error", () => {
+    const project = new TestProject();
+
+    new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      allowScripts: ["esbuild"],
+    });
+
+    expect(() => project.synth()).toThrow(
+      /"allowScripts" is not supported for packageManager "yarn_classic"/,
+    );
+  });
+
+  test("addAllowedScripts adds to the allowlist set via the allowScripts option", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.addAllowedScripts("@biomejs/biome");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+      esbuild: true,
+    });
+  });
+
+  test("addAllowedScripts works without the allowScripts option (e.g. a project type default)", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      esbuild: true,
+    });
+  });
+
+  test("removeAllowedScripts removes a package that was set via the allowScripts option", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+    });
+  });
+
+  test("removeAllowedScripts removes a package added via addAllowedScripts (e.g. a project type default)", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+    });
+    pkg.addAllowedScripts("esbuild", "@biomejs/biome");
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      "@biomejs/biome": true,
+    });
+  });
+
+  test("removeAllowedScripts clearing every entry omits the field entirely", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toBeUndefined();
+  });
+
+  test("removeAllowedScripts is a no-op for a package that was never allowed", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.NPM,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("not-in-the-list");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].allowScripts).toStrictEqual({
+      esbuild: true,
+    });
+  });
+
+  test("pnpm: addAllowedScripts called after construction (no initial allowScripts) still creates pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual(["esbuild"]);
+  });
+
+  test("pnpm: removeAllowedScripts called after construction is reflected in pnpm-workspace.yaml", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.PNPM,
+      allowScripts: ["esbuild", "@biomejs/biome"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+    expect(workspaceYaml.onlyBuiltDependencies).toStrictEqual([
+      "@biomejs/biome",
+    ]);
+  });
+
+  test("yarn berry: addAllowedScripts called after construction (no initial allowScripts) still disables scripts globally", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toStrictEqual({
+      esbuild: { built: true },
+    });
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBe(false);
+  });
+
+  test("yarn berry: removeAllowedScripts clearing every entry omits enableScripts", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_BERRY,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    const files = synthSnapshot(project);
+    expect(files["package.json"].dependenciesMeta).toBeUndefined();
+    expect(YAML.parse(files[".yarnrc.yml"]).enableScripts).toBeUndefined();
+  });
+
+  test("yarn classic: addAllowedScripts called after construction (no allowScripts option) still throws at synth time", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+    pkg.addAllowedScripts("esbuild");
+
+    expect(() => project.synth()).toThrow(
+      /"allowScripts" is not supported for packageManager "yarn_classic"/,
+    );
+  });
+
+  test("yarn classic: removeAllowedScripts clearing every entry avoids the synth-time error", () => {
+    const project = new TestProject();
+
+    const pkg = new NodePackage(project, {
+      packageManager: NodePackageManager.YARN_CLASSIC,
+      allowScripts: ["esbuild"],
+    });
+    pkg.removeAllowedScripts("esbuild");
+
+    expect(() => project.synth()).not.toThrow();
   });
 });

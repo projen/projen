@@ -17,8 +17,21 @@ const actions: javascript.biome_config.Actions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.Actions.property.preset">preset</a></code> | <code>projen.javascript.biome_config.PresetConfig</code> | The actions preset to use. |
 | <code><a href="#projen.javascript.biome_config.Actions.property.recommended">recommended</a></code> | <code>boolean</code> | It enables the assist actions recommended by Biome. |
 | <code><a href="#projen.javascript.biome_config.Actions.property.source">source</a></code> | <code>projen.javascript.biome_config.Source</code> | *No description.* |
+
+---
+
+##### `preset`<sup>Optional</sup> <a name="preset" id="projen.javascript.biome_config.Actions.property.preset"></a>
+
+```typescript
+public readonly preset: PresetConfig;
+```
+
+- *Type:* projen.javascript.biome_config.PresetConfig
+
+The actions preset to use.
 
 ---
 
@@ -133,9 +146,9 @@ const biomeConfiguration: javascript.biome_config.BiomeConfiguration = { ... }
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.json">json</a></code> | <code>projen.javascript.biome_config.JsonConfiguration</code> | Specific configuration for the Json language. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.LinterConfiguration</code> | The configuration for the linter. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.overrides">overrides</a></code> | <code>projen.javascript.biome_config.OverridePattern[]</code> | A list of granular patterns that should be applied only to a sub set of files. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.plugins">plugins</a></code> | <code>string[]</code> | List of plugins to load. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.plugins">plugins</a></code> | <code>any[]</code> | List of plugins to load. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.root">root</a></code> | <code>boolean</code> | Indicates whether this configuration file is at the root of a Biome project. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.schema">schema</a></code> | <code>string</code> | A field for the [JSON schema](https://json-schema.org/) specification. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.schema">schema</a></code> | <code>string</code> | A field for the JSON schema specification: https://json-schema.org/. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.vcs">vcs</a></code> | <code>projen.javascript.biome_config.VcsConfiguration</code> | The configuration of the VCS integration. |
 
 ---
@@ -287,10 +300,10 @@ A list of granular patterns that should be applied only to a sub set of files.
 ##### `plugins`<sup>Optional</sup> <a name="plugins" id="projen.javascript.biome_config.BiomeConfiguration.property.plugins"></a>
 
 ```typescript
-public readonly plugins: string[];
+public readonly plugins: any[];
 ```
 
-- *Type:* string[]
+- *Type:* any[]
 
 List of plugins to load.
 
@@ -318,7 +331,7 @@ public readonly schema: string;
 
 - *Type:* string
 
-A field for the [JSON schema](https://json-schema.org/) specification.
+A field for the JSON schema specification: https://json-schema.org/.
 
 ---
 
@@ -466,6 +479,7 @@ const cssFormatterConfiguration: javascript.biome_config.CssFormatterConfigurati
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for CSS (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to CSS (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to CSS (and its super languages) files. |
@@ -473,6 +487,23 @@ const cssFormatterConfiguration: javascript.biome_config.CssFormatterConfigurati
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to CSS (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in CSS code. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
+
+---
+
+##### `delimiterSpacing`<sup>Optional</sup> <a name="delimiterSpacing" id="projen.javascript.biome_config.CssFormatterConfiguration.property.delimiterSpacing"></a>
+
+```typescript
+public readonly delimiterSpacing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false.
+
+Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+
+Only applies when the content fits on a single line, and empty
+delimiters are not affected. For CSS, affects parentheses (e.g., `rgb( 0, 0, 0 )`) and
+square brackets (e.g., `[ data-attr ]`). Defaults to false.
 
 ---
 
@@ -774,6 +805,7 @@ const formatterConfiguration: javascript.biome_config.FormatterConfiguration = {
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in HTML-ish languages. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements). |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Whether formatting should be allowed to proceed if a given file has syntax errors. |
@@ -826,6 +858,23 @@ public readonly bracketSpacing: boolean;
 Whether to insert spaces around brackets in object literals.
 
 Defaults to true.
+
+---
+
+##### `delimiterSpacing`<sup>Optional</sup> <a name="delimiterSpacing" id="projen.javascript.biome_config.FormatterConfiguration.property.delimiterSpacing"></a>
+
+```typescript
+public readonly delimiterSpacing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false.
+
+Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations.
+
+Spaces are not added before the opening delimiter, and empty delimiters
+are not affected. Only applies when the content fits on a single line. The specific
+delimiters affected depend on the language. Defaults to false.
 
 ---
 
@@ -1826,6 +1875,7 @@ const htmlParserConfiguration: javascript.biome_config.HtmlParserConfiguration =
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.interpolation">interpolation</a></code> | <code>boolean</code> | Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files. |
+| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.vue">vue</a></code> | <code>boolean</code> | Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly. |
 
 ---
 
@@ -1838,6 +1888,22 @@ public readonly interpolation: boolean;
 - *Type:* boolean
 
 Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files.
+
+---
+
+##### `vue`<sup>Optional</sup> <a name="vue" id="projen.javascript.biome_config.HtmlParserConfiguration.property.vue"></a>
+
+```typescript
+public readonly vue: boolean;
+```
+
+- *Type:* boolean
+
+Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly.
+
+Biome will already automatically enable Vue parsing in `.vue` files, so you probably don't need
+to enable this option. This only affects `.html` files, and does not change how `.vue`, `.svelte`,
+or `.astro` files are parsed.
 
 ---
 
@@ -1896,6 +1962,7 @@ const jsConfiguration: javascript.biome_config.JsConfiguration = { ... }
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.jsxRuntime">jsxRuntime</a></code> | <code>projen.javascript.biome_config.JsxRuntime</code> | Indicates the type of runtime or transformation used for interpreting JSX. |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.JsLinterConfiguration</code> | Linter options. |
 | <code><a href="#projen.javascript.biome_config.JsConfiguration.property.parser">parser</a></code> | <code>projen.javascript.biome_config.JsParserConfiguration</code> | Parsing options. |
+| <code><a href="#projen.javascript.biome_config.JsConfiguration.property.resolver">resolver</a></code> | <code>projen.javascript.biome_config.JsResolverConfiguration</code> | Module/dependency resolver options. |
 
 ---
 
@@ -1985,6 +2052,18 @@ Parsing options.
 
 ---
 
+##### `resolver`<sup>Optional</sup> <a name="resolver" id="projen.javascript.biome_config.JsConfiguration.property.resolver"></a>
+
+```typescript
+public readonly resolver: JsResolverConfiguration;
+```
+
+- *Type:* projen.javascript.biome_config.JsResolverConfiguration
+
+Module/dependency resolver options.
+
+---
+
 ### JsFormatterConfiguration <a name="JsFormatterConfiguration" id="projen.javascript.biome_config.JsFormatterConfiguration"></a>
 
 Formatting options specific to the JavaScript files.
@@ -2005,6 +2084,7 @@ const jsFormatterConfiguration: javascript.biome_config.JsFormatterConfiguration
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in JSX elements. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for JavaScript (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JavaScript (and its super languages) files. |
@@ -2078,6 +2158,28 @@ public readonly bracketSpacing: boolean;
 Whether to insert spaces around brackets in object literals.
 
 Defaults to true.
+
+---
+
+##### `delimiterSpacing`<sup>Optional</sup> <a name="delimiterSpacing" id="projen.javascript.biome_config.JsFormatterConfiguration.property.delimiterSpacing"></a>
+
+```typescript
+public readonly delimiterSpacing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false.
+
+Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+
+Only applies when the content fits on a single line. Spaces are not
+added before the opening delimiter (e.g., `function f()` stays `function f()`, not
+`function f ()`), and empty delimiters are not affected (e.g., `fn()` stays `fn()`).
+For JavaScript and TypeScript, affects parentheses (e.g., `foo( a, b )`), square brackets
+(e.g., `[ a, b ]`), template literal interpolations (e.g., `${ expr }`), TypeScript angle
+brackets (e.g., `foo< T >()`), JSX expression braces (e.g., `{ value }`), and the logical
+NOT operator (e.g., `! x`, but in chains only after the last one: `!! x`). Defaults to
+false.
 
 ---
 
@@ -2427,6 +2529,7 @@ const jsonFormatterConfiguration: javascript.biome_config.JsonFormatterConfigura
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for JSON (and its super languages) files. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JSON (and its super languages) files. |
@@ -2450,6 +2553,23 @@ public readonly bracketSpacing: boolean;
 Whether to insert spaces around brackets in object literals.
 
 Defaults to true.
+
+---
+
+##### `delimiterSpacing`<sup>Optional</sup> <a name="delimiterSpacing" id="projen.javascript.biome_config.JsonFormatterConfiguration.property.delimiterSpacing"></a>
+
+```typescript
+public readonly delimiterSpacing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false.
+
+Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+
+Only applies when the content fits on a single line, and empty
+brackets are not affected. For JSON, affects square brackets (e.g., `[ 1, 2, 3 ]`).
+Defaults to false.
 
 ---
 
@@ -2720,6 +2840,60 @@ These decorators belong to an old proposal, and they are subject to change.
 
 ---
 
+### JsResolverConfiguration <a name="JsResolverConfiguration" id="projen.javascript.biome_config.JsResolverConfiguration"></a>
+
+Resolver options specific to JavaScript files.
+
+#### Initializer <a name="Initializer" id="projen.javascript.biome_config.JsResolverConfiguration.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const jsResolverConfiguration: javascript.biome_config.JsResolverConfiguration = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.JsResolverConfiguration.property.experimentalPnpmCatalogs">experimentalPnpmCatalogs</a></code> | <code>boolean</code> | Enables pnpm workspace catalog resolution for JavaScript package manifests. |
+
+---
+
+##### `experimentalPnpmCatalogs`<sup>Optional</sup> <a name="experimentalPnpmCatalogs" id="projen.javascript.biome_config.JsResolverConfiguration.property.experimentalPnpmCatalogs"></a>
+
+```typescript
+public readonly experimentalPnpmCatalogs: boolean;
+```
+
+- *Type:* boolean
+
+Enables pnpm workspace catalog resolution for JavaScript package manifests.
+
+Opt-in:
+- Set `javascript.resolver.experimentalPnpmCatalogs` to `true`.
+
+Scope:
+- Resolves `catalog:` and `catalog:<name>` dependency versions from
+`package.json`.
+- Applies to `dependencies`, `devDependencies`, and `peerDependencies`.
+
+Fail-safe behavior:
+- If `pnpm-workspace.yaml` is missing, unreadable, or cannot be parsed,
+Biome silently falls back to the default behavior (as if this option
+were disabled).
+- Unknown keys and unsupported value shapes in `pnpm-workspace.yaml` are
+ignored.
+
+Limitations:
+- Only `pnpm-workspace.yaml` is read.
+- Biome only reads top-level `catalog` / `catalogs` mappings and scalar
+string entries.
+
+Default: `false`.
+
+---
+
 ### LinterConfiguration <a name="LinterConfiguration" id="projen.javascript.biome_config.LinterConfiguration"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.LinterConfiguration.Initializer"></a>
@@ -2886,6 +3060,7 @@ const overrideFormatterConfiguration: javascript.biome_config.OverrideFormatterC
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements). |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Stores whether formatting should be allowed to proceed if a given file has syntax errors. |
@@ -2894,6 +3069,7 @@ const overrideFormatterConfiguration: javascript.biome_config.OverrideFormatterC
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
@@ -2934,6 +3110,23 @@ public readonly bracketSpacing: boolean;
 Whether to insert spaces around brackets in object literals.
 
 Defaults to true.
+
+---
+
+##### `delimiterSpacing`<sup>Optional</sup> <a name="delimiterSpacing" id="projen.javascript.biome_config.OverrideFormatterConfiguration.property.delimiterSpacing"></a>
+
+```typescript
+public readonly delimiterSpacing: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false.
+
+Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations.
+
+Spaces are not added before the opening delimiter, and empty delimiters
+are not affected. Only applies when the content fits on a single line. The specific
+delimiters affected depend on the language. Defaults to false.
 
 ---
 
@@ -3038,6 +3231,18 @@ public readonly lineWidth: number;
 What's the max width of a line.
 
 Defaults to 80.
+
+---
+
+##### `trailingCommas`<sup>Optional</sup> <a name="trailingCommas" id="projen.javascript.biome_config.OverrideFormatterConfiguration.property.trailingCommas"></a>
+
+```typescript
+public readonly trailingCommas: JsTrailingCommas;
+```
+
+- *Type:* projen.javascript.biome_config.JsTrailingCommas
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
 
 ---
 
@@ -3146,7 +3351,7 @@ const overridePattern: javascript.biome_config.OverridePattern = { ... }
 | <code><a href="#projen.javascript.biome_config.OverridePattern.property.javascript">javascript</a></code> | <code>projen.javascript.biome_config.JsConfiguration</code> | Specific configuration for the JavaScript language. |
 | <code><a href="#projen.javascript.biome_config.OverridePattern.property.json">json</a></code> | <code>projen.javascript.biome_config.JsonConfiguration</code> | Specific configuration for the Json language. |
 | <code><a href="#projen.javascript.biome_config.OverridePattern.property.linter">linter</a></code> | <code>projen.javascript.biome_config.OverrideLinterConfiguration</code> | Specific configuration for the Json language. |
-| <code><a href="#projen.javascript.biome_config.OverridePattern.property.plugins">plugins</a></code> | <code>string[]</code> | Specific configuration for additional plugins. |
+| <code><a href="#projen.javascript.biome_config.OverridePattern.property.plugins">plugins</a></code> | <code>any[]</code> | Specific configuration for additional plugins. |
 
 ---
 
@@ -3288,10 +3493,10 @@ Specific configuration for the Json language.
 ##### `plugins`<sup>Optional</sup> <a name="plugins" id="projen.javascript.biome_config.OverridePattern.property.plugins"></a>
 
 ```typescript
-public readonly plugins: string[];
+public readonly plugins: any[];
 ```
 
-- *Type:* string[]
+- *Type:* any[]
 
 Specific configuration for additional plugins.
 
@@ -3316,6 +3521,7 @@ const rules: javascript.biome_config.Rules = { ... }
 | <code><a href="#projen.javascript.biome_config.Rules.property.correctness">correctness</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.Rules.property.nursery">nursery</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.Rules.property.performance">performance</a></code> | <code>any</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.Rules.property.preset">preset</a></code> | <code>projen.javascript.biome_config.PresetConfig</code> | The rule presets to use. |
 | <code><a href="#projen.javascript.biome_config.Rules.property.recommended">recommended</a></code> | <code>boolean</code> | It enables the lint rules recommended by Biome. |
 | <code><a href="#projen.javascript.biome_config.Rules.property.security">security</a></code> | <code>any</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.Rules.property.style">style</a></code> | <code>any</code> | *No description.* |
@@ -3370,6 +3576,18 @@ public readonly performance: any;
 ```
 
 - *Type:* any
+
+---
+
+##### `preset`<sup>Optional</sup> <a name="preset" id="projen.javascript.biome_config.Rules.property.preset"></a>
+
+```typescript
+public readonly preset: PresetConfig;
+```
+
+- *Type:* projen.javascript.biome_config.PresetConfig
+
+The rule presets to use.
 
 ---
 
@@ -3435,11 +3653,16 @@ const source: javascript.biome_config.Source = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.Source.property.noDuplicateClasses">noDuplicateClasses</a></code> | <code>any</code> | Remove duplicate CSS classes. |
 | <code><a href="#projen.javascript.biome_config.Source.property.organizeImports">organizeImports</a></code> | <code>any</code> | Sorts imports and exports in your JavaScript and TypeScript files. |
+| <code><a href="#projen.javascript.biome_config.Source.property.preset">preset</a></code> | <code>projen.javascript.biome_config.PresetConfig</code> | Enables a particular rule preset. |
 | <code><a href="#projen.javascript.biome_config.Source.property.recommended">recommended</a></code> | <code>boolean</code> | Enables the recommended rules for this group. |
-| <code><a href="#projen.javascript.biome_config.Source.property.useSortedAttributes">useSortedAttributes</a></code> | <code>any</code> | Enforce attribute sorting in JSX elements. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedAttributes">useSortedAttributes</a></code> | <code>any</code> | Enforce attribute sorting in HTML elements. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedEnumMembers">useSortedEnumMembers</a></code> | <code>any</code> | Sort the members of an enum in natural order. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedInterfaceMembers">useSortedInterfaceMembers</a></code> | <code>any</code> | Sort interface members by key. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedKeys">useSortedKeys</a></code> | <code>any</code> | Sort the keys of a JSON object in natural order. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedPackageJson">useSortedPackageJson</a></code> | <code>any</code> | Organize package.json fields according to established conventions. See https://biomejs.dev/assist/actions/use-sorted-package-json. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedProperties">useSortedProperties</a></code> | <code>any</code> | Enforce ordering of CSS properties and nested rules. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedSelectionSet">useSortedSelectionSet</a></code> | <code>any</code> | Sort GraphQL selection sets. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedTypeFields">useSortedTypeFields</a></code> | <code>any</code> | Sort fields in GraphQL type definitions alphabetically. |
 
 ---
 
@@ -3471,6 +3694,18 @@ See https://biomejs.dev/assist/actions/organize-imports
 
 ---
 
+##### `preset`<sup>Optional</sup> <a name="preset" id="projen.javascript.biome_config.Source.property.preset"></a>
+
+```typescript
+public readonly preset: PresetConfig;
+```
+
+- *Type:* projen.javascript.biome_config.PresetConfig
+
+Enables a particular rule preset.
+
+---
+
 ##### `recommended`<sup>Optional</sup> <a name="recommended" id="projen.javascript.biome_config.Source.property.recommended"></a>
 
 ```typescript
@@ -3491,9 +3726,23 @@ public readonly useSortedAttributes: any;
 
 - *Type:* any
 
-Enforce attribute sorting in JSX elements.
+Enforce attribute sorting in HTML elements.
 
 See https://biomejs.dev/assist/actions/use-sorted-attributes
+
+---
+
+##### `useSortedEnumMembers`<sup>Optional</sup> <a name="useSortedEnumMembers" id="projen.javascript.biome_config.Source.property.useSortedEnumMembers"></a>
+
+```typescript
+public readonly useSortedEnumMembers: any;
+```
+
+- *Type:* any
+
+Sort the members of an enum in natural order.
+
+See https://biomejs.dev/assist/actions/use-sorted-enum-members
 
 ---
 
@@ -3525,6 +3774,18 @@ See https://biomejs.dev/assist/actions/use-sorted-keys
 
 ---
 
+##### `useSortedPackageJson`<sup>Optional</sup> <a name="useSortedPackageJson" id="projen.javascript.biome_config.Source.property.useSortedPackageJson"></a>
+
+```typescript
+public readonly useSortedPackageJson: any;
+```
+
+- *Type:* any
+
+Organize package.json fields according to established conventions. See https://biomejs.dev/assist/actions/use-sorted-package-json.
+
+---
+
 ##### `useSortedProperties`<sup>Optional</sup> <a name="useSortedProperties" id="projen.javascript.biome_config.Source.property.useSortedProperties"></a>
 
 ```typescript
@@ -3536,6 +3797,34 @@ public readonly useSortedProperties: any;
 Enforce ordering of CSS properties and nested rules.
 
 See https://biomejs.dev/assist/actions/use-sorted-properties
+
+---
+
+##### `useSortedSelectionSet`<sup>Optional</sup> <a name="useSortedSelectionSet" id="projen.javascript.biome_config.Source.property.useSortedSelectionSet"></a>
+
+```typescript
+public readonly useSortedSelectionSet: any;
+```
+
+- *Type:* any
+
+Sort GraphQL selection sets.
+
+See https://biomejs.dev/assist/actions/use-sorted-selection-set
+
+---
+
+##### `useSortedTypeFields`<sup>Optional</sup> <a name="useSortedTypeFields" id="projen.javascript.biome_config.Source.property.useSortedTypeFields"></a>
+
+```typescript
+public readonly useSortedTypeFields: any;
+```
+
+- *Type:* any
+
+Sort fields in GraphQL type definitions alphabetically.
+
+See https://biomejs.dev/assist/actions/use-sorted-type-fields
 
 ---
 
@@ -3559,7 +3848,7 @@ const vcsConfiguration: javascript.biome_config.VcsConfiguration = { ... }
 | <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.defaultBranch">defaultBranch</a></code> | <code>string</code> | The main branch of the project. |
 | <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Whether Biome should integrate itself with the VCS client. |
 | <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.root">root</a></code> | <code>string</code> | The folder where Biome should check for VCS files. |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.useIgnoreFile">useIgnoreFile</a></code> | <code>boolean</code> | Whether Biome should use the VCS ignore file. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.useIgnoreFile">useIgnoreFile</a></code> | <code>boolean</code> | Whether Biome should use VCS ignore files. |
 
 ---
 
@@ -3626,10 +3915,10 @@ public readonly useIgnoreFile: boolean;
 
 - *Type:* boolean
 
-Whether Biome should use the VCS ignore file.
+Whether Biome should use VCS ignore files.
 
-When [true], Biome will ignore the files
-specified in the ignore file.
+When [true], Biome will ignore files
+specified in `.gitignore`, `.ignore`, and Git's local exclude file.
 
 ---
 
@@ -3913,6 +4202,41 @@ The operator is placed after the expression (after).
 ##### `BEFORE` <a name="BEFORE" id="projen.javascript.biome_config.OperatorLinebreak.BEFORE"></a>
 
 The operator is placed before the expression (before).
+
+---
+
+
+### PresetConfig <a name="PresetConfig" id="projen.javascript.biome_config.PresetConfig"></a>
+
+A preset configuration for enabling a set of rules.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.biome_config.PresetConfig.RECOMMENDED">RECOMMENDED</a></code> | recommended. |
+| <code><a href="#projen.javascript.biome_config.PresetConfig.ALL">ALL</a></code> | all. |
+| <code><a href="#projen.javascript.biome_config.PresetConfig.NONE">NONE</a></code> | none. |
+
+---
+
+##### `RECOMMENDED` <a name="RECOMMENDED" id="projen.javascript.biome_config.PresetConfig.RECOMMENDED"></a>
+
+recommended.
+
+---
+
+
+##### `ALL` <a name="ALL" id="projen.javascript.biome_config.PresetConfig.ALL"></a>
+
+all.
+
+---
+
+
+##### `NONE` <a name="NONE" id="projen.javascript.biome_config.PresetConfig.NONE"></a>
+
+none.
 
 ---
 

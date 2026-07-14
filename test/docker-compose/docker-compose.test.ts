@@ -1,8 +1,8 @@
-import * as child_process from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import { DockerCompose, DockerComposeProtocol, YamlFile } from "../../src/";
 import * as logging from "../../src/logging";
+import { tool } from "../../src/util/exec";
 import { TestProject } from "../util";
 
 logging.disable();
@@ -38,26 +38,10 @@ describe("docker-compose", () => {
     ).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
-  test("errors when version tag is not a number", () => {
-    const project = new TestProject();
-    expect(
-      () =>
-        new DockerCompose(project, {
-          schemaVersion: "blub",
-          services: {
-            myservice: {
-              image: "nginx",
-            },
-          },
-        }),
-    ).toThrow(/Version tag needs to be a number/i);
-  });
-
   test("exposes file as property", () => {
     const project = new TestProject();
 
     const dc = new DockerCompose(project, {
-      schemaVersion: "3.1",
       services: {
         myservice: {
           image: "nginx",
@@ -67,31 +51,6 @@ describe("docker-compose", () => {
 
     expect(dc.file).toBeInstanceOf(YamlFile);
     expect(dc.file.path).toEqual("docker-compose.yml");
-  });
-
-  test("version tag explicit set and created as float", () => {
-    const project = new TestProject();
-
-    const dc = new DockerCompose(project, {
-      schemaVersion: "3.1",
-      services: {
-        myservice: {
-          image: "nginx",
-        },
-      },
-    });
-
-    expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.1",
-      services: {
-        myservice: {
-          image: "nginx",
-        },
-      },
-    });
-
-    project.synth();
-    assertDockerComposeFileValidates(project.outdir);
   });
 
   test("not defining schemaVersion will omit version from output", () => {
@@ -121,7 +80,6 @@ describe("docker-compose", () => {
     const project = new TestProject();
 
     const dc = new DockerCompose(project, {
-      schemaVersion: "3",
       services: {
         myservice: {
           image: "nginx",
@@ -130,7 +88,6 @@ describe("docker-compose", () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3",
       services: {
         myservice: {
           image: "nginx",
@@ -991,21 +948,21 @@ describe("docker-compose", () => {
 });
 
 const hasDockerCompose =
-  child_process.spawnSync("docker-compose", ["version"]).status === 0;
+  tool("docker-compose").tryCapture(["version"], { cwd: process.cwd() }) !==
+  undefined;
 
 function assertDockerComposeFileValidates(dir: string) {
   const filePath = path.join(dir, "docker-compose.yml");
   expect(fs.existsSync(filePath)).toBeTruthy();
 
   if (hasDockerCompose) {
-    const res = child_process.spawnSync("docker-compose", [
-      "-f",
-      filePath,
-      "config",
-    ]);
-    if (res.status !== 0) {
+    try {
+      tool("docker-compose").capture(["-f", filePath, "config"], { cwd: dir });
+    } catch (e: unknown) {
       throw new Error(
-        `docker-compose file does not validate: ${res.stderr.toString()}`,
+        `docker-compose file does not validate: ${
+          (e as { stderr?: Buffer })?.stderr?.toString() ?? e
+        }`,
       );
     }
   } else {

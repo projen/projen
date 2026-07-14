@@ -1,4 +1,8 @@
 {
+  "manifestVersion": 3,
+  "env": {
+    "PATH": "$(npx -c \"node --print process.env.PATH\")"
+  },
   "tasks": {
     "audit": {
       "name": "audit",
@@ -43,7 +47,7 @@
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
         "BUMP_PACKAGE": "commit-and-tag-version@^12",
-        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\""
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'"
       },
       "steps": [
         {
@@ -57,7 +61,7 @@
       "description": "Bundle the run-task.cjs script needed for \"projen eject\"",
       "steps": [
         {
-          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.cjs --bundle --platform=node --format=cjs --external:\"*/package.json\" --banner:js=\"#!/usr/bin/env node\" --footer:js=\"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\""
+          "exec": "esbuild src/cli/task-runtime.ts --outfile=lib/run-task.cjs --bundle --platform=node --format=cjs --banner:js=\"#!/usr/bin/env node\" --footer:js=\"TaskRuntime.main();\""
         }
       ]
     },
@@ -65,7 +69,13 @@
       "name": "check-licenses",
       "steps": [
         {
-          "exec": "license-checker --summary --production --onlyAllow \"MIT;ISC;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0\"",
+          "execArgs": [
+            "license-checker",
+            "--summary",
+            "--production",
+            "--onlyAllow",
+            "MIT;ISC;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0"
+          ],
           "receiveArgs": true
         }
       ]
@@ -125,7 +135,21 @@
       "description": "Synthesize project files",
       "steps": [
         {
-          "exec": "ts-node --project tsconfig.dev.json .projenrc.ts"
+          "execArgs": [
+            "tsc",
+            "--noEmit",
+            "-p",
+            "projenrc/tsconfig.json"
+          ],
+          "name": "typecheck"
+        },
+        {
+          "execArgs": [
+            "tsx",
+            "--tsconfig",
+            "projenrc/tsconfig.json",
+            ".projenrc.ts"
+          ]
         }
       ]
     },
@@ -214,7 +238,26 @@
         },
         {
           "spawn": "integ:java"
+        },
+        {
+          "spawn": "integ:windows-shell-syntax"
+        },
+        {
+          "spawn": "integ:eject"
         }
+      ]
+    },
+    "integ:eject": {
+      "name": "integ:eject",
+      "description": "Run projen eject integration test",
+      "steps": [
+        {
+          "exec": "scripts/integ-eject.sh"
+        }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:go": {
@@ -224,6 +267,10 @@
         {
           "exec": "scripts/integ-go.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:java": {
@@ -233,6 +280,10 @@
         {
           "exec": "scripts/integ-java.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:node": {
@@ -242,6 +293,10 @@
         {
           "exec": "scripts/integ-node.sh"
         }
+      ],
+      "shell": [
+        "bash",
+        "-c"
       ]
     },
     "integ:python": {
@@ -250,6 +305,21 @@
       "steps": [
         {
           "exec": "scripts/integ-python.sh"
+        }
+      ],
+      "shell": [
+        "bash",
+        "-c"
+      ]
+    },
+    "integ:windows-shell-syntax": {
+      "name": "integ:windows-shell-syntax",
+      "description": "Run Windows task shell syntax tests",
+      "steps": [
+        {
+          "exec": "scripts\\integ-windows-shell-syntax.cmd",
+          "condition": "node -e \"process.exit(process.platform === 'win32' ? 0 : 1)\"",
+          "shell": "system"
         }
       ]
     },
@@ -290,7 +360,12 @@
       "description": "Create go language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target go"
+          "execArgs": [
+            "jsii-pacmak",
+            "-v",
+            "--target",
+            "go"
+          ]
         }
       ]
     },
@@ -299,7 +374,12 @@
       "description": "Create java language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target java"
+          "execArgs": [
+            "jsii-pacmak",
+            "-v",
+            "--target",
+            "java"
+          ]
         }
       ]
     },
@@ -308,7 +388,12 @@
       "description": "Create js language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target js"
+          "execArgs": [
+            "jsii-pacmak",
+            "-v",
+            "--target",
+            "js"
+          ]
         }
       ]
     },
@@ -317,7 +402,12 @@
       "description": "Create python language bindings",
       "steps": [
         {
-          "exec": "jsii-pacmak -v --target python"
+          "execArgs": [
+            "jsii-pacmak",
+            "-v",
+            "--target",
+            "python"
+          ]
         }
       ]
     },
@@ -425,11 +515,29 @@
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
         "BUMP_PACKAGE": "commit-and-tag-version@^12",
-        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep \"^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+\""
+        "RELEASABLE_COMMITS": "git log --no-merges --oneline $LATEST_TAG..HEAD -E --grep '^(feat|fix){1}(\\([^()[:space:]]+\\))?(!)?:[[:blank:]]+.+'"
       },
       "steps": [
         {
           "builtin": "release/reset-version"
+        }
+      ]
+    },
+    "update-schemas": {
+      "name": "update-schemas",
+      "description": "Updates vendored JSON schemas from their source URL",
+      "steps": [
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/pyproject.json schemas/pyproject.json",
+          "name": "update schema: schemas/pyproject.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/uv.json schemas/uv.json",
+          "name": "update schema: schemas/uv.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://json.schemastore.org/pnpm-workspace.json schemas/pnpm-workspace.json",
+          "name": "update schema: schemas/pnpm-workspace.json"
         }
       ]
     },
@@ -442,13 +550,59 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,ts-node"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--cooldown=2",
+            "--peer",
+            "--no-deprecated",
+            "--dep=dev,prod,peer,optional",
+            "--filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,tsx"
+          ]
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @biomejs/biome @jsii/check-node @types/conventional-changelog-config-spec @types/ini @types/jest @types/node @types/parse-conflict-json @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk-lib commit-and-tag-version esbuild eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii-rosetta jsii json2jsii license-checker markmac prettier ts-jest ts-node typescript"
+          "execArgs": [
+            "npm",
+            "update",
+            "@biomejs/biome",
+            "@jsii/check-node",
+            "@types/conventional-changelog-config-spec",
+            "@types/ini",
+            "@types/jest",
+            "@types/node",
+            "@types/parse-conflict-json",
+            "@types/semver",
+            "@types/yargs",
+            "@typescript-eslint/eslint-plugin",
+            "@typescript-eslint/parser",
+            "aws-cdk-lib",
+            "commit-and-tag-version",
+            "esbuild",
+            "eslint-config-prettier",
+            "eslint-import-resolver-typescript",
+            "eslint-plugin-import",
+            "eslint-plugin-prettier",
+            "eslint",
+            "jest",
+            "jest-junit",
+            "jsii-diff",
+            "jsii-docgen",
+            "jsii-pacmak",
+            "jsii-rosetta",
+            "jsii",
+            "json2jsii",
+            "license-checker",
+            "markmac",
+            "prettier",
+            "ts-jest",
+            "tsx",
+            "typescript"
+          ]
         },
         {
           "exec": "node ./projen.js"
@@ -467,13 +621,40 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@20 --upgrade --target=minor --cooldown=2 --peer --no-deprecated --dep= --filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,shx,xmlbuilder2,yargs"
+          "execArgs": [
+            "npx",
+            "npm-check-updates@20",
+            "--upgrade",
+            "--target=minor",
+            "--cooldown=2",
+            "--peer",
+            "--no-deprecated",
+            "--dep=prod",
+            "--filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,dax,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,xmlbuilder2,yargs"
+          ]
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-glob fast-json-patch ini parse-conflict-json semver shx xmlbuilder2 yaml yargs"
+          "execArgs": [
+            "npm",
+            "update",
+            "@iarna/toml",
+            "case",
+            "chalk",
+            "comment-json",
+            "conventional-changelog-config-spec",
+            "dax",
+            "fast-glob",
+            "fast-json-patch",
+            "ini",
+            "parse-conflict-json",
+            "semver",
+            "xmlbuilder2",
+            "yaml",
+            "yargs"
+          ]
         },
         {
           "exec": "node ./projen.js"
@@ -481,7 +662,8 @@
         {
           "spawn": "post-upgrade"
         }
-      ]
+      ],
+      "shell": "system"
     },
     "watch": {
       "name": "watch",
@@ -492,9 +674,6 @@
         }
       ]
     }
-  },
-  "env": {
-    "PATH": "$(npx -c \"node --print process.env.PATH\")"
   },
   "//": "~~ Generated by projen. To modify, edit .projenrc.ts and run \"node ./projen.js\"."
 }

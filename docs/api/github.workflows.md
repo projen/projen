@@ -62,7 +62,6 @@ const appPermissions: github.workflows.AppPermissions = { ... }
 | <code><a href="#projen.github.workflows.AppPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.profile">profile</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners">repositoryAnnouncementBanners</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryCustomProperties">repositoryCustomProperties</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryHooks">repositoryHooks</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.AppPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.AppPermission</code> | *No description.* |
@@ -442,18 +441,6 @@ public readonly profile: AppPermission;
 
 ```typescript
 public readonly pullRequests: AppPermission;
-```
-
-- *Type:* projen.github.workflows.AppPermission
-
----
-
-##### ~~`repositoryAnnouncementBanners`~~<sup>Optional</sup> <a name="repositoryAnnouncementBanners" id="projen.github.workflows.AppPermissions.property.repositoryAnnouncementBanners"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryAnnouncementBanners: AppPermission;
 ```
 
 - *Type:* projen.github.workflows.AppPermission
@@ -1885,7 +1872,6 @@ const jobPermissions: github.workflows.JobPermissions = { ... }
 | <code><a href="#projen.github.workflows.JobPermissions.property.packages">packages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pages">pages</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.pullRequests">pullRequests</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
-| <code><a href="#projen.github.workflows.JobPermissions.property.repositoryProjects">repositoryProjects</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.securityEvents">securityEvents</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 | <code><a href="#projen.github.workflows.JobPermissions.property.statuses">statuses</a></code> | <code>projen.github.workflows.JobPermission</code> | *No description.* |
 
@@ -2011,18 +1997,6 @@ public readonly pullRequests: JobPermission;
 
 ---
 
-##### ~~`repositoryProjects`~~<sup>Optional</sup> <a name="repositoryProjects" id="projen.github.workflows.JobPermissions.property.repositoryProjects"></a>
-
-- *Deprecated:* removed by GitHub
-
-```typescript
-public readonly repositoryProjects: JobPermission;
-```
-
-- *Type:* projen.github.workflows.JobPermission
-
----
-
 ##### `securityEvents`<sup>Optional</sup> <a name="securityEvents" id="projen.github.workflows.JobPermissions.property.securityEvents"></a>
 
 ```typescript
@@ -2070,8 +2044,13 @@ const jobStep: github.workflows.JobStep = { ... }
 | <code><a href="#projen.github.workflows.JobStep.property.run">run</a></code> | <code>string</code> | Runs command-line programs using the operating system's shell. |
 | <code><a href="#projen.github.workflows.JobStep.property.uses">uses</a></code> | <code>string</code> | Selects an action to run as part of a step in your job. |
 | <code><a href="#projen.github.workflows.JobStep.property.with">with</a></code> | <code>{[ key: string ]: any}</code> | A map of the input parameters defined by the action. |
+| <code><a href="#projen.github.workflows.JobStep.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.workflows.JobStep.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.workflows.JobStep.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.workflows.JobStep.property.parallel">parallel</a></code> | <code>projen.github.workflows.JobStep[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.workflows.JobStep.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.workflows.JobStep.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.workflows.JobStep.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 
 ---
 
@@ -2210,6 +2189,48 @@ The variable is prefixed with INPUT_ and converted to upper case.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.workflows.JobStep.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.workflows.JobStep.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStep.property.continueOnError"></a>
 
 ```typescript
@@ -2225,6 +2246,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.workflows.JobStep.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStep.property.timeoutMinutes"></a>
 
 ```typescript
@@ -2234,6 +2280,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.workflows.JobStep.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.workflows.JobStep.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 
@@ -2259,8 +2341,13 @@ const jobStepConfiguration: github.workflows.JobStepConfiguration = { ... }
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.name">name</a></code> | <code>string</code> | A name for your step to display on GitHub. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.shell">shell</a></code> | <code>string</code> | Overrides the default shell settings in the runner's operating system and the job's default. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.workingDirectory">workingDirectory</a></code> | <code>string</code> | Specifies a working directory for a step. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.background">background</a></code> | <code>boolean</code> | Runs a step asynchronously so the job continues to the next step without waiting for it to finish. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.cancel">cancel</a></code> | <code>string</code> | Gracefully terminates a running background step, referenced by its `id`. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.continueOnError">continueOnError</a></code> | <code>boolean</code> | Prevents a job from failing when a step fails. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.parallel">parallel</a></code> | <code>projen.github.workflows.JobStep[]</code> | Runs a group of steps concurrently, then waits for all of them to finish before continuing. |
 | <code><a href="#projen.github.workflows.JobStepConfiguration.property.timeoutMinutes">timeoutMinutes</a></code> | <code>number</code> | The maximum number of minutes to run the step before killing the process. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.wait">wait</a></code> | <code>string[]</code> | Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for. |
+| <code><a href="#projen.github.workflows.JobStepConfiguration.property.waitAll">waitAll</a></code> | <code>boolean</code> | Pauses the job until all active background steps complete. |
 
 ---
 
@@ -2350,6 +2437,48 @@ Overrides a job's working directory.
 
 ---
 
+##### `background`<sup>Optional</sup> <a name="background" id="projen.github.workflows.JobStepConfiguration.property.background"></a>
+
+```typescript
+public readonly background: boolean;
+```
+
+- *Type:* boolean
+
+Runs a step asynchronously so the job continues to the next step without waiting for it to finish.
+
+Use for long-running processes, such as
+databases, servers, or monitoring tasks, that need to run alongside other
+steps.
+
+Synchronize with background steps later using `wait` or `waitAll`, or
+stop them with `cancel`. Give the step an `id` so it can be referenced.
+
+A maximum of 10 background steps can run concurrently in a single job;
+additional background steps are queued until a slot is free.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsbackground)
+
+---
+
+##### `cancel`<sup>Optional</sup> <a name="cancel" id="projen.github.workflows.JobStepConfiguration.property.cancel"></a>
+
+```typescript
+public readonly cancel: string;
+```
+
+- *Type:* string
+
+Gracefully terminates a running background step, referenced by its `id`.
+
+The runner sends the step's process a termination signal (SIGTERM) so it
+can clean up, and forcibly stops it (SIGKILL) if it does not exit within
+a short grace period.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscancel)
+
+---
+
 ##### `continueOnError`<sup>Optional</sup> <a name="continueOnError" id="projen.github.workflows.JobStepConfiguration.property.continueOnError"></a>
 
 ```typescript
@@ -2365,6 +2494,31 @@ to pass when this step fails.
 
 ---
 
+##### `parallel`<sup>Optional</sup> <a name="parallel" id="projen.github.workflows.JobStepConfiguration.property.parallel"></a>
+
+```typescript
+public readonly parallel: JobStep[];
+```
+
+- *Type:* projen.github.workflows.JobStep[]
+
+Runs a group of steps concurrently, then waits for all of them to finish before continuing.
+
+This is shorthand for declaring each step with
+`background: true` followed by a `wait` step.
+
+Use this when you have a self-contained group of independent steps that
+can all run at the same time and don't need to be referenced
+individually. Use `background` instead when you need finer control, such
+as starting a long-running process that stays up while later steps run.
+
+Each step in the group is subject to the same 10-step concurrency limit
+as other background steps. Cannot be used inside a composite action.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsparallel)
+
+---
+
 ##### `timeoutMinutes`<sup>Optional</sup> <a name="timeoutMinutes" id="projen.github.workflows.JobStepConfiguration.property.timeoutMinutes"></a>
 
 ```typescript
@@ -2374,6 +2528,42 @@ public readonly timeoutMinutes: number;
 - *Type:* number
 
 The maximum number of minutes to run the step before killing the process.
+
+---
+
+##### `wait`<sup>Optional</sup> <a name="wait" id="projen.github.workflows.JobStepConfiguration.property.wait"></a>
+
+```typescript
+public readonly wait: string[];
+```
+
+- *Type:* string[]
+
+Pauses the job until one or more background steps complete. Provide the `id`s of the background steps to wait for.
+
+This step performs no work itself; it only blocks until the referenced
+background steps finish. If a referenced background step failed, the
+`wait` step fails too.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait)
+
+---
+
+##### `waitAll`<sup>Optional</sup> <a name="waitAll" id="projen.github.workflows.JobStepConfiguration.property.waitAll"></a>
+
+```typescript
+public readonly waitAll: boolean;
+```
+
+- *Type:* boolean
+
+Pauses the job until all active background steps complete.
+
+Fails if any
+of the background steps it waits on failed, unless `continueOnError` is
+set on this step.
+
+> [https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswait-all)
 
 ---
 

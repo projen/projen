@@ -31,6 +31,8 @@ jobs:
       - name: Upgrade dependencies
         id: upgrade_dependencies
         run: node ./projen.js upgrade-bundled
+      - name: Update vendored schemas
+        run: node ./projen.js update-schemas
       - name: Find mutations
         id: create_patch
         run: |-

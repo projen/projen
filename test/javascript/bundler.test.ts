@@ -451,10 +451,10 @@ test.each([
   // DEFAULT: `addToPreCompile` was true by default
   [{}, true, false],
 
-  // `addToPreCompile` set to false - same as RunBundleTask.MANUAL
+  // RunBundleTask.MANUAL - same as old addToPreCompile: false
   [
     {
-      addToPreCompile: false,
+      runBundleTask: RunBundleTask.MANUAL,
     },
     false,
     false,
@@ -519,11 +519,11 @@ test.each([true, false])(
     const bundleTask = tasks["bundle:lib/hello"];
     if (executable) {
       expect(bundleTask.steps).toContainEqual({
-        exec: expect.stringContaining("chmod +x"),
+        execArgs: expect.arrayContaining(["chmod", "+x"]),
       });
     } else {
       expect(bundleTask.steps).not.toContainEqual({
-        exec: expect.stringContaining("chmod +x"),
+        execArgs: expect.arrayContaining(["chmod", "+x"]),
       });
     }
   },

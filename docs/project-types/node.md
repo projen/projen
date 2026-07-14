@@ -169,3 +169,64 @@ const project = new javascript.NodeProject({
 });
 project.synth();
 ```
+
+### Restricting dependency install scripts (`allowScripts`)
+
+Package managers run `preinstall`, `install`, `postinstall`, and `prepare` lifecycle scripts for dependencies,
+which can execute arbitrary code and are a common supply-chain attack vector.
+Package managers are moving toward blocking these scripts by default and requiring an explicit allowlist.
+The `allowScripts` option configures that allowlist so scripts only run for the dependencies you've explicitly reviewed and trust.
+
+```ts
+const project = new javascript.NodeProject({
+  // ...
+  packageManager: javascript.NodePackageManager.NPM,
+  allowScripts: ["esbuild", "@biomejs/biome"],
+});
+```
+
+Support for `allowScripts` depends on the configured `packageManager`:
+
+| Package manager | Mechanism                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `NPM`           | native `allowScripts` field in `package.json` (requires npm >= 11.16)                                                    |
+| `BUN`           | native `trustedDependencies` field in `package.json`                                                                     |
+| `PNPM`          | `onlyBuiltDependencies` setting in `pnpm-workspace.yaml`                                                                 |
+| `YARN_BERRY`    | native `dependenciesMeta.<pkg>.built` allowlist in `package.json`, combined with `enableScripts: false` in `.yarnrc.yml` |
+| `YARN_CLASSIC`  | not supported — throws an error                                                                                          |
+
+Yarn Classic has no native mechanism to allowlist install scripts for individual dependencies.
+If you need `allowScripts`, switch to `YARN_BERRY`, `NPM`, `PNPM`, or `BUN` instead.
+
+If you set `enableScripts` explicitly under `yarnBerryOptions.yarnRcOptions`, that value is respected instead of being overridden by `allowScripts`:
+
+```ts
+const project = new javascript.NodeProject({
+  // ...
+  packageManager: javascript.NodePackageManager.YARN_BERRY,
+  allowScripts: ["esbuild"],
+  yarnBerryOptions: {
+    yarnRcOptions: {
+      enableScripts: true, // scripts still run for all packages, not just "esbuild"
+    },
+  },
+});
+```
+
+When using pnpm, `allowScripts` is backed by the `PnpmWorkspaceYaml` component, which manages `pnpm-workspace.yaml`.
+You can use this component directly for full control over any other pnpm workspace setting.
+This includes workspace `packages`, catalogs, and overrides — the full `pnpm-workspace.yaml` schema is supported:
+
+```ts
+import { javascript } from "projen";
+
+const project = new javascript.NodeProject({
+  // ...
+  packageManager: javascript.NodePackageManager.PNPM,
+});
+
+new javascript.PnpmWorkspaceYaml(project, {
+  packages: ["packages/*"],
+  onlyBuiltDependencies: ["esbuild"],
+});
+```

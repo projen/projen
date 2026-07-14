@@ -6,7 +6,7 @@
  */
 export interface BiomeConfiguration {
   /**
-   * A field for the [JSON schema](https://json-schema.org/) specification
+   * A field for the JSON schema specification: https://json-schema.org/
    *
    * @schema BiomeConfiguration#$schema
    */
@@ -101,7 +101,7 @@ export interface BiomeConfiguration {
    *
    * @schema BiomeConfiguration#plugins
    */
-  readonly plugins?: string[];
+  readonly plugins?: any[];
 
   /**
    * Indicates whether this configuration file is at the root of a Biome
@@ -344,6 +344,18 @@ export interface FormatterConfiguration {
   readonly bracketSpacing?: boolean;
 
   /**
+   * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+   * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
+   * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
+   * are not affected. Only applies when the content fits on a single line. The specific
+   * delimiters affected depend on the language. Defaults to false.
+   *
+   * @default false.
+   * @schema FormatterConfiguration#delimiterSpacing
+   */
+  readonly delimiterSpacing?: boolean;
+
+  /**
    * @schema FormatterConfiguration#enabled
    */
   readonly enabled?: boolean;
@@ -445,6 +457,7 @@ export function toJson_FormatterConfiguration(obj: FormatterConfiguration | unde
     'attributePosition': obj.attributePosition,
     'bracketSameLine': obj.bracketSameLine,
     'bracketSpacing': obj.bracketSpacing,
+    'delimiterSpacing': obj.delimiterSpacing,
     'enabled': obj.enabled,
     'expand': obj.expand,
     'formatWithErrors': obj.formatWithErrors,
@@ -664,6 +677,13 @@ export interface JsConfiguration {
    * @schema JsConfiguration#parser
    */
   readonly parser?: JsParserConfiguration;
+
+  /**
+   * Module/dependency resolver options
+   *
+   * @schema JsConfiguration#resolver
+   */
+  readonly resolver?: JsResolverConfiguration;
 }
 
 /**
@@ -681,6 +701,7 @@ export function toJson_JsConfiguration(obj: JsConfiguration | undefined): Record
     'jsxRuntime': obj.jsxRuntime,
     'linter': toJson_JsLinterConfiguration(obj.linter),
     'parser': toJson_JsParserConfiguration(obj.parser),
+    'resolver': toJson_JsResolverConfiguration(obj.resolver),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -879,7 +900,7 @@ export interface OverridePattern {
    *
    * @schema OverridePattern#plugins
    */
-  readonly plugins?: string[];
+  readonly plugins?: any[];
 }
 
 /**
@@ -948,8 +969,8 @@ export interface VcsConfiguration {
   readonly root?: string;
 
   /**
-   * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files
-   * specified in the ignore file.
+   * Whether Biome should use VCS ignore files. When [true], Biome will ignore files
+   * specified in `.gitignore`, `.ignore`, and Git's local exclude file.
    *
    * @schema VcsConfiguration#useIgnoreFile
    */
@@ -980,6 +1001,13 @@ export function toJson_VcsConfiguration(obj: VcsConfiguration | undefined): Reco
  */
 export interface Actions {
   /**
+   * The actions preset to use.
+   *
+   * @schema Actions#preset
+   */
+  readonly preset?: PresetConfig;
+
+  /**
    * It enables the assist actions recommended by Biome. `true` by default.
    *
    * @schema Actions#recommended
@@ -1000,6 +1028,7 @@ export interface Actions {
 export function toJson_Actions(obj: Actions | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'preset': obj.preset,
     'recommended': obj.recommended,
     'source': toJson_Source(obj.source),
   };
@@ -1043,6 +1072,17 @@ export function toJson_CssAssistConfiguration(obj: CssAssistConfiguration | unde
  * @schema CssFormatterConfiguration
  */
 export interface CssFormatterConfiguration {
+  /**
+   * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+   * closing delimiter). Only applies when the content fits on a single line, and empty
+   * delimiters are not affected. For CSS, affects parentheses (e.g., `rgb( 0, 0, 0 )`) and
+   * square brackets (e.g., `[ data-attr ]`). Defaults to false.
+   *
+   * @default false.
+   * @schema CssFormatterConfiguration#delimiterSpacing
+   */
+  readonly delimiterSpacing?: boolean;
+
   /**
    * Control the formatter for CSS (and its super languages) files.
    *
@@ -1114,6 +1154,7 @@ export interface CssFormatterConfiguration {
 export function toJson_CssFormatterConfiguration(obj: CssFormatterConfiguration | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
+    'delimiterSpacing': obj.delimiterSpacing,
     'enabled': obj.enabled,
     'indentStyle': obj.indentStyle,
     'indentWidth': obj.indentWidth,
@@ -1735,6 +1776,17 @@ export interface HtmlParserConfiguration {
    * @schema HtmlParserConfiguration#interpolation
    */
   readonly interpolation?: boolean;
+
+  /**
+   * Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly.
+   *
+   * Biome will already automatically enable Vue parsing in `.vue` files, so you probably don't need
+   * to enable this option. This only affects `.html` files, and does not change how `.vue`, `.svelte`,
+   * or `.astro` files are parsed.
+   *
+   * @schema HtmlParserConfiguration#vue
+   */
+  readonly vue?: boolean;
 }
 
 /**
@@ -1746,6 +1798,7 @@ export function toJson_HtmlParserConfiguration(obj: HtmlParserConfiguration | un
   if (obj === undefined) { return undefined; }
   const result = {
     'interpolation': obj.interpolation,
+    'vue': obj.vue,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1818,6 +1871,22 @@ export interface JsFormatterConfiguration {
    * @schema JsFormatterConfiguration#bracketSpacing
    */
   readonly bracketSpacing?: boolean;
+
+  /**
+   * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+   * closing delimiter). Only applies when the content fits on a single line. Spaces are not
+   * added before the opening delimiter (e.g., `function f()` stays `function f()`, not
+   * `function f ()`), and empty delimiters are not affected (e.g., `fn()` stays `fn()`).
+   * For JavaScript and TypeScript, affects parentheses (e.g., `foo( a, b )`), square brackets
+   * (e.g., `[ a, b ]`), template literal interpolations (e.g., `${ expr }`), TypeScript angle
+   * brackets (e.g., `foo< T >()`), JSX expression braces (e.g., `{ value }`), and the logical
+   * NOT operator (e.g., `! x`, but in chains only after the last one: `!! x`). Defaults to
+   * false.
+   *
+   * @default false.
+   * @schema JsFormatterConfiguration#delimiterSpacing
+   */
+  readonly delimiterSpacing?: boolean;
 
   /**
    * Control the formatter for JavaScript (and its super languages) files.
@@ -1946,6 +2015,7 @@ export function toJson_JsFormatterConfiguration(obj: JsFormatterConfiguration | 
     'attributePosition': obj.attributePosition,
     'bracketSameLine': obj.bracketSameLine,
     'bracketSpacing': obj.bracketSpacing,
+    'delimiterSpacing': obj.delimiterSpacing,
     'enabled': obj.enabled,
     'expand': obj.expand,
     'indentStyle': obj.indentStyle,
@@ -2068,6 +2138,57 @@ export function toJson_JsParserConfiguration(obj: JsParserConfiguration | undefi
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * Resolver options specific to JavaScript files
+ *
+ * @schema JsResolverConfiguration
+ */
+export interface JsResolverConfiguration {
+  /**
+   * Enables pnpm workspace catalog resolution for JavaScript package manifests.
+   *
+   * Opt-in:
+   * - Set `javascript.resolver.experimentalPnpmCatalogs` to `true`.
+   *
+   * Scope:
+   * - Resolves `catalog:` and `catalog:<name>` dependency versions from
+   * `package.json`.
+   * - Applies to `dependencies`, `devDependencies`, and `peerDependencies`.
+   *
+   * Fail-safe behavior:
+   * - If `pnpm-workspace.yaml` is missing, unreadable, or cannot be parsed,
+   * Biome silently falls back to the default behavior (as if this option
+   * were disabled).
+   * - Unknown keys and unsupported value shapes in `pnpm-workspace.yaml` are
+   * ignored.
+   *
+   * Limitations:
+   * - Only `pnpm-workspace.yaml` is read.
+   * - Biome only reads top-level `catalog` / `catalogs` mappings and scalar
+   * string entries.
+   *
+   * Default: `false`.
+   *
+   * @schema JsResolverConfiguration#experimentalPnpmCatalogs
+   */
+  readonly experimentalPnpmCatalogs?: boolean;
+}
+
+/**
+ * Converts an object of type 'JsResolverConfiguration' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_JsResolverConfiguration(obj: JsResolverConfiguration | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'experimentalPnpmCatalogs': obj.experimentalPnpmCatalogs,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * Assist options specific to the JSON linter
  *
  * @schema JsonAssistConfiguration
@@ -2107,6 +2228,17 @@ export interface JsonFormatterConfiguration {
    * @schema JsonFormatterConfiguration#bracketSpacing
    */
   readonly bracketSpacing?: boolean;
+
+  /**
+   * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+   * closing delimiter). Only applies when the content fits on a single line, and empty
+   * brackets are not affected. For JSON, affects square brackets (e.g., `[ 1, 2, 3 ]`).
+   * Defaults to false.
+   *
+   * @default false.
+   * @schema JsonFormatterConfiguration#delimiterSpacing
+   */
+  readonly delimiterSpacing?: boolean;
 
   /**
    * Control the formatter for JSON (and its super languages) files.
@@ -2193,6 +2325,7 @@ export function toJson_JsonFormatterConfiguration(obj: JsonFormatterConfiguratio
   if (obj === undefined) { return undefined; }
   const result = {
     'bracketSpacing': obj.bracketSpacing,
+    'delimiterSpacing': obj.delimiterSpacing,
     'enabled': obj.enabled,
     'expand': obj.expand,
     'indentStyle': obj.indentStyle,
@@ -2315,6 +2448,13 @@ export interface Rules {
   readonly performance?: any;
 
   /**
+   * The rule presets to use.
+   *
+   * @schema Rules#preset
+   */
+  readonly preset?: PresetConfig;
+
+  /**
    * It enables the lint rules recommended by Biome. `true` by default.
    *
    * @schema Rules#recommended
@@ -2350,6 +2490,7 @@ export function toJson_Rules(obj: Rules | undefined): Record<string, any> | unde
     'correctness': obj.correctness,
     'nursery': obj.nursery,
     'performance': obj.performance,
+    'preset': obj.preset,
     'recommended': obj.recommended,
     'security': obj.security,
     'style': obj.style,
@@ -2449,6 +2590,18 @@ export interface OverrideFormatterConfiguration {
   readonly bracketSpacing?: boolean;
 
   /**
+   * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+   * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
+   * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
+   * are not affected. Only applies when the content fits on a single line. The specific
+   * delimiters affected depend on the language. Defaults to false.
+   *
+   * @default false.
+   * @schema OverrideFormatterConfiguration#delimiterSpacing
+   */
+  readonly delimiterSpacing?: boolean;
+
+  /**
    * @schema OverrideFormatterConfiguration#enabled
    */
   readonly enabled?: boolean;
@@ -2511,6 +2664,13 @@ export interface OverrideFormatterConfiguration {
   readonly lineWidth?: number;
 
   /**
+   * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+   *
+   * @schema OverrideFormatterConfiguration#trailingCommas
+   */
+  readonly trailingCommas?: JsTrailingCommas;
+
+  /**
    * Whether to add a trailing newline at the end of the file.
    *
    * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
@@ -2539,6 +2699,7 @@ export function toJson_OverrideFormatterConfiguration(obj: OverrideFormatterConf
     'attributePosition': obj.attributePosition,
     'bracketSameLine': obj.bracketSameLine,
     'bracketSpacing': obj.bracketSpacing,
+    'delimiterSpacing': obj.delimiterSpacing,
     'enabled': obj.enabled,
     'expand': obj.expand,
     'formatWithErrors': obj.formatWithErrors,
@@ -2547,6 +2708,7 @@ export function toJson_OverrideFormatterConfiguration(obj: OverrideFormatterConf
     'indentWidth': obj.indentWidth,
     'lineEnding': obj.lineEnding,
     'lineWidth': obj.lineWidth,
+    'trailingCommas': obj.trailingCommas,
     'trailingNewline': obj.trailingNewline,
   };
   // filter undefined values
@@ -2608,6 +2770,20 @@ export enum VcsClientKind {
 }
 
 /**
+ * A preset configuration for enabling a set of rules.
+ *
+ * @schema PresetConfig
+ */
+export enum PresetConfig {
+  /** recommended */
+  RECOMMENDED = "recommended",
+  /** all */
+  ALL = "all",
+  /** none */
+  NONE = "none",
+}
+
+/**
  * A list of rules that belong to this group
  *
  * @schema Source
@@ -2630,6 +2806,13 @@ export interface Source {
   readonly organizeImports?: any;
 
   /**
+   * Enables a particular rule preset
+   *
+   * @schema Source#preset
+   */
+  readonly preset?: PresetConfig;
+
+  /**
    * Enables the recommended rules for this group
    *
    * @schema Source#recommended
@@ -2637,12 +2820,20 @@ export interface Source {
   readonly recommended?: boolean;
 
   /**
-   * Enforce attribute sorting in JSX elements.
+   * Enforce attribute sorting in HTML elements.
    * See https://biomejs.dev/assist/actions/use-sorted-attributes
    *
    * @schema Source#useSortedAttributes
    */
   readonly useSortedAttributes?: any;
+
+  /**
+   * Sort the members of an enum in natural order.
+   * See https://biomejs.dev/assist/actions/use-sorted-enum-members
+   *
+   * @schema Source#useSortedEnumMembers
+   */
+  readonly useSortedEnumMembers?: any;
 
   /**
    * Sort interface members by key.
@@ -2661,12 +2852,36 @@ export interface Source {
   readonly useSortedKeys?: any;
 
   /**
+   * Organize package.json fields according to established conventions.
+   * See https://biomejs.dev/assist/actions/use-sorted-package-json
+   *
+   * @schema Source#useSortedPackageJson
+   */
+  readonly useSortedPackageJson?: any;
+
+  /**
    * Enforce ordering of CSS properties and nested rules.
    * See https://biomejs.dev/assist/actions/use-sorted-properties
    *
    * @schema Source#useSortedProperties
    */
   readonly useSortedProperties?: any;
+
+  /**
+   * Sort GraphQL selection sets.
+   * See https://biomejs.dev/assist/actions/use-sorted-selection-set
+   *
+   * @schema Source#useSortedSelectionSet
+   */
+  readonly useSortedSelectionSet?: any;
+
+  /**
+   * Sort fields in GraphQL type definitions alphabetically.
+   * See https://biomejs.dev/assist/actions/use-sorted-type-fields
+   *
+   * @schema Source#useSortedTypeFields
+   */
+  readonly useSortedTypeFields?: any;
 }
 
 /**
@@ -2679,11 +2894,16 @@ export function toJson_Source(obj: Source | undefined): Record<string, any> | un
   const result = {
     'noDuplicateClasses': obj.noDuplicateClasses,
     'organizeImports': obj.organizeImports,
+    'preset': obj.preset,
     'recommended': obj.recommended,
     'useSortedAttributes': obj.useSortedAttributes,
+    'useSortedEnumMembers': obj.useSortedEnumMembers,
     'useSortedInterfaceMembers': obj.useSortedInterfaceMembers,
     'useSortedKeys': obj.useSortedKeys,
+    'useSortedPackageJson': obj.useSortedPackageJson,
     'useSortedProperties': obj.useSortedProperties,
+    'useSortedSelectionSet': obj.useSortedSelectionSet,
+    'useSortedTypeFields': obj.useSortedTypeFields,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});

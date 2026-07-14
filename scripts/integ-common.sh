@@ -20,8 +20,19 @@ setup_git_identity() {
 }
 
 # Get repo root directory (caller should set SCRIPT_DIR first)
+#
+# Emits a native path: on Git Bash (Windows), `pwd` alone produces a POSIX-style
+# path (e.g. /d/a/projen/projen). Native Windows tools like npm don't reliably
+# translate that back to a real path (observed mangling: /d/... becomes
+# C:\d\...), so `-W` is used there to get the native form (D:/a/projen/projen)
+# that npm can open directly.
 get_repo_root() {
-  cd "$(dirname "${BASH_SOURCE[1]}")/.." && pwd
+  cd "$(dirname "${BASH_SOURCE[1]}")/.." || return 1
+  if pwd -W >/dev/null 2>&1; then
+    pwd -W
+  else
+    pwd
+  fi
 }
 
 # Find the local projen npm tarball

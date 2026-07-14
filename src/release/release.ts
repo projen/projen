@@ -52,24 +52,6 @@ type BranchHook = (branch: string) => void;
  */
 export interface ReleaseProjectOptions {
   /**
-   * Automatically release new versions every commit to one of branches in `releaseBranches`.
-   *
-   * @default true
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
-   */
-  readonly releaseEveryCommit?: boolean;
-
-  /**
-   * CRON schedule to trigger new releases.
-   *
-   * @default - no scheduled releases
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
-   */
-  readonly releaseSchedule?: string;
-
-  /**
    * The release trigger to use.
    *
    * @default - Continuous releases (`ReleaseTrigger.continuous()`)
@@ -300,15 +282,6 @@ export interface ReleaseProjectOptions {
  */
 export interface ReleaseOptions extends ReleaseProjectOptions {
   /**
-   * The task to execute in order to create the release artifacts. Artifacts are
-   * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
-   * build is complete.
-   *
-   * @deprecated Use `tasks` instead
-   */
-  readonly task?: Task;
-
-  /**
    * The tasks to execute in order to create the release artifacts. Artifacts are
    * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
    * build is complete.
@@ -423,15 +396,11 @@ export class Release extends Component {
 
     this.github = GitHub.of(this.project.root);
 
-    // Handle both deprecated task and new tasks options
-    if (options.tasks) {
+    // Determine the tasks to use to create the release artifacts
+    if (options.tasks && options.tasks.length > 0) {
       this.buildTasks = options.tasks;
-    } else if (options.task) {
-      this.buildTasks = [options.task];
     } else {
-      throw new Error(
-        "Either 'tasks' or 'task' must be provided, but not both.",
-      );
+      throw new Error("'tasks' must be provided.");
     }
 
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
@@ -451,28 +420,6 @@ export class Release extends Component {
     this.releaseWorkflowEnv = options.releaseWorkflowEnv;
     this._branchHooks = [];
 
-    /**
-     * Use manual releases with no changelog if releaseEveryCommit is explicitly
-     * disabled and no other trigger is set.
-     *
-     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
-     */
-    if (
-      !(
-        (options.releaseEveryCommit ?? true) ||
-        options.releaseSchedule ||
-        options.releaseTrigger
-      )
-    ) {
-      this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
-    }
-
-    if (options.releaseSchedule) {
-      this.releaseTrigger = ReleaseTrigger.scheduled({
-        schedule: options.releaseSchedule,
-      });
-    }
-
     this.version = new Version(this.project, {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
@@ -491,7 +438,7 @@ export class Release extends Component {
       artifactName: this.artifactsDirectory,
       condition: DEPENDENT_JOB_CONDITIONAL,
       buildJobId: BUILD_JOBID,
-      jsiiReleaseVersion: options.jsiiReleaseVersion,
+      publibVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       ...filteredWorkflowRunsOnOptions(
@@ -743,8 +690,11 @@ export class Release extends Component {
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
       shell: "bash",
+      env: {
+        GITHUB_REF: "${{ github.ref }}",
+      },
       run: [
-        `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
+        `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT`,
         "cat $GITHUB_OUTPUT",
       ].join("\n"),
     });

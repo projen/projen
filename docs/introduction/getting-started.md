@@ -15,17 +15,31 @@ well.
 :::
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Creating a New TypeScript Project](#creating-a-new-typescript-project)
-3. [Project Configuration](#project-configuration)
-4. [Adding Dependencies](#adding-dependencies)
-5. [Managing Scripts](#managing-scripts)
-6. [Generating Files](#generating-files)
-7. [Customizing Project Settings](#customizing-project-settings)
-8. [Working with Git](#working-with-git)
-9. [Aliasing projen](#aliasing-projen)
-10. [Watching for Changes](#watching-for-changes)
-11. [Conclusion](#conclusion)
+- [Getting Started](#getting-started)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Creating a New TypeScript Project](#creating-a-new-typescript-project)
+  - [Project Configuration](#project-configuration)
+  - [Adding Dependencies](#adding-dependencies)
+    - [Using API Methods](#using-api-methods)
+    - [Setting Dependencies in the Constructor](#setting-dependencies-in-the-constructor)
+  - [Managing Scripts](#managing-scripts)
+  - [Generating Files](#generating-files)
+  - [Customizing Project Settings](#customizing-project-settings)
+    - [Custom File Generation:](#custom-file-generation)
+    - [ESLint Configuration:](#eslint-configuration)
+    - [Prettier Configuration:](#prettier-configuration)
+    - [Jest Configuration:](#jest-configuration)
+    - [Publishing Settings:](#publishing-settings)
+    - [VSCode Settings:](#vscode-settings)
+    - [Docker Configuration:](#docker-configuration)
+    - [CI/CD Settings:](#cicd-settings)
+    - [Environment Variables:](#environment-variables)
+  - [Working with Git](#working-with-git)
+    - [Git Ignore Settings:](#git-ignore-settings)
+  - [Aliasing projen](#aliasing-projen)
+  - [Watching for Changes](#watching-for-changes)
+  - [Conclusion](#conclusion)
 
 ## Introduction
 
@@ -117,7 +131,7 @@ Projen allows you to manage npm scripts easily:
 
 ```ts
 project.addTask('start', {
-  exec: 'ts-node src/index.ts',
+  execArgs: ['ts-node', 'src/index.ts'],
 });
 ```
 

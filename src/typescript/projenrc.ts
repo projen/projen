@@ -1,8 +1,12 @@
-import { existsSync, writeFileSync, mkdirSync } from "fs";
-import { dirname, resolve } from "path";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname, posix, resolve } from "path";
+import type { InventoryProjectType } from "../inventory";
+import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
+import type { TypeScriptProject } from "./typescript";
+import { TypeScriptRunner } from "./typescript-runner";
 import { renderJavaScriptOptions } from "../javascript/render-options";
+import type { InitProject } from "../project";
 import { ProjenrcFile } from "../projenrc";
-import type { TypeScriptProject } from "../typescript";
 
 export interface ProjenrcOptions {
   /**
@@ -23,20 +27,32 @@ export interface ProjenrcOptions {
    * Whether to use `SWC` for ts-node.
    *
    * @default false
+   * @deprecated Use `runner: TypeScriptRunner.tsNode({ swc: true })` instead.
    */
   readonly swc?: boolean;
+
+  /**
+   * The runner to use for executing TypeScript files.
+   *
+   * @default - the project's runner
+   */
+  readonly runner?: TypeScriptRunner;
 }
 
 const DEFAULT_FILENAME = ".projenrc.ts";
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * A projenrc file written in TypeScript
+ *
+ * This component is used within TypeScriptProject.
  */
 export class Projenrc extends ProjenrcFile {
   public readonly filePath: string;
+  public readonly tsconfig: TypescriptConfig;
+
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
-  private readonly _swc: boolean;
+  private readonly _runner: TypeScriptRunner;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
@@ -44,31 +60,66 @@ export class Projenrc extends ProjenrcFile {
 
     this.filePath = options.filename ?? DEFAULT_FILENAME;
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
-    this._swc = options.swc ?? false;
+
+    // Give the projenrc source tree its own `tsconfig.json` so the eslint
+    // project service (and editors) resolve it as the nearest config for those
+    // files. This avoids listing the whole tree under `allowDefaultProject`,
+    // which only permits a small number of loose files (and rejects `**`
+    // globs). It extends the root config and is type-check only.
+    const baseTsconfig = project.tsconfig ?? project.tsconfigDev;
+    this.tsconfig = new TypescriptConfig(project, {
+      fileName: `${this._projenCodeDir}/tsconfig.json`,
+      include: ["**/*.ts", posix.relative(this._projenCodeDir, this.filePath)],
+      extends: TypescriptConfigExtends.fromTypescriptConfigs([baseTsconfig]),
+      compilerOptions: {
+        noEmit: true,
+        rootDir: posix.relative(this._projenCodeDir, ".") || ".",
+      },
+    });
+
+    // A runner is a future component, make sure it is attached
+    this._runner = this.getRunner(options).tryAttach(this._tsProject);
 
     this.addDefaultTask();
+  }
 
-    this.generateProjenrc();
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
   }
 
   private addDefaultTask() {
-    const deps = ["ts-node"];
-    if (this._swc) {
-      deps.push("@swc/core");
+    // Render the run config for the entrypoint
+    const { dependencies, steps } = this._runner.configFor(this.filePath);
+
+    // Request runner dependencies
+    for (const dep of dependencies) {
+      this._tsProject.deps.requestDependency(dep);
     }
 
-    // this is the task projen executes when running `projen` without a
-    // specific task (if this task is not defined, projen falls back to
-    // running "node .projenrc.js").
-    this._tsProject.addDevDeps(...deps);
+    // Add runner steps
+    this._tsProject.defaultTask?.addSteps(...steps);
+  }
 
-    const tsNode = this._swc ? "ts-node --swc" : "ts-node";
+  private getRunner(options: ProjenrcOptions): TypeScriptRunner {
+    // use a provide runner as is
+    if (options.runner) {
+      return options.runner;
+    }
 
-    // we use "tsconfig.dev.json" here to allow projen source files to reside
-    // anywhere in the project tree.
-    this._tsProject.defaultTask?.exec(
-      `${tsNode} --project ${this._tsProject.tsconfigDev.fileName} ${this.filePath}`,
-    );
+    // swc implies ts-node runner for backwards compatibility
+    if (options.swc) {
+      return TypeScriptRunner.tsNode({
+        swc: true,
+        typeCheck: true,
+        tsconfig: this.tsconfig.fileName,
+      }).tryAttach(this._tsProject);
+    }
+
+    // we use the project's default runner with the correct tsconfig and type-checking enabled
+    return this._tsProject.runner.copy({
+      tsconfig: this.tsconfig.fileName,
+      typeCheck: true,
+    });
   }
 
   public override preSynthesize(): void {
@@ -77,8 +128,11 @@ export class Projenrc extends ProjenrcFile {
     this._tsProject.addPackageIgnore(`/${this.filePath}`);
     this._tsProject.addPackageIgnore(`/${this._projenCodeDir}`);
 
-    this._tsProject.tsconfigDev.addInclude(this.filePath);
-    this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
+    // The projenrc entrypoint lives at the repository root and is not covered
+    // by any `tsconfig.json`. Register only this single file with the eslint
+    // project service's default project (the projenrc source tree is covered
+    // by its own tsconfig). `allowDefaultProject` does not permit `**` globs.
+    this._tsProject.eslint?.allowDefaultProjectFiles(this.filePath);
 
     this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
     this._tsProject.eslint?.addLintPattern(this.filePath);
@@ -108,15 +162,10 @@ export class Projenrc extends ProjenrcFile {
     );
   }
 
-  private generateProjenrc() {
+  private generateProjenrc(bootstrap: InitProject) {
     const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
-    }
-
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
     }
 
     const parts = bootstrap.fqn.split(".");
@@ -126,7 +175,7 @@ export class Projenrc extends ProjenrcFile {
 
     const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
       comments: bootstrap.comments,
     });
 

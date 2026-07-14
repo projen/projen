@@ -1,16 +1,16 @@
 import {
-  renderInstallCommand,
+  renderInstallArgs,
   findJsiiFilePath,
   CliError,
 } from "../../src/cli/util";
 
-describe("renderInstallCommand", () => {
-  test("renders npm install command with dir and module", () => {
-    const cmd = renderInstallCommand("/tmp/test", "my-module");
-    expect(cmd).toContain("npm install");
-    expect(cmd).toContain('--prefix="/tmp/test"');
-    expect(cmd).toContain("my-module");
-    expect(cmd).toContain("--save-dev");
+describe("renderInstallArgs", () => {
+  test("renders npm install args with dir and module", () => {
+    const args = renderInstallArgs("/tmp/test", "my-module");
+    expect(args[0]).toBe("install");
+    expect(args).toContain("--prefix=/tmp/test");
+    expect(args).toContain("my-module");
+    expect(args).toContain("--save-dev");
   });
 });
 

@@ -6,7 +6,7 @@ import {
   TypeScriptProject,
   type TypeScriptProjectOptions,
 } from "../../../src/typescript";
-import { synthSnapshot } from "../../../src/util/synth";
+import { simulateProjenNew, synthSnapshot } from "../../util";
 
 const getTestProject = (
   projenOptions: Partial<TypeScriptProjectOptions>,
@@ -15,9 +15,7 @@ const getTestProject = (
     name: "test-project",
     defaultReleaseBranch: "main",
     sampleCode: false,
-    githubOptions: {
-      mergify: false,
-    },
+    githubOptions: { mergify: false },
     ...projenOptions,
   });
 };
@@ -46,7 +44,7 @@ describe("biome", () => {
 
       const config = snapshotBiomeConfig(project);
       expect(config.linter?.enabled).toBeTruthy();
-      expect(config.linter?.rules?.recommended).toBeTruthy();
+      expect(config.linter?.rules?.preset).toBe("recommended");
     });
 
     it("formatter enabled", () => {
@@ -71,7 +69,7 @@ describe("biome", () => {
 
       const config = snapshotBiomeConfig(project);
       expect(config.assist?.enabled).toBeTruthy();
-      expect(config.assist?.actions?.recommended).toBeTruthy();
+      expect(config.assist?.actions?.preset).toBe("recommended");
     });
 
     it("custom overrides", () => {
@@ -272,7 +270,7 @@ describe("Configuration", () => {
 
       expect(mergedConfig.linter?.rules).toBeDefined();
       expect(mergedConfig.linter?.rules).toMatchObject({
-        recommended: true,
+        preset: "recommended",
         security: {
           noBlankTarget: "error",
         },
@@ -333,11 +331,73 @@ describe("Configuration", () => {
 
       expect(mergedConfig.linter?.rules).toBeDefined();
       expect(mergedConfig.linter?.rules).toEqual({
-        recommended: true,
+        preset: "recommended",
         complexity: { "another-rule": "warn" },
         nursery: { "standard-rule": "error", "test-rule": "warn" },
       });
     });
+  });
+});
+
+describe("postProjectCreation", () => {
+  test("runs the biome task once the project is created via `projen new`", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN
+    expect(runTask).toHaveBeenCalledWith(biome.task.name);
+  });
+
+  test("does not run the biome task for a project not created via `projen new`", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+    });
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    project.synth();
+
+    // THEN: other tasks (e.g. "install") may run, but not biome
+    expect(runTask).not.toHaveBeenCalledWith(biome.task.name);
+  });
+
+  test("does not run the biome task when post-synthesis steps are disabled", () => {
+    // GIVEN
+    const project = simulateProjenNew(
+      NodeProject,
+      "projen.javascript.NodeProject",
+      {
+        args: { name: "test" },
+      },
+    );
+    const biome = new Biome(project);
+    const runTask = jest
+      .spyOn(project.tasks, "runTask")
+      .mockImplementation(() => {});
+
+    // WHEN
+    synthSnapshot(project);
+
+    // THEN
+    expect(runTask).not.toHaveBeenCalledWith(biome.task.name);
   });
 });
 

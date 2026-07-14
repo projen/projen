@@ -88,7 +88,7 @@ export class MavenPackaging extends Component {
     for (const [k, v] of Object.entries(env)) {
       this.project.packageTask.env(k, v);
     }
-    this.project.packageTask.exec(`mkdir -p ${this.distdir}`);
+    this.project.packageTask.execArgs(["mkdir", "-p", this.distdir]);
     this.project.packageTask.exec(
       `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${this.distdir}`,
     );

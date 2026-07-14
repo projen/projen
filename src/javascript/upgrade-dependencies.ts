@@ -329,7 +329,7 @@ export class UpgradeDependencies extends Component {
     // Package Manager upgrade should always include all deps
     const includeForPackageManagerUpgrade = this.buildDependencyList(true);
     if (includeForPackageManagerUpgrade.length === 0) {
-      return [{ exec: "echo No dependencies to upgrade." }];
+      return [{ execArgs: ["echo", "No dependencies to upgrade."] }];
     }
 
     // Removing `npm-check-updates` from our dependency tree because it depends on a package
@@ -343,7 +343,7 @@ export class UpgradeDependencies extends Component {
         upgrade: true,
         target: this.upgradeTarget,
       });
-      steps.push({ exec: ncuCommand });
+      steps.push({ execArgs: ncuCommand });
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
@@ -351,7 +351,9 @@ export class UpgradeDependencies extends Component {
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
-      exec: this.renderUpgradePackagesCommand(includeForPackageManagerUpgrade),
+      execArgs: this.renderUpgradePackagesCommand(
+        includeForPackageManagerUpgrade,
+      ),
     });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
@@ -372,11 +374,10 @@ export class UpgradeDependencies extends Component {
       format?: string;
       removeRange?: boolean;
     } = {},
-  ): string {
+  ): string[] {
     const command = [
-      `${executeCommandPriorInstallation(
-        this.project.package.packageManager,
-      )} npm-check-updates@20`,
+      ...executeCommandPriorInstallation(this.project.package.packageManager),
+      "npm-check-updates@20",
     ];
 
     if (options.upgrade) {
@@ -402,7 +403,7 @@ export class UpgradeDependencies extends Component {
     command.push(`--dep=${this.renderNcuDependencyTypes(this.depTypes)}`);
     command.push(`--filter=${includePackages.join(",")}`);
 
-    return command.join(" ");
+    return command;
   }
 
   /**
@@ -427,6 +428,7 @@ export class UpgradeDependencies extends Component {
                 return "dev";
 
               case DependencyType.BUNDLED:
+                return "prod";
               default:
                 return false;
             }
@@ -439,14 +441,14 @@ export class UpgradeDependencies extends Component {
   /**
    * Render a package manager specific command to upgrade all requested dependencies.
    */
-  private renderUpgradePackagesCommand(include: string[]): string {
-    function upgradePackages(command: string, cooldownFlag?: string) {
+  private renderUpgradePackagesCommand(include: string[]): string[] {
+    function upgradePackages(command: string[], cooldownFlag?: string) {
       return () => {
-        const parts = [command, ...include];
+        const parts = [...command, ...include];
         if (cooldownFlag) {
           parts.push(cooldownFlag);
         }
-        return parts.join(" ");
+        return parts;
       };
     }
 
@@ -457,21 +459,21 @@ export class UpgradeDependencies extends Component {
     switch (packageManager) {
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_CLASSIC:
-        lazy = upgradePackages("yarn upgrade");
+        lazy = upgradePackages(["yarn", "upgrade"]);
         break;
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
         // Yarn Berry cooldown set via task env
-        lazy = upgradePackages("yarn up -R");
+        lazy = upgradePackages(["yarn", "up", "-R"]);
         break;
       case NodePackageManager.NPM:
         // npm cooldown set via NPM_CONFIG_BEFORE env
-        lazy = upgradePackages("npm update");
+        lazy = upgradePackages(["npm", "update"]);
         break;
       case NodePackageManager.PNPM:
         // pnpm expects minutes
         lazy = upgradePackages(
-          "pnpm update",
+          ["pnpm", "update"],
           cooldown !== undefined
             ? `--config.minimum-release-age=${daysToMinutes(cooldown)}`
             : undefined,
@@ -480,7 +482,7 @@ export class UpgradeDependencies extends Component {
       case NodePackageManager.BUN:
         // bun expects seconds
         lazy = upgradePackages(
-          "bun update",
+          ["bun", "update"],
           cooldown
             ? `--minimum-release-age=${daysToSeconds(cooldown)}`
             : undefined,
@@ -492,7 +494,7 @@ export class UpgradeDependencies extends Component {
 
     // return a lazy function so that dependencies include ones that were
     // added post project instantiation (i.e using project.addDeps)
-    return lazy as unknown as string;
+    return lazy as unknown as string[];
   }
 
   private buildDependencyList(includeDependenciesWithConstraint: boolean) {

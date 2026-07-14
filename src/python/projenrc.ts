@@ -4,7 +4,7 @@ import { snake } from "case";
 import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
-import type { Project } from "../project";
+import type { InitProject, Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 
 /**
@@ -59,17 +59,14 @@ export class Projenrc extends ProjenrcFile {
     );
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask?.exec(`${this.pythonExec} .projenrc.py`);
-
-    // if this is a new project, generate a skeleton for projenrc.py
-    this.generateProjenrc();
+    project.defaultTask?.execArgs([this.pythonExec, ".projenrc.py"]);
   }
 
-  private generateProjenrc() {
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
-    }
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
+  }
+
+  private generateProjenrc(bootstrap: InitProject) {
     const jsiiFqn = bootstrap.fqn;
     const jsiiManifest = readJsiiManifest(jsiiFqn);
     const jsiiType = jsiiManifest.types[jsiiFqn];

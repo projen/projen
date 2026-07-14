@@ -11,7 +11,7 @@ export interface RenderProjectOptions {
   /**
    * The project type to render.
    */
-  readonly type: inventory.ProjectType;
+  readonly type: inventory.InventoryProjectType;
 
   /**
    * Project arguments as passed to `projen new`.
@@ -41,6 +41,20 @@ export interface RenderProjectOptions {
   readonly omitFromBootstrap?: string[];
 
   /**
+   * Whether `projen new` will call `project.synth()` after construction.
+   * Embedded in the `__new__` field so `Project.synth()` can detect `--no-synth`.
+   * @default true
+   */
+  readonly synth?: boolean;
+
+  /**
+   * Whether `projen new` will run post-synthesis steps (e.g. package manager install).
+   * Embedded in the `__new__` field for components that need to know.
+   * @default true
+   */
+  readonly post?: boolean;
+
+  /**
    * Prefix all imports with this string and the full module name
    * This is required when executing options code in a vm
    *
@@ -68,6 +82,18 @@ interface ProjenInit {
    * Include commented out options. Does not apply to projenrc.json files.
    */
   readonly comments: InitProjectOptionHints;
+
+  /**
+   * Whether `projen new` will call `project.synth()` after construction.
+   * @default true
+   */
+  readonly synth: boolean;
+
+  /**
+   * Whether `projen new` will run post-synthesis steps (e.g. package manager install).
+   * @default true
+   */
+  readonly post: boolean;
 }
 
 /**
@@ -77,10 +103,12 @@ export function renderProjenInitOptions(
   fqn: string,
   args: Record<string, any>,
   comments: InitProjectOptionHints = InitProjectOptionHints.NONE,
+  synth: boolean = true,
+  post: boolean = true,
 ): any {
   return {
     ...args,
-    [PROJEN_NEW]: { fqn, args, comments } as ProjenInit,
+    [PROJEN_NEW]: { fqn, args, comments, synth, post } as ProjenInit,
   };
 }
 
@@ -99,6 +127,8 @@ export function resolveInitProject(opts: any) {
     fqn: f.fqn,
     type: type,
     comments: f.comments,
+    synth: f.synth ?? true,
+    post: f.post ?? true,
   };
 }
 
@@ -213,6 +243,8 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
       args: opts.args,
       fqn: opts.type.fqn,
       comments: opts.comments,
+      synth: opts.synth ?? true,
+      post: opts.post ?? true,
     } as ProjenInit)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
@@ -255,9 +287,10 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
 
 function renderCommentedOptionsByModule(
   renders: Record<string, string>,
-  options: inventory.ProjectOption[],
+  options: inventory.InventoryProjectOption[],
 ) {
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
+  const optionsByModule: Record<string, inventory.InventoryProjectOption[]> =
+    {};
 
   for (const option of options) {
     const parentModule = option.parent;
@@ -321,7 +354,10 @@ function renderCommentedOptionsInOrder(
  * Returns a JavaScript expression as a string, and the names of any
  * necessary imports.
  */
-function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
+function renderArgAsJavaScript(
+  arg: any,
+  option: inventory.InventoryProjectOption,
+) {
   if (option.kind === "enum") {
     if (!option.fqn) {
       throw new Error(`fqn field is missing from enum option ${option.name}`);

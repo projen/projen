@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@biomejs/biome",
-      "version": "^2",
+      "version": "^2.5",
       "type": "build"
     },
     {
@@ -106,12 +106,12 @@
     },
     {
       "name": "jsii-rosetta",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
       "name": "jsii",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
@@ -135,12 +135,12 @@
       "type": "build"
     },
     {
-      "name": "ts-node",
+      "name": "tsx",
       "type": "build"
     },
     {
       "name": "typescript",
-      "version": "5.9.x",
+      "version": "6.0.x",
       "type": "build"
     },
     {
@@ -165,6 +165,10 @@
       "type": "bundled"
     },
     {
+      "name": "dax",
+      "type": "bundled"
+    },
+    {
       "name": "fast-glob",
       "type": "bundled"
     },
@@ -182,10 +186,6 @@
     },
     {
       "name": "semver",
-      "type": "bundled"
-    },
-    {
-      "name": "shx",
       "type": "bundled"
     },
     {

@@ -30,8 +30,8 @@ test("simplest LambdaExtension cdk v2", () => {
     "--external:aws-sdk",
   );
   expect(bundleTaskExec).toContain(
-    // Supports node12
-    '--target="node12"',
+    // It picked the lowest compatible runtime
+    '--target="node14"',
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
@@ -46,9 +46,6 @@ test("simplest LambdaExtension cdk v2", () => {
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)",
-  );
-  expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toContain(
@@ -58,30 +55,6 @@ test("simplest LambdaExtension cdk v2", () => {
     "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)",
   );
   expect(generatedSource).toMatchSnapshot();
-});
-
-test("simplest LambdaExtension cdk v1", () => {
-  const project = new TypeScriptProject({
-    name: "hello",
-    defaultReleaseBranch: "main",
-  });
-
-  // WHEN
-  new LambdaExtension(project, {
-    cdkDeps: cdkDepsForProject(project),
-    entrypoint: "src/example.lambda-extension.ts",
-  });
-
-  // THEN
-  const snapshot = Testing.synth(project);
-
-  const generatedSource = snapshot["src/example-layer-version.ts"];
-  expect(generatedSource).toContain(
-    [
-      "import * as lambda from '@aws-cdk/aws-lambda';",
-      "import { Construct } from '@aws-cdk/core';",
-    ].join("\n"),
-  );
 });
 
 test("changing compatible runtimes", () => {
@@ -98,8 +71,6 @@ test("changing compatible runtimes", () => {
       LambdaRuntime.NODEJS_18_X,
       LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,
-      LambdaRuntime.NODEJS_12_X,
-      LambdaRuntime.NODEJS_10_X,
     ],
   });
 
@@ -112,16 +83,10 @@ test("changing compatible runtimes", () => {
 
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node10"',
+    '--target="node14"',
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
-  expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)",
-  );
-  expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)",
-  );
   expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
   );
@@ -210,7 +175,7 @@ test("changing construct name and path", () => {
 
 function cdkDepsForProject(
   project: TypeScriptProject,
-  cdkVersion = "1.0.0",
+  cdkVersion = "2.189.1",
 ): AwsCdkDeps {
   return new AwsCdkDepsJs(project, {
     cdkVersion: cdkVersion,

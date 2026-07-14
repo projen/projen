@@ -15,59 +15,7 @@ const project = new javascript.NodeProject({
 project.synth();"
 `;
 
-exports[`projen new --from project options creating java project with enum-typed CLI arg 1`] = `
-"import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
-import io.github.cdklabs.projen.ProjectType;
-
-public class projenrc {
-    public static void main(String[] args) {
-        JavaProject project = new JavaProject(JavaProjectOptions.builder()
-            .artifactId("my-app")
-            .groupId("org.acme")
-            .name("my-project")
-            .projectType(ProjectType.LIB)
-            .projenrcJava(true)
-            .version("0.1.0")
-            .build());
-        project.synth();
-    }
-}"
-`;
-
 exports[`projen new --from project options creating node project with enum-typed CLI arg 1`] = `
-"const { javascript } = require("projen");
-const project = new javascript.NodeProject({
-  defaultReleaseBranch: "main",
-  name: "my-project",
-  packageManager: javascript.NodePackageManager.NPM,
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
-});
-project.synth();"
-`;
-
-exports[`projen new --from project options creating python project with enum-typed CLI arg 1`] = `
-"from projen.python import PythonProject
-from projen import ProjectType
-
-project = PythonProject(
-    author_email="my@user.email.com",
-    author_name="My User Name",
-    module_name="my_project",
-    name="my-project",
-    project_type=ProjectType.LIB,
-    projenrc_python=True,
-    version="0.1.0",
-)
-
-project.synth()"
-`;
-
-exports[`projen new --from project options projen new with unknown option works 1`] = `
 "const { javascript } = require("projen");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: "main",

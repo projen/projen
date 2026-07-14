@@ -1,11 +1,11 @@
-import { execSync } from "child_process";
 import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import * as logging from "../../src/logging";
 import type { UpdateChangelogOptions } from "../../src/release/update-changelog";
 import { updateChangelog } from "../../src/release/update-changelog";
-import { execCapture, tryReadFile } from "../../src/util";
+import { tryReadFile } from "../../src/util";
+import { git as gitTool } from "../../src/util/exec";
 
 logging.disable();
 jest.setTimeout(1000 * 60); // 1min
@@ -158,21 +158,21 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
   const inputChangelogFullPath = join(workdir, inputChangelog);
   const outputChangelogFullPath = join(workdir, outputChangelog);
 
-  const git = gitFunc(workdir);
+  const run = (args: string[]) => gitTool.run(args, { cwd: workdir });
 
   if (!opts.testOptions?.cwd) {
     // init a git repository and make initial commit
-    git("init -q");
-    git('config user.email "you@example.com"');
-    git('config user.name "Your Name"');
-    git("config commit.gpgsign false");
+    run(["init", "-q"]);
+    run(["config", "user.email", "you@example.com"]);
+    run(["config", "user.name", "Your Name"]);
+    run(["config", "commit.gpgsign", "false"]);
     await fs.mkdir(join(workdir, "dist"));
     await fs.writeFile(join(workdir, versionFile), version);
     await fs.writeFile(inputChangelogFullPath, inputChangelogContent);
     if (!skipOutputChangelog) {
       await fs.writeFile(outputChangelogFullPath, outputChangelogContent);
-      git(`add ${outputChangelogFullPath}`);
-      git('commit -m "chore: setup"');
+      run(["add", outputChangelogFullPath]);
+      run(["commit", "-m", "chore: setup"]);
     }
   }
 
@@ -182,15 +182,13 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     versionFile: versionFile,
   });
 
-  const commits = execCapture("git log --oneline", {
-    cwd: workdir,
-  })
-    .toString()
+  const commits = gitTool
+    .capture(["log", "--oneline"], { cwd: workdir })
     .split("\n");
-  const lastCommitContent = execCapture(
-    "git diff-tree --no-commit-id --name-only -r HEAD",
+  const lastCommitContent = gitTool.capture(
+    ["diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"],
     { cwd: workdir },
-  ).toString();
+  );
   const projectChangelogContent = await tryReadFile(outputChangelogFullPath);
 
   return {
@@ -200,6 +198,3 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     commits,
   };
 }
-
-const gitFunc = (cwd: string) => (cmd: string) =>
-  execSync(`git ${cmd}`, { cwd: cwd, stdio: "inherit" });

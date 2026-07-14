@@ -4,13 +4,13 @@ import type { AutoMergeOptions } from "./auto-merge";
 import type { GitHubOptions } from "./github";
 import { GitHub } from "./github";
 import type { GithubCredentials } from "./github-credentials";
-import type { MergifyOptions } from "./mergify";
+
 import type { StaleOptions } from "./stale";
 import { Stale } from "./stale";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import type { ProjectOptions } from "../project";
-import { Project, ProjectType } from "../project";
+import { Project } from "../project";
 import type { SampleReadmeProps } from "../readme";
 import { SampleReadme } from "../readme";
 import { normalizePersistedPath } from "../util";
@@ -53,22 +53,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly githubOptions?: GitHubOptions;
 
   /**
-   * Whether mergify should be enabled on this repository or not.
-   *
-   * @default true
-   * @deprecated use `githubOptions.mergify` instead
-   */
-  readonly mergify?: boolean;
-
-  /**
-   * Options for mergify
-   *
-   * @default - default options
-   * @deprecated use `githubOptions.mergifyOptions` instead
-   */
-  readonly mergifyOptions?: MergifyOptions;
-
-  /**
    * Add a VSCode development environment (used for GitHub Codespaces)
    *
    * @default false
@@ -88,13 +72,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @example "{ filename: 'readme.md', contents: '# title' }"
    */
   readonly readme?: SampleReadmeProps;
-
-  /**
-   * Which type of project this is (library/app).
-   * @default ProjectType.UNKNOWN
-   * @deprecated no longer supported at the base project level
-   */
-  readonly projectType?: ProjectType;
 
   /**
    * Enable and configure the 'auto approve' workflow.
@@ -137,16 +114,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default - use a personal access token named PROJEN_GITHUB_TOKEN
    */
   readonly projenCredentials?: GithubCredentials;
-
-  /**
-   * The name of a secret which includes a GitHub Personal Access Token to be
-   * used by projen workflows. This token needs to have the `repo`, `workflows`
-   * and `packages` scope.
-   *
-   * @default "PROJEN_GITHUB_TOKEN"
-   * @deprecated use `projenCredentials`
-   */
-  readonly projenTokenSecret?: string;
 }
 
 /**
@@ -187,13 +154,6 @@ export class GitHubProject extends Project {
    */
   public readonly devContainer: DevContainer | undefined;
 
-  /*
-   * Which project type this is.
-   *
-   * @deprecated
-   */
-  public readonly projectType: ProjectType;
-
   /**
    * Auto approve set up for this project.
    */
@@ -202,15 +162,11 @@ export class GitHubProject extends Project {
   constructor(options: GitHubProjectOptions) {
     super(options);
 
-    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
     const github = options.github ?? !this.parent;
     this.github = github
       ? new GitHub(this, {
-          projenTokenSecret: options.projenTokenSecret,
           projenCredentials: options.projenCredentials,
-          mergify: options.mergify,
-          mergifyOptions: options.mergifyOptions,
           ...options.githubOptions,
         })
       : undefined;

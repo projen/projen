@@ -44,8 +44,10 @@ new vscode.DevContainer(project: Project, options?: DevContainerOptions)
 | --- | --- |
 | <code><a href="#projen.vscode.DevContainer.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.vscode.DevContainer.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.vscode.DevContainer.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.DevContainer.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.DevContainer.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.vscode.DevContainer.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.DevContainer.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.vscode.DevContainer.addDockerImage">addDockerImage</a></code> | Add a custom Docker image or Dockerfile for the container. |
 | <code><a href="#projen.vscode.DevContainer.addFeatures">addFeatures</a></code> | Adds a list of VSCode features that should be automatically installed in the container. |
@@ -84,6 +86,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.vscode.DevContainer.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.DevContainer.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.DevContainer.postSynthesize"></a>
 
 ```typescript
@@ -101,6 +124,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.vscode.DevContainer.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.DevContainer.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.vscode.DevContainer.synthesize"></a>
 
@@ -320,8 +362,10 @@ new vscode.VsCode(project: Project)
 | --- | --- |
 | <code><a href="#projen.vscode.VsCode.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.vscode.VsCode.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.vscode.VsCode.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCode.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCode.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.vscode.VsCode.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCode.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 
 ---
@@ -355,6 +399,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.vscode.VsCode.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCode.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCode.postSynthesize"></a>
 
 ```typescript
@@ -372,6 +437,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.vscode.VsCode.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCode.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.vscode.VsCode.synthesize"></a>
 
@@ -533,8 +617,10 @@ new vscode.VsCodeLaunchConfig(vscode: VsCode)
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.vscode.VsCodeLaunchConfig.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.vscode.VsCodeLaunchConfig.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.addCommandInput">addCommandInput</a></code> | Adds an input variable with type `command` to `.vscode/launch.json`. |
 | <code><a href="#projen.vscode.VsCodeLaunchConfig.addConfiguration">addConfiguration</a></code> | Adds a VsCodeLaunchConfigurationEntry (e.g. a node.js debugger) to `.vscode/launch.json. Each configuration entry has following mandatory fields: type, request and name. See https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes for details. |
@@ -572,6 +658,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.vscode.VsCodeLaunchConfig.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeLaunchConfig.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeLaunchConfig.postSynthesize"></a>
 
 ```typescript
@@ -589,6 +696,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.vscode.VsCodeLaunchConfig.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeLaunchConfig.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.vscode.VsCodeLaunchConfig.synthesize"></a>
 
@@ -798,8 +924,10 @@ new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.vscode.VsCodeRecommendedExtensions.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.vscode.VsCodeRecommendedExtensions.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.addRecommendations">addRecommendations</a></code> | Adds a list of VS Code extensions as recommendations for this workspace. |
 | <code><a href="#projen.vscode.VsCodeRecommendedExtensions.addUnwantedRecommendations">addUnwantedRecommendations</a></code> | Marks a list of VS Code extensions as unwanted recommendations for this workspace. |
@@ -835,6 +963,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.vscode.VsCodeRecommendedExtensions.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeRecommendedExtensions.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeRecommendedExtensions.postSynthesize"></a>
 
 ```typescript
@@ -852,6 +1001,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.vscode.VsCodeRecommendedExtensions.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeRecommendedExtensions.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.vscode.VsCodeRecommendedExtensions.synthesize"></a>
 
@@ -1025,8 +1193,10 @@ new vscode.VsCodeSettings(vscode: VsCode)
 | --- | --- |
 | <code><a href="#projen.vscode.VsCodeSettings.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#projen.vscode.VsCodeSettings.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.vscode.VsCodeSettings.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeSettings.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
 | <code><a href="#projen.vscode.VsCodeSettings.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.vscode.VsCodeSettings.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.vscode.VsCodeSettings.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.vscode.VsCodeSettings.addSetting">addSetting</a></code> | Adds a workspace setting. |
 | <code><a href="#projen.vscode.VsCodeSettings.addSettings">addSettings</a></code> | Adds a workspace setting. |
@@ -1062,6 +1232,27 @@ The mixins to apply.
 
 ---
 
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.vscode.VsCodeSettings.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeSettings.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
 ##### `postSynthesize` <a name="postSynthesize" id="projen.vscode.VsCodeSettings.postSynthesize"></a>
 
 ```typescript
@@ -1079,6 +1270,25 @@ public preSynthesize(): void
 ```
 
 Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.vscode.VsCodeSettings.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.vscode.VsCodeSettings.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
 
 ##### `synthesize` <a name="synthesize" id="projen.vscode.VsCodeSettings.synthesize"></a>
 

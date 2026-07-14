@@ -5,7 +5,7 @@ import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
 import type { ProjectOption } from "../inventory";
 import { readJsiiManifest } from "../inventory";
-import type { Project } from "../project";
+import type { InitProject, Project } from "../project";
 import { ProjenrcFile } from "../projenrc";
 import { normalizePersistedPath } from "../util";
 
@@ -80,13 +80,14 @@ export class Projenrc extends ProjenrcFile {
     pom.addPlugin("org.codehaus.mojo/exec-maven-plugin@3.0.0");
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask?.exec(`mvn ${compileGoal} --quiet`);
+    project.defaultTask?.execArgs(["mvn", compileGoal, "--quiet"]);
     project.defaultTask?.exec(
       `mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`,
     );
+  }
 
-    // if this is a new project, generate a skeleton for projenrc.java
-    this.generateProjenrc();
+  public projectCreation(initProject: InitProject) {
+    this.generateProjenrc(initProject);
   }
 
   private get javaClass(): string {
@@ -123,11 +124,7 @@ export class Projenrc extends ProjenrcFile {
     return normalizePersistedPath(relativePath);
   }
 
-  private generateProjenrc() {
-    const bootstrap = this.project.initProject;
-    if (!bootstrap) {
-      return;
-    }
+  private generateProjenrc(bootstrap: InitProject) {
     const jsiiFqn = bootstrap.fqn;
     const jsiiManifest = readJsiiManifest(jsiiFqn);
     const jsiiType = jsiiManifest.types[jsiiFqn];

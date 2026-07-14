@@ -1,26 +1,17 @@
-import type { SpawnSyncReturns } from "child_process";
-import * as fs from "fs";
-import * as path from "path";
 import * as semver from "semver";
 import * as yargs from "yargs";
 import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import {
-  exec,
-  execCapture,
-  execOrUndefined,
-  getGitVersion,
-  isTruthy,
-  normalizePersistedPath,
-} from "../../util";
+import { getGitVersion, isTruthy, normalizePersistedPath } from "../../util";
+import { git, npm } from "../../util/exec";
 import { tryProcessMacro } from "../macros";
 import {
   CliError,
   findJsiiFilePath,
   installPackage,
-  renderInstallCommand,
+  renderInstallArgs,
 } from "../util";
 
 class Command implements yargs.CommandModule {
@@ -75,6 +66,7 @@ class Command implements yargs.CommandModule {
       args.command(type.pjid, type.docs ?? "", {
         builder: (cargs) => {
           cargs.showHelpOnFail(false);
+          cargs.strictOptions();
 
           for (const option of type.options ?? []) {
             // not all types can be represented in the cli
@@ -164,7 +156,7 @@ async function handler(args: any) {
  * Returns the yargs option type for a given project option
  */
 function argType(
-  option: inventory.ProjectOption,
+  option: inventory.InventoryProjectOption,
 ): "string" | "boolean" | "number" | "array" {
   if (option.kind === "enum") {
     return "string";
@@ -180,7 +172,7 @@ function argType(
 /**
  * Returns the description for a given project option
  */
-function argDesc(option: inventory.ProjectOption): string {
+function argDesc(option: inventory.InventoryProjectOption): string {
   let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
 
   const helpDefault = option.initialValue ?? option.default;
@@ -197,7 +189,7 @@ function argDesc(option: inventory.ProjectOption): string {
  * Compute the initial value for a given project option
  */
 function argInitialValue(
-  option: inventory.ProjectOption,
+  option: inventory.InventoryProjectOption,
   cwd = process.cwd(),
 ): any {
   // if we have determined an initial value for the field
@@ -213,7 +205,7 @@ function argInitialValue(
  * - lists of primitives
  * - enums
  */
-function argTypeSupported(option: inventory.ProjectOption): boolean {
+function argTypeSupported(option: inventory.InventoryProjectOption): boolean {
   return (
     option.simpleType === "string" ||
     option.simpleType === "number" ||
@@ -226,14 +218,14 @@ function argTypeSupported(option: inventory.ProjectOption): boolean {
 /**
  * Checks if the given option is a primitive array
  */
-function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
+function isPrimitiveArrayOption(
+  option: inventory.InventoryProjectOption,
+): boolean {
   return Boolean(
     option.jsonLike &&
-    option.fullType.collection?.kind === "array" &&
-    option.fullType.collection.elementtype.primitive &&
-    ["string", "number"].includes(
-      option.fullType.collection.elementtype.primitive,
-    ),
+    option.type.collection?.kind === "array" &&
+    option.type.collection.elementtype.primitive &&
+    ["string", "number"].includes(option.type.collection.elementtype.primitive),
   );
 }
 
@@ -254,7 +246,7 @@ function renderDefault(cwd: string, value: string) {
  */
 function commandLineToProps(
   cwd: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   argv: Record<string, unknown>,
 ): Record<string, any> {
   const props: Record<string, any> = {};
@@ -296,26 +288,29 @@ function commandLineToProps(
  */
 async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   const projenVersion = args.projenVersion ?? "latest";
-  const installCommand = renderInstallCommand(
-    baseDir,
-    `projen@${projenVersion}`,
-  );
+  const installArgs = renderInstallArgs(baseDir, `projen@${projenVersion}`);
   if (args.projenVersion) {
-    exec(installCommand, { cwd: baseDir });
+    await npm.run(installArgs, { cwd: baseDir });
   } else {
-    // do not overwrite existing installation
-    exec(
-      `npm ls --prefix="${baseDir}" --depth=0 --pattern projen || ${installCommand}`,
-      { cwd: baseDir },
-    );
+    // do not overwrite an existing installation: only install if `npm ls` fails
+    try {
+      await npm.run(
+        ["ls", `--prefix=${baseDir}`, "--depth=0", "--pattern", "projen"],
+        { cwd: baseDir },
+      );
+    } catch {
+      await npm.run(installArgs, { cwd: baseDir });
+    }
   }
 
-  const installPackageWithCliError = (b: string, s: string): string => {
+  const installPackageWithCliError = async (
+    b: string,
+    s: string,
+  ): Promise<string> => {
     try {
-      return installPackage(b, s);
+      return await installPackage(b, s);
     } catch (error: unknown) {
-      const stderr =
-        (error as SpawnSyncReturns<Buffer>)?.stderr?.toString() ?? "";
+      const stderr = (error as { stderr?: Buffer })?.stderr?.toString() ?? "";
       const isLocal = stderr.includes("code ENOENT");
       const isRegistry = stderr.includes("code E404");
       if (isLocal || isRegistry) {
@@ -329,7 +324,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     }
   };
 
-  const moduleName = installPackageWithCliError(baseDir, spec);
+  const moduleName = await installPackageWithCliError(baseDir, spec);
   logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
@@ -433,7 +428,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
 function parseArg(
   value: any,
   type: string,
-  option?: inventory.ProjectOption,
+  option?: inventory.InventoryProjectOption,
 ): any {
   switch (type) {
     case "number":
@@ -445,10 +440,7 @@ function parseArg(
         value = [value];
       }
       return value.map((v: any) =>
-        parseArg(
-          v,
-          option?.fullType.collection?.elementtype.primitive || "string",
-        ),
+        parseArg(v, option?.type.collection?.elementtype.primitive || "string"),
       );
     // return value unchanged
     case "string":
@@ -469,7 +461,7 @@ function parseArg(
  */
 async function initProject(
   baseDir: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   args: any,
 ) {
   // convert command line arguments to project props using type information
@@ -486,34 +478,33 @@ async function initProject(
     post: args.post,
   });
 
-  if (fs.existsSync(path.join(baseDir, "package.json")) && args.post) {
-    exec("npm run eslint --if-present", { cwd: baseDir });
-  }
-
   if (args.git) {
-    const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    const gitversion: string = getGitVersion(
-      execCapture("git --version", { cwd: baseDir }).toString(),
-    );
+    const opts = { cwd: baseDir };
+    const gitversion: string = getGitVersion(git.capture(["--version"], opts));
     logging.debug("system using git version ", gitversion);
     // `git config init.defaultBranch` and `git init -b` are only available since git 2.28.0
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
       const defaultGitInitBranch =
-        execOrUndefined("git config init.defaultBranch", {
-          cwd: baseDir,
-        })?.trim() || "main";
-      git(`init -b ${defaultGitInitBranch}`);
-      git("add .");
-      git('commit --allow-empty -m "chore: project created with projen"');
+        git.tryCapture(["config", "init.defaultBranch"], opts)?.trim() ||
+        "main";
+      git.run(["init", "-b", defaultGitInitBranch], opts);
+      git.run(["add", "."], opts);
+      git.run(
+        ["commit", "--allow-empty", "-m", "chore: project created with projen"],
+        opts,
+      );
       logging.debug(`default branch name set to ${defaultGitInitBranch}`);
     } else {
-      git("init");
-      git("add .");
-      git('commit --allow-empty -m "chore: project created with projen"');
+      git.run(["init"], opts);
+      git.run(["add", "."], opts);
+      git.run(
+        ["commit", "--allow-empty", "-m", "chore: project created with projen"],
+        opts,
+      );
       logging.debug(
         "older version of git detected, changed default branch name to main",
       );
-      git("branch -M main");
+      git.run(["branch", "-M", "main"], opts);
     }
   }
 }

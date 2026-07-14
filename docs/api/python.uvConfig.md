@@ -3,6 +3,56 @@
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### AuditOptions <a name="AuditOptions" id="projen.python.uvConfig.AuditOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.python.uvConfig.AuditOptions.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const auditOptions: python.uvConfig.AuditOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.uvConfig.AuditOptions.property.ignore">ignore</a></code> | <code>string[]</code> | A list of vulnerability IDs to ignore during auditing. |
+| <code><a href="#projen.python.uvConfig.AuditOptions.property.ignoreUntilFixed">ignoreUntilFixed</a></code> | <code>string[]</code> | A list of vulnerability IDs to ignore during auditing, but only while no fix is available. |
+
+---
+
+##### `ignore`<sup>Optional</sup> <a name="ignore" id="projen.python.uvConfig.AuditOptions.property.ignore"></a>
+
+```typescript
+public readonly ignore: string[];
+```
+
+- *Type:* string[]
+
+A list of vulnerability IDs to ignore during auditing.
+
+Vulnerabilities matching any of the provided IDs (including aliases) will be excluded from
+the audit results.
+
+---
+
+##### `ignoreUntilFixed`<sup>Optional</sup> <a name="ignoreUntilFixed" id="projen.python.uvConfig.AuditOptions.property.ignoreUntilFixed"></a>
+
+```typescript
+public readonly ignoreUntilFixed: string[];
+```
+
+- *Type:* string[]
+
+A list of vulnerability IDs to ignore during auditing, but only while no fix is available.
+
+Vulnerabilities matching any of the provided IDs (including aliases) will be excluded from
+the audit results as long as they have no known fix versions. Once a fix version becomes
+available, the vulnerability will be reported again.
+
+---
+
 ### BuildBackendSettings <a name="BuildBackendSettings" id="projen.python.uvConfig.BuildBackendSettings"></a>
 
 Settings for the uv build backend (`uv_build`).
@@ -189,6 +239,9 @@ public readonly sourceExclude: string[];
 
 Glob expressions which files and directories to exclude from the source distribution.
 
+These exclusions are also applied to wheels to ensure that a wheel built from a source tree
+is consistent with a wheel built from a source distribution.
+
 ---
 
 ##### `sourceInclude`<sup>Optional</sup> <a name="sourceInclude" id="projen.python.uvConfig.BuildBackendSettings.property.sourceInclude"></a>
@@ -265,6 +318,7 @@ const index: python.uvConfig.Index = { ... }
 | <code><a href="#projen.python.uvConfig.Index.property.authenticate">authenticate</a></code> | <code>projen.python.uvConfig.AuthPolicy</code> | When uv should use authentication for requests to the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.cacheControl">cacheControl</a></code> | <code>projen.python.uvConfig.IndexCacheControl</code> | Cache control configuration for this index. |
 | <code><a href="#projen.python.uvConfig.Index.property.default">default</a></code> | <code>boolean</code> | Mark the index as the default index. |
+| <code><a href="#projen.python.uvConfig.Index.property.excludeNewer">excludeNewer</a></code> | <code>projen.python.uvConfig.ExcludeNewerOverride</code> | An index-specific `exclude-newer` cutoff. |
 | <code><a href="#projen.python.uvConfig.Index.property.explicit">explicit</a></code> | <code>boolean</code> | Mark the index as explicit. |
 | <code><a href="#projen.python.uvConfig.Index.property.format">format</a></code> | <code>projen.python.uvConfig.IndexFormat</code> | The format used by the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.ignoreErrorCodes">ignoreErrorCodes</a></code> | <code>number[]</code> | Status codes that uv should ignore when deciding whether to continue searching in the next index after a failure. |
@@ -348,6 +402,37 @@ is given the highest priority when resolving packages.
 
 ---
 
+##### `excludeNewer`<sup>Optional</sup> <a name="excludeNewer" id="projen.python.uvConfig.Index.property.excludeNewer"></a>
+
+```typescript
+public readonly excludeNewer: ExcludeNewerOverride;
+```
+
+- *Type:* projen.python.uvConfig.ExcludeNewerOverride
+
+An index-specific `exclude-newer` cutoff.
+
+Accepts the same date, timestamp, and duration values as the global `exclude-newer`
+setting. Set this to `false` to disable `exclude-newer` for this index entirely.
+
+When set to a value, packages resolved from this index will use that cutoff instead of the
+globally-specified value, unless a package-specific `exclude-newer-package` override is
+present.
+
+This option is in preview and may change in any future release.
+
+```toml
+[tool.uv]
+exclude-newer = "2025-01-01T00:00:00Z"
+
+[[tool.uv.index]]
+name = "internal"
+url = "https://internal.example.com/simple"
+exclude-newer = "7 days"
+```
+
+---
+
 ##### `explicit`<sup>Optional</sup> <a name="explicit" id="projen.python.uvConfig.Index.property.explicit"></a>
 
 ```typescript
@@ -364,7 +449,7 @@ definition, as in:
 ```toml
 [[tool.uv.index]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cu121"
+url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 
 [tool.uv.sources]
@@ -424,7 +509,7 @@ you can pin a package to a specific index by name:
 ```toml
 [[tool.uv.index]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cu121"
+url = "https://download.pytorch.org/whl/cu130"
 
 [tool.uv.sources]
 torch = { index = "pytorch" }
@@ -578,7 +663,7 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | <code><a href="#projen.python.uvConfig.PipOptions.property.emitIndexUrl">emitIndexUrl</a></code> | <code>boolean</code> | Include `--index-url` and `--extra-index-url` entries in the output file generated by `uv pip compile`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.emitMarkerExpression">emitMarkerExpression</a></code> | <code>boolean</code> | Whether to emit a marker string indicating the conditions under which the set of pinned dependencies is valid. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | Limit candidate packages to those that were uploaded prior to a given point in time. |
-| <code><a href="#projen.python.uvConfig.PipOptions.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: string}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: projen.python.uvConfig.ExcludeNewerOverride}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.extra">extra</a></code> | <code>string[]</code> | Include optional dependencies from the specified extra; may be provided more than once. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.extraBuildDependencies">extraBuildDependencies</a></code> | <code>{[ key: string ]: any[]}</code> | Additional build dependencies for packages. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
@@ -602,6 +687,7 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noHeader">noHeader</a></code> | <code>boolean</code> | Exclude the comment header at the top of output file generated by `uv pip compile`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noIndex">noIndex</a></code> | <code>boolean</code> | Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noSources">noSources</a></code> | <code>boolean</code> | Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.noSourcesPackage">noSourcesPackage</a></code> | <code>string[]</code> | Ignore `tool.uv.sources` for the specified packages. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noStripExtras">noStripExtras</a></code> | <code>boolean</code> | Include extras in the output file. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.noStripMarkers">noStripMarkers</a></code> | <code>boolean</code> | Include environment markers in the output file generated by `uv pip compile`. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.onlyBinary">onlyBinary</a></code> | <code>string[]</code> | Only use pre-built wheels; don't build source distributions. |
@@ -840,23 +926,39 @@ public readonly excludeNewer: string;
 
 Limit candidate packages to those that were uploaded prior to a given point in time.
 
-Accepts a superset of [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339.html) (e.g.,
-`2006-12-02T02:07:43Z`). A full timestamp is required to ensure that the resolver will
-behave consistently across timezones.
+The date is compared against the upload time of each individual distribution artifact
+(i.e., when each file was uploaded to the package index), not the release date of the
+package version.
+
+Accepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g.,
+`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+
+Durations do not respect semantics of the local time zone and are always resolved to a fixed
+number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+Calendar units such as months and years are not allowed.
 
 ---
 
 ##### `excludeNewerPackage`<sup>Optional</sup> <a name="excludeNewerPackage" id="projen.python.uvConfig.PipOptions.property.excludeNewerPackage"></a>
 
 ```typescript
-public readonly excludeNewerPackage: {[ key: string ]: string};
+public readonly excludeNewerPackage: {[ key: string ]: ExcludeNewerOverride};
 ```
 
-- *Type:* {[ key: string ]: string}
+- *Type:* {[ key: string ]: projen.python.uvConfig.ExcludeNewerOverride}
 
 Limit candidate packages for specific packages to those that were uploaded prior to the given date.
 
-Accepts package-date pairs in a dictionary format.
+Accepts a dictionary format of `PACKAGE = "DATE"` pairs, where `DATE` is an RFC 3339
+timestamp (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g., `24 hours`, `1 week`,
+`30 days`), or a ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+
+Durations do not respect semantics of the local time zone and are always resolved to a fixed
+number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+Calendar units such as months and years are not allowed.
+
+Set a package to `false` to exempt it from the global [`exclude-newer`](#exclude-newer)
+constraint entirely.
 
 ---
 
@@ -1045,11 +1147,11 @@ public readonly linkMode: LinkMode;
 ```
 
 - *Type:* projen.python.uvConfig.LinkMode
-- *Default:* clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+- *Default:* clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
 
 The method to use when installing packages from the global cache.
 
-Defaults to `clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+Defaults to `clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
 Windows.
 
 WARNING: The use of symlink link mode is discouraged, as they create tight coupling between
@@ -1209,6 +1311,18 @@ public readonly noSources: boolean;
 - *Type:* boolean
 
 Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources.
+
+---
+
+##### `noSourcesPackage`<sup>Optional</sup> <a name="noSourcesPackage" id="projen.python.uvConfig.PipOptions.property.noSourcesPackage"></a>
+
+```typescript
+public readonly noSourcesPackage: string[];
+```
+
+- *Type:* string[]
+
+Ignore `tool.uv.sources` for the specified packages.
 
 ---
 
@@ -1494,6 +1608,8 @@ uv will use the PyTorch index for CUDA 12.6.
 The `auto` mode will attempt to detect the appropriate PyTorch index based on the currently
 installed CUDA drivers.
 
+This setting is only respected by `uv pip` commands.
+
 This option is in preview and may change in any future release.
 
 ---
@@ -1758,6 +1874,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.addBounds">addBounds</a></code> | <code>projen.python.uvConfig.AddBoundsKind</code> | The default version specifier when adding a dependency. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.allowInsecureHost">allowInsecureHost</a></code> | <code>string[]</code> | Allow insecure connections to host. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.audit">audit</a></code> | <code>projen.python.uvConfig.AuditOptions</code> | *No description.* |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildBackend">buildBackend</a></code> | <code>projen.python.uvConfig.BuildBackendSettings</code> | Configuration for the uv build backend. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.cacheDir">cacheDir</a></code> | <code>string</code> | Path to the cache directory. |
@@ -1777,13 +1894,15 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.devDependencies">devDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.environments">environments</a></code> | <code>string[]</code> | A list of environment markers, e.g., `python_version >= '3.6'`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.excludeDependencies">excludeDependencies</a></code> | <code>string[]</code> | Package names to exclude, e.g., `werkzeug`, `numpy`. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | Limit candidate packages to those that were uploaded prior to a given point in time. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: string}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.excludeNewer">excludeNewer</a></code> | <code>string</code> | Limit candidate packages to those that were uploaded prior to the given date. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.excludeNewerPackage">excludeNewerPackage</a></code> | <code>{[ key: string ]: projen.python.uvConfig.ExcludeNewerOverride}</code> | Limit candidate packages for specific packages to those that were uploaded prior to the given date. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraBuildDependencies">extraBuildDependencies</a></code> | <code>{[ key: string ]: any[]}</code> | Additional build dependencies for packages. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraBuildVariables">extraBuildVariables</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Extra environment variables to set when building certain packages. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to `--index-url`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.forkStrategy">forkStrategy</a></code> | <code>projen.python.uvConfig.ForkStrategy</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.httpProxy">httpProxy</a></code> | <code>string</code> | The URL of the HTTP proxy to use. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.httpsProxy">httpsProxy</a></code> | <code>string</code> | The URL of the HTTPS proxy to use. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.index">index</a></code> | <code>projen.python.uvConfig.Index[]</code> | The indexes to use when resolving dependencies. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.indexStrategy">indexStrategy</a></code> | <code>projen.python.uvConfig.IndexStrategy</code> | The strategy to use when resolving against multiple index URLs. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.indexUrl">indexUrl</a></code> | <code>string</code> | The URL of the Python package index (by default: <https://pypi.org/simple>). |
@@ -1799,7 +1918,9 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noBuildPackage">noBuildPackage</a></code> | <code>string[]</code> | Don't build source distributions for a specific package. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noCache">noCache</a></code> | <code>boolean</code> | Avoid reading from or writing to the cache, instead using a temporary directory for the duration of the operation. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noIndex">noIndex</a></code> | <code>boolean</code> | Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependencies and those provided via `--find-links`. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.noProxy">noProxy</a></code> | <code>string[]</code> | A list of hosts to exclude from proxying. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noSources">noSources</a></code> | <code>boolean</code> | Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.noSourcesPackage">noSourcesPackage</a></code> | <code>string[]</code> | Ignore `tool.uv.sources` for the specified packages. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.offline">offline</a></code> | <code>boolean</code> | Disable network access, relying only on locally cached data and locally available files. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.overrideDependencies">overrideDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.package">package</a></code> | <code>boolean</code> | Whether the project should be considered a Python package, or a non-package ("virtual") project. |
@@ -1818,6 +1939,8 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.requiredVersion">requiredVersion</a></code> | <code>string</code> | Enforce a requirement on the version of uv. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.resolution">resolution</a></code> | <code>projen.python.uvConfig.ResolutionMode</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.sources">sources</a></code> | <code>{[ key: string ]: any[]}</code> | The sources to use when resolving dependencies. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.systemCerts">systemCerts</a></code> | <code>boolean</code> | Whether to load TLS certificates from the platform's native certificate store. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.torchBackend">torchBackend</a></code> | <code>projen.python.uvConfig.TorchMode</code> | The backend to use when fetching packages in the PyTorch ecosystem. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.trustedPublishing">trustedPublishing</a></code> | <code>projen.python.uvConfig.TrustedPublishing</code> | Configure trusted publishing. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.upgrade">upgrade</a></code> | <code>boolean</code> | Allow package upgrades, ignoring pinned versions in any existing output file. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.upgradePackage">upgradePackage</a></code> | <code>string[]</code> | Allow upgrades for a specific package, ignoring pinned versions in any existing output file. |
@@ -1862,6 +1985,16 @@ Expects to receive either a hostname (e.g., `localhost`), a host-port pair (e.g.
 WARNING: Hosts included in this list will not be verified against the system's certificate
 store. Only use `--allow-insecure-host` in a secure network with verified sources, as it
 bypasses SSL verification and could expose you to MITM attacks.
+
+---
+
+##### `audit`<sup>Optional</sup> <a name="audit" id="projen.python.uvConfig.UvConfiguration.property.audit"></a>
+
+```typescript
+public readonly audit: AuditOptions;
+```
+
+- *Type:* projen.python.uvConfig.AuditOptions
 
 ---
 
@@ -2190,25 +2323,41 @@ public readonly excludeNewer: string;
 
 - *Type:* string
 
-Limit candidate packages to those that were uploaded prior to a given point in time.
+Limit candidate packages to those that were uploaded prior to the given date.
 
-Accepts a superset of [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339.html) (e.g.,
-`2006-12-02T02:07:43Z`). A full timestamp is required to ensure that the resolver will
-behave consistently across timezones.
+The date is compared against the upload time of each individual distribution artifact
+(i.e., when each file was uploaded to the package index), not the release date of the
+package version.
+
+Accepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g.,
+`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+
+Durations do not respect semantics of the local time zone and are always resolved to a fixed
+number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+Calendar units such as months and years are not allowed.
 
 ---
 
 ##### `excludeNewerPackage`<sup>Optional</sup> <a name="excludeNewerPackage" id="projen.python.uvConfig.UvConfiguration.property.excludeNewerPackage"></a>
 
 ```typescript
-public readonly excludeNewerPackage: {[ key: string ]: string};
+public readonly excludeNewerPackage: {[ key: string ]: ExcludeNewerOverride};
 ```
 
-- *Type:* {[ key: string ]: string}
+- *Type:* {[ key: string ]: projen.python.uvConfig.ExcludeNewerOverride}
 
 Limit candidate packages for specific packages to those that were uploaded prior to the given date.
 
-Accepts package-date pairs in a dictionary format.
+Accepts a dictionary format of `PACKAGE = "DATE"` pairs, where `DATE` is an RFC 3339
+timestamp (e.g., `2006-12-02T02:07:43Z`), a "friendly" duration (e.g., `24 hours`, `1 week`,
+`30 days`), or a ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).
+
+Durations do not respect semantics of the local time zone and are always resolved to a fixed
+number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
+Calendar units such as months and years are not allowed.
+
+Set a package to `false` to exempt it from the global [`exclude-newer`](#exclude-newer)
+constraint entirely.
 
 ---
 
@@ -2305,6 +2454,30 @@ versions or platforms.
 
 ---
 
+##### `httpProxy`<sup>Optional</sup> <a name="httpProxy" id="projen.python.uvConfig.UvConfiguration.property.httpProxy"></a>
+
+```typescript
+public readonly httpProxy: string;
+```
+
+- *Type:* string
+
+The URL of the HTTP proxy to use.
+
+---
+
+##### `httpsProxy`<sup>Optional</sup> <a name="httpsProxy" id="projen.python.uvConfig.UvConfiguration.property.httpsProxy"></a>
+
+```typescript
+public readonly httpsProxy: string;
+```
+
+- *Type:* string
+
+The URL of the HTTPS proxy to use.
+
+---
+
 ##### `index`<sup>Optional</sup> <a name="index" id="projen.python.uvConfig.UvConfiguration.property.index"></a>
 
 ```typescript
@@ -2330,7 +2503,7 @@ dependencies that select it explicitly via `[tool.uv.sources]`, as in:
 ```toml
 [[tool.uv.index]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cu121"
+url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 
 [tool.uv.sources]
@@ -2402,11 +2575,11 @@ public readonly linkMode: LinkMode;
 ```
 
 - *Type:* projen.python.uvConfig.LinkMode
-- *Default:* clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+- *Default:* clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
 
 The method to use when installing packages from the global cache.
 
-Defaults to `clone` (also known as Copy-on-Write) on macOS, and `hardlink` on Linux and
+Defaults to `clone` (also known as Copy-on-Write) on macOS and Linux, and `hardlink` on
 Windows.
 
 WARNING: The use of symlink link mode is discouraged, as they create tight coupling between
@@ -2441,13 +2614,10 @@ public readonly nativeTls: boolean;
 
 Whether to load TLS certificates from the platform's native certificate store.
 
-By default, uv loads certificates from the bundled `webpki-roots` crate. The
-`webpki-roots` are a reliable set of trust roots from Mozilla, and including them in uv
-improves portability and performance (especially on macOS).
+By default, uv uses bundled Mozilla root certificates. When enabled, this loads
+certificates from the platform's native certificate store instead.
 
-However, in some cases, you may want to use the platform's native certificate store,
-especially if you're relying on a corporate trust root (e.g., for a mandatory proxy) that's
-included in your system's certificate store.
+(Deprecated: use `system-certs` instead.)
 
 ---
 
@@ -2560,6 +2730,18 @@ Ignore all registry indexes (e.g., PyPI), instead relying on direct URL dependen
 
 ---
 
+##### `noProxy`<sup>Optional</sup> <a name="noProxy" id="projen.python.uvConfig.UvConfiguration.property.noProxy"></a>
+
+```typescript
+public readonly noProxy: string[];
+```
+
+- *Type:* string[]
+
+A list of hosts to exclude from proxying.
+
+---
+
 ##### `noSources`<sup>Optional</sup> <a name="noSources" id="projen.python.uvConfig.UvConfiguration.property.noSources"></a>
 
 ```typescript
@@ -2569,6 +2751,18 @@ public readonly noSources: boolean;
 - *Type:* boolean
 
 Ignore the `tool.uv.sources` table when resolving dependencies. Used to lock against the standards-compliant, publishable package metadata, as opposed to using any local or Git sources.
+
+---
+
+##### `noSourcesPackage`<sup>Optional</sup> <a name="noSourcesPackage" id="projen.python.uvConfig.UvConfiguration.property.noSourcesPackage"></a>
+
+```typescript
+public readonly noSourcesPackage: string[];
+```
+
+- *Type:* string[]
+
+Ignore `tool.uv.sources` for the specified packages.
 
 ---
 
@@ -2707,8 +2901,6 @@ public readonly pythonDownloadsJsonUrl: string;
 
 URL pointing to JSON of custom Python installations.
 
-Note that currently, only local paths are supported.
-
 ---
 
 ##### `pythonInstallMirror`<sup>Optional</sup> <a name="pythonInstallMirror" id="projen.python.uvConfig.UvConfiguration.property.pythonInstallMirror"></a>
@@ -2828,6 +3020,46 @@ during development. A dependency source can be a Git repository, a URL, a local 
 alternative registry.
 
 See [Dependencies](https://docs.astral.sh/uv/concepts/projects/dependencies/) for more.
+
+---
+
+##### `systemCerts`<sup>Optional</sup> <a name="systemCerts" id="projen.python.uvConfig.UvConfiguration.property.systemCerts"></a>
+
+```typescript
+public readonly systemCerts: boolean;
+```
+
+- *Type:* boolean
+
+Whether to load TLS certificates from the platform's native certificate store.
+
+By default, uv uses bundled Mozilla root certificates. When enabled, this loads
+certificates from the platform's native certificate store instead.
+
+---
+
+##### `torchBackend`<sup>Optional</sup> <a name="torchBackend" id="projen.python.uvConfig.UvConfiguration.property.torchBackend"></a>
+
+```typescript
+public readonly torchBackend: TorchMode;
+```
+
+- *Type:* projen.python.uvConfig.TorchMode
+
+The backend to use when fetching packages in the PyTorch ecosystem.
+
+When set, uv will ignore the configured index URLs for packages in the PyTorch ecosystem,
+and will instead use the defined backend.
+
+For example, when set to `cpu`, uv will use the CPU-only PyTorch index; when set to `cu126`,
+uv will use the PyTorch index for CUDA 12.6.
+
+The `auto` mode will attempt to detect the appropriate PyTorch index based on the currently
+installed CUDA drivers.
+
+This setting is only respected by `uv pip` commands.
+
+This option is in preview and may change in any future release.
 
 ---
 
@@ -2959,6 +3191,66 @@ public readonly scripts: string;
 ```
 
 - *Type:* string
+
+---
+
+## Classes <a name="Classes" id="Classes"></a>
+
+### ExcludeNewerOverride <a name="ExcludeNewerOverride" id="projen.python.uvConfig.ExcludeNewerOverride"></a>
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.ExcludeNewerOverride.fromBoolean">fromBoolean</a></code> | *No description.* |
+| <code><a href="#projen.python.uvConfig.ExcludeNewerOverride.fromString">fromString</a></code> | *No description.* |
+
+---
+
+##### `fromBoolean` <a name="fromBoolean" id="projen.python.uvConfig.ExcludeNewerOverride.fromBoolean"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.uvConfig.ExcludeNewerOverride.fromBoolean(value: boolean)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.python.uvConfig.ExcludeNewerOverride.fromBoolean.parameter.value"></a>
+
+- *Type:* boolean
+
+---
+
+##### `fromString` <a name="fromString" id="projen.python.uvConfig.ExcludeNewerOverride.fromString"></a>
+
+```typescript
+import { python } from 'projen'
+
+python.uvConfig.ExcludeNewerOverride.fromString(value: string)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.python.uvConfig.ExcludeNewerOverride.fromString.parameter.value"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.uvConfig.ExcludeNewerOverride.property.value">value</a></code> | <code>string \| boolean</code> | *No description.* |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.python.uvConfig.ExcludeNewerOverride.property.value"></a>
+
+```typescript
+public readonly value: string | boolean;
+```
+
+- *Type:* string | boolean
 
 ---
 
@@ -3242,27 +3534,33 @@ Use the `keyring` command for credential lookup.
 
 ### LinkMode <a name="LinkMode" id="projen.python.uvConfig.LinkMode"></a>
 
+The method to use when linking.
+
+Defaults to [`LinkMode::Clone`] on macOS and Linux (which support copy-on-write on
+APFS and btrfs/xfs/bcachefs respectively), and [`LinkMode::Hardlink`] on other
+platforms.
+
 #### Members <a name="Members" id="Members"></a>
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.python.uvConfig.LinkMode.CLONE">CLONE</a></code> | Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone). |
-| <code><a href="#projen.python.uvConfig.LinkMode.COPY">COPY</a></code> | Copy packages from the wheel into the `site-packages` directory. |
-| <code><a href="#projen.python.uvConfig.LinkMode.HARDLINK">HARDLINK</a></code> | Hard link packages from the wheel into the `site-packages` directory. |
-| <code><a href="#projen.python.uvConfig.LinkMode.SYMLINK">SYMLINK</a></code> | Symbolically link packages from the wheel into the `site-packages` directory. |
+| <code><a href="#projen.python.uvConfig.LinkMode.CLONE">CLONE</a></code> | Clone (i.e., copy-on-write) packages from the source into the destination. (clone). |
+| <code><a href="#projen.python.uvConfig.LinkMode.COPY">COPY</a></code> | Copy packages from the source into the destination. |
+| <code><a href="#projen.python.uvConfig.LinkMode.HARDLINK">HARDLINK</a></code> | Hard link packages from the source into the destination. |
+| <code><a href="#projen.python.uvConfig.LinkMode.SYMLINK">SYMLINK</a></code> | Symbolically link packages from the source into the destination. |
 
 ---
 
 ##### `CLONE` <a name="CLONE" id="projen.python.uvConfig.LinkMode.CLONE"></a>
 
-Clone (i.e., copy-on-write) packages from the wheel into the `site-packages` directory. (clone).
+Clone (i.e., copy-on-write) packages from the source into the destination. (clone).
 
 ---
 
 
 ##### `COPY` <a name="COPY" id="projen.python.uvConfig.LinkMode.COPY"></a>
 
-Copy packages from the wheel into the `site-packages` directory.
+Copy packages from the source into the destination.
 
 (copy)
 
@@ -3271,7 +3569,7 @@ Copy packages from the wheel into the `site-packages` directory.
 
 ##### `HARDLINK` <a name="HARDLINK" id="projen.python.uvConfig.LinkMode.HARDLINK"></a>
 
-Hard link packages from the wheel into the `site-packages` directory.
+Hard link packages from the source into the destination.
 
 (hardlink)
 
@@ -3280,7 +3578,7 @@ Hard link packages from the wheel into the `site-packages` directory.
 
 ##### `SYMLINK` <a name="SYMLINK" id="projen.python.uvConfig.LinkMode.SYMLINK"></a>
 
-Symbolically link packages from the wheel into the `site-packages` directory.
+Symbolically link packages from the source into the destination.
 
 (symlink)
 
@@ -3980,6 +4278,10 @@ The strategy to use when determining the appropriate PyTorch index.
 | <code><a href="#projen.python.uvConfig.TorchMode.CU91">CU91</a></code> | Use the PyTorch index for CUDA 9.1. (cu91). |
 | <code><a href="#projen.python.uvConfig.TorchMode.CU90">CU90</a></code> | Use the PyTorch index for CUDA 9.0. (cu90). |
 | <code><a href="#projen.python.uvConfig.TorchMode.CU80">CU80</a></code> | Use the PyTorch index for CUDA 8.0. (cu80). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM7_2">ROCM7_2</a></code> | Use the PyTorch index for ROCm 7.2. (rocm7.2). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM7_1">ROCM7_1</a></code> | Use the PyTorch index for ROCm 7.1. (rocm7.1). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM7_0">ROCM7_0</a></code> | Use the PyTorch index for ROCm 7.0. (rocm7.0). |
+| <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_4">ROCM6_4</a></code> | Use the PyTorch index for ROCm 6.4. (rocm6.4). |
 | <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_3">ROCM6_3</a></code> | Use the PyTorch index for ROCm 6.3. (rocm6.3). |
 | <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_2_4">ROCM6_2_4</a></code> | Use the PyTorch index for ROCm 6.2.4. (rocm6.2.4). |
 | <code><a href="#projen.python.uvConfig.TorchMode.ROCM6_2">ROCM6_2</a></code> | Use the PyTorch index for ROCm 6.2. (rocm6.2). |
@@ -4196,6 +4498,34 @@ Use the PyTorch index for CUDA 9.0. (cu90).
 ##### `CU80` <a name="CU80" id="projen.python.uvConfig.TorchMode.CU80"></a>
 
 Use the PyTorch index for CUDA 8.0. (cu80).
+
+---
+
+
+##### `ROCM7_2` <a name="ROCM7_2" id="projen.python.uvConfig.TorchMode.ROCM7_2"></a>
+
+Use the PyTorch index for ROCm 7.2. (rocm7.2).
+
+---
+
+
+##### `ROCM7_1` <a name="ROCM7_1" id="projen.python.uvConfig.TorchMode.ROCM7_1"></a>
+
+Use the PyTorch index for ROCm 7.1. (rocm7.1).
+
+---
+
+
+##### `ROCM7_0` <a name="ROCM7_0" id="projen.python.uvConfig.TorchMode.ROCM7_0"></a>
+
+Use the PyTorch index for ROCm 7.0. (rocm7.0).
+
+---
+
+
+##### `ROCM6_4` <a name="ROCM6_4" id="projen.python.uvConfig.TorchMode.ROCM6_4"></a>
+
+Use the PyTorch index for ROCm 6.4. (rocm6.4).
 
 ---
 
