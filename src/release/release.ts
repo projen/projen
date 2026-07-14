@@ -691,7 +691,7 @@ export class Release extends Component {
       id: GIT_REMOTE_STEPID,
       shell: "bash",
       env: {
-        GITHUB_REF: '${{ github.ref }}',
+        GITHUB_REF: "${{ github.ref }}",
       },
       run: [
         `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT`,

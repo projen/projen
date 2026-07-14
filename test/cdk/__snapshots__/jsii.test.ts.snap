@@ -451,8 +451,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
@@ -2460,8 +2462,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
@@ -2647,8 +2651,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
@@ -2832,8 +2838,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
@@ -3015,8 +3023,10 @@ jobs:
           cat $GITHUB_OUTPUT
       - name: Check for new commits
         id: git_remote
+        env:
+          GITHUB_REF: \${{ github.ref }}
         run: |-
-          echo "latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT
+          echo "latest_commit=$(git ls-remote origin -h "$GITHUB_REF" | cut -f1)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
