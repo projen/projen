@@ -54,7 +54,7 @@
           "builtin": "release/bump-version"
         }
       ],
-      "condition": "git log --oneline -1 | grep -qv \"chore(release):\""
+      "condition": "git log --oneline -1 | grep -v \"chore(release):\" > /dev/null"
     },
     "bundle:task-runner": {
       "name": "bundle:task-runner",

@@ -252,7 +252,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -657,7 +657,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -1069,7 +1069,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -1436,7 +1436,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -1947,7 +1947,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2496,7 +2496,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2874,7 +2874,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -3422,7 +3422,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -3716,7 +3716,7 @@ exports[`Single Project majorVersion can be 0 2`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -3860,7 +3860,7 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -4161,7 +4161,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -4402,7 +4402,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -4836,7 +4836,7 @@ exports[`Single Project publisher (defaults) 2`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -5320,7 +5320,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -5853,7 +5853,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -6237,7 +6237,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -6540,7 +6540,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
