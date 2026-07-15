@@ -12,6 +12,7 @@
     "audit": "node ./projen.js audit",
     "build": "node ./projen.js build",
     "bump": "node ./projen.js bump",
+    "bump:releasable-commits": "node ./projen.js bump:releasable-commits",
     "bundle:task-runner": "node ./projen.js bundle:task-runner",
     "check-licenses": "node ./projen.js check-licenses",
     "clobber": "node ./projen.js clobber",

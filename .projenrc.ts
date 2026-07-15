@@ -234,16 +234,13 @@ project.eslint?.addRules({
     },
   ],
 });
-// Files that need direct child_process access:
-// - src/util/exec.ts: the single home for command execution
-// - test/cli/run-task.test.ts: spawns the CLI and spies on the task runtime's
-//   process execution
-// - test/tasks/tasks.test.ts: spies on the task runner's process execution
+// Files that need direct child_process access
 project.eslint?.addOverride({
   files: [
-    "src/util/exec.ts",
-    "test/cli/run-task.test.ts",
-    "test/tasks/tasks.test.ts",
+    "src/util/exec.ts", // the single home for command execution
+    "src/cli/task-runtime.ts", // to use the system shell if opted-in by the user
+    "test/cli/run-task.test.ts", // spawns the CLI and spies on the task runtime's process execution
+    "test/tasks/tasks.test.ts", // spies on the task runner's process execution
   ],
   rules: {
     "@typescript-eslint/no-restricted-imports": "off",

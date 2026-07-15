@@ -4,10 +4,10 @@ import { dirname, join } from "path";
 import { javascript, ReleasableCommits } from "../../src";
 import * as logging from "../../src/logging";
 import type { BumpOptions } from "../../src/release/bump-version";
-import { bump } from "../../src/release/bump-version";
 import { TypeScriptProject } from "../../src/typescript";
-import { git } from "../../src/util/exec";
-import { execProjenCLI, withProjectDir } from "../util";
+import { git, node } from "../../src/util/exec";
+import { Version } from "../../src/version";
+import { execProjenCLI, TestProject, withProjectDir } from "../util";
 
 logging.disable();
 jest.setTimeout(1000 * 60 * 5); // 5min
@@ -677,21 +677,59 @@ async function testBump(
     }
   }
 
-  await bump(workdir, {
-    changelog: "changelog.md",
-    versionFile: "version.json",
-    bumpFile: "bump.txt",
-    releaseTagFile: "releasetag.txt",
-    ...opts.options,
+  // Generate the release tasks (bump + releasable-commits + next-version)
+  // through the Version component and run the real `bump` task, exercising the
+  // decomposed builtins/spawns and the `outputEnv` handoffs end-to-end.
+  const project = new TestProject({ outdir: workdir });
+  new Version(project, {
+    versionInputFile: "version.json",
+    artifactsDirectory: "dist",
+    tagPrefix: opts.options?.tagPrefix,
+    releasableCommits: opts.options?.releasableCommits
+      ? ReleasableCommits.exec(opts.options.releasableCommits)
+      : undefined,
+    nextVersionCommand: opts.options?.nextVersionCommand,
+    versionrcOptions: opts.options?.versionrcOptions,
   });
+  project.synth();
+
+  // Branch-level version constraints are passed as env, mirroring
+  // `Version.envForBranch`.
+  const env: Record<string, string> = {};
+  if (opts.options?.majorVersion !== undefined) {
+    env.MAJOR = String(opts.options.majorVersion);
+  }
+  if (opts.options?.minMajorVersion !== undefined) {
+    env.MIN_MAJOR = String(opts.options.minMajorVersion);
+  }
+  if (opts.options?.minorVersion !== undefined) {
+    env.MINOR = String(opts.options.minorVersion);
+  }
+  if (opts.options?.prerelease) {
+    env.PRERELEASE = opts.options.prerelease;
+  }
+
+  try {
+    node.capture([require.resolve("../../lib/cli"), "bump"], {
+      cwd: workdir,
+      env,
+    });
+  } catch (e: any) {
+    // Surface the CLI's stderr (which carries the builtin's error message) so
+    // tests can assert on it, matching the previous programmatic behavior.
+    if (typeof e?.status === "number") {
+      throw new Error(e.stderr?.toString("utf-8") ?? "");
+    }
+    throw e;
+  }
 
   return {
     version: JSON.parse(
       await fs.readFile(join(workdir, "version.json"), "utf-8"),
     ).version,
-    changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
-    bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
-    tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
+    changelog: await fs.readFile(join(workdir, "dist/changelog.md"), "utf8"),
+    bumpfile: await fs.readFile(join(workdir, "dist/version.txt"), "utf8"),
+    tag: await fs.readFile(join(workdir, "dist/releasetag.txt"), "utf8"),
     workdir,
   };
 }

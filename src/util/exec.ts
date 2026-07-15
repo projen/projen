@@ -5,7 +5,7 @@ import * as path from "path";
 import { $ } from "dax";
 import * as logging from "../logging";
 
-const MAX_BUFFER = 10 * 1024 * 1024;
+export const MAX_BUFFER = 10 * 1024 * 1024;
 
 //
 // ---------------------------------------------------------------------------
@@ -301,110 +301,3 @@ export const npm = shimTool("npm");
  * Cross-platform helper for `npx` (a Windows `.cmd` shim).
  */
 export const npx = shimTool("npx");
-
-//
-// ---------------------------------------------------------------------------
-// rawShell: arbitrary shell command strings (via dax, cross-platform).
-//
-// This runs an opaque command *string* through dax's cross-platform shell
-// (incl. Windows). The command is parsed by a shell as-is, so it is meant for
-// arbitrary command lines that cannot be expressed as a fixed binary plus a
-// list of arguments, e.g. a release's `nextVersionCommand` or
-// `ReleasableCommits.exec()` (and projen's own generated `ReleasableCommits`
-// queries). For everything else prefer the structured `tool`/`git` helpers
-// (or `shimTool` for `.cmd` shims), which take an explicit list of arguments.
-//
-// `$.raw` is required here (and only here): the input is an opaque command
-// line, so it must be parsed by a shell. dax provides that shell on every
-// platform, including Windows.
-// ---------------------------------------------------------------------------
-//
-
-export const rawShell = {
-  /**
-   * Runs a user-supplied shell command line and resolves its trimmed
-   * STDOUT. Rejects if the command exits non-zero.
-   */
-  capture: async (
-    command: string,
-    options: { cwd: string; env?: Record<string, string> },
-  ): Promise<string> => {
-    logging.debug(`${command} (cwd: ${options.cwd})`);
-    const cmd = $.raw`${command}`.cwd(options.cwd);
-    return (options.env ? cmd.env(options.env) : cmd).text();
-  },
-
-  /**
-   * Runs a user-supplied shell command line and resolves its trimmed
-   * STDOUT, or `undefined` if the command failed or produced no output.
-   */
-  tryCapture: async (
-    command: string,
-    options: { cwd: string; env?: Record<string, string> },
-  ): Promise<string | undefined> => {
-    logging.debug(`${command} (cwd: ${options.cwd})`);
-    let cmd = $.raw`${command}`.cwd(options.cwd).noThrow().stdout("piped");
-    if (options.env) {
-      cmd = cmd.env(options.env);
-    }
-    const result = await cmd;
-    if (result.code !== 0) {
-      return undefined;
-    }
-    const out = result.stdout.trim();
-    return out || undefined;
-  },
-};
-
-//
-// ---------------------------------------------------------------------------
-// systemShell: the operating system's native shell.
-//
-// Runs an opaque command string through the OS default shell (`/bin/sh` on
-// POSIX, `cmd.exe` on Windows) via `child_process` with `shell: true`. This
-// backs the `"@system"` task shell, which lets a task opt out of the built-in
-// cross-platform shell and use the host's native shell instead.
-// ---------------------------------------------------------------------------
-//
-
-/**
- * Normalized result of running a command through the system shell (a subset of
- * node's `SpawnSyncReturns`).
- */
-export interface SystemShellResult {
-  /** Exit code, or `null` if terminated by a signal or never spawned. */
-  readonly status: number | null;
-  /** Captured stdout, or `null` when stdout was inherited. */
-  readonly stdout: Buffer | null;
-  /** Captured stderr, or `null` when stderr was inherited. */
-  readonly stderr: Buffer | null;
-  /** An error raised while attempting to spawn (not a non-zero exit). */
-  readonly error?: Error;
-}
-
-/**
- * Runs a command line through the operating system's default shell (`/bin/sh`
- * on POSIX, `cmd.exe` on Windows). Never throws for a non-zero exit (that is
- * reported via `status`); a spawn failure is reported via `error`. The caller
- * supplies the full `env`.
- */
-export function systemShell(
-  command: string,
-  options: { cwd: string; env?: NodeJS.ProcessEnv; capture?: boolean },
-): SystemShellResult {
-  logging.debug(`${command} (cwd: ${options.cwd})`);
-  const result = child_process.spawnSync(command, {
-    cwd: options.cwd,
-    shell: true,
-    maxBuffer: MAX_BUFFER,
-    env: options.env,
-    // "pipe" for STDERR (when capturing) means it appears in exceptions.
-    stdio: options.capture ? ["inherit", "pipe", "pipe"] : "inherit",
-  });
-  return {
-    status: result.status,
-    stdout: result.stdout ?? null,
-    stderr: result.stderr ?? null,
-    error: result.error,
-  };
-}

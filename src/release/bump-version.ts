@@ -4,15 +4,9 @@ import type { Config } from "conventional-changelog-config-spec";
 import { compare } from "semver";
 import * as logging from "../logging";
 import type { BumpType } from "./bump-type";
-import {
-  parseBumpType,
-  performBump,
-  relativeBumpType,
-  renderBumpType,
-} from "./bump-type";
-import { git, rawShell } from "../util/exec";
-import { ReleasableCommits } from "../version";
+import { performBump, relativeBumpType, renderBumpType } from "./bump-type";
 import { CommitAndTagVersion } from "./commit-tag-version";
+import { git } from "../util/exec";
 
 export interface BumpOptions {
   /**
@@ -138,202 +132,208 @@ export interface BumpOptions {
 }
 
 /**
- * Resolves the latest version from git tags and uses `commit-and-tag-version` to bump
- * to the next version based on commits.
- *
- * This expects `commit-and-tag-version` to be installed in the path.
- *
- * @param cwd working directory (git repository)
- * @param options options
+ * Context resolved by {@link resolveLatestTag} and consumed by the later bump phases.
  */
-export async function bump(cwd: string, options: BumpOptions) {
-  const versionFile = join(cwd, options.versionFile);
-  const prerelease = options.prerelease;
+export interface BumpContext {
+  readonly latestVersion: string;
+  readonly latestTag: string;
+  readonly isFirstRelease: boolean;
+}
+
+/**
+ * Phase 1: resolve the latest tag/version and seed the version file (so the
+ * later phases can read the current version back from it).
+ */
+export async function resolveLatestTag(
+  cwd: string,
+  options: {
+    versionFile: string;
+    tagPrefix?: string;
+    majorVersion?: number;
+    minorVersion?: number;
+    minMajorVersion?: number;
+    prerelease?: string;
+  },
+): Promise<BumpContext> {
   const major = options.majorVersion;
   const minor = options.minorVersion;
-  const minMajorVersion = options.minMajorVersion;
-  const tagPrefix = options.tagPrefix ?? "";
-  const bumpFile = join(cwd, options.bumpFile);
-  const changelogFile = join(cwd, options.changelog);
-  const releaseTagFile = join(cwd, options.releaseTagFile);
-
-  if (major && minMajorVersion) {
+  if (major && options.minMajorVersion) {
     throw new Error(
       `minMajorVersion and majorVersion cannot be used together.`,
-    );
-  }
-  if (options.nextVersionCommand && minMajorVersion) {
-    throw new Error(
-      `minMajorVersion and nextVersionCommand cannot be used together.`,
     );
   }
   if (minor && !major) {
     throw new Error(`minorVersion and majorVersion must be used together.`);
   }
 
-  await fs.mkdir(dirname(bumpFile), { recursive: true });
-  await fs.mkdir(dirname(changelogFile), { recursive: true });
-  await fs.mkdir(dirname(releaseTagFile), { recursive: true });
+  const versionFile = join(cwd, options.versionFile);
 
-  const { latestVersion, latestTag, isFirstRelease } = determineLatestTag({
+  const context = determineLatestTag({
     cwd,
     major,
     minor,
-    prerelease,
-    prefix: tagPrefix,
+    prerelease: options.prerelease,
+    prefix: options.tagPrefix ?? "",
   });
 
-  // Write the current version into the version file so that CATV will know the current version
+  // Write the current version into the version file so that CATV knows it and
+  // the later phases can read it back.
   const { contents, newline } = await tryReadVersionFile(versionFile);
-  contents.version = latestVersion;
+  contents.version = context.latestVersion;
   logging.info(
-    `Update ${versionFile} to latest resolved version: ${latestVersion}`,
+    `Update ${versionFile} to resolved version: ${context.latestVersion}`,
   );
   await fs.writeFile(
     versionFile,
     JSON.stringify(contents, undefined, 2) + (newline ? "\n" : ""),
   );
 
-  // Determine the initial bump status. CATV will always do a patch even if
-  // there are no commits, so look at commits ourselves first to decide
-  // if we even should do nothing at all.
-  const shouldRelease = isFirstRelease
-    ? true
-    : await hasNewInterestingCommits({
-        cwd,
-        latestTag,
-        releasableCommits: options.releasableCommits,
-      });
+  return context;
+}
+
+/**
+ * Phase 2: decide the bump from the commit history. Returns `none` when there
+ * is nothing releasable (or on a first release, which is handled by CATV).
+ */
+export async function suggestVersionBump(
+  cwd: string,
+  options: {
+    versionFile: string;
+    changelog: string;
+    latestTag?: string;
+    tagPrefix?: string;
+    prerelease?: string;
+    bumpPackage?: string;
+    versionrcOptions?: Config;
+    releasableCommits?: string;
+  },
+): Promise<BumpType> {
+  const isFirstRelease = !options.latestTag;
+  const latestVersion = await readCurrentVersion(
+    join(cwd, options.versionFile),
+  );
+
+  const numCommits = (options.releasableCommits ?? "")
+    .split("\n")
+    .filter((l) => l.trim()).length;
+  logging.info(
+    `Number of commits since ${options.latestTag || "(first release)"}: ${numCommits}`,
+  );
+
+  if (isFirstRelease || numCommits === 0) {
+    if (!isFirstRelease) {
+      logging.info("No new interesting commits.");
+    }
+    return { bump: "none" };
+  }
+
+  const catv = new CommitAndTagVersion(options.bumpPackage, cwd, {
+    versionFile: join(cwd, options.versionFile),
+    changelogFile: join(cwd, options.changelog),
+    prerelease: options.prerelease,
+    configOptions: options.versionrcOptions,
+    tagPrefix: options.tagPrefix ?? "",
+  });
+
+  return relativeBumpType(latestVersion, await catv.dryRun());
+}
+
+/**
+ * Phase 3: apply the chosen bump - invoke CATV (or regenerate the changelog),
+ * enforce version constraints, and record the resulting version and tag.
+ */
+export async function applyVersionBump(
+  cwd: string,
+  options: {
+    versionFile: string;
+    changelog: string;
+    bumpFile: string;
+    releaseTagFile: string;
+    bumpType: BumpType;
+    latestTag?: string;
+    tagPrefix?: string;
+    prerelease?: string;
+    bumpPackage?: string;
+    versionrcOptions?: Config;
+    majorVersion?: number;
+    minorVersion?: number;
+    minMajorVersion?: number;
+  },
+): Promise<void> {
+  const isFirstRelease = !options.latestTag;
+  const versionFile = join(cwd, options.versionFile);
+  const bumpFile = join(cwd, options.bumpFile);
+  const changelogFile = join(cwd, options.changelog);
+  const releaseTagFile = join(cwd, options.releaseTagFile);
+  const tagPrefix = options.tagPrefix ?? "";
+  const latestVersion = await readCurrentVersion(versionFile);
+
+  await fs.mkdir(dirname(bumpFile), { recursive: true });
+  await fs.mkdir(dirname(changelogFile), { recursive: true });
+  await fs.mkdir(dirname(releaseTagFile), { recursive: true });
+
+  let bumpType = options.bumpType;
+
+  // Respect minMajorVersion to correct the result of the nextVersionCommand.
+  if (options.minMajorVersion) {
+    const bumpedVersion = performBump(latestVersion, bumpType);
+    const [majorVersion] = bumpedVersion.split(".");
+    if (parseInt(majorVersion, 10) < options.minMajorVersion) {
+      bumpType = {
+        bump: "absolute",
+        absolute: `${options.minMajorVersion}.0.0`,
+      };
+    }
+  }
 
   const catv = new CommitAndTagVersion(options.bumpPackage, cwd, {
     versionFile,
     changelogFile,
-    prerelease,
+    prerelease: options.prerelease,
     configOptions: options.versionrcOptions,
     tagPrefix,
   });
 
-  // We used to translate `isFirstRelease` to the `--first-release` flag of CATV.
-  // What that does is skip a bump, only generate the changelog.
-  //
-  // Our `{ bump: none }` does the same, so we don't need to carry over this
-  // flag anymore.
-  let bumpType: BumpType =
-    shouldRelease && !isFirstRelease
-      ? relativeBumpType(latestVersion, await catv.dryRun())
-      : { bump: "none" };
-
-  logging.info(`Bump from commits: ${renderBumpType(bumpType)}`);
-  if (options.nextVersionCommand) {
-    const nextVersion = await rawShell.capture(options.nextVersionCommand, {
-      cwd,
-      env: {
-        VERSION: latestVersion,
-        SUGGESTED_BUMP: renderBumpType(bumpType),
-        ...(latestTag ? { LATEST_TAG: latestTag } : {}),
-      },
-    });
-
-    if (nextVersion) {
-      try {
-        bumpType = parseBumpType(nextVersion);
-        logging.info(
-          `Bump from nextVersionCommand: ${renderBumpType(bumpType)}`,
-        );
-      } catch (e) {
-        throw new Error(
-          `nextVersionCommand "${options.nextVersionCommand}" returned invalid output: ${e}`,
-        );
-      }
-    }
-  }
-
-  // Respect minMajorVersion to correct the result of the nextVersionCommand
-  if (minMajorVersion) {
-    const bumpedVersion = performBump(latestVersion, bumpType);
-    const [majorVersion] = bumpedVersion.split(".");
-    const majorVersionNumber = parseInt(majorVersion, 10);
-    if (majorVersionNumber < minMajorVersion) {
-      bumpType = { bump: "absolute", absolute: `${minMajorVersion}.0.0` };
-    }
-  }
-
-  // Invoke CATV with the options we landed on. If we decided not to do a bump,
-  // we will use this to regenerate the changelog of the most recent version.
   const newRelease = bumpType.bump !== "none";
-
-  // If we're not doing a new release and this is not the
-  // first release, we're just regenerating the previous changelog again.
   if (!newRelease && !isFirstRelease) {
-    await catv.regeneratePreviousChangeLog(latestVersion, latestTag);
+    // Regenerate the changelog of the most recent version.
+    await catv.regeneratePreviousChangeLog(latestVersion, options.latestTag!);
   } else {
-    // Otherwise we're either doing a bump + release, or we're releasing the
-    // first version as 0.0.0 (which is already the number in the file so we
-    // skip bumping).
+    // Bump + release, or release the first version (already in the file).
     await catv.invoke({
       releaseAs: newRelease ? renderBumpType(bumpType) : undefined,
       skipBump: !newRelease,
     });
   }
 
-  // Validate the version that we ended up with
   const newVersion = (await tryReadVersionFile(versionFile)).version;
   if (!newVersion) {
     throw new Error(`bump failed: ${versionFile} does not have a version set`);
   }
-  if (major) {
-    if (!newVersion.startsWith(`${major}.`)) {
-      throw new Error(
-        `bump failed: this branch is configured to only publish v${major} releases - bump resulted in ${newVersion}`,
-      );
-    }
+  const major = options.majorVersion;
+  const minor = options.minorVersion;
+  if (major !== undefined && !newVersion.startsWith(`${major}.`)) {
+    throw new Error(
+      `bump failed: this branch is configured to only publish v${major} releases - bump resulted in ${newVersion}`,
+    );
   }
-  if (minor) {
-    if (!newVersion.startsWith(`${major}.${minor}`)) {
-      throw new Error(
-        `bump failed: this branch is configured to only publish v${major}.${minor} releases - bump resulted in ${newVersion}`,
-      );
-    }
+  if (minor !== undefined && !newVersion.startsWith(`${major}.${minor}`)) {
+    throw new Error(
+      `bump failed: this branch is configured to only publish v${major}.${minor} releases - bump resulted in ${newVersion}`,
+    );
   }
 
-  // Report curent status into the dist/ directory
   const newTag = `${tagPrefix}v${newVersion}`;
   await fs.writeFile(bumpFile, newVersion);
   await fs.writeFile(releaseTagFile, newTag);
 }
 
-/**
- * Determine based on releaseable commits whether we should release or not
- */
-async function hasNewInterestingCommits(options: {
-  releasableCommits?: string;
-  latestTag: string;
-  cwd: string;
-}): Promise<boolean> {
-  // `$LATEST_TAG` is provided to the command as an environment variable
-  // (rather than interpolated into the command string), consistent with how
-  // `nextVersionCommand` receives it.
-  const findCommits =
-    options.releasableCommits ?? ReleasableCommits.everyCommit().cmd;
-
-  const commitsSinceLastTag = (
-    await rawShell.tryCapture(findCommits, {
-      cwd: options.cwd,
-      env: { LATEST_TAG: options.latestTag },
-    })
-  )?.split("\n");
-  const numCommitsSinceLastTag = commitsSinceLastTag?.length ?? 0;
-  logging.info(
-    `Number of commits since ${options.latestTag}: ${numCommitsSinceLastTag}`,
-  );
-
-  // Nothing to release right now
-  if (numCommitsSinceLastTag === 0) {
-    logging.info("No new interesting commits.");
-    return false;
+async function readCurrentVersion(versionFile: string): Promise<string> {
+  const { version } = await tryReadVersionFile(versionFile);
+  if (!version) {
+    throw new Error(`${versionFile} does not have a version set`);
   }
-
-  return true;
+  return version;
 }
 
 async function tryReadVersionFile(

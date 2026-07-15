@@ -135,6 +135,51 @@ I.e. to not not bump the version, the command must print nothing and exit succes
 releasableCommits: ReleasableCommits.exec("./custom-script.sh"),
 ```
 
+### How the `bump` task works
+
+The `bump` task decides the next version and writes the release artifacts. It
+runs as a pipeline of steps, where each step passes its result to later steps
+through an environment variable, using the task step
+[`outputEnv`](../concepts/tasks.md#capturing-a-steps-output) option. Two of the
+steps `spawn` standalone tasks, so you can run and configure them on their own.
+
+The steps, in order:
+
+1. **`resolve-latest-tag`** (builtin) — finds the latest release tag for the
+   current branch and seeds the version file with the current version. It
+   outputs the tag into `LATEST_TAG`, which is empty on a first release (no tag
+   exists yet).
+2. **`bump:releasable-commits`** (spawned task) — runs your `releasableCommits`
+   command (by default, every commit since `$LATEST_TAG`) and outputs the
+   matching commits into `RELEASABLE_COMMITS`. It is skipped on a first release,
+   since there is no tag to diff against.
+3. **`suggest-version-bump`** (builtin) — reads `RELEASABLE_COMMITS` and the
+   commit history to derive the bump implied by the commits
+   (`major`/`minor`/`patch`/`none`) and outputs it into `SUGGESTED_BUMP`.
+4. **`bump:next-version`** (spawned task, only present when `nextVersionCommand`
+   is set) — runs your command with `$VERSION`, `$LATEST_TAG` and
+   `$SUGGESTED_BUMP` available, and outputs its decision into `BUMP_TYPE`,
+   overriding the suggestion.
+5. **`apply-version-bump`** (builtin) — uses `BUMP_TYPE` if set, otherwise
+   `SUGGESTED_BUMP`, invokes `commit-and-tag-version`, and writes the resolved
+   version and tag into the artifacts directory.
+
+Because each step reads what it needs from the environment the previous steps
+left behind, there is no shared state file: the current version is read back
+from the version file that `resolve-latest-tag` seeds, and a first release is
+signalled by an empty `LATEST_TAG`.
+
+`bump:releasable-commits` and `bump:next-version` are ordinary tasks. You can
+run them directly to inspect what they do (e.g. `projen bump:releasable-commits`)
+and configure each independently, including its shell — useful when a command
+relies on bash-specific syntax:
+
+```ts
+import { TaskShell } from "projen";
+
+project.tasks.tryFind("bump:next-version")?.shell = TaskShell.bash();
+```
+
 ## Manual Releases
 
 If you don't want projen to automatically release your project, you can configure a manual release trigger:
