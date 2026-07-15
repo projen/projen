@@ -14,6 +14,7 @@ export * from "./json2jsii";
 export * from "./jsonConst";
 export * from "./integ-versions";
 export * from "./integ-test";
+export * from "./integ-harness";
 
 /**
  * Add a task to bundle the run-task script needed for "projen eject"
