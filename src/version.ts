@@ -6,19 +6,35 @@ import { NodePackage } from "./javascript/node-package";
 import type { Task } from "./task";
 
 /**
- * This command determines if there were any changes since the last release in a cross-platform compatible way.
- * It is used as a condition for both the `bump` and the `release` tasks.
+ * This command determines if there were any changes since the last release in a
+ * cross-platform compatible way. It is used as a condition for both the `bump`
+ * and the `release` tasks: it exits 0 (proceed) when the most recent commit is
+ * not a release commit, and non-zero (skip) when the most recent commit is a
+ * `chore(release):` commit.
  *
  * Explanation:
- *  - log commits                                               | git log
- *  - limit log output to a single line per commit              | --oneline
- *  - looks only at the most recent commit                      | -1
- *  - silent grep output                                        | grep -q
- *  - exits with code 0 if a match is found                     | grep -q "chore(release):"
- *  - exits with code 1 if a match is found (reverse-match)     | grep -qv "chore(release):"
+ *  - `git log --oneline -1`          the most recent commit, one line
+ *  - `| grep -v "chore(release):"`   pass the line through only if it is NOT a release commit
+ *  - `> /dev/null`                   discard grep's output; only its exit code matters
+ *
+ * grep exits 0 when it prints at least one non-matching line (a normal commit,
+ * so proceed) and 1 when every line matches (a release commit, so skip).
+ *
+ * IMPORTANT: do NOT reintroduce `grep -q` here (i.e. do not "optimize" this back
+ * to `grep -qv`). `grep -q` exits as soon as it has an answer and closes the read
+ * end of the pipe. When this condition runs through projen's built-in (dax)
+ * shell, that early close races with `git log` still writing to the pipe, and dax
+ * surfaces the failed write as a spurious non-zero exit ("stdin pipe broken.
+ * Invalid state: WritableStream is closed"). The task runtime cannot distinguish
+ * that from a legitimate skip (dax reports it as a plain non-zero code under
+ * `.noThrow()`, not as an error), so the bump/release task is silently skipped: a
+ * release is missed, or a dependent publishes a broken `^0.0.0` version range.
+ * Plain `grep -v ... > /dev/null` reads to EOF instead of short-circuiting, so it
+ * never closes the pipe while the writer is active and the race cannot occur. The
+ * exit semantics are identical to the previous `grep -qv`.
  */
 export const CHANGES_SINCE_LAST_RELEASE =
-  'git log --oneline -1 | grep -qv "chore(release):"';
+  'git log --oneline -1 | grep -v "chore(release):" > /dev/null';
 
 /**
  * The default package to be used for commit-and-tag-version

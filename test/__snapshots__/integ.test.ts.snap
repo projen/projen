@@ -1012,7 +1012,7 @@ tsconfig.tsbuildinfo
           "builtin": "release/apply-version-bump"
         }
       ],
-      "condition": "git log --oneline -1 | grep -qv \\"chore(release):\\""
+      "condition": "git log --oneline -1 | grep -v \\"chore(release):\\" > /dev/null"
     },
     "bump:releasable-commits": {
       "name": "bump:releasable-commits",
@@ -4635,7 +4635,7 @@ permissions-backup.acl
           "builtin": "release/apply-version-bump"
         }
       ],
-      "condition": "git log --oneline -1 | grep -qv \\"chore(release):\\""
+      "condition": "git log --oneline -1 | grep -v \\"chore(release):\\" > /dev/null"
     },
     "bump:releasable-commits": {
       "name": "bump:releasable-commits",
