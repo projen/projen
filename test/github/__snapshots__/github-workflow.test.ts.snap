@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/checkout@generic-override
-      - uses: actions/checkout@generic-override
-      - uses: actions/checkout@explicit-v4
+      - id: auto_73100d0b
+        uses: actions/checkout@generic-override
+      - id: auto_656c9688
+        uses: actions/checkout@generic-override
+      - id: auto_c3fe249f
+        uses: actions/checkout@explicit-v4
 "
 `;
 
@@ -26,7 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/checkout@v4
+      - id: auto_c3fe249f
+        uses: actions/checkout@v4
 "
 `;
 
@@ -133,7 +137,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/checkout@v2
+      - id: auto_73100d0b
+        uses: actions/checkout@v2
 "
 `;
 
@@ -147,7 +152,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - run: ls
+      - id: auto_c7b68ac3
+        run: ls
         working-directory: .github/workflows
 "
 `;

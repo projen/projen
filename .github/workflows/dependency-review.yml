@@ -12,8 +12,10 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Dependency Review
+        id: dependency_review
         uses: actions/dependency-review-action@v4
         with:
           allow-licenses: MIT, ISC, BSD-2-Clause, BSD-3-Clause, Apache-2.0, Python-2.0

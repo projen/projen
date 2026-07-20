@@ -904,6 +904,7 @@ describe("Single Project", () => {
     const githubReleaseJobSteps = workflow.jobs.release_github
       .steps as Array<JobStep>;
     expect(githubReleaseJobSteps[githubReleaseJobSteps.length - 1]).toEqual({
+      id: "add_additional_content",
       name: "Add additional content",
       run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
     });
@@ -932,6 +933,7 @@ describe("Single Project", () => {
     const githubReleaseJobSteps = workflow.jobs.release_github
       .steps as Array<JobStep>;
     expect(githubReleaseJobSteps[githubReleaseJobSteps.length - 1]).toEqual({
+      id: "add_additional_content",
       name: "Add additional content",
       run: `gh release upload $(cat dist/releasetag.txt) 'dist/js/example-*.tgz'`,
     });

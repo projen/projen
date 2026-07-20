@@ -14,24 +14,33 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: npm ci
       - name: Compile
+        id: compile
         run: node ./projen.js compile
       - name: Bundle task runner
+        id: bundle_task_runner
         run: node ./projen.js bundle:task-runner
       - name: Package
+        id: package
         run: node ./projen.js package:js
       - name: Run Node integration test
+        id: run_node_integration_test
         run: node ./projen.js integ:node
       - name: Run Windows task shell syntax tests
+        id: run_windows_task_shell_syntax_tests
         run: node ./projen.js integ:windows-shell-syntax
       - name: Run eject integration test
+        id: run_eject_integration_test
         run: node ./projen.js integ:eject
     strategy:
       fail-fast: false
@@ -51,21 +60,28 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - id: auto_0bca5aae
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: npm ci
       - name: Compile
+        id: compile
         run: node ./projen.js compile
       - name: Package
+        id: package
         run: node ./projen.js package:python
       - name: Run Python integration test
+        id: run_python_integration_test
         run: node ./projen.js integ:python
     strategy:
       fail-fast: false
@@ -84,21 +100,28 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
+      - id: auto_5c729294
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: npm ci
       - name: Compile
+        id: compile
         run: node ./projen.js compile
       - name: Package
+        id: package
         run: node ./projen.js package:go
       - name: Run Go integration test
+        id: run_go_integration_test
         run: node ./projen.js integ:go
     strategy:
       fail-fast: false
@@ -114,22 +137,29 @@ jobs:
       CI: "0"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - id: auto_caa81516
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java-version }}
           distribution: ${{ matrix.java-distribution }}
-      - uses: actions/setup-node@v6
+      - id: auto_4ca7ae43
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
+        id: install_dependencies
         run: npm ci
       - name: Compile
+        id: compile
         run: node ./projen.js compile
       - name: Package
+        id: package
         run: node ./projen.js package:java
       - name: Run Java integration test
+        id: run_java_integration_test
         run: node ./projen.js integ:java
     strategy:
       fail-fast: false
@@ -162,13 +192,18 @@ jobs:
     if: always()
     steps:
       - name: integ-node result
+        id: integ-node_result
         run: echo ${{ needs.integ-node.result }}
       - name: integ-python result
+        id: integ-python_result
         run: echo ${{ needs.integ-python.result }}
       - name: integ-go result
+        id: integ-go_result
         run: echo ${{ needs.integ-go.result }}
       - name: integ-java result
+        id: integ-java_result
         run: echo ${{ needs.integ-java.result }}
       - name: Set status based on integ tests
+        id: set_status_based_on_integ_tests
         if: ${{ needs.integ-node.result != 'success' || needs.integ-python.result != 'success' || needs.integ-go.result != 'success' || needs.integ-java.result != 'success' }}
         run: exit 1

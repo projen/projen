@@ -3162,7 +3162,7 @@ The ID of the step to replace.
 
 The replacement step.
 
-If `id` is omitted, it inherits the original step's ID.
+Inherits the original step's ID.
 
 ---
 
@@ -5460,7 +5460,7 @@ The ID of the step to replace.
 
 The replacement step.
 
-If `id` is omitted, it inherits the original step's ID.
+Inherits the original step's ID.
 
 ---
 
