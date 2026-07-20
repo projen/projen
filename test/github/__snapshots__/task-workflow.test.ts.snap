@@ -20,7 +20,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: gh-workflow-test
-        id: gh_workflow_test
+        id: gh-workflow-test
         run: projen gh-workflow-test
 "
 `;
@@ -45,7 +45,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: gh-workflow-test
-        id: gh_workflow_test
+        id: gh-workflow-test
         run: projen gh-workflow-test
       - name: Upload artifact
         id: upload_artifact

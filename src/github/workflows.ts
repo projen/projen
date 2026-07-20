@@ -309,7 +309,7 @@ export class GithubWorkflow extends Component {
    *
    * @param jobId The job name (unique within the workflow)
    * @param stepId The ID of the step to replace
-   * @param replacementStep The replacement step. If `id` is omitted, it inherits the original step's ID.
+   * @param replacementStep The replacement step. Inherits the original step's ID.
    */
   public replaceStep(
     jobId: string,
@@ -318,17 +318,10 @@ export class GithubWorkflow extends Component {
   ): void {
     const steps = this.resolveJobSteps(jobId);
     const index = this.findStepIndex(steps, stepId, jobId);
-    const originalId = steps[index].id;
     const newStep = {
       ...replacementStep,
-      id: replacementStep.id ?? originalId ?? stepId,
+      id: stepId,
     };
-
-    // If the id changed, validate uniqueness of the new id against the other steps
-    if (newStep.id !== originalId) {
-      const otherSteps = steps.filter((_, i) => i !== index);
-      this.requireUniqueStepId(otherSteps, newStep.id!, jobId);
-    }
 
     steps[index] = newStep;
   }
@@ -688,7 +681,7 @@ function assignJobStepIds(
       // steps may be populated later during synthesis (eg setupTools)
       result[name] =
         job.steps.length > 0
-          ? { ...job, steps: assignStepIds(job.steps) }
+          ? { ...job, steps: ensureStepsHaveIds(job.steps) }
           : job;
     }
   }
@@ -707,7 +700,7 @@ function assignJobStepIds(
  * collide with them. Duplicate explicit IDs in the same job throw an error.
  * Derived/auto IDs that collide are disambiguated with `_2`, `_3`, etc.
  */
-function assignStepIds(
+function ensureStepsHaveIds(
   steps: workflows.JobStep[],
 ): Array<workflows.JobStep & { id: string }> {
   const usedIds = new Map<string, number>();
@@ -742,10 +735,17 @@ function assignStepIds(
     }
 
     if (step.name) {
-      // Derive from name: snake_case, collapse non-alphanumeric
-      const base = snake(step.name)
-        .replace(/[^a-z0-9_]/g, "_")
+      // Derive from name: allow only characters valid for a GitHub workflow id
+      const base = step.name
+        // convert spaces to underscores
+        .replace(/\s+/g, "_")
+        // normalize to lowercase
+        .toLowerCase()
+        // remove characters not allowed in workflow ids (keep a-z, 0-9, _ and -)
+        .replace(/[^a-z0-9_-]/g, "_")
+        // collapse multiple underscores
         .replace(/_+/g, "_")
+        // trim leading/trailing underscores or hyphens
         .replace(/^_|_$/g, "");
       const id = uniqueId(base);
       return { ...step, id };

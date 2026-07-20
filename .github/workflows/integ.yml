@@ -192,16 +192,16 @@ jobs:
     if: always()
     steps:
       - name: integ-node result
-        id: integ_node_result
+        id: integ-node_result
         run: echo ${{ needs.integ-node.result }}
       - name: integ-python result
-        id: integ_python_result
+        id: integ-python_result
         run: echo ${{ needs.integ-python.result }}
       - name: integ-go result
-        id: integ_go_result
+        id: integ-go_result
         run: echo ${{ needs.integ-go.result }}
       - name: integ-java result
-        id: integ_java_result
+        id: integ-java_result
         run: echo ${{ needs.integ-java.result }}
       - name: Set status based on integ tests
         id: set_status_based_on_integ_tests

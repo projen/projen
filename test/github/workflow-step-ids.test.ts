@@ -4,7 +4,7 @@ import { JobPermission } from "../../src/github/workflows-model";
 import { synthSnapshot, TestProject } from "../util";
 
 /**
- * These tests cover the ID assignment logic in assignStepIds().
+ * These tests cover the ID assignment logic in ensureStepsHaveIds().
  *
  * Key invariants:
  * - Every step gets an id assigned eagerly when addJob is called.

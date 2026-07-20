@@ -25,5 +25,5 @@ jobs:
         id: install_dependencies
         run: node ./projen.js install:ci
       - name: check-licenses
-        id: check_licenses
+        id: check-licenses
         run: node ./projen.js check-licenses
