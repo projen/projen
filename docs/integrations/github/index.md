@@ -87,6 +87,39 @@ See the `GitHub`, `GithubWorkflow`, and `Job` types in the [GitHub](./../../api/
 Example code of creating a GitHub workflow:
 <https://github.com/projen/projen/blob/65b4194c163f47ba4842981b0c92dbe516be787b/src/github/auto-approve.ts#L67-L105>
 
+### Step IDs
+
+When jobs are added or updated (via `addJobs` / `updateJobs`), projen automatically
+assigns a stable, deterministic `id` to every step that doesn't already have one.
+This makes steps referenceable by other steps and jobs — for example through `needs`,
+conditional expressions (`if: steps.<id>.outputs.*`), and output consumption — without
+requiring you to annotate every step manually.
+
+IDs are assigned using the following priority:
+
+1. **Explicit `id`** — if a step already defines an `id`, it is preserved as-is and is
+   never renamed (it may already be referenced elsewhere).
+2. **Derived from `name`** — the step `name` is converted to `snake_case`, keeping only
+   characters valid in a GitHub workflow id (for example `"Install dependencies"` becomes
+   `install_dependencies`).
+3. **Content hash fallback** — for steps with neither an `id` nor a `name`, an `auto_`
+   prefix plus an 8-character SHA-256 hash of the step's `run` or `uses` content is used
+   (for example `auto_65b1296e`).
+
+Duplicate explicit IDs within the same job throw an error. Derived or auto-generated IDs
+that would collide with an explicit id (or with each other) are disambiguated with a
+`_2`, `_3`, … suffix.
+
+IDs are assigned eagerly at `addJobs` / `updateJobs` time rather than during render. This
+guarantees that any id appearing in the rendered YAML is also reachable through the
+step-mutation API (`getStep`, `patchStep`, `replaceStep`, `appendStep`, `removeStep`,
+`insertStepBefore`, `insertStepAfter`).
+
+!!! note
+    Steps injected from `job.tools` (e.g. `actions/setup-node`, `actions/setup-java`)
+    are produced during synthesis and are intentionally left without an auto-generated
+    `id`, since they are not addressable through the projen step API.
+
 ### Actions versions
 
 Most workflows included with projen are constraint to a major version, in order for updates to be available immediately.
