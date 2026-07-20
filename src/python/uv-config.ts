@@ -258,11 +258,30 @@ export interface UvConfiguration {
   readonly environments?: string[];
 
   /**
-   * Package names to exclude, e.g., `werkzeug`, `numpy`.
+   * Dependencies to exclude when resolving the project's dependencies.
+   *
+   * Excludes are used to prevent a package from being selected during resolution,
+   * regardless of whether it's requested by any other package. When a package is excluded,
+   * it will be omitted from the dependency list entirely.
+   *
+   * Including a package as an exclusion will prevent it from being installed, even if
+   * it's requested by transitive dependencies. This can be useful for removing optional
+   * dependencies or working around packages with broken dependencies.
+   *
+   * Exclusions can be limited to the dependencies declared by a specific package version by
+   * using a table with `package` and `dependencies`. The `package` table identifies the package
+   * whose dependencies will be excluded by `name` and, optionally, `version`. If `version` is
+   * omitted, the exclusions apply to all versions of that package. A version-specific entry
+   * takes precedence over an all-versions entry.
+   *
+   * !!! note
+   * In `uv lock`, `uv sync`, and `uv run`, uv will only read `exclude-dependencies` from
+   * the `pyproject.toml` at the workspace root, and will ignore any declarations in other
+   * workspace members or `uv.toml` files.
    *
    * @schema UvConfiguration#exclude-dependencies
    */
-  readonly excludeDependencies?: string[];
+  readonly excludeDependencies?: any[];
 
   /**
    * Limit candidate packages to those that were uploaded prior to the given date.
@@ -278,9 +297,11 @@ export interface UvConfiguration {
    * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
    * Calendar units such as months and years are not allowed.
    *
+   * Set to `false` to disable `exclude-newer`.
+   *
    * @schema UvConfiguration#exclude-newer
    */
-  readonly excludeNewer?: string;
+  readonly excludeNewer?: ExcludeNewerOverride;
 
   /**
    * Limit candidate packages for specific packages to those that were uploaded prior to the
@@ -511,9 +532,9 @@ export interface UvConfiguration {
   /**
    * Don't build source distributions.
    *
-   * When enabled, resolving will not run arbitrary Python code. The cached wheels of
-   * already-built source distributions will be reused, but operations that require building
-   * distributions will exit with an error.
+   * When enabled, uv will reuse cached wheels from previously built source distributions, but
+   * operations that require building a source distribution will exit with an error. uv may
+   * still build editable requirements, and their build backends may run arbitrary Python code.
    *
    * @schema UvConfiguration#no-build
    */
@@ -593,11 +614,38 @@ export interface UvConfiguration {
   readonly offline?: boolean;
 
   /**
-   * PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`.
+   * Overrides to apply when resolving the project's dependencies.
+   *
+   * Overrides are used to force selection of a specific version of a package, regardless of the
+   * version requested by any other package, and regardless of whether choosing that version
+   * would typically constitute an invalid resolution.
+   *
+   * While constraints are _additive_, in that they're combined with the requirements of the
+   * constituent packages, overrides are _absolute_, in that they completely replace the
+   * requirements of any constituent packages.
+   *
+   * Including a package as an override will _not_ trigger installation of the package on its
+   * own; instead, the package must be requested elsewhere in the project's first-party or
+   * transitive dependencies.
+   *
+   * Overrides can be limited to the dependencies declared by a specific package version by
+   * using a table with `package` and `dependencies`. The `package` table identifies the package
+   * whose dependencies will be overridden by `name` and, optionally, `version`. If `version` is
+   * omitted, the overrides apply to all versions of that package. Requirements in `dependencies`
+   * replace dependencies with the same name and add dependencies that are not declared by the
+   * package. Dependencies not listed in `dependencies` are left unchanged.
+   *
+   * Scoped overrides currently support registry version specifiers only. Direct URL and path
+   * sources, including Git sources, and explicit indexes are not supported.
+   *
+   * !!! note
+   * In `uv lock`, `uv sync`, and `uv run`, uv will only read `override-dependencies` from
+   * the `pyproject.toml` at the workspace root, and will ignore any declarations in other
+   * workspace members or `uv.toml` files.
    *
    * @schema UvConfiguration#override-dependencies
    */
-  readonly overrideDependencies?: string[];
+  readonly overrideDependencies?: any[];
 
   /**
    * Whether the project should be considered a Python package, or a non-package ("virtual")
@@ -632,11 +680,22 @@ export interface UvConfiguration {
   readonly prerelease?: PrereleaseMode;
 
   /**
-   * Whether to enable experimental, preview features.
+   * Whether to enable all experimental, preview features.
+   *
+   * Use `preview-features` instead.
    *
    * @schema UvConfiguration#preview
    */
   readonly preview?: boolean;
+
+  /**
+   * Whether to enable specific or all experimental preview features.
+   *
+   * Unknown feature names are ignored with a warning.
+   *
+   * @schema UvConfiguration#preview-features
+   */
+  readonly previewFeatures?: any;
 
   /**
    * The URL for publishing packages to the Python package index (by default:
@@ -849,7 +908,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'dev-dependencies': obj.devDependencies?.map(y => y),
     'environments': obj.environments?.map(y => y),
     'exclude-dependencies': obj.excludeDependencies?.map(y => y),
-    'exclude-newer': obj.excludeNewer,
+    'exclude-newer': obj.excludeNewer?.value,
     'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.value }), {})),
     'extra-build-dependencies': ((obj.extraBuildDependencies) === undefined) ? undefined : (Object.entries(obj.extraBuildDependencies).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
     'extra-build-variables': ((obj.extraBuildVariables) === undefined) ? undefined : (Object.entries(obj.extraBuildVariables).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ((i[1]) === undefined) ? undefined : (Object.entries(i[1]).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})) }), {})),
@@ -882,6 +941,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'pip': toJson_PipOptions(obj.pip),
     'prerelease': obj.prerelease,
     'preview': obj.preview,
+    'preview-features': obj.previewFeatures,
     'publish-url': obj.publishUrl,
     'pypy-install-mirror': obj.pypyInstallMirror,
     'python-downloads': obj.pythonDownloads,
@@ -1410,8 +1470,8 @@ export interface Index {
   readonly format?: IndexFormat;
 
   /**
-   * Status codes that uv should ignore when deciding whether
-   * to continue searching in the next index after a failure.
+   * Status codes that uv should ignore when deciding whether to continue resolution after a
+   * request to this index fails.
    *
    * ```toml
    * [[tool.uv.index]]
@@ -1726,9 +1786,11 @@ export interface PipOptions {
    * number of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).
    * Calendar units such as months and years are not allowed.
    *
+   * Set to `false` to disable `exclude-newer`.
+   *
    * @schema PipOptions#exclude-newer
    */
-  readonly excludeNewer?: string;
+  readonly excludeNewer?: ExcludeNewerOverride;
 
   /**
    * Limit candidate packages for specific packages to those that were uploaded prior to the given date.
@@ -1913,9 +1975,9 @@ export interface PipOptions {
   /**
    * Don't build source distributions.
    *
-   * When enabled, resolving will not run arbitrary Python code. The cached wheels of
-   * already-built source distributions will be reused, but operations that require building
-   * distributions will exit with an error.
+   * When enabled, uv will reuse cached wheels from previously built source distributions, but
+   * operations that require building a source distribution will exit with an error. uv may
+   * still build editable requirements, and their build backends may run arbitrary Python code.
    *
    * Alias for `--only-binary :all:`.
    *
@@ -2021,9 +2083,10 @@ export interface PipOptions {
   /**
    * Only use pre-built wheels; don't build source distributions.
    *
-   * When enabled, resolving will not run code from the given packages. The cached wheels of already-built
-   * source distributions will be reused, but operations that require building distributions will
-   * exit with an error.
+   * When enabled, uv will reuse cached wheels from previously built source distributions, but
+   * operations that require building a source distribution for the given packages will exit
+   * with an error. uv may still build editable requirements, and their build backends may run
+   * arbitrary Python code.
    *
    * Multiple packages may be provided. Disable binaries for all packages with `:all:`.
    * Clear previously specified packages with `:none:`.
@@ -2263,7 +2326,7 @@ export function toJson_PipOptions(obj: PipOptions | undefined): Record<string, a
     'emit-index-annotation': obj.emitIndexAnnotation,
     'emit-index-url': obj.emitIndexUrl,
     'emit-marker-expression': obj.emitMarkerExpression,
-    'exclude-newer': obj.excludeNewer,
+    'exclude-newer': obj.excludeNewer?.value,
     'exclude-newer-package': ((obj.excludeNewerPackage) === undefined) ? undefined : (Object.entries(obj.excludeNewerPackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.value }), {})),
     'extra': obj.extra?.map(y => y),
     'extra-build-dependencies': ((obj.extraBuildDependencies) === undefined) ? undefined : (Object.entries(obj.extraBuildDependencies).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
@@ -2388,6 +2451,8 @@ export enum TorchMode {
   AUTO = "auto",
   /** Use the CPU-only PyTorch index. (cpu) */
   CPU = "cpu",
+  /** Use the PyTorch index for CUDA 13.2. (cu132) */
+  CU132 = "cu132",
   /** Use the PyTorch index for CUDA 13.0. (cu130) */
   CU130 = "cu130",
   /** Use the PyTorch index for CUDA 12.9. (cu129) */
@@ -2817,8 +2882,12 @@ the `ANDROID_API_LEVEL` environment variable if set. (aarch64-linux-android) */
 By default uses Android API level 24, but respects
 the `ANDROID_API_LEVEL` environment variable if set. (x86_64-linux-android) */
   X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID = "x86_64-linux-android",
-  /** A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12. (wasm32-pyodide2024) */
+  /** A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12.
+See <https://pyodide.org/en/stable/development/abi/312.html> (wasm32-pyodide2024) */
   WASM32_HYPHEN_PYODIDE2024 = "wasm32-pyodide2024",
+  /** A wasm32 target using the Pyodide 2025 platform. Meant for use with Python 3.13.
+See <https://pyodide.org/en/stable/development/abi/313.html> (wasm32-pyodide2025) */
+  WASM32_HYPHEN_PYODIDE2025 = "wasm32-pyodide2025",
   /** An ARM64 target for iOS device
 
 By default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`
