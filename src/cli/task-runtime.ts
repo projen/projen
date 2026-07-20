@@ -1,3 +1,4 @@
+import * as child_process from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
@@ -7,7 +8,7 @@ import { $ } from "dax";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
-import { systemShell, tool } from "../util/exec";
+import { MAX_BUFFER, tool } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
 // `?.default ?? module` keeps this working both as a plain CommonJS require and
@@ -178,7 +179,8 @@ export class TaskRuntime {
     parents: string[] = [],
     args: Array<string | number> = [],
     env: { [name: string]: string } = {},
-  ): Promise<void> {
+    options: { captureOutput?: boolean } = {},
+  ): Promise<string | void> {
     // A previously executed task (most importantly the "default"/synth task,
     // which `build` spawns first) may have regenerated `.projen/tasks.json`.
     // Pick up any such changes before resolving and running this task so we
@@ -190,7 +192,8 @@ export class TaskRuntime {
       throw new Error(`cannot find command ${name}`);
     }
 
-    await new RunTask(this, task, parents, args, env).run();
+    const runner = new RunTask(this, task, parents, args, env);
+    return options.captureOutput ? runner.runCapturingOutput() : runner.run();
   }
 
   /**
@@ -262,6 +265,15 @@ class RunTask {
 
   private readonly workdir: string;
 
+  // When set, every step's stdout is captured and accumulated (for a spawned
+  // task whose aggregate output the caller wants).
+  private captureAll = false;
+  private readonly captured: string[] = [];
+
+  // `outputEnv` captures, propagated to spawned subtasks (exec/builtin steps
+  // see them via `this.env`).
+  private readonly capturedEnv: { [name: string]: string } = {};
+
   constructor(
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
@@ -271,6 +283,31 @@ class RunTask {
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
     this.parents = parents;
+  }
+
+  /**
+   * Runs the task, capturing and returning the trimmed, newline-joined stdout
+   * of all its steps (and any nested spawned tasks) in execution order.
+   */
+  public async runCapturingOutput(): Promise<string> {
+    this.captureAll = true;
+    await this.run();
+    return this.captured.join("\n").trim();
+  }
+
+  /**
+   * Records a step's captured (trimmed) stdout: into `outputEnv` for later
+   * steps (and propagated to spawned subtasks), and into the run's aggregate
+   * output when capturing everything.
+   */
+  private recordCapture(outputEnv: string | undefined, value: string) {
+    if (outputEnv) {
+      this.env[outputEnv] = value;
+      this.capturedEnv[outputEnv] = value;
+    }
+    if (this.captureAll) {
+      this.captured.push(value);
+    }
   }
 
   /**
@@ -344,12 +381,17 @@ class RunTask {
       }
 
       if (step.spawn) {
-        await this.runtime.runTask(
+        const capture = this.captureAll || !!step.outputEnv;
+        const output = await this.runtime.runTask(
           step.spawn,
           [...this.parents, this.task.name],
           argsList,
-          step.env,
+          { ...this.capturedEnv, ...step.env },
+          { captureOutput: capture },
         );
+        if (typeof output === "string") {
+          this.recordCapture(step.outputEnv, output);
+        }
       }
 
       const execs: Array<string | string[]> = step.exec ? [step.exec] : [];
@@ -405,6 +447,7 @@ class RunTask {
         }
 
         const cwd = step.cwd;
+        const capture = this.captureAll || !!step.outputEnv;
         // A thrown error (e.g. spawn failure) propagates; a non-zero exit is
         // reported via `result.status`.
         const result = await this.shell({
@@ -412,6 +455,7 @@ class RunTask {
           cwd,
           extraEnv: env,
           shell: stepShell,
+          captureOutput: capture,
         });
         if (result.status !== 0) {
           throw new Error(
@@ -419,6 +463,10 @@ class RunTask {
               Array.isArray(command) ? command.join(" ") : command
             }" (cwd: ${resolve(cwd ?? this.workdir)})`,
           );
+        }
+        if (capture) {
+          const stdout = result.stdout?.toString("utf-8").trim() ?? "";
+          this.recordCapture(step.outputEnv, stdout);
         }
       }
     }
@@ -593,9 +641,10 @@ class RunTask {
       );
     }
 
-    // stdout/stderr are captured only when asked (e.g. `$(...)` env eval);
-    // otherwise they are inherited so output streams through.
     const capture = options.captureOutput ?? false;
+    // Quiet captures (`$(...)`, conditions) stay silent; visible captures
+    // (`outputEnv`) stream live while still buffering.
+    const stream = capture && !quiet;
 
     const command = options.command;
     const env = {
@@ -621,19 +670,28 @@ class RunTask {
           throw e;
         }
       }
-      return systemShell(command, { cwd, env, capture });
+      return systemShell(command, { cwd, env, capture, stream });
     }
 
     // Otherwise run through dax: the "projen" shell or an explicit invocation.
     const builder = this.buildDaxCommand(command, shell);
+
+    // `inheritPiped` streams and buffers; `piped` buffers quietly. stderr is
+    // buffered only for quiet captures, so it can surface in errors.
+    const stdoutMode = capture
+      ? stream
+        ? "inheritPiped"
+        : "piped"
+      : "inherit";
+    const stderrMode = capture && !stream ? "piped" : "inherit";
 
     let result;
     try {
       result = await builder
         .cwd(cwd)
         .env(env)
-        .stdout(capture ? "piped" : "inherit")
-        .stderr(capture ? "piped" : "inherit")
+        .stdout(stdoutMode)
+        .stderr(stderrMode)
         .noThrow();
     } catch (e) {
       // dax's in-process shell throws a terse `Not implemented: ...` for shell
@@ -646,7 +704,7 @@ class RunTask {
     return {
       status: result.code,
       stdout: capture ? Buffer.from(result.stdoutBytes) : null,
-      stderr: capture ? Buffer.from(result.stderrBytes) : null,
+      stderr: capture && !stream ? Buffer.from(result.stderrBytes) : null,
     };
   }
 
@@ -727,4 +785,65 @@ interface ShellOptions {
    * @default "projen"
    */
   readonly shell?: string | string[];
+}
+
+/**
+ * Normalized result of running a command through the system shell (a subset of
+ * node's `SpawnSyncReturns`).
+ */
+export interface SystemShellResult {
+  /** Exit code, or `null` if terminated by a signal or never spawned. */
+  readonly status: number | null;
+  /** Captured stdout, or `null` when stdout was inherited. */
+  readonly stdout: Buffer | null;
+  /** Captured stderr, or `null` when stderr was inherited. */
+  readonly stderr: Buffer | null;
+  /** An error raised while attempting to spawn (not a non-zero exit). */
+  readonly error?: Error;
+}
+
+/**
+ * Runs a command line through the operating system's native shell.
+ *
+ * Calls the OS shell via `child_process` with `shell: true`.
+ * This backs the `system` task shell, which lets a user opt out of the built-in
+ * cross-platform shell and use the host's native shell instead:
+ * `/bin/sh`on POSIX and `cmd.exe` on Windows.
+ *
+ * Never throws for a non-zero exit (that is reported via `status`);
+ * a spawn failure is reported via `error`. The caller supplies the full `env`.
+ */
+export function systemShell(
+  command: string,
+  options: {
+    cwd: string;
+    env?: NodeJS.ProcessEnv;
+    capture?: boolean;
+    stream?: boolean;
+  },
+): SystemShellResult {
+  logging.debug(`${command} (cwd: ${options.cwd})`);
+  const result = child_process.spawnSync(command, {
+    cwd: options.cwd,
+    shell: true,
+    maxBuffer: MAX_BUFFER,
+    env: options.env,
+    // Quiet capture buffers stderr for error messages. Streamed capture
+    // inherits stderr and re-emits buffered stdout afterwards, since spawnSync
+    // can't both show and buffer the same stream at once.
+    stdio: options.capture
+      ? options.stream
+        ? ["inherit", "pipe", "inherit"]
+        : ["inherit", "pipe", "pipe"]
+      : "inherit",
+  });
+  if (options.capture && options.stream && result.stdout) {
+    process.stdout.write(result.stdout);
+  }
+  return {
+    status: result.status,
+    stdout: result.stdout ?? null,
+    stderr: result.stderr ?? null,
+    error: result.error,
+  };
 }

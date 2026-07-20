@@ -298,6 +298,7 @@ exports[`node project can be ejected 1`] = `
   "scripts": {
     "build": "node scripts/run-task.cjs build",
     "bump": "node scripts/run-task.cjs bump",
+    "bump:releasable-commits": "node scripts/run-task.cjs bump:releasable-commits",
     "clobber": "node scripts/run-task.cjs clobber",
     "compile": "node scripts/run-task.cjs compile",
     "package": "node scripts/run-task.cjs package",

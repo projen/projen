@@ -267,7 +267,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -280,7 +280,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -687,7 +709,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -700,7 +722,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -1116,7 +1160,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -1129,7 +1173,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -1494,7 +1560,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -1507,7 +1573,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -2027,7 +2115,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2040,7 +2128,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -2597,7 +2707,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2610,7 +2720,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -2983,7 +3115,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -2996,7 +3128,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -3560,7 +3714,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -3573,7 +3727,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -3861,7 +4037,7 @@ exports[`Single Project majorVersion can be 0 2`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -3874,7 +4050,29 @@ exports[`Single Project majorVersion can be 0 2`] = `
       "name": "bump",
       "steps": [
         {
-          "builtin": "release/bump-version",
+          "builtin": "release/resolve-latest-tag",
+          "outputEnv": "LATEST_TAG",
+        },
+        {
+          "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+          "outputEnv": "RELEASABLE_COMMITS",
+          "spawn": "bump:releasable-commits",
+        },
+        {
+          "builtin": "release/suggest-version-bump",
+          "outputEnv": "SUGGESTED_BUMP",
+        },
+        {
+          "builtin": "release/apply-version-bump",
+        },
+      ],
+    },
+    "bump:releasable-commits": {
+      "description": "Print the releasable commits since the latest release",
+      "name": "bump:releasable-commits",
+      "steps": [
+        {
+          "exec": "git log --oneline $LATEST_TAG..HEAD",
         },
       ],
     },
@@ -4005,7 +4203,7 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -4018,7 +4216,29 @@ exports[`Single Project minMajorVersion can be 1 1`] = `
       "name": "bump",
       "steps": [
         {
-          "builtin": "release/bump-version",
+          "builtin": "release/resolve-latest-tag",
+          "outputEnv": "LATEST_TAG",
+        },
+        {
+          "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+          "outputEnv": "RELEASABLE_COMMITS",
+          "spawn": "bump:releasable-commits",
+        },
+        {
+          "builtin": "release/suggest-version-bump",
+          "outputEnv": "SUGGESTED_BUMP",
+        },
+        {
+          "builtin": "release/apply-version-bump",
+        },
+      ],
+    },
+    "bump:releasable-commits": {
+      "description": "Print the releasable commits since the latest release",
+      "name": "bump:releasable-commits",
+      "steps": [
+        {
+          "exec": "git log --oneline $LATEST_TAG..HEAD",
         },
       ],
     },
@@ -4314,7 +4534,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -4327,7 +4547,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -4562,7 +4804,7 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -4575,7 +4817,29 @@ exports[`Single Project prerelease can be specified per branch 3`] = `
       "name": "bump",
       "steps": [
         {
-          "builtin": "release/bump-version",
+          "builtin": "release/resolve-latest-tag",
+          "outputEnv": "LATEST_TAG",
+        },
+        {
+          "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+          "outputEnv": "RELEASABLE_COMMITS",
+          "spawn": "bump:releasable-commits",
+        },
+        {
+          "builtin": "release/suggest-version-bump",
+          "outputEnv": "SUGGESTED_BUMP",
+        },
+        {
+          "builtin": "release/apply-version-bump",
+        },
+      ],
+    },
+    "bump:releasable-commits": {
+      "description": "Print the releasable commits since the latest release",
+      "name": "bump:releasable-commits",
+      "steps": [
+        {
+          "exec": "git log --oneline $LATEST_TAG..HEAD",
         },
       ],
     },
@@ -5018,7 +5282,7 @@ exports[`Single Project publisher (defaults) 2`] = `
       ],
     },
     "bump": {
-      "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "BUMPFILE": "dist/version.txt",
@@ -5031,7 +5295,29 @@ exports[`Single Project publisher (defaults) 2`] = `
       "name": "bump",
       "steps": [
         {
-          "builtin": "release/bump-version",
+          "builtin": "release/resolve-latest-tag",
+          "outputEnv": "LATEST_TAG",
+        },
+        {
+          "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+          "outputEnv": "RELEASABLE_COMMITS",
+          "spawn": "bump:releasable-commits",
+        },
+        {
+          "builtin": "release/suggest-version-bump",
+          "outputEnv": "SUGGESTED_BUMP",
+        },
+        {
+          "builtin": "release/apply-version-bump",
+        },
+      ],
+    },
+    "bump:releasable-commits": {
+      "description": "Print the releasable commits since the latest release",
+      "name": "bump:releasable-commits",
+      "steps": [
+        {
+          "exec": "git log --oneline $LATEST_TAG..HEAD",
         },
       ],
     },
@@ -5517,7 +5803,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -5530,7 +5816,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -6072,7 +6380,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -6085,7 +6393,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -6464,7 +6794,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -6477,7 +6807,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },
@@ -6775,7 +7127,7 @@ node_modules/
         ],
       },
       "bump": {
-        "condition": "git log --oneline -1 | grep -qv "chore(release):"",
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
@@ -6788,7 +7140,29 @@ node_modules/
         "name": "bump",
         "steps": [
           {
-            "builtin": "release/bump-version",
+            "builtin": "release/resolve-latest-tag",
+            "outputEnv": "LATEST_TAG",
+          },
+          {
+            "condition": "git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"",
+            "outputEnv": "RELEASABLE_COMMITS",
+            "spawn": "bump:releasable-commits",
+          },
+          {
+            "builtin": "release/suggest-version-bump",
+            "outputEnv": "SUGGESTED_BUMP",
+          },
+          {
+            "builtin": "release/apply-version-bump",
+          },
+        ],
+      },
+      "bump:releasable-commits": {
+        "description": "Print the releasable commits since the latest release",
+        "name": "bump:releasable-commits",
+        "steps": [
+          {
+            "exec": "git log --oneline $LATEST_TAG..HEAD",
           },
         ],
       },

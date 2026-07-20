@@ -148,6 +148,7 @@
     {
       "files": [
         "src/util/exec.ts",
+        "src/cli/task-runtime.ts",
         "test/cli/run-task.test.ts",
         "test/tasks/tasks.test.ts"
       ],

@@ -158,6 +158,25 @@ projen hello
 current time is Tue Dec 1 09:32:33 IST 2020
 ```
 
+### Capturing a step's output
+
+A step can capture its standard output into an environment variable visible to
+all later steps of the same task run, using `outputEnv`. This works for `exec`,
+`execArgs`, `builtin`, and `spawn` steps (for a spawned subtask, its combined
+output is captured):
+
+```ts
+const t = project.addTask("release-notes");
+t.execArgs(["git", "describe", "--tags", "--abbrev=0"], {
+  outputEnv: "LATEST_TAG",
+});
+t.execArgs(["node", "-e", "console.log(`notes since ${process.env.LATEST_TAG}`)"]);
+```
+
+The captured value is trimmed and set only when the step runs (a step skipped by
+its `condition` leaves the variable unset). The step's output still streams
+live. For a `spawn` step, add `outputEnv` via `task.spawn(subtask, { outputEnv })`.
+
 ## Conditions
 
 The `condition` option includes a command that determines if the task is

@@ -215,6 +215,18 @@ export interface TaskStepOptions {
   readonly env?: { [name: string]: string };
 
   /**
+   * Capture this step's (trimmed) stdout into an environment variable of this
+   * name, visible to all later steps of the task run. For `spawn` steps the
+   * spawned subtask's combined stdout is captured.
+   *
+   * Set only when the step runs (a skipped step leaves it unset) and always
+   * overwrites. The step's output still streams live.
+   *
+   * @default - stdout is not captured
+   */
+  readonly outputEnv?: string;
+
+  /**
    * The shell used to run this step, overriding the task/project shell.
    *
    * @see {@link TaskCommonOptions.shell}
@@ -276,6 +288,15 @@ export interface TaskStep {
    * @default - no environment variables defined in step
    */
   readonly env?: { [name: string]: string };
+
+  /**
+   * Capture this step's standard output and expose it to later steps as an
+   * environment variable with this name.
+   *
+   * @see {@link TaskStepOptions.outputEnv}
+   * @default - stdout is not captured
+   */
+  readonly outputEnv?: string;
 
   /**
    * The step shell in `tasks.json` form: a keyword (`"projen"` or `"system"`)

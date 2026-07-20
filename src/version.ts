@@ -6,19 +6,35 @@ import { NodePackage } from "./javascript/node-package";
 import type { Task } from "./task";
 
 /**
- * This command determines if there were any changes since the last release in a cross-platform compatible way.
- * It is used as a condition for both the `bump` and the `release` tasks.
+ * This command determines if there were any changes since the last release in a
+ * cross-platform compatible way. It is used as a condition for both the `bump`
+ * and the `release` tasks: it exits 0 (proceed) when the most recent commit is
+ * not a release commit, and non-zero (skip) when the most recent commit is a
+ * `chore(release):` commit.
  *
  * Explanation:
- *  - log commits                                               | git log
- *  - limit log output to a single line per commit              | --oneline
- *  - looks only at the most recent commit                      | -1
- *  - silent grep output                                        | grep -q
- *  - exits with code 0 if a match is found                     | grep -q "chore(release):"
- *  - exits with code 1 if a match is found (reverse-match)     | grep -qv "chore(release):"
+ *  - `git log --oneline -1`          the most recent commit, one line
+ *  - `| grep -v "chore(release):"`   pass the line through only if it is NOT a release commit
+ *  - `> /dev/null`                   discard grep's output; only its exit code matters
+ *
+ * grep exits 0 when it prints at least one non-matching line (a normal commit,
+ * so proceed) and 1 when every line matches (a release commit, so skip).
+ *
+ * IMPORTANT: do NOT reintroduce `grep -q` here (i.e. do not "optimize" this back
+ * to `grep -qv`). `grep -q` exits as soon as it has an answer and closes the read
+ * end of the pipe. When this condition runs through projen's built-in (dax)
+ * shell, that early close races with `git log` still writing to the pipe, and dax
+ * surfaces the failed write as a spurious non-zero exit ("stdin pipe broken.
+ * Invalid state: WritableStream is closed"). The task runtime cannot distinguish
+ * that from a legitimate skip (dax reports it as a plain non-zero code under
+ * `.noThrow()`, not as an error), so the bump/release task is silently skipped: a
+ * release is missed, or a dependent publishes a broken `^0.0.0` version range.
+ * Plain `grep -v ... > /dev/null` reads to EOF instead of short-circuiting, so it
+ * never closes the pipe while the writer is active and the race cannot occur. The
+ * exit semantics are identical to the previous `grep -qv`.
  */
 export const CHANGES_SINCE_LAST_RELEASE =
-  'git log --oneline -1 | grep -qv "chore(release):"';
+  'git log --oneline -1 | grep -v "chore(release):" > /dev/null';
 
 /**
  * The default package to be used for commit-and-tag-version
@@ -98,6 +114,18 @@ export class Version extends Component {
   public readonly unbumpTask: Task;
 
   /**
+   * The task that prints the releasable commits since the latest tag. Spawned
+   * by `bump`; its shell can be overridden via `task.shell`.
+   */
+  public readonly releasableCommitsTask: Task;
+
+  /**
+   * The task that runs the user's `nextVersionCommand`, if configured. Spawned
+   * by `bump`; its shell can be overridden via `task.shell`.
+   */
+  public readonly nextVersionTask?: Task;
+
+  /**
    * The name of the changelog file (under `artifactsDirectory`).
    */
   public readonly changelogFileName: string;
@@ -167,13 +195,29 @@ export class Version extends Component {
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
       BUMP_PACKAGE: this.bumpPackage,
     };
-    if (options.nextVersionCommand) {
-      commonEnv.NEXT_VERSION_COMMAND = options.nextVersionCommand;
-    }
-    if (options.releasableCommits) {
-      commonEnv.RELEASABLE_COMMITS = options.releasableCommits.cmd;
+
+    // The command that lists releasable commits, run as its own spawnable task
+    // so its shell can be configured independently (see `TaskShell`).
+    // `$LATEST_TAG` is provided by `bump` when spawning it.
+    this.releasableCommitsTask = this.project.addTask(
+      "bump:releasable-commits",
+      {
+        description: "Print the releasable commits since the latest release",
+        exec: (options.releasableCommits ?? ReleasableCommits.everyCommit())
+          .cmd,
+      },
+    );
+
+    // The optional command that decides the next version, also its own task.
+    if (this.nextVersionCommand) {
+      this.nextVersionTask = this.project.addTask("bump:next-version", {
+        description: "Determine the next version to release",
+        exec: this.nextVersionCommand,
+      });
     }
 
+    // Orchestrates the release bump as a pipeline of builtins and spawned
+    // tasks, handing results forward via step `outputEnv` captures.
     this.bumpTask = this.project.addTask("bump", {
       description:
         "Bumps version based on latest git tag and generates a changelog entry",
@@ -181,8 +225,31 @@ export class Version extends Component {
       env: { ...commonEnv },
     });
 
-    this.bumpTask.builtin("release/bump-version");
+    this.bumpTask.addSteps(
+      { builtin: "release/resolve-latest-tag", outputEnv: "LATEST_TAG" },
+      // On a first release the resolved tag is synthetic and does not exist, so
+      // there is nothing to diff against - skip listing commits in that case.
+      {
+        spawn: "bump:releasable-commits",
+        outputEnv: "RELEASABLE_COMMITS",
+        condition: 'git rev-parse --verify --quiet "refs/tags/$LATEST_TAG"',
+      },
+      { builtin: "release/suggest-version-bump", outputEnv: "SUGGESTED_BUMP" },
+    );
+    if (this.nextVersionTask) {
+      // `bump:next-version` receives `$VERSION` (the current version); read it
+      // from the version file into `VERSION` so it propagates to the spawn.
+      this.bumpTask.addSteps(
+        {
+          exec: `node -e "process.stdout.write(JSON.parse(require('fs').readFileSync(process.env.OUTFILE,'utf8')).version)"`,
+          outputEnv: "VERSION",
+        },
+        { spawn: "bump:next-version", outputEnv: "BUMP_TYPE" },
+      );
+    }
+    this.bumpTask.addSteps({ builtin: "release/apply-version-bump" });
 
+    // Resets the version in the version file back to 0.0.0 after a bump.
     this.unbumpTask = this.project.addTask("unbump", {
       description: "Restores version to 0.0.0",
       env: { ...commonEnv },
