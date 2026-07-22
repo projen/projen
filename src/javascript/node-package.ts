@@ -909,6 +909,11 @@ export class NodePackage extends Component {
       description: "Install project dependencies using frozen lockfile",
       exec: this.installCommand,
     });
+
+    if (isYarnBerry(this.packageManager)) {
+      // Needs to happen after the install tasks have been added
+      this.configureYarnBerryDedupe(options.yarnBerryOptions?.dedupePackages);
+    }
   }
 
   /**
@@ -2137,6 +2142,22 @@ export class NodePackage extends Component {
     });
   }
 
+  /**
+   * Configure package deduping
+   */
+  private configureYarnBerryDedupe(dedupePackages: string[] | undefined) {
+    if (!dedupePackages || dedupePackages.length === 0) {
+      return;
+    }
+
+    const dedupeTask = this.project.addTask("yarn:dedupe", {
+      execArgs: ["yarn", "dedupe", ...dedupePackages],
+    });
+
+    // Add dedupe to non-CI install command
+    this.project.tasks.tryFind("install")?.spawn(dedupeTask);
+  }
+
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
     if (
       this.npmAccess &&
@@ -2273,6 +2294,20 @@ export interface YarnBerryOptions {
    * @default false
    */
   readonly zeroInstalls?: boolean;
+
+  /**
+   * Packages to deduplicate.
+   *
+   * This will prevent multiple versions of the same package from being
+   * installed in the lock file, if a single version could satisfy all requested
+   * version ranges. This will prevent version proliferation and reduce the size
+   * of the depdendency tree.
+   *
+   * Setting this will run `yarn dedupe` after dependency upgrades.
+   *
+   * Supports glob patterns, e.g. `@aws-sdk/*`.
+   */
+  readonly dedupePackages?: string[];
 }
 
 /**
