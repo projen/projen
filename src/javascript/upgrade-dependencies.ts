@@ -313,6 +313,12 @@ export class UpgradeDependencies extends Component {
         );
       }
     }
+
+    // If we can find the yarn:dedupe task, add it to the post-upgrade task. This is only relevant for yarn berry.
+    const dedupeCommand = this.project.tasks.tryFind("yarn:dedupe");
+    if (dedupeCommand) {
+      this.postUpgradeTask.spawn(dedupeCommand);
+    }
   }
 
   /**
