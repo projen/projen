@@ -19065,9 +19065,31 @@ const yarnBerryOptions: javascript.YarnBerryOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.YarnBerryOptions.property.dedupePackages">dedupePackages</a></code> | <code>string[]</code> | Packages to deduplicate. |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.version">version</a></code> | <code>string</code> | A fully specified version to use for yarn (e.g., x.x.x). |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.yarnRcOptions">yarnRcOptions</a></code> | <code><a href="#projen.javascript.YarnrcOptions">YarnrcOptions</a></code> | The yarnrc configuration. |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.zeroInstalls">zeroInstalls</a></code> | <code>boolean</code> | Should zero-installs be enabled? |
+
+---
+
+##### `dedupePackages`<sup>Optional</sup> <a name="dedupePackages" id="projen.javascript.YarnBerryOptions.property.dedupePackages"></a>
+
+```typescript
+public readonly dedupePackages: string[];
+```
+
+- *Type:* string[]
+
+Packages to deduplicate.
+
+This will prevent multiple versions of the same package from being
+installed in the lock file, if a single version could satisfy all requested
+version ranges. This will prevent version proliferation and reduce the size
+of the depdendency tree.
+
+Setting this will run `yarn dedupe` after dependency upgrades.
+
+Supports glob patterns, e.g. `@aws-sdk/*`.
 
 ---
 
