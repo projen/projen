@@ -15873,9 +15873,9 @@ exports[`inventory 1`] = `
     "typename": "cdk8s.ConstructLibraryCdk8s",
   },
   {
-    "docs": "CDKTF construct library project.",
-    "docsurl": "https://projen.io/docs/api/cdktf#constructlibrarycdktf-",
-    "fqn": "projen.cdktf.ConstructLibraryCdktf",
+    "docs": "CDKTN construct library project.",
+    "docsurl": "https://projen.io/docs/api/cdktn#constructlibrarycdktn-",
+    "fqn": "projen.cdktn.ConstructLibraryCdktn",
     "moduleName": "projen",
     "options": [
       {
@@ -16391,18 +16391,18 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""^0.13.0"",
+        "default": ""^0.24.0"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
-        "initialValue": ""^0.13.0"",
+        "initialValue": ""^0.24.0"",
         "jsonLike": true,
-        "name": "cdktfVersion",
-        "parent": "ConstructLibraryCdktfOptions",
+        "name": "cdktnVersion",
+        "parent": "ConstructLibraryCdktnOptions",
         "path": [
-          "cdktfVersion",
+          "cdktnVersion",
         ],
         "simpleType": "string",
-        "switch": "cdktf-version",
+        "switch": "cdktn-version",
         "type": {
           "primitive": "string",
         },
@@ -16565,13 +16565,13 @@ exports[`inventory 1`] = `
         },
       },
       {
-        "default": ""^10.3.0"",
+        "default": ""^10.7.0"",
         "docs": "Construct version to use.",
         "featured": false,
         "jsonLike": true,
         "name": "constructsVersion",
         "optional": true,
-        "parent": "ConstructLibraryCdktfOptions",
+        "parent": "ConstructLibraryCdktnOptions",
         "path": [
           "constructsVersion",
         ],
@@ -18911,8 +18911,8 @@ exports[`inventory 1`] = `
         },
       },
     ],
-    "pjid": "cdktf-construct",
-    "typename": "cdktf.ConstructLibraryCdktf",
+    "pjid": "cdktn-construct",
+    "typename": "cdktn.ConstructLibraryCdktn",
   },
   {
     "docs": "Java project.",

@@ -36,34 +36,34 @@ use the same syntax.
 ## Example
 
 Let's look at a specific example. There is a
-[custom project for creating CDKTF providers](https://github.com/cdktf/cdktf-provider-project).
+[custom project for creating CDKTN providers](https://github.com/cdktn-io/cdktn-provider-project).
 To install it, we would use the following command:
 
 ```shell
-pnpm dlx projen new cdktf_provider --from @cdktf/provider-project
+pnpm dlx projen new cdktn_provider --from @cdktn/provider-project
 ```
 
-We would infer that it's `cdktfprovider` because the name of the exported class in `src/main.ts`
-is `CdkTfProviderProject`. However, when we try installing that, we get an error:
+We would infer that it's `cdktnprovider` because the name of the exported class in `src/main.ts`
+is `CdkTnProviderProject`. However, when we try installing that, we get an error:
 
 ```shell
-👾 Project type "cdktfprovider" not found in "@cdktf/provider-project". Found:
+👾 Project type "cdktnprovider" not found in "@cdktn/provider-project". Found:
 
-    cdktf_provider
+    cdktn_provider
 
 Please specify a valid project type.
-Example: pnpm dlx projen new --from @cdktf/provider-project cdktf_provider
+Example: pnpm dlx projen new --from @cdktn/provider-project cdktn_provider
 ```
 
 In this case the error message is very helpful. It tells us the project type and we can easily
 adjust. When we execute the correct command, we get the following output:
 
 ```shell
-❯ pnpm dlx projen new cdktf_provider --from @cdktf/provider-project
-blank@ /Users/defiance/cdktf-provider-project
-└── projen@0.75.1
+❯ pnpm dlx projen new cdktn_provider --from @cdktn/provider-project
+blank@ /Users/admin/cdktn-provider-project
+└── projen@0.99.0
 
-👾 installing external module @cdktf/provider-project...
+👾 installing external module @cdktn/provider-project...
 
 up to date, audited 89 packages in 399ms
 
@@ -72,8 +72,8 @@ up to date, audited 89 packages in 399ms
 
 found 0 vulnerabilities
 
-👾 Cannot create "@cdktf/provider-project.CdktfProviderProject". Missing required options:
-    --cdktf-version [string]
+👾 Cannot create "@cdktn/provider-project.CdktnProviderProject". Missing required options:
+    --cdktn-version [string]
     --constructs-version [string]
     --terraform-provider [string]
 ```
@@ -83,10 +83,10 @@ the command line. It tells us the options and the syntax to pass them. We can no
 project with the following command:
 
 ```shell
-pnpm dlx projen new cdktf_provider --from @cdktf/provider-project \
---cdktf-version 0.18.0 \
---constructs-version 10.3.0 \
---terraform-provider aws@5.21.0
+pnpm dlx projen new cdktn_provider --from @cdktn/provider-project \
+--cdktn-version 0.24.0 \
+--constructs-version 10.7.0 \
+--terraform-provider aws@6.56.0
 ```
 
 This command will execute successfully.

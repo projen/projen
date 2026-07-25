@@ -48,9 +48,12 @@ Projen offers various project types, including:
 - cdk8s-app-ts - CDK8s app in TypeScript.
 - cdk8s-construct - CDK8s construct library project.
 
-### CDK for Terraform
+### CDK Terrain (CDKTN)
 
-- cdktf-construct - CDKTF construct library project.
+- cdktn-construct - CDKTN construct library project.
+- cdktf-construct - CDKTF construct library project (archived by HashiCorp, use cdktn-construct).
+
+**Note**: CDKTF has been archived by HashiCorp. [CDK Terrain (CDKTN)](https://cdktn.io/) is a community-driven fork that continues active development.
 
 ### Java
 

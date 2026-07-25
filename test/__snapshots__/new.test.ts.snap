@@ -765,13 +765,13 @@ project.synth();",
 }
 `;
 
-exports[`projen new cdktf-construct 1`] = `
+exports[`projen new cdktn-construct 1`] = `
 {
-  ".projenrc.ts": "import { cdktf, javascript } from "projen";
-const project = new cdktf.ConstructLibraryCdktf({
+  ".projenrc.ts": "import { cdktn, javascript } from "projen";
+const project = new cdktn.ConstructLibraryCdktn({
   author: "My User Name",
   authorAddress: "my@user.email.com",
-  cdktfVersion: "^0.13.0",
+  cdktnVersion: "^0.24.0",
   jsiiVersion: "~6.0.0",
   name: "my-project",
   packageManager: javascript.NodePackageManager.NPM,
