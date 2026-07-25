@@ -1,11 +1,13 @@
 import type { Task } from "../src";
-import { Component, TaskShell } from "../src";
+import { Component } from "../src";
+import { setupIntegHarness } from "./integ-harness";
 import type { JavaVersion, LanguageVersions } from "./integ-versions";
 import { INTEG_TEST_VERSIONS } from "./integ-versions";
 import { GithubWorkflow, WorkflowSteps } from "../src/github";
-import type { Job, JobStep } from "../src/github/workflows-model";
+import type { JobStep } from "../src/github/workflows-model";
 import { JobPermission } from "../src/github/workflows-model";
 import type { NodeProject } from "../src/javascript";
+import type { TypeScriptProject } from "../src/typescript";
 
 /**
  * Options for IntegrationTests component
@@ -25,474 +27,302 @@ export interface IntegrationTestsOptions {
 }
 
 /**
- * Integration test configuration for a language
+ * A suite of the harness that runs against the Node npm tarball only.
  */
-interface LanguageTestConfig {
-  /**
-   * The task name suffix (e.g., 'javascript', 'python')
-   */
+interface NodeSuite {
+  /** Task id suffix and jest file stem. */
   readonly name: string;
-
-  /**
-   * The script path to execute
-   */
-  readonly script: string;
-
-  /**
-   * Description of the integration test
-   */
+  /** The `tests/<file>` to run. */
+  readonly file: string;
   readonly description: string;
-
-  /**
-   * The package task to run before the integ test (e.g., 'package:js', 'package:python')
-   */
-  readonly packageTask: string;
-
-  /**
-   * Function to create the workflow job for this language
-   */
-  readonly createJob: (project: NodeProject, config: LanguageTestConfig) => Job;
 }
 
+/** Suites that only need the npm tarball (dist/js). */
+const NODE_SUITES: NodeSuite[] = [
+  {
+    name: "node",
+    file: "tests/node-typescript.integ.test.ts",
+    description: "Node/TypeScript create+build and #4746 downstream npm ci",
+  },
+  {
+    name: "eject",
+    file: "tests/eject.integ.test.ts",
+    description: "projen eject self-containment (#3679/#4407)",
+  },
+  {
+    name: "snapshot",
+    file: "tests/projenrc-snapshot.integ.test.ts",
+    description: "projenrc snapshot suite",
+  },
+];
+
+const INTEG_DIR = "integ";
+
 /**
- * Component that sets up integration tests for projen across multiple languages.
+ * Sets up integration tests for projen across multiple languages and package
+ * managers, backed by the cross-platform Jest harness in `test/integ`.
  *
- * This component creates:
- * - Individual tasks for each language (integ:javascript, integ:python, etc.)
- * - A main integ task that runs all integration tests
- * - A separate CI workflow that runs compile and then integ tests in parallel
+ * Creates:
+ * - the `test/integ` child project (via setupIntegHarness),
+ * - local tasks `integ:<suite>` and an aggregate `integ` task, and
+ * - an `integ` GitHub workflow that runs every suite on Ubuntu AND Windows,
+ *   across the Node version matrix, with a representative set of Python/Java/Go
+ *   versions.
  */
 export class IntegrationTests extends Component {
-  /**
-   * The main integration test task
-   */
   public readonly integTask: Task;
-
-  /**
-   * Individual language test tasks
-   */
   public readonly tasks: Record<string, Task> = {};
-
-  /**
-   * The integration tests workflow
-   */
   public readonly workflow?: GithubWorkflow;
 
   private readonly versions: LanguageVersions;
+  private readonly suiteFiles: Record<string, string>;
 
   constructor(project: NodeProject, options: IntegrationTestsOptions = {}) {
     super(project);
 
     this.versions = options.versions ?? INTEG_TEST_VERSIONS;
+    setupIntegHarness(project as TypeScriptProject);
 
-    // Define language test configurations
-    const languageConfigs: LanguageTestConfig[] = [
-      {
-        name: "node",
-        script: "scripts/integ-node.sh",
-        description: "Run Node.js integration test",
-        packageTask: "package:js",
-        createJob: this.createNodeMatrixJob.bind(this),
-      },
-      {
-        name: "python",
-        script: "scripts/integ-python.sh",
-        description: "Run Python integration test",
-        packageTask: "package:python",
-        createJob: this.createPythonMatrixJob.bind(this),
-      },
-      {
-        name: "go",
-        script: "scripts/integ-go.sh",
-        description: "Run Go integration test",
-        packageTask: "package:go",
-        createJob: this.createGoMatrixJob.bind(this),
-      },
-      {
-        name: "java",
-        script: "scripts/integ-java.sh",
-        description: "Run Java integration test",
-        packageTask: "package:java",
-        createJob: this.createJavaMatrixJob.bind(this),
-      },
+    // Installs the harness child project's dependencies.
+    const installTask = project.addTask("integ:install", {
+      description: "Install the integration test harness dependencies",
+      cwd: INTEG_DIR,
+      exec: "npm ci",
+    });
+
+    // A task per suite: run the corresponding Jest file in the child project.
+    const suiteNames = [
+      ...NODE_SUITES.map((s) => s.name),
+      "python",
+      "java",
+      "go",
     ];
+    const suiteFiles: Record<string, string> = {
+      python: "tests/python.integ.test.ts",
+      java: "tests/java.integ.test.ts",
+      go: "tests/go.integ.test.ts",
+    };
+    for (const s of NODE_SUITES) {
+      suiteFiles[s.name] = s.file;
+    }
+    this.suiteFiles = suiteFiles;
 
-    // Create individual tasks for each language
-    //
-    // The scripts are bash - Windows has no shebang support at all (unlike
-    // POSIX, where the kernel dispatches on `#!/bin/bash`), so dax's default
-    // shell fails with `spawn EFTYPE` if asked to exec a bare `.sh` path
-    // directly. `TaskShell.bash()` runs the command through `bash -c`
-    // instead, which works everywhere: real bash on POSIX, and the
-    // Git-for-Windows bash that ships on GitHub's `windows-latest` runners
-    // (and is a common enough dev-machine dependency) on Windows.
-    for (const config of languageConfigs) {
-      this.tasks[config.name] = project.addTask(`integ:${config.name}`, {
-        exec: config.script,
-        shell: TaskShell.bash(),
-        description: config.description,
+    for (const name of suiteNames) {
+      this.tasks[name] = project.addTask(`integ:${name}`, {
+        description: `Run the ${name} integration suite`,
+        cwd: INTEG_DIR,
+        exec: `npx jest ${suiteFiles[name]} --ci`,
       });
     }
 
-    // Verifies task shell syntax resolves commands via PATH on Windows;
-    // no-ops elsewhere. Runs as a step of the node matrix job in CI.
-    this.tasks.windowsShellSyntax = project.addTask(
-      "integ:windows-shell-syntax",
-      {
-        description: "Run Windows task shell syntax tests",
-      },
-    );
-    this.tasks.windowsShellSyntax.exec(
-      "scripts\\integ-windows-shell-syntax.cmd",
-      {
-        condition:
-          "node -e \"process.exit(process.platform === 'win32' ? 0 : 1)\"",
-        shell: TaskShell.system(),
-      },
-    );
-
-    // The eject integration test is not language-specific. It is its own task
-    // (so it can be run locally and as part of the aggregate `integ` task) but
-    // in CI it runs as a step of the node matrix job rather than a dedicated
-    // job - see `createNodeMatrixJob`.
-    this.tasks.eject = project.addTask("integ:eject", {
-      exec: "scripts/integ-eject.sh",
-      shell: TaskShell.bash(),
-      description: "Run projen eject integration test",
-    });
-
-    // Create main integ task that runs all tests
+    // Aggregate task: build + package everything, install the harness, run all.
     this.integTask = project.addTask("integ", {
       description: "Run all integration tests",
     });
-
-    // Spawn compile and package-all before running tests
     this.integTask.spawn(project.compileTask);
-    const packageAllTask = project.tasks.tryFind("package-all");
-    if (packageAllTask) {
-      this.integTask.spawn(packageAllTask);
+    const bundleTaskRunner = project.tasks.tryFind("bundle:task-runner");
+    if (bundleTaskRunner) {
+      this.integTask.spawn(bundleTaskRunner);
+    }
+    const packageAll = project.tasks.tryFind("package-all");
+    if (packageAll) {
+      this.integTask.spawn(packageAll);
+    }
+    this.integTask.spawn(installTask);
+    for (const name of suiteNames) {
+      this.integTask.spawn(this.tasks[name]);
     }
 
-    // Spawn all individual language tasks
-    for (const config of languageConfigs) {
-      this.integTask.spawn(this.tasks[config.name]);
-    }
-    this.integTask.spawn(this.tasks.windowsShellSyntax);
-    this.integTask.spawn(this.tasks.eject);
-
-    // Create a separate workflow for integ tests
     if (options.workflow !== false && project.github) {
-      this.workflow = new GithubWorkflow(project.github, "integ");
-      this.workflow.on({
-        pullRequest: {},
-        workflowDispatch: {},
-        mergeGroup: {},
-      });
-
-      // Add integ test jobs (each job is self-contained with its own compile)
-      const integJobIds: string[] = [];
-      for (const config of languageConfigs) {
-        const jobId = `integ-${config.name}`;
-        integJobIds.push(jobId);
-        const job = config.createJob(project, config);
-
-        this.workflow.addJob(jobId, {
-          ...job,
-          env: {
-            CI: "0",
-          },
-        });
-      }
-
-      // Add a final job that combines all integ test results
-      this.workflow.addJob("integ", {
-        runsOn: ["ubuntu-latest"],
-        permissions: {},
-        needs: integJobIds,
-        if: "always()",
-        steps: [
-          ...integJobIds.map((id) => ({
-            name: `${id} result`,
-            run: `echo \${{ needs.${id}.result }}`,
-          })),
-          {
-            if: `\${{ ${integJobIds
-              .map((id) => `needs.${id}.result != 'success'`)
-              .join(" || ")} }}`,
-            name: "Set status based on integ tests",
-            run: "exit 1",
-          },
-        ],
-      });
+      this.workflow = this.buildWorkflow(project);
     }
   }
 
-  /**
-   * Creates common steps for integration test jobs (checkout)
-   */
-  private createCommonSteps(): JobStep[] {
+  private buildWorkflow(project: NodeProject): GithubWorkflow {
+    const workflow = new GithubWorkflow(project.github!, "integ");
+    workflow.on({ pullRequest: {}, workflowDispatch: {}, mergeGroup: {} });
+
+    const distArtifact = "integ-build-artifact";
+    const nodeSuiteNames = NODE_SUITES.map((s) => s.name);
+    const langSuiteNames = ["python", "java", "go"];
+    const allSuites = [...nodeSuiteNames, ...langSuiteNames];
+    const defaultNode = this.versions.node.at(-1) ?? "lts/*";
+
+    // Prepare: compile and package all release artifacts ONCE, upload dist/.
+    workflow.addJob("prepare", {
+      runsOn: ["ubuntu-latest"],
+      permissions: { contents: JobPermission.READ },
+      env: { CI: "0" },
+      steps: [
+        ...this.commonSteps(),
+        ...this.langSetupSteps("python"),
+        ...this.langSetupSteps("java"),
+        ...this.langSetupSteps("go"),
+        this.setupNode(defaultNode),
+        this.installParent(project),
+        this.compile(project),
+        this.runTask(project, "Bundle task runner", "bundle:task-runner"),
+        this.runTask(project, "Package all languages", "package-all"),
+        WorkflowSteps.uploadArtifact({
+          name: "Upload build artifacts",
+          with: { name: distArtifact, path: "dist" },
+        }),
+      ],
+    });
+
+    // Test: a single sharded job. Matrix over suite x OS x Node version;
+    // language suites run on the default Node version only. Shards download
+    // the prepared artifacts and run Jest directly in the harness - they
+    // never build the parent project.
+    workflow.addJob("integ-test", {
+      name: "${{ matrix.suite }} / ${{ matrix.os }} / node ${{ matrix.node-version }}",
+      runsOn: ["${{ matrix.os }}"],
+      permissions: { contents: JobPermission.READ },
+      needs: ["prepare"],
+      env: { CI: "0" },
+      strategy: {
+        failFast: false,
+        matrix: {
+          domain: {
+            os: ["ubuntu-latest", "windows-latest"],
+            suite: allSuites,
+            "node-version": this.versions.node,
+          },
+          // Attach the jest file to each suite.
+          include: allSuites.map((suite) => ({
+            suite,
+            file: this.suiteFiles[suite],
+          })),
+          // Language suites only run on the default Node version.
+          exclude: langSuiteNames.flatMap((suite) =>
+            this.versions.node
+              .filter((v) => v !== defaultNode)
+              .map((nodeVersion) => ({
+                suite,
+                "node-version": nodeVersion,
+              })),
+          ),
+        },
+      },
+      steps: [
+        ...this.commonSteps(),
+        ...this.langSetupSteps("python").map((s) => ({
+          ...s,
+          if: "matrix.suite == 'python'",
+        })),
+        ...this.langSetupSteps("java").map((s) => ({
+          ...s,
+          if: "matrix.suite == 'java'",
+        })),
+        ...this.langSetupSteps("go").map((s) => ({
+          ...s,
+          if: "matrix.suite == 'go'",
+        })),
+        this.setupNode("${{ matrix.node-version }}"),
+        WorkflowSteps.downloadArtifact({
+          name: "Download build artifacts",
+          with: { name: distArtifact, path: "dist" },
+        }),
+        {
+          name: "Install harness",
+          run: "npm ci",
+          workingDirectory: INTEG_DIR,
+        },
+        {
+          name: "Run suite",
+          run: "npx jest ${{ matrix.file }} --ci",
+          workingDirectory: INTEG_DIR,
+        },
+      ],
+    });
+
+    // Aggregation job for a single required status check.
+    workflow.addJob("integ", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      needs: ["integ-test"],
+      if: "always()",
+      steps: [
+        {
+          name: "integ-test result",
+          run: "echo ${{ needs.integ-test.result }}",
+        },
+        {
+          if: "${{ needs.integ-test.result != 'success' }}",
+          name: "Set status based on integ tests",
+          run: "exit 1",
+        },
+      ],
+    });
+
+    return workflow;
+  }
+
+  /** Representative language toolchain setup (single version per language). */
+  private langSetupSteps(lang: "python" | "java" | "go"): JobStep[] {
+    switch (lang) {
+      case "python":
+        return [
+          {
+            uses: "actions/setup-python@v6",
+            with: { "python-version": this.versions.python.at(-1) ?? "3.x" },
+          },
+        ];
+      case "go":
+        return [
+          {
+            uses: "actions/setup-go@v6",
+            with: { "go-version": this.versions.go.at(-1) ?? "1.x" },
+          },
+        ];
+      case "java": {
+        const j: JavaVersion = this.versions.java.at(-1) ?? {
+          version: "17",
+          distribution: "corretto",
+        };
+        return [
+          {
+            uses: "actions/setup-java@v5",
+            with: { "java-version": j.version, distribution: j.distribution },
+          },
+        ];
+      }
+    }
+  }
+
+  private commonSteps(): JobStep[] {
     return [WorkflowSteps.checkout()];
   }
 
-  /**
-   * Creates an install dependencies step
-   */
-  private installDepsStep(project: NodeProject): JobStep {
+  private installParent(project: NodeProject): JobStep {
     return {
       name: "Install dependencies",
       run: project.package.installCommand,
     };
   }
 
-  /**
-   * Creates a compile step
-   */
-  private compileStep(project: NodeProject): JobStep {
+  private compile(project: NodeProject): JobStep {
     return {
       name: "Compile",
       run: project.runTaskCommand(project.compileTask),
     };
   }
 
-  /**
-   * Creates a run task step
-   */
-  private runTaskStep(
+  private runTask(
     project: NodeProject,
     name: string,
-    nameOfTask: string,
+    taskName: string,
   ): JobStep {
     return {
       name,
-      run: project.runTaskCommand(project.tasks.tryFind(nameOfTask)!),
+      run: project.runTaskCommand(project.tasks.tryFind(taskName)!),
     };
   }
 
-  /**
-   * Creates a setup-node step
-   */
-  private setupNodeStep(version: string): JobStep {
+  private setupNode(version: string): JobStep {
     return {
       uses: "actions/setup-node@v6",
-      with: {
-        "node-version": version,
-        "package-manager-cache": false,
-      },
+      with: { "node-version": version, "package-manager-cache": false },
     };
   }
-
-  /**
-   * Creates a setup-python step
-   */
-  private setupPythonStep(version: string): JobStep {
-    return {
-      uses: "actions/setup-python@v6",
-      with: {
-        "python-version": version,
-      },
-    };
-  }
-
-  /**
-   * Creates a setup-go step
-   */
-  private setupGoStep(version: string): JobStep {
-    return {
-      uses: "actions/setup-go@v6",
-      with: {
-        "go-version": version,
-      },
-    };
-  }
-
-  /**
-   * Creates a setup-java step
-   */
-  private setupJavaStep(version: string, distribution: string): JobStep {
-    return {
-      uses: "actions/setup-java@v5",
-      with: {
-        "java-version": version,
-        distribution: distribution,
-      },
-    };
-  }
-
-  /**
-   * Creates a Node.js matrix job for JavaScript integration tests
-   *
-   * Runs on both `ubuntu-latest` and `windows-latest`: this is the job that
-   * bootstraps a real project and runs its tasks end-to-end, including a
-   * `.projenrc.ts` step executed through `ts-node`/`tsx`/`node` - exactly the
-   * code path dax has to resolve Windows `.cmd`/`.ps1` shims for (see
-   * https://github.com/projen/projen/issues/4789). Without a real Windows
-   * run here, dax's Windows behavior is only ever exercised through Jest,
-   * which fakes `process.platform` but still spawns the real process on
-   * whatever OS the test runner happens to be - so it can assert *that* dax
-   * was invoked, but not that dax actually works on Windows.
-   */
-  private createNodeMatrixJob(
-    project: NodeProject,
-    config: LanguageTestConfig,
-  ): Job {
-    return {
-      permissions: {
-        contents: JobPermission.READ,
-      },
-      runsOn: ["${{ matrix.os }}"],
-      strategy: {
-        failFast: false,
-        matrix: {
-          domain: {
-            "node-version": this.versions.node,
-            os: ["ubuntu-latest", "windows-latest"],
-          },
-        },
-      },
-      steps: [
-        ...this.createCommonSteps(),
-        this.setupNodeStep("${{ matrix.node-version }}"),
-        this.installDepsStep(project),
-        this.compileStep(project),
-        // Build the run-task.cjs bundle (normally a post-compile step) so the
-        // packaged tarball includes it - the eject test below depends on it.
-        this.runTaskStep(project, "Bundle task runner", "bundle:task-runner"),
-        this.runTaskStep(project, "Package", config.packageTask),
-        this.runTaskStep(
-          project,
-          `Run Node integration test`,
-          taskName(config.name),
-        ),
-        this.runTaskStep(
-          project,
-          "Run Windows task shell syntax tests",
-          "integ:windows-shell-syntax",
-        ),
-        // The eject test is run here, within the node matrix, rather than as a
-        // dedicated job (it only needs the node tarball from `package:js`).
-        this.runTaskStep(project, "Run eject integration test", "integ:eject"),
-      ],
-    };
-  }
-
-  /**
-   * Creates a Python matrix job
-   */
-  private createPythonMatrixJob(
-    project: NodeProject,
-    config: LanguageTestConfig,
-  ): Job {
-    return {
-      permissions: {
-        contents: JobPermission.READ,
-      },
-      runsOn: ["ubuntu-latest"],
-      strategy: {
-        failFast: false,
-        matrix: {
-          domain: {
-            "python-version": this.versions.python,
-          },
-        },
-      },
-      steps: [
-        ...this.createCommonSteps(),
-        this.setupPythonStep("${{ matrix.python-version }}"),
-        this.setupNodeStep("lts/*"),
-        this.installDepsStep(project),
-        this.compileStep(project),
-        this.runTaskStep(project, "Package", config.packageTask),
-        this.runTaskStep(
-          project,
-          "Run Python integration test",
-          taskName(config.name),
-        ),
-      ],
-    };
-  }
-
-  /**
-   * Creates a Go matrix job
-   */
-  private createGoMatrixJob(
-    project: NodeProject,
-    config: LanguageTestConfig,
-  ): Job {
-    return {
-      permissions: {
-        contents: JobPermission.READ,
-      },
-      runsOn: ["ubuntu-latest"],
-      strategy: {
-        failFast: false,
-        matrix: {
-          domain: {
-            "go-version": this.versions.go,
-          },
-        },
-      },
-      steps: [
-        ...this.createCommonSteps(),
-        this.setupGoStep("${{ matrix.go-version }}"),
-        this.setupNodeStep("lts/*"),
-        this.installDepsStep(project),
-        this.compileStep(project),
-        this.runTaskStep(project, "Package", config.packageTask),
-        this.runTaskStep(
-          project,
-          "Run Go integration test",
-          taskName(config.name),
-        ),
-      ],
-    };
-  }
-
-  /**
-   * Creates a Java matrix job with version and distribution
-   */
-  private createJavaMatrixJob(
-    project: NodeProject,
-    config: LanguageTestConfig,
-  ): Job {
-    const javaVersions: JavaVersion[] = this.versions.java;
-
-    return {
-      permissions: {
-        contents: JobPermission.READ,
-      },
-      runsOn: ["ubuntu-latest"],
-      strategy: {
-        failFast: false,
-        matrix: {
-          domain: {
-            "java-version": javaVersions.map((j) => j.version),
-          },
-          include: javaVersions.map((j) => ({
-            "java-version": j.version,
-            "java-distribution": j.distribution,
-          })),
-        },
-      },
-      steps: [
-        ...this.createCommonSteps(),
-        this.setupJavaStep(
-          "${{ matrix.java-version }}",
-          "${{ matrix.java-distribution }}",
-        ),
-        this.setupNodeStep("lts/*"),
-        this.installDepsStep(project),
-        this.compileStep(project),
-        this.runTaskStep(project, "Package", config.packageTask),
-        this.runTaskStep(
-          project,
-          "Run Java integration test",
-          taskName(config.name),
-        ),
-      ],
-    };
-  }
-}
-
-function taskName(lang: string): string {
-  return `integ:${lang}`;
 }
