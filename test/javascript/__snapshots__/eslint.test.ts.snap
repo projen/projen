@@ -175,6 +175,7 @@ exports[`eslint settings devdirs 1`] = `
         "devDependencies": [
           "**/foo/**",
           "**/bar/**",
+          ".projenrc.js",
         ],
         "optionalDependencies": false,
         "peerDependencies": true,
@@ -299,7 +300,9 @@ exports[`prettier snapshot 1`] = `
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [],
+        "devDependencies": [
+          ".projenrc.js",
+        ],
         "optionalDependencies": false,
         "peerDependencies": true,
       },

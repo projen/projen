@@ -399,6 +399,7 @@ test("eslint allows handlers to import dev dependencies", () => {
         "**/build-tools/**",
         "src/hello.lambda.ts",
         "src/world.lambda.ts",
+        ".projenrc.js",
       ],
       optionalDependencies: false,
       peerDependencies: true,
