@@ -37,9 +37,14 @@ export class Projenrc extends ProjenrcFile {
   public override preSynthesize(): void {
     super.preSynthesize();
 
+    this.project.addPackageIgnore(`/${this.filePath}`);
+
     const eslint = Eslint.of(this.project);
     eslint?.addLintPattern(this.filePath);
+    eslint?.allowDefaultProjectFiles(this.filePath);
+    eslint?.allowDevDeps(this.filePath);
     eslint?.addIgnorePattern(`!${this.filePath}`);
+
     eslint?.addOverride({
       files: [this.filePath],
       rules: {

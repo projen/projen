@@ -71,7 +71,7 @@ describe("project service", () => {
 
     const parserOptions =
       synthSnapshot(project)[".eslintrc.json"].parserOptions;
-    expect(parserOptions.projectService).toBe(true);
+    expect(parserOptions.projectService).toBeDefined();
     expect(parserOptions.project).toBeUndefined();
   });
 
@@ -90,8 +90,11 @@ describe("project service", () => {
 
     const parserOptions =
       synthSnapshot(project)[".eslintrc.json"].parserOptions;
-    expect(parserOptions.projectService).toStrictEqual({
-      allowDefaultProject: [".projenrc.ts", "scripts/run.ts"],
+    expect(parserOptions.projectService).toMatchObject({
+      allowDefaultProject: expect.arrayContaining([
+        ".projenrc.ts",
+        "scripts/run.ts",
+      ]),
       defaultProject: "./tsconfig.json",
     });
   });
