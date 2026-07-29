@@ -34,7 +34,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -74,14 +75,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -98,6 +102,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -125,14 +130,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -150,14 +158,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -181,19 +192,23 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Generate CodeArtifact Token
+        id: generate_codeartifact_token
         env:
           AWS_ACCESS_KEY_ID: \${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: echo "TWINE_PASSWORD=$(aws codeartifact get-authorization-token --domain my-domain --domain-owner 111122223333 --region us-west-2 --query authorizationToken --output text)" >> $GITHUB_ENV
       - name: Release
+        id: release
         env:
           TWINE_REPOSITORY_URL: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/
           TWINE_USERNAME: aws
@@ -461,7 +476,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -501,14 +517,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -525,6 +544,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -552,14 +572,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -577,14 +600,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -608,19 +634,23 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Generate CodeArtifact Token
+        id: generate_codeartifact_token
         env:
           AWS_ACCESS_KEY_ID: \${{ secrets.OTHER_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: \${{ secrets.OTHER_AWS_SECRET_ACCESS_KEY }}
         run: echo "TWINE_PASSWORD=$(aws codeartifact get-authorization-token --domain my-domain --domain-owner 111122223333 --region us-west-2 --query authorizationToken --output text)" >> $GITHUB_ENV
       - name: Release
+        id: release
         env:
           TWINE_REPOSITORY_URL: https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/
           TWINE_USERNAME: aws
@@ -888,7 +918,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -928,14 +959,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -952,6 +986,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -979,14 +1014,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -1005,19 +1043,23 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Configure AWS Credentials via GitHub OIDC Provider
+        id: configure_aws_credentials_via_github_oidc_provider
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: role-arn
           aws-region: us-west-2
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -1040,21 +1082,26 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Configure AWS Credentials via GitHub OIDC Provider
+        id: configure_aws_credentials_via_github_oidc_provider
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: role-arn
           aws-region: us-west-2
       - name: Generate CodeArtifact Token
+        id: generate_codeartifact_token
         run: echo "TWINE_PASSWORD=$(aws codeartifact get-authorization-token --domain my-domain --domain-owner 111122223333 --region us-west-2 --query authorizationToken --output text)" >> $GITHUB_ENV
       - name: Release
+        id: release
         env:
           TWINE_REPOSITORY_URL: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/pypi/my_repo/
           TWINE_USERNAME: aws
@@ -1318,7 +1365,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -1358,14 +1406,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -1382,6 +1433,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -1408,14 +1460,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -1433,14 +1488,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -1696,7 +1754,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -1736,14 +1795,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:10.x
+        id: release_10_x
         run: projen release:10.x
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -1760,6 +1822,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -1784,14 +1847,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -1827,14 +1893,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:2.x
+        id: release_2_x
         run: projen release:2.x
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -1851,6 +1920,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -1875,14 +1945,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -1918,14 +1991,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -1942,6 +2018,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -1966,14 +2043,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -2297,14 +2377,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:foo
+        id: release_foo
         run: projen release:foo
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -2321,6 +2404,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -2347,14 +2431,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -2375,14 +2462,17 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -2415,7 +2505,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2455,14 +2546,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -2479,6 +2573,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -2505,14 +2600,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -2533,14 +2631,17 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -2850,7 +2951,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2891,14 +2993,17 @@ jobs:
       FOO: VALUE1
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -2915,6 +3020,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -2939,14 +3045,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -3174,14 +3283,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -3198,6 +3310,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -3225,14 +3338,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -3243,6 +3359,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: \${{ failure() }}
         env:
           GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -3264,14 +3381,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
@@ -3284,6 +3404,7 @@ jobs:
         run: echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT
         shell: bash
       - name: Create Issue
+        id: create_issue
         if: \${{ failure() }}
         env:
           GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -3327,7 +3448,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3367,14 +3489,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -3391,6 +3516,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -3419,14 +3545,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -3445,14 +3574,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
@@ -3477,14 +3609,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           MAVEN_SERVER_ID: github
           MAVEN_REPOSITORY_URL: maven.pkg.github.com
@@ -3510,14 +3645,17 @@ jobs:
           dotnet-version: 6.x
           cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NUGET_API_KEY: \${{ secrets.GITHUB_TOKEN }}
           NUGET_SERVER: nuget.pkg.github.com
@@ -3799,14 +3937,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -3823,6 +3964,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -3847,14 +3989,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -4228,7 +4373,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -4268,14 +4414,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -4292,6 +4441,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -4316,14 +4466,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -4549,14 +4702,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -4573,6 +4729,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -4597,14 +4754,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -4852,14 +5012,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -4876,6 +5039,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -4906,14 +5070,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -4935,14 +5102,17 @@ jobs:
           go-version: ^1.18.0
           cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           GIT_USER_NAME: github-actions[bot]
           GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
@@ -4966,14 +5136,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           MAVEN_SERVER_ID: central-ossrh
           MAVEN_GPG_PRIVATE_KEY: \${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
@@ -4996,14 +5169,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NPM_DIST_TAG: latest
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
@@ -5026,14 +5202,17 @@ jobs:
           dotnet-version: 6.x
           cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           NUGET_API_KEY: \${{ secrets.NUGET_API_KEY }}
           PUBLIB_DRYRUN: \${{ inputs.dry_run }}
@@ -5054,14 +5233,17 @@ jobs:
         with:
           python-version: 3.x
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -5360,7 +5542,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -5400,14 +5583,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:firefox
+        id: release_firefox
         run: projen release:firefox
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -5424,6 +5610,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -5448,14 +5635,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -5491,14 +5681,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:safari
+        id: release_safari
         run: projen release:safari
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -5515,6 +5708,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -5539,14 +5733,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -5822,7 +6019,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -5862,14 +6060,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:3.x
+        id: release_3_x
         run: projen release:3.x
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -5886,6 +6087,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -5910,14 +6112,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -5953,14 +6158,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:next
+        id: release_next
         run: projen release:next
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -5977,6 +6185,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -6001,14 +6210,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -6044,14 +6256,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -6068,6 +6283,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -6092,14 +6308,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -6414,7 +6633,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -6454,14 +6674,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:10.x
+        id: release_10_x
         run: projen release:10.x
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -6478,6 +6701,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -6502,14 +6726,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -6739,7 +6966,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: amannn/action-semantic-pull-request@v6
+      - id: auto_5940c89f
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -6779,14 +7007,17 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release:10.x
+        id: release_10_x
         run: projen release:10.x
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -6803,6 +7034,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -6827,14 +7059,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -7065,14 +7300,17 @@ jobs:
         working-directory: ./packages/subproject
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: release
+        id: release
         run: projen release
       - name: Check if version has already been tagged
         id: check_tag_exists
@@ -7089,6 +7327,7 @@ jobs:
           cat $GITHUB_OUTPUT
         shell: bash
       - name: Backup artifact permissions
+        id: backup_artifact_permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
         continue-on-error: true
@@ -7113,14 +7352,17 @@ jobs:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
+        id: download_build_artifacts
         uses: actions/download-artifact@v8
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
       - name: Restore build artifact permissions
+        id: restore_build_artifact_permissions
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Release
+        id: release
         if: \${{ !inputs.dry_run }}
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}

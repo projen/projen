@@ -319,7 +319,7 @@ describe("step mutation API", () => {
         { name: "Checkout", uses: "actions/checkout@v6" },
         { id: "install", name: "Install", run: "npm ci" },
       ]);
-      wf.replaceStep("build", "Checkout", {
+      wf.replaceStep("build", "checkout", {
         id: "checkout",
         name: "Checkout",
         uses: "actions/checkout@v6",

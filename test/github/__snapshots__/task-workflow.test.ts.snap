@@ -12,12 +12,15 @@ jobs:
     permissions: {}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: gh-workflow-test
+        id: gh-workflow-test
         run: projen gh-workflow-test
 "
 `;
@@ -34,14 +37,18 @@ jobs:
     permissions: {}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: gh-workflow-test
+        id: gh-workflow-test
         run: projen gh-workflow-test
       - name: Upload artifact
+        id: upload_artifact
         if: always()
         uses: actions/upload-artifact@v7
         with:

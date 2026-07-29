@@ -14,12 +14,16 @@ jobs:
     permissions: {}
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v6
       - name: Set git identity
+        id: set_git_identity
         run: |-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Install dependencies
+        id: install_dependencies
         run: node ./projen.js install:ci
       - name: check-licenses
+        id: check-licenses
         run: node ./projen.js check-licenses
