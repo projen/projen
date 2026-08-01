@@ -1556,6 +1556,8 @@ export enum PnpmWorkspaceYamlSchemaSavePrefix {
   VALUE_CARAT = "^",
   /** ~ */
   VALUE_TILDE = "~",
+  /** = */
+  VALUE_EQUALS = "=",
 }
 
 /**

@@ -21967,6 +21967,7 @@ Configure how versions of packages installed to a package.json file get prefixed
 | --- | --- |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix.VALUE_CARAT">VALUE_CARAT</a></code> | ^. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix.VALUE_TILDE">VALUE_TILDE</a></code> | ~. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix.VALUE_EQUALS">VALUE_EQUALS</a></code> | =. |
 
 ---
 
@@ -21980,6 +21981,13 @@ Configure how versions of packages installed to a package.json file get prefixed
 ##### `VALUE_TILDE` <a name="VALUE_TILDE" id="projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix.VALUE_TILDE"></a>
 
 ~.
+
+---
+
+
+##### `VALUE_EQUALS` <a name="VALUE_EQUALS" id="projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix.VALUE_EQUALS"></a>
+
+=.
 
 ---
 
