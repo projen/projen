@@ -12409,6 +12409,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowNonAppliedPatches">allowNonAppliedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowUnusedPatches">allowUnusedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.audit">audit</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.auditConfig">auditConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditConfig">PnpmWorkspaceYamlSchemaAuditConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
@@ -12548,6 +12549,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyIgnoreAfter">trustPolicyIgnoreAfter</a></code> | <code>number</code> | Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.unsafePerm">unsafePerm</a></code> | <code>boolean</code> | Set to true to enable UID/GID switching when running package scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.update">update</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.updateConfig">updateConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdateConfig">PnpmWorkspaceYamlSchemaUpdateConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.updateNotifier">updateNotifier</a></code> | <code>boolean</code> | When true, pnpm will check for updates to the installed packages and notify the user. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useBetaCli">useBetaCli</a></code> | <code>boolean</code> | Experimental option that enables beta features of the CLI. |
@@ -12611,6 +12613,16 @@ public readonly allowUnusedPatches: boolean;
 When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied.
 
 (Previously named "allowNonAppliedPatches")
+
+---
+
+##### `audit`<sup>Optional</sup> <a name="audit" id="projen.javascript.PnpmWorkspaceYamlOptions.property.audit"></a>
+
+```typescript
+public readonly audit: PnpmWorkspaceYamlSchemaAudit;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a>
 
 ---
 
@@ -14331,6 +14343,16 @@ If set explicitly to false, then installing as a non-root user will fail.
 
 ---
 
+##### `update`<sup>Optional</sup> <a name="update" id="projen.javascript.PnpmWorkspaceYamlOptions.property.update"></a>
+
+```typescript
+public readonly update: PnpmWorkspaceYamlSchemaUpdate;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a>
+
+---
+
 ##### `updateConfig`<sup>Optional</sup> <a name="updateConfig" id="projen.javascript.PnpmWorkspaceYamlOptions.property.updateConfig"></a>
 
 ```typescript
@@ -14485,6 +14507,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowNonAppliedPatches">allowNonAppliedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowUnusedPatches">allowUnusedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.audit">audit</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.auditConfig">auditConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditConfig">PnpmWorkspaceYamlSchemaAuditConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
@@ -14624,6 +14647,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyIgnoreAfter">trustPolicyIgnoreAfter</a></code> | <code>number</code> | Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.unsafePerm">unsafePerm</a></code> | <code>boolean</code> | Set to true to enable UID/GID switching when running package scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.update">update</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.updateConfig">updateConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdateConfig">PnpmWorkspaceYamlSchemaUpdateConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.updateNotifier">updateNotifier</a></code> | <code>boolean</code> | When true, pnpm will check for updates to the installed packages and notify the user. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useBetaCli">useBetaCli</a></code> | <code>boolean</code> | Experimental option that enables beta features of the CLI. |
@@ -14687,6 +14711,16 @@ public readonly allowUnusedPatches: boolean;
 When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied.
 
 (Previously named "allowNonAppliedPatches")
+
+---
+
+##### `audit`<sup>Optional</sup> <a name="audit" id="projen.javascript.PnpmWorkspaceYamlSchema.property.audit"></a>
+
+```typescript
+public readonly audit: PnpmWorkspaceYamlSchemaAudit;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a>
 
 ---
 
@@ -16407,6 +16441,16 @@ If set explicitly to false, then installing as a non-root user will fail.
 
 ---
 
+##### `update`<sup>Optional</sup> <a name="update" id="projen.javascript.PnpmWorkspaceYamlSchema.property.update"></a>
+
+```typescript
+public readonly update: PnpmWorkspaceYamlSchemaUpdate;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a>
+
+---
+
 ##### `updateConfig`<sup>Optional</sup> <a name="updateConfig" id="projen.javascript.PnpmWorkspaceYamlSchema.property.updateConfig"></a>
 
 ```typescript
@@ -16538,6 +16582,49 @@ public readonly workspaceConcurrency: number;
 Set the maximum number of tasks to run simultaneously.
 
 For unlimited concurrency use Infinity. You can set the value to <= 0 and it will use amount of CPU cores of the host minus the absolute value of the provided number as: max(1, (number of cores) - abs(workspaceConcurrency)).
+
+---
+
+### PnpmWorkspaceYamlSchemaAudit <a name="PnpmWorkspaceYamlSchemaAudit" id="projen.javascript.PnpmWorkspaceYamlSchemaAudit"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaAudit.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaAudit: javascript.PnpmWorkspaceYamlSchemaAudit = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.ignore">ignore</a></code> | <code>string[]</code> | A list of GHSA codes that will be ignored by pnpm audit. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.level">level</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Only print advisories with severity greater than or equal to this level. |
+
+---
+
+##### `ignore`<sup>Optional</sup> <a name="ignore" id="projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.ignore"></a>
+
+```typescript
+public readonly ignore: string[];
+```
+
+- *Type:* string[]
+
+A list of GHSA codes that will be ignored by pnpm audit.
+
+---
+
+##### `level`<sup>Optional</sup> <a name="level" id="projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.level"></a>
+
+```typescript
+public readonly level: PnpmWorkspaceYamlSchemaAuditLevel;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a>
+
+Only print advisories with severity greater than or equal to this level.
 
 ---
 
@@ -16719,6 +16806,75 @@ public readonly os: string[];
 ```
 
 - *Type:* string[]
+
+---
+
+### PnpmWorkspaceYamlSchemaUpdate <a name="PnpmWorkspaceYamlSchemaUpdate" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaUpdate: javascript.PnpmWorkspaceYamlSchemaUpdate = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.changeset">changeset</a></code> | <code>boolean</code> | When true, pnpm update writes a change intent after updating workspace manifests. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.githubActions">githubActions</a></code> | <code>boolean</code> | When true, pnpm update and pnpm outdated also check the GitHub Actions referenced by the repository's workflow files. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.githubActionsServer">githubActionsServer</a></code> | <code>string</code> | The base URL of the GitHub server that hosts the repositories of the GitHub Actions referenced by the workflow files. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.ignoreDeps">ignoreDeps</a></code> | <code>string[]</code> | A list of dependency name patterns that pnpm update and pnpm outdated should skip. |
+
+---
+
+##### `changeset`<sup>Optional</sup> <a name="changeset" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.changeset"></a>
+
+```typescript
+public readonly changeset: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm update writes a change intent after updating workspace manifests.
+
+---
+
+##### `githubActions`<sup>Optional</sup> <a name="githubActions" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.githubActions"></a>
+
+```typescript
+public readonly githubActions: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm update and pnpm outdated also check the GitHub Actions referenced by the repository's workflow files.
+
+---
+
+##### `githubActionsServer`<sup>Optional</sup> <a name="githubActionsServer" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.githubActionsServer"></a>
+
+```typescript
+public readonly githubActionsServer: string;
+```
+
+- *Type:* string
+
+The base URL of the GitHub server that hosts the repositories of the GitHub Actions referenced by the workflow files.
+
+---
+
+##### `ignoreDeps`<sup>Optional</sup> <a name="ignoreDeps" id="projen.javascript.PnpmWorkspaceYamlSchemaUpdate.property.ignoreDeps"></a>
+
+```typescript
+public readonly ignoreDeps: string[];
+```
+
+- *Type:* string[]
+
+A list of dependency name patterns that pnpm update and pnpm outdated should skip.
 
 ---
 
@@ -21512,9 +21668,7 @@ Package can only be accessed with credentials.
 
 ### PnpmWorkspaceYamlSchemaAuditLevel <a name="PnpmWorkspaceYamlSchemaAuditLevel" id="projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel"></a>
 
-Controls the level of issues reported by `pnpm audit`.
-
-When set to 'low', all vulnerabilities are reported. When set to 'moderate', 'high', or 'critical', only vulnerabilities with that severity or higher are reported.
+Only print advisories with severity greater than or equal to this level.
 
 #### Members <a name="Members" id="Members"></a>
 
