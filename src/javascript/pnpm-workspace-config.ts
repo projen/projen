@@ -134,6 +134,11 @@ export interface PnpmWorkspaceYamlSchema {
   readonly ignorePatchFailures?: boolean;
 
   /**
+   * @schema PnpmWorkspaceYamlSchema#update
+   */
+  readonly update?: PnpmWorkspaceYamlSchemaUpdate;
+
+  /**
    * @schema PnpmWorkspaceYamlSchema#updateConfig
    */
   readonly updateConfig?: PnpmWorkspaceYamlSchemaUpdateConfig;
@@ -144,6 +149,11 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#configDependencies
    */
   readonly configDependencies?: any;
+
+  /**
+   * @schema PnpmWorkspaceYamlSchema#audit
+   */
+  readonly audit?: PnpmWorkspaceYamlSchemaAudit;
 
   /**
    * @schema PnpmWorkspaceYamlSchema#auditConfig
@@ -1108,8 +1118,10 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'allowUnusedPatches': obj.allowUnusedPatches,
     'allowNonAppliedPatches': obj.allowNonAppliedPatches,
     'ignorePatchFailures': obj.ignorePatchFailures,
+    'update': toJson_PnpmWorkspaceYamlSchemaUpdate(obj.update),
     'updateConfig': toJson_PnpmWorkspaceYamlSchemaUpdateConfig(obj.updateConfig),
     'configDependencies': obj.configDependencies,
+    'audit': toJson_PnpmWorkspaceYamlSchemaAudit(obj.audit),
     'auditConfig': toJson_PnpmWorkspaceYamlSchemaAuditConfig(obj.auditConfig),
     'requiredScripts': obj.requiredScripts?.map(y => y),
     'supportedArchitectures': toJson_PnpmWorkspaceYamlSchemaSupportedArchitectures(obj.supportedArchitectures),
@@ -1308,6 +1320,57 @@ export function toJson_PnpmWorkspaceYamlSchemaPeerDependencyRules(obj: PnpmWorks
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
+ * @schema PnpmWorkspaceYamlSchemaUpdate
+ */
+export interface PnpmWorkspaceYamlSchemaUpdate {
+  /**
+   * A list of dependency name patterns that pnpm update and pnpm outdated should skip.
+   *
+   * @schema PnpmWorkspaceYamlSchemaUpdate#ignoreDeps
+   */
+  readonly ignoreDeps?: string[];
+
+  /**
+   * When true, pnpm update writes a change intent after updating workspace manifests.
+   *
+   * @schema PnpmWorkspaceYamlSchemaUpdate#changeset
+   */
+  readonly changeset?: boolean;
+
+  /**
+   * When true, pnpm update and pnpm outdated also check the GitHub Actions referenced by the repository's workflow files.
+   *
+   * @schema PnpmWorkspaceYamlSchemaUpdate#githubActions
+   */
+  readonly githubActions?: boolean;
+
+  /**
+   * The base URL of the GitHub server that hosts the repositories of the GitHub Actions referenced by the workflow files.
+   *
+   * @schema PnpmWorkspaceYamlSchemaUpdate#githubActionsServer
+   */
+  readonly githubActionsServer?: string;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaUpdate' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaUpdate(obj: PnpmWorkspaceYamlSchemaUpdate | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'ignoreDeps': obj.ignoreDeps?.map(y => y),
+    'changeset': obj.changeset,
+    'githubActions': obj.githubActions,
+    'githubActionsServer': obj.githubActionsServer,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * @schema PnpmWorkspaceYamlSchemaUpdateConfig
  */
 export interface PnpmWorkspaceYamlSchemaUpdateConfig {
@@ -1328,6 +1391,41 @@ export function toJson_PnpmWorkspaceYamlSchemaUpdateConfig(obj: PnpmWorkspaceYam
   if (obj === undefined) { return undefined; }
   const result = {
     'ignoreDependencies': obj.ignoreDependencies?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema PnpmWorkspaceYamlSchemaAudit
+ */
+export interface PnpmWorkspaceYamlSchemaAudit {
+  /**
+   * Only print advisories with severity greater than or equal to this level.
+   *
+   * @schema PnpmWorkspaceYamlSchemaAudit#level
+   */
+  readonly level?: PnpmWorkspaceYamlSchemaAuditLevel;
+
+  /**
+   * A list of GHSA codes that will be ignored by pnpm audit.
+   *
+   * @schema PnpmWorkspaceYamlSchemaAudit#ignore
+   */
+  readonly ignore?: string[];
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaAudit' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaAudit(obj: PnpmWorkspaceYamlSchemaAudit | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'level': obj.level,
+    'ignore': obj.ignore?.map(y => y),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1587,7 +1685,7 @@ export enum PnpmWorkspaceYamlSchemaTrustPolicy {
 }
 
 /**
- * Controls the level of issues reported by `pnpm audit`. When set to 'low', all vulnerabilities are reported. When set to 'moderate', 'high', or 'critical', only vulnerabilities with that severity or higher are reported.
+ * Only print advisories with severity greater than or equal to this level.
  *
  * @schema PnpmWorkspaceYamlSchemaAuditLevel
  */
