@@ -12557,6 +12557,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.versioning">versioning</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a></code> | Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
@@ -14435,6 +14436,18 @@ By default, if a file in the store has been modified, the content of this file i
 
 ---
 
+##### `versioning`<sup>Optional</sup> <a name="versioning" id="projen.javascript.PnpmWorkspaceYamlOptions.property.versioning"></a>
+
+```typescript
+public readonly versioning: PnpmWorkspaceYamlSchemaVersioning;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a>
+
+Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
+
+---
+
 ##### `virtualStoreDir`<sup>Optional</sup> <a name="virtualStoreDir" id="projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDir"></a>
 
 ```typescript
@@ -14655,6 +14668,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.versioning">versioning</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a></code> | Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
@@ -16533,6 +16547,18 @@ By default, if a file in the store has been modified, the content of this file i
 
 ---
 
+##### `versioning`<sup>Optional</sup> <a name="versioning" id="projen.javascript.PnpmWorkspaceYamlSchema.property.versioning"></a>
+
+```typescript
+public readonly versioning: PnpmWorkspaceYamlSchemaVersioning;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a>
+
+Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
+
+---
+
 ##### `virtualStoreDir`<sup>Optional</sup> <a name="virtualStoreDir" id="projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDir"></a>
 
 ```typescript
@@ -16905,6 +16931,184 @@ public readonly ignoreDependencies: string[];
 - *Type:* string[]
 
 A list of packages that should be ignored when running "pnpm outdated" or "pnpm update --latest".
+
+---
+
+### PnpmWorkspaceYamlSchemaVersioning <a name="PnpmWorkspaceYamlSchemaVersioning" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning"></a>
+
+Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaVersioning: javascript.PnpmWorkspaceYamlSchemaVersioning = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.changelog">changelog</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog">PnpmWorkspaceYamlSchemaVersioningChangelog</a></code> | Controls where release changelog content is stored. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.epics">epics</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics">PnpmWorkspaceYamlSchemaVersioningEpics</a>[]</code> | Ties member projects to a lead project and constrains their major versions to the lead's major-version band. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.fixed">fixed</a></code> | <code>string[][]</code> | Groups of workspace projects that always release together at one shared version. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.ignore">ignore</a></code> | <code>string[]</code> | Workspace projects permanently excluded from versioning and dependent propagation. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.lanes">lanes</a></code> | <code>{[ key: string ]: string}</code> | Maps a workspace project to a release lane. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.maxBump">maxBump</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump">PnpmWorkspaceYamlSchemaVersioningMaxBump</a></code> | Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution. |
+
+---
+
+##### `changelog`<sup>Optional</sup> <a name="changelog" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.changelog"></a>
+
+```typescript
+public readonly changelog: PnpmWorkspaceYamlSchemaVersioningChangelog;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog">PnpmWorkspaceYamlSchemaVersioningChangelog</a>
+
+Controls where release changelog content is stored.
+
+---
+
+##### `epics`<sup>Optional</sup> <a name="epics" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.epics"></a>
+
+```typescript
+public readonly epics: PnpmWorkspaceYamlSchemaVersioningEpics[];
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics">PnpmWorkspaceYamlSchemaVersioningEpics</a>[]
+
+Ties member projects to a lead project and constrains their major versions to the lead's major-version band.
+
+---
+
+##### `fixed`<sup>Optional</sup> <a name="fixed" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.fixed"></a>
+
+```typescript
+public readonly fixed: string[][];
+```
+
+- *Type:* string[][]
+
+Groups of workspace projects that always release together at one shared version.
+
+The shared version is the highest current version in the group, bumped by the largest bump any member needs.
+
+---
+
+##### `ignore`<sup>Optional</sup> <a name="ignore" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.ignore"></a>
+
+```typescript
+public readonly ignore: string[];
+```
+
+- *Type:* string[]
+
+Workspace projects permanently excluded from versioning and dependent propagation.
+
+---
+
+##### `lanes`<sup>Optional</sup> <a name="lanes" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.lanes"></a>
+
+```typescript
+public readonly lanes: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Maps a workspace project to a release lane.
+
+Unlisted projects are on the reserved `main` lane and release stable versions.
+
+---
+
+##### `maxBump`<sup>Optional</sup> <a name="maxBump" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.maxBump"></a>
+
+```typescript
+public readonly maxBump: PnpmWorkspaceYamlSchemaVersioningMaxBump;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump">PnpmWorkspaceYamlSchemaVersioningMaxBump</a>
+
+Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution.
+
+---
+
+### PnpmWorkspaceYamlSchemaVersioningChangelog <a name="PnpmWorkspaceYamlSchemaVersioningChangelog" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog"></a>
+
+Controls where release changelog content is stored.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaVersioningChangelog: javascript.PnpmWorkspaceYamlSchemaVersioningChangelog = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog.property.storage">storage</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage">PnpmWorkspaceYamlSchemaVersioningChangelogStorage</a></code> | Changelog storage mode. |
+
+---
+
+##### `storage`<sup>Optional</sup> <a name="storage" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelog.property.storage"></a>
+
+```typescript
+public readonly storage: PnpmWorkspaceYamlSchemaVersioningChangelogStorage;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage">PnpmWorkspaceYamlSchemaVersioningChangelogStorage</a>
+
+Changelog storage mode.
+
+`registry` composes changelog entries at publish time, while `repository` commits CHANGELOG.md files in packages.
+
+---
+
+### PnpmWorkspaceYamlSchemaVersioningEpics <a name="PnpmWorkspaceYamlSchemaVersioningEpics" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaVersioningEpics: javascript.PnpmWorkspaceYamlSchemaVersioningEpics = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics.property.lead">lead</a></code> | <code>string</code> | Lead workspace project name or a `./`-prefixed workspace-relative directory. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics.property.packages">packages</a></code> | <code>string[]</code> | Project selectors matched in order, supporting name globs, `./`-prefixed directory globs, and `!`-prefixed negations. |
+
+---
+
+##### `lead`<sup>Required</sup> <a name="lead" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics.property.lead"></a>
+
+```typescript
+public readonly lead: string;
+```
+
+- *Type:* string
+
+Lead workspace project name or a `./`-prefixed workspace-relative directory.
+
+---
+
+##### `packages`<sup>Required</sup> <a name="packages" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics.property.packages"></a>
+
+```typescript
+public readonly packages: string[];
+```
+
+- *Type:* string[]
+
+Project selectors matched in order, supporting name globs, `./`-prefixed directory globs, and `!`-prefixed negations.
 
 ---
 
@@ -22171,6 +22375,70 @@ off.
 ##### `NO_HYPHEN_DOWNGRADE` <a name="NO_HYPHEN_DOWNGRADE" id="projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy.NO_HYPHEN_DOWNGRADE"></a>
 
 no-downgrade.
+
+---
+
+
+### PnpmWorkspaceYamlSchemaVersioningChangelogStorage <a name="PnpmWorkspaceYamlSchemaVersioningChangelogStorage" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage"></a>
+
+Changelog storage mode.
+
+`registry` composes changelog entries at publish time, while `repository` commits CHANGELOG.md files in packages.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage.REGISTRY">REGISTRY</a></code> | registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage.REPOSITORY">REPOSITORY</a></code> | repository. |
+
+---
+
+##### `REGISTRY` <a name="REGISTRY" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage.REGISTRY"></a>
+
+registry.
+
+---
+
+
+##### `REPOSITORY` <a name="REPOSITORY" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningChangelogStorage.REPOSITORY"></a>
+
+repository.
+
+---
+
+
+### PnpmWorkspaceYamlSchemaVersioningMaxBump <a name="PnpmWorkspaceYamlSchemaVersioningMaxBump" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump"></a>
+
+Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.PATCH">PATCH</a></code> | patch. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.MINOR">MINOR</a></code> | minor. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.MAJOR">MAJOR</a></code> | major. |
+
+---
+
+##### `PATCH` <a name="PATCH" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.PATCH"></a>
+
+patch.
+
+---
+
+
+##### `MINOR` <a name="MINOR" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.MINOR"></a>
+
+minor.
+
+---
+
+
+##### `MAJOR` <a name="MAJOR" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.MAJOR"></a>
+
+major.
 
 ---
 
