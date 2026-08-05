@@ -888,6 +888,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly publishBranch?: string;
 
   /**
+   * Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
+   *
+   * @schema PnpmWorkspaceYamlSchema#versioning
+   */
+  readonly versioning?: PnpmWorkspaceYamlSchemaVersioning;
+
+  /**
    * When publishing from a supported cloud CI/CD system, the package will be publicly linked to where it was built and published from.
    *
    * @schema PnpmWorkspaceYamlSchema#provenance
@@ -1227,6 +1234,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'gitChecks': obj.gitChecks,
     'embedReadme': obj.embedReadme,
     'publishBranch': obj.publishBranch,
+    'versioning': toJson_PnpmWorkspaceYamlSchemaVersioning(obj.versioning),
     'provenance': obj.provenance,
     'pnpmfile': obj.pnpmfile,
     'globalPnpmfile': obj.globalPnpmfile,
@@ -1673,6 +1681,75 @@ export enum PnpmWorkspaceYamlSchemaResolutionMode {
 }
 
 /**
+ * Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVersioning
+ */
+export interface PnpmWorkspaceYamlSchemaVersioning {
+  /**
+   * Groups of workspace projects that always release together at one shared version. The shared version is the highest current version in the group, bumped by the largest bump any member needs.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#fixed
+   */
+  readonly fixed?: string[][];
+
+  /**
+   * Workspace projects permanently excluded from versioning and dependent propagation.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#ignore
+   */
+  readonly ignore?: string[];
+
+  /**
+   * Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#maxBump
+   */
+  readonly maxBump?: PnpmWorkspaceYamlSchemaVersioningMaxBump;
+
+  /**
+   * Maps a workspace project to a release lane. Unlisted projects are on the reserved `main` lane and release stable versions.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#lanes
+   */
+  readonly lanes?: { [key: string]: string };
+
+  /**
+   * Ties member projects to a lead project and constrains their major versions to the lead's major-version band.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#epics
+   */
+  readonly epics?: PnpmWorkspaceYamlSchemaVersioningEpics[];
+
+  /**
+   * Controls where release changelog content is stored.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#changelog
+   */
+  readonly changelog?: PnpmWorkspaceYamlSchemaVersioningChangelog;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaVersioning' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaVersioning(obj: PnpmWorkspaceYamlSchemaVersioning | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'fixed': obj.fixed?.map(y => y?.map(y => y)),
+    'ignore': obj.ignore?.map(y => y),
+    'maxBump': obj.maxBump,
+    'lanes': ((obj.lanes) === undefined) ? undefined : (Object.entries(obj.lanes).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'epics': obj.epics?.map(y => toJson_PnpmWorkspaceYamlSchemaVersioningEpics(y)),
+    'changelog': toJson_PnpmWorkspaceYamlSchemaVersioningChangelog(obj.changelog),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
  * When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases. For example, if a package was previously published by a trusted publisher but now only has provenance or no trust evidence, installation will fail. This helps prevent installing potentially compromised versions.
  *
  * @schema PnpmWorkspaceYamlSchemaTrustPolicy
@@ -1744,4 +1821,94 @@ export enum PnpmWorkspaceYamlSchemaHoistingLimits {
   WORKSPACES = "workspaces",
   /** dependencies */
   DEPENDENCIES = "dependencies",
+}
+
+/**
+ * Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVersioningMaxBump
+ */
+export enum PnpmWorkspaceYamlSchemaVersioningMaxBump {
+  /** patch */
+  PATCH = "patch",
+  /** minor */
+  MINOR = "minor",
+  /** major */
+  MAJOR = "major",
+}
+
+/**
+ * @schema PnpmWorkspaceYamlSchemaVersioningEpics
+ */
+export interface PnpmWorkspaceYamlSchemaVersioningEpics {
+  /**
+   * Lead workspace project name or a `./`-prefixed workspace-relative directory.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioningEpics#lead
+   */
+  readonly lead: string;
+
+  /**
+   * Project selectors matched in order, supporting name globs, `./`-prefixed directory globs, and `!`-prefixed negations.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioningEpics#packages
+   */
+  readonly packages: string[];
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaVersioningEpics' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaVersioningEpics(obj: PnpmWorkspaceYamlSchemaVersioningEpics | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'lead': obj.lead,
+    'packages': obj.packages?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Controls where release changelog content is stored.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVersioningChangelog
+ */
+export interface PnpmWorkspaceYamlSchemaVersioningChangelog {
+  /**
+   * Changelog storage mode. `registry` composes changelog entries at publish time, while `repository` commits CHANGELOG.md files in packages.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioningChangelog#storage
+   */
+  readonly storage?: PnpmWorkspaceYamlSchemaVersioningChangelogStorage;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaVersioningChangelog' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaVersioningChangelog(obj: PnpmWorkspaceYamlSchemaVersioningChangelog | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'storage': obj.storage,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Changelog storage mode. `registry` composes changelog entries at publish time, while `repository` commits CHANGELOG.md files in packages.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVersioningChangelogStorage
+ */
+export enum PnpmWorkspaceYamlSchemaVersioningChangelogStorage {
+  /** registry */
+  REGISTRY = "registry",
+  /** repository */
+  REPOSITORY = "repository",
 }
