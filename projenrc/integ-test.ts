@@ -351,13 +351,18 @@ export class IntegrationTests extends Component {
       },
       steps: [
         ...this.createCommonSteps(),
-        this.setupNodeStep("${{ matrix.node-version }}"),
+        // Build and package with a modern Node
+        // The matrix version is only the *consumer* runtime - installed right before the integ test below.
+        this.setupNodeStep("lts/*"),
         this.installDepsStep(project),
         this.compileStep(project),
         // Build the run-task.cjs bundle (normally a post-compile step) so the
         // packaged tarball includes it - the eject test below depends on it.
         this.runTaskStep(project, "Bundle task runner", "bundle:task-runner"),
         this.runTaskStep(project, "Package", config.packageTask),
+        // Switch to the matrix Node version: everything from here on runs the
+        // *packaged* projen the way a user would, on the runtime under test.
+        this.setupNodeStep("${{ matrix.node-version }}"),
         this.runTaskStep(
           project,
           `Run Node integration test`,

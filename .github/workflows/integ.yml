@@ -19,7 +19,7 @@ jobs:
       - id: auto_4ca7ae43
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: lts/*
           package-manager-cache: false
       - name: Install dependencies
         id: install_dependencies
@@ -33,6 +33,11 @@ jobs:
       - name: Package
         id: package
         run: node ./projen.js package:js
+      - id: auto_4ca7ae43_2
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
       - name: Run Node integration test
         id: run_node_integration_test
         run: node ./projen.js integ:node
@@ -46,8 +51,12 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
+          - 18.18.0
+          - 20.9.0
           - lts/-2
+          - 22.0.0
           - lts/-1
+          - 24.0.0
           - lts/*
         os:
           - ubuntu-latest
