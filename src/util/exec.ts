@@ -1,11 +1,8 @@
-// Must come first: polyfills `process.getBuiltinModule` for Node < 22.3 /
-// < 20.16, which dax needs to resolve any command (see projen#4846).
-import "./node-compat";
 import * as child_process from "child_process";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { $ } from "dax";
+import { $ } from "./dax";
 import * as logging from "../logging";
 
 export const MAX_BUFFER = 10 * 1024 * 1024;

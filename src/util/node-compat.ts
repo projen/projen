@@ -9,8 +9,8 @@
  * regardless of PATH (https://github.com/projen/projen/issues/4846).
  *
  * projen declares `engines: node >= 16`, so polyfill the API with `require()`
- * on runtimes that lack it. dax reads it lazily on first command resolution,
- * so installing the polyfill at module load (before any task runs) is enough.
+ * on runtimes that lack it. `src/util/dax.ts` - the only module allowed to
+ * import dax - installs the polyfill before dax can resolve any command.
  */
 
 import { builtinModules } from "module";
@@ -36,5 +36,3 @@ export function polyfillGetBuiltinModule(proc: NodeJS.Process = process): void {
     return require(`node:${bare}`);
   };
 }
-
-polyfillGetBuiltinModule();

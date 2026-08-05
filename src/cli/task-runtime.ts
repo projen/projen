@@ -1,16 +1,13 @@
-// Must come first: polyfills `process.getBuiltinModule` for Node < 22.3 /
-// < 20.16, which dax needs to resolve any command (see projen#4846).
-import "../util/node-compat";
 import * as child_process from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
 import { gray, underline } from "chalk";
-import { $ } from "dax";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
+import { $ } from "../util/dax";
 import { MAX_BUFFER, tool } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
