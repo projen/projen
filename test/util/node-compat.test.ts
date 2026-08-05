@@ -34,11 +34,12 @@ describe("polyfillGetBuiltinModule", () => {
     expect((proc as any).getBuiltinModule).toBe(original);
   });
 
-  test("the real process object provides getBuiltinModule after loading the dax wrapper", async () => {
+  test("the real process object provides getBuiltinModule after loading the dax wrapper", () => {
     // src/util/dax.ts is the only module allowed to import dax; loading it
     // must install the polyfill on the real `process`. Either way - native or
     // polyfilled - dax's call must work afterwards.
-    await import("../../src/util/dax");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("../../src/util/dax");
     const getBuiltinModule = (process as any).getBuiltinModule;
     expect(typeof getBuiltinModule).toBe("function");
     expect(typeof getBuiltinModule.call(process, "node:fs").statSync).toBe(
