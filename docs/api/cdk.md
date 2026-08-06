@@ -4646,7 +4646,7 @@ public readonly dedupeDeps: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false - unless `yarnBerryOptions.dedupePackages` is set
+- *Default:* false, unless `yarnBerryOptions.dedupePackages` is set
 
 Add a `dedupe` task that deduplicates project dependencies.
 
@@ -8432,7 +8432,7 @@ public readonly dedupeDeps: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false - unless `yarnBerryOptions.dedupePackages` is set
+- *Default:* false, unless `yarnBerryOptions.dedupePackages` is set
 
 Add a `dedupe` task that deduplicates project dependencies.
 
