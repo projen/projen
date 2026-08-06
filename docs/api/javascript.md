@@ -2381,9 +2381,9 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.entrypoint">entrypoint</a></code> | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`). |
 | <code><a href="#projen.javascript.NodePackage.property.execCommand">execCommand</a></code> | <code>string</code> | The command prefix to use when executing binary commands for this package manager (e.g. `npx`, `pnpm exec`, `yarn`, `bunx`). |
 | <code><a href="#projen.javascript.NodePackage.property.file">file</a></code> | <code>projen.JsonFile</code> | The package.json file. |
-| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Renders `pnpm install` or `npm install` with lockfile update (not frozen). |
+| <code><a href="#projen.javascript.NodePackage.property.installAndUpdateLockfileCommand">installAndUpdateLockfileCommand</a></code> | <code>string</code> | Returns the package manager's mutable install command with lockfile update, e.g. `npm install` or `pnpm install`. |
 | <code><a href="#projen.javascript.NodePackage.property.installCiTask">installCiTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (frozen). |
-| <code><a href="#projen.javascript.NodePackage.property.installCommand">installCommand</a></code> | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen). |
+| <code><a href="#projen.javascript.NodePackage.property.installCommand">installCommand</a></code> | <code>string</code> | Returns the package manager's immutable install command with a frozen lockfile, e.g. `npm ci` or `pnpm ci`. |
 | <code><a href="#projen.javascript.NodePackage.property.installTask">installTask</a></code> | <code>projen.Task</code> | The task for installing project dependencies (non-frozen). |
 | <code><a href="#projen.javascript.NodePackage.property.lockFile">lockFile</a></code> | <code>string</code> | The name of the lock file. |
 | <code><a href="#projen.javascript.NodePackage.property.manifest">manifest</a></code> | <code>any</code> | *No description.* |
@@ -2395,6 +2395,7 @@ The project.
 | <code><a href="#projen.javascript.NodePackage.property.packageName">packageName</a></code> | <code>string</code> | The name of the npm package. |
 | <code><a href="#projen.javascript.NodePackage.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodePackage.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodePackage.property.dedupeTask">dedupeTask</a></code> | <code>projen.Task</code> | The task for deduplicating project dependencies, if configured. |
 | <code><a href="#projen.javascript.NodePackage.property.license">license</a></code> | <code>string</code> | The SPDX license of this module. |
 | <code><a href="#projen.javascript.NodePackage.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.javascript.NodePackage.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
@@ -2483,7 +2484,9 @@ public readonly installAndUpdateLockfileCommand: string;
 
 - *Type:* string
 
-Renders `pnpm install` or `npm install` with lockfile update (not frozen).
+Returns the package manager's mutable install command with lockfile update, e.g. `npm install` or `pnpm install`.
+
+Prefer using `NodePackage.installTask`. The raw command string is intended for bootstrapping.
 
 ---
 
@@ -2507,7 +2510,9 @@ public readonly installCommand: string;
 
 - *Type:* string
 
-Returns the command to execute in order to install all dependencies (always frozen).
+Returns the package manager's immutable install command with a frozen lockfile, e.g. `npm ci` or `pnpm ci`.
+
+Prefer using `NodePackage.installCiTask`. The raw command string is intended for bootstrapping.
 
 ---
 
@@ -2643,6 +2648,18 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 Options for npm packages using AWS CodeArtifact.
 
 This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+
+---
+
+##### `dedupeTask`<sup>Optional</sup> <a name="dedupeTask" id="projen.javascript.NodePackage.property.dedupeTask"></a>
+
+```typescript
+public readonly dedupeTask: Task;
+```
+
+- *Type:* projen.Task
+
+The task for deduplicating project dependencies, if configured.
 
 ---
 
@@ -9503,6 +9520,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.dedupeDeps">dedupeDeps</a></code> | <code>boolean</code> | Add a `dedupe` task that deduplicates project dependencies. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
@@ -9750,6 +9768,34 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 Options for npm packages using AWS CodeArtifact.
 
 This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+
+---
+
+##### `dedupeDeps`<sup>Optional</sup> <a name="dedupeDeps" id="projen.javascript.NodePackageOptions.property.dedupeDeps"></a>
+
+```typescript
+public readonly dedupeDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false - unless `yarnBerryOptions.dedupePackages` is set
+
+Add a `dedupe` task that deduplicates project dependencies.
+
+Deduplication prevents multiple versions of the same package from being
+installed, if a single version can satisfy all requested version ranges.
+This prevents version proliferation and reduces the size of the dependency
+tree.
+
+The behavior depends on the package manager:
+- npm: runs `npm dedupe` after every mutating install.
+- pnpm: runs `pnpm dedupe` after every mutating install.
+- Yarn Berry: runs `yarn dedupe` after every mutating install. If
+  `yarnBerryOptions.dedupePackages` is set, only the listed packages are
+  deduplicated.
+- Yarn Classic: `yarn install` already deduplicates, so the task only
+  prints an informational message.
+- Bun: not supported, enabling this option throws an error.
 
 ---
 
@@ -10256,6 +10302,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code><a href="#projen.javascript.CodeArtifactOptions">CodeArtifactOptions</a></code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.dedupeDeps">dedupeDeps</a></code> | <code>boolean</code> | Add a `dedupe` task that deduplicates project dependencies. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
@@ -10930,6 +10977,34 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 Options for npm packages using AWS CodeArtifact.
 
 This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+
+---
+
+##### `dedupeDeps`<sup>Optional</sup> <a name="dedupeDeps" id="projen.javascript.NodeProjectOptions.property.dedupeDeps"></a>
+
+```typescript
+public readonly dedupeDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false - unless `yarnBerryOptions.dedupePackages` is set
+
+Add a `dedupe` task that deduplicates project dependencies.
+
+Deduplication prevents multiple versions of the same package from being
+installed, if a single version can satisfy all requested version ranges.
+This prevents version proliferation and reduces the size of the dependency
+tree.
+
+The behavior depends on the package manager:
+- npm: runs `npm dedupe` after every mutating install.
+- pnpm: runs `pnpm dedupe` after every mutating install.
+- Yarn Berry: runs `yarn dedupe` after every mutating install. If
+  `yarnBerryOptions.dedupePackages` is set, only the listed packages are
+  deduplicated.
+- Yarn Classic: `yarn install` already deduplicates, so the task only
+  prints an informational message.
+- Bun: not supported, enabling this option throws an error.
 
 ---
 
@@ -19433,7 +19508,7 @@ const yarnBerryOptions: javascript.YarnBerryOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.YarnBerryOptions.property.dedupePackages">dedupePackages</a></code> | <code>string[]</code> | Packages to deduplicate. |
+| <code><a href="#projen.javascript.YarnBerryOptions.property.dedupePackages">dedupePackages</a></code> | <code>string[]</code> | Packages to deduplicate when the `dedupe` task runs. |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.version">version</a></code> | <code>string</code> | A fully specified version to use for yarn (e.g., x.x.x). |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.yarnRcOptions">yarnRcOptions</a></code> | <code><a href="#projen.javascript.YarnrcOptions">YarnrcOptions</a></code> | The yarnrc configuration. |
 | <code><a href="#projen.javascript.YarnBerryOptions.property.zeroInstalls">zeroInstalls</a></code> | <code>boolean</code> | Should zero-installs be enabled? |
@@ -19447,15 +19522,18 @@ public readonly dedupePackages: string[];
 ```
 
 - *Type:* string[]
+- *Default:* all packages are deduplicated
 
-Packages to deduplicate.
+Packages to deduplicate when the `dedupe` task runs.
 
 This will prevent multiple versions of the same package from being
 installed in the lock file, if a single version could satisfy all requested
 version ranges. This will prevent version proliferation and reduce the size
-of the depdendency tree.
+of the dependency tree.
 
-Setting this will run `yarn dedupe` after dependency upgrades.
+Setting this implies `dedupeDeps: true` on the project, which will run
+`yarn dedupe` after every mutating install. Set `dedupeDeps: false`
+explicitly to disable the task.
 
 Supports glob patterns, e.g. `@aws-sdk/*`.
 
@@ -19874,8 +19952,11 @@ const yarnrcOptions: javascript.YarnrcOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.YarnrcOptions.property.approvedGitRepositories">approvedGitRepositories</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#approvedGitRepositories. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.cacheFolder">cacheFolder</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#cacheFolder. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.cacheMigrationMode">cacheMigrationMode</a></code> | <code><a href="#projen.javascript.YarnCacheMigrationMode">YarnCacheMigrationMode</a></code> | https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.catalog">catalog</a></code> | <code>{[ key: string ]: string}</code> | https://yarnpkg.com/configuration/yarnrc#catalog. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | https://yarnpkg.com/configuration/yarnrc#catalogs. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.changesetBaseRefs">changesetBaseRefs</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#changesetBaseRefs. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.changesetIgnorePatterns">changesetIgnorePatterns</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#changesetIgnorePatterns. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.checksumBehavior">checksumBehavior</a></code> | <code><a href="#projen.javascript.YarnChecksumBehavior">YarnChecksumBehavior</a></code> | https://yarnpkg.com/configuration/yarnrc#checksumBehavior. |
@@ -19887,7 +19968,8 @@ const yarnrcOptions: javascript.YarnrcOptions = { ... }
 | <code><a href="#projen.javascript.YarnrcOptions.property.defaultSemverRangePrefix">defaultSemverRangePrefix</a></code> | <code><a href="#projen.javascript.YarnDefaultSemverRangePrefix">YarnDefaultSemverRangePrefix</a></code> | https://yarnpkg.com/configuration/yarnrc#defaultSemverRangePrefix. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.deferredVersionFolder">deferredVersionFolder</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#deferredVersionFolder. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.enableColors">enableColors</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableColors. |
-| <code><a href="#projen.javascript.YarnrcOptions.property.enableConstraintsCheck">enableConstraintsCheck</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.enableConstraintsCheck">enableConstraintsCheck</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.enableConstraintsChecks">enableConstraintsChecks</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.enableGlobalCache">enableGlobalCache</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableGlobalCache. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.enableHardenedMode">enableHardenedMode</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableHardenedMode. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.enableHyperlinks">enableHyperlinks</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#enableHyperlinks. |
@@ -19925,14 +20007,19 @@ const yarnrcOptions: javascript.YarnrcOptions = { ... }
 | <code><a href="#projen.javascript.YarnrcOptions.property.nmHoistingLimits">nmHoistingLimits</a></code> | <code><a href="#projen.javascript.YarnNmHoistingLimit">YarnNmHoistingLimit</a></code> | https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.nmMode">nmMode</a></code> | <code><a href="#projen.javascript.YarnNmMode">YarnNmMode</a></code> | https://yarnpkg.com/configuration/yarnrc#nmMode. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.nmSelfReferences">nmSelfReferences</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#nmSelfReferences. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#nodeExperimentalPackageMap. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.YarnNodeLinker">YarnNodeLinker</a></code> | https://yarnpkg.com/configuration/yarnrc#nodeLinker. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.YarnNodePackageMapType">YarnNodePackageMapType</a></code> | https://yarnpkg.com/configuration/yarnrc#nodePackageMapType. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAlwaysAuth">npmAlwaysAuth</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#npmAlwaysAuth. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAuditExcludePackages">npmAuditExcludePackages</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAuditIgnoreAdvisories">npmAuditIgnoreAdvisories</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAuditRegistry">npmAuditRegistry</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuditRegistry. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAuthIdent">npmAuthIdent</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuthIdent. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmAuthToken">npmAuthToken</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmAuthToken. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.npmMinimalAgeGate">npmMinimalAgeGate</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.npmPreapprovedPackages">npmPreapprovedPackages</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmPublishAccess">npmPublishAccess</a></code> | <code><a href="#projen.javascript.YarnNpmPublishAccess">YarnNpmPublishAccess</a></code> | https://yarnpkg.com/configuration/yarnrc#npmPublishAccess. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.npmPublishProvenance">npmPublishProvenance</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#npmPublishProvenance. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmPublishRegistry">npmPublishRegistry</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmPublishRegistry. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmRegistries">npmRegistries</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.YarnNpmRegistry">YarnNpmRegistry</a>}</code> | https://yarnpkg.com/configuration/yarnrc#npmRegistries. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.npmRegistryServer">npmRegistryServer</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#npmRegistryServer. |
@@ -19944,6 +20031,7 @@ const yarnrcOptions: javascript.YarnrcOptions = { ... }
 | <code><a href="#projen.javascript.YarnrcOptions.property.pnpFallbackMode">pnpFallbackMode</a></code> | <code><a href="#projen.javascript.YarnPnpFallbackMode">YarnPnpFallbackMode</a></code> | https://yarnpkg.com/configuration/yarnrc#pnpFallbackMode. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.pnpIgnorePatterns">pnpIgnorePatterns</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#pnpIgnorePatterns. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.pnpMode">pnpMode</a></code> | <code><a href="#projen.javascript.YarnPnpMode">YarnPnpMode</a></code> | https://yarnpkg.com/configuration/yarnrc#pnpMode. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.pnpmStoreFolder">pnpmStoreFolder</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpmStoreFolder. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.pnpShebang">pnpShebang</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpShebang. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.pnpUnpluggedFolder">pnpUnpluggedFolder</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#pnpUnpluggedFolder. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.preferDeferredVersions">preferDeferredVersions</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#preferDeferredVersions. |
@@ -19954,14 +20042,27 @@ const yarnrcOptions: javascript.YarnrcOptions = { ... }
 | <code><a href="#projen.javascript.YarnrcOptions.property.rcFilename">rcFilename</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#rcFilename. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.supportedArchitectures">supportedArchitectures</a></code> | <code><a href="#projen.javascript.YarnSupportedArchitectures">YarnSupportedArchitectures</a></code> | https://yarnpkg.com/configuration/yarnrc#supportedArchitectures. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.taskPoolConcurrency">taskPoolConcurrency</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.taskPoolMode">taskPoolMode</a></code> | <code><a href="#projen.javascript.YarnTaskPoolMode">YarnTaskPoolMode</a></code> | https://yarnpkg.com/configuration/yarnrc#taskPoolMode. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.telemetryInterval">telemetryInterval</a></code> | <code>number</code> | https://yarnpkg.com/configuration/yarnrc#telemetryInterval. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.telemetryUserId">telemetryUserId</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#telemetryUserId. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.tsEnableAutoTypes">tsEnableAutoTypes</a></code> | <code>boolean</code> | https://yarnpkg.com/configuration/yarnrc#tsEnableAutoTypes. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.unsafeHttpWhitelist">unsafeHttpWhitelist</a></code> | <code>string[]</code> | https://yarnpkg.com/configuration/yarnrc#unsafeHttpWhitelist. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.virtualFolder">virtualFolder</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#virtualFolder. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.winLinkType">winLinkType</a></code> | <code><a href="#projen.javascript.YarnWinLinkType">YarnWinLinkType</a></code> | https://yarnpkg.com/configuration/yarnrc#winLinkType. |
-| <code><a href="#projen.javascript.YarnrcOptions.property.workerPoolMode">workerPoolMode</a></code> | <code><a href="#projen.javascript.YarnWorkerPoolMode">YarnWorkerPoolMode</a></code> | https://yarnpkg.com/configuration/yarnrc#workerPoolMode. |
+| <code><a href="#projen.javascript.YarnrcOptions.property.workerPoolMode">workerPoolMode</a></code> | <code><a href="#projen.javascript.YarnWorkerPoolMode">YarnWorkerPoolMode</a></code> | https://yarnpkg.com/configuration/yarnrc#taskPoolMode. |
 | <code><a href="#projen.javascript.YarnrcOptions.property.yarnPath">yarnPath</a></code> | <code>string</code> | https://yarnpkg.com/configuration/yarnrc#yarnPath. |
+
+---
+
+##### `approvedGitRepositories`<sup>Optional</sup> <a name="approvedGitRepositories" id="projen.javascript.YarnrcOptions.property.approvedGitRepositories"></a>
+
+```typescript
+public readonly approvedGitRepositories: string[];
+```
+
+- *Type:* string[]
+
+https://yarnpkg.com/configuration/yarnrc#approvedGitRepositories.
 
 ---
 
@@ -19986,6 +20087,30 @@ public readonly cacheMigrationMode: YarnCacheMigrationMode;
 - *Type:* <a href="#projen.javascript.YarnCacheMigrationMode">YarnCacheMigrationMode</a>
 
 https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode.
+
+---
+
+##### `catalog`<sup>Optional</sup> <a name="catalog" id="projen.javascript.YarnrcOptions.property.catalog"></a>
+
+```typescript
+public readonly catalog: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+https://yarnpkg.com/configuration/yarnrc#catalog.
+
+---
+
+##### `catalogs`<sup>Optional</sup> <a name="catalogs" id="projen.javascript.YarnrcOptions.property.catalogs"></a>
+
+```typescript
+public readonly catalogs: {[ key: string ]: {[ key: string ]: string}};
+```
+
+- *Type:* {[ key: string ]: {[ key: string ]: string}}
+
+https://yarnpkg.com/configuration/yarnrc#catalogs.
 
 ---
 
@@ -20121,7 +20246,10 @@ https://yarnpkg.com/configuration/yarnrc#enableColors.
 
 ---
 
-##### `enableConstraintsCheck`<sup>Optional</sup> <a name="enableConstraintsCheck" id="projen.javascript.YarnrcOptions.property.enableConstraintsCheck"></a>
+##### ~~`enableConstraintsCheck`~~<sup>Optional</sup> <a name="enableConstraintsCheck" id="projen.javascript.YarnrcOptions.property.enableConstraintsCheck"></a>
+
+- *Deprecated:* use {@link YarnrcOptions.enableConstraintsChecks } instead. Yarn
+calls this setting `enableConstraintsChecks` (note the trailing `s`).
 
 ```typescript
 public readonly enableConstraintsCheck: boolean;
@@ -20129,7 +20257,19 @@ public readonly enableConstraintsCheck: boolean;
 
 - *Type:* boolean
 
-https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck.
+https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks.
+
+---
+
+##### `enableConstraintsChecks`<sup>Optional</sup> <a name="enableConstraintsChecks" id="projen.javascript.YarnrcOptions.property.enableConstraintsChecks"></a>
+
+```typescript
+public readonly enableConstraintsChecks: boolean;
+```
+
+- *Type:* boolean
+
+https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks.
 
 ---
 
@@ -20577,6 +20717,18 @@ https://yarnpkg.com/configuration/yarnrc#nmSelfReferences.
 
 ---
 
+##### `nodeExperimentalPackageMap`<sup>Optional</sup> <a name="nodeExperimentalPackageMap" id="projen.javascript.YarnrcOptions.property.nodeExperimentalPackageMap"></a>
+
+```typescript
+public readonly nodeExperimentalPackageMap: boolean;
+```
+
+- *Type:* boolean
+
+https://yarnpkg.com/configuration/yarnrc#nodeExperimentalPackageMap.
+
+---
+
 ##### `nodeLinker`<sup>Optional</sup> <a name="nodeLinker" id="projen.javascript.YarnrcOptions.property.nodeLinker"></a>
 
 ```typescript
@@ -20586,6 +20738,18 @@ public readonly nodeLinker: YarnNodeLinker;
 - *Type:* <a href="#projen.javascript.YarnNodeLinker">YarnNodeLinker</a>
 
 https://yarnpkg.com/configuration/yarnrc#nodeLinker.
+
+---
+
+##### `nodePackageMapType`<sup>Optional</sup> <a name="nodePackageMapType" id="projen.javascript.YarnrcOptions.property.nodePackageMapType"></a>
+
+```typescript
+public readonly nodePackageMapType: YarnNodePackageMapType;
+```
+
+- *Type:* <a href="#projen.javascript.YarnNodePackageMapType">YarnNodePackageMapType</a>
+
+https://yarnpkg.com/configuration/yarnrc#nodePackageMapType.
 
 ---
 
@@ -20661,6 +20825,30 @@ https://yarnpkg.com/configuration/yarnrc#npmAuthToken.
 
 ---
 
+##### `npmMinimalAgeGate`<sup>Optional</sup> <a name="npmMinimalAgeGate" id="projen.javascript.YarnrcOptions.property.npmMinimalAgeGate"></a>
+
+```typescript
+public readonly npmMinimalAgeGate: string;
+```
+
+- *Type:* string
+
+https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate.
+
+---
+
+##### `npmPreapprovedPackages`<sup>Optional</sup> <a name="npmPreapprovedPackages" id="projen.javascript.YarnrcOptions.property.npmPreapprovedPackages"></a>
+
+```typescript
+public readonly npmPreapprovedPackages: string[];
+```
+
+- *Type:* string[]
+
+https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages.
+
+---
+
 ##### `npmPublishAccess`<sup>Optional</sup> <a name="npmPublishAccess" id="projen.javascript.YarnrcOptions.property.npmPublishAccess"></a>
 
 ```typescript
@@ -20670,6 +20858,18 @@ public readonly npmPublishAccess: YarnNpmPublishAccess;
 - *Type:* <a href="#projen.javascript.YarnNpmPublishAccess">YarnNpmPublishAccess</a>
 
 https://yarnpkg.com/configuration/yarnrc#npmPublishAccess.
+
+---
+
+##### `npmPublishProvenance`<sup>Optional</sup> <a name="npmPublishProvenance" id="projen.javascript.YarnrcOptions.property.npmPublishProvenance"></a>
+
+```typescript
+public readonly npmPublishProvenance: boolean;
+```
+
+- *Type:* boolean
+
+https://yarnpkg.com/configuration/yarnrc#npmPublishProvenance.
 
 ---
 
@@ -20805,6 +21005,18 @@ https://yarnpkg.com/configuration/yarnrc#pnpMode.
 
 ---
 
+##### `pnpmStoreFolder`<sup>Optional</sup> <a name="pnpmStoreFolder" id="projen.javascript.YarnrcOptions.property.pnpmStoreFolder"></a>
+
+```typescript
+public readonly pnpmStoreFolder: string;
+```
+
+- *Type:* string
+
+https://yarnpkg.com/configuration/yarnrc#pnpmStoreFolder.
+
+---
+
 ##### `pnpShebang`<sup>Optional</sup> <a name="pnpShebang" id="projen.javascript.YarnrcOptions.property.pnpShebang"></a>
 
 ```typescript
@@ -20925,6 +21137,18 @@ https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency.
 
 ---
 
+##### `taskPoolMode`<sup>Optional</sup> <a name="taskPoolMode" id="projen.javascript.YarnrcOptions.property.taskPoolMode"></a>
+
+```typescript
+public readonly taskPoolMode: YarnTaskPoolMode;
+```
+
+- *Type:* <a href="#projen.javascript.YarnTaskPoolMode">YarnTaskPoolMode</a>
+
+https://yarnpkg.com/configuration/yarnrc#taskPoolMode.
+
+---
+
 ##### `telemetryInterval`<sup>Optional</sup> <a name="telemetryInterval" id="projen.javascript.YarnrcOptions.property.telemetryInterval"></a>
 
 ```typescript
@@ -20997,7 +21221,10 @@ https://yarnpkg.com/configuration/yarnrc#winLinkType.
 
 ---
 
-##### `workerPoolMode`<sup>Optional</sup> <a name="workerPoolMode" id="projen.javascript.YarnrcOptions.property.workerPoolMode"></a>
+##### ~~`workerPoolMode`~~<sup>Optional</sup> <a name="workerPoolMode" id="projen.javascript.YarnrcOptions.property.workerPoolMode"></a>
+
+- *Deprecated:* use {@link YarnrcOptions.taskPoolMode } instead. Yarn calls this
+setting `taskPoolMode`; there is no `workerPoolMode` setting.
 
 ```typescript
 public readonly workerPoolMode: YarnWorkerPoolMode;
@@ -21005,7 +21232,7 @@ public readonly workerPoolMode: YarnWorkerPoolMode;
 
 - *Type:* <a href="#projen.javascript.YarnWorkerPoolMode">YarnWorkerPoolMode</a>
 
-https://yarnpkg.com/configuration/yarnrc#workerPoolMode.
+https://yarnpkg.com/configuration/yarnrc#taskPoolMode.
 
 ---
 
@@ -23130,6 +23357,29 @@ https://yarnpkg.com/configuration/yarnrc#nodeLinker.
 ---
 
 
+### YarnNodePackageMapType <a name="YarnNodePackageMapType" id="projen.javascript.YarnNodePackageMapType"></a>
+
+https://yarnpkg.com/configuration/yarnrc#nodePackageMapType.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.YarnNodePackageMapType.STANDARD">STANDARD</a></code> | *No description.* |
+| <code><a href="#projen.javascript.YarnNodePackageMapType.LOOSE">LOOSE</a></code> | *No description.* |
+
+---
+
+##### `STANDARD` <a name="STANDARD" id="projen.javascript.YarnNodePackageMapType.STANDARD"></a>
+
+---
+
+
+##### `LOOSE` <a name="LOOSE" id="projen.javascript.YarnNodePackageMapType.LOOSE"></a>
+
+---
+
+
 ### YarnNpmPublishAccess <a name="YarnNpmPublishAccess" id="projen.javascript.YarnNpmPublishAccess"></a>
 
 https://yarnpkg.com/configuration/yarnrc#npmPublishAccess.
@@ -23246,6 +23496,29 @@ https://yarnpkg.com/configuration/yarnrc#progressBarStyle.
 ---
 
 
+### YarnTaskPoolMode <a name="YarnTaskPoolMode" id="projen.javascript.YarnTaskPoolMode"></a>
+
+https://yarnpkg.com/configuration/yarnrc#taskPoolMode.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.YarnTaskPoolMode.ASYNC">ASYNC</a></code> | *No description.* |
+| <code><a href="#projen.javascript.YarnTaskPoolMode.WORKERS">WORKERS</a></code> | *No description.* |
+
+---
+
+##### `ASYNC` <a name="ASYNC" id="projen.javascript.YarnTaskPoolMode.ASYNC"></a>
+
+---
+
+
+##### `WORKERS` <a name="WORKERS" id="projen.javascript.YarnTaskPoolMode.WORKERS"></a>
+
+---
+
+
 ### YarnWinLinkType <a name="YarnWinLinkType" id="projen.javascript.YarnWinLinkType"></a>
 
 https://yarnpkg.com/configuration/yarnrc#winLinkType.
@@ -23271,6 +23544,8 @@ https://yarnpkg.com/configuration/yarnrc#winLinkType.
 
 ### YarnWorkerPoolMode <a name="YarnWorkerPoolMode" id="projen.javascript.YarnWorkerPoolMode"></a>
 
+https://yarnpkg.com/configuration/yarnrc#taskPoolMode.
+
 #### Members <a name="Members" id="Members"></a>
 
 | **Name** | **Description** |
@@ -23280,12 +23555,18 @@ https://yarnpkg.com/configuration/yarnrc#winLinkType.
 
 ---
 
-##### `ASYNC` <a name="ASYNC" id="projen.javascript.YarnWorkerPoolMode.ASYNC"></a>
+##### ~~`ASYNC`~~ <a name="ASYNC" id="projen.javascript.YarnWorkerPoolMode.ASYNC"></a>
+
+- *Deprecated:* use {@link YarnTaskPoolMode } instead. Yarn calls this setting
+`taskPoolMode`; there is no `workerPoolMode` setting.
 
 ---
 
 
-##### `WORKERS` <a name="WORKERS" id="projen.javascript.YarnWorkerPoolMode.WORKERS"></a>
+##### ~~`WORKERS`~~ <a name="WORKERS" id="projen.javascript.YarnWorkerPoolMode.WORKERS"></a>
+
+- *Deprecated:* use {@link YarnTaskPoolMode } instead. Yarn calls this setting
+`taskPoolMode`; there is no `workerPoolMode` setting.
 
 ---
 

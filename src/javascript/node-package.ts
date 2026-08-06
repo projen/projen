@@ -174,6 +174,28 @@ export interface NodePackageOptions {
   readonly packageManager?: NodePackageManager;
 
   /**
+   * Add a `dedupe` task that deduplicates project dependencies.
+   *
+   * Deduplication prevents multiple versions of the same package from being
+   * installed, if a single version can satisfy all requested version ranges.
+   * This prevents version proliferation and reduces the size of the dependency
+   * tree.
+   *
+   * The behavior depends on the package manager:
+   * - npm: runs `npm dedupe` after every mutating install.
+   * - pnpm: runs `pnpm dedupe` after every mutating install.
+   * - Yarn Berry: runs `yarn dedupe` after every mutating install. If
+   *   `yarnBerryOptions.dedupePackages` is set, only the listed packages are
+   *   deduplicated.
+   * - Yarn Classic: `yarn install` already deduplicates, so the task only
+   *   prints an informational message.
+   * - Bun: not supported, enabling this option throws an error.
+   *
+   * @default - false, unless `yarnBerryOptions.dedupePackages` is set
+   */
+  readonly dedupeDeps?: boolean;
+
+  /**
    * The repository is the location where the actual code for your package lives.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-repository
    */
@@ -712,14 +734,19 @@ export class NodePackage extends Component {
   public readonly lockFile: string;
 
   /**
-   * The task for installing project dependencies (non-frozen)
+   * The task for installing project dependencies (non-frozen).
    */
   public readonly installTask: Task;
 
   /**
-   * The task for installing project dependencies (frozen)
+   * The task for installing project dependencies (frozen).
    */
   public readonly installCiTask: Task;
+
+  /**
+   * The task for deduplicating project dependencies, if configured.
+   */
+  public readonly dedupeTask?: Task;
 
   /**
    * The package.json file.
@@ -910,10 +937,49 @@ export class NodePackage extends Component {
       exec: this.installCommand,
     });
 
-    if (isYarnBerry(this.packageManager)) {
-      // Needs to happen after the install tasks have been added
-      this.configureYarnBerryDedupe(options.yarnBerryOptions?.dedupePackages);
+    // Needs to happen after the install tasks have been added
+    this.dedupeTask = this.maybeAddDedupeTask(options);
+  }
+
+  /**
+   * Adds a `dedupe` task if enabled via `dedupeDeps` or implied by
+   * `yarnBerryOptions.dedupePackages`.
+   *
+   * @returns the dedupe task, or `undefined` if not enabled.
+   */
+  private maybeAddDedupeTask(options: NodePackageOptions): Task | undefined {
+    const yarnBerryDedupePackages = options.yarnBerryOptions?.dedupePackages;
+    if (!(options.dedupeDeps ?? yarnBerryDedupePackages !== undefined)) {
+      return undefined;
     }
+
+    if (this.packageManager === NodePackageManager.BUN) {
+      throw new Error(
+        "The 'dedupeDeps' option is not supported for Bun: bun does not provide a dedupe command.",
+      );
+    }
+
+    const dedupeTask = this.project.addTask("dedupe", {
+      description: "Deduplicate project dependencies",
+    });
+
+    if (isYarnClassic(this.packageManager)) {
+      // Yarn Classic always deduplicates as part of `yarn install`
+      dedupeTask.say(
+        "The dedupe command isn't necessary. `yarn install` will already dedupe.",
+      );
+    } else {
+      dedupeTask.execArgs(
+        isYarnBerry(this.packageManager)
+          ? ["yarn", "dedupe", ...(yarnBerryDedupePackages ?? [])]
+          : [this.packageManager, "dedupe"],
+      );
+
+      // Add dedupe to mutable install task
+      this.installTask.spawn(dedupeTask);
+    }
+
+    return dedupeTask;
   }
 
   /**
@@ -1107,14 +1173,18 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Returns the command to execute in order to install all dependencies (always frozen).
+   * Returns the package manager's immutable install command with a frozen lockfile, e.g. `npm ci` or `pnpm ci`.
+   *
+   * Prefer using `NodePackage.installCiTask`. The raw command string is intended for bootstrapping.
    */
   public get installCommand() {
     return this.renderInstallCommand(true);
   }
 
   /**
-   * Renders `pnpm install` or `npm install` with lockfile update (not frozen)
+   * Returns the package manager's mutable install command with lockfile update, e.g. `npm install` or `pnpm install`.
+   *
+   * Prefer using `NodePackage.installTask`. The raw command string is intended for bootstrapping.
    */
   public get installAndUpdateLockfileCommand() {
     return this.renderInstallCommand(false);
@@ -2142,22 +2212,6 @@ export class NodePackage extends Component {
     });
   }
 
-  /**
-   * Configure package deduping
-   */
-  private configureYarnBerryDedupe(dedupePackages: string[] | undefined) {
-    if (!dedupePackages || dedupePackages.length === 0) {
-      return;
-    }
-
-    const dedupeTask = this.project.addTask("yarn:dedupe", {
-      execArgs: ["yarn", "dedupe", ...dedupePackages],
-    });
-
-    // Add dedupe to non-CI install command
-    this.project.tasks.tryFind("install")?.spawn(dedupeTask);
-  }
-
   private checkForConflictingYarnOptions(yarnRcOptions: YarnrcOptions) {
     if (
       this.npmAccess &&
@@ -2296,16 +2350,20 @@ export interface YarnBerryOptions {
   readonly zeroInstalls?: boolean;
 
   /**
-   * Packages to deduplicate.
+   * Packages to deduplicate when the `dedupe` task runs.
    *
    * This will prevent multiple versions of the same package from being
    * installed in the lock file, if a single version could satisfy all requested
    * version ranges. This will prevent version proliferation and reduce the size
-   * of the depdendency tree.
+   * of the dependency tree.
    *
-   * Setting this will run `yarn dedupe` after dependency upgrades.
+   * Setting this implies `dedupeDeps: true` on the project, which will run
+   * `yarn dedupe` after every mutating install. Set `dedupeDeps: false`
+   * explicitly to disable the task.
    *
    * Supports glob patterns, e.g. `@aws-sdk/*`.
+   *
+   * @default - all packages are deduplicated
    */
   readonly dedupePackages?: string[];
 }

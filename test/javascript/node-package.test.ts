@@ -1194,7 +1194,69 @@ describe("yarn berry", () => {
   });
 
   describe("Package deduplication", () => {
-    test("without dependency upgrades", () => {
+    test("no dedupe task by default", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.NPM,
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe).toBeUndefined();
+    });
+
+    test("adds a npm dedupe task", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.NPM,
+        dedupeDeps: true,
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe.steps).toEqual([
+        { execArgs: ["npm", "dedupe"] },
+      ]);
+      expect(snps[".projen/tasks.json"].tasks.install.steps).toContainEqual({
+        spawn: "dedupe",
+      });
+    });
+
+    test("adds a pnpm dedupe task", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.PNPM,
+        dedupeDeps: true,
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe.steps).toEqual([
+        { execArgs: ["pnpm", "dedupe"] },
+      ]);
+      expect(snps[".projen/tasks.json"].tasks.install.steps).toContainEqual({
+        spawn: "dedupe",
+      });
+    });
+
+    test("adds a yarn berry dedupe task for all packages", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        dedupeDeps: true,
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe.steps).toEqual([
+        { execArgs: ["yarn", "dedupe"] },
+      ]);
+      expect(snps[".projen/tasks.json"].tasks.install.steps).toContainEqual({
+        spawn: "dedupe",
+      });
+    });
+
+    test("yarn berry dedupe task honors yarnBerryOptions.dedupePackages", () => {
       const project = new TestProject();
       new NodePackage(project, {
         packageManager: NodePackageManager.YARN_BERRY,
@@ -1205,18 +1267,60 @@ describe("yarn berry", () => {
 
       const snps = synthSnapshot(project);
 
-      expect(snps[".projen/tasks.json"]).toEqual(
-        expect.objectContaining({
-          tasks: expect.objectContaining({
-            "yarn:dedupe": expect.objectContaining({
-              steps: expect.arrayContaining([
-                expect.objectContaining({
-                  execArgs: ["yarn", "dedupe", "@aws-sdk/*", "some-package"],
-                }),
-              ]),
-            }),
+      expect(snps[".projen/tasks.json"].tasks.dedupe.steps).toEqual([
+        { execArgs: ["yarn", "dedupe", "@aws-sdk/*", "some-package"] },
+      ]);
+      expect(snps[".projen/tasks.json"].tasks.install.steps).toContainEqual({
+        spawn: "dedupe",
+      });
+    });
+
+    test("explicitly disabled dedupeDeps wins over yarnBerryOptions.dedupePackages", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_BERRY,
+        dedupeDeps: false,
+        yarnBerryOptions: {
+          dedupePackages: ["@aws-sdk/*", "some-package"],
+        },
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe).toBeUndefined();
+    });
+
+    test("yarn classic dedupe task only prints a message", () => {
+      const project = new TestProject();
+      new NodePackage(project, {
+        packageManager: NodePackageManager.YARN_CLASSIC,
+        dedupeDeps: true,
+      });
+
+      const snps = synthSnapshot(project);
+
+      expect(snps[".projen/tasks.json"].tasks.dedupe.steps).toEqual([
+        {
+          say: "The dedupe command isn't necessary. `yarn install` will already dedupe.",
+        },
+      ]);
+      expect(snps[".projen/tasks.json"].tasks.install.steps).not.toContainEqual(
+        {
+          spawn: "dedupe",
+        },
+      );
+    });
+
+    test("throws for bun", () => {
+      const project = new TestProject();
+      expect(
+        () =>
+          new NodePackage(project, {
+            packageManager: NodePackageManager.BUN,
+            dedupeDeps: true,
           }),
-        }),
+      ).toThrow(
+        "The 'dedupeDeps' option is not supported for Bun: bun does not provide a dedupe command.",
       );
     });
 
@@ -1236,10 +1340,10 @@ describe("yarn berry", () => {
       expect(snps[".projen/tasks.json"]).toEqual(
         expect.objectContaining({
           tasks: expect.objectContaining({
-            "post-upgrade": expect.objectContaining({
+            upgrade: expect.objectContaining({
               steps: expect.arrayContaining([
                 expect.objectContaining({
-                  spawn: "yarn:dedupe",
+                  spawn: "dedupe",
                 }),
               ]),
             }),
