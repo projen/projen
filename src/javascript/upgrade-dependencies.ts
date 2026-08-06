@@ -356,6 +356,11 @@ export class UpgradeDependencies extends Component {
       ),
     });
 
+    // If we have a packages deduplication task, run it now.
+    if (this.project.package.dedupeTask) {
+      steps.push({ spawn: this.project.package.dedupeTask.name });
+    }
+
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     steps.push({ exec: this.project.projenCommand });
     steps.push({ spawn: this.postUpgradeTask.name });

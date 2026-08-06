@@ -1455,6 +1455,7 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.dedupeDeps">dedupeDeps</a></code> | <code>boolean</code> | Add a `dedupe` task that deduplicates project dependencies. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.description">description</a></code> | <code>string</code> | The description is just a string that helps people understand the purpose of the package. |
@@ -2166,6 +2167,34 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 Options for npm packages using AWS CodeArtifact.
 
 This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+
+---
+
+##### `dedupeDeps`<sup>Optional</sup> <a name="dedupeDeps" id="projen.cdktf.ConstructLibraryCdktfOptions.property.dedupeDeps"></a>
+
+```typescript
+public readonly dedupeDeps: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false, unless `yarnBerryOptions.dedupePackages` is set
+
+Add a `dedupe` task that deduplicates project dependencies.
+
+Deduplication prevents multiple versions of the same package from being
+installed, if a single version can satisfy all requested version ranges.
+This prevents version proliferation and reduces the size of the dependency
+tree.
+
+The behavior depends on the package manager:
+- npm: runs `npm dedupe` after every mutating install.
+- pnpm: runs `pnpm dedupe` after every mutating install.
+- Yarn Berry: runs `yarn dedupe` after every mutating install. If
+  `yarnBerryOptions.dedupePackages` is set, only the listed packages are
+  deduplicated.
+- Yarn Classic: `yarn install` already deduplicates, so the task only
+  prints an informational message.
+- Bun: not supported, enabling this option throws an error.
 
 ---
 

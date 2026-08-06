@@ -3033,6 +3033,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -6108,6 +6125,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -10563,6 +10597,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -13503,6 +13554,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -16545,6 +16613,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -20316,6 +20401,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -23220,6 +23322,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -25654,6 +25773,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -28374,6 +28510,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -32012,6 +32165,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -34434,6 +34604,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -37162,6 +37349,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""main"",
         "docs": "The name of the main release branch.",
         "featured": true,
@@ -39862,6 +40066,23 @@ exports[`inventory 1`] = `
         "switch": "copyright-period",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- false, unless \`yarnBerryOptions.dedupePackages\` is set",
+        "docs": "Add a \`dedupe\` task that deduplicates project dependencies.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "dedupeDeps",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "dedupeDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "dedupe-deps",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {

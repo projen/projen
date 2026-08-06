@@ -106,6 +106,7 @@ const project = new TypeScriptProject({
 
   peerDeps: ["constructs@^10.5.0"],
 
+  dedupeDeps: true,
   depsUpgrade: false, // configured below
   auditDeps: true,
   auditDepsOptions: {

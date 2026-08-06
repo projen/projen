@@ -151,6 +151,18 @@
         }
       ]
     },
+    "dedupe": {
+      "name": "dedupe",
+      "description": "Deduplicate project dependencies",
+      "steps": [
+        {
+          "execArgs": [
+            "npm",
+            "dedupe"
+          ]
+        }
+      ]
+    },
     "default": {
       "name": "default",
       "description": "Synthesize project files",
@@ -226,6 +238,9 @@
       "steps": [
         {
           "exec": "npm install"
+        },
+        {
+          "spawn": "dedupe"
         }
       ]
     },
@@ -625,6 +640,9 @@
           ]
         },
         {
+          "spawn": "dedupe"
+        },
+        {
           "exec": "node ./projen.js"
         },
         {
@@ -675,6 +693,9 @@
             "yaml",
             "yargs"
           ]
+        },
+        {
+          "spawn": "dedupe"
         },
         {
           "exec": "node ./projen.js"

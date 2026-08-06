@@ -64,6 +64,12 @@ export enum YarnNodeLinker {
   NODE_MODULES = "node-modules",
 }
 
+/** https://yarnpkg.com/configuration/yarnrc#nodePackageMapType */
+export enum YarnNodePackageMapType {
+  STANDARD = "standard",
+  LOOSE = "loose",
+}
+
 /** https://yarnpkg.com/configuration/yarnrc#npmPublishAccess */
 export enum YarnNpmPublishAccess {
   PUBLIC = "public",
@@ -132,7 +138,7 @@ export interface YarnSupportedArchitectures {
 
 /** https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode */
 export enum YarnCacheMigrationMode {
-  REQUIRED_ONLY = "requied-only",
+  REQUIRED_ONLY = "required-only",
   MATCH_SPEC = "match-spec",
   ALWAYS = "always",
 }
@@ -143,7 +149,19 @@ export enum YarnWinLinkType {
   SYMLINKS = "symlinks",
 }
 
+/**
+ * https://yarnpkg.com/configuration/yarnrc#taskPoolMode
+ *
+ * @deprecated use {@link YarnTaskPoolMode} instead. Yarn calls this setting
+ * `taskPoolMode`; there is no `workerPoolMode` setting.
+ */
 export enum YarnWorkerPoolMode {
+  ASYNC = "async",
+  WORKERS = "workers",
+}
+
+/** https://yarnpkg.com/configuration/yarnrc#taskPoolMode */
+export enum YarnTaskPoolMode {
   ASYNC = "async",
   WORKERS = "workers",
 }
@@ -154,6 +172,12 @@ export interface YarnrcOptions {
   readonly cacheFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#cacheMigrationMode */
   readonly cacheMigrationMode?: YarnCacheMigrationMode;
+  /** https://yarnpkg.com/configuration/yarnrc#catalog */
+  readonly catalog?: Record<string, string>;
+  /** https://yarnpkg.com/configuration/yarnrc#catalogs */
+  readonly catalogs?: Record<string, Record<string, string>>;
+  /** https://yarnpkg.com/configuration/yarnrc#approvedGitRepositories */
+  readonly approvedGitRepositories?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#httpsCaFilePath */
   readonly httpsCaFilePath?: string;
   /** https://yarnpkg.com/configuration/yarnrc#changesetBaseRefs */
@@ -178,8 +202,15 @@ export interface YarnrcOptions {
   readonly deferredVersionFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#enableColors */
   readonly enableColors?: boolean;
-  /** https://yarnpkg.com/configuration/yarnrc#enableConstraintsCheck */
+  /**
+   * https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks
+   *
+   * @deprecated use {@link YarnrcOptions.enableConstraintsChecks} instead. Yarn
+   * calls this setting `enableConstraintsChecks` (note the trailing `s`).
+   */
   readonly enableConstraintsCheck?: boolean;
+  /** https://yarnpkg.com/configuration/yarnrc#enableConstraintsChecks */
+  readonly enableConstraintsChecks?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableGlobalCache */
   readonly enableGlobalCache?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#enableHardenedMode */
@@ -254,6 +285,16 @@ export interface YarnrcOptions {
   readonly nmMode?: YarnNmMode;
   /** https://yarnpkg.com/configuration/yarnrc#nodeLinker */
   readonly nodeLinker?: YarnNodeLinker;
+  /** https://yarnpkg.com/configuration/yarnrc#nodeExperimentalPackageMap */
+  readonly nodeExperimentalPackageMap?: boolean;
+  /** https://yarnpkg.com/configuration/yarnrc#nodePackageMapType */
+  readonly nodePackageMapType?: YarnNodePackageMapType;
+  /** https://yarnpkg.com/configuration/yarnrc#npmMinimalAgeGate */
+  readonly npmMinimalAgeGate?: string;
+  /** https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages */
+  readonly npmPreapprovedPackages?: string[];
+  /** https://yarnpkg.com/configuration/yarnrc#pnpmStoreFolder */
+  readonly pnpmStoreFolder?: string;
   /** https://yarnpkg.com/configuration/yarnrc#winLinkType */
   readonly winLinkType?: YarnWinLinkType;
   /** https://yarnpkg.com/configuration/yarnrc#npmAlwaysAuth */
@@ -266,6 +307,8 @@ export interface YarnrcOptions {
   readonly npmAuthToken?: string;
   /** https://yarnpkg.com/configuration/yarnrc#npmPublishAccess */
   readonly npmPublishAccess?: YarnNpmPublishAccess;
+  /** https://yarnpkg.com/configuration/yarnrc#npmPublishProvenance */
+  readonly npmPublishProvenance?: boolean;
   /** https://yarnpkg.com/configuration/yarnrc#npmAuditExcludePackages */
   readonly npmAuditExcludePackages?: string[];
   /** https://yarnpkg.com/configuration/yarnrc#npmAuditIgnoreAdvisories */
@@ -312,7 +355,14 @@ export interface YarnrcOptions {
   readonly supportedArchitectures?: YarnSupportedArchitectures;
   /** https://yarnpkg.com/configuration/yarnrc#taskPoolConcurrency */
   readonly taskPoolConcurrency?: string;
-  /** https://yarnpkg.com/configuration/yarnrc#workerPoolMode */
+  /** https://yarnpkg.com/configuration/yarnrc#taskPoolMode */
+  readonly taskPoolMode?: YarnTaskPoolMode;
+  /**
+   * https://yarnpkg.com/configuration/yarnrc#taskPoolMode
+   *
+   * @deprecated use {@link YarnrcOptions.taskPoolMode} instead. Yarn calls this
+   * setting `taskPoolMode`; there is no `workerPoolMode` setting.
+   */
   readonly workerPoolMode?: YarnWorkerPoolMode;
   /** https://yarnpkg.com/configuration/yarnrc#telemetryInterval */
   readonly telemetryInterval?: number;
