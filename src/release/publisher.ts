@@ -6,6 +6,7 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
+import type { GithubCredentials } from "../github/github-credentials";
 import type {
   Job,
   JobPermissions,
@@ -650,9 +651,30 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
+    if (
+      options.githubCredentials &&
+      (options.githubUseSsh ||
+        options.githubTokenSecret ||
+        options.githubDeployKeySecret)
+    ) {
+      throw new Error(
+        "Only one of 'githubCredentials' or 'githubUseSsh'/'githubTokenSecret'/'githubDeployKeySecret' may be specified, not both.",
+      );
+    }
+
+    if (options.githubUseSsh && options.githubTokenSecret) {
+      throw new Error(
+        "'githubTokenSecret' cannot be used together with 'githubUseSsh'. Use 'githubDeployKeySecret' instead.",
+      );
+    }
+
     const prePublishSteps = options.prePublishSteps ?? [];
     const workflowEnv: { [name: string]: string | undefined } = {};
-    if (options.githubUseSsh) {
+    if (options.githubCredentials) {
+      const credentials = options.githubCredentials;
+      prePublishSteps.push(...credentials.setupSteps);
+      workflowEnv.GITHUB_TOKEN = credentials.tokenRef;
+    } else if (options.githubUseSsh) {
       workflowEnv.GITHUB_USE_SSH = "true";
       workflowEnv.SSH_AUTH_SOCK = "/tmp/ssh_agent.sock";
       prePublishSteps.push({
@@ -677,7 +699,10 @@ export class Publisher extends Component {
         publishTools: PUBLIB_TOOLCHAIN.go,
         prePublishSteps: prePublishSteps,
         postPublishSteps: options.postPublishSteps ?? [],
-        environment: options.githubEnvironment ?? branchOptions.environment,
+        environment:
+          options.githubEnvironment ??
+          options.githubCredentials?.environment ??
+          branchOptions.environment,
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -1286,8 +1311,9 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
    *
-   * Ignored if `githubUseSsh` is `true`.
+   * Ignored if `githubUseSsh` or `githubCredentials` is set.
    *
+   * @deprecated use `githubCredentials` with `GithubCredentials.fromPersonalAccessToken()` instead.
    * @default "GO_GITHUB_TOKEN"
    */
   readonly githubTokenSecret?: string;
@@ -1296,7 +1322,7 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * The name of the secret that includes a GitHub deploy key used to push to the
    * GitHub repository.
    *
-   * Ignored if `githubUseSsh` is `false`.
+   * Ignored if `githubUseSsh` is `false` or `githubCredentials` is set.
    *
    * @default "GO_GITHUB_DEPLOY_KEY"
    */
@@ -1305,9 +1331,24 @@ export interface GoPublishOptions extends CommonPublishOptions {
   /**
    * Use SSH to push to GitHub instead of a personal accses token.
    *
+   * Ignored if `githubCredentials` is set.
+   *
    * @default false
    */
   readonly githubUseSsh?: boolean;
+
+  /**
+   * Provide API access to the GitHub repository the Go module is pushed to
+   * through a `GithubCredentials` instance, e.g. a GitHub App
+   * (`GithubCredentials.fromApp`).
+   *
+   * Cannot be combined with `githubUseSsh`, `githubTokenSecret` or
+   * `githubDeployKeySecret`. When a GitHub App credential specifies an
+   * `environment`, it is used unless `githubEnvironment` is also set.
+   *
+   * @default - no GitHub App credentials used
+   */
+  readonly githubCredentials?: GithubCredentials;
 
   /**
    * Branch to push to.
