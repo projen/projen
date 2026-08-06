@@ -1338,13 +1338,9 @@ export interface GoPublishOptions extends CommonPublishOptions {
   readonly githubUseSsh?: boolean;
 
   /**
-   * Provide API access to the GitHub repository the Go module is pushed to
-   * through a `GithubCredentials` instance, e.g. a GitHub App
-   * (`GithubCredentials.fromApp`).
+   * Provide API access to the GitHub repository using `GithubCredentials`, e.g. a GitHub App.
    *
-   * Cannot be combined with `githubUseSsh`, `githubTokenSecret` or
-   * `githubDeployKeySecret`. When a GitHub App credential specifies an
-   * `environment`, it is used unless `githubEnvironment` is also set.
+   * Cannot be combined with `githubUseSsh`, `githubTokenSecret` or `githubDeployKeySecret`.
    *
    * @default - no GitHub App credentials used
    */
