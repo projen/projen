@@ -120,7 +120,7 @@ match these patterns.
 
 ### BiomeConfiguration <a name="BiomeConfiguration" id="projen.javascript.biome_config.BiomeConfiguration"></a>
 
-The configuration that is contained inside the file `biome.json`.
+The configuration contained in `biome.json`.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.BiomeConfiguration.Initializer"></a>
 
@@ -134,22 +134,22 @@ const biomeConfiguration: javascript.biome_config.BiomeConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.AssistConfiguration</code> | Specific configuration for assists. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.css">css</a></code> | <code>projen.javascript.biome_config.CssConfiguration</code> | Specific configuration for the Css language. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.AssistConfiguration</code> | The assist configuration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.css">css</a></code> | <code>projen.javascript.biome_config.CssConfiguration</code> | Configuration specific to CSS. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.extends">extends</a></code> | <code>string[]</code> | A list of paths to other JSON files, used to extend the current configuration. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.files">files</a></code> | <code>projen.javascript.biome_config.FilesConfiguration</code> | The configuration of the filesystem. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.FormatterConfiguration</code> | The configuration of the formatter. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.graphql">graphql</a></code> | <code>projen.javascript.biome_config.GraphqlConfiguration</code> | Specific configuration for the GraphQL language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.grit">grit</a></code> | <code>projen.javascript.biome_config.GritConfiguration</code> | Specific configuration for the GraphQL language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.html">html</a></code> | <code>projen.javascript.biome_config.HtmlConfiguration</code> | Specific configuration for the HTML language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.javascript">javascript</a></code> | <code>projen.javascript.biome_config.JsConfiguration</code> | Specific configuration for the JavaScript language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.json">json</a></code> | <code>projen.javascript.biome_config.JsonConfiguration</code> | Specific configuration for the Json language. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.LinterConfiguration</code> | The configuration for the linter. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.overrides">overrides</a></code> | <code>projen.javascript.biome_config.OverridePattern[]</code> | A list of granular patterns that should be applied only to a sub set of files. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.files">files</a></code> | <code>projen.javascript.biome_config.FilesConfiguration</code> | The file handling configuration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.FormatterConfiguration</code> | The formatter configuration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.graphql">graphql</a></code> | <code>projen.javascript.biome_config.GraphqlConfiguration</code> | Configuration specific to GraphQL. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.grit">grit</a></code> | <code>projen.javascript.biome_config.GritConfiguration</code> | Configuration specific to GritQL. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.html">html</a></code> | <code>projen.javascript.biome_config.HtmlConfiguration</code> | Configuration specific to HTML. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.javascript">javascript</a></code> | <code>projen.javascript.biome_config.JsConfiguration</code> | Configuration specific to JavaScript. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.json">json</a></code> | <code>projen.javascript.biome_config.JsonConfiguration</code> | Configuration specific to JSON. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.LinterConfiguration</code> | The linter configuration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.overrides">overrides</a></code> | <code>projen.javascript.biome_config.OverridePattern[]</code> | A list of granular patterns applied only to a subset of files. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.plugins">plugins</a></code> | <code>any[]</code> | List of plugins to load. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.root">root</a></code> | <code>boolean</code> | Indicates whether this configuration file is at the root of a Biome project. |
 | <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.schema">schema</a></code> | <code>string</code> | A field for the JSON schema specification: https://json-schema.org/. |
-| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.vcs">vcs</a></code> | <code>projen.javascript.biome_config.VcsConfiguration</code> | The configuration of the VCS integration. |
+| <code><a href="#projen.javascript.biome_config.BiomeConfiguration.property.vcs">vcs</a></code> | <code>projen.javascript.biome_config.VcsConfiguration</code> | The version control integration configuration. |
 
 ---
 
@@ -161,7 +161,7 @@ public readonly assist: AssistConfiguration;
 
 - *Type:* projen.javascript.biome_config.AssistConfiguration
 
-Specific configuration for assists.
+The assist configuration.
 
 ---
 
@@ -173,7 +173,7 @@ public readonly css: CssConfiguration;
 
 - *Type:* projen.javascript.biome_config.CssConfiguration
 
-Specific configuration for the Css language.
+Configuration specific to CSS.
 
 ---
 
@@ -197,7 +197,7 @@ public readonly files: FilesConfiguration;
 
 - *Type:* projen.javascript.biome_config.FilesConfiguration
 
-The configuration of the filesystem.
+The file handling configuration.
 
 ---
 
@@ -209,7 +209,7 @@ public readonly formatter: FormatterConfiguration;
 
 - *Type:* projen.javascript.biome_config.FormatterConfiguration
 
-The configuration of the formatter.
+The formatter configuration.
 
 ---
 
@@ -221,7 +221,7 @@ public readonly graphql: GraphqlConfiguration;
 
 - *Type:* projen.javascript.biome_config.GraphqlConfiguration
 
-Specific configuration for the GraphQL language.
+Configuration specific to GraphQL.
 
 ---
 
@@ -233,7 +233,7 @@ public readonly grit: GritConfiguration;
 
 - *Type:* projen.javascript.biome_config.GritConfiguration
 
-Specific configuration for the GraphQL language.
+Configuration specific to GritQL.
 
 ---
 
@@ -245,7 +245,7 @@ public readonly html: HtmlConfiguration;
 
 - *Type:* projen.javascript.biome_config.HtmlConfiguration
 
-Specific configuration for the HTML language.
+Configuration specific to HTML.
 
 ---
 
@@ -257,7 +257,7 @@ public readonly javascript: JsConfiguration;
 
 - *Type:* projen.javascript.biome_config.JsConfiguration
 
-Specific configuration for the JavaScript language.
+Configuration specific to JavaScript.
 
 ---
 
@@ -269,7 +269,7 @@ public readonly json: JsonConfiguration;
 
 - *Type:* projen.javascript.biome_config.JsonConfiguration
 
-Specific configuration for the Json language.
+Configuration specific to JSON.
 
 ---
 
@@ -281,7 +281,7 @@ public readonly linter: LinterConfiguration;
 
 - *Type:* projen.javascript.biome_config.LinterConfiguration
 
-The configuration for the linter.
+The linter configuration.
 
 ---
 
@@ -293,7 +293,7 @@ public readonly overrides: OverridePattern[];
 
 - *Type:* projen.javascript.biome_config.OverridePattern[]
 
-A list of granular patterns that should be applied only to a sub set of files.
+A list of granular patterns applied only to a subset of files.
 
 ---
 
@@ -343,13 +343,13 @@ public readonly vcs: VcsConfiguration;
 
 - *Type:* projen.javascript.biome_config.VcsConfiguration
 
-The configuration of the VCS integration.
+The version control integration configuration.
 
 ---
 
 ### CssAssistConfiguration <a name="CssAssistConfiguration" id="projen.javascript.biome_config.CssAssistConfiguration"></a>
 
-Options that changes how the CSS assist behaves.
+Options that change how CSS assist behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.CssAssistConfiguration.Initializer"></a>
 
@@ -363,7 +363,7 @@ const cssAssistConfiguration: javascript.biome_config.CssAssistConfiguration = {
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.CssAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist for CSS files. |
+| <code><a href="#projen.javascript.biome_config.CssAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for CSS files. |
 
 ---
 
@@ -375,7 +375,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the assist for CSS files.
+Controls assist actions for CSS files.
 
 ---
 
@@ -465,7 +465,7 @@ CSS parsing options.
 
 ### CssFormatterConfiguration <a name="CssFormatterConfiguration" id="projen.javascript.biome_config.CssFormatterConfiguration"></a>
 
-Options that changes how the CSS formatter behaves.
+Options that change how the CSS formatter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.CssFormatterConfiguration.Initializer"></a>
 
@@ -479,12 +479,12 @@ const cssFormatterConfiguration: javascript.biome_config.CssFormatterConfigurati
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for CSS (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to CSS (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to CSS (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to CSS (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to CSS (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Controls spaces inside CSS parentheses and square brackets when their content fits on one line. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for CSS and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to CSS and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to CSS and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to CSS and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width for CSS and languages that extend it. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in CSS code. |
 | <code><a href="#projen.javascript.biome_config.CssFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
@@ -497,13 +497,13 @@ public readonly delimiterSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
-Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+Controls spaces inside CSS parentheses and square brackets when their content fits on one line.
 
-Only applies when the content fits on a single line, and empty
-delimiters are not affected. For CSS, affects parentheses (e.g., `rgb( 0, 0, 0 )`) and
-square brackets (e.g., `[ data-attr ]`). Defaults to false.
+When enabled, `rgb(0, 0, 0)` becomes `rgb( 0, 0, 0 )` and `[data-attr]` becomes
+`[ data-attr ]`. Empty delimiters are unchanged.
+
+If unset, inherits the global delimiter spacing setting.
 
 ---
 
@@ -515,7 +515,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for CSS (and its super languages) files.
+Controls the formatter for CSS and languages that extend it.
 
 ---
 
@@ -527,7 +527,10 @@ public readonly indentStyle: IndentStyle;
 
 - *Type:* projen.javascript.biome_config.IndentStyle
 
-The indent style applied to CSS (and its super languages) files.
+The indent style applied to CSS and languages that extend it.
+
+If unset, inherits the global
+indentation style.
 
 ---
 
@@ -538,11 +541,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to CSS (and its super languages) files.
+The indentation width applied to CSS and languages that extend it.
 
-Default to 2.
+If unset, inherits the
+global indentation width.
 
 ---
 
@@ -554,9 +557,10 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to CSS (and its super languages) files.
+The line ending applied to CSS and languages that extend it.
 
-`auto` uses CRLF on Windows and LF on other platforms.
+If unset, inherits the global
+line ending.
 
 ---
 
@@ -567,11 +571,11 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to CSS (and its super languages) files.
+The maximum line width for CSS and languages that extend it.
 
-Defaults to 80.
+If unset, inherits the global
+line width.
 
 ---
 
@@ -582,11 +586,11 @@ public readonly quoteStyle: QuoteStyle;
 ```
 
 - *Type:* projen.javascript.biome_config.QuoteStyle
-- *Default:* double.
+- *Default:* double`.
 
 The type of quotes used in CSS code.
 
-Defaults to double.
+Defaults to `double`.
 
 ---
 
@@ -597,24 +601,17 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+If unset, inherits the global
+trailing newline setting.
 
 ---
 
 ### CssLinterConfiguration <a name="CssLinterConfiguration" id="projen.javascript.biome_config.CssLinterConfiguration"></a>
 
-Options that changes how the CSS linter behaves.
+Options that change how the CSS linter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.CssLinterConfiguration.Initializer"></a>
 
@@ -628,7 +625,7 @@ const cssLinterConfiguration: javascript.biome_config.CssLinterConfiguration = {
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.CssLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for CSS files. |
+| <code><a href="#projen.javascript.biome_config.CssLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for CSS files. |
 
 ---
 
@@ -640,13 +637,13 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the linter for CSS files.
+Controls the linter for CSS files.
 
 ---
 
 ### CssParserConfiguration <a name="CssParserConfiguration" id="projen.javascript.biome_config.CssParserConfiguration"></a>
 
-Options that changes how the CSS parser behaves.
+Options that change how the CSS parser behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.CssParserConfiguration.Initializer"></a>
 
@@ -660,8 +657,8 @@ const cssParserConfiguration: javascript.biome_config.CssParserConfiguration = {
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.allowWrongLineComments">allowWrongLineComments</a></code> | <code>boolean</code> | Allow comments to appear on incorrect lines in `.css` files. |
-| <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.cssModules">cssModules</a></code> | <code>boolean</code> | Enables parsing of CSS Modules specific features. |
+| <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.allowWrongLineComments">allowWrongLineComments</a></code> | <code>boolean</code> | Allows comments to appear on incorrect lines in `.css` files. |
+| <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.cssModules">cssModules</a></code> | <code>boolean</code> | Enables parsing of CSS Modules-specific features. |
 | <code><a href="#projen.javascript.biome_config.CssParserConfiguration.property.tailwindDirectives">tailwindDirectives</a></code> | <code>boolean</code> | Enables parsing of Tailwind CSS 4.0 directives and functions. |
 
 ---
@@ -674,7 +671,7 @@ public readonly allowWrongLineComments: boolean;
 
 - *Type:* boolean
 
-Allow comments to appear on incorrect lines in `.css` files.
+Allows comments to appear on incorrect lines in `.css` files.
 
 ---
 
@@ -686,7 +683,7 @@ public readonly cssModules: boolean;
 
 - *Type:* boolean
 
-Enables parsing of CSS Modules specific features.
+Enables parsing of CSS Modules-specific features.
 
 Enable this feature only
 when your files don't end in `.module.css`.
@@ -707,7 +704,7 @@ Enables parsing of Tailwind CSS 4.0 directives and functions.
 
 ### FilesConfiguration <a name="FilesConfiguration" id="projen.javascript.biome_config.FilesConfiguration"></a>
 
-The configuration of the filesystem.
+The file handling configuration.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.FilesConfiguration.Initializer"></a>
 
@@ -722,9 +719,9 @@ const filesConfiguration: javascript.biome_config.FilesConfiguration = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.experimentalScannerIgnores">experimentalScannerIgnores</a></code> | <code>string[]</code> | **Deprecated:** Please use _force-ignore syntax_ in `files.includes` instead: <https://biomejs.dev/reference/configuration/#filesincludes>. |
-| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.ignoreUnknown">ignoreUnknown</a></code> | <code>boolean</code> | Tells Biome to not emit diagnostics when handling files that it doesn't know. |
+| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.ignoreUnknown">ignoreUnknown</a></code> | <code>boolean</code> | Prevents Biome from emitting diagnostics for unrecognized file types. |
 | <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
-| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.maxSize">maxSize</a></code> | <code>number</code> | The maximum allowed size for source code files in bytes. |
+| <code><a href="#projen.javascript.biome_config.FilesConfiguration.property.maxSize">maxSize</a></code> | <code>number</code> | The maximum source file size in bytes. |
 
 ---
 
@@ -751,7 +748,7 @@ public readonly ignoreUnknown: boolean;
 
 - *Type:* boolean
 
-Tells Biome to not emit diagnostics when handling files that it doesn't know.
+Prevents Biome from emitting diagnostics for unrecognized file types.
 
 ---
 
@@ -765,8 +762,8 @@ public readonly includes: string[];
 
 A list of glob patterns.
 
-Biome will handle only those files/folders that will
-match these patterns.
+Biome handles only files and directories that match these
+patterns.
 
 ---
 
@@ -777,12 +774,11 @@ public readonly maxSize: number;
 ```
 
 - *Type:* number
-- *Default:* 1 MiB
+- *Default:* 1 MiB`.
 
-The maximum allowed size for source code files in bytes.
+The maximum source file size in bytes.
 
-Files above
-this limit will be ignored for performance reasons. Defaults to 1 MiB
+Biome ignores larger files. Defaults to `1 MiB`.
 
 ---
 
@@ -802,20 +798,20 @@ const formatterConfiguration: javascript.biome_config.FormatterConfiguration = {
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in HTML-ish languages. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements). |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in HTML-like languages. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Places the `>` of a multiline HTML or JSX element at the end of the last line instead of on the next line. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside braces in object literals. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Controls spaces immediately inside supported delimiters when their content fits on one line. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Whether formatting should be allowed to proceed if a given file has syntax errors. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Controls whether arrays and objects are formatted on one line or multiple lines. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Allows formatting files that contain syntax errors when set to `true`. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation, 2 by default. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | Uses tabs or spaces for indentation. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | Selects the line ending. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width. |
 | <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
-| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.useEditorconfig">useEditorconfig</a></code> | <code>boolean</code> | Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration. |
+| <code><a href="#projen.javascript.biome_config.FormatterConfiguration.property.useEditorconfig">useEditorconfig</a></code> | <code>boolean</code> | Uses `.editorconfig` files to configure the formatter. Settings in `biome.json` or `biome.jsonc` override `.editorconfig` settings. Defaults to `false`. |
 
 ---
 
@@ -826,11 +822,11 @@ public readonly attributePosition: AttributePosition;
 ```
 
 - *Type:* projen.javascript.biome_config.AttributePosition
-- *Default:* auto.
+- *Default:* auto`.
 
-The attribute position style in HTML-ish languages.
+The attribute position style in HTML-like languages.
 
-Defaults to auto.
+Defaults to `auto`.
 
 ---
 
@@ -841,8 +837,11 @@ public readonly bracketSameLine: boolean;
 ```
 
 - *Type:* boolean
+- *Default:* false`.
 
-Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
+Places the `>` of a multiline HTML or JSX element at the end of the last line instead of on the next line.
+
+Self-closing elements are unaffected. Defaults to `false`.
 
 ---
 
@@ -853,11 +852,11 @@ public readonly bracketSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
+- *Default:* true`.
 
-Whether to insert spaces around brackets in object literals.
+Whether to insert spaces inside braces in object literals.
 
-Defaults to true.
+Defaults to `true`.
 
 ---
 
@@ -868,13 +867,13 @@ public readonly delimiterSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
+- *Default:* false`.
 
-Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations.
+Controls spaces immediately inside supported delimiters when their content fits on one line.
 
-Spaces are not added before the opening delimiter, and empty delimiters
-are not affected. Only applies when the content fits on a single line. The specific
-delimiters affected depend on the language. Defaults to false.
+It doesn't add spaces before opening delimiters or inside empty delimiters.
+
+The affected delimiters vary by language. Defaults to `false`.
 
 ---
 
@@ -895,15 +894,20 @@ public readonly expand: Expand;
 ```
 
 - *Type:* projen.javascript.biome_config.Expand
-- *Default:* auto".
+- *Default:* auto`.
 
-Whether to expand arrays and objects on multiple lines.
+Controls whether arrays and objects are formatted on one line or multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-and array literals are formatted on a single line if it fits in the line.
-When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-When set to `never`, these literals are formatted on a single line if it fits in the line.
-When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+`auto` formats objects on multiple lines if the first property has a newline, and arrays on
+one line if they fit.
+
+`always` formats arrays and objects on multiple lines.
+
+`never` formats arrays and objects on one line if they fit.
+
+Defaults to `auto`.
+
+When formatting `package.json`, Biome uses `always` unless configured otherwise.
 
 ---
 
@@ -914,8 +918,11 @@ public readonly formatWithErrors: boolean;
 ```
 
 - *Type:* boolean
+- *Default:* false`.
 
-Whether formatting should be allowed to proceed if a given file has syntax errors.
+Allows formatting files that contain syntax errors when set to `true`.
+
+Defaults to `false`.
 
 ---
 
@@ -941,8 +948,11 @@ public readonly indentStyle: IndentStyle;
 ```
 
 - *Type:* projen.javascript.biome_config.IndentStyle
+- *Default:* tab`.
 
-The indent style.
+Uses tabs or spaces for indentation.
+
+Defaults to `tab`.
 
 ---
 
@@ -953,8 +963,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
+- *Default:* 2`.
 
-The size of the indentation, 2 by default.
+The indentation width.
+
+Defaults to `2`.
 
 ---
 
@@ -965,8 +978,11 @@ public readonly lineEnding: LineEnding;
 ```
 
 - *Type:* projen.javascript.biome_config.LineEnding
+- *Default:* lf`.
 
-The type of line ending.
+Selects the line ending.
+
+`auto` uses the platform convention. Defaults to `lf`.
 
 ---
 
@@ -977,11 +993,11 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
+- *Default:* 80`.
 
-What's the max width of a line.
+The maximum line width.
 
-Defaults to 80.
+Defaults to `80`.
 
 ---
 
@@ -992,18 +1008,12 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
+- *Default:* true`; disabling
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+Defaults to `true`; disabling
+this option can cause compatibility problems with other tools.
 
 ---
 
@@ -1014,16 +1024,15 @@ public readonly useEditorconfig: boolean;
 ```
 
 - *Type:* boolean
+- *Default:* false`.
 
-Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration.
-
-Default: `false`.
+Uses `.editorconfig` files to configure the formatter. Settings in `biome.json` or `biome.jsonc` override `.editorconfig` settings. Defaults to `false`.
 
 ---
 
 ### GraphqlAssistConfiguration <a name="GraphqlAssistConfiguration" id="projen.javascript.biome_config.GraphqlAssistConfiguration"></a>
 
-Options that changes how the GraphQL linter behaves.
+Options that change how GraphQL assist behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.GraphqlAssistConfiguration.Initializer"></a>
 
@@ -1037,7 +1046,7 @@ const graphqlAssistConfiguration: javascript.biome_config.GraphqlAssistConfigura
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GraphqlAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for GraphQL files. |
 
 ---
 
@@ -1049,7 +1058,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for GraphQL files.
+Controls assist actions for GraphQL files.
 
 ---
 
@@ -1069,9 +1078,9 @@ const graphqlConfiguration: javascript.biome_config.GraphqlConfiguration = { ...
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GraphqlConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.GraphqlAssistConfiguration</code> | Assist options. |
+| <code><a href="#projen.javascript.biome_config.GraphqlConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.GraphqlAssistConfiguration</code> | GraphQL assist options. |
 | <code><a href="#projen.javascript.biome_config.GraphqlConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.GraphqlFormatterConfiguration</code> | GraphQL formatter options. |
-| <code><a href="#projen.javascript.biome_config.GraphqlConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.GraphqlLinterConfiguration</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.GraphqlConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.GraphqlLinterConfiguration</code> | GraphQL linter options. |
 
 ---
 
@@ -1083,7 +1092,7 @@ public readonly assist: GraphqlAssistConfiguration;
 
 - *Type:* projen.javascript.biome_config.GraphqlAssistConfiguration
 
-Assist options.
+GraphQL assist options.
 
 ---
 
@@ -1107,11 +1116,13 @@ public readonly linter: GraphqlLinterConfiguration;
 
 - *Type:* projen.javascript.biome_config.GraphqlLinterConfiguration
 
+GraphQL linter options.
+
 ---
 
 ### GraphqlFormatterConfiguration <a name="GraphqlFormatterConfiguration" id="projen.javascript.biome_config.GraphqlFormatterConfiguration"></a>
 
-Options that changes how the GraphQL formatter behaves.
+Options that change how the GraphQL formatter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.GraphqlFormatterConfiguration.Initializer"></a>
 
@@ -1125,12 +1136,12 @@ const graphqlFormatterConfiguration: javascript.biome_config.GraphqlFormatterCon
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
-| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside braces in object literals. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for GraphQL files. |
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to GraphQL files. |
-| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to GraphQL files. |
-| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to GraphQL files. |
-| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width for GraphQL files. |
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in GraphQL code. |
 | <code><a href="#projen.javascript.biome_config.GraphqlFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
@@ -1143,11 +1154,11 @@ public readonly bracketSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
-Whether to insert spaces around brackets in object literals.
+Whether to insert spaces inside braces in object literals.
 
-Defaults to true.
+If unset, inherits the global
+bracket spacing setting.
 
 ---
 
@@ -1159,7 +1170,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for GraphQL files.
+Controls the formatter for GraphQL files.
 
 ---
 
@@ -1173,6 +1184,8 @@ public readonly indentStyle: IndentStyle;
 
 The indent style applied to GraphQL files.
 
+If unset, inherits the global indentation style.
+
 ---
 
 ##### `indentWidth`<sup>Optional</sup> <a name="indentWidth" id="projen.javascript.biome_config.GraphqlFormatterConfiguration.property.indentWidth"></a>
@@ -1182,11 +1195,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to GraphQL files.
+The indentation width applied to GraphQL files.
 
-Default to 2.
+If unset, inherits the global indentation
+width.
 
 ---
 
@@ -1198,9 +1211,9 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to GraphQL files.
+The line ending applied to GraphQL files.
 
-`auto` uses CRLF on Windows and LF on other platforms.
+If unset, inherits the global line ending.
 
 ---
 
@@ -1211,11 +1224,10 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to GraphQL files.
+The maximum line width for GraphQL files.
 
-Defaults to 80.
+If unset, inherits the global line width.
 
 ---
 
@@ -1226,11 +1238,11 @@ public readonly quoteStyle: QuoteStyle;
 ```
 
 - *Type:* projen.javascript.biome_config.QuoteStyle
-- *Default:* double.
+- *Default:* double`.
 
 The type of quotes used in GraphQL code.
 
-Defaults to double.
+Defaults to `double`.
 
 ---
 
@@ -1241,18 +1253,11 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+If unset, inherits the global
+trailing newline setting.
 
 ---
 
@@ -1272,7 +1277,7 @@ const graphqlLinterConfiguration: javascript.biome_config.GraphqlLinterConfigura
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GraphqlLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for GraphQL files. |
+| <code><a href="#projen.javascript.biome_config.GraphqlLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for GraphQL files. |
 
 ---
 
@@ -1284,11 +1289,13 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for GraphQL files.
+Controls the linter for GraphQL files.
 
 ---
 
 ### GritAssistConfiguration <a name="GritAssistConfiguration" id="projen.javascript.biome_config.GritAssistConfiguration"></a>
+
+Options that change how GritQL assist behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.GritAssistConfiguration.Initializer"></a>
 
@@ -1302,7 +1309,7 @@ const gritAssistConfiguration: javascript.biome_config.GritAssistConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GritAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist functionality for Grit files. |
+| <code><a href="#projen.javascript.biome_config.GritAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for GritQL files. |
 
 ---
 
@@ -1314,7 +1321,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the assist functionality for Grit files.
+Controls assist actions for GritQL files.
 
 ---
 
@@ -1334,9 +1341,9 @@ const gritConfiguration: javascript.biome_config.GritConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.GritAssistConfiguration</code> | Assist options. |
-| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.GritFormatterConfiguration</code> | Formatting options. |
-| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.GritLinterConfiguration</code> | Formatting options. |
+| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.GritAssistConfiguration</code> | GritQL assist options. |
+| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.GritFormatterConfiguration</code> | GritQL formatter options. |
+| <code><a href="#projen.javascript.biome_config.GritConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.GritLinterConfiguration</code> | GritQL linter options. |
 
 ---
 
@@ -1348,7 +1355,7 @@ public readonly assist: GritAssistConfiguration;
 
 - *Type:* projen.javascript.biome_config.GritAssistConfiguration
 
-Assist options.
+GritQL assist options.
 
 ---
 
@@ -1360,7 +1367,7 @@ public readonly formatter: GritFormatterConfiguration;
 
 - *Type:* projen.javascript.biome_config.GritFormatterConfiguration
 
-Formatting options.
+GritQL formatter options.
 
 ---
 
@@ -1372,11 +1379,13 @@ public readonly linter: GritLinterConfiguration;
 
 - *Type:* projen.javascript.biome_config.GritLinterConfiguration
 
-Formatting options.
+GritQL linter options.
 
 ---
 
 ### GritFormatterConfiguration <a name="GritFormatterConfiguration" id="projen.javascript.biome_config.GritFormatterConfiguration"></a>
+
+Options that change how the GritQL formatter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.GritFormatterConfiguration.Initializer"></a>
 
@@ -1390,11 +1399,11 @@ const gritFormatterConfiguration: javascript.biome_config.GritFormatterConfigura
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for Grit files. |
-| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to Grit files. |
-| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to Grit files. |
-| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to Grit files. |
-| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to Grit files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for GritQL files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to GritQL files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to GritQL files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to GritQL files. |
+| <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width for GritQL files. |
 | <code><a href="#projen.javascript.biome_config.GritFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
@@ -1407,7 +1416,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for Grit files.
+Controls the formatter for GritQL files.
 
 ---
 
@@ -1419,7 +1428,9 @@ public readonly indentStyle: IndentStyle;
 
 - *Type:* projen.javascript.biome_config.IndentStyle
 
-The indent style applied to Grit files.
+The indent style applied to GritQL files.
+
+If unset, inherits the global indentation style.
 
 ---
 
@@ -1430,11 +1441,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to Grit files.
+The indentation width applied to GritQL files.
 
-Default to 2.
+If unset, inherits the global indentation
+width.
 
 ---
 
@@ -1446,7 +1457,9 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to Grit files.
+The line ending applied to GritQL files.
+
+If unset, inherits the global line ending.
 
 ---
 
@@ -1457,11 +1470,10 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to Grit files.
+The maximum line width for GritQL files.
 
-Defaults to 80.
+If unset, inherits the global line width.
 
 ---
 
@@ -1472,22 +1484,17 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+If unset, inherits the global
+trailing newline setting.
 
 ---
 
 ### GritLinterConfiguration <a name="GritLinterConfiguration" id="projen.javascript.biome_config.GritLinterConfiguration"></a>
+
+Options that change how the GritQL linter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.GritLinterConfiguration.Initializer"></a>
 
@@ -1501,7 +1508,7 @@ const gritLinterConfiguration: javascript.biome_config.GritLinterConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.GritLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for Grit files. |
+| <code><a href="#projen.javascript.biome_config.GritLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for GritQL files. |
 
 ---
 
@@ -1513,13 +1520,13 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the linter for Grit files.
+Controls the linter for GritQL files.
 
 ---
 
 ### HtmlAssistConfiguration <a name="HtmlAssistConfiguration" id="projen.javascript.biome_config.HtmlAssistConfiguration"></a>
 
-Options that changes how the HTML assist behaves.
+Options that change how HTML assist behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlAssistConfiguration.Initializer"></a>
 
@@ -1533,7 +1540,7 @@ const htmlAssistConfiguration: javascript.biome_config.HtmlAssistConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.HtmlAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist for HTML (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.HtmlAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for HTML and languages that extend it. |
 
 ---
 
@@ -1545,7 +1552,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the assist for HTML (and its super languages) files.
+Controls assist actions for HTML and languages that extend it.
 
 ---
 
@@ -1565,8 +1572,8 @@ const htmlConfiguration: javascript.biome_config.HtmlConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.HtmlAssistConfiguration</code> | *No description.* |
-| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.experimentalFullSupportEnabled">experimentalFullSupportEnabled</a></code> | <code>boolean</code> | Enables full support for HTML, Vue, Svelte and Astro files. |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.assist">assist</a></code> | <code>projen.javascript.biome_config.HtmlAssistConfiguration</code> | HTML assist options. |
+| <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.experimentalFullSupportEnabled">experimentalFullSupportEnabled</a></code> | <code>boolean</code> | Enables full support for HTML, Vue, Svelte, and Astro files. |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.formatter">formatter</a></code> | <code>projen.javascript.biome_config.HtmlFormatterConfiguration</code> | HTML formatter options. |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.linter">linter</a></code> | <code>projen.javascript.biome_config.HtmlLinterConfiguration</code> | HTML linter options. |
 | <code><a href="#projen.javascript.biome_config.HtmlConfiguration.property.parser">parser</a></code> | <code>projen.javascript.biome_config.HtmlParserConfiguration</code> | HTML parsing options. |
@@ -1581,6 +1588,8 @@ public readonly assist: HtmlAssistConfiguration;
 
 - *Type:* projen.javascript.biome_config.HtmlAssistConfiguration
 
+HTML assist options.
+
 ---
 
 ##### `experimentalFullSupportEnabled`<sup>Optional</sup> <a name="experimentalFullSupportEnabled" id="projen.javascript.biome_config.HtmlConfiguration.property.experimentalFullSupportEnabled"></a>
@@ -1591,7 +1600,7 @@ public readonly experimentalFullSupportEnabled: boolean;
 
 - *Type:* boolean
 
-Enables full support for HTML, Vue, Svelte and Astro files.
+Enables full support for HTML, Vue, Svelte, and Astro files.
 
 ---
 
@@ -1633,7 +1642,7 @@ HTML parsing options.
 
 ### HtmlFormatterConfiguration <a name="HtmlFormatterConfiguration" id="projen.javascript.biome_config.HtmlFormatterConfiguration"></a>
 
-Options that changes how the HTML formatter behaves.
+Options that change how the HTML formatter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlFormatterConfiguration.Initializer"></a>
 
@@ -1648,16 +1657,16 @@ const htmlFormatterConfiguration: javascript.biome_config.HtmlFormatterConfigura
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in HTML elements. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Whether to hug the closing bracket of multiline HTML tags to the end of the last line, rather than being alone on the following line. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for HTML (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentScriptAndStyle">indentScriptAndStyle</a></code> | <code>boolean</code> | Whether to indent the `<script>` and `<style>` tags for HTML (and its super languages). |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to HTML (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to HTML (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to HTML (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to HTML (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.selfCloseVoidElements">selfCloseVoidElements</a></code> | <code>projen.javascript.biome_config.SelfCloseVoidElements</code> | Whether void elements should be self-closed. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Whether to place the closing bracket of a multiline HTML tag at the end of the last line instead of on its own line. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentScriptAndStyle">indentScriptAndStyle</a></code> | <code>boolean</code> | Whether to indent `<script>` and `<style>` tags in HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width for HTML and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.selfCloseVoidElements">selfCloseVoidElements</a></code> | <code>projen.javascript.biome_config.SelfCloseVoidElements</code> | Controls whether void elements are self-closed. |
 | <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
-| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.whitespaceSensitivity">whitespaceSensitivity</a></code> | <code>projen.javascript.biome_config.WhitespaceSensitivity</code> | Whether to account for whitespace sensitivity when formatting HTML (and its super languages). |
+| <code><a href="#projen.javascript.biome_config.HtmlFormatterConfiguration.property.whitespaceSensitivity">whitespaceSensitivity</a></code> | <code>projen.javascript.biome_config.WhitespaceSensitivity</code> | Whether to account for whitespace sensitivity when formatting HTML and languages that extend it. |
 
 ---
 
@@ -1668,11 +1677,11 @@ public readonly attributePosition: AttributePosition;
 ```
 
 - *Type:* projen.javascript.biome_config.AttributePosition
-- *Default:* auto.
 
 The attribute position style in HTML elements.
 
-Defaults to auto.
+If unset, inherits the global attribute
+position setting.
 
 ---
 
@@ -1683,11 +1692,10 @@ public readonly bracketSameLine: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
-Whether to hug the closing bracket of multiline HTML tags to the end of the last line, rather than being alone on the following line.
+Whether to place the closing bracket of a multiline HTML tag at the end of the last line instead of on its own line.
 
-Defaults to false.
+If unset, inherits the global `bracketSameLine` setting.
 
 ---
 
@@ -1699,7 +1707,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for HTML (and its super languages) files.
+Controls the formatter for HTML and languages that extend it.
 
 ---
 
@@ -1710,11 +1718,11 @@ public readonly indentScriptAndStyle: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
+- *Default:* false`.
 
-Whether to indent the `<script>` and `<style>` tags for HTML (and its super languages).
+Whether to indent `<script>` and `<style>` tags in HTML and languages that extend it.
 
-Defaults to false.
+Defaults to `false`.
 
 ---
 
@@ -1726,7 +1734,10 @@ public readonly indentStyle: IndentStyle;
 
 - *Type:* projen.javascript.biome_config.IndentStyle
 
-The indent style applied to HTML (and its super languages) files.
+The indent style applied to HTML and languages that extend it.
+
+If unset, inherits the global
+indentation style.
 
 ---
 
@@ -1737,11 +1748,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to HTML (and its super languages) files.
+The indentation width applied to HTML and languages that extend it.
 
-Default to 2.
+If unset, inherits the
+global indentation width.
 
 ---
 
@@ -1753,9 +1764,10 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to HTML (and its super languages) files.
+The line ending applied to HTML and languages that extend it.
 
-`auto` uses CRLF on Windows and LF on other platforms.
+If unset, inherits the global
+line ending.
 
 ---
 
@@ -1766,11 +1778,11 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to HTML (and its super languages) files.
+The maximum line width for HTML and languages that extend it.
 
-Defaults to 80.
+If unset, inherits the global
+line width.
 
 ---
 
@@ -1781,11 +1793,11 @@ public readonly selfCloseVoidElements: SelfCloseVoidElements;
 ```
 
 - *Type:* projen.javascript.biome_config.SelfCloseVoidElements
-- *Default:* never.
+- *Default:* never`.
 
-Whether void elements should be self-closed.
+Controls whether void elements are self-closed.
 
-Defaults to never.
+Defaults to `never`.
 
 ---
 
@@ -1796,18 +1808,12 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+Unlike other language-specific
+trailing newline settings, this option defaults to `true` instead of inheriting the global
+setting.
 
 ---
 
@@ -1818,17 +1824,17 @@ public readonly whitespaceSensitivity: WhitespaceSensitivity;
 ```
 
 - *Type:* projen.javascript.biome_config.WhitespaceSensitivity
-- *Default:* css".
+- *Default:* css`.
 
-Whether to account for whitespace sensitivity when formatting HTML (and its super languages).
+Whether to account for whitespace sensitivity when formatting HTML and languages that extend it.
 
-Defaults to "css".
+Defaults to `css`.
 
 ---
 
 ### HtmlLinterConfiguration <a name="HtmlLinterConfiguration" id="projen.javascript.biome_config.HtmlLinterConfiguration"></a>
 
-Options that changes how the HTML linter behaves.
+Options that change how the HTML linter behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlLinterConfiguration.Initializer"></a>
 
@@ -1842,7 +1848,7 @@ const htmlLinterConfiguration: javascript.biome_config.HtmlLinterConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.HtmlLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for HTML (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.HtmlLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for HTML and languages that extend it. |
 
 ---
 
@@ -1854,13 +1860,13 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the linter for HTML (and its super languages) files.
+Controls the linter for HTML and languages that extend it.
 
 ---
 
 ### HtmlParserConfiguration <a name="HtmlParserConfiguration" id="projen.javascript.biome_config.HtmlParserConfiguration"></a>
 
-Options that changes how the HTML parser behaves.
+Options that change how the HTML parser behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.HtmlParserConfiguration.Initializer"></a>
 
@@ -1874,8 +1880,8 @@ const htmlParserConfiguration: javascript.biome_config.HtmlParserConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.interpolation">interpolation</a></code> | <code>boolean</code> | Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files. |
-| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.vue">vue</a></code> | <code>boolean</code> | Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly. |
+| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.interpolation">interpolation</a></code> | <code>boolean</code> | Enables parsing double text expressions such as `{{ expression }}` inside `.html` files. |
+| <code><a href="#projen.javascript.biome_config.HtmlParserConfiguration.property.vue">vue</a></code> | <code>boolean</code> | Enables parsing Vue syntax (`v-if`, `v-bind`, etc.) in `.html` files. Enabling this option also enables `interpolation` implicitly. |
 
 ---
 
@@ -1887,7 +1893,7 @@ public readonly interpolation: boolean;
 
 - *Type:* boolean
 
-Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files.
+Enables parsing double text expressions such as `{{ expression }}` inside `.html` files.
 
 ---
 
@@ -1899,7 +1905,7 @@ public readonly vue: boolean;
 
 - *Type:* boolean
 
-Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly.
+Enables parsing Vue syntax (`v-if`, `v-bind`, etc.) in `.html` files. Enabling this option also enables `interpolation` implicitly.
 
 Biome will already automatically enable Vue parsing in `.vue` files, so you probably don't need
 to enable this option. This only affects `.html` files, and does not change how `.vue`, `.svelte`,
@@ -1923,7 +1929,7 @@ const jsAssistConfiguration: javascript.biome_config.JsAssistConfiguration = { .
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist for JavaScript (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for JavaScript and languages that extend it. |
 
 ---
 
@@ -1935,7 +1941,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the assist for JavaScript (and its super languages) files.
+Controls assist actions for JavaScript and languages that extend it.
 
 ---
 
@@ -2080,23 +2086,23 @@ const jsFormatterConfiguration: javascript.biome_config.JsFormatterConfiguration
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.arrowParentheses">arrowParentheses</a></code> | <code>projen.javascript.biome_config.ArrowParentheses</code> | Whether to add non-necessary parentheses to arrow functions. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.arrowParentheses">arrowParentheses</a></code> | <code>projen.javascript.biome_config.ArrowParentheses</code> | Whether to add parentheses around arrow function parameters. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style in JSX elements. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for JavaScript (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JavaScript (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to JavaScript (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside braces in object literals. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Controls spaces immediately inside supported JavaScript and TypeScript delimiters when their content fits on one line. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for JavaScript and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Uses the same `auto`, `always`, and `never` behavior as the global expansion setting. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JavaScript and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to JavaScript and languages that extend it. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.jsxQuoteStyle">jsxQuoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JSX. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to JavaScript (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to JavaScript (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to JavaScript and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width applied to JavaScript and languages that extend it. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.operatorLinebreak">operatorLinebreak</a></code> | <code>projen.javascript.biome_config.OperatorLinebreak</code> | When breaking binary expressions into multiple lines, whether to break them before or after the binary operator. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteProperties">quoteProperties</a></code> | <code>projen.javascript.biome_config.QuoteProperties</code> | When properties in objects are quoted. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteProperties">quoteProperties</a></code> | <code>projen.javascript.biome_config.QuoteProperties</code> | Controls when object properties are quoted. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.quoteStyle">quoteStyle</a></code> | <code>projen.javascript.biome_config.QuoteStyle</code> | The type of quotes used in JavaScript code. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.semicolons">semicolons</a></code> | <code>projen.javascript.biome_config.Semicolons</code> | Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI. |
-| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.semicolons">semicolons</a></code> | <code>projen.javascript.biome_config.Semicolons</code> | Prints semicolons after every statement or only where needed to avoid automatic semicolon insertion hazards. |
+| <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsTrailingCommas</code> | Prints trailing commas wherever possible in multiline comma-separated structures. |
 | <code><a href="#projen.javascript.biome_config.JsFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
@@ -2108,11 +2114,11 @@ public readonly arrowParentheses: ArrowParentheses;
 ```
 
 - *Type:* projen.javascript.biome_config.ArrowParentheses
-- *Default:* always".
+- *Default:* always`.
 
-Whether to add non-necessary parentheses to arrow functions.
+Whether to add parentheses around arrow function parameters.
 
-Defaults to "always".
+Defaults to `always`.
 
 ---
 
@@ -2123,11 +2129,11 @@ public readonly attributePosition: AttributePosition;
 ```
 
 - *Type:* projen.javascript.biome_config.AttributePosition
-- *Default:* auto.
 
 The attribute position style in JSX elements.
 
-Defaults to auto.
+If unset, inherits the global attribute
+position setting.
 
 ---
 
@@ -2138,11 +2144,11 @@ public readonly bracketSameLine: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
 Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line.
 
-Defaults to false.
+If unset, inherits the global bracket
+placement setting.
 
 ---
 
@@ -2153,11 +2159,11 @@ public readonly bracketSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
-Whether to insert spaces around brackets in object literals.
+Whether to insert spaces inside braces in object literals.
 
-Defaults to true.
+If unset, inherits the global
+bracket spacing setting.
 
 ---
 
@@ -2168,18 +2174,17 @@ public readonly delimiterSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
-Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+Controls spaces immediately inside supported JavaScript and TypeScript delimiters when their content fits on one line.
 
-Only applies when the content fits on a single line. Spaces are not
-added before the opening delimiter (e.g., `function f()` stays `function f()`, not
-`function f ()`), and empty delimiters are not affected (e.g., `fn()` stays `fn()`).
-For JavaScript and TypeScript, affects parentheses (e.g., `foo( a, b )`), square brackets
-(e.g., `[ a, b ]`), template literal interpolations (e.g., `${ expr }`), TypeScript angle
-brackets (e.g., `foo< T >()`), JSX expression braces (e.g., `{ value }`), and the logical
-NOT operator (e.g., `! x`, but in chains only after the last one: `!! x`). Defaults to
-false.
+It doesn't add spaces before opening delimiters or inside empty
+delimiters.
+
+It affects parentheses, square brackets, template interpolations, TypeScript angle brackets,
+JSX expression braces, and logical NOT. In operator chains, only the final operator receives
+a following space.
+
+If unset, inherits the global delimiter spacing setting.
 
 ---
 
@@ -2191,7 +2196,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for JavaScript (and its super languages) files.
+Controls the formatter for JavaScript and languages that extend it.
 
 ---
 
@@ -2202,15 +2207,10 @@ public readonly expand: Expand;
 ```
 
 - *Type:* projen.javascript.biome_config.Expand
-- *Default:* auto".
 
-Whether to expand arrays and objects on multiple lines.
+Uses the same `auto`, `always`, and `never` behavior as the global expansion setting.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-and array literals are formatted on a single line if it fits in the line.
-When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-When set to `never`, these literals are formatted on a single line if it fits in the line.
-When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+If unset, inherits the global expansion setting.
 
 ---
 
@@ -2222,7 +2222,10 @@ public readonly indentStyle: IndentStyle;
 
 - *Type:* projen.javascript.biome_config.IndentStyle
 
-The indent style applied to JavaScript (and its super languages) files.
+The indent style applied to JavaScript and languages that extend it.
+
+If unset, inherits the
+global indentation style.
 
 ---
 
@@ -2233,11 +2236,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to JavaScript (and its super languages) files.
+The indentation width applied to JavaScript and languages that extend it.
 
-Default to 2.
+If unset,
+inherits the global indentation width.
 
 ---
 
@@ -2248,11 +2251,11 @@ public readonly jsxQuoteStyle: QuoteStyle;
 ```
 
 - *Type:* projen.javascript.biome_config.QuoteStyle
-- *Default:* double.
+- *Default:* double`.
 
 The type of quotes used in JSX.
 
-Defaults to double.
+Defaults to `double`.
 
 ---
 
@@ -2264,9 +2267,10 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to JavaScript (and its super languages) files.
+The line ending applied to JavaScript and languages that extend it.
 
-`auto` uses CRLF on Windows and LF on other platforms.
+If unset, inherits the
+global line ending.
 
 ---
 
@@ -2277,11 +2281,11 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to JavaScript (and its super languages) files.
+The maximum line width applied to JavaScript and languages that extend it.
 
-Defaults to 80.
+If unset,
+inherits the global line width.
 
 ---
 
@@ -2292,11 +2296,11 @@ public readonly operatorLinebreak: OperatorLinebreak;
 ```
 
 - *Type:* projen.javascript.biome_config.OperatorLinebreak
-- *Default:* after".
+- *Default:* after`.
 
 When breaking binary expressions into multiple lines, whether to break them before or after the binary operator.
 
-Defaults to "after".
+Defaults to `after`.
 
 ---
 
@@ -2307,11 +2311,12 @@ public readonly quoteProperties: QuoteProperties;
 ```
 
 - *Type:* projen.javascript.biome_config.QuoteProperties
-- *Default:* asNeeded.
+- *Default:* asNeeded` in configuration
 
-When properties in objects are quoted.
+Controls when object properties are quoted.
 
-Defaults to asNeeded.
+Defaults to `asNeeded` in configuration
+(`as-needed` on the CLI).
 
 ---
 
@@ -2322,11 +2327,11 @@ public readonly quoteStyle: QuoteStyle;
 ```
 
 - *Type:* projen.javascript.biome_config.QuoteStyle
-- *Default:* double.
+- *Default:* double`.
 
 The type of quotes used in JavaScript code.
 
-Defaults to double.
+Defaults to `double`.
 
 ---
 
@@ -2337,8 +2342,11 @@ public readonly semicolons: Semicolons;
 ```
 
 - *Type:* projen.javascript.biome_config.Semicolons
+- *Default:* always`.
 
-Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+Prints semicolons after every statement or only where needed to avoid automatic semicolon insertion hazards.
+
+Defaults to `always`.
 
 ---
 
@@ -2349,11 +2357,12 @@ public readonly trailingCommas: JsTrailingCommas;
 ```
 
 - *Type:* projen.javascript.biome_config.JsTrailingCommas
-- *Default:* all".
+- *Default:* all`.
 
-Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+Prints trailing commas wherever possible in multiline comma-separated structures.
 
-Defaults to "all".
+Defaults
+to `all`.
 
 ---
 
@@ -2364,18 +2373,11 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+If unset, inherits the global
+trailing newline setting.
 
 ---
 
@@ -2395,7 +2397,7 @@ const jsLinterConfiguration: javascript.biome_config.JsLinterConfiguration = { .
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for JavaScript (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for JavaScript and languages that extend it. |
 
 ---
 
@@ -2407,7 +2409,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the linter for JavaScript (and its super languages) files.
+Controls the linter for JavaScript and languages that extend it.
 
 ---
 
@@ -2427,7 +2429,7 @@ const jsonAssistConfiguration: javascript.biome_config.JsonAssistConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsonAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the assist for JSON (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsonAssistConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls assist actions for JSON and languages that extend it. |
 
 ---
 
@@ -2439,7 +2441,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the assist for JSON (and its super languages) files.
+Controls assist actions for JSON and languages that extend it.
 
 ---
 
@@ -2528,15 +2530,15 @@ const jsonFormatterConfiguration: javascript.biome_config.JsonFormatterConfigura
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter). |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the formatter for JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The size of the indentation applied to JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The type of line ending applied to JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | What's the max width of a line applied to JSON (and its super languages) files. |
-| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsonTrailingCommas</code> | Print trailing commas wherever possible in multi-line comma-separated syntactic structures. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside braces in object literals. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Controls spaces inside JSON square brackets when their content fits on one line. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the formatter for JSON and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Uses the same `auto`, `always`, and `never` behavior as the global expansion setting. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style applied to JSON and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.indentWidth">indentWidth</a></code> | <code>number</code> | The indentation width applied to JSON and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineEnding">lineEnding</a></code> | <code>projen.javascript.biome_config.LineEnding</code> | The line ending applied to JSON and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.lineWidth">lineWidth</a></code> | <code>number</code> | The maximum line width applied to JSON and languages that extend it. |
+| <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingCommas">trailingCommas</a></code> | <code>projen.javascript.biome_config.JsonTrailingCommas</code> | Prints trailing commas wherever possible in multiline comma-separated structures. |
 | <code><a href="#projen.javascript.biome_config.JsonFormatterConfiguration.property.trailingNewline">trailingNewline</a></code> | <code>boolean</code> | Whether to add a trailing newline at the end of the file. |
 
 ---
@@ -2548,11 +2550,11 @@ public readonly bracketSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
-Whether to insert spaces around brackets in object literals.
+Whether to insert spaces inside braces in object literals.
 
-Defaults to true.
+If unset, inherits the global
+bracket spacing setting.
 
 ---
 
@@ -2563,13 +2565,13 @@ public readonly delimiterSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
-Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter).
+Controls spaces inside JSON square brackets when their content fits on one line.
 
-Only applies when the content fits on a single line, and empty
-brackets are not affected. For JSON, affects square brackets (e.g., `[ 1, 2, 3 ]`).
-Defaults to false.
+When
+enabled, `[1, 2, 3]` becomes `[ 1, 2, 3 ]`. Empty brackets are unchanged.
+
+If unset, inherits the global delimiter spacing setting.
 
 ---
 
@@ -2581,7 +2583,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the formatter for JSON (and its super languages) files.
+Controls the formatter for JSON and languages that extend it.
 
 ---
 
@@ -2592,15 +2594,12 @@ public readonly expand: Expand;
 ```
 
 - *Type:* projen.javascript.biome_config.Expand
-- *Default:* auto".
 
-Whether to expand arrays and objects on multiple lines.
+Uses the same `auto`, `always`, and `never` behavior as the global expansion setting.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-and array literals are formatted on a single line if it fits in the line.
-When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-When set to `never`, these literals are formatted on a single line if it fits in the line.
-When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+If unset, inherits the global expansion setting.
+
+When formatting `package.json`, Biome uses `always` unless configured otherwise.
 
 ---
 
@@ -2612,7 +2611,10 @@ public readonly indentStyle: IndentStyle;
 
 - *Type:* projen.javascript.biome_config.IndentStyle
 
-The indent style applied to JSON (and its super languages) files.
+The indent style applied to JSON and languages that extend it.
+
+If unset, inherits the global
+indentation style.
 
 ---
 
@@ -2623,11 +2625,11 @@ public readonly indentWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 2.
 
-The size of the indentation applied to JSON (and its super languages) files.
+The indentation width applied to JSON and languages that extend it.
 
-Default to 2.
+If unset, inherits the
+global indentation width.
 
 ---
 
@@ -2639,9 +2641,10 @@ public readonly lineEnding: LineEnding;
 
 - *Type:* projen.javascript.biome_config.LineEnding
 
-The type of line ending applied to JSON (and its super languages) files.
+The line ending applied to JSON and languages that extend it.
 
-`auto` uses CRLF on Windows and LF on other platforms.
+If unset, inherits the global
+line ending.
 
 ---
 
@@ -2652,11 +2655,11 @@ public readonly lineWidth: number;
 ```
 
 - *Type:* number
-- *Default:* 80.
 
-What's the max width of a line applied to JSON (and its super languages) files.
+The maximum line width applied to JSON and languages that extend it.
 
-Defaults to 80.
+If unset, inherits the
+global line width.
 
 ---
 
@@ -2667,11 +2670,12 @@ public readonly trailingCommas: JsonTrailingCommas;
 ```
 
 - *Type:* projen.javascript.biome_config.JsonTrailingCommas
-- *Default:* none".
+- *Default:* none`.
 
-Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+Prints trailing commas wherever possible in multiline comma-separated structures.
 
-Defaults to "none".
+Defaults
+to `none`.
 
 ---
 
@@ -2682,18 +2686,11 @@ public readonly trailingNewline: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* true.
 
 Whether to add a trailing newline at the end of the file.
 
-Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-- https://thoughtbot.com/blog/no-newline-at-end-of-file
-- https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-- https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-
-Disable the option at your own risk.
-
-Defaults to true.
+If unset, inherits the global
+trailing newline setting.
 
 ---
 
@@ -2713,7 +2710,7 @@ const jsonLinterConfiguration: javascript.biome_config.JsonLinterConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsonLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Control the linter for JSON (and its super languages) files. |
+| <code><a href="#projen.javascript.biome_config.JsonLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Controls the linter for JSON and languages that extend it. |
 
 ---
 
@@ -2725,13 +2722,13 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Control the linter for JSON (and its super languages) files.
+Controls the linter for JSON and languages that extend it.
 
 ---
 
 ### JsonParserConfiguration <a name="JsonParserConfiguration" id="projen.javascript.biome_config.JsonParserConfiguration"></a>
 
-Options that changes how the JSON parser behaves.
+Options that change how the JSON parser behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.JsonParserConfiguration.Initializer"></a>
 
@@ -2745,8 +2742,8 @@ const jsonParserConfiguration: javascript.biome_config.JsonParserConfiguration =
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.JsonParserConfiguration.property.allowComments">allowComments</a></code> | <code>boolean</code> | Allow parsing comments in `.json` files. |
-| <code><a href="#projen.javascript.biome_config.JsonParserConfiguration.property.allowTrailingCommas">allowTrailingCommas</a></code> | <code>boolean</code> | Allow parsing trailing commas in `.json` files. |
+| <code><a href="#projen.javascript.biome_config.JsonParserConfiguration.property.allowComments">allowComments</a></code> | <code>boolean</code> | Allows parsing comments in `.json` files. |
+| <code><a href="#projen.javascript.biome_config.JsonParserConfiguration.property.allowTrailingCommas">allowTrailingCommas</a></code> | <code>boolean</code> | Allows parsing trailing commas in `.json` files. |
 
 ---
 
@@ -2758,7 +2755,7 @@ public readonly allowComments: boolean;
 
 - *Type:* boolean
 
-Allow parsing comments in `.json` files.
+Allows parsing comments in `.json` files.
 
 ---
 
@@ -2770,13 +2767,13 @@ public readonly allowTrailingCommas: boolean;
 
 - *Type:* boolean
 
-Allow parsing trailing commas in `.json` files.
+Allows parsing trailing commas in `.json` files.
 
 ---
 
 ### JsParserConfiguration <a name="JsParserConfiguration" id="projen.javascript.biome_config.JsParserConfiguration"></a>
 
-Options that changes how the JavaScript parser behaves.
+Options that change how the JavaScript parser behaves.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.JsParserConfiguration.Initializer"></a>
 
@@ -2791,7 +2788,7 @@ const jsParserConfiguration: javascript.biome_config.JsParserConfiguration = { .
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.JsParserConfiguration.property.gritMetavariables">gritMetavariables</a></code> | <code>boolean</code> | Enables parsing of Grit metavariables. |
-| <code><a href="#projen.javascript.biome_config.JsParserConfiguration.property.jsxEverywhere">jsxEverywhere</a></code> | <code>boolean</code> | When enabled, files like `.js`/`.mjs`/`.cjs` may contain JSX syntax. |
+| <code><a href="#projen.javascript.biome_config.JsParserConfiguration.property.jsxEverywhere">jsxEverywhere</a></code> | <code>boolean</code> | When enabled, files such as `.js`, `.mjs`, and `.cjs` may contain JSX syntax. Defaults to `true`. |
 | <code><a href="#projen.javascript.biome_config.JsParserConfiguration.property.unsafeParameterDecoratorsEnabled">unsafeParameterDecoratorsEnabled</a></code> | <code>boolean</code> | It enables the experimental and unsafe parsing of parameter decorators. |
 
 ---
@@ -2820,9 +2817,7 @@ public readonly jsxEverywhere: boolean;
 - *Type:* boolean
 - *Default:* true`.
 
-When enabled, files like `.js`/`.mjs`/`.cjs` may contain JSX syntax.
-
-Defaults to `true`.
+When enabled, files such as `.js`, `.mjs`, and `.cjs` may contain JSX syntax. Defaults to `true`.
 
 ---
 
@@ -2867,6 +2862,7 @@ public readonly experimentalPnpmCatalogs: boolean;
 ```
 
 - *Type:* boolean
+- *Default:* false`.
 
 Enables pnpm workspace catalog resolution for JavaScript package manifests.
 
@@ -2890,7 +2886,7 @@ Limitations:
 - Biome only reads top-level `catalog` / `catalogs` mappings and scalar
 string entries.
 
-Default: `false`.
+Defaults to `false`.
 
 ---
 
@@ -3060,9 +3056,9 @@ const overrideFormatterConfiguration: javascript.biome_config.OverrideFormatterC
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.attributePosition">attributePosition</a></code> | <code>projen.javascript.biome_config.AttributePosition</code> | The attribute position style. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.bracketSameLine">bracketSameLine</a></code> | <code>boolean</code> | Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements). |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.bracketSpacing">bracketSpacing</a></code> | <code>boolean</code> | Whether to insert spaces around brackets in object literals. |
-| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.delimiterSpacing">delimiterSpacing</a></code> | <code>boolean</code> | Controls spaces immediately inside supported delimiters when their content fits on one line. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Whether to expand arrays and objects on multiple lines. |
+| <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.expand">expand</a></code> | <code>projen.javascript.biome_config.Expand</code> | Controls whether arrays and objects are formatted on one line or multiple lines. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.formatWithErrors">formatWithErrors</a></code> | <code>boolean</code> | Stores whether formatting should be allowed to proceed if a given file has syntax errors. |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.indentSize">indentSize</a></code> | <code>number</code> | The size of the indentation, 2 by default (deprecated, use `indent-width`). |
 | <code><a href="#projen.javascript.biome_config.OverrideFormatterConfiguration.property.indentStyle">indentStyle</a></code> | <code>projen.javascript.biome_config.IndentStyle</code> | The indent style. |
@@ -3120,13 +3116,12 @@ public readonly delimiterSpacing: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* false.
 
-Whether to insert spaces inside delimiters (after the opening delimiter and before the closing delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations.
+Controls spaces immediately inside supported delimiters when their content fits on one line.
 
-Spaces are not added before the opening delimiter, and empty delimiters
-are not affected. Only applies when the content fits on a single line. The specific
-delimiters affected depend on the language. Defaults to false.
+It doesn't add spaces before opening delimiters or inside empty delimiters.
+
+The affected delimiters vary by language. If unset, uses the configured formatter setting.
 
 ---
 
@@ -3147,15 +3142,19 @@ public readonly expand: Expand;
 ```
 
 - *Type:* projen.javascript.biome_config.Expand
-- *Default:* auto".
 
-Whether to expand arrays and objects on multiple lines.
+Controls whether arrays and objects are formatted on one line or multiple lines.
 
-When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-and array literals are formatted on a single line if it fits in the line.
-When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-When set to `never`, these literals are formatted on a single line if it fits in the line.
-When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+`auto` formats objects on multiple lines if the first property has a newline, and arrays on
+one line if they fit.
+
+`always` formats arrays and objects on multiple lines.
+
+`never` formats arrays and objects on one line if they fit.
+
+If unset, uses the configured formatter setting.
+
+When formatting `package.json`, Biome uses `always` unless configured otherwise.
 
 ---
 
@@ -3830,7 +3829,7 @@ See https://biomejs.dev/assist/actions/use-sorted-type-fields
 
 ### VcsConfiguration <a name="VcsConfiguration" id="projen.javascript.biome_config.VcsConfiguration"></a>
 
-Set of properties to integrate Biome with a VCS software.
+Settings for integrating Biome with version control.
 
 #### Initializer <a name="Initializer" id="projen.javascript.biome_config.VcsConfiguration.Initializer"></a>
 
@@ -3844,11 +3843,11 @@ const vcsConfiguration: javascript.biome_config.VcsConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.clientKind">clientKind</a></code> | <code>projen.javascript.biome_config.VcsClientKind</code> | The kind of client. |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.defaultBranch">defaultBranch</a></code> | <code>string</code> | The main branch of the project. |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Whether Biome should integrate itself with the VCS client. |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.root">root</a></code> | <code>string</code> | The folder where Biome should check for VCS files. |
-| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.useIgnoreFile">useIgnoreFile</a></code> | <code>boolean</code> | Whether Biome should use VCS ignore files. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.clientKind">clientKind</a></code> | <code>projen.javascript.biome_config.VcsClientKind</code> | The version control client. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.defaultBranch">defaultBranch</a></code> | <code>string</code> | The project's default branch. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | Whether Biome should integrate with the version control client. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.root">root</a></code> | <code>string</code> | Sets the directory where Biome checks for version control files. |
+| <code><a href="#projen.javascript.biome_config.VcsConfiguration.property.useIgnoreFile">useIgnoreFile</a></code> | <code>boolean</code> | When `true`, Biome ignores files listed in `.gitignore`, `.ignore`, and Git's local exclude file. |
 
 ---
 
@@ -3860,7 +3859,7 @@ public readonly clientKind: VcsClientKind;
 
 - *Type:* projen.javascript.biome_config.VcsClientKind
 
-The kind of client.
+The version control client.
 
 ---
 
@@ -3872,7 +3871,7 @@ public readonly defaultBranch: string;
 
 - *Type:* string
 
-The main branch of the project.
+The project's default branch.
 
 ---
 
@@ -3884,7 +3883,7 @@ public readonly enabled: boolean;
 
 - *Type:* boolean
 
-Whether Biome should integrate itself with the VCS client.
+Whether Biome should integrate with the version control client.
 
 ---
 
@@ -3895,15 +3894,15 @@ public readonly root: string;
 ```
 
 - *Type:* string
+- *Default:* the directory containing `biome.json` or `biome.jsonc`. If no configuration is
 
-The folder where Biome should check for VCS files.
+Sets the directory where Biome checks for version control files.
 
-By default, Biome will use the same
-folder where `biome.json` was found.
+Defaults to the directory containing `biome.json` or `biome.jsonc`. If no configuration is
+found, Biome uses the current working directory.
 
-If Biome can't find the configuration, it will attempt to use the current working directory.
-If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic
-will be emitted
+If neither directory is available, Biome disables version control integration and emits a
+diagnostic.
 
 ---
 
@@ -3915,10 +3914,7 @@ public readonly useIgnoreFile: boolean;
 
 - *Type:* boolean
 
-Whether Biome should use VCS ignore files.
-
-When [true], Biome will ignore files
-specified in `.gitignore`, `.ignore`, and Git's local exclude file.
+When `true`, Biome ignores files listed in `.gitignore`, `.ignore`, and Git's local exclude file.
 
 ---
 
@@ -3984,7 +3980,7 @@ multiline.
 | --- | --- |
 | <code><a href="#projen.javascript.biome_config.Expand.AUTO">AUTO</a></code> | Objects are expanded when the first property has a leading newline. |
 | <code><a href="#projen.javascript.biome_config.Expand.ALWAYS">ALWAYS</a></code> | Objects and arrays are always expanded. |
-| <code><a href="#projen.javascript.biome_config.Expand.NEVER">NEVER</a></code> | Objects and arrays are never expanded, if they are shorter than the line width. |
+| <code><a href="#projen.javascript.biome_config.Expand.NEVER">NEVER</a></code> | Objects and arrays remain on one line if they fit. |
 
 ---
 
@@ -3992,8 +3988,8 @@ multiline.
 
 Objects are expanded when the first property has a leading newline.
 
-Arrays are always
-expanded if they are shorter than the line width. (auto)
+Arrays remain on one
+line if they fit. (auto)
 
 ---
 
@@ -4009,7 +4005,7 @@ Objects and arrays are always expanded.
 
 ##### `NEVER` <a name="NEVER" id="projen.javascript.biome_config.Expand.NEVER"></a>
 
-Objects and arrays are never expanded, if they are shorter than the line width.
+Objects and arrays remain on one line if they fit.
 
 (never)
 
@@ -4378,7 +4374,7 @@ asNeeded.
 
 ### VcsClientKind <a name="VcsClientKind" id="projen.javascript.biome_config.VcsClientKind"></a>
 
-Integration with the git client as VCS.
+Integration with Git as the version control client.
 
 #### Members <a name="Members" id="Members"></a>
 
