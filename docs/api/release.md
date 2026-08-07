@@ -1436,6 +1436,7 @@ const goPublishOptions: release.GoPublishOptions = { ... }
 | <code><a href="#projen.release.GoPublishOptions.property.publishTools">publishTools</a></code> | <code>projen.github.workflows.Tools</code> | Additional tools to install in the publishing job. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.release.GoPublishOptions.property.gitCommitMessage">gitCommitMessage</a></code> | <code>string</code> | The commit message. |
+| <code><a href="#projen.release.GoPublishOptions.property.githubCredentials">githubCredentials</a></code> | <code>projen.github.GithubCredentials</code> | Provide API access to the GitHub repository using `GithubCredentials`, e.g. a GitHub App. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubDeployKeySecret">githubDeployKeySecret</a></code> | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubTokenSecret">githubTokenSecret</a></code> | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. |
 | <code><a href="#projen.release.GoPublishOptions.property.githubUseSsh">githubUseSsh</a></code> | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token. |
@@ -1536,6 +1537,21 @@ The commit message.
 
 ---
 
+##### `githubCredentials`<sup>Optional</sup> <a name="githubCredentials" id="projen.release.GoPublishOptions.property.githubCredentials"></a>
+
+```typescript
+public readonly githubCredentials: GithubCredentials;
+```
+
+- *Type:* projen.github.GithubCredentials
+- *Default:* no GitHub App credentials used
+
+Provide API access to the GitHub repository using `GithubCredentials`, e.g. a GitHub App.
+
+Cannot be combined with `githubUseSsh`, `githubTokenSecret` or `githubDeployKeySecret`.
+
+---
+
 ##### `githubDeployKeySecret`<sup>Optional</sup> <a name="githubDeployKeySecret" id="projen.release.GoPublishOptions.property.githubDeployKeySecret"></a>
 
 ```typescript
@@ -1547,11 +1563,13 @@ public readonly githubDeployKeySecret: string;
 
 The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.
 
-Ignored if `githubUseSsh` is `false`.
+Ignored if `githubUseSsh` is `false` or `githubCredentials` is set.
 
 ---
 
-##### `githubTokenSecret`<sup>Optional</sup> <a name="githubTokenSecret" id="projen.release.GoPublishOptions.property.githubTokenSecret"></a>
+##### ~~`githubTokenSecret`~~<sup>Optional</sup> <a name="githubTokenSecret" id="projen.release.GoPublishOptions.property.githubTokenSecret"></a>
+
+- *Deprecated:* use `githubCredentials` with `GithubCredentials.fromPersonalAccessToken()` instead.
 
 ```typescript
 public readonly githubTokenSecret: string;
@@ -1562,7 +1580,7 @@ public readonly githubTokenSecret: string;
 
 The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.
 
-Ignored if `githubUseSsh` is `true`.
+Ignored if `githubUseSsh` or `githubCredentials` is set.
 
 ---
 
@@ -1576,6 +1594,8 @@ public readonly githubUseSsh: boolean;
 - *Default:* false
 
 Use SSH to push to GitHub instead of a personal accses token.
+
+Ignored if `githubCredentials` is set.
 
 ---
 
