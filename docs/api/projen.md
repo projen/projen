@@ -9,6 +9,7 @@ The following submodules are available:
 - [cdk](./cdk.md)
 - [cdk8s](./cdk8s.md)
 - [cdktf](./cdktf.md)
+- [cdktn](./cdktn.md)
 - [circleci](./circleci.md)
 - [github](./github.md)
 - [github.workflows](./github.workflows.md)

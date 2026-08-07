@@ -56,5 +56,6 @@ export * as release from "./release";
 export * as awscdk from "./awscdk";
 export * as cdk8s from "./cdk8s";
 export * as cdktf from "./cdktf";
+export * as cdktn from "./cdktn";
 export * as cdk from "./cdk";
 export * as build from "./build";

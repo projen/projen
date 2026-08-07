@@ -24,6 +24,8 @@ export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
  * use within the CDK for Terraform (CDKTF), with a friendly workflow and
  * automatic publishing to the construct catalog.
  *
+ * @deprecated CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+ *             CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
  * @pjid cdktf-construct
  */
 export class ConstructLibraryCdktf extends ConstructLibrary {

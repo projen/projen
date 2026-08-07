@@ -63,7 +63,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 ---
 
-##### `toString` <a name="toString" id="projen.cdktf.ConstructLibraryCdktf.toString"></a>
+##### ~~`toString`~~ <a name="toString" id="projen.cdktf.ConstructLibraryCdktf.toString"></a>
 
 ```typescript
 public toString(): string
@@ -71,7 +71,7 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `with` <a name="with" id="projen.cdktf.ConstructLibraryCdktf.with"></a>
+##### ~~`with`~~ <a name="with" id="projen.cdktf.ConstructLibraryCdktf.with"></a>
 
 ```typescript
 public with(mixins: ...IMixin[]): IConstruct
@@ -92,7 +92,7 @@ The mixins to apply.
 
 ---
 
-##### `addExcludeFromCleanup` <a name="addExcludeFromCleanup" id="projen.cdktf.ConstructLibraryCdktf.addExcludeFromCleanup"></a>
+##### ~~`addExcludeFromCleanup`~~ <a name="addExcludeFromCleanup" id="projen.cdktf.ConstructLibraryCdktf.addExcludeFromCleanup"></a>
 
 ```typescript
 public addExcludeFromCleanup(globs: ...string[]): void
@@ -111,7 +111,7 @@ The glob patterns to match.
 
 ---
 
-##### `addGitIgnore` <a name="addGitIgnore" id="projen.cdktf.ConstructLibraryCdktf.addGitIgnore"></a>
+##### ~~`addGitIgnore`~~ <a name="addGitIgnore" id="projen.cdktf.ConstructLibraryCdktf.addGitIgnore"></a>
 
 ```typescript
 public addGitIgnore(pattern: string): void
@@ -127,7 +127,7 @@ The glob pattern to ignore.
 
 ---
 
-##### `addPackageIgnore` <a name="addPackageIgnore" id="projen.cdktf.ConstructLibraryCdktf.addPackageIgnore"></a>
+##### ~~`addPackageIgnore`~~ <a name="addPackageIgnore" id="projen.cdktf.ConstructLibraryCdktf.addPackageIgnore"></a>
 
 ```typescript
 public addPackageIgnore(pattern: string): void
@@ -143,7 +143,7 @@ The pattern to ignore.
 
 ---
 
-##### `addTask` <a name="addTask" id="projen.cdktf.ConstructLibraryCdktf.addTask"></a>
+##### ~~`addTask`~~ <a name="addTask" id="projen.cdktf.ConstructLibraryCdktf.addTask"></a>
 
 ```typescript
 public addTask(name: string, props?: TaskOptions): Task
@@ -170,7 +170,7 @@ Task properties.
 
 ---
 
-##### `annotateGenerated` <a name="annotateGenerated" id="projen.cdktf.ConstructLibraryCdktf.annotateGenerated"></a>
+##### ~~`annotateGenerated`~~ <a name="annotateGenerated" id="projen.cdktf.ConstructLibraryCdktf.annotateGenerated"></a>
 
 ```typescript
 public annotateGenerated(glob: string): void
@@ -192,7 +192,7 @@ the glob pattern to match (could be a file path).
 
 ---
 
-##### `postSynthesize` <a name="postSynthesize" id="projen.cdktf.ConstructLibraryCdktf.postSynthesize"></a>
+##### ~~`postSynthesize`~~ <a name="postSynthesize" id="projen.cdktf.ConstructLibraryCdktf.postSynthesize"></a>
 
 ```typescript
 public postSynthesize(): void
@@ -202,7 +202,7 @@ Called after all components are synthesized.
 
 Order is *not* guaranteed.
 
-##### `preSynthesize` <a name="preSynthesize" id="projen.cdktf.ConstructLibraryCdktf.preSynthesize"></a>
+##### ~~`preSynthesize`~~ <a name="preSynthesize" id="projen.cdktf.ConstructLibraryCdktf.preSynthesize"></a>
 
 ```typescript
 public preSynthesize(): void
@@ -210,7 +210,7 @@ public preSynthesize(): void
 
 Called before all components are synthesized.
 
-##### `removeTask` <a name="removeTask" id="projen.cdktf.ConstructLibraryCdktf.removeTask"></a>
+##### ~~`removeTask`~~ <a name="removeTask" id="projen.cdktf.ConstructLibraryCdktf.removeTask"></a>
 
 ```typescript
 public removeTask(name: string): Task
@@ -226,7 +226,7 @@ The name of the task to remove.
 
 ---
 
-##### `runTaskCommand` <a name="runTaskCommand" id="projen.cdktf.ConstructLibraryCdktf.runTaskCommand"></a>
+##### ~~`runTaskCommand`~~ <a name="runTaskCommand" id="projen.cdktf.ConstructLibraryCdktf.runTaskCommand"></a>
 
 ```typescript
 public runTaskCommand(task: Task): string
@@ -245,7 +245,7 @@ The task for which the command is required.
 
 ---
 
-##### `synth` <a name="synth" id="projen.cdktf.ConstructLibraryCdktf.synth"></a>
+##### ~~`synth`~~ <a name="synth" id="projen.cdktf.ConstructLibraryCdktf.synth"></a>
 
 ```typescript
 public synth(): void
@@ -262,7 +262,7 @@ Synthesize all project files into `outdir`.
 7. Call "this.postSynthesize()"
 8. Call "postProjectCreation()" for all components, only if the project is being created for the first time
 
-##### `tryFindFile` <a name="tryFindFile" id="projen.cdktf.ConstructLibraryCdktf.tryFindFile"></a>
+##### ~~`tryFindFile`~~ <a name="tryFindFile" id="projen.cdktf.ConstructLibraryCdktf.tryFindFile"></a>
 
 ```typescript
 public tryFindFile(filePath: string): FileBase
@@ -281,7 +281,7 @@ from the root of _this_ project.
 
 ---
 
-##### `tryFindObjectFile` <a name="tryFindObjectFile" id="projen.cdktf.ConstructLibraryCdktf.tryFindObjectFile"></a>
+##### ~~`tryFindObjectFile`~~ <a name="tryFindObjectFile" id="projen.cdktf.ConstructLibraryCdktf.tryFindObjectFile"></a>
 
 ```typescript
 public tryFindObjectFile(filePath: string): ObjectFile
@@ -297,7 +297,7 @@ The file path.
 
 ---
 
-##### `tryRemoveFile` <a name="tryRemoveFile" id="projen.cdktf.ConstructLibraryCdktf.tryRemoveFile"></a>
+##### ~~`tryRemoveFile`~~ <a name="tryRemoveFile" id="projen.cdktf.ConstructLibraryCdktf.tryRemoveFile"></a>
 
 ```typescript
 public tryRemoveFile(filePath: string): FileBase
@@ -316,7 +316,7 @@ resolved from the root of _this_ project.
 
 ---
 
-##### `addBins` <a name="addBins" id="projen.cdktf.ConstructLibraryCdktf.addBins"></a>
+##### ~~`addBins`~~ <a name="addBins" id="projen.cdktf.ConstructLibraryCdktf.addBins"></a>
 
 ```typescript
 public addBins(bins: {[ key: string ]: string}): void
@@ -328,7 +328,7 @@ public addBins(bins: {[ key: string ]: string}): void
 
 ---
 
-##### `addBundledDeps` <a name="addBundledDeps" id="projen.cdktf.ConstructLibraryCdktf.addBundledDeps"></a>
+##### ~~`addBundledDeps`~~ <a name="addBundledDeps" id="projen.cdktf.ConstructLibraryCdktf.addBundledDeps"></a>
 
 ```typescript
 public addBundledDeps(deps: ...string[]): void
@@ -353,7 +353,7 @@ add/update`. If you wish to specify a version range use this syntax:
 
 ---
 
-##### `addDeps` <a name="addDeps" id="projen.cdktf.ConstructLibraryCdktf.addDeps"></a>
+##### ~~`addDeps`~~ <a name="addDeps" id="projen.cdktf.ConstructLibraryCdktf.addDeps"></a>
 
 ```typescript
 public addDeps(deps: ...string[]): void
@@ -375,7 +375,7 @@ add/update`. If you wish to specify a version range use this syntax:
 
 ---
 
-##### `addDevDeps` <a name="addDevDeps" id="projen.cdktf.ConstructLibraryCdktf.addDevDeps"></a>
+##### ~~`addDevDeps`~~ <a name="addDevDeps" id="projen.cdktf.ConstructLibraryCdktf.addDevDeps"></a>
 
 ```typescript
 public addDevDeps(deps: ...string[]): void
@@ -397,7 +397,7 @@ add/update`. If you wish to specify a version range use this syntax:
 
 ---
 
-##### `addFields` <a name="addFields" id="projen.cdktf.ConstructLibraryCdktf.addFields"></a>
+##### ~~`addFields`~~ <a name="addFields" id="projen.cdktf.ConstructLibraryCdktf.addFields"></a>
 
 ```typescript
 public addFields(fields: {[ key: string ]: any}): void
@@ -413,7 +413,7 @@ The fields to set.
 
 ---
 
-##### `addKeywords` <a name="addKeywords" id="projen.cdktf.ConstructLibraryCdktf.addKeywords"></a>
+##### ~~`addKeywords`~~ <a name="addKeywords" id="projen.cdktf.ConstructLibraryCdktf.addKeywords"></a>
 
 ```typescript
 public addKeywords(keywords: ...string[]): void
@@ -429,7 +429,7 @@ The keywords to add.
 
 ---
 
-##### `addPeerDeps` <a name="addPeerDeps" id="projen.cdktf.ConstructLibraryCdktf.addPeerDeps"></a>
+##### ~~`addPeerDeps`~~ <a name="addPeerDeps" id="projen.cdktf.ConstructLibraryCdktf.addPeerDeps"></a>
 
 ```typescript
 public addPeerDeps(deps: ...string[]): void
@@ -455,7 +455,7 @@ add/update`. If you wish to specify a version range use this syntax:
 
 ---
 
-##### `addScripts` <a name="addScripts" id="projen.cdktf.ConstructLibraryCdktf.addScripts"></a>
+##### ~~`addScripts`~~ <a name="addScripts" id="projen.cdktf.ConstructLibraryCdktf.addScripts"></a>
 
 ```typescript
 public addScripts(scripts: {[ key: string ]: string}): void
@@ -471,7 +471,7 @@ The scripts to set.
 
 ---
 
-##### `removeScript` <a name="removeScript" id="projen.cdktf.ConstructLibraryCdktf.removeScript"></a>
+##### ~~`removeScript`~~ <a name="removeScript" id="projen.cdktf.ConstructLibraryCdktf.removeScript"></a>
 
 ```typescript
 public removeScript(name: string): void
@@ -487,7 +487,7 @@ The name of the script.
 
 ---
 
-##### `renderWorkflowSetup` <a name="renderWorkflowSetup" id="projen.cdktf.ConstructLibraryCdktf.renderWorkflowSetup"></a>
+##### ~~`renderWorkflowSetup`~~ <a name="renderWorkflowSetup" id="projen.cdktf.ConstructLibraryCdktf.renderWorkflowSetup"></a>
 
 ```typescript
 public renderWorkflowSetup(options?: RenderWorkflowSetupOptions): JobStep[]
@@ -503,7 +503,7 @@ Options.
 
 ---
 
-##### `setScript` <a name="setScript" id="projen.cdktf.ConstructLibraryCdktf.setScript"></a>
+##### ~~`setScript`~~ <a name="setScript" id="projen.cdktf.ConstructLibraryCdktf.setScript"></a>
 
 ```typescript
 public setScript(name: string, command: string): void
@@ -537,7 +537,7 @@ The command to execute.
 
 ---
 
-##### `isConstruct` <a name="isConstruct" id="projen.cdktf.ConstructLibraryCdktf.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="projen.cdktf.ConstructLibraryCdktf.isConstruct"></a>
 
 ```typescript
 import { cdktf } from 'projen'
@@ -569,7 +569,7 @@ Any object.
 
 ---
 
-##### `isProject` <a name="isProject" id="projen.cdktf.ConstructLibraryCdktf.isProject"></a>
+##### ~~`isProject`~~ <a name="isProject" id="projen.cdktf.ConstructLibraryCdktf.isProject"></a>
 
 ```typescript
 import { cdktf } from 'projen'
@@ -585,7 +585,7 @@ Test whether the given construct is a project.
 
 ---
 
-##### `of` <a name="of" id="projen.cdktf.ConstructLibraryCdktf.of"></a>
+##### ~~`of`~~ <a name="of" id="projen.cdktf.ConstructLibraryCdktf.of"></a>
 
 ```typescript
 import { cdktf } from 'projen'
@@ -668,7 +668,10 @@ When given a project, this it the project itself.
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="projen.cdktf.ConstructLibraryCdktf.property.node"></a>
+##### ~~`node`~~<sup>Required</sup> <a name="node" id="projen.cdktf.ConstructLibraryCdktf.property.node"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly node: Node;
@@ -680,7 +683,10 @@ The tree node.
 
 ---
 
-##### `buildTask`<sup>Required</sup> <a name="buildTask" id="projen.cdktf.ConstructLibraryCdktf.property.buildTask"></a>
+##### ~~`buildTask`~~<sup>Required</sup> <a name="buildTask" id="projen.cdktf.ConstructLibraryCdktf.property.buildTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly buildTask: Task;
@@ -690,7 +696,10 @@ public readonly buildTask: Task;
 
 ---
 
-##### `commitGenerated`<sup>Required</sup> <a name="commitGenerated" id="projen.cdktf.ConstructLibraryCdktf.property.commitGenerated"></a>
+##### ~~`commitGenerated`~~<sup>Required</sup> <a name="commitGenerated" id="projen.cdktf.ConstructLibraryCdktf.property.commitGenerated"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly commitGenerated: boolean;
@@ -702,7 +711,10 @@ Whether to commit the managed files by default.
 
 ---
 
-##### `compileTask`<sup>Required</sup> <a name="compileTask" id="projen.cdktf.ConstructLibraryCdktf.property.compileTask"></a>
+##### ~~`compileTask`~~<sup>Required</sup> <a name="compileTask" id="projen.cdktf.ConstructLibraryCdktf.property.compileTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly compileTask: Task;
@@ -712,7 +724,10 @@ public readonly compileTask: Task;
 
 ---
 
-##### `components`<sup>Required</sup> <a name="components" id="projen.cdktf.ConstructLibraryCdktf.property.components"></a>
+##### ~~`components`~~<sup>Required</sup> <a name="components" id="projen.cdktf.ConstructLibraryCdktf.property.components"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly components: Component[];
@@ -724,7 +739,10 @@ Returns all the components within this project.
 
 ---
 
-##### `deps`<sup>Required</sup> <a name="deps" id="projen.cdktf.ConstructLibraryCdktf.property.deps"></a>
+##### ~~`deps`~~<sup>Required</sup> <a name="deps" id="projen.cdktf.ConstructLibraryCdktf.property.deps"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly deps: Dependencies;
@@ -736,7 +754,10 @@ Project dependencies.
 
 ---
 
-##### `ejected`<sup>Required</sup> <a name="ejected" id="projen.cdktf.ConstructLibraryCdktf.property.ejected"></a>
+##### ~~`ejected`~~<sup>Required</sup> <a name="ejected" id="projen.cdktf.ConstructLibraryCdktf.property.ejected"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly ejected: boolean;
@@ -748,7 +769,10 @@ Whether or not the project is being ejected.
 
 ---
 
-##### `files`<sup>Required</sup> <a name="files" id="projen.cdktf.ConstructLibraryCdktf.property.files"></a>
+##### ~~`files`~~<sup>Required</sup> <a name="files" id="projen.cdktf.ConstructLibraryCdktf.property.files"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly files: FileBase[];
@@ -760,7 +784,10 @@ All files in this project.
 
 ---
 
-##### `gitattributes`<sup>Required</sup> <a name="gitattributes" id="projen.cdktf.ConstructLibraryCdktf.property.gitattributes"></a>
+##### ~~`gitattributes`~~<sup>Required</sup> <a name="gitattributes" id="projen.cdktf.ConstructLibraryCdktf.property.gitattributes"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly gitattributes: GitAttributesFile;
@@ -772,7 +799,10 @@ The .gitattributes file for this repository.
 
 ---
 
-##### `gitignore`<sup>Required</sup> <a name="gitignore" id="projen.cdktf.ConstructLibraryCdktf.property.gitignore"></a>
+##### ~~`gitignore`~~<sup>Required</sup> <a name="gitignore" id="projen.cdktf.ConstructLibraryCdktf.property.gitignore"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly gitignore: IgnoreFile;
@@ -784,7 +814,10 @@ public readonly gitignore: IgnoreFile;
 
 ---
 
-##### `logger`<sup>Required</sup> <a name="logger" id="projen.cdktf.ConstructLibraryCdktf.property.logger"></a>
+##### ~~`logger`~~<sup>Required</sup> <a name="logger" id="projen.cdktf.ConstructLibraryCdktf.property.logger"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly logger: Logger;
@@ -796,7 +829,10 @@ Logging utilities.
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="projen.cdktf.ConstructLibraryCdktf.property.name"></a>
+##### ~~`name`~~<sup>Required</sup> <a name="name" id="projen.cdktf.ConstructLibraryCdktf.property.name"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly name: string;
@@ -808,7 +844,10 @@ Project name.
 
 ---
 
-##### `outdir`<sup>Required</sup> <a name="outdir" id="projen.cdktf.ConstructLibraryCdktf.property.outdir"></a>
+##### ~~`outdir`~~<sup>Required</sup> <a name="outdir" id="projen.cdktf.ConstructLibraryCdktf.property.outdir"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly outdir: string;
@@ -820,7 +859,10 @@ Absolute output directory of this project.
 
 ---
 
-##### `packageTask`<sup>Required</sup> <a name="packageTask" id="projen.cdktf.ConstructLibraryCdktf.property.packageTask"></a>
+##### ~~`packageTask`~~<sup>Required</sup> <a name="packageTask" id="projen.cdktf.ConstructLibraryCdktf.property.packageTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly packageTask: Task;
@@ -830,7 +872,10 @@ public readonly packageTask: Task;
 
 ---
 
-##### `postCompileTask`<sup>Required</sup> <a name="postCompileTask" id="projen.cdktf.ConstructLibraryCdktf.property.postCompileTask"></a>
+##### ~~`postCompileTask`~~<sup>Required</sup> <a name="postCompileTask" id="projen.cdktf.ConstructLibraryCdktf.property.postCompileTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly postCompileTask: Task;
@@ -840,7 +885,10 @@ public readonly postCompileTask: Task;
 
 ---
 
-##### `preCompileTask`<sup>Required</sup> <a name="preCompileTask" id="projen.cdktf.ConstructLibraryCdktf.property.preCompileTask"></a>
+##### ~~`preCompileTask`~~<sup>Required</sup> <a name="preCompileTask" id="projen.cdktf.ConstructLibraryCdktf.property.preCompileTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly preCompileTask: Task;
@@ -850,7 +898,10 @@ public readonly preCompileTask: Task;
 
 ---
 
-##### `projectBuild`<sup>Required</sup> <a name="projectBuild" id="projen.cdktf.ConstructLibraryCdktf.property.projectBuild"></a>
+##### ~~`projectBuild`~~<sup>Required</sup> <a name="projectBuild" id="projen.cdktf.ConstructLibraryCdktf.property.projectBuild"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly projectBuild: ProjectBuild;
@@ -862,7 +913,10 @@ Manages the build process of the project.
 
 ---
 
-##### `projenCommand`<sup>Required</sup> <a name="projenCommand" id="projen.cdktf.ConstructLibraryCdktf.property.projenCommand"></a>
+##### ~~`projenCommand`~~<sup>Required</sup> <a name="projenCommand" id="projen.cdktf.ConstructLibraryCdktf.property.projenCommand"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly projenCommand: string;
@@ -874,7 +928,10 @@ The command to use in order to run the projen CLI.
 
 ---
 
-##### `root`<sup>Required</sup> <a name="root" id="projen.cdktf.ConstructLibraryCdktf.property.root"></a>
+##### ~~`root`~~<sup>Required</sup> <a name="root" id="projen.cdktf.ConstructLibraryCdktf.property.root"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly root: Project;
@@ -886,7 +943,10 @@ The root project.
 
 ---
 
-##### `subprojects`<sup>Required</sup> <a name="subprojects" id="projen.cdktf.ConstructLibraryCdktf.property.subprojects"></a>
+##### ~~`subprojects`~~<sup>Required</sup> <a name="subprojects" id="projen.cdktf.ConstructLibraryCdktf.property.subprojects"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly subprojects: Project[];
@@ -898,7 +958,10 @@ Returns all the subprojects within this project.
 
 ---
 
-##### `tasks`<sup>Required</sup> <a name="tasks" id="projen.cdktf.ConstructLibraryCdktf.property.tasks"></a>
+##### ~~`tasks`~~<sup>Required</sup> <a name="tasks" id="projen.cdktf.ConstructLibraryCdktf.property.tasks"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly tasks: Tasks;
@@ -910,7 +973,10 @@ Project tasks.
 
 ---
 
-##### `testTask`<sup>Required</sup> <a name="testTask" id="projen.cdktf.ConstructLibraryCdktf.property.testTask"></a>
+##### ~~`testTask`~~<sup>Required</sup> <a name="testTask" id="projen.cdktf.ConstructLibraryCdktf.property.testTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly testTask: Task;
@@ -920,7 +986,10 @@ public readonly testTask: Task;
 
 ---
 
-##### `defaultTask`<sup>Optional</sup> <a name="defaultTask" id="projen.cdktf.ConstructLibraryCdktf.property.defaultTask"></a>
+##### ~~`defaultTask`~~<sup>Optional</sup> <a name="defaultTask" id="projen.cdktf.ConstructLibraryCdktf.property.defaultTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly defaultTask: Task;
@@ -953,7 +1022,10 @@ FQN of the project type.
 
 ---
 
-##### `parent`<sup>Optional</sup> <a name="parent" id="projen.cdktf.ConstructLibraryCdktf.property.parent"></a>
+##### ~~`parent`~~<sup>Optional</sup> <a name="parent" id="projen.cdktf.ConstructLibraryCdktf.property.parent"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly parent: Project;
@@ -967,7 +1039,10 @@ If undefined, this is the root project.
 
 ---
 
-##### `autoApprove`<sup>Optional</sup> <a name="autoApprove" id="projen.cdktf.ConstructLibraryCdktf.property.autoApprove"></a>
+##### ~~`autoApprove`~~<sup>Optional</sup> <a name="autoApprove" id="projen.cdktf.ConstructLibraryCdktf.property.autoApprove"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly autoApprove: AutoApprove;
@@ -979,7 +1054,10 @@ Auto approve set up for this project.
 
 ---
 
-##### `devContainer`<sup>Optional</sup> <a name="devContainer" id="projen.cdktf.ConstructLibraryCdktf.property.devContainer"></a>
+##### ~~`devContainer`~~<sup>Optional</sup> <a name="devContainer" id="projen.cdktf.ConstructLibraryCdktf.property.devContainer"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly devContainer: DevContainer;
@@ -993,7 +1071,10 @@ This will be `undefined` if devContainer boolean is false
 
 ---
 
-##### `github`<sup>Optional</sup> <a name="github" id="projen.cdktf.ConstructLibraryCdktf.property.github"></a>
+##### ~~`github`~~<sup>Optional</sup> <a name="github" id="projen.cdktf.ConstructLibraryCdktf.property.github"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly github: GitHub;
@@ -1007,7 +1088,10 @@ This will be `undefined` for subprojects.
 
 ---
 
-##### `gitpod`<sup>Optional</sup> <a name="gitpod" id="projen.cdktf.ConstructLibraryCdktf.property.gitpod"></a>
+##### ~~`gitpod`~~<sup>Optional</sup> <a name="gitpod" id="projen.cdktf.ConstructLibraryCdktf.property.gitpod"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly gitpod: Gitpod;
@@ -1021,7 +1105,10 @@ This will be `undefined` if gitpod boolean is false
 
 ---
 
-##### `vscode`<sup>Optional</sup> <a name="vscode" id="projen.cdktf.ConstructLibraryCdktf.property.vscode"></a>
+##### ~~`vscode`~~<sup>Optional</sup> <a name="vscode" id="projen.cdktf.ConstructLibraryCdktf.property.vscode"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly vscode: VsCode;
@@ -1035,7 +1122,10 @@ This will be `undefined` for subprojects.
 
 ---
 
-##### `artifactsDirectory`<sup>Required</sup> <a name="artifactsDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.artifactsDirectory"></a>
+##### ~~`artifactsDirectory`~~<sup>Required</sup> <a name="artifactsDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.artifactsDirectory"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly artifactsDirectory: string;
@@ -1051,7 +1141,10 @@ tarball will be placed under `dist/js/boom-boom-1.2.3.tg`.
 
 ---
 
-##### `artifactsJavascriptDirectory`<sup>Required</sup> <a name="artifactsJavascriptDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.artifactsJavascriptDirectory"></a>
+##### ~~`artifactsJavascriptDirectory`~~<sup>Required</sup> <a name="artifactsJavascriptDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.artifactsJavascriptDirectory"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly artifactsJavascriptDirectory: string;
@@ -1063,7 +1156,10 @@ The location of the npm tarball after build (`${artifactsDirectory}/js`).
 
 ---
 
-##### `bundler`<sup>Required</sup> <a name="bundler" id="projen.cdktf.ConstructLibraryCdktf.property.bundler"></a>
+##### ~~`bundler`~~<sup>Required</sup> <a name="bundler" id="projen.cdktf.ConstructLibraryCdktf.property.bundler"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly bundler: Bundler;
@@ -1073,7 +1169,10 @@ public readonly bundler: Bundler;
 
 ---
 
-##### `npmrc`<sup>Required</sup> <a name="npmrc" id="projen.cdktf.ConstructLibraryCdktf.property.npmrc"></a>
+##### ~~`npmrc`~~<sup>Required</sup> <a name="npmrc" id="projen.cdktf.ConstructLibraryCdktf.property.npmrc"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly npmrc: NpmConfig;
@@ -1085,7 +1184,10 @@ The .npmrc file.
 
 ---
 
-##### `package`<sup>Required</sup> <a name="package" id="projen.cdktf.ConstructLibraryCdktf.property.package"></a>
+##### ~~`package`~~<sup>Required</sup> <a name="package" id="projen.cdktf.ConstructLibraryCdktf.property.package"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly package: NodePackage;
@@ -1097,7 +1199,10 @@ API for managing the node package.
 
 ---
 
-##### `runScriptCommand`<sup>Required</sup> <a name="runScriptCommand" id="projen.cdktf.ConstructLibraryCdktf.property.runScriptCommand"></a>
+##### ~~`runScriptCommand`~~<sup>Required</sup> <a name="runScriptCommand" id="projen.cdktf.ConstructLibraryCdktf.property.runScriptCommand"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly runScriptCommand: string;
@@ -1109,7 +1214,10 @@ The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the p
 
 ---
 
-##### `autoMerge`<sup>Optional</sup> <a name="autoMerge" id="projen.cdktf.ConstructLibraryCdktf.property.autoMerge"></a>
+##### ~~`autoMerge`~~<sup>Optional</sup> <a name="autoMerge" id="projen.cdktf.ConstructLibraryCdktf.property.autoMerge"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly autoMerge: AutoMerge;
@@ -1121,7 +1229,10 @@ Component that sets up mergify for merging approved pull requests.
 
 ---
 
-##### `biome`<sup>Optional</sup> <a name="biome" id="projen.cdktf.ConstructLibraryCdktf.property.biome"></a>
+##### ~~`biome`~~<sup>Optional</sup> <a name="biome" id="projen.cdktf.ConstructLibraryCdktf.property.biome"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly biome: Biome;
@@ -1131,7 +1242,10 @@ public readonly biome: Biome;
 
 ---
 
-##### `buildWorkflow`<sup>Optional</sup> <a name="buildWorkflow" id="projen.cdktf.ConstructLibraryCdktf.property.buildWorkflow"></a>
+##### ~~`buildWorkflow`~~<sup>Optional</sup> <a name="buildWorkflow" id="projen.cdktf.ConstructLibraryCdktf.property.buildWorkflow"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly buildWorkflow: BuildWorkflow;
@@ -1145,7 +1259,10 @@ The PR build GitHub workflow.
 
 ---
 
-##### `buildWorkflowJobId`<sup>Optional</sup> <a name="buildWorkflowJobId" id="projen.cdktf.ConstructLibraryCdktf.property.buildWorkflowJobId"></a>
+##### ~~`buildWorkflowJobId`~~<sup>Optional</sup> <a name="buildWorkflowJobId" id="projen.cdktf.ConstructLibraryCdktf.property.buildWorkflowJobId"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly buildWorkflowJobId: string;
@@ -1157,7 +1274,10 @@ The job ID of the build workflow.
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.cdktf.ConstructLibraryCdktf.property.jest"></a>
+##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.cdktf.ConstructLibraryCdktf.property.jest"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly jest: Jest;
@@ -1169,7 +1289,10 @@ The Jest configuration (if enabled).
 
 ---
 
-##### `maxNodeVersion`<sup>Optional</sup> <a name="maxNodeVersion" id="projen.cdktf.ConstructLibraryCdktf.property.maxNodeVersion"></a>
+##### ~~`maxNodeVersion`~~<sup>Optional</sup> <a name="maxNodeVersion" id="projen.cdktf.ConstructLibraryCdktf.property.maxNodeVersion"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly maxNodeVersion: string;
@@ -1183,7 +1306,10 @@ The value indicates the package is incompatible with newer versions.
 
 ---
 
-##### `minNodeVersion`<sup>Optional</sup> <a name="minNodeVersion" id="projen.cdktf.ConstructLibraryCdktf.property.minNodeVersion"></a>
+##### ~~`minNodeVersion`~~<sup>Optional</sup> <a name="minNodeVersion" id="projen.cdktf.ConstructLibraryCdktf.property.minNodeVersion"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly minNodeVersion: string;
@@ -1197,7 +1323,10 @@ This value indicates the package is incompatible with older versions.
 
 ---
 
-##### `npmignore`<sup>Optional</sup> <a name="npmignore" id="projen.cdktf.ConstructLibraryCdktf.property.npmignore"></a>
+##### ~~`npmignore`~~<sup>Optional</sup> <a name="npmignore" id="projen.cdktf.ConstructLibraryCdktf.property.npmignore"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly npmignore: IgnoreFile;
@@ -1209,7 +1338,10 @@ The .npmignore file.
 
 ---
 
-##### `prettier`<sup>Optional</sup> <a name="prettier" id="projen.cdktf.ConstructLibraryCdktf.property.prettier"></a>
+##### ~~`prettier`~~<sup>Optional</sup> <a name="prettier" id="projen.cdktf.ConstructLibraryCdktf.property.prettier"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly prettier: Prettier;
@@ -1219,7 +1351,10 @@ public readonly prettier: Prettier;
 
 ---
 
-##### `release`<sup>Optional</sup> <a name="release" id="projen.cdktf.ConstructLibraryCdktf.property.release"></a>
+##### ~~`release`~~<sup>Optional</sup> <a name="release" id="projen.cdktf.ConstructLibraryCdktf.property.release"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly release: Release;
@@ -1231,7 +1366,10 @@ Release management.
 
 ---
 
-##### `upgradeWorkflow`<sup>Optional</sup> <a name="upgradeWorkflow" id="projen.cdktf.ConstructLibraryCdktf.property.upgradeWorkflow"></a>
+##### ~~`upgradeWorkflow`~~<sup>Optional</sup> <a name="upgradeWorkflow" id="projen.cdktf.ConstructLibraryCdktf.property.upgradeWorkflow"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly upgradeWorkflow: UpgradeDependencies;
@@ -1243,7 +1381,10 @@ The upgrade workflow.
 
 ---
 
-##### `docsDirectory`<sup>Required</sup> <a name="docsDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.docsDirectory"></a>
+##### ~~`docsDirectory`~~<sup>Required</sup> <a name="docsDirectory" id="projen.cdktf.ConstructLibraryCdktf.property.docsDirectory"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly docsDirectory: string;
@@ -1253,7 +1394,10 @@ public readonly docsDirectory: string;
 
 ---
 
-##### `libdir`<sup>Required</sup> <a name="libdir" id="projen.cdktf.ConstructLibraryCdktf.property.libdir"></a>
+##### ~~`libdir`~~<sup>Required</sup> <a name="libdir" id="projen.cdktf.ConstructLibraryCdktf.property.libdir"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly libdir: string;
@@ -1265,7 +1409,10 @@ The directory in which compiled .js files reside.
 
 ---
 
-##### `runner`<sup>Required</sup> <a name="runner" id="projen.cdktf.ConstructLibraryCdktf.property.runner"></a>
+##### ~~`runner`~~<sup>Required</sup> <a name="runner" id="projen.cdktf.ConstructLibraryCdktf.property.runner"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly runner: TypeScriptRunner;
@@ -1277,7 +1424,10 @@ The TypeScript runner used for executing TypeScript files.
 
 ---
 
-##### `srcdir`<sup>Required</sup> <a name="srcdir" id="projen.cdktf.ConstructLibraryCdktf.property.srcdir"></a>
+##### ~~`srcdir`~~<sup>Required</sup> <a name="srcdir" id="projen.cdktf.ConstructLibraryCdktf.property.srcdir"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly srcdir: string;
@@ -1289,7 +1439,10 @@ The directory in which the .ts sources reside.
 
 ---
 
-##### `testdir`<sup>Required</sup> <a name="testdir" id="projen.cdktf.ConstructLibraryCdktf.property.testdir"></a>
+##### ~~`testdir`~~<sup>Required</sup> <a name="testdir" id="projen.cdktf.ConstructLibraryCdktf.property.testdir"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly testdir: string;
@@ -1301,7 +1454,10 @@ The directory in which tests reside.
 
 ---
 
-##### `tsconfigDev`<sup>Required</sup> <a name="tsconfigDev" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfigDev"></a>
+##### ~~`tsconfigDev`~~<sup>Required</sup> <a name="tsconfigDev" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfigDev"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly tsconfigDev: TypescriptConfig;
@@ -1313,7 +1469,10 @@ A typescript configuration file which covers all files (sources, tests, projen).
 
 ---
 
-##### `watchTask`<sup>Required</sup> <a name="watchTask" id="projen.cdktf.ConstructLibraryCdktf.property.watchTask"></a>
+##### ~~`watchTask`~~<sup>Required</sup> <a name="watchTask" id="projen.cdktf.ConstructLibraryCdktf.property.watchTask"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly watchTask: Task;
@@ -1325,7 +1484,10 @@ The "watch" task.
 
 ---
 
-##### `docgen`<sup>Optional</sup> <a name="docgen" id="projen.cdktf.ConstructLibraryCdktf.property.docgen"></a>
+##### ~~`docgen`~~<sup>Optional</sup> <a name="docgen" id="projen.cdktf.ConstructLibraryCdktf.property.docgen"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly docgen: boolean;
@@ -1335,7 +1497,10 @@ public readonly docgen: boolean;
 
 ---
 
-##### `eslint`<sup>Optional</sup> <a name="eslint" id="projen.cdktf.ConstructLibraryCdktf.property.eslint"></a>
+##### ~~`eslint`~~<sup>Optional</sup> <a name="eslint" id="projen.cdktf.ConstructLibraryCdktf.property.eslint"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly eslint: Eslint;
@@ -1345,7 +1510,10 @@ public readonly eslint: Eslint;
 
 ---
 
-##### `tsconfig`<sup>Optional</sup> <a name="tsconfig" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfig"></a>
+##### ~~`tsconfig`~~<sup>Optional</sup> <a name="tsconfig" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfig"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly tsconfig: TypescriptConfig;
@@ -1355,7 +1523,10 @@ public readonly tsconfig: TypescriptConfig;
 
 ---
 
-##### `tsconfigEslint`<sup>Optional</sup> <a name="tsconfigEslint" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfigEslint"></a>
+##### ~~`tsconfigEslint`~~<sup>Optional</sup> <a name="tsconfigEslint" id="projen.cdktf.ConstructLibraryCdktf.property.tsconfigEslint"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly tsconfigEslint: TypescriptConfig;
@@ -1374,7 +1545,10 @@ public readonly tsconfigEslint: TypescriptConfig;
 
 ---
 
-##### `DEFAULT_TASK`<sup>Required</sup> <a name="DEFAULT_TASK" id="projen.cdktf.ConstructLibraryCdktf.property.DEFAULT_TASK"></a>
+##### ~~`DEFAULT_TASK`~~<sup>Required</sup> <a name="DEFAULT_TASK" id="projen.cdktf.ConstructLibraryCdktf.property.DEFAULT_TASK"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly DEFAULT_TASK: string;
@@ -1389,7 +1563,10 @@ this task should synthesize the project files.
 
 ---
 
-##### `DEFAULT_TS_JEST_TRANFORM_PATTERN`<sup>Required</sup> <a name="DEFAULT_TS_JEST_TRANFORM_PATTERN" id="projen.cdktf.ConstructLibraryCdktf.property.DEFAULT_TS_JEST_TRANFORM_PATTERN"></a>
+##### ~~`DEFAULT_TS_JEST_TRANFORM_PATTERN`~~<sup>Required</sup> <a name="DEFAULT_TS_JEST_TRANFORM_PATTERN" id="projen.cdktf.ConstructLibraryCdktf.property.DEFAULT_TS_JEST_TRANFORM_PATTERN"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
 
 ```typescript
 public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
