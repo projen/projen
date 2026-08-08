@@ -514,8 +514,12 @@
       "description": "A proxy to use for outgoing HTTPS requests. If the HTTPS_PROXY, https_proxy, HTTP_PROXY or http_proxy environment variables are set, their values will be used instead.",
       "type": "string"
     },
+    "httpProxy": {
+      "description": "A proxy to use for outgoing HTTP requests. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.",
+      "type": "string"
+    },
     "proxy": {
-      "description": "A proxy to use for outgoing http requests. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.",
+      "description": "npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.",
       "type": "string"
     },
     "localAddress": {
@@ -526,7 +530,7 @@
       "description": "The maximum number of connections to use per origin (protocol/host/port combination).",
       "type": "number"
     },
-    "noproxy": {
+    "noProxy": {
       "description": "A comma-separated string of domain extensions that a proxy should not be used for.",
       "type": "string"
     },
@@ -556,6 +560,14 @@
     },
     "fetchTimeout": {
       "description": "The maximum amount of time to wait for HTTP requests to complete.",
+      "type": "number"
+    },
+    "fetchWarnTimeoutMs": {
+      "description": "A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). Added in pnpm v10.18.0.",
+      "type": "number"
+    },
+    "fetchMinSpeedKiBps": {
+      "description": "A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s). Added in pnpm v10.18.0.",
       "type": "number"
     },
     "autoInstallPeers": {
@@ -1073,6 +1085,14 @@
       "type": "object",
       "additionalProperties": {
         "type": "string"
+      }
+    },
+    "namedRegistries": {
+      "description": "Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
       }
     },
     "virtualStoreOnly": {
