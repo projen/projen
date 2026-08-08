@@ -12516,11 +12516,13 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.executionEnv">executionEnv</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaExecutionEnv">PnpmWorkspaceYamlSchemaExecutionEnv</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.extendNodePath">extendNodePath</a></code> | <code>boolean</code> | When false, the NODE_PATH environment variable is not set in the command shims. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.failIfNoMatch">failIfNoMatch</a></code> | <code>boolean</code> | If true, pnpm will fail if no packages match the filter. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchMinSpeedKiBps">fetchMinSpeedKiBps</a></code> | <code>number</code> | A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetries">fetchRetries</a></code> | <code>number</code> | How many times to retry if pnpm fails to fetch from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetryFactor">fetchRetryFactor</a></code> | <code>number</code> | The exponential factor for retry backoff. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetryMaxtimeout">fetchRetryMaxtimeout</a></code> | <code>number</code> | The maximum fallback timeout to ensure the retry factor does not make requests too long. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetryMintimeout">fetchRetryMintimeout</a></code> | <code>number</code> | The minimum (base) timeout for retrying requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
@@ -12532,6 +12534,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoistingLimits">hoistingLimits</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits">PnpmWorkspaceYamlSchemaHoistingLimits</a></code> | Added a new hoistingLimits setting for `nodeLinker: hoisted` installs, mirroring yarn's `nmHoistingLimits`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoistPattern">hoistPattern</a></code> | <code>string[]</code> | Tells pnpm which packages should be hoisted to node_modules/.pnpm/node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoistWorkspacePackages">hoistWorkspacePackages</a></code> | <code>boolean</code> | When true, packages from the workspaces are symlinked to either <workspace_root>/node_modules/.pnpm/node_modules or to <workspace_root>/node_modules depending on other hoisting settings (hoistPattern and publicHoistPattern). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.httpProxy">httpProxy</a></code> | <code>string</code> | A proxy to use for outgoing HTTP requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.httpsProxy">httpsProxy</a></code> | <code>string</code> | A proxy to use for outgoing HTTPS requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ignoreCompatibilityDb">ignoreCompatibilityDb</a></code> | <code>boolean</code> | During installation the dependencies of some packages are automatically patched. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ignoredBuiltDependencies">ignoredBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that should not be built during installation. |
@@ -12559,13 +12562,14 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeStrict">minimumReleaseAgeStrict</a></code> | <code>boolean</code> | Controls how pnpm behaves when no version of a dependency satisfies the minimumReleaseAge constraint within the requested range. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.modulesCacheMaxAge">modulesCacheMaxAge</a></code> | <code>number</code> | The time in minutes after which orphan packages from the modules directory should be removed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.modulesDir">modulesDir</a></code> | <code>string</code> | The directory in which dependencies will be installed (instead of node_modules). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.namedRegistries">namedRegistries</a></code> | <code>{[ key: string ]: string}</code> | Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noproxy">noproxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmrcAuthFile">npmrcAuthFile</a></code> | <code>string</code> | The path to a file containing registry authentication tokens. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.onlyBuiltDependencies">onlyBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that are allowed to be executed during installation. |
@@ -12588,7 +12592,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferWorkspacePackages">preferWorkspacePackages</a></code> | <code>boolean</code> | If this is enabled, local packages from the workspace are preferred over packages from the registry, even if there is a newer version of the package in the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.provenance">provenance</a></code> | <code>boolean</code> | When publishing from a supported cloud CI/CD system, the package will be publicly linked to where it was built and published from. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.proxy">proxy</a></code> | <code>string</code> | A proxy to use for outgoing http requests. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.proxy">proxy</a></code> | <code>string</code> | npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publicHoistPattern">publicHoistPattern</a></code> | <code>string[]</code> | Unlike hoistPattern, which hoists dependencies to a hidden modules directory inside the virtual store, publicHoistPattern hoists dependencies matching the pattern to the root modules directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
@@ -13078,6 +13082,20 @@ If true, pnpm will fail if no packages match the filter.
 
 ---
 
+##### `fetchMinSpeedKiBps`<sup>Optional</sup> <a name="fetchMinSpeedKiBps" id="projen.javascript.PnpmWorkspaceYamlOptions.property.fetchMinSpeedKiBps"></a>
+
+```typescript
+public readonly fetchMinSpeedKiBps: number;
+```
+
+- *Type:* number
+
+A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s).
+
+Added in pnpm v10.18.0.
+
+---
+
 ##### `fetchRetries`<sup>Optional</sup> <a name="fetchRetries" id="projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetries"></a>
 
 ```typescript
@@ -13135,6 +13153,20 @@ public readonly fetchTimeout: number;
 - *Type:* number
 
 The maximum amount of time to wait for HTTP requests to complete.
+
+---
+
+##### `fetchWarnTimeoutMs`<sup>Optional</sup> <a name="fetchWarnTimeoutMs" id="projen.javascript.PnpmWorkspaceYamlOptions.property.fetchWarnTimeoutMs"></a>
+
+```typescript
+public readonly fetchWarnTimeoutMs: number;
+```
+
+- *Type:* number
+
+A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds).
+
+Added in pnpm v10.18.0.
 
 ---
 
@@ -13273,6 +13305,20 @@ public readonly hoistWorkspacePackages: boolean;
 - *Type:* boolean
 
 When true, packages from the workspaces are symlinked to either <workspace_root>/node_modules/.pnpm/node_modules or to <workspace_root>/node_modules depending on other hoisting settings (hoistPattern and publicHoistPattern).
+
+---
+
+##### `httpProxy`<sup>Optional</sup> <a name="httpProxy" id="projen.javascript.PnpmWorkspaceYamlOptions.property.httpProxy"></a>
+
+```typescript
+public readonly httpProxy: string;
+```
+
+- *Type:* string
+
+A proxy to use for outgoing HTTP requests.
+
+If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
 
 ---
 
@@ -13617,6 +13663,18 @@ The directory in which dependencies will be installed (instead of node_modules).
 
 ---
 
+##### `namedRegistries`<sup>Optional</sup> <a name="namedRegistries" id="projen.javascript.PnpmWorkspaceYamlOptions.property.namedRegistries"></a>
+
+```typescript
+public readonly namedRegistries: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0.
+
+---
+
 ##### `networkConcurrency`<sup>Optional</sup> <a name="networkConcurrency" id="projen.javascript.PnpmWorkspaceYamlOptions.property.networkConcurrency"></a>
 
 ```typescript
@@ -13689,10 +13747,10 @@ The Node.js version to use when checking a package's engines setting.
 
 ---
 
-##### `noproxy`<sup>Optional</sup> <a name="noproxy" id="projen.javascript.PnpmWorkspaceYamlOptions.property.noproxy"></a>
+##### `noProxy`<sup>Optional</sup> <a name="noProxy" id="projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy"></a>
 
 ```typescript
-public readonly noproxy: string;
+public readonly noProxy: string;
 ```
 
 - *Type:* string
@@ -13981,7 +14039,7 @@ public readonly proxy: string;
 
 - *Type:* string
 
-A proxy to use for outgoing http requests.
+npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy.
 
 If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
 
@@ -14627,11 +14685,13 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.executionEnv">executionEnv</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaExecutionEnv">PnpmWorkspaceYamlSchemaExecutionEnv</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.extendNodePath">extendNodePath</a></code> | <code>boolean</code> | When false, the NODE_PATH environment variable is not set in the command shims. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.failIfNoMatch">failIfNoMatch</a></code> | <code>boolean</code> | If true, pnpm will fail if no packages match the filter. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchMinSpeedKiBps">fetchMinSpeedKiBps</a></code> | <code>number</code> | A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetries">fetchRetries</a></code> | <code>number</code> | How many times to retry if pnpm fails to fetch from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetryFactor">fetchRetryFactor</a></code> | <code>number</code> | The exponential factor for retry backoff. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetryMaxtimeout">fetchRetryMaxtimeout</a></code> | <code>number</code> | The maximum fallback timeout to ensure the retry factor does not make requests too long. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetryMintimeout">fetchRetryMintimeout</a></code> | <code>number</code> | The minimum (base) timeout for retrying requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
@@ -14643,6 +14703,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoistingLimits">hoistingLimits</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits">PnpmWorkspaceYamlSchemaHoistingLimits</a></code> | Added a new hoistingLimits setting for `nodeLinker: hoisted` installs, mirroring yarn's `nmHoistingLimits`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoistPattern">hoistPattern</a></code> | <code>string[]</code> | Tells pnpm which packages should be hoisted to node_modules/.pnpm/node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoistWorkspacePackages">hoistWorkspacePackages</a></code> | <code>boolean</code> | When true, packages from the workspaces are symlinked to either <workspace_root>/node_modules/.pnpm/node_modules or to <workspace_root>/node_modules depending on other hoisting settings (hoistPattern and publicHoistPattern). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.httpProxy">httpProxy</a></code> | <code>string</code> | A proxy to use for outgoing HTTP requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.httpsProxy">httpsProxy</a></code> | <code>string</code> | A proxy to use for outgoing HTTPS requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ignoreCompatibilityDb">ignoreCompatibilityDb</a></code> | <code>boolean</code> | During installation the dependencies of some packages are automatically patched. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ignoredBuiltDependencies">ignoredBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that should not be built during installation. |
@@ -14670,13 +14731,14 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeStrict">minimumReleaseAgeStrict</a></code> | <code>boolean</code> | Controls how pnpm behaves when no version of a dependency satisfies the minimumReleaseAge constraint within the requested range. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.modulesCacheMaxAge">modulesCacheMaxAge</a></code> | <code>number</code> | The time in minutes after which orphan packages from the modules directory should be removed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.modulesDir">modulesDir</a></code> | <code>string</code> | The directory in which dependencies will be installed (instead of node_modules). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.namedRegistries">namedRegistries</a></code> | <code>{[ key: string ]: string}</code> | Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noproxy">noproxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmrcAuthFile">npmrcAuthFile</a></code> | <code>string</code> | The path to a file containing registry authentication tokens. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.onlyBuiltDependencies">onlyBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that are allowed to be executed during installation. |
@@ -14699,7 +14761,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferWorkspacePackages">preferWorkspacePackages</a></code> | <code>boolean</code> | If this is enabled, local packages from the workspace are preferred over packages from the registry, even if there is a newer version of the package in the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.provenance">provenance</a></code> | <code>boolean</code> | When publishing from a supported cloud CI/CD system, the package will be publicly linked to where it was built and published from. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.proxy">proxy</a></code> | <code>string</code> | A proxy to use for outgoing http requests. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.proxy">proxy</a></code> | <code>string</code> | npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publicHoistPattern">publicHoistPattern</a></code> | <code>string[]</code> | Unlike hoistPattern, which hoists dependencies to a hidden modules directory inside the virtual store, publicHoistPattern hoists dependencies matching the pattern to the root modules directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
@@ -15189,6 +15251,20 @@ If true, pnpm will fail if no packages match the filter.
 
 ---
 
+##### `fetchMinSpeedKiBps`<sup>Optional</sup> <a name="fetchMinSpeedKiBps" id="projen.javascript.PnpmWorkspaceYamlSchema.property.fetchMinSpeedKiBps"></a>
+
+```typescript
+public readonly fetchMinSpeedKiBps: number;
+```
+
+- *Type:* number
+
+A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s).
+
+Added in pnpm v10.18.0.
+
+---
+
 ##### `fetchRetries`<sup>Optional</sup> <a name="fetchRetries" id="projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetries"></a>
 
 ```typescript
@@ -15246,6 +15322,20 @@ public readonly fetchTimeout: number;
 - *Type:* number
 
 The maximum amount of time to wait for HTTP requests to complete.
+
+---
+
+##### `fetchWarnTimeoutMs`<sup>Optional</sup> <a name="fetchWarnTimeoutMs" id="projen.javascript.PnpmWorkspaceYamlSchema.property.fetchWarnTimeoutMs"></a>
+
+```typescript
+public readonly fetchWarnTimeoutMs: number;
+```
+
+- *Type:* number
+
+A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds).
+
+Added in pnpm v10.18.0.
 
 ---
 
@@ -15384,6 +15474,20 @@ public readonly hoistWorkspacePackages: boolean;
 - *Type:* boolean
 
 When true, packages from the workspaces are symlinked to either <workspace_root>/node_modules/.pnpm/node_modules or to <workspace_root>/node_modules depending on other hoisting settings (hoistPattern and publicHoistPattern).
+
+---
+
+##### `httpProxy`<sup>Optional</sup> <a name="httpProxy" id="projen.javascript.PnpmWorkspaceYamlSchema.property.httpProxy"></a>
+
+```typescript
+public readonly httpProxy: string;
+```
+
+- *Type:* string
+
+A proxy to use for outgoing HTTP requests.
+
+If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
 
 ---
 
@@ -15728,6 +15832,18 @@ The directory in which dependencies will be installed (instead of node_modules).
 
 ---
 
+##### `namedRegistries`<sup>Optional</sup> <a name="namedRegistries" id="projen.javascript.PnpmWorkspaceYamlSchema.property.namedRegistries"></a>
+
+```typescript
+public readonly namedRegistries: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
+
+Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0.
+
+---
+
 ##### `networkConcurrency`<sup>Optional</sup> <a name="networkConcurrency" id="projen.javascript.PnpmWorkspaceYamlSchema.property.networkConcurrency"></a>
 
 ```typescript
@@ -15800,10 +15916,10 @@ The Node.js version to use when checking a package's engines setting.
 
 ---
 
-##### `noproxy`<sup>Optional</sup> <a name="noproxy" id="projen.javascript.PnpmWorkspaceYamlSchema.property.noproxy"></a>
+##### `noProxy`<sup>Optional</sup> <a name="noProxy" id="projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy"></a>
 
 ```typescript
-public readonly noproxy: string;
+public readonly noProxy: string;
 ```
 
 - *Type:* string
@@ -16092,7 +16208,7 @@ public readonly proxy: string;
 
 - *Type:* string
 
-A proxy to use for outgoing http requests.
+npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy.
 
 If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
 

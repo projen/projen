@@ -404,7 +404,14 @@ export interface PnpmWorkspaceYamlSchema {
   readonly httpsProxy?: string;
 
   /**
-   * A proxy to use for outgoing http requests. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
+   * A proxy to use for outgoing HTTP requests. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
+   *
+   * @schema PnpmWorkspaceYamlSchema#httpProxy
+   */
+  readonly httpProxy?: string;
+
+  /**
+   * npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. If the HTTP_PROXY or http_proxy environment variables are set, proxy settings will be honored by the underlying request library.
    *
    * @schema PnpmWorkspaceYamlSchema#proxy
    */
@@ -427,9 +434,9 @@ export interface PnpmWorkspaceYamlSchema {
   /**
    * A comma-separated string of domain extensions that a proxy should not be used for.
    *
-   * @schema PnpmWorkspaceYamlSchema#noproxy
+   * @schema PnpmWorkspaceYamlSchema#noProxy
    */
-  readonly noproxy?: string;
+  readonly noProxy?: string;
 
   /**
    * Whether or not to do SSL key validation when making requests to the registry via HTTPS.
@@ -479,6 +486,20 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#fetchTimeout
    */
   readonly fetchTimeout?: number;
+
+  /**
+   * A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). Added in pnpm v10.18.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#fetchWarnTimeoutMs
+   */
+  readonly fetchWarnTimeoutMs?: number;
+
+  /**
+   * A warning message is displayed if the download speed of a tarball from the registry falls below the specified threshold (in KiB/s). Added in pnpm v10.18.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#fetchMinSpeedKiBps
+   */
+  readonly fetchMinSpeedKiBps?: number;
 
   /**
    * When true, any missing non-optional peer dependencies are automatically installed.
@@ -1057,6 +1078,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly registries?: { [key: string]: string };
 
   /**
+   * Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#namedRegistries
+   */
+  readonly namedRegistries?: { [key: string]: string };
+
+  /**
    * When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. This is useful for pre-populating a store (e.g., in Nix builds) without creating unnecessary project-level artifacts. pnpm fetch uses this mode internally.
    *
    * @schema PnpmWorkspaceYamlSchema#virtualStoreOnly
@@ -1165,10 +1193,11 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'key': obj.key,
     'gitShallowHosts': obj.gitShallowHosts?.map(y => y),
     'httpsProxy': obj.httpsProxy,
+    'httpProxy': obj.httpProxy,
     'proxy': obj.proxy,
     'localAddress': obj.localAddress,
     'maxsockets': obj.maxsockets,
-    'noproxy': obj.noproxy,
+    'noProxy': obj.noProxy,
     'strictSsl': obj.strictSsl,
     'networkConcurrency': obj.networkConcurrency,
     'fetchRetries': obj.fetchRetries,
@@ -1176,6 +1205,8 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'fetchRetryMintimeout': obj.fetchRetryMintimeout,
     'fetchRetryMaxtimeout': obj.fetchRetryMaxtimeout,
     'fetchTimeout': obj.fetchTimeout,
+    'fetchWarnTimeoutMs': obj.fetchWarnTimeoutMs,
+    'fetchMinSpeedKiBps': obj.fetchMinSpeedKiBps,
     'autoInstallPeers': obj.autoInstallPeers,
     'dedupePeerDependents': obj.dedupePeerDependents,
     'strictPeerDependencies': obj.strictPeerDependencies,
@@ -1258,6 +1289,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'npmrcAuthFile': obj.npmrcAuthFile,
     'minimumReleaseAgeIgnoreMissingTime': obj.minimumReleaseAgeIgnoreMissingTime,
     'registries': ((obj.registries) === undefined) ? undefined : (Object.entries(obj.registries).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'namedRegistries': ((obj.namedRegistries) === undefined) ? undefined : (Object.entries(obj.namedRegistries).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'virtualStoreOnly': obj.virtualStoreOnly,
     'pmOnFail': obj.pmOnFail,
     'runtimeOnFail': obj.runtimeOnFail,
