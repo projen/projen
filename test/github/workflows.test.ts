@@ -634,3 +634,163 @@ describe("setupTools", () => {
     expect(content).toContain("distribution: corretto");
   });
 });
+
+describe("reusable workflows", () => {
+  test("calling a reusable workflow job renders uses, with, and secrets", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("call-reusable");
+    wf.addJob("deploy", {
+      permissions: {},
+      uses: "octo-org/example-repo/.github/workflows/deployment.yml@main",
+      with: {
+        username: "mona",
+        environment: "production",
+      },
+      secrets: {
+        token: "${{ secrets.GITHUB_TOKEN }}",
+        deploy_key: "${{ secrets.DEPLOY_KEY }}",
+      },
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(
+      workflows[".github/workflows/call-reusable.yml"],
+    );
+    expect(content.jobs.deploy.uses).toBe(
+      "octo-org/example-repo/.github/workflows/deployment.yml@main",
+    );
+    expect(content.jobs.deploy.with).toEqual({
+      username: "mona",
+      environment: "production",
+    });
+    expect(content.jobs.deploy.secrets).toEqual({
+      token: "${{ secrets.GITHUB_TOKEN }}",
+      deploy_key: "${{ secrets.DEPLOY_KEY }}",
+    });
+    // Should not have runs-on or steps
+    expect(content.jobs.deploy["runs-on"]).toBeUndefined();
+    expect(content.jobs.deploy.steps).toBeUndefined();
+  });
+
+  test("calling a reusable workflow with secrets: inherit", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("call-inherit");
+    wf.addJob("deploy", {
+      permissions: {},
+      uses: "octo-org/example-repo/.github/workflows/deployment.yml@main",
+      secrets: "inherit",
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(workflows[".github/workflows/call-inherit.yml"]);
+    expect(content.jobs.deploy.secrets).toBe("inherit");
+  });
+
+  test("defining a reusable workflow with workflow_call inputs and secrets", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("reusable-wf");
+    wf.on({
+      workflowCall: {
+        inputs: {
+          config_path: {
+            description: "Path to the configuration file",
+            required: true,
+            type: "string",
+          },
+          dry_run: {
+            description: "Whether to perform a dry run",
+            required: false,
+            type: "boolean",
+            default: false,
+          },
+        },
+        secrets: {
+          personal_access_token: {
+            description: "A token for authentication",
+            required: true,
+          },
+        },
+      },
+    });
+    wf.addJob("build", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(workflows[".github/workflows/reusable-wf.yml"]);
+    expect(content.on.workflow_call.inputs.config_path).toEqual({
+      description: "Path to the configuration file",
+      required: true,
+      type: "string",
+    });
+    expect(content.on.workflow_call.inputs.dry_run).toEqual({
+      description: "Whether to perform a dry run",
+      required: false,
+      type: "boolean",
+      default: false,
+    });
+    expect(content.on.workflow_call.secrets.personal_access_token).toEqual({
+      description: "A token for authentication",
+      required: true,
+    });
+  });
+
+  test("defining a reusable workflow with workflow_call outputs", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("reusable-with-outputs");
+    wf.on({
+      workflowCall: {
+        outputs: {
+          build_id: {
+            description: "The build identifier",
+            value: "${{ jobs.build.outputs.id }}",
+          },
+        },
+      },
+    });
+    wf.addJob("build", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(
+      workflows[".github/workflows/reusable-with-outputs.yml"],
+    );
+    expect(content.on.workflow_call.outputs.build_id).toEqual({
+      description: "The build identifier",
+      value: "${{ jobs.build.outputs.id }}",
+    });
+  });
+
+  test("reusable workflow job with strategy matrix", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("matrix-reusable");
+    wf.addJob("deploy", {
+      permissions: {},
+      uses: "octo-org/example-repo/.github/workflows/deployment.yml@main",
+      with: {
+        target: "${{ matrix.target }}",
+      },
+      strategy: {
+        matrix: {
+          domain: { target: ["dev", "stage", "prod"] },
+        },
+      },
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(
+      workflows[".github/workflows/matrix-reusable.yml"],
+    );
+    expect(content.jobs.deploy.strategy.matrix.target).toEqual([
+      "dev",
+      "stage",
+      "prod",
+    ]);
+    expect(content.jobs.deploy.with.target).toBe("${{ matrix.target }}");
+  });
+});

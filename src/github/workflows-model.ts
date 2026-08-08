@@ -71,7 +71,7 @@ export interface JobCallingReusableWorkflow extends CommonJobDefinition {
    *
    * Allowed expression contexts: `github`, and `needs`.
    */
-  readonly with?: Record<string, string | boolean>;
+  readonly with?: Record<string, string | boolean | number>;
 
   /**
    * When a job is used to call a reusable workflow, you can use secrets to
@@ -1382,9 +1382,105 @@ export interface WorkflowDispatchInput {
 }
 
 /**
- * The Workflow Call event accepts no options.
+ * Options for the `workflow_call` trigger event, used to define a reusable workflow.
+ *
+ * @see https://docs.github.com/en/actions/using-workflows/reusing-workflows
  */
-export interface WorkflowCallOptions {}
+export interface WorkflowCallOptions {
+  /**
+   * A map of inputs that are passed from the caller workflow.
+   * Inputs are available in the called workflow using the `inputs` context.
+   *
+   * @default - no inputs
+   */
+  readonly inputs?: { [name: string]: WorkflowCallInput };
+
+  /**
+   * A map of secrets that can be used in the called workflow.
+   * Secrets are available in the called workflow using the `secrets` context.
+   *
+   * @default - no secrets
+   */
+  readonly secrets?: { [name: string]: WorkflowCallSecret };
+
+  /**
+   * A map of outputs that the called workflow can set.
+   * Called workflow outputs are available to all downstream jobs in the caller workflow.
+   *
+   * @default - no outputs
+   */
+  readonly outputs?: { [name: string]: WorkflowCallOutput };
+}
+
+/**
+ * An input definition for a `workflow_call` trigger.
+ *
+ * @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs
+ */
+export interface WorkflowCallInput {
+  /**
+   * A description of the input parameter.
+   */
+  readonly description?: string;
+
+  /**
+   * Whether the input is required. If `true`, the caller must supply
+   * this input when calling the workflow.
+   *
+   * @default false
+   */
+  readonly required?: boolean;
+
+  /**
+   * The data type of the input.
+   */
+  readonly type: "string" | "boolean" | "number";
+
+  /**
+   * The default value for the input when it is not provided by the caller.
+   *
+   * @default - no default
+   */
+  readonly default?: string | boolean | number;
+}
+
+/**
+ * A secret definition for a `workflow_call` trigger.
+ *
+ * @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets
+ */
+export interface WorkflowCallSecret {
+  /**
+   * A description of the secret parameter.
+   */
+  readonly description?: string;
+
+  /**
+   * Whether the secret is required. If `true`, the caller must supply
+   * this secret when calling the workflow.
+   *
+   * @default false
+   */
+  readonly required?: boolean;
+}
+
+/**
+ * An output definition for a `workflow_call` trigger.
+ *
+ * @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_calloutputs
+ */
+export interface WorkflowCallOutput {
+  /**
+   * A description of the output parameter.
+   */
+  readonly description?: string;
+
+  /**
+   * The value of the output. This must reference a job output from within
+   * the reusable workflow, e.g. `${{ jobs.<job_id>.outputs.<output_name> }}`.
+   */
+  readonly value: string;
+}
 
 /**
  * The Create event accepts no options.
