@@ -1595,7 +1595,7 @@ const jobCallingReusableWorkflow: github.workflows.JobCallingReusableWorkflow = 
 | <code><a href="#projen.github.workflows.JobCallingReusableWorkflow.property.strategy">strategy</a></code> | <code>projen.github.workflows.JobStrategy</code> | A strategy creates a build matrix for your jobs. |
 | <code><a href="#projen.github.workflows.JobCallingReusableWorkflow.property.uses">uses</a></code> | <code>string</code> | The location and version of a reusable workflow file to run as a job. |
 | <code><a href="#projen.github.workflows.JobCallingReusableWorkflow.property.secrets">secrets</a></code> | <code>string \| {[ key: string ]: string}</code> | When a job is used to call a reusable workflow, you can use secrets to provide a map of secrets that are passed to the called workflow. |
-| <code><a href="#projen.github.workflows.JobCallingReusableWorkflow.property.with">with</a></code> | <code>{[ key: string ]: string \| boolean}</code> | When a job is used to call a reusable workflow, you can use with to provide a map of inputs that are passed to the called workflow. |
+| <code><a href="#projen.github.workflows.JobCallingReusableWorkflow.property.with">with</a></code> | <code>{[ key: string ]: string \| number \| boolean}</code> | When a job is used to call a reusable workflow, you can use with to provide a map of inputs that are passed to the called workflow. |
 
 ---
 
@@ -1722,10 +1722,10 @@ Use the 'inherit' keyword to pass all the calling workflow's secrets to the call
 ##### `with`<sup>Optional</sup> <a name="with" id="projen.github.workflows.JobCallingReusableWorkflow.property.with"></a>
 
 ```typescript
-public readonly with: {[ key: string ]: string | boolean};
+public readonly with: {[ key: string ]: string | number | boolean};
 ```
 
-- *Type:* {[ key: string ]: string | boolean}
+- *Type:* {[ key: string ]: string | number | boolean}
 
 When a job is used to call a reusable workflow, you can use with to provide a map of inputs that are passed to the called workflow.
 
@@ -4420,9 +4420,89 @@ Which activity types to trigger on.
 
 ---
 
+### WorkflowCallInput <a name="WorkflowCallInput" id="projen.github.workflows.WorkflowCallInput"></a>
+
+An input definition for a `workflow_call` trigger.
+
+> [https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callinputs)
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowCallInput.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const workflowCallInput: github.workflows.WorkflowCallInput = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowCallInput.property.type">type</a></code> | <code>string</code> | The data type of the input. |
+| <code><a href="#projen.github.workflows.WorkflowCallInput.property.default">default</a></code> | <code>string \| number \| boolean</code> | The default value for the input when it is not provided by the caller. |
+| <code><a href="#projen.github.workflows.WorkflowCallInput.property.description">description</a></code> | <code>string</code> | A description of the input parameter. |
+| <code><a href="#projen.github.workflows.WorkflowCallInput.property.required">required</a></code> | <code>boolean</code> | Whether the input is required. |
+
+---
+
+##### `type`<sup>Required</sup> <a name="type" id="projen.github.workflows.WorkflowCallInput.property.type"></a>
+
+```typescript
+public readonly type: string;
+```
+
+- *Type:* string
+
+The data type of the input.
+
+---
+
+##### `default`<sup>Optional</sup> <a name="default" id="projen.github.workflows.WorkflowCallInput.property.default"></a>
+
+```typescript
+public readonly default: string | number | boolean;
+```
+
+- *Type:* string | number | boolean
+- *Default:* no default
+
+The default value for the input when it is not provided by the caller.
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.github.workflows.WorkflowCallInput.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A description of the input parameter.
+
+---
+
+##### `required`<sup>Optional</sup> <a name="required" id="projen.github.workflows.WorkflowCallInput.property.required"></a>
+
+```typescript
+public readonly required: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the input is required.
+
+If `true`, the caller must supply
+this input when calling the workflow.
+
+---
+
 ### WorkflowCallOptions <a name="WorkflowCallOptions" id="projen.github.workflows.WorkflowCallOptions"></a>
 
-The Workflow Call event accepts no options.
+Options for the `workflow_call` trigger event, used to define a reusable workflow.
+
+> [https://docs.github.com/en/actions/using-workflows/reusing-workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 
 #### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowCallOptions.Initializer"></a>
 
@@ -4432,6 +4512,161 @@ import { github } from 'projen'
 const workflowCallOptions: github.workflows.WorkflowCallOptions = { ... }
 ```
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowCallOptions.property.inputs">inputs</a></code> | <code>{[ key: string ]: projen.github.workflows.WorkflowCallInput}</code> | A map of inputs that are passed from the caller workflow. |
+| <code><a href="#projen.github.workflows.WorkflowCallOptions.property.outputs">outputs</a></code> | <code>{[ key: string ]: projen.github.workflows.WorkflowCallOutput}</code> | A map of outputs that the called workflow can set. |
+| <code><a href="#projen.github.workflows.WorkflowCallOptions.property.secrets">secrets</a></code> | <code>{[ key: string ]: projen.github.workflows.WorkflowCallSecret}</code> | A map of secrets that can be used in the called workflow. |
+
+---
+
+##### `inputs`<sup>Optional</sup> <a name="inputs" id="projen.github.workflows.WorkflowCallOptions.property.inputs"></a>
+
+```typescript
+public readonly inputs: {[ key: string ]: WorkflowCallInput};
+```
+
+- *Type:* {[ key: string ]: projen.github.workflows.WorkflowCallInput}
+- *Default:* no inputs
+
+A map of inputs that are passed from the caller workflow.
+
+Inputs are available in the called workflow using the `inputs` context.
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.github.workflows.WorkflowCallOptions.property.outputs"></a>
+
+```typescript
+public readonly outputs: {[ key: string ]: WorkflowCallOutput};
+```
+
+- *Type:* {[ key: string ]: projen.github.workflows.WorkflowCallOutput}
+- *Default:* no outputs
+
+A map of outputs that the called workflow can set.
+
+Called workflow outputs are available to all downstream jobs in the caller workflow.
+
+---
+
+##### `secrets`<sup>Optional</sup> <a name="secrets" id="projen.github.workflows.WorkflowCallOptions.property.secrets"></a>
+
+```typescript
+public readonly secrets: {[ key: string ]: WorkflowCallSecret};
+```
+
+- *Type:* {[ key: string ]: projen.github.workflows.WorkflowCallSecret}
+- *Default:* no secrets
+
+A map of secrets that can be used in the called workflow.
+
+Secrets are available in the called workflow using the `secrets` context.
+
+---
+
+### WorkflowCallOutput <a name="WorkflowCallOutput" id="projen.github.workflows.WorkflowCallOutput"></a>
+
+An output definition for a `workflow_call` trigger.
+
+> [https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_calloutputs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_calloutputs)
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowCallOutput.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const workflowCallOutput: github.workflows.WorkflowCallOutput = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowCallOutput.property.value">value</a></code> | <code>string</code> | The value of the output. |
+| <code><a href="#projen.github.workflows.WorkflowCallOutput.property.description">description</a></code> | <code>string</code> | A description of the output parameter. |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.github.workflows.WorkflowCallOutput.property.value"></a>
+
+```typescript
+public readonly value: string;
+```
+
+- *Type:* string
+
+The value of the output.
+
+This must reference a job output from within
+the reusable workflow, e.g. `${{ jobs.<job_id>.outputs.<output_name> }}`.
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.github.workflows.WorkflowCallOutput.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A description of the output parameter.
+
+---
+
+### WorkflowCallSecret <a name="WorkflowCallSecret" id="projen.github.workflows.WorkflowCallSecret"></a>
+
+A secret definition for a `workflow_call` trigger.
+
+> [https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onworkflow_callsecrets)
+
+#### Initializer <a name="Initializer" id="projen.github.workflows.WorkflowCallSecret.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const workflowCallSecret: github.workflows.WorkflowCallSecret = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.workflows.WorkflowCallSecret.property.description">description</a></code> | <code>string</code> | A description of the secret parameter. |
+| <code><a href="#projen.github.workflows.WorkflowCallSecret.property.required">required</a></code> | <code>boolean</code> | Whether the secret is required. |
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="projen.github.workflows.WorkflowCallSecret.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+A description of the secret parameter.
+
+---
+
+##### `required`<sup>Optional</sup> <a name="required" id="projen.github.workflows.WorkflowCallSecret.property.required"></a>
+
+```typescript
+public readonly required: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the secret is required.
+
+If `true`, the caller must supply
+this secret when calling the workflow.
+
+---
 
 ### WorkflowDispatchInput <a name="WorkflowDispatchInput" id="projen.github.workflows.WorkflowDispatchInput"></a>
 
