@@ -88,7 +88,7 @@
     "markmac": "^0.1.659",
     "prettier": "^3",
     "ts-jest": "^29",
-    "tsx": "^4.23.9",
+    "tsx": "^4.23.11",
     "typescript": "6.0.x"
   },
   "peerDependencies": {
