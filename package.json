@@ -70,7 +70,7 @@
     "@typescript-eslint/parser": "^8",
     "aws-cdk-lib": "^2.263.0",
     "commit-and-tag-version": "^12",
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^2.7.1",
