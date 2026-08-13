@@ -68,7 +68,7 @@
     "@types/yargs": "^16.0.11",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
-    "aws-cdk-lib": "^2.263.0",
+    "aws-cdk-lib": "^2.264.0",
     "commit-and-tag-version": "^12",
     "esbuild": "^0.28.2",
     "eslint": "^9",
@@ -88,7 +88,7 @@
     "markmac": "^0.1.659",
     "prettier": "^3",
     "ts-jest": "^29",
-    "tsx": "^4.23.11",
+    "tsx": "^4.23.12",
     "typescript": "6.0.x"
   },
   "peerDependencies": {
