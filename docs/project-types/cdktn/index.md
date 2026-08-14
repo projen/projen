@@ -201,6 +201,22 @@ new cdktn.ConstructLibraryCdktn({
 
 You'll need to configure the appropriate secrets in your CI/CD environment. See the [AWS CDK Construct Library](./aws-cdk-construct-library.md#publishing) guide for details on required secrets.
 
+## Differences from CDKTF
+
+CDKTN maintains compatibility with CDKTF constructs while continuing development:
+
+| Feature | CDKTF | CDKTN |
+|---------|-------|-------|
+| Status | Archived by HashiCorp | Active (Community-maintained) |
+| Package name | `cdktf` | `cdktn` |
+| Default version | `^0.13.0` | `^0.24.0` |
+| Projen class | `cdktf.ConstructLibraryCdktf` | `cdktn.ConstructLibraryCdktn` |
+| Option key | `cdktfVersion` | `cdktnVersion` |
+| Website | N/A | https://cdktn.io/ |
+| Development | No longer maintained | Active community development |
+
+The `ConstructLibraryCdktf` class remains available for backward compatibility but is now deprecated. Existing projects using `cdktf` will continue to work, but we recommend migrating to `cdktn` for new features and improvements.
+
 ## Migrating from CDKTF
 
 If you have an existing CDKTF construct library, see the [CDKTN Migration Guide](./cdktn-migration.md) for step-by-step instructions on migrating to CDKTN.
@@ -211,15 +227,3 @@ If you have an existing CDKTF construct library, see the [CDKTN Migration Guide]
 - [CDKTN npm package](https://www.npmjs.com/package/cdktn)
 - [Projen CDKTN API Reference](https://projen.io/api/cdktn.html)
 - [Terraform Registry](https://registry.terraform.io/) - Find pre-built providers
-
-## Differences from CDKTF
-
-CDKTN maintains compatibility with CDKTF constructs while continuing development:
-
-| Feature | CDKTF | CDKTN |
-|---------|-------|-------|
-| Status | Archived by HashiCorp | Active (Community-maintained) |
-| Package name | `cdktf` | `cdktn` |
-| Website | N/A | https://cdktn.io/ |
-| Development | No longer maintained | Active community development |
-| Projen support | `cdktf.ConstructLibraryCdktf` | `cdktn.ConstructLibraryCdktn` |

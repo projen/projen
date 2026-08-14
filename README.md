@@ -70,6 +70,7 @@ full list):
 * [cdk8s-app-py](https://projen.io/docs/api/cdk8s#cdk8spythonapp-) - CDK8s app in Python.
 * [cdk8s-app-ts](https://projen.io/docs/api/cdk8s#cdk8stypescriptapp-) - CDK8s app in TypeScript.
 * [cdk8s-construct](https://projen.io/docs/api/cdk8s#constructlibrarycdk8s-) - CDK8s construct library project.
+* [cdktn-app-ts](https://projen.io/docs/api/cdktn#cdktntypescriptapp-) - CDKTN app in TypeScript.
 * [cdktn-construct](https://projen.io/docs/api/cdktn#constructlibrarycdktn-) - CDKTN construct library project.
 * [java](https://projen.io/docs/api/java#javaproject-) - Java project.
 * [jsii](https://projen.io/docs/api/cdk#jsiiproject-) - Multi-language jsii library project.
