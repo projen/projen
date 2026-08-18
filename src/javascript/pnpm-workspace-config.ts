@@ -65,6 +65,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly packageExtensions?: any;
 
   /**
+   * Per-workspace-project pnpm settings that replace project-specific .npmrc files.
+   *
+   * @schema PnpmWorkspaceYamlSchema#packageConfigs
+   */
+  readonly packageConfigs?: any;
+
+  /**
    * @schema PnpmWorkspaceYamlSchema#peerDependencyRules
    */
   readonly peerDependencyRules?: PnpmWorkspaceYamlSchemaPeerDependencyRules;
@@ -1143,6 +1150,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'onlyBuiltDependencies': obj.onlyBuiltDependencies?.map(y => y),
     'overrides': obj.overrides,
     'packageExtensions': obj.packageExtensions,
+    'packageConfigs': obj.packageConfigs,
     'peerDependencyRules': toJson_PnpmWorkspaceYamlSchemaPeerDependencyRules(obj.peerDependencyRules),
     'neverBuiltDependencies': obj.neverBuiltDependencies?.map(y => y),
     'dangerouslyAllowAllBuilds': obj.dangerouslyAllowAllBuilds,
