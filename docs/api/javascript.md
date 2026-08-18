@@ -12576,6 +12576,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.onlyBuiltDependenciesFile">onlyBuiltDependenciesFile</a></code> | <code>string</code> | Specifies a JSON file that lists the only packages permitted to run installation scripts during the pnpm install process. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.optimisticRepeatInstall">optimisticRepeatInstall</a></code> | <code>boolean</code> | When enabled, a fast check will be performed before proceeding to installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.overrides">overrides</a></code> | <code>any</code> | Used to override any dependency in the dependency graph. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.packageConfigs">packageConfigs</a></code> | <code>any</code> | Per-workspace-project pnpm settings that replace project-specific .npmrc files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.packageExtensions">packageExtensions</a></code> | <code>any</code> | Used to extend the existing package definitions with additional information. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.packageImportMethod">packageImportMethod</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPackageImportMethod">PnpmWorkspaceYamlSchemaPackageImportMethod</a></code> | Controls the way packages are imported from the store (if you want to disable symlinks inside node_modules, then you need to change the nodeLinker setting, not this one). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.packageManagerStrict">packageManagerStrict</a></code> | <code>boolean</code> | If this setting is disabled, pnpm will not fail if a different package manager is specified in the packageManager field of package.json. When enabled, only the package name is checked (since pnpm v9.2.0), so you can still run any version of pnpm regardless of the version specified in the packageManager field. |
@@ -13835,6 +13836,18 @@ Used to override any dependency in the dependency graph.
 
 ---
 
+##### `packageConfigs`<sup>Optional</sup> <a name="packageConfigs" id="projen.javascript.PnpmWorkspaceYamlOptions.property.packageConfigs"></a>
+
+```typescript
+public readonly packageConfigs: any;
+```
+
+- *Type:* any
+
+Per-workspace-project pnpm settings that replace project-specific .npmrc files.
+
+---
+
 ##### `packageExtensions`<sup>Optional</sup> <a name="packageExtensions" id="projen.javascript.PnpmWorkspaceYamlOptions.property.packageExtensions"></a>
 
 ```typescript
@@ -14745,6 +14758,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.onlyBuiltDependenciesFile">onlyBuiltDependenciesFile</a></code> | <code>string</code> | Specifies a JSON file that lists the only packages permitted to run installation scripts during the pnpm install process. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.optimisticRepeatInstall">optimisticRepeatInstall</a></code> | <code>boolean</code> | When enabled, a fast check will be performed before proceeding to installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.overrides">overrides</a></code> | <code>any</code> | Used to override any dependency in the dependency graph. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.packageConfigs">packageConfigs</a></code> | <code>any</code> | Per-workspace-project pnpm settings that replace project-specific .npmrc files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.packageExtensions">packageExtensions</a></code> | <code>any</code> | Used to extend the existing package definitions with additional information. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.packageImportMethod">packageImportMethod</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPackageImportMethod">PnpmWorkspaceYamlSchemaPackageImportMethod</a></code> | Controls the way packages are imported from the store (if you want to disable symlinks inside node_modules, then you need to change the nodeLinker setting, not this one). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.packageManagerStrict">packageManagerStrict</a></code> | <code>boolean</code> | If this setting is disabled, pnpm will not fail if a different package manager is specified in the packageManager field of package.json. When enabled, only the package name is checked (since pnpm v9.2.0), so you can still run any version of pnpm regardless of the version specified in the packageManager field. |
@@ -16001,6 +16015,18 @@ public readonly overrides: any;
 - *Type:* any
 
 Used to override any dependency in the dependency graph.
+
+---
+
+##### `packageConfigs`<sup>Optional</sup> <a name="packageConfigs" id="projen.javascript.PnpmWorkspaceYamlSchema.property.packageConfigs"></a>
+
+```typescript
+public readonly packageConfigs: any;
+```
+
+- *Type:* any
+
+Per-workspace-project pnpm settings that replace project-specific .npmrc files.
 
 ---
 
