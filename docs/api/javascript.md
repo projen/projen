@@ -12494,6 +12494,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cafile">cafile</a></code> | <code>string</code> | A path to a file containing one or multiple Certificate Authority signing certificates. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalog">catalog</a></code> | <code>{[ key: string ]: string}</code> | Define dependency version ranges as reusable constants, for later reference in package.json files. This (singular) field creates a catalog named default. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogMode">catalogMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a></code> | Controlling if and how dependencies are added to the default catalog. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogPrune">catalogPrune</a></code> | <code>boolean</code> | When set to true, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
@@ -12558,6 +12559,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.mergeGitBranchLockfilesBranchPattern">mergeGitBranchLockfilesBranchPattern</a></code> | <code>any[]</code> | This configuration matches the current branch name to determine whether to merge all git branch lockfile files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>number</code> | minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeExclude">minimumReleaseAgeExclude</a></code> | <code>string[]</code> | If you set `minimumReleaseAge` but need certain dependencies to always install the newest version immediately, you can list them under `minimumReleaseAgeExclude`. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeExcludePrune">minimumReleaseAgeExcludePrune</a></code> | <code>boolean</code> | When set to true, pnpm add, pnpm update, and pnpm remove prune the entries of minimumReleaseAgeExclude in pnpm-workspace.yaml that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (@myorg/*) are always kept. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeIgnoreMissingTime">minimumReleaseAgeIgnoreMissingTime</a></code> | <code>boolean</code> | When `true`, pnpm skips the `minimumReleaseAge` check for a package whose registry metadata does not include the time field (some private registries and mirrors omit it). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeStrict">minimumReleaseAgeStrict</a></code> | <code>boolean</code> | Controls how pnpm behaves when no version of a dependency satisfies the minimumReleaseAge constraint within the requested range. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.modulesCacheMaxAge">modulesCacheMaxAge</a></code> | <code>number</code> | The time in minutes after which orphan packages from the modules directory should be removed. |
@@ -12566,8 +12568,10 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
@@ -12814,6 +12818,20 @@ public readonly catalogMode: PnpmWorkspaceYamlSchemaCatalogMode;
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a>
 
 Controlling if and how dependencies are added to the default catalog.
+
+---
+
+##### `catalogPrune`<sup>Optional</sup> <a name="catalogPrune" id="projen.javascript.PnpmWorkspaceYamlOptions.property.catalogPrune"></a>
+
+```typescript
+public readonly catalogPrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm will remove unused catalog entries during installation.
+
+`cleanupUnusedCatalogs` is the deprecated spelling of this setting and continues to work; when both are set, `catalogPrune` wins.
 
 ---
 
@@ -13612,6 +13630,18 @@ The exclusion works by `package name` and applies to all versions of that packag
 
 ---
 
+##### `minimumReleaseAgeExcludePrune`<sup>Optional</sup> <a name="minimumReleaseAgeExcludePrune" id="projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeExcludePrune"></a>
+
+```typescript
+public readonly minimumReleaseAgeExcludePrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm add, pnpm update, and pnpm remove prune the entries of minimumReleaseAgeExclude in pnpm-workspace.yaml that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (@myorg/*) are always kept.
+
+---
+
 ##### `minimumReleaseAgeIgnoreMissingTime`<sup>Optional</sup> <a name="minimumReleaseAgeIgnoreMissingTime" id="projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeIgnoreMissingTime"></a>
 
 ```typescript
@@ -13712,6 +13742,18 @@ Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are
 
 ---
 
+##### `nodeExperimentalPackageMap`<sup>Optional</sup> <a name="nodeExperimentalPackageMap" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodeExperimentalPackageMap"></a>
+
+```typescript
+public readonly nodeExperimentalPackageMap: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap.
+
+---
+
 ##### `nodeLinker`<sup>Optional</sup> <a name="nodeLinker" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker"></a>
 
 ```typescript
@@ -13733,6 +13775,18 @@ public readonly nodeOptions: string;
 - *Type:* string
 
 Options to pass through to Node.js via the NODE_OPTIONS environment variable.
+
+---
+
+##### `nodePackageMapType`<sup>Optional</sup> <a name="nodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType"></a>
+
+```typescript
+public readonly nodePackageMapType: PnpmWorkspaceYamlSchemaNodePackageMapType;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a>
+
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
 
 ---
 
@@ -14676,6 +14730,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cafile">cafile</a></code> | <code>string</code> | A path to a file containing one or multiple Certificate Authority signing certificates. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalog">catalog</a></code> | <code>{[ key: string ]: string}</code> | Define dependency version ranges as reusable constants, for later reference in package.json files. This (singular) field creates a catalog named default. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogMode">catalogMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a></code> | Controlling if and how dependencies are added to the default catalog. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogPrune">catalogPrune</a></code> | <code>boolean</code> | When set to true, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
@@ -14740,6 +14795,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.mergeGitBranchLockfilesBranchPattern">mergeGitBranchLockfilesBranchPattern</a></code> | <code>any[]</code> | This configuration matches the current branch name to determine whether to merge all git branch lockfile files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>number</code> | minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeExclude">minimumReleaseAgeExclude</a></code> | <code>string[]</code> | If you set `minimumReleaseAge` but need certain dependencies to always install the newest version immediately, you can list them under `minimumReleaseAgeExclude`. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeExcludePrune">minimumReleaseAgeExcludePrune</a></code> | <code>boolean</code> | When set to true, pnpm add, pnpm update, and pnpm remove prune the entries of minimumReleaseAgeExclude in pnpm-workspace.yaml that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (@myorg/*) are always kept. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeIgnoreMissingTime">minimumReleaseAgeIgnoreMissingTime</a></code> | <code>boolean</code> | When `true`, pnpm skips the `minimumReleaseAge` check for a package whose registry metadata does not include the time field (some private registries and mirrors omit it). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeStrict">minimumReleaseAgeStrict</a></code> | <code>boolean</code> | Controls how pnpm behaves when no version of a dependency satisfies the minimumReleaseAge constraint within the requested range. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.modulesCacheMaxAge">modulesCacheMaxAge</a></code> | <code>number</code> | The time in minutes after which orphan packages from the modules directory should be removed. |
@@ -14748,8 +14804,10 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
@@ -14996,6 +15054,20 @@ public readonly catalogMode: PnpmWorkspaceYamlSchemaCatalogMode;
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a>
 
 Controlling if and how dependencies are added to the default catalog.
+
+---
+
+##### `catalogPrune`<sup>Optional</sup> <a name="catalogPrune" id="projen.javascript.PnpmWorkspaceYamlSchema.property.catalogPrune"></a>
+
+```typescript
+public readonly catalogPrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm will remove unused catalog entries during installation.
+
+`cleanupUnusedCatalogs` is the deprecated spelling of this setting and continues to work; when both are set, `catalogPrune` wins.
 
 ---
 
@@ -15794,6 +15866,18 @@ The exclusion works by `package name` and applies to all versions of that packag
 
 ---
 
+##### `minimumReleaseAgeExcludePrune`<sup>Optional</sup> <a name="minimumReleaseAgeExcludePrune" id="projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeExcludePrune"></a>
+
+```typescript
+public readonly minimumReleaseAgeExcludePrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm add, pnpm update, and pnpm remove prune the entries of minimumReleaseAgeExclude in pnpm-workspace.yaml that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (@myorg/*) are always kept.
+
+---
+
 ##### `minimumReleaseAgeIgnoreMissingTime`<sup>Optional</sup> <a name="minimumReleaseAgeIgnoreMissingTime" id="projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeIgnoreMissingTime"></a>
 
 ```typescript
@@ -15894,6 +15978,18 @@ Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are
 
 ---
 
+##### `nodeExperimentalPackageMap`<sup>Optional</sup> <a name="nodeExperimentalPackageMap" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodeExperimentalPackageMap"></a>
+
+```typescript
+public readonly nodeExperimentalPackageMap: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap.
+
+---
+
 ##### `nodeLinker`<sup>Optional</sup> <a name="nodeLinker" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker"></a>
 
 ```typescript
@@ -15915,6 +16011,18 @@ public readonly nodeOptions: string;
 - *Type:* string
 
 Options to pass through to Node.js via the NODE_OPTIONS environment variable.
+
+---
+
+##### `nodePackageMapType`<sup>Optional</sup> <a name="nodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType"></a>
+
+```typescript
+public readonly nodePackageMapType: PnpmWorkspaceYamlSchemaNodePackageMapType;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a>
+
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
 
 ---
 
@@ -22485,6 +22593,33 @@ hoisted.
 ##### `PNP` <a name="PNP" id="projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.PNP"></a>
 
 pnp.
+
+---
+
+
+### PnpmWorkspaceYamlSchemaNodePackageMapType <a name="PnpmWorkspaceYamlSchemaNodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType"></a>
+
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType.STANDARD">STANDARD</a></code> | standard. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType.LOOSE">LOOSE</a></code> | loose. |
+
+---
+
+##### `STANDARD` <a name="STANDARD" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType.STANDARD"></a>
+
+standard.
+
+---
+
+
+##### `LOOSE` <a name="LOOSE" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType.LOOSE"></a>
+
+loose.
 
 ---
 
