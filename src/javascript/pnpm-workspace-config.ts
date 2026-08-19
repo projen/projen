@@ -44,6 +44,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly cleanupUnusedCatalogs?: boolean;
 
   /**
+   * When set to true, pnpm will remove unused catalog entries during installation. `cleanupUnusedCatalogs` is the deprecated spelling of this setting and continues to work; when both are set, `catalogPrune` wins.
+   *
+   * @schema PnpmWorkspaceYamlSchema#catalogPrune
+   */
+  readonly catalogPrune?: boolean;
+
+  /**
    * A list of package names that are allowed to be executed during installation.
    *
    * @schema PnpmWorkspaceYamlSchema#onlyBuiltDependencies
@@ -241,6 +248,20 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#nodeLinker
    */
   readonly nodeLinker?: PnpmWorkspaceYamlSchemaNodeLinker;
+
+  /**
+   * When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap
+   *
+   * @schema PnpmWorkspaceYamlSchema#nodeExperimentalPackageMap
+   */
+  readonly nodeExperimentalPackageMap?: boolean;
+
+  /**
+   * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+   *
+   * @schema PnpmWorkspaceYamlSchema#nodePackageMapType
+   */
+  readonly nodePackageMapType?: PnpmWorkspaceYamlSchemaNodePackageMapType;
 
   /**
    * When symlink is set to false, pnpm creates a virtual store directory without any symlinks. It is a useful setting together with nodeLinker=pnp.
@@ -1008,6 +1029,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly minimumReleaseAgeStrict?: boolean;
 
   /**
+   * When set to true, pnpm add, pnpm update, and pnpm remove prune the entries of minimumReleaseAgeExclude in pnpm-workspace.yaml that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (@myorg/*) are always kept.
+   *
+   * @schema PnpmWorkspaceYamlSchema#minimumReleaseAgeExcludePrune
+   */
+  readonly minimumReleaseAgeExcludePrune?: boolean;
+
+  /**
    * Bypass staleness checks for cached data. Missing data will still be requested from the server.
    *
    * @schema PnpmWorkspaceYamlSchema#preferOffline
@@ -1147,6 +1175,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'catalogs': ((obj.catalogs) === undefined) ? undefined : (Object.entries(obj.catalogs).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ((i[1]) === undefined) ? undefined : (Object.entries(i[1]).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})) }), {})),
     'catalogMode': obj.catalogMode,
     'cleanupUnusedCatalogs': obj.cleanupUnusedCatalogs,
+    'catalogPrune': obj.catalogPrune,
     'onlyBuiltDependencies': obj.onlyBuiltDependencies?.map(y => y),
     'overrides': obj.overrides,
     'packageExtensions': obj.packageExtensions,
@@ -1177,6 +1206,8 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'shamefullyHoist': obj.shamefullyHoist,
     'modulesDir': obj.modulesDir,
     'nodeLinker': obj.nodeLinker,
+    'nodeExperimentalPackageMap': obj.nodeExperimentalPackageMap,
+    'nodePackageMapType': obj.nodePackageMapType,
     'symlink': obj.symlink,
     'enableModulesDir': obj.enableModulesDir,
     'virtualStoreDir': obj.virtualStoreDir,
@@ -1286,6 +1317,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'minimumReleaseAge': obj.minimumReleaseAge,
     'minimumReleaseAgeExclude': obj.minimumReleaseAgeExclude?.map(y => y),
     'minimumReleaseAgeStrict': obj.minimumReleaseAgeStrict,
+    'minimumReleaseAgeExcludePrune': obj.minimumReleaseAgeExcludePrune,
     'preferOffline': obj.preferOffline,
     'trustPolicy': obj.trustPolicy,
     'trustPolicyExclude': obj.trustPolicyExclude?.map(y => y),
@@ -1593,6 +1625,18 @@ export enum PnpmWorkspaceYamlSchemaNodeLinker {
   HOISTED = "hoisted",
   /** pnp */
   PNP = "pnp",
+}
+
+/**
+ * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+ *
+ * @schema PnpmWorkspaceYamlSchemaNodePackageMapType
+ */
+export enum PnpmWorkspaceYamlSchemaNodePackageMapType {
+  /** standard */
+  STANDARD = "standard",
+  /** loose */
+  LOOSE = "loose",
 }
 
 /**
