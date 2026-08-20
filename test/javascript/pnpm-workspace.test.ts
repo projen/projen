@@ -60,3 +60,27 @@ test("of() returns undefined when there is no PnpmWorkspaceYaml component", () =
 
   expect(PnpmWorkspaceYaml.of(project)).toBeUndefined();
 });
+
+test("exposes the underlying pnpm-workspace.yaml file", () => {
+  const project = new TestProject();
+  const pnpmWorkspaceYaml = new PnpmWorkspaceYaml(project, {
+    onlyBuiltDependencies: ["esbuild"],
+  });
+
+  expect(pnpmWorkspaceYaml.file.path).toBe("pnpm-workspace.yaml");
+});
+
+test("file can be customized after construction", () => {
+  const project = new TestProject();
+
+  new PnpmWorkspaceYaml(project, { onlyBuiltDependencies: ["esbuild"] });
+
+  PnpmWorkspaceYaml.of(project)?.file.addOverride("packages", ["packages/*"]);
+
+  const files = synthSnapshot(project);
+  const workspaceYaml = YAML.parse(files["pnpm-workspace.yaml"]);
+  expect(workspaceYaml).toStrictEqual({
+    onlyBuiltDependencies: ["esbuild"],
+    packages: ["packages/*"],
+  });
+});

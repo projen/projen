@@ -4507,6 +4507,7 @@ Returns the `PnpmWorkspaceYaml` instance associated with a project or `undefined
 | --- | --- | --- |
 | <code><a href="#projen.javascript.PnpmWorkspaceYaml.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYaml.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.javascript.PnpmWorkspaceYaml.property.file">file</a></code> | <code>projen.YamlFile</code> | The underlying `pnpm-workspace.yaml` file. |
 
 ---
 
@@ -4529,6 +4530,18 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.PnpmWorkspaceYaml.property.file"></a>
+
+```typescript
+public readonly file: YamlFile;
+```
+
+- *Type:* projen.YamlFile
+
+The underlying `pnpm-workspace.yaml` file.
 
 ---
 

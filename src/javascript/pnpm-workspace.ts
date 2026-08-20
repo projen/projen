@@ -27,10 +27,15 @@ export class PnpmWorkspaceYaml extends Component {
     return project.components.find(isIt);
   }
 
+  /**
+   * The underlying `pnpm-workspace.yaml` file.
+   */
+  public readonly file: YamlFile;
+
   constructor(project: Project, options: PnpmWorkspaceYamlOptions = {}) {
     super(project);
 
-    new YamlFile(project, "pnpm-workspace.yaml", {
+    this.file = new YamlFile(project, "pnpm-workspace.yaml", {
       omitEmpty: true,
       obj: () => toJson_PnpmWorkspaceYamlSchema(options),
       readonly: false,
