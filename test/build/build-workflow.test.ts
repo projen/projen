@@ -141,6 +141,50 @@ describe("addPostBuildJob", () => {
   });
 });
 
+describe("checkout ref", () => {
+  test("post-build job commands checkout is pinned to the PR head SHA", () => {
+    const p = new TestProject();
+    const bw = new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+    });
+
+    bw.addPostBuildJobCommands("post-job", ["echo hello"], {
+      checkoutRepo: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    const checkoutStep = build.jobs["post-job"].steps.find((s: any) =>
+      s.uses?.startsWith("actions/checkout"),
+    );
+    expect(checkoutStep.with.ref).toBe(
+      "${{ github.event.pull_request.head.sha }}",
+    );
+    expect(checkoutStep.with.repository).toBe(
+      "${{ github.event.pull_request.head.repo.full_name }}",
+    );
+  });
+
+  test("self-mutation checkout uses the PR head ref to push back to the branch", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const build = yaml.parse(workflows[".github/workflows/build.yml"]);
+    const checkoutStep = build.jobs["self-mutation"].steps.find((s: any) =>
+      s.uses?.startsWith("actions/checkout"),
+    );
+    expect(checkoutStep.with.ref).toBe(
+      "${{ github.event.pull_request.head.ref }}",
+    );
+  });
+});
+
 function synthWorkflows(p: Project): any {
   const snapshot = synthSnapshot(p);
   const filtered = Object.keys(snapshot)

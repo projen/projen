@@ -37,6 +37,7 @@ import {
   NOT_FORK,
   PULL_REQUEST_REF,
   PULL_REQUEST_REPOSITORY,
+  PULL_REQUEST_SHA,
   SELF_MUTATION_CONDITION,
   SELF_MUTATION_HAPPENED_OUTPUT,
   SELF_MUTATION_STEP,
@@ -377,7 +378,7 @@ export class BuildWorkflow extends Component {
       steps.push(
         WorkflowSteps.checkout({
           with: {
-            ref: PULL_REQUEST_REF,
+            ref: PULL_REQUEST_SHA,
             repository: PULL_REQUEST_REPOSITORY,
             ...(this.github.downloadLfs ? { lfs: true } : {}),
             ...(this.github.checkoutSubmodules !== CheckoutSubmodules.DISABLED

@@ -1,4 +1,5 @@
 export const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
+export const PULL_REQUEST_SHA = "${{ github.event.pull_request.head.sha }}";
 export const PULL_REQUEST_REPOSITORY =
   "${{ github.event.pull_request.head.repo.full_name }}";
 export const BUILD_JOBID = "build";
