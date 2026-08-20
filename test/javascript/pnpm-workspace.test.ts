@@ -75,7 +75,6 @@ test("file can be customized after construction", () => {
 
   new PnpmWorkspaceYaml(project, { onlyBuiltDependencies: ["esbuild"] });
 
-  // Some settings are not known at construction time, so they have to be applied later.
   PnpmWorkspaceYaml.of(project)?.file.addOverride("packages", ["packages/*"]);
 
   const files = synthSnapshot(project);
