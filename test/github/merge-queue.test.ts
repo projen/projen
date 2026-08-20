@@ -15,8 +15,7 @@ describe("merge-queue", () => {
     const autoQueue = snapshot[`.github/workflows/auto-queue.yml`];
 
     expect(autoQueue).toBeDefined();
-    expect(autoQueue).toContain("enable-pull-request-automerge");
-    expect(autoQueue).toContain("merge-method: squash");
+    expect(autoQueue).toContain("gh pr merge --auto --squash");
     expect(autoQueue).toMatchSnapshot();
   });
 
@@ -69,8 +68,8 @@ describe("merge-queue", () => {
     expect(autoQueue).toContain(
       "if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo')",
     );
-    expect(autoQueue).toContain("merge-method: merge");
-    expect(autoQueue).toContain("token: ${{ secrets.shh }}");
+    expect(autoQueue).toContain("gh pr merge --auto --merge");
+    expect(autoQueue).toContain("GH_TOKEN: ${{ secrets.shh }}");
     expect(autoQueue).toContain("runs-on: gpu");
     expect(autoQueue).toMatchSnapshot();
   });
@@ -138,6 +137,71 @@ describe("merge-queue", () => {
     const autoQueue = snapshot[`.github/workflows/auto-queue.yml`];
 
     expect(autoQueue).toMatchSnapshot();
+  });
+
+  test.each([
+    [MergeMethod.SQUASH, "squash"],
+    [MergeMethod.MERGE, "merge"],
+    [MergeMethod.REBASE, "rebase"],
+  ])("mergeMethod %s produces a gh pr merge --%s step", (mergeMethod, flag) => {
+    const project = new TestProject({
+      githubOptions: {
+        mergeQueue: true,
+        mergeQueueOptions: {
+          autoQueueOptions: { mergeMethod },
+        },
+      },
+    });
+
+    const autoQueue =
+      synthSnapshot(project)[".github/workflows/auto-queue.yml"];
+
+    expect(autoQueue).toContain(
+      `run: gh pr merge --auto --${flag} "$PR_NUMBER" --repo "$GH_REPO"`,
+    );
+  });
+
+  test.each([
+    ["squash; echo pwned"],
+    ["squash && rm -rf /"],
+    ["$(echo squash)"],
+    ["SQUASH"],
+    ["fast-forward"],
+    [""],
+  ])("invalid mergeMethod %p throws", (mergeMethod) => {
+    expect(
+      () =>
+        new TestProject({
+          githubOptions: {
+            mergeQueue: true,
+            mergeQueueOptions: {
+              autoQueueOptions: {
+                // Simulates a caller from another jsii language or plain JS,
+                // where the enum provides no runtime guarantee
+                mergeMethod: mergeMethod as MergeMethod,
+              },
+            },
+          },
+        }),
+    ).toThrow(/Invalid mergeMethod/);
+  });
+
+  test("invalid mergeMethod error lists all valid values", async () => {
+    expect(
+      () =>
+        new TestProject({
+          githubOptions: {
+            mergeQueue: true,
+            mergeQueueOptions: {
+              autoQueueOptions: {
+                mergeMethod: "squash; echo pwned" as MergeMethod,
+              },
+            },
+          },
+        }),
+    ).toThrow(
+      /Invalid mergeMethod "squash; echo pwned" in AutoQueueOptions\. Set 'mergeMethod' to one of: MergeMethod\.SQUASH \("squash"\), MergeMethod\.MERGE \("merge"\), MergeMethod\.REBASE \("rebase"\), or leave it unset to default to MergeMethod\.SQUASH\./,
+    );
   });
 
   test("autoqueue branches must be subset of merge queue branches", async () => {

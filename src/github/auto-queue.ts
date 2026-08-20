@@ -150,6 +150,20 @@ export class AutoQueue extends Component {
       options.projenCredentials ?? workflowEngine.projenCredentials;
     const mergeMethod = options.mergeMethod ?? MergeMethod.SQUASH;
 
+    // The merge method is interpolated into a shell command below. Even though the
+    // type system restricts this to `MergeMethod`, that guarantee does not hold for
+    // consumers in other jsii languages or plain JavaScript, so validate explicitly.
+    const validMergeMethods = Object.values(MergeMethod);
+    if (!validMergeMethods.includes(mergeMethod)) {
+      const allowed = Object.entries(MergeMethod)
+        .map(([name, value]) => `MergeMethod.${name} ("${value}")`)
+        .join(", ");
+      throw new Error(
+        `Invalid mergeMethod "${mergeMethod}" in AutoQueueOptions. ` +
+          `Set 'mergeMethod' to one of: ${allowed}, or leave it unset to default to MergeMethod.SQUASH.`,
+      );
+    }
+
     const autoQueueJob: workflows.Job = {
       name: "Set AutoQueue on PR #${{ github.event.number }}",
       runsOn: options.runsOn ?? ["ubuntu-latest"],
@@ -162,11 +176,12 @@ export class AutoQueue extends Component {
       steps: [
         ...credentials.setupSteps,
         {
-          uses: "peter-evans/enable-pull-request-automerge@v3",
-          with: {
-            token: credentials.tokenRef,
-            "pull-request-number": "${{ github.event.number }}",
-            "merge-method": mergeMethod,
+          id: "auto-queue-pr",
+          run: `gh pr merge --auto --${mergeMethod} "$PR_NUMBER" --repo "$GH_REPO"`,
+          env: {
+            GH_TOKEN: credentials.tokenRef,
+            GH_REPO: "${{ github.repository }}",
+            PR_NUMBER: "${{ github.event.number }}",
           },
         },
       ],
