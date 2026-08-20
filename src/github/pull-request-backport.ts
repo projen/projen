@@ -1,4 +1,5 @@
 import type { IConstruct } from "constructs";
+import { GitHubActions } from "./actions.const";
 import { AutoApprove } from "./auto-approve";
 import { GitHub } from "./github";
 import { GithubWorkflow } from "./workflows";
@@ -172,7 +173,7 @@ export class PullRequestBackport extends Component {
         },
         {
           name: "Backport Action",
-          uses: "sqren/backport-github-action@v12",
+          uses: GitHubActions.SQREN_BACKPORT_GITHUB_ACTION,
           // only run this step if we have found matching labels in the previous step
           // this is to prevent workflow failures because the action fails when pre-conditions are not met
           // and causes any PR to be marked with a red X, leading to error blindness.

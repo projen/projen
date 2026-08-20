@@ -3,6 +3,7 @@ import { Component, TaskShell } from "../src";
 import type { JavaVersion, LanguageVersions } from "./integ-versions";
 import { INTEG_TEST_VERSIONS } from "./integ-versions";
 import { GithubWorkflow, WorkflowSteps } from "../src/github";
+import { GitHubActions } from "../src/github/actions.const";
 import type { Job, JobStep } from "../src/github/workflows-model";
 import { JobPermission } from "../src/github/workflows-model";
 import type { NodeProject } from "../src/javascript";
@@ -273,7 +274,7 @@ export class IntegrationTests extends Component {
    */
   private setupNodeStep(version: string): JobStep {
     return {
-      uses: "actions/setup-node@v7",
+      uses: GitHubActions.ACTIONS_SETUP_NODE,
       with: {
         "node-version": version,
         "package-manager-cache": false,
@@ -286,7 +287,7 @@ export class IntegrationTests extends Component {
    */
   private setupPythonStep(version: string): JobStep {
     return {
-      uses: "actions/setup-python@v7",
+      uses: GitHubActions.ACTIONS_SETUP_PYTHON,
       with: {
         "python-version": version,
       },
@@ -298,7 +299,7 @@ export class IntegrationTests extends Component {
    */
   private setupGoStep(version: string): JobStep {
     return {
-      uses: "actions/setup-go@v7",
+      uses: GitHubActions.ACTIONS_SETUP_GO,
       with: {
         "go-version": version,
       },
@@ -310,7 +311,7 @@ export class IntegrationTests extends Component {
    */
   private setupJavaStep(version: string, distribution: string): JobStep {
     return {
-      uses: "actions/setup-java@v5",
+      uses: GitHubActions.ACTIONS_SETUP_JAVA,
       with: {
         "java-version": version,
         distribution: distribution,

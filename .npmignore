@@ -33,6 +33,7 @@ tsconfig.tsbuildinfo
 /rfcs/
 /scripts/
 /schemas/
+/resources/
 /ARCHITECTURE.md
 /CODE_OF_CONDUCT.md
 /CONTRIBUTING.md

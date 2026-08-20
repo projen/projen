@@ -1,0 +1,81 @@
+// Every GitHub Action used by projen, mapped to the version line it follows.
+//
+// This is the single source of truth. Editing an entry here and running
+// projen regenerates src/github/actions.const.ts, which is what the code
+// actually references.
+//
+// Fields per action:
+// - "major":       The approved version line (e.g. "v7"). Changing this requires
+//                  human review. Used directly as a floating tag unless a pin is set.
+// - "pin":         Optional concrete ref (commit SHA or immutable tag) within the
+//                  major line. Written by the update script, never by hand.
+// - "version":     The human-readable version the pin corresponds to. Required
+//                  when the pin is not self-describing (i.e. a SHA).
+// - "isImmutable": Whether the pin is an immutable tag: a release GitHub
+//                  reports as immutable, meaning the tag cannot be repointed and
+//                  is as strong a guarantee as a commit SHA. Set from the GitHub
+//                  API, not by hand.
+{
+  "actions": {
+    "actions/checkout": {
+      "major": "v7"
+    },
+    "actions/create-github-app-token": {
+      "major": "v3",
+      "pin": "v3.2.0",
+      "isImmutable": true
+    },
+    "actions/dependency-review-action": {
+      "major": "v5",
+      "pin": "v5.0.0"
+    },
+    "actions/download-artifact": {
+      "major": "v8"
+    },
+    "actions/github-script": {
+      "major": "v9"
+    },
+    "actions/setup-dotnet": {
+      "major": "v6"
+    },
+    "actions/setup-go": {
+      "major": "v7"
+    },
+    "actions/setup-java": {
+      "major": "v5"
+    },
+    "actions/setup-node": {
+      "major": "v7"
+    },
+    "actions/setup-python": {
+      "major": "v7"
+    },
+    "actions/stale": {
+      "major": "v11"
+    },
+    "actions/upload-artifact": {
+      "major": "v7"
+    },
+    "amannn/action-semantic-pull-request": {
+      "major": "v6"
+    },
+    "aws-actions/configure-aws-credentials": {
+      "major": "v6"
+    },
+    "codecov/codecov-action": {
+      "major": "v7"
+    },
+    "oven-sh/setup-bun": {
+      "major": "v2"
+    },
+    "peter-evans/create-pull-request": {
+      "major": "v8"
+    },
+    "pnpm/action-setup": {
+      "major": "v6"
+    },
+    "sqren/backport-github-action": {
+      "major": "v12"
+    }
+  }
+}

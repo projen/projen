@@ -30,6 +30,7 @@
     "projen.js",
     "projenrc/tsconfig.json",
     "src/awscdk/private/feature-flags-v2.const.ts",
+    "src/github/actions.const.ts",
     "src/javascript/biome/biome-config.ts",
     "src/javascript/pnpm-workspace-config.ts",
     "src/python/pyproject-toml.ts",

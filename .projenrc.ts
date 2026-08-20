@@ -14,6 +14,7 @@ import {
   WindowsBuild,
   JsiiFromJsonSchema,
   JsonConst,
+  ActionsConst,
   IntegrationTests,
 } from "./projenrc";
 import {
@@ -367,6 +368,11 @@ new JsonConst(project, {
   comment: `Feature flags as of v${
     tryResolveDependencyVersion("aws-cdk-lib") || "2"
   }`,
+});
+
+new ActionsConst(project, {
+  jsonPath: path.join(__dirname, "resources", "github-actions.jsonc"),
+  filePath: path.join("src", "github", "actions.const.ts"),
 });
 
 new WindowsBuild(project);

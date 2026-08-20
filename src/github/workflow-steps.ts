@@ -1,3 +1,4 @@
+import { GitHubActions } from "./actions.const";
 import type { GitIdentity } from "./task-workflow";
 import type { JobStepConfiguration, JobStep } from "./workflows-model";
 import { removeNullOrUndefinedProperties } from "../util/object";
@@ -56,7 +57,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Checkout",
       }),
-      uses: "actions/checkout@v7",
+      uses: GitHubActions.ACTIONS_CHECKOUT,
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
   }
@@ -139,7 +140,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Upload artifact",
       }),
-      uses: "actions/upload-artifact@v7",
+      uses: GitHubActions.ACTIONS_UPLOAD_ARTIFACT,
       with: uploadArtifactWith,
     };
   }
@@ -169,7 +170,7 @@ export class WorkflowSteps {
         ...options,
         name: options?.name ?? "Download artifact",
       }),
-      uses: "actions/download-artifact@v8",
+      uses: GitHubActions.ACTIONS_DOWNLOAD_ARTIFACT,
       with: downloadArtifactWith,
     };
   }

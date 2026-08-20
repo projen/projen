@@ -595,6 +595,13 @@
           "path": "src/awscdk/private/feature-flags-v2.const.ts"
         }
       },
+      "ActionsConst@src--github--actions.const.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "ActionsConst",
+          "path": "src/github/actions.const.ts"
+        }
+      },
       "WindowsBuild": {
         "metadata": {
           "type": "component",
