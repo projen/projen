@@ -1,3 +1,4 @@
+import * as YAML from "yaml";
 import { javascript, Project } from "../../src";
 import { JsiiBuild, ValidateTsconfig } from "../../src/cdk";
 import { TypeScriptProject } from "../../src/typescript";
@@ -143,6 +144,33 @@ describe("JsiiBuild", () => {
       const output = synthSnapshot(project);
       const releaseWorkflow = output[".github/workflows/release.yml"];
       expect(releaseWorkflow).toContain(".repo/packages/my-lib");
+    });
+
+    it("pins packaging job checkouts to the PR head SHA", () => {
+      const project = createTypeScriptProject();
+      project.with(
+        new JsiiBuild({
+          publishToMaven: {
+            javaPackage: "com.example",
+            mavenGroupId: "com.example",
+            mavenArtifactId: "test",
+          },
+        }),
+      );
+
+      const output = synthSnapshot(project);
+      const buildWorkflow = YAML.parse(output[".github/workflows/build.yml"]);
+      for (const jobName of ["package-js", "package-java"]) {
+        const checkoutStep = buildWorkflow.jobs[jobName].steps.find((s: any) =>
+          s.uses?.startsWith("actions/checkout"),
+        );
+        expect(checkoutStep.with.ref).toBe(
+          "${{ github.event.pull_request.head.sha }}",
+        );
+        expect(checkoutStep.with.repository).toBe(
+          "${{ github.event.pull_request.head.repo.full_name }}",
+        );
+      }
     });
   });
 });
