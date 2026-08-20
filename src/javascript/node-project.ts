@@ -59,7 +59,6 @@ import {
   Release,
 } from "../release";
 import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
 import type { Task } from "../task";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
 import {
@@ -668,7 +667,8 @@ export class NodeProject extends GitHubProject {
     const buildWorkflowOptions: BuildWorkflowOptions =
       options.buildWorkflowOptions ?? {};
 
-    if (buildEnabled && (this.github || GitHub.of(this.root))) {
+    const buildWorkflowGithub = this.github ?? GitHub.of(this.root);
+    if (buildEnabled && buildWorkflowGithub) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
         artifactsDirectory: this.artifactsDirectory,
@@ -686,10 +686,7 @@ export class NodeProject extends GitHubProject {
             true,
         }).concat(buildWorkflowOptions.preBuildSteps ?? []),
         postBuildSteps: [...(options.postBuildSteps ?? [])],
-        ...filteredRunsOnOptions(
-          buildWorkflowOptions.runsOn ?? options.workflowRunsOn,
-          buildWorkflowOptions.runsOnGroup ?? options.workflowRunsOnGroup,
-        ),
+        ...buildWorkflowGithub.runsOnConfig(buildWorkflowOptions),
       });
 
       this.buildWorkflow.addPostBuildSteps(

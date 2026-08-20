@@ -16328,6 +16328,102 @@ The task steps to execute the script.
 
 ---
 
+### RunsOnConfig <a name="RunsOnConfig" id="projen.RunsOnConfig"></a>
+
+Resolved `runsOn`/`runsOnGroup` config for a job.
+
+Exactly one of the two
+fields is set.
+
+#### Initializer <a name="Initializer" id="projen.RunsOnConfig.Initializer"></a>
+
+```typescript
+import { RunsOnConfig } from 'projen'
+
+const runsOnConfig: RunsOnConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RunsOnConfig.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.RunsOnConfig.property.runsOnGroup">runsOnGroup</a></code> | <code><a href="#projen.GroupRunnerOptions">GroupRunnerOptions</a></code> | Github Runner Group selection options. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.RunsOnConfig.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* not set if `runsOnGroup` is used
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.RunsOnConfig.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* <a href="#projen.GroupRunnerOptions">GroupRunnerOptions</a>
+- *Default:* not set if `runsOn` is used
+
+Github Runner Group selection options.
+
+---
+
+### RunsOnOptions <a name="RunsOnOptions" id="projen.RunsOnOptions"></a>
+
+Options for selecting the GitHub Runner that a job runs on.
+
+#### Initializer <a name="Initializer" id="projen.RunsOnOptions.Initializer"></a>
+
+```typescript
+import { RunsOnOptions } from 'projen'
+
+const runsOnOptions: RunsOnOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RunsOnOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.RunsOnOptions.property.runsOnGroup">runsOnGroup</a></code> | <code><a href="#projen.GroupRunnerOptions">GroupRunnerOptions</a></code> | Github Runner Group selection options. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.RunsOnOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.RunsOnOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* <a href="#projen.GroupRunnerOptions">GroupRunnerOptions</a>
+
+Github Runner Group selection options.
+
+---
+
 ### SampleDirOptions <a name="SampleDirOptions" id="projen.SampleDirOptions"></a>
 
 SampleDir options.

@@ -6,8 +6,9 @@ import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Release } from "../release";
+import type { RunsOnOptions } from "../runner-options";
 
-export interface PullRequestBackportOptions {
+export interface PullRequestBackportOptions extends RunsOnOptions {
   /**
    * The name of the workflow.
    *
@@ -151,7 +152,7 @@ export class PullRequestBackport extends Component {
 
     this.workflow.addJob("backport", {
       name: "Backport PR",
-      runsOn: ["ubuntu-latest"],
+      ...workflowEngine.runsOnConfig(options),
       permissions: {},
       // Only ever run this job if the PR is merged and not a backport PR itself
       if: `github.event.pull_request.merged == true && !${isBackportPr}`,

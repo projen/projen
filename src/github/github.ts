@@ -17,6 +17,12 @@ import { CheckoutSubmodules } from "./workflow-steps";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
 import type { Project } from "../project";
+import type {
+  GroupRunnerOptions,
+  RunsOnConfig,
+  RunsOnOptions,
+} from "../runner-options";
+import { filteredRunsOnOptions } from "../runner-options";
 
 export interface GitHubOptions {
   /**
@@ -128,6 +134,23 @@ export interface GitHubOptions {
    * @default CheckoutSubmodules.DISABLED
    */
   readonly checkoutSubmodules?: CheckoutSubmodules;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels for all workflows.
+   * Can be overridden on a per-component basis.
+   * @throws {Error} if both `workflowRunsOn` and `workflowRunsOnGroup` are specified
+   */
+  readonly workflowRunsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels for all workflows.
+   * Can be overridden on a per-component basis.
+   * @throws {Error} if both `workflowRunsOn` and `workflowRunsOnGroup` are specified
+   */
+  readonly workflowRunsOnGroup?: GroupRunnerOptions;
 }
 
 export class GitHub extends Component {
@@ -169,6 +192,8 @@ export class GitHub extends Component {
 
   private readonly _downloadLfs?: boolean;
   private readonly _checkoutSubmodules?: CheckoutSubmodules;
+  private readonly _workflowRunsOn?: string[];
+  private readonly _workflowRunsOnGroup?: GroupRunnerOptions;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
@@ -179,6 +204,8 @@ export class GitHub extends Component {
 
     this._downloadLfs = options.downloadLfs;
     this._checkoutSubmodules = options.checkoutSubmodules;
+    this._workflowRunsOn = options.workflowRunsOn;
+    this._workflowRunsOnGroup = options.workflowRunsOnGroup;
 
     if (options.projenCredentials) {
       this.projenCredentials = options.projenCredentials;
@@ -264,5 +291,19 @@ export class GitHub extends Component {
    */
   public get checkoutSubmodules(): CheckoutSubmodules {
     return this._checkoutSubmodules ?? CheckoutSubmodules.DISABLED;
+  }
+
+  /**
+   * Resolves the `runsOn`/`runsOnGroup` config for a job, falling back to the
+   * project's global runner selection (`workflowRunsOn`/`workflowRunsOnGroup`)
+   * when `options` does not specify one.
+   * @param options per-job runner selection that takes precedence over the
+   * project's global default
+   */
+  public runsOnConfig(options: RunsOnOptions = {}): RunsOnConfig {
+    return filteredRunsOnOptions(
+      options.runsOn ?? this._workflowRunsOn,
+      options.runsOnGroup ?? this._workflowRunsOnGroup,
+    );
   }
 }

@@ -4,13 +4,12 @@ import { GitHubActions } from "./actions.const";
 import type { Job } from "./workflows-model";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
+import type { RunsOnOptions } from "../runner-options";
 
 /**
  * Options for PullRequestLint
  */
-export interface PullRequestLintOptions {
+export interface PullRequestLintOptions extends RunsOnOptions {
   /**
    * Validate that pull request titles follow Conventional Commits.
    *
@@ -24,21 +23,6 @@ export interface PullRequestLintOptions {
    * @default - title must start with "feat", "fix", or "chore"
    */
   readonly semanticTitleOptions?: SemanticTitleOptions;
-
-  /**
-   * Github Runner selection labels
-   * @default ["ubuntu-latest"]
-   * @description Defines a target Runner by labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * Github Runner Group selection options
-   * @description Defines a target Runner Group by name and/or labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOnGroup?: GroupRunnerOptions;
 
   /**
    * Require a contributor statement to be included in the PR description.
@@ -148,7 +132,7 @@ export class PullRequestLint extends Component {
       const validateJob: Job = {
         name: "Validate PR title",
         if: prCheck,
-        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+        ...github.runsOnConfig(options),
         permissions: {
           pullRequests: JobPermission.WRITE,
         },
@@ -202,7 +186,7 @@ export class PullRequestLint extends Component {
         "Contributor statement missing from PR description. Please include the following text in the PR description";
       const contributorStatement: Job = {
         name: "Require Contributor Statement",
-        runsOn: options.runsOn ?? ["ubuntu-latest"],
+        ...github.runsOnConfig(options),
         permissions: {
           pullRequests: JobPermission.READ,
         },

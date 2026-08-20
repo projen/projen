@@ -10701,7 +10701,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -10714,7 +10716,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;
@@ -15671,7 +15675,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -15684,7 +15690,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;

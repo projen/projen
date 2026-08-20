@@ -1367,7 +1367,9 @@ describe("workflowRunsOn", () => {
   test("use github runner specified in workflowRunsOn", () => {
     // WHEN
     const project = new TestNodeProject({
-      workflowRunsOn: ["self-hosted"],
+      githubOptions: {
+        workflowRunsOn: ["self-hosted"],
+      },
     });
 
     // THEN
@@ -1382,9 +1384,11 @@ describe("workflowRunsOn", () => {
   test("use github runner group specified in workflowRunsOn", () => {
     // WHEN
     const project = new TestNodeProject({
-      workflowRunsOnGroup: {
-        group: "Default",
-        labels: ["self-hosted", "linux", "x64"],
+      githubOptions: {
+        workflowRunsOnGroup: {
+          group: "Default",
+          labels: ["self-hosted", "linux", "x64"],
+        },
       },
     });
 
@@ -1410,7 +1414,9 @@ describe("workflowRunsOn", () => {
 describe("buildWorkflowOptions.runsOn", () => {
   test("overrides workflowRunsOn for the build job", () => {
     const project = new TestNodeProject({
-      workflowRunsOn: ["ubuntu-latest"],
+      githubOptions: {
+        workflowRunsOn: ["ubuntu-latest"],
+      },
       buildWorkflowOptions: {
         runsOn: ["self-hosted"],
       },
@@ -1423,9 +1429,11 @@ describe("buildWorkflowOptions.runsOn", () => {
 
   test("overrides workflowRunsOnGroup for the build job", () => {
     const project = new TestNodeProject({
-      workflowRunsOnGroup: {
-        group: "Default",
-        labels: ["self-hosted", "linux"],
+      githubOptions: {
+        workflowRunsOnGroup: {
+          group: "Default",
+          labels: ["self-hosted", "linux"],
+        },
       },
       buildWorkflowOptions: {
         runsOnGroup: {

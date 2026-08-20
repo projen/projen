@@ -600,7 +600,9 @@ describe("workflows use global workflowRunsOn option", () => {
       packageId: "PackageId",
     },
     publishToPypi: { distName: "dist-name", module: "module-name" },
-    workflowRunsOn: ["self-hosted", "linux", "x64"],
+    githubOptions: {
+      workflowRunsOn: ["self-hosted", "linux", "x64"],
+    },
   });
 
   const output = synthSnapshot(project);
@@ -651,10 +653,6 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
       packageId: "PackageId",
     },
     publishToPypi: { distName: "dist-name", module: "module-name" },
-    workflowRunsOnGroup: {
-      group: "Default",
-      labels: ["self-hosted", "linux", "x64"],
-    },
     depsUpgradeOptions: {
       workflowOptions: {
         runsOnGroup: {
@@ -664,6 +662,10 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
       },
     },
     githubOptions: {
+      workflowRunsOnGroup: {
+        group: "Default",
+        labels: ["self-hosted", "linux", "x64"],
+      },
       pullRequestLintOptions: {
         runsOnGroup: {
           group: "Default",
