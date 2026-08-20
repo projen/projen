@@ -20,6 +20,7 @@ The following submodules are available:
 - [python](./python.md)
 - [python.uvConfig](./python.uvConfig.md)
 - [release](./release.md)
+- [sonarqube](./sonarqube.md)
 - [typescript](./typescript.md)
 - [vscode](./vscode.md)
 - [web](./web.md)
@@ -8408,6 +8409,587 @@ The path of the projenrc file.
 ---
 
 
+### PropertiesFile <a name="PropertiesFile" id="projen.PropertiesFile"></a>
+
+Represents a Java `.properties` file.
+
+Properties files consist of key=value pairs, one per line,
+with `#` used for comments. This file format is commonly
+used by tools like SonarQube, Gradle, and other JVM-based
+ecosystem tools.
+
+The object passed as `obj` can be a nested structure. Nested keys are
+flattened into dot-separated property keys on synthesis. For example,
+`{ sonar: { sources: "src" } }` produces `sonar.sources=src`.
+
+This means `addOverride` uses dot notation as a path separator,
+consistent with ObjectFile/JsonPatch semantics.
+
+*Example*
+
+```typescript
+new PropertiesFile(project, 'sonar-project.properties', {
+  obj: {
+    sonar: {
+      projectKey: 'my-project',
+      sources: 'src',
+    },
+  },
+});
+
+// Produces:
+// sonar.projectKey=my-project
+// sonar.sources=src
+```
+
+
+#### Initializers <a name="Initializers" id="projen.PropertiesFile.Initializer"></a>
+
+```typescript
+import { PropertiesFile } from 'projen'
+
+new PropertiesFile(scope: IConstruct, filePath: string, options: PropertiesFileOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.PropertiesFile.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.PropertiesFile.Initializer.parameter.filePath">filePath</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.PropertiesFile.Initializer.parameter.options">options</a></code> | <code><a href="#projen.PropertiesFileOptions">PropertiesFileOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.PropertiesFile.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `filePath`<sup>Required</sup> <a name="filePath" id="projen.PropertiesFile.Initializer.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.PropertiesFile.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.PropertiesFileOptions">PropertiesFileOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.PropertiesFile.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.PropertiesFile.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.PropertiesFile.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.PropertiesFile.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.PropertiesFile.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.PropertiesFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.PropertiesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.PropertiesFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.PropertiesFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
+| <code><a href="#projen.PropertiesFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
+| <code><a href="#projen.PropertiesFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
+| <code><a href="#projen.PropertiesFile.patch">patch</a></code> | Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information. |
+
+---
+
+##### `toString` <a name="toString" id="projen.PropertiesFile.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.PropertiesFile.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.PropertiesFile.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.PropertiesFile.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.PropertiesFile.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.PropertiesFile.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.PropertiesFile.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.PropertiesFile.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.PropertiesFile.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.PropertiesFile.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.PropertiesFile.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.PropertiesFile.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.PropertiesFile.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
+
+##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.PropertiesFile.addDeletionOverride"></a>
+
+```typescript
+public addDeletionOverride(path: string): void
+```
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.PropertiesFile.addDeletionOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the value to delete.
+
+---
+
+##### `addOverride` <a name="addOverride" id="projen.PropertiesFile.addOverride"></a>
+
+```typescript
+public addOverride(path: string, value: any): void
+```
+
+Adds an override to the synthesized object file.
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
+```
+would add the overrides
+```json
+"compilerOptions": {
+  "alwaysStrict": true,
+  "lib": [
+    "dom",
+    "dom.iterable",
+    "esnext"
+  ]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.PropertiesFile.addOverride.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to override values in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.PropertiesFile.addOverride.parameter.value"></a>
+
+- *Type:* any
+
+The value.
+
+Could be primitive or complex.
+
+---
+
+##### `addToArray` <a name="addToArray" id="projen.PropertiesFile.addToArray"></a>
+
+```typescript
+public addToArray(path: string, values: ...any[]): void
+```
+
+Adds to an array in the synthesized object file.
+
+If the array is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2020"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.addToArray('compilerOptions.exclude', 'coverage');
+project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["es2020", "dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.PropertiesFile.addToArray.parameter.path"></a>
+
+- *Type:* string
+
+The path of the property, you can use dot notation to att to arrays in complex types.
+
+Any intermediate keys
+will be created as needed.
+
+---
+
+###### `values`<sup>Required</sup> <a name="values" id="projen.PropertiesFile.addToArray.parameter.values"></a>
+
+- *Type:* ...any[]
+
+The values to add.
+
+Could be primitive or complex.
+
+---
+
+##### `patch` <a name="patch" id="projen.PropertiesFile.patch"></a>
+
+```typescript
+public patch(patches: ...JsonPatch[]): void
+```
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules"],
+  "lib": ["es2020"]
+  ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["dom", "dom.iterable", "esnext"]
+  ...
+}
+...
+```
+
+###### `patches`<sup>Required</sup> <a name="patches" id="projen.PropertiesFile.patch.parameter.patches"></a>
+
+- *Type:* ...<a href="#projen.JsonPatch">JsonPatch</a>[]
+
+The patch operations to apply.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.PropertiesFile.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.PropertiesFile.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.PropertiesFile.isConstruct"></a>
+
+```typescript
+import { PropertiesFile } from 'projen'
+
+PropertiesFile.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.PropertiesFile.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.PropertiesFile.isComponent"></a>
+
+```typescript
+import { PropertiesFile } from 'projen'
+
+PropertiesFile.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.PropertiesFile.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.PropertiesFile.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.PropertiesFile.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.PropertiesFile.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.PropertiesFile.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
+| <code><a href="#projen.PropertiesFile.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.PropertiesFile.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.PropertiesFile.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.PropertiesFile.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.PropertiesFile.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.PropertiesFile.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.PropertiesFile.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.PropertiesFile.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.PropertiesFile.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.PropertiesFile.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.PropertiesFile.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.PropertiesFile.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.PropertiesFile.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.PropertiesFile.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.PropertiesFile.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `omitEmpty`<sup>Required</sup> <a name="omitEmpty" id="projen.PropertiesFile.property.omitEmpty"></a>
+
+```typescript
+public readonly omitEmpty: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if empty objects and arrays are omitted from the output object.
+
+---
+
+
 ### Renovatebot <a name="Renovatebot" id="projen.Renovatebot"></a>
 
 Defines renovatebot configuration for projen project.
@@ -16009,6 +16591,149 @@ public readonly filename: string;
 - *Default:* ".projenrc.json"
 
 The name of the projenrc file.
+
+---
+
+### PropertiesFileOptions <a name="PropertiesFileOptions" id="projen.PropertiesFileOptions"></a>
+
+Options for `PropertiesFile`.
+
+#### Initializer <a name="Initializer" id="projen.PropertiesFileOptions.Initializer"></a>
+
+```typescript
+import { PropertiesFileOptions } from 'projen'
+
+const propertiesFileOptions: PropertiesFileOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.PropertiesFileOptions.property.committed">committed</a></code> | <code>boolean</code> | Indicates whether this file should be committed to git or ignored. |
+| <code><a href="#projen.PropertiesFileOptions.property.editGitignore">editGitignore</a></code> | <code>boolean</code> | Update the project's .gitignore file. |
+| <code><a href="#projen.PropertiesFileOptions.property.executable">executable</a></code> | <code>boolean</code> | Whether the generated file should be marked as executable. |
+| <code><a href="#projen.PropertiesFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Adds the projen marker to the file. |
+| <code><a href="#projen.PropertiesFileOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
+| <code><a href="#projen.PropertiesFileOptions.property.obj">obj</a></code> | <code>any</code> | The object that will be serialized. You can modify the object's contents before synthesis. |
+| <code><a href="#projen.PropertiesFileOptions.property.omitEmpty">omitEmpty</a></code> | <code>boolean</code> | Omits empty objects and arrays. |
+| <code><a href="#projen.PropertiesFileOptions.property.comment">comment</a></code> | <code>string[]</code> | A comment to include at the top of the file (after the projen marker, if enabled). |
+
+---
+
+##### `committed`<sup>Optional</sup> <a name="committed" id="projen.PropertiesFileOptions.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Indicates whether this file should be committed to git or ignored.
+
+By
+default, all generated files are committed and anti-tamper is used to
+protect against manual modifications.
+
+---
+
+##### `editGitignore`<sup>Optional</sup> <a name="editGitignore" id="projen.PropertiesFileOptions.property.editGitignore"></a>
+
+```typescript
+public readonly editGitignore: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Update the project's .gitignore file.
+
+---
+
+##### `executable`<sup>Optional</sup> <a name="executable" id="projen.PropertiesFileOptions.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether the generated file should be marked as executable.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.PropertiesFileOptions.property.marker"></a>
+
+```typescript
+public readonly marker: boolean;
+```
+
+- *Type:* boolean
+- *Default:* marker will be included as long as the project is not ejected
+
+Adds the projen marker to the file.
+
+---
+
+##### `readonly`<sup>Optional</sup> <a name="readonly" id="projen.PropertiesFileOptions.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether the generated file should be readonly.
+
+---
+
+##### `obj`<sup>Optional</sup> <a name="obj" id="projen.PropertiesFileOptions.property.obj"></a>
+
+```typescript
+public readonly obj: any;
+```
+
+- *Type:* any
+- *Default:* {} an empty object (use `file.obj` to mutate).
+
+The object that will be serialized. You can modify the object's contents before synthesis.
+
+Serialization of the object is similar to JSON.stringify with few enhancements:
+- values that are functions will be called during synthesis and the result will be serialized - this allow to have lazy values.
+- `Set` will be converted to array
+- `Map` will be converted to a plain object ({ key: value, ... }})
+- `RegExp` without flags will be converted to string representation of the source
+
+---
+
+##### `omitEmpty`<sup>Optional</sup> <a name="omitEmpty" id="projen.PropertiesFileOptions.property.omitEmpty"></a>
+
+```typescript
+public readonly omitEmpty: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Omits empty objects and arrays.
+
+---
+
+##### `comment`<sup>Optional</sup> <a name="comment" id="projen.PropertiesFileOptions.property.comment"></a>
+
+```typescript
+public readonly comment: string[];
+```
+
+- *Type:* string[]
+- *Default:* no additional comment
+
+A comment to include at the top of the file (after the projen marker, if enabled).
+
+Each string in the array becomes a separate comment line.
 
 ---
 

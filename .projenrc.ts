@@ -82,6 +82,7 @@ const project = new TypeScriptProject({
     "@iarna/toml",
     "xmlbuilder2",
     "ini",
+    "properties-file",
     "dax",
     "fast-json-patch",
     "comment-json@4.2.2",

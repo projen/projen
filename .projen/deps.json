@@ -185,6 +185,10 @@
       "type": "bundled"
     },
     {
+      "name": "properties-file",
+      "type": "bundled"
+    },
+    {
       "name": "semver",
       "type": "bundled"
     },
