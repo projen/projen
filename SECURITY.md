@@ -1,22 +1,11 @@
-# Security Policy
+## Reporting Security Issues
 
-## Supported Versions
+Amazon Web Services (AWS) practices industry-standard Coodinated Vulnerability Disclosure (CVD) with the goal of reducing adversary advantage while a security vulnerability is being addressed. The [CERT® Guide to Coordinated Vulnerability Disclosure](https://certcc.github.io/CERT-Guide-to-CVD/tutorials/cvd_in_a_nutshell/) provides information about the CVD process, and outlines tools and practices that can help achieve this goal.
+  
+We kindly ask that you **do not** open a public GitHub issue to report security concerns.  
+  
+Instead, please submit the issue to the AWS Vulnerability Disclosure Program via [HackerOne](https://hackerone.com/aws_vdp) or send your report via [email](mailto:aws-security@amazon.com).  
+  
+For more details, visit the [AWS Vulnerability Reporting Page](http://aws.amazon.com/security/vulnerability-reporting/).  
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.x     | :white_check_mark: |
-
-## Reporting a Vulnerability
-
-We take all security reports seriously.
-When we receive such reports,
-we will investigate and subsequently address
-any potential vulnerabilities as quickly as possible.
-If you discover a potential security issue in this project,
-please notify AWS/Amazon Security via our
-[vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/)
-or directly via email to [AWS Security](mailto:aws-security@amazon.com).
-Please do *not* create a public GitHub issue in this project.
+Thank you in advance for collaborating with us to help protect our customers.
