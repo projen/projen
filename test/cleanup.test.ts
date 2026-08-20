@@ -1,9 +1,17 @@
-import { readFileSync } from "fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  symlinkSync,
+  writeFileSync,
+} from "fs";
+import { tmpdir } from "os";
 import { join } from "path";
 import { directorySnapshot, TestProject } from "./util";
 import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
-import { PROJEN_MARKER } from "../src/common";
+import { PROJEN_DIR, PROJEN_MARKER } from "../src/common";
 
 test("cleanup uses cache file", () => {
   // GIVEN
@@ -127,4 +135,99 @@ test("cleanup empty files", () => {
   expect(deletedFiles).not.toEqual(fileList);
   expect(deletedFiles).toContain(emptyFile.path);
   expect(deletedFiles).toMatchSnapshot();
+});
+
+describe("cleanup does not escape the project directory", () => {
+  let root: string;
+  let outdir: string;
+
+  beforeEach(() => {
+    root = mkdtempSync(join(tmpdir(), "projen-cleanup-"));
+    outdir = join(root, "repo");
+    mkdirSync(join(outdir, PROJEN_DIR), { recursive: true });
+    // a file that cleanup is legitimately allowed to remove, to prove that
+    // cleanup still processed the (sanitized) manifest
+    writeFileSync(join(outdir, "orphaned.txt"), "delete me");
+  });
+
+  const writeManifest = (files: any[]) =>
+    writeFileSync(
+      join(outdir, FILE_MANIFEST),
+      JSON.stringify({ files: ["orphaned.txt", ...files] }),
+    );
+
+  const writeVictim = () => {
+    const victim = join(root, "victim.txt");
+    writeFileSync(victim, "do not delete me");
+    return victim;
+  };
+
+  test("for parent directory traversal", () => {
+    // GIVEN
+    const victim = writeVictim();
+    writeManifest(["../victim.txt", "repo/../../victim.txt"]);
+
+    // WHEN
+    cleanup(outdir, [], []);
+
+    // THEN
+    expect(existsSync(victim)).toBe(true);
+    expect(existsSync(join(outdir, "orphaned.txt"))).toBe(false);
+  });
+
+  test("for absolute paths", () => {
+    // GIVEN
+    const victim = writeVictim();
+    writeManifest([victim]);
+
+    // WHEN
+    cleanup(outdir, [], []);
+
+    // THEN
+    expect(existsSync(victim)).toBe(true);
+    expect(existsSync(join(outdir, "orphaned.txt"))).toBe(false);
+  });
+
+  test("for symlinked directories", () => {
+    // GIVEN
+    const victim = writeVictim();
+    try {
+      symlinkSync(root, join(outdir, "link"), "dir");
+    } catch {
+      // symlink creation is not permitted (e.g. Windows without privileges)
+      return;
+    }
+    writeManifest(["link/victim.txt"]);
+
+    // WHEN
+    cleanup(outdir, [], []);
+
+    // THEN
+    expect(existsSync(victim)).toBe(true);
+    expect(existsSync(join(outdir, "orphaned.txt"))).toBe(false);
+  });
+
+  test("for the project directory itself", () => {
+    // GIVEN
+    writeManifest([".", "..", ""]);
+
+    // WHEN
+    cleanup(outdir, [], []);
+
+    // THEN
+    expect(existsSync(outdir)).toBe(true);
+    expect(existsSync(root)).toBe(true);
+    expect(existsSync(join(outdir, "orphaned.txt"))).toBe(false);
+  });
+
+  test("for non-string manifest entries", () => {
+    // GIVEN
+    writeManifest([null, 42, { path: "../victim.txt" }]);
+
+    // WHEN
+    cleanup(outdir, [], []);
+
+    // THEN
+    expect(existsSync(join(outdir, "orphaned.txt"))).toBe(false);
+  });
 });

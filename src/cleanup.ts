@@ -17,7 +17,10 @@ export function cleanup(dir: string, newFiles: string[], exclude: string[]) {
       removeFiles(findGeneratedFiles(dir, exclude));
     }
   } catch (e: any) {
-    logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
+    logging.warn(
+      `Could not clean up previously generated files, so outdated files may be left behind in your project. ` +
+        `Synthesis continues, but you may need to delete them yourself. Error: ${e.stack}`,
+    );
   }
 }
 
@@ -64,7 +67,91 @@ function findOrphanedFiles(
 ) {
   return oldFiles
     .filter((old) => !newFiles.includes(old))
-    .map((f: string) => path.resolve(dir, f));
+    .map((f: string) => resolveWithinDir(dir, f))
+    .filter((f): f is string => f !== undefined);
+}
+
+/**
+ * Resolves a file path taken from the file manifest against the project
+ * directory, making sure the result stays inside of it.
+ *
+ * The file manifest is checked into the repository and is therefore untrusted
+ * input: without this check, a manifest containing `../` or absolute path
+ * entries would make cleanup delete files outside of the project directory.
+ *
+ * @returns the absolute path to delete, or `undefined` if the entry does not
+ * resolve to a location inside `dir`.
+ */
+function resolveWithinDir(dir: string, file: string): string | undefined {
+  const skip = (reason: string) => {
+    logging.warn(
+      `Not deleting ${JSON.stringify(file)} during cleanup because ${reason}. ` +
+        `projen only removes generated files inside your project directory. ` +
+        `This entry in ${FILE_MANIFEST} should not be there - review it (and who changed it) in version control, ` +
+        `and delete the file yourself if you really no longer need it.`,
+    );
+    return undefined;
+  };
+
+  if (typeof file !== "string" || file.trim() === "") {
+    return skip("it is not a file path");
+  }
+
+  if (path.isAbsolute(file)) {
+    return skip("it is an absolute path instead of a path in your project");
+  }
+
+  const baseDir = realpathOfClosestExisting(dir);
+  const resolved = path.resolve(baseDir, file);
+
+  if (!isPathInside(baseDir, resolved)) {
+    return skip("it points outside of your project directory");
+  }
+
+  // the entry might traverse outside of the project through a symlinked
+  // directory, which `path.resolve` cannot detect. The last path segment is
+  // intentionally kept as-is: removing a symlink inside the project only
+  // deletes the link itself, not its target.
+  const realParent = realpathOfClosestExisting(path.dirname(resolved));
+  if (!isPathInside(baseDir, path.join(realParent, path.basename(resolved)))) {
+    return skip(
+      "it points outside of your project directory through a symlink",
+    );
+  }
+
+  return resolved;
+}
+
+function isPathInside(dir: string, file: string): boolean {
+  const relative = path.relative(dir, file);
+  return (
+    relative !== "" &&
+    !relative.startsWith(`..${path.sep}`) &&
+    relative !== ".." &&
+    !path.isAbsolute(relative)
+  );
+}
+
+/**
+ * Resolves symlinks in `p`, falling back to the closest existing ancestor for
+ * paths that do not exist (yet).
+ */
+function realpathOfClosestExisting(p: string): string {
+  const missing = new Array<string>();
+  let current = path.resolve(p);
+
+  while (true) {
+    try {
+      return path.join(fs.realpathSync(current), ...missing);
+    } catch {
+      const parent = path.dirname(current);
+      if (parent === current) {
+        return path.resolve(p);
+      }
+      missing.unshift(path.basename(current));
+      current = parent;
+    }
+  }
 }
 
 function getFilesFromManifest(dir: string): string[] {
@@ -74,13 +161,19 @@ function getFilesFromManifest(dir: string): string[] {
       const fileManifest = JSON.parse(
         fs.readFileSync(fileManifestPath, "utf-8"),
       );
-      if (fileManifest.files) {
+      if (Array.isArray(fileManifest.files)) {
         return fileManifest.files;
+      }
+      if (fileManifest.files) {
+        logging.debug(
+          `"files" in ${FILE_MANIFEST} is not a list of files, so it cannot be used to find files to clean up. Falling back to scanning your project for projen-generated files.`,
+        );
       }
     }
   } catch (e: any) {
     logging.warn(
-      `warning: unable to get files to clean from file manifest: ${e.stack}`,
+      `Could not read the list of generated files from ${FILE_MANIFEST}, so projen will scan your project for generated files instead. ` +
+        `Check that the file exists in version control and contains valid JSON. Error: ${e.stack}`,
     );
   }
 
