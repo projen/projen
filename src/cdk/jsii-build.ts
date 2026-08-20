@@ -10,8 +10,8 @@ import type {
   JsiiPythonTarget,
 } from "./jsii-project";
 import {
-  PULL_REQUEST_REF,
   PULL_REQUEST_REPOSITORY,
+  PULL_REQUEST_SHA,
 } from "../build/private/consts";
 import { WorkflowSteps } from "../github/workflow-steps";
 import type { Job, Step, Tools } from "../github/workflows-model";
@@ -534,7 +534,7 @@ export class JsiiBuild implements IMixin {
         WorkflowSteps.checkout({
           with: {
             path: REPO_TEMP_DIRECTORY,
-            ref: PULL_REQUEST_REF,
+            ref: PULL_REQUEST_SHA,
             repository: PULL_REQUEST_REPOSITORY,
             ...(project.github?.downloadLfs ? { lfs: true } : {}),
           },
