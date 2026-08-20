@@ -272,7 +272,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -319,7 +319,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -353,7 +353,7 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -369,7 +369,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.sha }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -453,7 +453,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -504,7 +504,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -533,7 +533,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -549,7 +549,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -595,7 +595,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -629,7 +629,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1770,14 +1770,14 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-go@v6",
+      "uses": "actions/setup-go@v7",
       "with": {
         "cache": false,
         "go-version": "^1.18.0",
@@ -1801,7 +1801,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
       },
@@ -1864,7 +1864,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -1888,7 +1888,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
       },
@@ -1948,7 +1948,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -1972,7 +1972,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
       },
@@ -2029,14 +2029,14 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-dotnet@v5",
+      "uses": "actions/setup-dotnet@v6",
       "with": {
         "cache": false,
         "dotnet-version": "6.x",
@@ -2060,7 +2060,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
       },
@@ -2114,14 +2114,14 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-python@v6",
+      "uses": "actions/setup-python@v7",
       "with": {
         "python-version": "3.x",
       },
@@ -2144,7 +2144,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
       },
@@ -2198,14 +2198,14 @@ exports[`language bindings snapshot dotnet 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-dotnet@v5",
+      "uses": "actions/setup-dotnet@v6",
       "with": {
         "cache": false,
         "dotnet-version": "6.x",
@@ -2229,7 +2229,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.sha }}",
@@ -2275,14 +2275,14 @@ exports[`language bindings snapshot go 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-go@v6",
+      "uses": "actions/setup-go@v7",
       "with": {
         "cache": false,
         "go-version": "^1.18.0",
@@ -2306,7 +2306,7 @@ exports[`language bindings snapshot go 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.sha }}",
@@ -2359,7 +2359,7 @@ exports[`language bindings snapshot java 1`] = `
       },
     },
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2383,7 +2383,7 @@ exports[`language bindings snapshot java 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.sha }}",
@@ -2429,7 +2429,7 @@ exports[`language bindings snapshot js 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2453,7 +2453,7 @@ exports[`language bindings snapshot js 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.sha }}",
@@ -2499,14 +2499,14 @@ exports[`language bindings snapshot python 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v6",
+      "uses": "actions/setup-node@v7",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-python@v6",
+      "uses": "actions/setup-python@v7",
       "with": {
         "python-version": "3.x",
       },
@@ -2529,7 +2529,7 @@ exports[`language bindings snapshot python 1`] = `
     {
       "id": "checkout",
       "name": "Checkout",
-      "uses": "actions/checkout@v6",
+      "uses": "actions/checkout@v7",
       "with": {
         "path": ".repo",
         "ref": "\${{ github.event.pull_request.head.sha }}",
@@ -2597,7 +2597,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2649,7 +2649,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -2678,7 +2678,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -2694,7 +2694,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -2729,11 +2729,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: ^1.18.0
           cache: false
@@ -2749,7 +2749,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -2812,7 +2812,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -2864,7 +2864,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -2893,7 +2893,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -2909,7 +2909,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -2944,11 +2944,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: ^1.18.0
           cache: false
@@ -2964,7 +2964,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -3025,7 +3025,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -3077,7 +3077,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -3106,7 +3106,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -3122,7 +3122,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -3157,11 +3157,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 6.x
           cache: false
@@ -3177,7 +3177,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -3236,7 +3236,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -3288,7 +3288,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -3317,7 +3317,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -3333,7 +3333,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -3368,11 +3368,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 6.x
           cache: false
@@ -3388,7 +3388,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies

@@ -793,7 +793,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v6",
+      uses: "actions/setup-node@v7",
       with: {
         "node-version": tools.node.version,
         "package-manager-cache": tools.node.cache ?? false,
@@ -808,7 +808,7 @@ function setupTools(tools: workflows.Tools) {
       );
     }
     steps.push({
-      uses: "actions/setup-python@v6",
+      uses: "actions/setup-python@v7",
       with: {
         "python-version": tools.python.version,
         ...(tools.python.cache && { cache: tools.python.packageManager }),
@@ -818,7 +818,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v6",
+      uses: "actions/setup-go@v7",
       with: {
         "go-version": tools.go.version,
         cache: tools.go.cache ?? false,
@@ -828,7 +828,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v5",
+      uses: "actions/setup-dotnet@v6",
       with: {
         "dotnet-version": tools.dotnet.version,
         cache: tools.dotnet.cache ?? false,

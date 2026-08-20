@@ -273,7 +273,7 @@ export class IntegrationTests extends Component {
    */
   private setupNodeStep(version: string): JobStep {
     return {
-      uses: "actions/setup-node@v6",
+      uses: "actions/setup-node@v7",
       with: {
         "node-version": version,
         "package-manager-cache": false,
@@ -286,7 +286,7 @@ export class IntegrationTests extends Component {
    */
   private setupPythonStep(version: string): JobStep {
     return {
-      uses: "actions/setup-python@v6",
+      uses: "actions/setup-python@v7",
       with: {
         "python-version": version,
       },
@@ -298,7 +298,7 @@ export class IntegrationTests extends Component {
    */
   private setupGoStep(version: string): JobStep {
     return {
-      uses: "actions/setup-go@v6",
+      uses: "actions/setup-go@v7",
       with: {
         "go-version": version,
       },

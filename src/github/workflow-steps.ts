@@ -56,7 +56,7 @@ export class WorkflowSteps {
         ...options,
         name: options.name ?? "Checkout",
       }),
-      uses: "actions/checkout@v6",
+      uses: "actions/checkout@v7",
       with: Object.keys(checkoutWith).length > 0 ? checkoutWith : undefined,
     };
   }

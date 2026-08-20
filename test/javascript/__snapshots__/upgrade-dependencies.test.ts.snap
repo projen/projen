@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -120,7 +120,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -154,7 +154,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -221,7 +221,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Install dependencies
@@ -255,7 +255,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Download patch
@@ -322,7 +322,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Install dependencies
@@ -356,7 +356,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Download patch
@@ -423,7 +423,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Install dependencies
@@ -457,7 +457,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Download patch
@@ -524,7 +524,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Install dependencies
@@ -558,7 +558,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Download patch
@@ -625,7 +625,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -659,7 +659,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -726,7 +726,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Install dependencies
@@ -760,7 +760,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch1
       - name: Download patch
@@ -827,7 +827,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Install dependencies
@@ -861,7 +861,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: branch2
       - name: Download patch
@@ -928,7 +928,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -962,7 +962,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1029,7 +1029,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -1063,7 +1063,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1128,7 +1128,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -1162,7 +1162,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1229,7 +1229,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -1264,7 +1264,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1331,7 +1331,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -1365,13 +1365,13 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
-        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859
+        uses: actions/create-github-app-token@v3.2.0
         with:
           app-id: \${{ secrets.PROJEN_APP_ID }}
           private-key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch
@@ -1438,7 +1438,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Install dependencies
@@ -1472,7 +1472,7 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
-        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859
+        uses: actions/create-github-app-token@v3.2.0
         with:
           app-id: \${{ secrets.PROJEN_APP_ID }}
           private-key: \${{ secrets.PROJEN_APP_PRIVATE_KEY }}
@@ -1480,7 +1480,7 @@ jobs:
           permission-contents: write
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
       - name: Download patch

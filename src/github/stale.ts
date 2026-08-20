@@ -141,7 +141,8 @@ export class Stale extends Component {
         },
         steps: [
           {
-            uses: "actions/stale@v10",
+            id: "run-actions-stale",
+            uses: "actions/stale@v11",
             with: {
               // disable global
               "days-before-stale": -1,

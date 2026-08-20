@@ -213,7 +213,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "actions/github-script@v8",
+            uses: "actions/github-script@v9",
             with: {
               script: scriptBody,
             },

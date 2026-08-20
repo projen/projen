@@ -139,7 +139,7 @@ export class DependencyReview extends Component {
           WorkflowSteps.checkout(),
           {
             name: "Dependency Review",
-            uses: "actions/dependency-review-action@v4",
+            uses: "actions/dependency-review-action@v5",
             with: {
               "fail-on-severity": options.failOnSeverity,
               "allow-licenses": options.allowLicenses?.join(", "),

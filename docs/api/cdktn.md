@@ -4286,7 +4286,7 @@ const cdktnTypeScriptAppOptions: cdktn.CdktnTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
-| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.codeCovTokenSecret">codeCovTokenSecret</a></code> | <code>string</code> | Define the secret name for a specified https://codecov.io/ token. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.copyrightOwner">copyrightOwner</a></code> | <code>string</code> | License copyright owner. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.copyrightPeriod">copyrightPeriod</a></code> | <code>string</code> | The copyright years to put in the LICENSE file. |
@@ -5921,7 +5921,10 @@ public readonly codeCov: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
+Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.
+
+Uses codecov/codecov-action. By default, OIDC auth is used.
+Alternatively a token can be provided via `codeCovTokenSecret`.
 
 ---
 
@@ -6842,7 +6845,7 @@ const constructLibraryCdktnOptions: cdktn.ConstructLibraryCdktnOptions = { ... }
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code>projen.javascript.BuildWorkflowOptions</code> | Options for PR build workflow. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.bundlerOptions">bundlerOptions</a></code> | <code>projen.javascript.BundlerOptions</code> | Options for `Bundler`. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.checkLicenses">checkLicenses</a></code> | <code>projen.javascript.LicenseCheckerOptions</code> | Configure which licenses should be deemed acceptable for use by dependencies. |
-| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.codeCovTokenSecret">codeCovTokenSecret</a></code> | <code>string</code> | Define the secret name for a specified https://codecov.io/ token. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.copyrightOwner">copyrightOwner</a></code> | <code>string</code> | License copyright owner. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.copyrightPeriod">copyrightPeriod</a></code> | <code>string</code> | The copyright years to put in the LICENSE file. |
@@ -8485,7 +8488,10 @@ public readonly codeCov: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
+Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.
+
+Uses codecov/codecov-action. By default, OIDC auth is used.
+Alternatively a token can be provided via `codeCovTokenSecret`.
 
 ---
 

@@ -584,7 +584,7 @@ export class JsiiBuild implements IMixin {
     if (project.package.packageManager === NodePackageManager.PNPM) {
       bootstrapSteps.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v5",
+        uses: "pnpm/action-setup@v6",
         with: { version: project.package.pnpmVersion },
       });
     } else if (project.package.packageManager === NodePackageManager.BUN) {

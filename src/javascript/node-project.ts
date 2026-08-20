@@ -147,8 +147,9 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v5
-   * By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
+   *
+   * Uses codecov/codecov-action. By default, OIDC auth is used.
+   * Alternatively a token can be provided via `codeCovTokenSecret`.
    * @default false
    */
   readonly codeCov?: boolean;
@@ -967,7 +968,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v6",
+          uses: "codecov/codecov-action@v7",
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1138,7 +1139,7 @@ export class NodeProject extends GitHubProject {
     } else if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v5",
+        uses: "pnpm/action-setup@v6",
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
@@ -1160,7 +1161,7 @@ export class NodeProject extends GitHubProject {
               : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v6",
+          uses: "actions/setup-node@v7",
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
