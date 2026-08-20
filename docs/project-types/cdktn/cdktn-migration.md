@@ -1,18 +1,6 @@
 # Migrating from CDKTF to CDKTN
 
-This guide helps you migrate your projen project from using `ConstructLibraryCdktf` to the new `ConstructLibraryCdktn`.
-
-## Background
-
-**CDKTF has been archived by HashiCorp.** [CDK Terrain (CDKTN)](https://cdktn.io/) is a community-driven fork of CDKTF that continues active development and maintenance of the project.
-
-CDKTN provides:
-- Continued maintenance and updates
-- Community-driven development
-- Compatibility with existing CDKTF constructs
-- Active issue resolution and feature development
-
-Projen now supports CDKTN construct libraries through the `ConstructLibraryCdktn` class, ensuring your infrastructure-as-code projects have a sustainable, community-supported foundation.
+This guide helps you migrate your projen project from using `ConstructLibraryCdktf` to `ConstructLibraryCdktn`. See the [CDKTN Projects](./index.md) page for background on why CDKTF was replaced and how the two classes differ.
 
 ## Migration Steps
 
@@ -42,7 +30,7 @@ import { cdktn } from 'projen';
 new cdktn.ConstructLibraryCdktn({
   author: 'Your Name',
   authorAddress: 'you@example.com',
-  cdktnVersion: '^0.1.0',  // Changed from cdktfVersion
+  cdktnVersion: '^0.24.0',  // Changed from cdktfVersion
   defaultReleaseBranch: 'main',
   name: 'my-cdktn-construct',
   repositoryUrl: 'https://github.com/yourusername/my-cdktn-construct.git',
@@ -50,13 +38,7 @@ new cdktn.ConstructLibraryCdktn({
 });
 ```
 
-### 2. Update package dependencies
-
-The key changes:
-- `cdktfVersion` → `cdktnVersion`
-- Your project will now depend on the `cdktn` npm package instead of `cdktf`
-
-### 3. Regenerate project files
+### 2. Regenerate project files
 
 After updating your `.projenrc` file:
 
@@ -64,9 +46,9 @@ After updating your `.projenrc` file:
 npx projen
 ```
 
-This will regenerate your `package.json` and other configuration files with the new CDKTN dependencies.
+This will regenerate your `package.json` and other configuration files, replacing the `cdktf` dependency with `cdktn`.
 
-### 4. Update your construct code
+### 3. Update your construct code
 
 In your construct implementation files, update imports:
 
@@ -80,9 +62,7 @@ import { Construct } from 'constructs';
 import { TerraformStack } from 'cdktn';
 ```
 
-### 5. Update dependencies
-
-Install the new dependencies:
+### 4. Install dependencies
 
 ```bash
 npm install
@@ -92,41 +72,13 @@ yarn install
 pnpm install
 ```
 
-### 6. Test your constructs
+### 5. Test your constructs
 
 Run your tests to ensure everything works with CDKTN:
 
 ```bash
 npx projen test
 ```
-
-## Creating a New CDKTN Project
-
-For new projects, you can start directly with CDKTN:
-
-```bash
-npx projen new cdktn-construct \
-  --author "Your Name" \
-  --author-address "you@example.com" \
-  --cdktn-version "^0.1.0" \
-  --name "my-cdktn-construct" \
-  --repository-url "https://github.com/yourusername/my-cdktn-construct.git"
-```
-
-## Backward Compatibility
-
-The `ConstructLibraryCdktf` class remains available for backward compatibility but is now deprecated. Existing projects using `cdktf` will continue to work, but we recommend migrating to `cdktn` for new features and improvements.
-
-## Key Differences
-
-| Feature | CDKTF | CDKTN |
-|---------|-------|-------|
-| Package name | `cdktf` | `cdktn` |
-| Default version | `^0.13.0` | `^0.1.0` |
-| Projen class | `cdktf.ConstructLibraryCdktf` | `cdktn.ConstructLibraryCdktn` |
-| Option key | `cdktfVersion` | `cdktnVersion` |
-| Status | Archived by HashiCorp | Active (Community-maintained) |
-| Website | N/A | https://cdktn.io/ |
 
 ## Need Help?
 

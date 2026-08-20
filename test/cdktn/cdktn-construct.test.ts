@@ -4,8 +4,11 @@ import { NpmAccess } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 describe("cdktn dependency selection", () => {
-  test("user-selected", () => {
+  test("user-selected version is pinned exactly by default", () => {
     // GIVEN
+    // cdktnVersionPinning defaults to true for ConstructLibraryCdktn so that
+    // the exact peerDependencies value written before caret ranges became
+    // the default (in CdktnDeps) doesn't change for existing projects.
     const project = new TestProject({ cdktnVersion: "0.99" });
 
     // WHEN
@@ -16,6 +19,21 @@ describe("cdktn dependency selection", () => {
     expect(snapshot["package.json"]?.devDependencies?.cdktn).toBe("0.99.0");
     expect(snapshot["package.json"]?.dependencies?.cdktn).toBeUndefined();
   });
+
+  test("pinning can be explicitly disabled to opt into caret ranges", () => {
+    // GIVEN
+    const project = new TestProject({
+      cdktnVersion: "0.99",
+      cdktnVersionPinning: false,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["package.json"]?.peerDependencies?.cdktn).toBe("^0.99.0");
+    expect(snapshot["package.json"]?.devDependencies?.cdktn).toBe("0.99.0");
+  });
 });
 
 describe("constructs dependency selection", () => {
@@ -23,7 +41,7 @@ describe("constructs dependency selection", () => {
     // GIVEN
     const project = new TestProject({
       cdktnVersion: "0.99",
-      constructsVersion: "10.5.1",
+      constructsVersion: "10.0.1",
     });
 
     // WHEN
@@ -31,10 +49,10 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "10.5.1",
+      "^10.0.1",
     );
     expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
-      "10.5.1",
+      "10.0.1",
     );
     expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
@@ -43,8 +61,8 @@ describe("constructs dependency selection", () => {
     // GIVEN
     const project = new TestProject({
       cdktnVersion: "0.99",
-      constructsVersion: "10.5.1",
-      deps: ["constructs@10.5.1"],
+      constructsVersion: "10.8.1",
+      deps: ["constructs@10.8.1"],
     });
 
     // WHEN
@@ -52,12 +70,9 @@ describe("constructs dependency selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "10.5.1",
+      "^10.8.1",
     );
-    expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
-      "10.5.1",
-    );
-    expect(snapshot["package.json"]?.dependencies?.constructs).toBe("10.5.1");
+    expect(snapshot["package.json"]?.dependencies?.constructs).toBe("10.8.1");
   });
 });
 
@@ -99,6 +114,33 @@ describe("error handling", () => {
         }),
     ).toThrow("Required field cdktnVersion is not specified.");
   });
+
+  test("throws error when cdktnVersion cannot be parsed as a semver version", () => {
+    // GIVEN / WHEN / THEN
+    expect(
+      () =>
+        new ConstructLibraryCdktn({
+          ...defaultOptions,
+          cdktnVersion: "not-a-version",
+        }),
+    ).toThrow(
+      '"cdktnVersion" cannot be parsed as a semver version: not-a-version',
+    );
+  });
+
+  test("throws error when constructsVersion cannot be parsed as a semver version", () => {
+    // GIVEN / WHEN / THEN
+    expect(
+      () =>
+        new ConstructLibraryCdktn({
+          ...defaultOptions,
+          cdktnVersion: "0.24.0",
+          constructsVersion: "not-a-version",
+        }),
+    ).toThrow(
+      '"constructsVersion" cannot be parsed as a semver version: not-a-version',
+    );
+  });
 });
 
 describe("default constructs version selection", () => {
@@ -111,7 +153,7 @@ describe("default constructs version selection", () => {
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "^10.5.1",
+      "^10.7.2",
     );
   });
 
@@ -123,9 +165,14 @@ describe("default constructs version selection", () => {
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
-      "^10.7.0",
-    );
+    expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe("^10");
+  });
+});
+
+describe("cdktnVersion getter", () => {
+  test("exposes the resolved cdktn version requirement", () => {
+    const project = new TestProject({ cdktnVersion: "0.24.0" });
+    expect(project.cdktnVersion).toBe("0.24.0");
   });
 });
 
