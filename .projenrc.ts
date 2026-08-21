@@ -369,6 +369,22 @@ new JsiiFromJsonSchema(project, {
   filePath: path.join("src", "javascript", "node-config.ts"),
 });
 
+new JsiiFromJsonSchema(project, {
+  structName: "PolarisCoveritySchema",
+  schemaPath:
+    "https://raw.githubusercontent.com/mongodb/mongo/refs/heads/master/etc/coverity_config_schema.json",
+  filePath: path.join("src", "polaris", "coverity-config.ts"),
+  // The "build" property collides with a JSII-prohibited member name; rename
+  // it in the schema so json2jsii emits a clean "buildCapture" property
+  // instead of the illegal "build_" (see https://github.com/aws/jsii-compiler/blob/main/src/assembler.ts).
+  transform: (schema) => {
+    const captureProps = schema.$defs["capture-configuration"].properties;
+    captureProps["build-capture"] = captureProps.build;
+    delete captureProps.build;
+    return schema;
+  },
+});
+
 new JsonConst(project, {
   jsonPath: require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
   filePath: path.join("src", "awscdk", "private", "feature-flags-v2.const.ts"),
