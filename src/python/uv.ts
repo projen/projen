@@ -61,7 +61,7 @@ export class Uv
 
     this.installTask = this.project.addTask("install", {
       description: "Install dependencies and update lockfile",
-      exec: "uv sync && uv lock",
+      steps: [{ execArgs: ["uv", "sync"] }, { execArgs: ["uv", "lock"] }],
     });
 
     this.installCiTask = this.project.addTask("install:ci", {

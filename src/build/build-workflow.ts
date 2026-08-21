@@ -13,10 +13,7 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import {
-  ensureNotHiddenPath,
-  projectPathRelativeToRepoRoot,
-} from "../github/private/util";
+import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import { WorkflowActions } from "../github/workflow-actions";
 import type {
   Job,
@@ -44,6 +41,7 @@ import {
   UPLOAD_ARTIFACT_STEP,
 } from "./private/consts";
 import { workflowNameForProject } from "../util/name";
+import { ensureNotHiddenPath } from "../util/path";
 
 export interface BuildWorkflowCommonOptions {
   /**

@@ -289,8 +289,14 @@ export class JsiiBuild implements IMixin {
     project.watchTask.reset(["jsii", "-w", ...jsiiFlags].join(" "));
 
     const compatTask = project.addTask("compat", {
-      description: "Perform API compatibility check against latest version",
-      exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
+      description: `Perform API compatibility check against latest version`,
+      execArgs: [
+        "jsii-diff",
+        `npm:${project.package.packageName}`,
+        "-k",
+        "--ignore-file",
+        compatIgnore,
+      ],
     });
 
     if (options.compat ?? false) {

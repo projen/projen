@@ -118,6 +118,10 @@ export interface CdkConfigCommonOptions {
    * running `cdk synth` or when `cdk watch` identifies a change in your source
    * code before redeployment.
    *
+   * The CDK CLI runs it through a shell on every synthesis, on the machine of
+   * anyone who checks out the project, so shell syntax in it is interpreted and
+   * the command should be one you would run yourself.
+   *
    * @default - no build command
    */
   readonly buildCommand?: string;

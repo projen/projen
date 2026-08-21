@@ -116,8 +116,18 @@ jobs:
         id: release
         if: ${{ !inputs.dry_run }}
         env:
+          RELEASE_TAG_FILE: dist/releasetag.txt
+          CHANGELOG_FILE: dist/changelog.md
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_SHA 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+        run: |-
+          errout=$(mktemp)
+          tag=$(cat "$RELEASE_TAG_FILE")
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" ${PRERELEASE:+-p} 2> "$errout" && true
+          exitcode=$?
+          if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+            cat "$errout"
+            exit $exitcode
+          fi
       - name: Extract Version
         id: extract-version
         if: ${{ failure() }}
@@ -184,7 +194,7 @@ jobs:
           NPM_CONFIG_PROVENANCE: "true"
           NPM_TRUSTED_PUBLISHER: "true"
           PUBLIB_DRYRUN: ${{ inputs.dry_run }}
-        run: npx -p publib@latest publib-npm
+        run: npx '-p' 'publib@latest' 'publib-npm'
       - name: Extract Version
         id: extract-version
         if: ${{ failure() }}
@@ -256,7 +266,7 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_STAGING_PROFILE_ID: ${{ secrets.MAVEN_STAGING_PROFILE_ID }}
           PUBLIB_DRYRUN: ${{ inputs.dry_run }}
-        run: npx -p publib@latest publib-maven
+        run: npx '-p' 'publib@latest' 'publib-maven'
       - name: Extract Version
         id: extract-version
         if: ${{ failure() }}
@@ -323,7 +333,7 @@ jobs:
         env:
           PYPI_TRUSTED_PUBLISHER: "true"
           PUBLIB_DRYRUN: ${{ inputs.dry_run }}
-        run: npx -p publib@latest publib-pypi
+        run: npx '-p' 'publib@latest' 'publib-pypi'
       - name: Extract Version
         id: extract-version
         if: ${{ failure() }}
@@ -392,7 +402,7 @@ jobs:
           GIT_USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
           GITHUB_TOKEN: ${{ secrets.GO_GITHUB_TOKEN }}
           PUBLIB_DRYRUN: ${{ inputs.dry_run }}
-        run: npx -p publib@latest publib-golang
+        run: npx '-p' 'publib@latest' 'publib-golang'
       - name: Extract Version
         id: extract-version
         if: ${{ failure() }}

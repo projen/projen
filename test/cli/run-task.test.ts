@@ -1231,6 +1231,44 @@ describe("in-process task execution", () => {
     );
   });
 
+  test("passes backslashes and tildes verbatim through a quoted marker", async () => {
+    const p = new TestProject();
+    p.addTask("q", {
+      exec: `node -e "require('fs').writeFileSync('q.txt', JSON.stringify(process.argv.slice(1)))" -- "$@"`,
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // A double-quoted splice mangles both of these in dax's shell: it doubles a
+    // backslash (so Windows paths arrive corrupted) and rejects `~` outright
+    // ("Unsupported tilde expansion").
+    const args = ["back\\slash", "C:\\Users\\me", "~", "~root"];
+    await new TaskRuntime(p.outdir).runTask("q", [], args);
+
+    expect(JSON.parse(readFileSync(join(p.outdir, "q.txt"), "utf-8"))).toEqual(
+      args,
+    );
+  });
+
+  test("passes args verbatim through a quoted marker into a declared POSIX shell", async () => {
+    const p = new TestProject();
+    p.addTask("q", {
+      shell: TaskShell.sh(),
+      exec: `node -e "require('fs').writeFileSync('q.txt', JSON.stringify(process.argv.slice(1)))" -- "$@"`,
+      receiveArgs: true,
+    });
+    p.synth();
+
+    // the spliced args are parsed by `sh`, not by dax, so the same escaping has
+    // to hold for a real POSIX shell
+    const args = ["a b", "it's", "back\\slash", "~", "$HOME", "a;b && c"];
+    await new TaskRuntime(p.outdir).runTask("q", [], args);
+
+    expect(JSON.parse(readFileSync(join(p.outdir, "q.txt"), "utf-8"))).toEqual(
+      args,
+    );
+  });
+
   test("runs a task through a declared POSIX shell", async () => {
     const p = new TestProject();
     p.addTask("t", {
@@ -1360,6 +1398,32 @@ describe("in-process task execution", () => {
     expect(readFileSync(join(p.outdir, "o.txt"), "utf-8")).toBe(
       "hello $HOME world",
     );
+  });
+
+  test("execArgs renders backslashes and tildes verbatim into a declared shell", async () => {
+    const p = new TestProject();
+    p.addTask("t", {
+      shell: TaskShell.sh(),
+      // the argv is rendered to a command line that `sh` re-parses, so values a
+      // double-quoted rendering would mangle must survive that round trip
+      execArgs: [
+        "node",
+        "-e",
+        "require('fs').writeFileSync('o.txt', JSON.stringify(process.argv.slice(1)))",
+        "C:\\Users\\me",
+        "~",
+        "it's",
+      ],
+    });
+    p.synth();
+
+    await new TaskRuntime(p.outdir).runTask("t");
+
+    expect(JSON.parse(readFileSync(join(p.outdir, "o.txt"), "utf-8"))).toEqual([
+      "C:\\Users\\me",
+      "~",
+      "it's",
+    ]);
   });
 
   test("execArgs under the system shell surfaces a non-zero exit", async () => {

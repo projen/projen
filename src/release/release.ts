@@ -14,10 +14,7 @@ import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import {
-  ensureNotHiddenPath,
-  projectPathRelativeToRepoRoot,
-} from "../github/private/util";
+import { projectPathRelativeToRepoRoot } from "../github/private/util";
 import type { Job, JobPermissions, JobStep } from "../github/workflows-model";
 import { JobPermission } from "../github/workflows-model";
 import type { Project } from "../project";
@@ -28,6 +25,7 @@ import {
 } from "../runner-options";
 import type { Task } from "../task";
 import { workflowNameForProject } from "../util/name";
+import { ensureNotHiddenPath, ensurePathInsideProject } from "../util/path";
 import type { ReleasableCommits } from "../version";
 import { Version } from "../version";
 
@@ -408,6 +406,11 @@ export class Release extends Component {
     this.artifactsDirectory =
       options.artifactsDirectory ?? DEFAULT_ARTIFACTS_DIRECTORY;
     ensureNotHiddenPath(this.artifactsDirectory, "artifactsDirectory");
+    ensurePathInsideProject(
+      this.artifactsDirectory,
+      "artifactsDirectory",
+      this.project.outdir,
+    );
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
@@ -637,7 +640,7 @@ export class Release extends Component {
       env,
     });
 
-    releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
+    releaseTask.execArgs(["rm", "-fr", this.artifactsDirectory]);
     releaseTask.spawn(this.version.bumpTask);
 
     // Spawn all build tasks

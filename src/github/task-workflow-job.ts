@@ -17,7 +17,7 @@ import { Component } from "../component";
 import type { GroupRunnerOptions } from "../runner-options";
 import { filteredRunsOnOptions } from "../runner-options";
 import type { Task } from "../task";
-import { ensureNotHiddenPath } from "./private/util";
+import { ensureNotHiddenPath } from "../util/path";
 
 /**
  * Options to create the Job associated with a TaskWorkflow.

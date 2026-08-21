@@ -1899,13 +1899,20 @@ describe("scoped private packages", () => {
       name: "ca:login",
       steps: [
         {
-          exec: "which aws",
+          execArgs: ["which", "aws"],
+        },
+        {
+          execArgs: ["npm", "config", "set", `${scope}:registry`, registryUrl],
         },
         {
           env: {
             CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            CODEARTIFACT_AUTH_TOKEN_KEY: `//${registry}:_authToken`,
           },
-          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          exec: 'npm config set "$CODEARTIFACT_AUTH_TOKEN_KEY=$CODEARTIFACT_AUTH_TOKEN"',
+        },
+        {
+          execArgs: ["npm", "config", "set", `//${registry}:always-auth=true`],
         },
       ],
     });
@@ -1928,13 +1935,17 @@ describe("scoped private packages", () => {
       name: "ca:login",
       steps: [
         {
-          exec: "which aws",
+          execArgs: ["which", "aws"],
+        },
+        {
+          execArgs: ["npm", "config", "set", `${scope}:registry`, registryUrl],
         },
         {
           env: {
             CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            CODEARTIFACT_AUTH_TOKEN_KEY: `//${registry}:_authToken`,
           },
-          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+          exec: 'npm config set "$CODEARTIFACT_AUTH_TOKEN_KEY=$CODEARTIFACT_AUTH_TOKEN"',
         },
       ],
     });
@@ -1967,19 +1978,39 @@ describe("scoped private packages", () => {
       name: "ca:login",
       steps: [
         {
-          exec: "which aws",
+          execArgs: ["which", "aws"],
+        },
+        {
+          execArgs: ["npm", "config", "set", `${scope}:registry`, registryUrl],
         },
         {
           env: {
             CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            CODEARTIFACT_AUTH_TOKEN_KEY: `//${registry}:_authToken`,
           },
-          exec: `npm config set ${scope}:registry ${registryUrl}; npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+          exec: 'npm config set "$CODEARTIFACT_AUTH_TOKEN_KEY=$CODEARTIFACT_AUTH_TOKEN"',
+        },
+        {
+          execArgs: ["npm", "config", "set", `//${registry}:always-auth=true`],
+        },
+        {
+          execArgs: [
+            "npm",
+            "config",
+            "set",
+            `${scope2}:registry`,
+            registryUrl2,
+          ],
         },
         {
           env: {
             CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text)`,
+            CODEARTIFACT_AUTH_TOKEN_KEY: `//${registry2}:_authToken`,
           },
-          exec: `npm config set ${scope2}:registry ${registryUrl2}; npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
+          exec: 'npm config set "$CODEARTIFACT_AUTH_TOKEN_KEY=$CODEARTIFACT_AUTH_TOKEN"',
+        },
+        {
+          execArgs: ["npm", "config", "set", `//${registry2}:always-auth=true`],
         },
       ],
     });

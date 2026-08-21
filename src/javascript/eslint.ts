@@ -113,6 +113,13 @@ export interface EslintCommandOptions {
 
   /**
    * Extra flag arguments to pass to eslint command
+   *
+   * Each element is passed to eslint as a single argument, exactly as given: no
+   * shell parses these, so a flag and its value need separate elements
+   * (`["--rulesdir", "my rules"]`, not `["--rulesdir 'my rules'"]`) and values
+   * must not be quoted.
+   *
+   * @example ["--cache", "--max-warnings=0"]
    */
   readonly extraArgs?: string[];
 }
@@ -598,21 +605,20 @@ export class Eslint extends Component {
    */
   private updateTask() {
     const taskExecCommand = "eslint";
-    const argsSet = new Set<string>();
+    const argv = [taskExecCommand];
+
     if (this._fileExtensions.size > 0) {
-      argsSet.add(`--ext ${[...this._fileExtensions].join(",")}`);
+      argv.push("--ext", [...this._fileExtensions].join(","));
     }
-    argsSet.add(`${[...this._flagArgs].join(" ")}`);
-    argsSet.add("$@"); // External args go here
+    argv.push(...this._flagArgs);
+    argv.push("$@"); // External args go here
+    argv.push(...this._lintPatterns);
 
-    for (const pattern of this._lintPatterns) {
-      argsSet.add(pattern);
-    }
-
-    this.eslintTask.reset(
-      [taskExecCommand, ...argsSet].join(" "),
-      this.buildTaskStepOptions(taskExecCommand),
-    );
+    // read before resetting: it inspects the current step to preserve any
+    // external edits
+    const stepOptions = this.buildTaskStepOptions(taskExecCommand);
+    this.eslintTask.reset();
+    this.eslintTask.execArgs(argv, stepOptions);
   }
 
   /**
@@ -623,8 +629,10 @@ export class Eslint extends Component {
    * @returns Either the externally edited, or the default task step options
    */
   private buildTaskStepOptions(taskExecCommand: string): TaskStepOptions {
-    const currentEslintTaskStep = this.eslintTask?.steps?.find((step) =>
-      step?.exec?.startsWith?.(taskExecCommand),
+    const currentEslintTaskStep = this.eslintTask?.steps?.find(
+      (step) =>
+        step?.execArgs?.[0] === taskExecCommand ||
+        step?.exec?.startsWith?.(taskExecCommand),
     );
 
     if (currentEslintTaskStep) {

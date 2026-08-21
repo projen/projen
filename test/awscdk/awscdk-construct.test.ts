@@ -83,7 +83,18 @@ describe("lambda functions", () => {
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps,
     ).toStrictEqual([
       {
-        exec: 'esbuild --bundle src/my.lambda.ts --target="node22" --platform="node" --outfile="resources/my.lambda/index.js" --tsconfig="test/tsconfig.json" --external:foo --external:bar --sourcemap',
+        execArgs: [
+          "esbuild",
+          "--bundle",
+          "src/my.lambda.ts",
+          "--target=node22",
+          "--platform=node",
+          "--outfile=resources/my.lambda/index.js",
+          "--tsconfig=test/tsconfig.json",
+          "--external:foo",
+          "--external:bar",
+          "--sourcemap",
+        ],
       },
     ]);
   });

@@ -3,6 +3,15 @@ import { javascript } from "../../src";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
 
+// Every publish task starts with a shell-free branch guard that compares the
+// checked out branch (resolved through the task's dynamic env) with the release
+// branch. The script itself is covered by test/release/publish-branch-guard.
+const BRANCH_GUARD_ENV = (branch: string) => ({
+  PUBLISH_BRANCH: branch,
+  CURRENT_BRANCH: "$(git rev-parse --abbrev-ref HEAD)",
+});
+const BRANCH_GUARD_STEP = { execArgs: ["node", "-e", expect.any(String)] };
+
 describe("JsiiProject with default settings", () => {
   it("synthesizes", () => {
     const project = new JsiiProject({
@@ -80,6 +89,7 @@ describe("maven repository options", () => {
       description: "Publish this package to Maven Central",
       env: {
         MAVEN_SERVER_ID: "central-ossrh",
+        ...BRANCH_GUARD_ENV("master"),
       },
       requiredEnv: [
         "MAVEN_GPG_PRIVATE_KEY",
@@ -89,13 +99,13 @@ describe("maven repository options", () => {
         "MAVEN_STAGING_PROFILE_ID",
       ],
       steps: [
-        { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p publib@latest publib-maven" },
+        BRANCH_GUARD_STEP,
+        { execArgs: ["npx", "-p", "publib@latest", "publib-maven"] },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
+    expect(workflow).toContain("run: npx '-p' 'publib@latest' 'publib-maven'");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
     expect(workflow).not.toContainEqual("MAVEN_REPOSITORY_URL");
@@ -128,6 +138,7 @@ describe("maven repository options", () => {
       env: {
         MAVEN_SERVER_ID: "ossrh",
         MAVEN_ENDPOINT: "https://s01.oss.sonatype.org",
+        ...BRANCH_GUARD_ENV("master"),
       },
       requiredEnv: [
         "MAVEN_GPG_PRIVATE_KEY",
@@ -137,13 +148,13 @@ describe("maven repository options", () => {
         "MAVEN_STAGING_PROFILE_ID",
       ],
       steps: [
-        { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p publib@latest publib-maven" },
+        BRANCH_GUARD_STEP,
+        { execArgs: ["npx", "-p", "publib@latest", "publib-maven"] },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
+    expect(workflow).toContain("run: npx '-p' 'publib@latest' 'publib-maven'");
     expect(workflow).toContain("MAVEN_ENDPOINT: https://s01.oss.sonatype.org");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
@@ -176,11 +187,12 @@ describe("maven repository options", () => {
       env: {
         MAVEN_SERVER_ID: "github",
         MAVEN_REPOSITORY_URL: "https://maven.pkg.github.com/eladb",
+        ...BRANCH_GUARD_ENV("master"),
       },
       requiredEnv: ["MAVEN_PASSWORD", "MAVEN_USERNAME"],
       steps: [
-        { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p publib@latest publib-maven" },
+        BRANCH_GUARD_STEP,
+        { execArgs: ["npx", "-p", "publib@latest", "publib-maven"] },
       ],
     });
 

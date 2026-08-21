@@ -27,6 +27,7 @@ import { JsonFile } from "../json";
 import type { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import type { Task } from "../task";
+import type { TaskStep } from "../task-model";
 import { isTruthy, normalizePersistedPath, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
@@ -1123,7 +1124,7 @@ export class NodePackage extends Component {
    * Add a npm package.json script.
    *
    * @param name The script name
-   * @param command The command to execute
+   * @param command The command to execute, run by the package manager's shell.
    */
   public setScript(name: string, command: string) {
     this.scripts[name] = command;
@@ -1464,25 +1465,44 @@ export class NodePackage extends Component {
 
     this.project.addTask("ca:login", {
       steps: [
-        { exec: "which aws" }, // check that AWS CLI is installed
-        ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
+        { execArgs: ["which", "aws"] }, // check that AWS CLI is installed
+        ...this.scopedPackagesOptions.flatMap((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
           const { domain, region, accountId, registry } =
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
-          const commands = [
-            `npm config set ${scope}:registry ${registryUrl}`,
-            `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-          ];
-          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16) {
-            commands.push(`npm config set //${registry}:always-auth=true`);
-          }
-          return {
-            env: {
-              CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+          const steps: TaskStep[] = [
+            {
+              execArgs: [
+                "npm",
+                "config",
+                "set",
+                `${scope}:registry`,
+                registryUrl,
+              ],
             },
-            exec: commands.join("; "),
-          };
+            {
+              env: {
+                CODEARTIFACT_AUTH_TOKEN: `$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+                CODEARTIFACT_AUTH_TOKEN_KEY: `//${registry}:_authToken`,
+              },
+              // needs a shell to expand env vars
+              exec: 'npm config set "$CODEARTIFACT_AUTH_TOKEN_KEY=$CODEARTIFACT_AUTH_TOKEN"',
+            },
+          ];
+
+          if (!this.minNodeVersion || semver.major(this.minNodeVersion) <= 16) {
+            steps.push({
+              execArgs: [
+                "npm",
+                "config",
+                "set",
+                `//${registry}:always-auth=true`,
+              ],
+            });
+          }
+
+          return steps;
         }),
       ],
     });

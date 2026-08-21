@@ -2275,7 +2275,7 @@ The script name.
 
 - *Type:* string
 
-The command to execute.
+The command to execute, run by the package manager's shell.
 
 ---
 
@@ -6245,6 +6245,10 @@ For example, `{ 'process.env.DEBUG': 'true' }`.
 
 Another example, `{ 'process.env.API_KEY': JSON.stringify('xxx-xxxx-xxx') }`.
 
+Each entry is passed to esbuild as a single `--define:` argument, exactly as
+given: no shell parses it, so values are not unquoted along the way and a
+string replacement keeps the quotes it needs (`JSON.stringify('xxx')`).
+
 ---
 
 ##### `esbuildArgs`<sup>Optional</sup> <a name="esbuildArgs" id="projen.javascript.AddBundleOptions.property.esbuildArgs"></a>
@@ -6271,6 +6275,10 @@ project.bundler.addBundle("./src/hello.ts", {
   },
 });
 ```
+
+Each entry is passed to esbuild as a single argument, exactly as given: no
+shell parses it, so values must not be quoted (a value containing spaces is
+passed through as one argument on its own).
 
 ---
 
@@ -7403,7 +7411,19 @@ public readonly extraArgs: string[];
 
 Extra flag arguments to pass to eslint command.
 
+Each element is passed to eslint as a single argument, exactly as given: no
+shell parses these, so a flag and its value need separate elements
+(`["--rulesdir", "my rules"]`, not `["--rulesdir 'my rules'"]`) and values
+must not be quoted.
+
 ---
+
+*Example*
+
+```typescript
+["--cache", "--max-warnings=0"]
+```
+
 
 ##### `fix`<sup>Optional</sup> <a name="fix" id="projen.javascript.EslintCommandOptions.property.fix"></a>
 
@@ -9324,7 +9344,20 @@ public readonly extraCliOptions: string[];
 
 Additional options to pass to the Jest CLI invocation.
 
+Each element is passed to jest as a single argument, exactly as given: no
+shell parses these, so a flag and its value need separate elements
+(`["--reporters", "jest-junit"]`, not `["--reporters jest-junit"]`) and
+values must not be quoted (`["--testPathIgnorePatterns=/node_modules/"]`,
+not `["--testPathIgnorePatterns='/node_modules/'"]`).
+
 ---
+
+*Example*
+
+```typescript
+["--runInBand", "--testNamePattern=a test name with spaces"]
+```
+
 
 ##### `jestConfig`<sup>Optional</sup> <a name="jestConfig" id="projen.javascript.JestOptions.property.jestConfig"></a>
 
@@ -10527,6 +10560,10 @@ public readonly projenCommand: string;
 - *Default:* "npx projen"
 
 The shell command to use in order to run the projen CLI.
+
+Inserted verbatim into task steps, workflows and IDE configuration, and run
+by each of their shells - locally, in CI and in dev containers. Keep it a
+plain unquoted command, since shell syntax in it executes in all of them.
 
 Can be used to customize in special environments.
 

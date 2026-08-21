@@ -89,7 +89,21 @@ export abstract class IntegrationTestBase extends Component {
 
     this.assertTask = project.addTask(`integ:${name}:assert`, {
       description: `assert the snapshot of integration test '${name}'`,
-      exec: `[ -d "${this.snapshotDir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${this.deployTask.name}' to capture." && exit 1)`,
+      execArgs: [
+        "node",
+        "-e",
+        [
+          "const [dir, name, task] = process.argv.slice(1);",
+          "const stat = require('fs').statSync(dir, { throwIfNoEntry: false });",
+          "if (!stat || !stat.isDirectory()) {",
+          "console.error(`No snapshot available for integration test '${name}'. Run 'projen ${task}' to capture.`);",
+          "process.exit(1);",
+          "}",
+        ].join(" "),
+        this.snapshotDir,
+        name,
+        this.deployTask.name,
+      ],
     });
 
     // synth as part of our tests, which means that if outdir changes, anti-tamper will fail

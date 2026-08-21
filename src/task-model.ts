@@ -309,9 +309,9 @@ export interface TaskStep {
   /**
    * Shell command to execute.
    *
-   * The whole command is a single shell string. To pass arguments as a list
-   * instead - without having to quote spaces or other characters yourself -
-   * use `execArgs`.
+   * A single shell string, so only pass trusted input: an interpolated value is
+   * interpreted by the shell too. Use `execArgs` for arguments you did not write
+   * literally.
    *
    * @default - don't execute a shell command
    */

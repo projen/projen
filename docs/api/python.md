@@ -6766,8 +6766,10 @@ Useful when all project tests are in a known location to speed up
 test collection and to avoid picking up undesired tests by accident.
 
 Leave empty to discover all test_*.py or *_test.py files, per Pytest default.
+Glob patterns are supported, including `**` for recursive matching.
 
-The array will be concatenated and passed as a single argument to pytest.
+The entries form pytest's `testpaths` setting, which is parsed like a shell
+word list, so a path containing spaces has to be quoted: `["'my tests'"]`.
 
 ---
 
@@ -6785,7 +6787,7 @@ public readonly version: string;
 ```
 
 - *Type:* string
-- *Default:* "7.4.3"
+- *Default:* "8.3.5"
 
 Pytest version.
 
@@ -7225,6 +7227,10 @@ public readonly projenCommand: string;
 - *Default:* "npx projen"
 
 The shell command to use in order to run the projen CLI.
+
+Inserted verbatim into task steps, workflows and IDE configuration, and run
+by each of their shells - locally, in CI and in dev containers. Keep it a
+plain unquoted command, since shell syntax in it executes in all of them.
 
 Can be used to customize in special environments.
 

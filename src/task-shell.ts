@@ -29,6 +29,9 @@ export class TaskShell {
    *
    * Use this to opt out of the cross-platform shell and run commands through
    * whatever shell the host provides.
+   *
+   * Steps given as an argv (`execArgs`) are spawned without a shell, so on
+   * Windows they cannot run `.cmd`/`.bat` shims such as npm-installed CLIs.
    */
   public static system(): TaskShell {
     return new TaskShell("system");

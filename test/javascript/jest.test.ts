@@ -369,9 +369,9 @@ test("can set extra CLI options", () => {
   });
 
   // THEN
-  const clFragments = project.testTask.steps.pop()?.exec?.split(" ");
-  expect(clFragments).toContain("--json");
-  expect(clFragments).toContain("--outputFile=jest-report.json");
+  const execArgs = project.testTask.steps.pop()?.execArgs;
+  expect(execArgs).toContain("--json");
+  expect(execArgs).toContain("--outputFile=jest-report.json");
 });
 
 test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:update' task is undefined", () => {
@@ -387,7 +387,7 @@ test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:u
 
   // THEN
   const testTask = project.testTask;
-  expect(testTask.steps[0].exec).toContain("--updateSnapshot");
+  expect(testTask.steps[0].execArgs).toContain("--updateSnapshot");
 
   const testUpdateTask = project.tasks.tryFind("test:update");
   expect(testUpdateTask).toBeUndefined();
@@ -406,7 +406,7 @@ test("Jest can be configured to fail without tests", () => {
 
   // THEN
   const testTask = project.testTask;
-  expect(testTask.steps[0].exec).not.toContain("--passWithNoTests");
+  expect(testTask.steps[0].execArgs).not.toContain("--passWithNoTests");
 });
 
 describe("UpdateSnapshotOptions.NEVER", () => {
@@ -421,16 +421,16 @@ describe("UpdateSnapshotOptions.NEVER", () => {
 
   it("does not add --updateSnapshot", () => {
     const testTask = project.testTask;
-    expect(testTask.steps[0].exec).not.toContain("--updateSnapshot");
+    expect(testTask.steps[0].execArgs).not.toContain("--updateSnapshot");
   });
 
   it("adds --ci", () => {
     const testTask = project.testTask;
-    expect(testTask.steps[0].exec).toContain("--ci");
+    expect(testTask.steps[0].execArgs).toContain("--ci");
   });
 
   it("creates a separate 'test:update' task", () => {
     const testUpdateTask = project.tasks.tryFind("test:update");
-    expect(testUpdateTask?.steps[0]?.exec).toContain("--updateSnapshot");
+    expect(testUpdateTask?.steps[0]?.execArgs).toContain("--updateSnapshot");
   });
 });

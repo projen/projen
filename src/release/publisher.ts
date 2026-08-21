@@ -19,9 +19,47 @@ import { defaultNpmToken } from "../javascript/node-package";
 import type { Project } from "../project";
 import type { GroupRunnerOptions } from "../runner-options";
 import { filteredRunsOnOptions } from "../runner-options";
+import { TaskShell } from "../task-shell";
+import { escapeCommand } from "../util/dax";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
+
+/**
+ * Creates a GitHub release, tolerating a release that already exists so that
+ * re-running a release is a no-op rather than a failure.
+ *
+ * A fixed script: the release tag file, the changelog file and the prerelease
+ * flag arrive through the environment (`RELEASE_TAG_FILE`, `CHANGELOG_FILE`,
+ * `PRERELEASE`), so no value is ever interpolated into shell text.
+ *
+ * @TODO This is quite complex and should be solved differently in future
+ */
+const GITHUB_RELEASE_SCRIPT = [
+  "errout=$(mktemp)",
+  'tag=$(cat "$RELEASE_TAG_FILE")',
+  'gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" ${PRERELEASE:+-p} 2> "$errout" && true',
+  "exitcode=$?",
+  'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then',
+  '  cat "$errout"',
+  "  exit $exitcode",
+  "fi",
+].join("\n");
+
+/**
+ * Fails unless the checked out branch is the one a publish task releases.
+ *
+ * Compares `CURRENT_BRANCH` - resolved by the task's dynamic env - against
+ * `PUBLISH_BRANCH`, so neither the branch name nor the git invocation ends up
+ * inside a command. Runs as an argv (`node -e <script>`), so there is no shell.
+ */
+const CHECK_BRANCH_SCRIPT = [
+  "const { CURRENT_BRANCH: current, PUBLISH_BRANCH: expected } = process.env;",
+  "if (current !== expected) {",
+  '  console.error(`cannot publish from branch "${current}": this task publishes "${expected}"`);',
+  "  process.exit(1);",
+  "}",
+].join("\n");
 
 /**
  * Checks if a URL's host matches the expected host exactly.
@@ -282,10 +320,19 @@ export class Publisher extends Component {
     }
     publishTask.builtin("release/tag-version");
 
+    // an explicit empty string disables pushing
     if (options.gitPushCommand !== "") {
-      const gitPushCommand =
-        options.gitPushCommand || `git push --follow-tags origin ${gitBranch}`;
-      publishTask.exec(gitPushCommand);
+      if (options.gitPushCommand) {
+        publishTask.exec(options.gitPushCommand);
+      } else {
+        publishTask.execArgs([
+          "git",
+          "push",
+          "--follow-tags",
+          "origin",
+          gitBranch,
+        ]);
+      }
     }
 
     return publishTask;
@@ -739,13 +786,16 @@ export class Publisher extends Component {
         throw new Error(`Duplicate job with name "${jobname}"`);
       }
 
-      const commandToRun = this.dryRun
-        ? `echo "DRY RUN: ${opts.run}"`
+      const commandToRun: PublishRun = this.dryRun
+        ? { argv: ["echo", `DRY RUN: ${renderRun(opts.run)}`] }
         : opts.run;
       const requiredEnv = new Array<string>();
 
       // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
-      const jobEnv: Record<string, string> = { ...opts.env };
+      const jobEnv: Record<string, string> = {
+        ...opts.env,
+        ...("script" in commandToRun ? commandToRun.env : {}),
+      };
       const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {}).filter(
         ([_, value]) => value != undefined,
       ) as string[][];
@@ -763,16 +813,26 @@ export class Publisher extends Component {
           `publish:${basename.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,
-            env: opts.env,
+            env: {
+              ...opts.env,
+              ...("script" in commandToRun ? commandToRun.env : {}),
+              // consumed by the branch check below
+              PUBLISH_BRANCH: branch,
+              CURRENT_BRANCH: "$(git rev-parse --abbrev-ref HEAD)",
+            },
             requiredEnv: requiredEnv,
           },
         );
 
         // first verify that we are on the correct branch
-        task.exec(`test "$(git branch --show-current)" = "${branch}"`);
+        task.execArgs(["node", "-e", CHECK_BRANCH_SCRIPT]);
 
         // run commands
-        task.exec(commandToRun);
+        if ("argv" in commandToRun) {
+          task.execArgs(commandToRun.argv);
+        } else {
+          task.exec(commandToRun.script, { shell: commandToRun.shell });
+        }
       }
 
       const steps: JobStep[] = [
@@ -797,7 +857,7 @@ export class Publisher extends Component {
           name: "Release",
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
           if: opts.releaseStepIf,
-          run: commandToRun,
+          run: renderRun(commandToRun),
           env: {
             ...jobEnv,
             ...((opts.isPubLib ?? true)
@@ -860,45 +920,25 @@ export class Publisher extends Component {
     });
   }
 
-  private publibCommand(command: string) {
-    return `npx -p publib@${this.publibVersion} ${command}`;
+  private publibCommand(command: string): PublishRun {
+    return { argv: ["npx", "-p", `publib@${this.publibVersion}`, command] };
   }
 
   private githubReleaseCommand(
     options: GitHubReleasesPublishOptions,
     branchOptions: Partial<BranchOptions>,
-  ): string {
-    const changelogFile = options.changelogFile;
-    const releaseTagFile = options.releaseTagFile;
-
-    // create a github release
-    const releaseTag = `$(cat ${releaseTagFile})`;
-    const ghReleaseCommand = [
-      `gh release create ${releaseTag}`,
-      "-R $GITHUB_REPOSITORY",
-      `-F ${changelogFile}`,
-      `-t ${releaseTag}`,
-      "--target $GITHUB_SHA",
-    ];
-
-    if (branchOptions.prerelease) {
-      ghReleaseCommand.push("-p");
-    }
-
-    const ghRelease = ghReleaseCommand.join(" ");
-
-    // release script that does not error when re-releasing a given version
-    const idempotentRelease = [
-      "errout=$(mktemp);",
-      `${ghRelease} 2> $errout && true;`,
-      "exitcode=$?;",
-      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
-      "cat $errout;",
-      "exit $exitcode;",
-      "fi",
-    ].join(" ");
-
-    return idempotentRelease;
+  ): PublishRun {
+    return {
+      script: GITHUB_RELEASE_SCRIPT,
+      // the script uses `if`, `!` and `$?`, which the built-in shell does not
+      // implement
+      shell: TaskShell.sh(),
+      env: {
+        RELEASE_TAG_FILE: options.releaseTagFile,
+        CHANGELOG_FILE: options.changelogFile,
+        ...(branchOptions.prerelease ? { PRERELEASE: "true" } : {}),
+      },
+    };
   }
 }
 
@@ -906,11 +946,36 @@ function secret(secretName: string) {
   return `\${{ secrets.${secretName} }}`;
 }
 
+/**
+ * What a publish job runs: either an argv, which needs no shell at all, or a
+ * shell script for the cases that genuinely need shell features.
+ *
+ * A script is a fixed string - everything variable about it is passed in `env`,
+ * which is never shell-parsed - so no value is ever interpolated into shell
+ * text. It also declares the `shell` it is written for, since the built-in shell
+ * only implements a subset of POSIX syntax.
+ */
+type PublishRun =
+  | { readonly argv: string[] }
+  | {
+      readonly script: string;
+      readonly env?: Record<string, string>;
+      readonly shell?: TaskShell;
+    };
+
+/**
+ * Renders a `PublishRun` as a command line for a `run:` workflow step or a
+ * `projen publish:xxx` task.
+ */
+function renderRun(run: PublishRun): string {
+  return "argv" in run ? escapeCommand(run.argv) : run.script;
+}
+
 interface PublishJobOptions {
   /**
    * The command to execute.
    */
-  readonly run: string;
+  readonly run: PublishRun;
 
   /**
    * Environment variables to set
@@ -1456,6 +1521,11 @@ export interface GitPublishOptions extends VersionArtifactOptions {
 
   /**
    * Override git-push command.
+   *
+   * Runs as a shell command in the `publish:git` task - where release
+   * credentials are in scope - replacing the default
+   * `git push --follow-tags origin <branch>`. Shell syntax is interpreted, so
+   * keep it a literal command.
    *
    * Set to an empty string to disable pushing.
    */

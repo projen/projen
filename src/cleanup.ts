@@ -3,6 +3,7 @@ import * as path from "path";
 import * as glob from "fast-glob";
 import { PROJEN_DIR, PROJEN_MARKER } from "./common";
 import * as logging from "./logging";
+import { isPathInside, realpathOfClosestExisting } from "./util/path";
 
 export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
@@ -120,38 +121,6 @@ function resolveWithinDir(dir: string, file: string): string | undefined {
   }
 
   return resolved;
-}
-
-function isPathInside(dir: string, file: string): boolean {
-  const relative = path.relative(dir, file);
-  return (
-    relative !== "" &&
-    !relative.startsWith(`..${path.sep}`) &&
-    relative !== ".." &&
-    !path.isAbsolute(relative)
-  );
-}
-
-/**
- * Resolves symlinks in `p`, falling back to the closest existing ancestor for
- * paths that do not exist (yet).
- */
-function realpathOfClosestExisting(p: string): string {
-  const missing = new Array<string>();
-  let current = path.resolve(p);
-
-  while (true) {
-    try {
-      return path.join(fs.realpathSync(current), ...missing);
-    } catch {
-      const parent = path.dirname(current);
-      if (parent === current) {
-        return path.resolve(p);
-      }
-      missing.unshift(path.basename(current));
-      current = parent;
-    }
-  }
 }
 
 function getFilesFromManifest(dir: string): string[] {

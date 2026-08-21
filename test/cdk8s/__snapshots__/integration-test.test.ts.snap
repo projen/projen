@@ -80,10 +80,24 @@ exports[`IntegrationTest adding an integration test 3`] = `
   "name": "integ:my-test-name:assert",
   "steps": [
     {
-      "exec": "[ -d "test/my-test-name.integ.snapshot" ] || (echo "No snapshot available for integration test 'my-test-name'. Run 'projen integ:my-test-name:deploy' to capture." && exit 1)",
+      "execArgs": [
+        "node",
+        "-e",
+        "const [dir, name, task] = process.argv.slice(1); const stat = require('fs').statSync(dir, { throwIfNoEntry: false }); if (!stat || !stat.isDirectory()) { console.error(\`No snapshot available for integration test '\${name}'. Run 'projen \${task}' to capture.\`); process.exit(1); }",
+        "test/my-test-name.integ.snapshot",
+        "my-test-name",
+        "integ:my-test-name:deploy",
+      ],
     },
     {
-      "exec": "cdk8s synth --app "ts-node -P test/tsconfig.json test/my-test-name.integ.ts" -o test/.tmp/my-test-name.integ/assert.cdk.out > /dev/null",
+      "execArgs": [
+        "cdk8s",
+        "synth",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-test-name.integ.ts",
+        "-o",
+        "test/.tmp/my-test-name.integ/assert.cdk.out",
+      ],
     },
     {
       "execArgs": [
@@ -114,7 +128,11 @@ exports[`IntegrationTest adding an integration test 5`] = `
   "name": "test",
   "steps": [
     {
-      "exec": "jest --passWithNoTests --updateSnapshot",
+      "execArgs": [
+        "jest",
+        "--passWithNoTests",
+        "--updateSnapshot",
+      ],
       "receiveArgs": true,
     },
     {
@@ -145,7 +163,11 @@ exports[`IntegrationTest explicit name 2`] = `
   "name": "test",
   "steps": [
     {
-      "exec": "jest --passWithNoTests --updateSnapshot",
+      "execArgs": [
+        "jest",
+        "--passWithNoTests",
+        "--updateSnapshot",
+      ],
       "receiveArgs": true,
     },
     {

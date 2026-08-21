@@ -46,7 +46,7 @@ readme = "README.md"
 
 [tool.poetry.group.dev.dependencies]
 projen = "99.99.99"
-pytest = "7.4.3"
+pytest = "8.3.5"
 "
 `;
 
@@ -206,7 +206,7 @@ cython_debug/
       {
         "name": "pytest",
         "type": "test",
-        "version": "7.4.3",
+        "version": "8.3.5",
       },
     ],
   },
@@ -300,7 +300,17 @@ cython_debug/
         "name": "install:ci",
         "steps": [
           {
-            "exec": "poetry check --lock && poetry install",
+            "execArgs": [
+              "poetry",
+              "check",
+              "--lock",
+            ],
+          },
+          {
+            "execArgs": [
+              "poetry",
+              "install",
+            ],
           },
         ],
       },
@@ -355,7 +365,9 @@ cython_debug/
         "name": "test",
         "steps": [
           {
-            "exec": "pytest",
+            "execArgs": [
+              "pytest",
+            ],
           },
         ],
       },
@@ -418,7 +430,7 @@ package-mode = false
 
 [tool.poetry.group.dev.dependencies]
 projen = "99.99.99"
-pytest = "7.4.3"
+pytest = "8.3.5"
 ",
   "test_python_project/__init__.py": "__version__ = "0.1.0"
 ",

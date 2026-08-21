@@ -19,11 +19,12 @@ test("simplest LambdaExtension cdk v2", () => {
   const snapshot = Testing.synth(project);
 
   const tasks = snapshot[".projen/tasks.json"].tasks;
-  const bundleTaskExec = tasks["bundle:example.lambda-extension"].steps[0].exec;
+  const bundleTaskExec =
+    tasks["bundle:example.lambda-extension"].steps[0].execArgs;
 
   expect(bundleTaskExec).toContain(
     // Outputs `extensions/${name}` dir
-    '--outfile="assets/example.lambda-extension/extensions/example"',
+    "--outfile=assets/example.lambda-extension/extensions/example",
   );
   expect(bundleTaskExec).toContain(
     // aws-sdk is external
@@ -31,7 +32,7 @@ test("simplest LambdaExtension cdk v2", () => {
   );
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node14"',
+    "--target=node14",
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
@@ -79,11 +80,11 @@ test("changing compatible runtimes", () => {
 
   const bundleTaskExec =
     snapshot[".projen/tasks.json"].tasks["bundle:example.lambda-extension"]
-      .steps[0].exec;
+      .steps[0].execArgs;
 
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node14"',
+    "--target=node14",
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
@@ -118,7 +119,7 @@ test("bundler options", () => {
 
   const bundleTaskExec =
     snapshot[".projen/tasks.json"].tasks["bundle:example.lambda-extension"]
-      .steps[0].exec;
+      .steps[0].execArgs;
 
   expect(bundleTaskExec).toContain(
     // `foo` is external
@@ -144,11 +145,11 @@ test("changing the extension name", () => {
 
   const bundleTaskExec =
     snapshot[".projen/tasks.json"].tasks["bundle:example.lambda-extension"]
-      .steps[0].exec;
+      .steps[0].execArgs;
 
   expect(bundleTaskExec).toContain(
     // Outputs `extensions/${name}` dir
-    '--outfile="assets/example.lambda-extension/extensions/other"',
+    "--outfile=assets/example.lambda-extension/extensions/other",
   );
 });
 

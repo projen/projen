@@ -35,7 +35,7 @@ import {
 } from "./util";
 import { GitHubActions } from "../github/actions.const";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { ensureNotHiddenPath, secretToString } from "../github/private/util";
+import { secretToString } from "../github/private/util";
 import type {
   JobPermissions,
   JobStep,
@@ -62,7 +62,10 @@ import type { GroupRunnerOptions } from "../runner-options";
 import { filteredRunsOnOptions } from "../runner-options";
 import type { Task } from "../task";
 import { deepMerge, multipleSelected, normalizePersistedPath } from "../util";
-import { ensureRelativePathStartsWithDot } from "../util/path";
+import {
+  ensureNotHiddenPath,
+  ensureRelativePathStartsWithDot,
+} from "../util/path";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -1360,7 +1363,7 @@ export class NodeProject extends GitHubProject {
 
     // Add package manager specific audit command
     const auditCommand = this.getAuditCommand(auditLevel, auditProdOnly);
-    auditTask.exec(auditCommand);
+    auditTask.execArgs(auditCommand);
 
     return auditTask;
   }
@@ -1368,25 +1371,38 @@ export class NodeProject extends GitHubProject {
   /**
    * Gets the appropriate audit command for the package manager.
    */
-  private getAuditCommand(level: string, prodOnly: boolean): string {
+  private getAuditCommand(level: string, prodOnly: boolean): string[] {
     const levelFlag = this.getAuditLevelFlag(level);
-    const prodFlag = prodOnly ? this.getAuditProdFlag() : "";
+    const prodFlag = prodOnly ? this.getAuditProdFlag() : [];
 
     switch (this.package.packageManager) {
       case NodePackageManager.NPM:
-        return `npm audit${levelFlag}${prodFlag}`;
+        return ["npm", "audit", ...levelFlag, ...prodFlag];
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_CLASSIC:
         // Use Node.js to call yarn and handle exit code cross-platform
         const threshold = this.getYarnClassicThreshold(level);
-        return `node -e "const { execSync } = require('child_process'); try { execSync('yarn audit${levelFlag}${prodFlag}', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < ${threshold} ? 0 : 1); }"`;
+        // execSync takes a command line, so the flags are joined here
+        const yarnAudit = ["yarn", "audit", ...levelFlag, ...prodFlag];
+        return [
+          "node",
+          "-e",
+          `const { execSync } = require('child_process'); try { execSync('${yarnAudit.join(" ")}', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < ${threshold} ? 0 : 1); }`,
+        ];
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
-        return `yarn npm audit --recursive${levelFlag}${prodFlag}`;
+        return [
+          "yarn",
+          "npm",
+          "audit",
+          "--recursive",
+          ...levelFlag,
+          ...prodFlag,
+        ];
       case NodePackageManager.PNPM:
-        return `pnpm audit${levelFlag}${prodFlag}`;
+        return ["pnpm", "audit", ...levelFlag, ...prodFlag];
       case NodePackageManager.BUN:
-        return `bun audit${levelFlag}${prodFlag}`;
+        return ["bun", "audit", ...levelFlag, ...prodFlag];
       default:
         throw new Error(
           `Unsupported package manager: ${this.package.packageManager}`,
@@ -1415,44 +1431,44 @@ export class NodeProject extends GitHubProject {
   /**
    * Gets the audit level flag for the package manager.
    */
-  private getAuditLevelFlag(level: string): string {
+  private getAuditLevelFlag(level: string): string[] {
     switch (this.package.packageManager) {
       case NodePackageManager.NPM:
-        return ` --audit-level=${level}`;
+        return [`--audit-level=${level}`];
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_CLASSIC:
-        return ` --level ${level}`;
+        return [`--level`, level];
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
-        return ` --severity ${level}`;
+        return [`--severity`, level];
       case NodePackageManager.PNPM:
-        return ` --audit-level ${level}`;
+        return [`--audit-level`, level];
       case NodePackageManager.BUN:
-        return ` --audit-level ${level}`;
+        return [`--audit-level`, level];
       default:
-        return "";
+        return [];
     }
   }
 
   /**
    * Gets the production-only flag for the package manager.
    */
-  private getAuditProdFlag(): string {
+  private getAuditProdFlag(): string[] {
     switch (this.package.packageManager) {
       case NodePackageManager.NPM:
-        return " --omit=dev";
+        return ["--omit=dev"];
       case NodePackageManager.YARN:
       case NodePackageManager.YARN_CLASSIC:
-        return " --groups dependencies";
+        return ["--groups", "dependencies"];
       case NodePackageManager.YARN2:
       case NodePackageManager.YARN_BERRY:
-        return " --environment production";
+        return ["--environment", "production"];
       case NodePackageManager.PNPM:
-        return " --prod";
+        return ["--prod"];
       case NodePackageManager.BUN:
-        return " --production";
+        return ["--production"];
       default:
-        return "";
+        return [];
     }
   }
 }

@@ -46,9 +46,11 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "npm",
+      "audit",
+      "--audit-level=high",
+    ]);
   });
 
   test("audit uses correct yarn classic command", () => {
@@ -64,9 +66,11 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "node -e \"const { execSync } = require('child_process'); try { execSync('yarn audit --level high', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }\"",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "node",
+      "-e",
+      "const { execSync } = require('child_process'); try { execSync('yarn audit --level high', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 8 ? 0 : 1); }",
+    ]);
   });
 
   test("audit uses correct yarn berry command", () => {
@@ -82,9 +86,14 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "yarn npm audit --recursive --severity high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "yarn",
+      "npm",
+      "audit",
+      "--recursive",
+      "--severity",
+      "high",
+    ]);
   });
 
   test("audit uses correct bun command", () => {
@@ -100,9 +109,12 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "bun audit --audit-level high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "bun",
+      "audit",
+      "--audit-level",
+      "high",
+    ]);
   });
 
   test("audit uses correct pnpm command", () => {
@@ -118,9 +130,12 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "pnpm audit --audit-level high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "pnpm",
+      "audit",
+      "--audit-level",
+      "high",
+    ]);
   });
 
   test("audit level can be configured", () => {
@@ -137,9 +152,11 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=critical",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "npm",
+      "audit",
+      "--audit-level=critical",
+    ]);
   });
 
   test("audit can include dev dependencies", () => {
@@ -156,9 +173,11 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "npm",
+      "audit",
+      "--audit-level=high",
+    ]);
   });
 
   test("audit can exclude dev dependencies", () => {
@@ -175,9 +194,12 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "npm audit --audit-level=high --omit=dev",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "npm",
+      "audit",
+      "--audit-level=high",
+      "--omit=dev",
+    ]);
   });
 
   test("audit is added to pre-compile task", () => {
@@ -281,9 +303,14 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toBe(
-      "yarn npm audit --recursive --severity high",
-    );
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "yarn",
+      "npm",
+      "audit",
+      "--recursive",
+      "--severity",
+      "high",
+    ]);
   });
 
   test("audit with yarn uses correct command", () => {
@@ -299,23 +326,29 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].exec).toContain(
+    // yarn classic wraps the command in a node script
+    expect(tasks.tasks.audit.steps[0].execArgs[2]).toContain(
       "yarn audit --level high",
     );
   });
 
   test("audit prodOnly flag works with all package managers", () => {
-    const managers = [
+    const managers: Array<{ manager: NodePackageManager; expected: any }> = [
       {
         manager: NodePackageManager.YARN_CLASSIC,
-        expected: " --groups dependencies",
+        // yarn classic wraps the command in a node script
+        expected: [
+          expect.stringContaining(
+            "yarn audit --level high --groups dependencies",
+          ),
+        ],
       },
       {
         manager: NodePackageManager.YARN_BERRY,
-        expected: " --environment production",
+        expected: ["--environment", "production"],
       },
-      { manager: NodePackageManager.PNPM, expected: " --prod" },
-      { manager: NodePackageManager.BUN, expected: " --production" },
+      { manager: NodePackageManager.PNPM, expected: ["--prod"] },
+      { manager: NodePackageManager.BUN, expected: ["--production"] },
     ];
 
     for (const { manager, expected } of managers) {
@@ -332,7 +365,9 @@ describe("NodeProject audit", () => {
 
       const snapshot = synthSnapshot(project);
       const tasks = snapshot["test-project/.projen/tasks.json"];
-      expect(tasks.tasks.audit.steps[0].exec).toContain(expected);
+      expect(tasks.tasks.audit.steps[0].execArgs).toEqual(
+        expect.arrayContaining(expected),
+      );
     }
   });
 
@@ -353,7 +388,7 @@ describe("NodeProject audit", () => {
 
       const snapshot = synthSnapshot(project);
       const tasks = snapshot["test-project/.projen/tasks.json"];
-      expect(tasks.tasks.audit.steps[0].exec).toContain(
+      expect(tasks.tasks.audit.steps[0].execArgs).toContain(
         `--audit-level=${level}`,
       );
     }

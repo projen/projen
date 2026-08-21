@@ -109,6 +109,9 @@ export interface GitpodTask {
   /**
    * In case you need to run something even before init, that is a requirement for both init and command,
    * you can use the before property.
+   *
+   * A shell command, chained with the other task commands using `&&`.
+   *
    * @default
    */
   readonly before?: string;
@@ -124,6 +127,9 @@ export interface GitpodTask {
   /**
    * The optional prebuild command will be executed during prebuilds. It is meant to run additional long running
    * processes that could be useful, e.g. running test suites.
+   *
+   * A shell command, chained with the other task commands using `&&`.
+   *
    * @default
    */
   readonly prebuild?: string;
