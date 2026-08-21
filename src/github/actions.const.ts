@@ -4,44 +4,44 @@
  * Fully qualified references for all GitHub Actions used by this project.
  */
 export class GitHubActions {
-  /** actions/checkout at v7 */
-  public static readonly ACTIONS_CHECKOUT = "actions/checkout@v7";
+  /** actions/checkout at v7.0.1 */
+  public static readonly ACTIONS_CHECKOUT = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1";
   /** actions/create-github-app-token at v3.2.0 (immutable) */
   public static readonly ACTIONS_CREATE_GITHUB_APP_TOKEN = "actions/create-github-app-token@v3.2.0";
   /** actions/dependency-review-action at v5.0.0 */
-  public static readonly ACTIONS_DEPENDENCY_REVIEW_ACTION = "actions/dependency-review-action@v5.0.0";
-  /** actions/download-artifact at v8 */
-  public static readonly ACTIONS_DOWNLOAD_ARTIFACT = "actions/download-artifact@v8";
-  /** actions/github-script at v9 */
-  public static readonly ACTIONS_GITHUB_SCRIPT = "actions/github-script@v9";
-  /** actions/setup-dotnet at v6 */
-  public static readonly ACTIONS_SETUP_DOTNET = "actions/setup-dotnet@v6";
-  /** actions/setup-go at v7 */
-  public static readonly ACTIONS_SETUP_GO = "actions/setup-go@v7";
-  /** actions/setup-java at v5 */
-  public static readonly ACTIONS_SETUP_JAVA = "actions/setup-java@v5";
-  /** actions/setup-node at v7 */
-  public static readonly ACTIONS_SETUP_NODE = "actions/setup-node@v7";
-  /** actions/setup-python at v7 */
-  public static readonly ACTIONS_SETUP_PYTHON = "actions/setup-python@v7";
-  /** actions/stale at v11 */
-  public static readonly ACTIONS_STALE = "actions/stale@v11";
-  /** actions/upload-artifact at v7 */
-  public static readonly ACTIONS_UPLOAD_ARTIFACT = "actions/upload-artifact@v7";
-  /** amannn/action-semantic-pull-request at v6 */
-  public static readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST = "amannn/action-semantic-pull-request@v6";
-  /** aws-actions/configure-aws-credentials at v6 */
-  public static readonly AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS = "aws-actions/configure-aws-credentials@v6";
-  /** codecov/codecov-action at v7 */
-  public static readonly CODECOV_CODECOV_ACTION = "codecov/codecov-action@v7";
-  /** oven-sh/setup-bun at v2 */
-  public static readonly OVEN_SH_SETUP_BUN = "oven-sh/setup-bun@v2";
-  /** peter-evans/create-pull-request at v8 */
-  public static readonly PETER_EVANS_CREATE_PULL_REQUEST = "peter-evans/create-pull-request@v8";
-  /** pnpm/action-setup at v6 */
-  public static readonly PNPM_ACTION_SETUP = "pnpm/action-setup@v6";
-  /** sqren/backport-github-action at v12 */
-  public static readonly SQREN_BACKPORT_GITHUB_ACTION = "sqren/backport-github-action@v12";
+  public static readonly ACTIONS_DEPENDENCY_REVIEW_ACTION = "actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294";
+  /** actions/download-artifact at v8.0.1 */
+  public static readonly ACTIONS_DOWNLOAD_ARTIFACT = "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c";
+  /** actions/github-script at v9.0.0 */
+  public static readonly ACTIONS_GITHUB_SCRIPT = "actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3";
+  /** actions/setup-dotnet at v6.0.0 (immutable) */
+  public static readonly ACTIONS_SETUP_DOTNET = "actions/setup-dotnet@v6.0.0";
+  /** actions/setup-go at v7.0.0 (immutable) */
+  public static readonly ACTIONS_SETUP_GO = "actions/setup-go@v7.0.0";
+  /** actions/setup-java at v5.7.0 (immutable) */
+  public static readonly ACTIONS_SETUP_JAVA = "actions/setup-java@v5.7.0";
+  /** actions/setup-node at v7.0.0 (immutable) */
+  public static readonly ACTIONS_SETUP_NODE = "actions/setup-node@v7.0.0";
+  /** actions/setup-python at v7.0.0 (immutable) */
+  public static readonly ACTIONS_SETUP_PYTHON = "actions/setup-python@v7.0.0";
+  /** actions/stale at v11.0.0 (immutable) */
+  public static readonly ACTIONS_STALE = "actions/stale@v11.0.0";
+  /** actions/upload-artifact at v7.0.1 */
+  public static readonly ACTIONS_UPLOAD_ARTIFACT = "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a";
+  /** amannn/action-semantic-pull-request at v6.1.1 */
+  public static readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST = "amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50";
+  /** aws-actions/configure-aws-credentials at v6.2.3 (immutable) */
+  public static readonly AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS = "aws-actions/configure-aws-credentials@v6.2.3";
+  /** codecov/codecov-action at v7.0.0 (immutable) */
+  public static readonly CODECOV_CODECOV_ACTION = "codecov/codecov-action@v7.0.0";
+  /** oven-sh/setup-bun at v2.2.0 */
+  public static readonly OVEN_SH_SETUP_BUN = "oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6";
+  /** peter-evans/create-pull-request at v8.1.1 (immutable) */
+  public static readonly PETER_EVANS_CREATE_PULL_REQUEST = "peter-evans/create-pull-request@v8.1.1";
+  /** pnpm/action-setup at v6.0.10 (immutable) */
+  public static readonly PNPM_ACTION_SETUP = "pnpm/action-setup@v6.0.10";
+  /** sqren/backport-github-action at v12.0.4 */
+  public static readonly SQREN_BACKPORT_GITHUB_ACTION = "sqren/backport-github-action@8a6c0381851f43f9f1fddc7303f0e9015eb57b62";
 
   private constructor() {}
 }

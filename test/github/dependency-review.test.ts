@@ -40,7 +40,7 @@ describe("DependencyReview", () => {
     const reviewStep = job.steps.find(
       (s: any) => s.name === "Dependency Review",
     );
-    expect(reviewStep.uses).toMatch(/^actions\/dependency-review-action@v/);
+    expect(reviewStep.uses).toMatch(/^actions\/dependency-review-action@/);
   });
 
   test("auto-populates failOnSeverity from auditDepsOptions.level", () => {

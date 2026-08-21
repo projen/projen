@@ -15,10 +15,15 @@
 //                  reports as immutable, meaning the tag cannot be repointed and
 //                  is as strong a guarantee as a commit SHA. Set from the GitHub
 //                  API, not by hand.
+// - "cooldownDays": Optional per-action override for the global cooldown.
 {
+  // Days a release must be public before the update script adopts it.
+  "cooldownDays": 7,
   "actions": {
     "actions/checkout": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "version": "v7.0.1"
     },
     "actions/create-github-app-token": {
       "major": "v3",
@@ -27,55 +32,88 @@
     },
     "actions/dependency-review-action": {
       "major": "v5",
-      "pin": "v5.0.0"
+      "pin": "a1d282b36b6f3519aa1f3fc636f609c47dddb294",
+      "version": "v5.0.0"
     },
     "actions/download-artifact": {
-      "major": "v8"
+      "major": "v8",
+      "pin": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "version": "v8.0.1"
     },
     "actions/github-script": {
-      "major": "v9"
+      "major": "v9",
+      "pin": "3a2844b7e9c422d3c10d287c895573f7108da1b3",
+      "version": "v9.0.0"
     },
     "actions/setup-dotnet": {
-      "major": "v6"
+      "major": "v6",
+      "pin": "v6.0.0",
+      "isImmutable": true
     },
     "actions/setup-go": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "v7.0.0",
+      "isImmutable": true
     },
     "actions/setup-java": {
-      "major": "v5"
+      "major": "v5",
+      "pin": "v5.7.0",
+      "isImmutable": true
     },
     "actions/setup-node": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "v7.0.0",
+      "isImmutable": true
     },
     "actions/setup-python": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "v7.0.0",
+      "isImmutable": true
     },
     "actions/stale": {
-      "major": "v11"
+      "major": "v11",
+      "pin": "v11.0.0",
+      "isImmutable": true
     },
     "actions/upload-artifact": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "version": "v7.0.1"
     },
     "amannn/action-semantic-pull-request": {
-      "major": "v6"
+      "major": "v6",
+      "pin": "48f256284bd46cdaab1048c3721360e808335d50",
+      "version": "v6.1.1"
     },
     "aws-actions/configure-aws-credentials": {
-      "major": "v6"
+      "major": "v6",
+      "pin": "v6.2.3",
+      "isImmutable": true
     },
     "codecov/codecov-action": {
-      "major": "v7"
+      "major": "v7",
+      "pin": "v7.0.0",
+      "isImmutable": true
     },
     "oven-sh/setup-bun": {
-      "major": "v2"
+      "major": "v2",
+      "pin": "0c5077e51419868618aeaa5fe8019c62421857d6",
+      "version": "v2.2.0"
     },
     "peter-evans/create-pull-request": {
-      "major": "v8"
+      "major": "v8",
+      "pin": "v8.1.1",
+      "isImmutable": true
     },
     "pnpm/action-setup": {
-      "major": "v6"
+      "major": "v6",
+      "pin": "v6.0.10",
+      "isImmutable": true
     },
     "sqren/backport-github-action": {
-      "major": "v12"
+      "major": "v12",
+      "pin": "8a6c0381851f43f9f1fddc7303f0e9015eb57b62",
+      "version": "v12.0.4"
     }
   }
 }

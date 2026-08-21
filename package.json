@@ -45,6 +45,7 @@
     "test": "node ./projen.js test",
     "test:watch": "node ./projen.js test:watch",
     "unbump": "node ./projen.js unbump",
+    "update-github-actions": "node ./projen.js update-github-actions",
     "update-schemas": "node ./projen.js update-schemas",
     "upgrade": "node ./projen.js upgrade",
     "upgrade-bundled": "node ./projen.js upgrade-bundled",
