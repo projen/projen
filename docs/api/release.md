@@ -2680,6 +2680,8 @@ const releaseOptions: release.ReleaseOptions = { ... }
 | <code><a href="#projen.release.ReleaseOptions.property.branch">branch</a></code> | <code>string</code> | The default branch name to release from. |
 | <code><a href="#projen.release.ReleaseOptions.property.versionFile">versionFile</a></code> | <code>string</code> | A name of a .json file to set the `version` field in after a bump. |
 | <code><a href="#projen.release.ReleaseOptions.property.githubRelease">githubRelease</a></code> | <code>boolean</code> | Create a GitHub release for each release. |
+| <code><a href="#projen.release.ReleaseOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.release.ReleaseOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.release.ReleaseOptions.property.tasks">tasks</a></code> | <code>projen.Task[]</code> | The tasks to execute in order to create the release artifacts. |
 | <code><a href="#projen.release.ReleaseOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed. |
 | <code><a href="#projen.release.ReleaseOptions.property.workflowPermissions">workflowPermissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the release workflow job. |
@@ -3028,7 +3030,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.release.ReleaseOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.release.ReleaseOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -3041,7 +3045,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.release.ReleaseOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.release.ReleaseOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;
@@ -3112,6 +3118,31 @@ public readonly githubRelease: boolean;
 - *Default:* true
 
 Create a GitHub release for each release.
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.release.ReleaseOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.release.ReleaseOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -3545,7 +3576,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.release.ReleaseProjectOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.release.ReleaseProjectOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -3558,7 +3591,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.release.ReleaseProjectOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.release.ReleaseProjectOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;

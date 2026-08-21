@@ -31,7 +31,6 @@ import type { NodeProject } from "../javascript";
 import { NodePackageManager } from "../javascript";
 import { Release } from "../release";
 import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
 import type { Task } from "../task";
 import type { TaskStep } from "../task-model";
 import { workflowNameForProject } from "../util/name";
@@ -620,10 +619,7 @@ export class UpgradeDependencies extends Component {
         container: this.containerOptions,
         permissions: this.permissions,
         env: this.options.workflowOptions?.env,
-        ...filteredRunsOnOptions(
-          this.options.workflowOptions?.runsOn,
-          this.options.workflowOptions?.runsOnGroup,
-        ),
+        ...github.runsOnConfig(this.options.workflowOptions),
         steps: steps,
         outputs: {
           [PATCH_CREATED_OUTPUT]: {
@@ -644,6 +640,11 @@ export class UpgradeDependencies extends Component {
 
     const semanticCommit = this.options.semanticCommit ?? "chore";
 
+    // createPr is only called from createWorkflow, which is only reachable
+    // once the constructor has already confirmed the root project has GitHub
+    // enabled - so this is always defined.
+    const github = GitHub.of(this.project.root)!;
+
     return {
       job: WorkflowJobs.pullRequestFromPatch({
         patch: {
@@ -653,10 +654,7 @@ export class UpgradeDependencies extends Component {
         },
         workflowName: workflow.name,
         credentials,
-        ...filteredRunsOnOptions(
-          this.options.workflowOptions?.runsOn,
-          this.options.workflowOptions?.runsOnGroup,
-        ),
+        ...github.runsOnConfig(this.options.workflowOptions),
         pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
         pullRequestDescription: "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,

@@ -5462,7 +5462,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.cdk.ConstructLibraryOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.cdk.ConstructLibraryOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -5475,7 +5477,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.cdk.ConstructLibraryOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.cdk.ConstructLibraryOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;
@@ -9275,7 +9279,9 @@ Container image to use for GitHub workflows.
 
 ---
 
-##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.cdk.JsiiProjectOptions.property.workflowRunsOn"></a>
+##### ~~`workflowRunsOn`~~<sup>Optional</sup> <a name="workflowRunsOn" id="projen.cdk.JsiiProjectOptions.property.workflowRunsOn"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOn: string[];
@@ -9288,7 +9294,9 @@ Github Runner selection labels.
 
 ---
 
-##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.cdk.JsiiProjectOptions.property.workflowRunsOnGroup"></a>
+##### ~~`workflowRunsOnGroup`~~<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.cdk.JsiiProjectOptions.property.workflowRunsOnGroup"></a>
+
+- *Deprecated:* use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
 
 ```typescript
 public readonly workflowRunsOnGroup: GroupRunnerOptions;

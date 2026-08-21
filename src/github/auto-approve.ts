@@ -2,13 +2,12 @@ import type { GitHub } from "./github";
 import type { Job } from "./workflows-model";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
+import type { RunsOnOptions } from "../runner-options";
 
 /**
  * Options for 'AutoApprove'
  */
-export interface AutoApproveOptions {
+export interface AutoApproveOptions extends RunsOnOptions {
   /**
    * Only pull requests authored by these Github usernames will be auto-approved.
    * @default ['github-bot']
@@ -36,21 +35,6 @@ export interface AutoApproveOptions {
    * @default "GITHUB_TOKEN"
    */
   readonly secret?: string;
-
-  /**
-   * Github Runner selection labels
-   * @default ["ubuntu-latest"]
-   * @description Defines a target Runner by labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * Github Runner Group selection options
-   * @description Defines a target Runner Group by name and/or labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -77,7 +61,7 @@ export class AutoApprove extends Component {
     const secret = options.secret ?? "GITHUB_TOKEN";
 
     const approveJob: Job = {
-      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      ...github.runsOnConfig(options),
       permissions: {
         pullRequests: JobPermission.WRITE,
       },

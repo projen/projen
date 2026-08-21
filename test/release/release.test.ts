@@ -910,13 +910,16 @@ describe("Single Project", () => {
 
   test("publisher can use custom github runner", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new TestProject({
+      githubOptions: {
+        workflowRunsOn: ["self-hosted"],
+      },
+    });
 
     const release = new Release(project, {
       tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
-      workflowRunsOn: ["self-hosted"],
       publishTasks: true, // to increase coverage
       artifactsDirectory: "dist",
     });
@@ -934,6 +937,128 @@ describe("Single Project", () => {
     for (let job of Object.keys(workflow.jobs)) {
       expect(workflow.jobs[job]["runs-on"]).toEqual("self-hosted");
     }
+  });
+
+  test("release runsOn overrides global workflowRunsOn", () => {
+    // GIVEN
+    const project = new TestProject({
+      githubOptions: {
+        workflowRunsOn: ["self-hosted"],
+      },
+    });
+
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      runsOn: ["custom-runner"],
+      publishTasks: true,
+      artifactsDirectory: "dist",
+    });
+
+    // WHEN
+    release.publisher.publishToNpm();
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    for (let job of Object.keys(workflow.jobs)) {
+      expect(workflow.jobs[job]["runs-on"]).toEqual("custom-runner");
+    }
+  });
+
+  test("release runsOnGroup overrides global workflowRunsOnGroup", () => {
+    // GIVEN
+    const project = new TestProject({
+      githubOptions: {
+        workflowRunsOnGroup: {
+          group: "Default",
+          labels: ["self-hosted", "linux"],
+        },
+      },
+    });
+
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      runsOnGroup: {
+        group: "Custom",
+        labels: ["custom-runner"],
+      },
+      artifactsDirectory: "dist",
+    });
+
+    // WHEN
+    release.publisher.publishToNpm();
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    for (let job of Object.keys(workflow.jobs)) {
+      expect(workflow.jobs[job]["runs-on"]).toEqual({
+        group: "Custom",
+        labels: ["custom-runner"],
+      });
+    }
+  });
+
+  test("release falls back to global workflowRunsOn when runsOn not set", () => {
+    // GIVEN
+    const project = new TestProject({
+      githubOptions: {
+        workflowRunsOn: ["self-hosted"],
+      },
+    });
+
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow.jobs.release["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("deprecated workflowRunsOn on ReleaseOptions still works", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      workflowRunsOn: ["self-hosted"],
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow.jobs.release["runs-on"]).toEqual("self-hosted");
+  });
+
+  test("explicit runsOn overrides deprecated workflowRunsOn", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      workflowRunsOn: ["self-hosted"],
+      runsOn: ["custom-runner"],
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow.jobs.release["runs-on"]).toEqual("custom-runner");
   });
 
   test("ability to add post release steps in release workflow with publishToGitHubReleases", () => {
@@ -1146,13 +1271,16 @@ describe("Single Project", () => {
 
   test("if publishTasks is disabled, no publish tasks are created", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new TestProject({
+      githubOptions: {
+        workflowRunsOn: ["self-hosted"],
+      },
+    });
 
     const release = new Release(project, {
       tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
-      workflowRunsOn: ["self-hosted"],
       artifactsDirectory: "dist",
     });
 

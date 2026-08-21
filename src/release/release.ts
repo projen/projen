@@ -197,6 +197,7 @@ export interface ReleaseProjectOptions {
    * @default ["ubuntu-latest"]
    * @description Defines a target Runner by labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   * @deprecated use `githubOptions.workflowRunsOn` on the project, or `runsOn` on `ReleaseOptions`
    */
   readonly workflowRunsOn?: string[];
 
@@ -204,6 +205,7 @@ export interface ReleaseProjectOptions {
    * Github Runner Group selection options
    * @description Defines a target Runner Group by name and/or labels
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   * @deprecated use `githubOptions.workflowRunsOnGroup` on the project, or `runsOnGroup` on `ReleaseOptions`
    */
   readonly workflowRunsOnGroup?: GroupRunnerOptions;
 
@@ -279,6 +281,21 @@ export interface ReleaseProjectOptions {
  * Options for `Release`.
  */
 export interface ReleaseOptions extends ReleaseProjectOptions {
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   * @description Defines a target Runner by labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOn?: string[];
+
+  /**
+   * Github Runner Group selection options
+   * @description Defines a target Runner Group by name and/or labels
+   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
+   */
+  readonly runsOnGroup?: GroupRunnerOptions;
+
   /**
    * The tasks to execute in order to create the release artifacts. Artifacts are
    * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
@@ -372,8 +389,8 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
-  private readonly workflowRunsOn?: string[];
-  private readonly workflowRunsOnGroup?: GroupRunnerOptions;
+  private readonly runsOn?: string[];
+  private readonly runsOnGroup?: GroupRunnerOptions;
   private readonly workflowPermissions: JobPermissions;
   private readonly releaseWorkflowEnv?: { [key: string]: string };
   private readonly releaseTagFilePath: string;
@@ -393,6 +410,12 @@ export class Release extends Component {
     }
 
     this.github = GitHub.of(this.project.root);
+    const runsOnConfig = this.github?.runsOnConfig({
+      runsOn: options.runsOn ?? options.workflowRunsOn,
+      runsOnGroup: options.runsOnGroup ?? options.workflowRunsOnGroup,
+    });
+    this.runsOn = runsOnConfig?.runsOn;
+    this.runsOnGroup = runsOnConfig?.runsOnGroup;
 
     // Determine the tasks to use to create the release artifacts
     if (options.tasks && options.tasks.length > 0) {
@@ -414,8 +437,6 @@ export class Release extends Component {
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
-    this.workflowRunsOn = options.workflowRunsOn;
-    this.workflowRunsOnGroup = options.workflowRunsOnGroup;
     this.workflowPermissions = {
       contents: JobPermission.WRITE,
       ...options.workflowPermissions,
@@ -444,10 +465,7 @@ export class Release extends Component {
       publibVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
-      ...filteredWorkflowRunsOnOptions(
-        options.workflowRunsOn,
-        options.workflowRunsOnGroup,
-      ),
+      ...filteredWorkflowRunsOnOptions(this.runsOn, this.runsOnGroup),
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
@@ -796,7 +814,7 @@ export class Release extends Component {
               },
             }
           : undefined,
-        ...filteredRunsOnOptions(this.workflowRunsOn, this.workflowRunsOnGroup),
+        ...filteredRunsOnOptions(this.runsOn, this.runsOnGroup),
       });
 
       workflow.addJob(BUILD_JOBID, taskjob);

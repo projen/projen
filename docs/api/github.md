@@ -1330,6 +1330,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 | <code><a href="#projen.github.GitHub.addDependabot">addDependabot</a></code> | *No description.* |
 | <code><a href="#projen.github.GitHub.addPullRequestTemplate">addPullRequestTemplate</a></code> | *No description.* |
 | <code><a href="#projen.github.GitHub.addWorkflow">addWorkflow</a></code> | Adds a workflow to the project. |
+| <code><a href="#projen.github.GitHub.runsOnConfig">runsOnConfig</a></code> | Resolves the `runsOn`/`runsOnGroup` config for a job, falling back to the project's global runner selection (`workflowRunsOn`/`workflowRunsOnGroup`) when `options` does not specify one. |
 | <code><a href="#projen.github.GitHub.tryFindWorkflow">tryFindWorkflow</a></code> | Finds a GitHub workflow by name. |
 
 ---
@@ -1466,6 +1467,22 @@ Adds a workflow to the project.
 - *Type:* string
 
 Name of the workflow.
+
+---
+
+##### `runsOnConfig` <a name="runsOnConfig" id="projen.github.GitHub.runsOnConfig"></a>
+
+```typescript
+public runsOnConfig(options?: RunsOnOptions): RunsOnConfig
+```
+
+Resolves the `runsOn`/`runsOnGroup` config for a job, falling back to the project's global runner selection (`workflowRunsOn`/`workflowRunsOnGroup`) when `options` does not specify one.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.github.GitHub.runsOnConfig.parameter.options"></a>
+
+- *Type:* projen.RunsOnOptions
+
+per-job runner selection that takes precedence over the project's global default.
 
 ---
 
@@ -6183,11 +6200,36 @@ const autoApproveOptions: github.AutoApproveOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.AutoApproveOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will be auto-approved. |
-| <code><a href="#projen.github.AutoApproveOptions.property.label">label</a></code> | <code>string</code> | Only pull requests with this label will be auto-approved. |
 | <code><a href="#projen.github.AutoApproveOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.AutoApproveOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.AutoApproveOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will be auto-approved. |
+| <code><a href="#projen.github.AutoApproveOptions.property.label">label</a></code> | <code>string</code> | Only pull requests with this label will be auto-approved. |
 | <code><a href="#projen.github.AutoApproveOptions.property.secret">secret</a></code> | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoApproveOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.AutoApproveOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -6214,31 +6256,6 @@ public readonly label: string;
 - *Default:* 'auto-approve'
 
 Only pull requests with this label will be auto-approved.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoApproveOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.AutoApproveOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 
@@ -6352,12 +6369,38 @@ const autoQueueOptions: github.AutoQueueOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.AutoQueueOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.AutoQueueOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.labels">labels</a></code> | <code>string[]</code> | Only pull requests with one of this labels will have auto-queue enabled. |
 | <code><a href="#projen.github.AutoQueueOptions.property.mergeMethod">mergeMethod</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | The method used to add the PR to the merge queue Any branch protection rules must allow this merge method. |
 | <code><a href="#projen.github.AutoQueueOptions.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | Choose a method for authenticating with GitHub to enable auto-queue on pull requests. |
-| <code><a href="#projen.github.AutoQueueOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.AutoQueueOptions.property.targetBranches">targetBranches</a></code> | <code>string[]</code> | The branch names that we should auto-queue for. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoQueueOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.AutoQueueOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -6416,19 +6459,6 @@ with the default token will not trigger any merge queue workflows,
 which results in the PR just not getting merged at all.
 
 > [https://projen.io/docs/integrations/github/](https://projen.io/docs/integrations/github/)
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.AutoQueueOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
 
 ---
 
@@ -7964,6 +7994,8 @@ const dependencyReviewOptions: github.DependencyReviewOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.DependencyReviewOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.allowGhsas">allowGhsas</a></code> | <code>string[]</code> | GitHub Advisory Database IDs that can be skipped during detection. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.allowLicenses">allowLicenses</a></code> | <code>string[]</code> | List of allowed SPDX license identifiers. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.commentSummaryInPr">commentSummaryInPr</a></code> | <code>string</code> | Whether to post a comment summary on the PR. |
@@ -7972,12 +8004,35 @@ const dependencyReviewOptions: github.DependencyReviewOptions = { ... }
 | <code><a href="#projen.github.DependencyReviewOptions.property.failOnScopes">failOnScopes</a></code> | <code>string[]</code> | Scopes of dependencies to fail on. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.failOnSeverity">failOnSeverity</a></code> | <code>string</code> | The severity level at which the action will fail. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.licenseCheck">licenseCheck</a></code> | <code>boolean</code> | Enable or disable the license check. |
-| <code><a href="#projen.github.DependencyReviewOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
-| <code><a href="#projen.github.DependencyReviewOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.showOpenSSFScorecard">showOpenSSFScorecard</a></code> | <code>boolean</code> | Show OpenSSF Scorecard scores for dependencies. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.vulnerabilityCheck">vulnerabilityCheck</a></code> | <code>boolean</code> | Enable or disable the vulnerability check. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.warnOnly">warnOnly</a></code> | <code>boolean</code> | When true, the action will only warn and not fail. |
 | <code><a href="#projen.github.DependencyReviewOptions.property.warnOnOpenSSFScorecardLevel">warnOnOpenSSFScorecardLevel</a></code> | <code>number</code> | Score threshold for OpenSSF Scorecard warnings. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.DependencyReviewOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.DependencyReviewOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -8082,31 +8137,6 @@ public readonly licenseCheck: boolean;
 - *Default:* true
 
 Enable or disable the license check.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.DependencyReviewOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.DependencyReviewOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 
@@ -8735,6 +8765,8 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestBackportOptions">pullRequestBackportOptions</a></code> | <code><a href="#projen.github.PullRequestBackportOptions">PullRequestBackportOptions</a></code> | Options for configuring pull request backport. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLint">pullRequestLint</a></code> | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. |
 | <code><a href="#projen.github.GitHubOptions.property.pullRequestLintOptions">pullRequestLintOptions</a></code> | <code><a href="#projen.github.PullRequestLintOptions">PullRequestLintOptions</a></code> | Options for configuring a pull request linter. |
+| <code><a href="#projen.github.GitHubOptions.property.workflowRunsOn">workflowRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.GitHubOptions.property.workflowRunsOnGroup">workflowRunsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.GitHubOptions.property.workflows">workflows</a></code> | <code>boolean</code> | Enables GitHub workflows. |
 
 ---
@@ -8918,6 +8950,31 @@ public readonly pullRequestLintOptions: PullRequestLintOptions;
 - *Default:* see defaults in `PullRequestLintOptions`
 
 Options for configuring a pull request linter.
+
+---
+
+##### `workflowRunsOn`<sup>Optional</sup> <a name="workflowRunsOn" id="projen.github.GitHubOptions.property.workflowRunsOn"></a>
+
+```typescript
+public readonly workflowRunsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `workflowRunsOnGroup`<sup>Optional</sup> <a name="workflowRunsOnGroup" id="projen.github.GitHubOptions.property.workflowRunsOnGroup"></a>
+
+```typescript
+public readonly workflowRunsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -9929,6 +9986,8 @@ const pullRequestBackportOptions: github.PullRequestBackportOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
+| <code><a href="#projen.github.PullRequestBackportOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.PullRequestBackportOptions.property.autoApproveBackport">autoApproveBackport</a></code> | <code>boolean</code> | Automatically approve backport PRs if the 'auto approve' workflow is available. |
 | <code><a href="#projen.github.PullRequestBackportOptions.property.backportBranchNamePrefix">backportBranchNamePrefix</a></code> | <code>string</code> | The prefix used to name backport branches. |
 | <code><a href="#projen.github.PullRequestBackportOptions.property.backportPRLabels">backportPRLabels</a></code> | <code>string[]</code> | The labels added to the created backport PR. |
@@ -9936,6 +9995,31 @@ const pullRequestBackportOptions: github.PullRequestBackportOptions = { ... }
 | <code><a href="#projen.github.PullRequestBackportOptions.property.createWithConflicts">createWithConflicts</a></code> | <code>boolean</code> | Should this created Backport PRs with conflicts. |
 | <code><a href="#projen.github.PullRequestBackportOptions.property.labelPrefix">labelPrefix</a></code> | <code>string</code> | The prefix used to detect PRs that should be backported. |
 | <code><a href="#projen.github.PullRequestBackportOptions.property.workflowName">workflowName</a></code> | <code>string</code> | The name of the workflow. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.PullRequestBackportOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.PullRequestBackportOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -10320,12 +10404,37 @@ const pullRequestLintOptions: github.PullRequestLintOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatement">contributorStatement</a></code> | <code>string</code> | Require a contributor statement to be included in the PR description. |
-| <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatementOptions">contributorStatementOptions</a></code> | <code><a href="#projen.github.ContributorStatementOptions">ContributorStatementOptions</a></code> | Options for requiring a contributor statement on Pull Requests. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatement">contributorStatement</a></code> | <code>string</code> | Require a contributor statement to be included in the PR description. |
+| <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatementOptions">contributorStatementOptions</a></code> | <code><a href="#projen.github.ContributorStatementOptions">ContributorStatementOptions</a></code> | Options for requiring a contributor statement on Pull Requests. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.semanticTitle">semanticTitle</a></code> | <code>boolean</code> | Validate that pull request titles follow Conventional Commits. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.semanticTitleOptions">semanticTitleOptions</a></code> | <code><a href="#projen.github.SemanticTitleOptions">SemanticTitleOptions</a></code> | Options for validating the conventional commit title linter. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.PullRequestLintOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.PullRequestLintOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -10356,31 +10465,6 @@ public readonly contributorStatementOptions: ContributorStatementOptions;
 - *Default:* none
 
 Options for requiring a contributor statement on Pull Requests.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.PullRequestLintOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.PullRequestLintOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 
@@ -11074,10 +11158,35 @@ const staleOptions: github.StaleOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.github.StaleOptions.property.issues">issues</a></code> | <code><a href="#projen.github.StaleBehavior">StaleBehavior</a></code> | How to handle stale issues. |
-| <code><a href="#projen.github.StaleOptions.property.pullRequest">pullRequest</a></code> | <code><a href="#projen.github.StaleBehavior">StaleBehavior</a></code> | How to handle stale pull requests. |
 | <code><a href="#projen.github.StaleOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.StaleOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.StaleOptions.property.issues">issues</a></code> | <code><a href="#projen.github.StaleBehavior">StaleBehavior</a></code> | How to handle stale issues. |
+| <code><a href="#projen.github.StaleOptions.property.pullRequest">pullRequest</a></code> | <code><a href="#projen.github.StaleBehavior">StaleBehavior</a></code> | How to handle stale pull requests. |
+
+---
+
+##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.StaleOptions.property.runsOn"></a>
+
+```typescript
+public readonly runsOn: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["ubuntu-latest"]
+
+Github Runner selection labels.
+
+---
+
+##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.StaleOptions.property.runsOnGroup"></a>
+
+```typescript
+public readonly runsOnGroup: GroupRunnerOptions;
+```
+
+- *Type:* projen.GroupRunnerOptions
+
+Github Runner Group selection options.
 
 ---
 
@@ -11104,31 +11213,6 @@ public readonly pullRequest: StaleBehavior;
 - *Default:* By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
 
 How to handle stale pull requests.
-
----
-
-##### `runsOn`<sup>Optional</sup> <a name="runsOn" id="projen.github.StaleOptions.property.runsOn"></a>
-
-```typescript
-public readonly runsOn: string[];
-```
-
-- *Type:* string[]
-- *Default:* ["ubuntu-latest"]
-
-Github Runner selection labels.
-
----
-
-##### `runsOnGroup`<sup>Optional</sup> <a name="runsOnGroup" id="projen.github.StaleOptions.property.runsOnGroup"></a>
-
-```typescript
-public readonly runsOnGroup: GroupRunnerOptions;
-```
-
-- *Type:* projen.GroupRunnerOptions
-
-Github Runner Group selection options.
 
 ---
 

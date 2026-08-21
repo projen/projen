@@ -5289,6 +5289,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -5310,6 +5311,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -8486,6 +8488,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -8507,6 +8510,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -12701,6 +12705,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -12722,6 +12727,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -15811,6 +15817,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -15832,6 +15839,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -18748,6 +18756,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -18769,6 +18778,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -21823,6 +21833,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -21844,6 +21855,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -25608,6 +25620,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -25629,6 +25642,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -28062,6 +28076,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -28083,6 +28098,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -30816,6 +30832,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -30837,6 +30854,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -33202,6 +33220,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -33223,6 +33242,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -36910,6 +36930,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -36931,6 +36952,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -39652,6 +39674,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -39673,6 +39696,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -42372,6 +42396,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -42393,6 +42418,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",
@@ -45092,6 +45118,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "["ubuntu-latest"]",
+        "deprecated": true,
         "docs": "Github Runner selection labels.",
         "featured": false,
         "jsonLike": true,
@@ -45113,6 +45140,7 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "deprecated": true,
         "docs": "Github Runner Group selection options.",
         "featured": false,
         "fqn": "projen.GroupRunnerOptions",

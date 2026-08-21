@@ -1,5 +1,6 @@
 import type { ValidateTsconfig } from "./jsii-build";
 import { JsiiBuild } from "./jsii-build";
+import { GitHub } from "../github";
 import type {
   GoPublishOptions,
   MavenPublishOptions,
@@ -263,17 +264,17 @@ export class JsiiProject extends TypeScriptProject {
   }
 
   /**
-   * Generates the runs-on config for Jobs.
-   * Throws error if 'runsOn' and 'runsOnGroup' are both set.
-   *
-   * @param options - 'runsOn' or 'runsOnGroup'.
+   * Generates the runs-on config for Jobs, falling back to the project's
+   * global GitHub runner selection (if any).
    */
   private getJobRunsOnConfig(options: JsiiProjectOptions) {
-    return options.workflowRunsOnGroup
-      ? { runsOnGroup: options.workflowRunsOnGroup }
-      : options.workflowRunsOn
-        ? { runsOn: options.workflowRunsOn }
-        : {};
+    const github = this.github ?? GitHub.of(this.root);
+    return (
+      github?.runsOnConfig({
+        runsOn: options.workflowRunsOn,
+        runsOnGroup: options.workflowRunsOnGroup,
+      }) ?? {}
+    );
   }
 }
 

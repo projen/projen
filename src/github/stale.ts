@@ -3,13 +3,12 @@ import type { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
+import type { RunsOnOptions } from "../runner-options";
 
 /**
  * Options for `Stale`.
  */
-export interface StaleOptions {
+export interface StaleOptions extends RunsOnOptions {
   /**
    * How to handle stale pull requests.
    *
@@ -25,21 +24,6 @@ export interface StaleOptions {
    * stale after 60 days and closed within 7 days.
    */
   readonly issues?: StaleBehavior;
-
-  /**
-   * Github Runner selection labels
-   * @default ["ubuntu-latest"]
-   * @description Defines a target Runner by labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * Github Runner Group selection options
-   * @description Defines a target Runner Group by name and/or labels
-   * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
-   */
-  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -135,7 +119,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+        ...github.runsOnConfig(options),
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,

@@ -3,6 +3,7 @@ import { GitHub } from "./github";
 import type { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { Component } from "../component";
+import type { RunsOnOptions } from "../runner-options";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -18,7 +19,7 @@ export enum MergeMethod {
 /**
  * Options for 'AutoQueue'
  */
-export interface AutoQueueOptions {
+export interface AutoQueueOptions extends RunsOnOptions {
   /**
    * Only pull requests authored by these Github usernames will have auto-queue enabled.
    * @default - pull requests from all users are eligible for auto-queuing
@@ -49,12 +50,6 @@ export interface AutoQueueOptions {
    * @default MergeMethod.SQUASH
    */
   readonly mergeMethod?: MergeMethod;
-
-  /**
-   * Github Runner selection labels
-   * @default ["ubuntu-latest"]
-   */
-  readonly runsOn?: string[];
 
   /**
    * The branch names that we should auto-queue for
@@ -166,7 +161,7 @@ export class AutoQueue extends Component {
 
     const autoQueueJob: workflows.Job = {
       name: "Set AutoQueue on PR #${{ github.event.number }}",
-      runsOn: options.runsOn ?? ["ubuntu-latest"],
+      ...workflowEngine.runsOnConfig(options),
       permissions: {
         pullRequests: workflows.JobPermission.WRITE,
         contents: workflows.JobPermission.WRITE,

@@ -3,13 +3,12 @@ import type { GitHub } from "./github";
 import { WorkflowSteps } from "./workflow-steps";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
-import type { GroupRunnerOptions } from "../runner-options";
-import { filteredRunsOnOptions } from "../runner-options";
+import type { RunsOnOptions } from "../runner-options";
 
 /**
  * Options for the DependencyReview component.
  */
-export interface DependencyReviewOptions {
+export interface DependencyReviewOptions extends RunsOnOptions {
   /**
    * The severity level at which the action will fail.
    *
@@ -93,18 +92,6 @@ export interface DependencyReviewOptions {
    * @default 3
    */
   readonly warnOnOpenSSFScorecardLevel?: number;
-
-  /**
-   * Github Runner selection labels.
-   *
-   * @default ["ubuntu-latest"]
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * Github Runner Group selection options.
-   */
-  readonly runsOnGroup?: GroupRunnerOptions;
 }
 
 /**
@@ -129,7 +116,7 @@ export class DependencyReview extends Component {
 
     workflow.addJobs({
       "dependency-review": {
-        ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+        ...github.runsOnConfig(options),
         permissions: {
           contents: JobPermission.READ,
           ...(commentSummary !== "never"
