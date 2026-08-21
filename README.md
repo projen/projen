@@ -296,6 +296,29 @@ community Slack workspace.
 
 [cdk.dev]: https://cdk.dev/
 
+## Security
+
+projen follows a shared responsibility model: projen is
+responsible for generating secure default configuration through its built-in
+project types; you are responsible for the code you write in your projenrc
+file, the third-party project types and components you use, and the environment
+projen runs in.
+
+projen is designed to run in a **trusted environment** with **trusted inputs**.
+Your projenrc file is a program executed with your user's permissions, and
+projen tasks execute shell commands defined in `.projen/tasks.json`. This file
+is *prescriptive* by design: the projen CLI executes what it contains, so
+anyone with write access to it (or to your repository in general) can change
+what projen runs. This is expected behavior — equivalent to write access to a
+`Makefile` or `package.json` scripts. The same trust model applies as with any
+other build tool. Since all synthesized files are derived from your projenrc
+program and checked in, source control always lets you review or restore what
+projen will run.
+
+See the [security documentation](https://projen.io/docs/security) for details,
+and report security issues via our [security policy](./SECURITY.md) rather than
+public GitHub issues.
+
 ## Contributions
 
 Contributions of all kinds are welcome! Check out our [contributor's
