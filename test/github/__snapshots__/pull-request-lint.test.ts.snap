@@ -51,8 +51,8 @@ jobs:
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(contains(github.event.pull_request.labels.*.name, 'automation') || github.event.pull_request.user.login == 'github-bot[bot]')
     steps:
-      - id: auto_f20ab3cd
-        uses: actions/github-script@v8
+      - id: auto_152a9d6d
+        uses: actions/github-script@v9
         with:
           script: |-
             const actual = process.env.PR_BODY.replace(/\\r?\\n/g, "\\n");
@@ -116,8 +116,8 @@ jobs:
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_f20ab3cd
-        uses: actions/github-script@v8
+      - id: auto_152a9d6d
+        uses: actions/github-script@v9
         with:
           script: |-
             const actual = process.env.PR_BODY.replace(/\\r?\\n/g, "\\n");

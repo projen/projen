@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set git identity
         id: set_git_identity
         run: |-

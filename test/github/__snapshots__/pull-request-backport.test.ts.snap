@@ -44,7 +44,7 @@ jobs:
       - name: Backport Action
         id: backport_action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
-        uses: sqren/backport-github-action@v11.0.0
+        uses: sqren/backport-github-action@v12
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           auto_backport_label_prefix: backport-to-
@@ -79,7 +79,7 @@ jobs:
       - name: Backport Action
         id: backport_action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
-        uses: sqren/backport-github-action@v11.0.0
+        uses: sqren/backport-github-action@v12
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           auto_backport_label_prefix: backport-to-
@@ -130,7 +130,7 @@ jobs:
       - name: Backport Action
         id: backport_action
         if: fromJSON(steps.check_labels.outputs.matched) > 0
-        uses: sqren/backport-github-action@v11.0.0
+        uses: sqren/backport-github-action@v12
         with:
           github_token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           auto_backport_label_prefix: copy-to-

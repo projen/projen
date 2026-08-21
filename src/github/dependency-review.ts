@@ -1,3 +1,4 @@
+import { GitHubActions } from "./actions.const";
 import type { GitHub } from "./github";
 import { WorkflowSteps } from "./workflow-steps";
 import { JobPermission } from "./workflows-model";
@@ -139,7 +140,7 @@ export class DependencyReview extends Component {
           WorkflowSteps.checkout(),
           {
             name: "Dependency Review",
-            uses: "actions/dependency-review-action@v4",
+            uses: GitHubActions.ACTIONS_DEPENDENCY_REVIEW_ACTION,
             with: {
               "fail-on-severity": options.failOnSeverity,
               "allow-licenses": options.allowLicenses?.join(", "),

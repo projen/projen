@@ -274,12 +274,12 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -326,7 +326,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -360,7 +360,7 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -376,7 +376,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.sha }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -407,7 +407,7 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -423,7 +423,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.sha }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -450,11 +450,11 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -469,7 +469,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.sha }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -553,7 +553,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -563,7 +563,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup Node.js
         id: setup_node_js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -612,7 +612,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -641,7 +641,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -657,7 +657,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -696,7 +696,7 @@ jobs:
         with:
           distribution: corretto
           java-version: "11"
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -712,7 +712,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -749,11 +749,11 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -768,7 +768,7 @@ jobs:
         continue-on-error: true
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: .repo
       - name: Install Dependencies
@@ -812,12 +812,12 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: master
       - name: Setup Node.js
         id: setup_node_js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 16.0.0
           package-manager-cache: false
@@ -852,7 +852,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: master
       - name: Download patch
@@ -2066,10 +2066,10 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Node.js
         id: setup_node_js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 12.7.0
           package-manager-cache: false
@@ -2104,7 +2104,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download patch
         id: download_patch
         uses: actions/download-artifact@v8
@@ -3371,10 +3371,10 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup Node.js
         id: setup_node_js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 12.7.0
           package-manager-cache: false
@@ -3409,7 +3409,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Download patch
         id: download_patch
         uses: actions/download-artifact@v8
@@ -4301,12 +4301,12 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: 10.33.0
       - name: Install dependencies
@@ -4342,7 +4342,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
@@ -4433,7 +4433,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -4443,7 +4443,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Setup pnpm
         id: setup_pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: 10.33.0
       - name: Install dependencies
@@ -4487,7 +4487,7 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -4526,12 +4526,12 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: master
       - name: Setup pnpm
         id: setup_pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: 10.33.0
       - name: Install dependencies
@@ -4565,7 +4565,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: master
       - name: Download patch

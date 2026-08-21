@@ -1,4 +1,5 @@
 import * as Case from "case";
+import { GitHubActions } from "./actions.const";
 import type { JobStep, AppPermissions } from "./workflows-model";
 
 /**
@@ -137,7 +138,7 @@ export class GithubCredentials {
         {
           name: "Generate token",
           id: "generate_token",
-          uses: "actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859",
+          uses: GitHubActions.ACTIONS_CREATE_GITHUB_APP_TOKEN,
           with: {
             ...actionConfig,
             ...permissions,

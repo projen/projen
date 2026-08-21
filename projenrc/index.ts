@@ -12,6 +12,7 @@ import type { TypeScriptProject } from "../src/typescript";
 export * from "./windows-build";
 export * from "./json2jsii";
 export * from "./jsonConst";
+export * from "./actionsConst";
 export * from "./integ-versions";
 export * from "./integ-test";
 
@@ -295,6 +296,7 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/rfcs/");
   project.npmignore?.exclude("/scripts/");
   project.npmignore?.exclude("/schemas/");
+  project.npmignore?.exclude("/resources/");
   project.npmignore?.exclude("/ARCHITECTURE.md");
   project.npmignore?.exclude("/CODE_OF_CONDUCT.md");
   project.npmignore?.exclude("/CONTRIBUTING.md");

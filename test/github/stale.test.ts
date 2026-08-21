@@ -157,7 +157,7 @@ test("exempt labels in workflow output", () => {
   );
 
   expect(workflow.jobs.stale.steps[0]).toStrictEqual({
-    id: "auto_65b1296e",
+    id: "run-actions-stale",
     uses: expect.stringContaining("actions/stale"),
     with: {
       "close-issue-message":

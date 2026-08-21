@@ -40,8 +40,8 @@ jobs:
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(github.event.pull_request.user.login == 'projen-automation' || github.event.pull_request.user.login == 'dependabot[bot]')
     steps:
-      - id: auto_f20ab3cd
-        uses: actions/github-script@v8
+      - id: auto_152a9d6d
+        uses: actions/github-script@v9
         with:
           script: |-
             const actual = process.env.PR_BODY.replace(/\r?\n/g, "\n");

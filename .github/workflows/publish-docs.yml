@@ -18,14 +18,14 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Build docs
         working-directory: docusaurus
         run: |
           npm ci
           npm run build
       - name: Build website artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "docusaurus/build"
   deploy:
@@ -40,4 +40,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

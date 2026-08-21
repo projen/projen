@@ -10378,7 +10378,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.buildWorkflowOptions">buildWorkflowOptions</a></code> | <code><a href="#projen.javascript.BuildWorkflowOptions">BuildWorkflowOptions</a></code> | Options for PR build workflow. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.bundlerOptions">bundlerOptions</a></code> | <code><a href="#projen.javascript.BundlerOptions">BundlerOptions</a></code> | Options for `Bundler`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.checkLicenses">checkLicenses</a></code> | <code><a href="#projen.javascript.LicenseCheckerOptions">LicenseCheckerOptions</a></code> | Configure which licenses should be deemed acceptable for use by dependencies. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.codeCov">codeCov</a></code> | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.codeCovTokenSecret">codeCovTokenSecret</a></code> | <code>string</code> | Define the secret name for a specified https://codecov.io/ token. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.copyrightOwner">copyrightOwner</a></code> | <code>string</code> | License copyright owner. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.copyrightPeriod">copyrightPeriod</a></code> | <code>string</code> | The copyright years to put in the LICENSE file. |
@@ -11982,7 +11982,10 @@ public readonly codeCov: boolean;
 - *Type:* boolean
 - *Default:* false
 
-Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v5 By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
+Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.
+
+Uses codecov/codecov-action. By default, OIDC auth is used.
+Alternatively a token can be provided via `codeCovTokenSecret`.
 
 ---
 

@@ -33,6 +33,7 @@ import {
   isYarnBerry,
   isYarnClassic,
 } from "./util";
+import { GitHubActions } from "../github/actions.const";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { ensureNotHiddenPath, secretToString } from "../github/private/util";
 import type {
@@ -147,8 +148,9 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v5
-   * By default, OIDC auth is used. Alternatively a token can be provided via `codeCovTokenSecret`.
+   *
+   * Uses codecov/codecov-action. By default, OIDC auth is used.
+   * Alternatively a token can be provided via `codeCovTokenSecret`.
    * @default false
    */
   readonly codeCov?: boolean;
@@ -967,7 +969,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v6",
+          uses: GitHubActions.CODECOV_CODECOV_ACTION,
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1061,7 +1063,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v6",
+          uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1079,7 +1081,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v6",
+          uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret,
@@ -1138,13 +1140,13 @@ export class NodeProject extends GitHubProject {
     } else if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v5",
+        uses: GitHubActions.PNPM_ACTION_SETUP,
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
       install.push({
         name: "Setup bun",
-        uses: "oven-sh/setup-bun@v2",
+        uses: GitHubActions.OVEN_SH_SETUP_BUN,
         with: { "bun-version": this.package.bunVersion },
       });
     }
@@ -1160,7 +1162,7 @@ export class NodeProject extends GitHubProject {
               : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: "actions/setup-node@v6",
+          uses: GitHubActions.ACTIONS_SETUP_NODE,
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
