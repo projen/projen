@@ -228,22 +228,35 @@ dist/java
         "name": "clobber",
         "steps": [
           {
-            "exec": "git checkout -b scratch",
+            "execArgs": [
+              "git",
+              "checkout",
+              "-b",
+              "scratch",
+            ],
             "name": "save current HEAD in "scratch" branch",
           },
           {
-            "exec": "git checkout $BRANCH",
+            "exec": "git checkout "$BRANCH"",
           },
           {
-            "exec": "git fetch origin",
+            "execArgs": [
+              "git",
+              "fetch",
+              "origin",
+            ],
             "name": "fetch latest changes from origin",
           },
           {
-            "exec": "git reset --hard origin/$BRANCH",
+            "exec": "git reset --hard "origin/$BRANCH"",
             "name": "hard reset to origin commit",
           },
           {
-            "exec": "git clean -fdx",
+            "execArgs": [
+              "git",
+              "clean",
+              "-fdx",
+            ],
             "name": "clean all untracked files",
           },
           {
@@ -275,7 +288,13 @@ dist/java
             ],
           },
           {
-            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope="test"",
+            "execArgs": [
+              "mvn",
+              "exec:java",
+              "--quiet",
+              "-Dexec.mainClass=projenrc",
+              "-Dexec.classpathScope=test",
+            ],
           },
         ],
       },
@@ -306,7 +325,11 @@ dist/java
             ],
           },
           {
-            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
+            "execArgs": [
+              "mvn",
+              "deploy",
+              "-D=altDeploymentRepository=local::default::file://\${project.basedir}/dist/java",
+            ],
           },
         ],
       },
@@ -979,22 +1002,35 @@ dist/java
         "name": "clobber",
         "steps": [
           {
-            "exec": "git checkout -b scratch",
+            "execArgs": [
+              "git",
+              "checkout",
+              "-b",
+              "scratch",
+            ],
             "name": "save current HEAD in "scratch" branch",
           },
           {
-            "exec": "git checkout $BRANCH",
+            "exec": "git checkout "$BRANCH"",
           },
           {
-            "exec": "git fetch origin",
+            "execArgs": [
+              "git",
+              "fetch",
+              "origin",
+            ],
             "name": "fetch latest changes from origin",
           },
           {
-            "exec": "git reset --hard origin/$BRANCH",
+            "exec": "git reset --hard "origin/$BRANCH"",
             "name": "hard reset to origin commit",
           },
           {
-            "exec": "git clean -fdx",
+            "execArgs": [
+              "git",
+              "clean",
+              "-fdx",
+            ],
             "name": "clean all untracked files",
           },
           {
@@ -1026,7 +1062,13 @@ dist/java
             ],
           },
           {
-            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope="test"",
+            "execArgs": [
+              "mvn",
+              "exec:java",
+              "--quiet",
+              "-Dexec.mainClass=projenrc",
+              "-Dexec.classpathScope=test",
+            ],
           },
         ],
       },
@@ -1057,7 +1099,11 @@ dist/java
             ],
           },
           {
-            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
+            "execArgs": [
+              "mvn",
+              "deploy",
+              "-D=altDeploymentRepository=local::default::file://\${project.basedir}/dist/java",
+            ],
           },
         ],
       },

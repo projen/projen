@@ -29,6 +29,7 @@ export interface IntegrationTestOptions
   extends IntegrationTestCommonOptions, IntegrationTestBaseOptions {
   /**
    * A list of stacks within the integration test to deploy/destroy.
+   *
    * @default ["**"]
    */
   readonly stacks?: string[];
@@ -72,7 +73,8 @@ export class IntegrationTest extends IntegrationTestBase {
     const app = `ts-node -P ${options.tsconfigPath} ${options.entrypoint}`;
 
     const opts = [
-      `--app "${app}"`,
+      "--app",
+      app,
       "--no-notices",
       "--no-version-reporting",
       // don't inject cloudformation metadata into template
@@ -84,16 +86,19 @@ export class IntegrationTest extends IntegrationTestBase {
       opts.push("--no-path-metadata");
     }
 
-    const cdkopts = opts.join(" ");
-
     // Determine which stacks to deploy
     const stacks = options.stacks ?? ["**"];
-    const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
 
     this.deployTask.execArgs(["rm", "-fr", deployDir]);
-    this.deployTask.exec(
-      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deployDir}`,
-    );
+    this.deployTask.execArgs([
+      "cdk",
+      "deploy",
+      ...opts,
+      ...stacks,
+      "--require-approval=never",
+      "-o",
+      deployDir,
+    ]);
 
     // if deployment was successful, copy the deploy dir to the expected dir
     this.deployTask.execArgs(["rm", "-fr", this.snapshotDir]);
@@ -101,12 +106,19 @@ export class IntegrationTest extends IntegrationTestBase {
 
     this.watchTask = project.addTask(`integ:${this.name}:watch`, {
       description: `watch integration test '${this.name}' (without updating snapshots)`,
-      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deployDir}`,
+      execArgs: ["cdk", "watch", ...opts, ...stacks, "-o", deployDir],
     });
 
     this.destroyTask = project.addTask(`integ:${this.name}:destroy`, {
       description: `destroy integration test '${this.name}'`,
-      exec: `cdk destroy --app ${this.snapshotDir} ${stackOpts} --no-version-reporting`,
+      execArgs: [
+        "cdk",
+        "destroy",
+        "--app",
+        this.snapshotDir,
+        ...stacks,
+        "--no-version-reporting",
+      ],
     });
 
     const destroyAfterDeploy = options.destroyAfterDeploy ?? true;
@@ -114,13 +126,25 @@ export class IntegrationTest extends IntegrationTestBase {
       this.deployTask.spawn(this.destroyTask);
     }
 
-    this.snapshotTask.exec(
-      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`,
-    );
+    this.snapshotTask.execArgs([
+      "cdk",
+      "synth",
+      "--quiet",
+      ...opts,
+      "-o",
+      this.snapshotDir,
+    ]);
 
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
-    this.assertTask.exec(`cdk synth ${cdkopts} -o ${assertDir} > /dev/null`);
+    this.assertTask.execArgs([
+      "cdk",
+      "synth",
+      "--quiet",
+      ...opts,
+      "-o",
+      assertDir,
+    ]);
     this.assertTask.execArgs([
       "diff",
       "-r",

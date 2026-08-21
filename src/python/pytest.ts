@@ -6,7 +6,7 @@ export interface PytestOptions {
   /**
    * Pytest version
    *
-   * @default "7.4.3"
+   * @default "8.3.5"
    */
   readonly version?: string;
 
@@ -21,8 +21,11 @@ export interface PytestOptions {
    * test collection and to avoid picking up undesired tests by accident.
    *
    * Leave empty to discover all test_*.py or *_test.py files, per Pytest default.
+   * Glob patterns are supported, including `**` for recursive matching.
    *
-   * The array will be concatenated and passed as a single argument to pytest.
+   * The entries form pytest's `testpaths` setting, which is parsed like a shell
+   * word list, so a path containing spaces has to be quoted: `["'my tests'"]`.
+   *
    * @example ["tests/unit", "tests/qa"]
    * @default []
    */
@@ -35,20 +38,19 @@ export class Pytest extends Component {
   constructor(project: Project, options: PytestOptions = {}) {
     super(project);
 
-    const version = options.version ?? "7.4.3";
+    const version = options.version ?? "8.3.5";
 
     this.testMatch = options.testMatch ?? [];
 
     project.deps.addDependency(`pytest@${version}`, DependencyType.TEST);
 
-    project.testTask.exec(
-      [
-        "pytest",
-        ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
-        ...this.testMatch,
-      ]
-        .join(" ")
-        .trimEnd(),
-    );
+    project.testTask.execArgs([
+      "pytest",
+      ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
+      // `testpaths` is expanded by pytest, so glob patterns are supported
+      ...(this.testMatch.length > 0
+        ? ["-o", `testpaths=${this.testMatch.join(" ")}`]
+        : []),
+    ]);
   }
 }

@@ -128,13 +128,13 @@ export class Bundler extends Component {
       "esbuild",
       "--bundle",
       entrypoint,
-      `--target="${options.target}"`,
-      `--platform="${options.platform}"`,
-      `--outfile="${outfile}"`,
+      `--target=${options.target}`,
+      `--platform=${options.platform}`,
+      `--outfile=${outfile}`,
     ];
 
     if (options.tsconfigPath) {
-      args.push(`--tsconfig="${options.tsconfigPath}"`);
+      args.push(`--tsconfig=${options.tsconfigPath}`);
     }
 
     for (const x of options.externals ?? []) {
@@ -169,7 +169,7 @@ export class Bundler extends Component {
 
     const defines = Object.entries(options.define ?? {});
     for (const [key, value] of defines) {
-      args.push(`--define:${key}=${JSON.stringify(value)}`);
+      args.push(`--define:${key}=${value}`);
     }
 
     if (options.minify) {
@@ -186,10 +186,10 @@ export class Bundler extends Component {
       args.push(`--metafile=${pathJoin(outdir, "index.meta.json")}`);
     }
     if (options.banner) {
-      args.push(`--banner:js=${JSON.stringify(options.banner)}`);
+      args.push(`--banner:js=${options.banner}`);
     }
     if (options.footer) {
-      args.push(`--footer:js=${JSON.stringify(options.footer)}`);
+      args.push(`--footer:js=${options.footer}`);
     }
     if (options.mainFields) {
       args.push(`--main-fields=${options.mainFields.join(",")}`);
@@ -204,16 +204,16 @@ export class Bundler extends Component {
         if (value === true || value === "") {
           subArgs.push(key);
         } else if (value) {
-          subArgs.push(`${key}="${value}"`);
+          subArgs.push(`${key}=${value}`);
         }
       }
 
-      args.push(subArgs.join(" "));
+      args.push(...subArgs);
     }
 
     const bundleTask = this.project.addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${entrypoint}`,
-      exec: args.join(" "),
+      execArgs: args,
     });
 
     this.bundleTask.spawn(bundleTask);
@@ -227,7 +227,7 @@ export class Bundler extends Component {
     if (watch) {
       watchTask = this.project.addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
-        exec: `${args.join(" ")} --watch`,
+        execArgs: [...args, "--watch"],
       });
     }
 
@@ -494,6 +494,10 @@ export interface AddBundleOptions extends BundlingOptions {
    *
    * Another example, `{ 'process.env.API_KEY': JSON.stringify('xxx-xxxx-xxx') }`.
    *
+   * Each entry is passed to esbuild as a single `--define:` argument, exactly as
+   * given: no shell parses it, so values are not unquoted along the way and a
+   * string replacement keeps the quotes it needs (`JSON.stringify('xxx')`).
+   *
    * @default - no replacements are made
    */
   readonly define?: { [key: string]: string };
@@ -514,6 +518,10 @@ export interface AddBundleOptions extends BundlingOptions {
    *   },
    * });
    * ```
+   *
+   * Each entry is passed to esbuild as a single argument, exactly as given: no
+   * shell parses it, so values must not be quoted (a value containing spaces is
+   * passed through as one argument on its own).
    *
    * @default - no additional esbuild arguments are passed
    */

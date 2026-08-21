@@ -89,9 +89,12 @@ export class MavenPackaging extends Component {
       this.project.packageTask.env(k, v);
     }
     this.project.packageTask.execArgs(["mkdir", "-p", this.distdir]);
-    this.project.packageTask.exec(
-      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${this.distdir}`,
-    );
+    // `${project.basedir}` is interpolated by Maven itself
+    this.project.packageTask.execArgs([
+      "mvn",
+      "deploy",
+      `-D=altDeploymentRepository=local::default::file://\${project.basedir}/${this.distdir}`,
+    ]);
 
     project.gitignore.exclude(this.distdir);
   }

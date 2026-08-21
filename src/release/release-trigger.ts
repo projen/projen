@@ -29,6 +29,11 @@ export interface ManualReleaseOptions {
   /**
    * Override git-push command.
    *
+   * Runs as a shell command in the `publish:git` task - where release
+   * credentials are in scope - replacing the default
+   * `git push --follow-tags origin <branch>`. Shell syntax is interpreted, so
+   * keep it a literal command.
+   *
    * Set to an empty string to disable pushing.
    */
   readonly gitPushCommand?: string;
@@ -79,6 +84,11 @@ interface ReleaseTriggerOptions {
 
   /**
    * Override git-push command.
+   *
+   * Runs as a shell command in the `publish:git` task - where release
+   * credentials are in scope - replacing the default
+   * `git push --follow-tags origin <branch>`. Shell syntax is interpreted, so
+   * keep it a literal command.
    *
    * Set to an empty string to disable pushing.
    */
@@ -211,6 +221,11 @@ export class ReleaseTrigger {
 
   /**
    * Override git-push command used when releasing manually.
+   *
+   * Runs as a shell command in the `publish:git` task - where release
+   * credentials are in scope - replacing the default
+   * `git push --follow-tags origin <branch>`. Shell syntax is interpreted, so
+   * keep it a literal command.
    *
    * Set to an empty string to disable pushing.
    */

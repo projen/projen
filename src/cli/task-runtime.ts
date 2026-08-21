@@ -7,7 +7,7 @@ import { gray, underline } from "chalk";
 import { PROJEN_DIR, TASKS_MANIFEST_VERSION } from "../common";
 import * as logging from "../logging";
 import type { TasksManifest, TaskSpec, TaskStep } from "../task-model";
-import { $ } from "../util/dax";
+import { $, escapeCommand } from "../util/dax";
 import { MAX_BUFFER, tool } from "../util/exec";
 
 // avoids a (false positive) esbuild warning about incorrect imports.
@@ -25,11 +25,34 @@ const ARGS_MARKER = "$@";
 const QUOTED_ARGS_MARKER = `"${ARGS_MARKER}"`;
 
 /**
- * Double-quotes a single argument so it is passed through verbatim, escaping the
- * characters that stay special inside double quotes. (Double quotes, not single:
- * dax's shell lacks the POSIX `'\''` escape.)
+ * Renders args for splicing into a string command, escaped for whichever shell
+ * will parse that command.
+ *
+ * Everything except `cmd.exe` gets POSIX single-quoting, which survives dax's
+ * built-in shell and any POSIX shell losslessly. `cmd.exe` has no single-quote
+ * syntax, so it keeps the double-quoted form.
  */
-function quoteArg(arg: string): string {
+function escapeArgsFor(shell: string | string[], args: string[]): string {
+  return isCmdExe(shell)
+    ? args.map(quoteArgCmd).join(" ")
+    : escapeCommand(args);
+}
+
+/**
+ * Whether a resolved shell means the host's `cmd.exe`: the only target that
+ * cannot parse POSIX quoting.
+ */
+function isCmdExe(shell: string | string[]): boolean {
+  return shell === "system" && process.platform === "win32";
+}
+
+/**
+ * Double-quotes a single argument for `cmd.exe`, escaping the characters that
+ * stay special inside double quotes. Note that `cmd.exe` itself has no in-quote
+ * escape - `\"` is understood by the receiving program's argv parser, not by the
+ * shell - and `%VAR%` still expands, so not every value can be passed verbatim.
+ */
+function quoteArgCmd(arg: string): string {
   return '"' + arg.replace(/(["$`\\])/g, "\\$1") + '"';
 }
 
@@ -437,7 +460,7 @@ class RunTask {
             // bash's quoted `"$@"`), so whitespace and metacharacters survive.
             command = command.replace(
               QUOTED_ARGS_MARKER,
-              argsList.map(quoteArg).join(" "),
+              escapeArgsFor(stepShell, argsList),
             );
           } else if (command.includes(ARGS_MARKER)) {
             command = command.replace(ARGS_MARKER, argsList.join(" "));
@@ -721,11 +744,12 @@ class RunTask {
     // An invocation (e.g. ["bash","-c"], ["npx","--no","-c"]): append the
     // command as its final argument. A string is appended as-is; an `execArgs`
     // argv is rendered to a quoted command line so the shell re-parses the same
-    // argv.
+    // argv. That rendering assumes a POSIX-style shell, which is what such an
+    // invocation is (`bash -c`, `sh -c`, `npx -c`, ...).
     if (Array.isArray(shell)) {
       const [program, ...flags] = shell;
       const commandLine = Array.isArray(command)
-        ? command.map(quoteArg).join(" ")
+        ? escapeCommand(command)
         : command;
       return $`${program} ${[...flags, commandLine]}`;
     }

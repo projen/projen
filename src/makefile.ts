@@ -23,6 +23,8 @@ export interface Rule {
   /**
    * Commands that are run (using prerequisites as inputs) to create a target.
    *
+   * Each entry is a shell command, run by make in its own shell.
+   *
    * @default []
    */
   readonly recipe?: string[];

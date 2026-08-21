@@ -63,6 +63,24 @@ describe("Single Project", () => {
     }).toThrow("'tasks' must be provided");
   });
 
+  test.each(["../dist", "/tmp/dist", "."])(
+    "throws when artifactsDirectory (%s) is not inside the project directory",
+    (artifactsDirectory) => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN/THEN - the release task runs `rm -fr` on this directory
+      expect(() => {
+        new Release(project, {
+          tasks: [project.buildTask],
+          versionFile: "version.json",
+          branch: "main",
+          artifactsDirectory,
+        });
+      }).toThrow(/artifactsDirectory must be/);
+    },
+  );
+
   test("with major version filter", () => {
     // GIVEN
     const project = new TestProject();
@@ -457,6 +475,50 @@ describe("Single Project", () => {
       (obj: any) => obj.spawn === Publisher.PUBLISH_GIT_TASK_NAME,
     );
     expect(publishGitStepIndex).toBeGreaterThan(antiTamperStepIndex);
+  });
+
+  test("manual release with an empty git-push disables pushing", () => {
+    // GIVEN
+    const project = new TestProject();
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: "" }),
+      publishTasks: true,
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const steps =
+      outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME].steps;
+    expect(JSON.stringify(steps)).not.toContain("push");
+  });
+
+  test("manual release without a git-push override pushes by default", () => {
+    // GIVEN
+    const project = new TestProject();
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.manual(),
+      publishTasks: true,
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const steps =
+      outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME].steps;
+    expect(steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          execArgs: ["git", "push", "--follow-tags", "origin", "main"],
+        }),
+      ]),
+    );
   });
 
   test("manual release with custom git-push", () => {
@@ -1136,9 +1198,9 @@ describe("Single Project", () => {
     );
     for (const name of releaseJobs) {
       const job = releaseWorkflow.jobs[name];
-      expect(
-        job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:'),
-      ).toBeTruthy();
+      // the command is echoed as a single escaped argument, so the message is
+      // quoted rather than starting bare
+      expect(job.steps.slice(-1)[0].run).toMatch(/^echo ['"]DRY RUN:/);
     }
   });
 

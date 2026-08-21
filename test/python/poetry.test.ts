@@ -280,7 +280,7 @@ test("generates correct pyproject.toml content", () => {
               black: "^24.2.0",
               flake8: "^7.0.0",
               projen: "99.99.99",
-              pytest: "7.4.3",
+              pytest: "8.3.5",
             },
           },
         },

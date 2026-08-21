@@ -75,7 +75,14 @@ test("bundler.addBundle() defines a bundle", () => {
     name: "bundle:hello",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/hello.ts --target="node16" --platform="node" --outfile="assets/hello/index.js"',
+        execArgs: [
+          "esbuild",
+          "--bundle",
+          "./src/hello.ts",
+          "--target=node16",
+          "--platform=node",
+          "--outfile=assets/hello/index.js",
+        ],
       },
     ],
   });
@@ -85,7 +92,18 @@ test("bundler.addBundle() defines a bundle", () => {
     name: "bundle:foo/world",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/foo/world.ts --target="node18" --platform="node" --outfile="assets/foo/world/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk --external:request --sourcemap',
+        execArgs: [
+          "esbuild",
+          "--bundle",
+          "./src/foo/world.ts",
+          "--target=node18",
+          "--platform=node",
+          "--outfile=assets/foo/world/index.js",
+          "--tsconfig=tsconfig.dev.json",
+          "--external:aws-sdk",
+          "--external:request",
+          "--sourcemap",
+        ],
       },
     ],
   });
@@ -155,7 +173,14 @@ test("sourcemaps can be disabled", () => {
     name: "bundle:hello",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
+        execArgs: [
+          "esbuild",
+          "--bundle",
+          "./src/hello.ts",
+          "--target=node12",
+          "--platform=node",
+          "--outfile=assets/hello/index.js",
+        ],
       },
     ],
   });
@@ -181,7 +206,15 @@ test("sourcemaps can be set to EXTERNAL", () => {
     name: "bundle:hello",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap=external',
+        execArgs: [
+          "esbuild",
+          "--bundle",
+          "./src/hello.ts",
+          "--target=node12",
+          "--platform=node",
+          "--outfile=assets/hello/index.js",
+          "--sourcemap=external",
+        ],
       },
     ],
   });
@@ -208,7 +241,15 @@ describe("bundle:watch", () => {
       name: "bundle:hello:watch",
       steps: [
         {
-          exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --watch',
+          execArgs: [
+            "esbuild",
+            "--bundle",
+            "./src/hello.ts",
+            "--target=node12",
+            "--platform=node",
+            "--outfile=assets/hello/index.js",
+            "--watch",
+          ],
         },
       ],
     });
@@ -278,8 +319,8 @@ test("loaders can be configured via bundlerOptions", () => {
   const snapshot = Testing.synth(p);
   const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
-  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  const bundleCommand = tasks["bundle:hello"].steps[0].execArgs;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].execArgs;
   expect(bundleCommand).toContain("--loader:.txt=text");
   expect(watchCommand).toContain("--loader:.txt=text");
 });
@@ -305,8 +346,8 @@ test("loaders can be configured via addBundle", () => {
   const snapshot = Testing.synth(p);
   const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
-  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  const bundleCommand = tasks["bundle:hello"].steps[0].execArgs;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].execArgs;
   expect(bundleCommand).toContain("--loader:.txt=text");
   expect(watchCommand).toContain("--loader:.txt=text");
 });
@@ -335,8 +376,8 @@ test("loaders configured via addBundle overwrite bundlerOptions", () => {
   const snapshot = Testing.synth(p);
   const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
-  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  const bundleCommand = tasks["bundle:hello"].steps[0].execArgs;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].execArgs;
   expect(bundleCommand).toContain("--loader:.txt=text");
   expect(bundleCommand).toContain("--loader:.txt=text");
   expect(watchCommand).not.toContain("--loader:.txt=some-loader");
@@ -359,8 +400,8 @@ test("format can be set to esm", () => {
   const snapshot = Testing.synth(p);
   const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
-  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  const bundleCommand = tasks["bundle:hello"].steps[0].execArgs;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].execArgs;
   expect(bundleCommand).toContain("--format=esm");
   expect(watchCommand).toContain("--format=esm");
 });
@@ -399,27 +440,27 @@ test("define, minify, sourcesContent, logLevel, keepNames, metafile, banner, foo
   const snapshot = Testing.synth(p);
   const tasks = snapshot[".projen/tasks.json"].tasks;
 
-  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
-  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  const bundleCommand = tasks["bundle:hello"].steps[0].execArgs;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].execArgs;
 
   for (const command of [bundleCommand, watchCommand]) {
-    expect(command).toMatch(/ --define:process.env.NODE_ENV="production"( |$)/);
-    expect(command).toMatch(/ --minify( |$)/);
-    expect(command).toMatch(/ --sourcemap( |$)/);
-    expect(command).toMatch(/ --sources-content=true( |$)/);
-    expect(command).toMatch(/ --log-level=info( |$)/);
-    expect(command).toMatch(/ --keep-names( |$)/);
-    expect(command).toMatch(
+    expect(command).toContain("--define:process.env.NODE_ENV=production");
+    expect(command).toContain("--minify");
+    expect(command).toContain("--sourcemap");
+    expect(command).toContain("--sources-content=true");
+    expect(command).toContain("--log-level=info");
+    expect(command).toContain("--keep-names");
+    expect(command).toContain(
       `--metafile=${join(p.bundler.bundledir, "hello", "index.meta.json")}`,
     );
-    expect(command).toMatch('--banner:js="/* \\"banner\\" */"');
-    expect(command).toMatch("--footer:js=\"/* 'footer' */\"");
-    expect(command).toMatch(/ --main-fields=module,main( |$)/);
+    expect(command).toContain('--banner:js=/* "banner" */');
+    expect(command).toContain("--footer:js=/* 'footer' */");
+    expect(command).toContain("--main-fields=module,main");
     expect(command).toContain("--inject:./inject.js");
-    expect(command).toMatch(/ --log-limit="0"( |$)/);
-    expect(command).toMatch(/--true( |$)/);
-    expect(command).toMatch(/ --true-string="true"( |$)/);
-    expect(command).toMatch(/--empty-string( |$)/);
+    expect(command).toContain("--log-limit=0");
+    expect(command).toContain("--true");
+    expect(command).toContain("--true-string=true");
+    expect(command).toContain("--empty-string");
   }
 });
 

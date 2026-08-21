@@ -140,8 +140,12 @@ export class Biome extends Component {
 
   private readonly biomeConfiguration: Record<string, any>;
   private readonly _filePatterns: Set<string>;
-  private readonly biomeCommand =
-    "biome check --no-errors-on-unmatched --write";
+  private readonly biomeCommand = [
+    "biome",
+    "check",
+    "--no-errors-on-unmatched",
+    "--write",
+  ];
 
   /**
    * Biome task.
@@ -300,7 +304,7 @@ export class Biome extends Component {
       description: "Runs Biome against the codebase",
       steps: [
         {
-          exec: this.biomeCommand,
+          execArgs: this.biomeCommand,
           receiveArgs: true,
         },
       ],

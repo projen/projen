@@ -41,12 +41,18 @@ export class Setuptools extends Component implements IPythonPackaging {
 
     this.publishTestTask = project.addTask("publish:test", {
       description: "Uploads the package against a test PyPI endpoint.",
-      exec: "twine upload --repository-url https://test.pypi.org/legacy/ dist/*",
+      execArgs: [
+        "twine",
+        "upload",
+        "--repository-url",
+        "https://test.pypi.org/legacy/",
+        "dist/*",
+      ],
     });
 
     this.publishTask = project.addTask("publish", {
       description: "Uploads the package against a test PyPI endpoint.",
-      exec: "twine upload dist/*",
+      execArgs: ["twine", "upload", "dist/*"],
     });
 
     const packages = options.packageName ? [options.packageName] : undefined;

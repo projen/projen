@@ -69,7 +69,10 @@ export class Poetry
 
     this.installCiTask = project.addTask("install:ci", {
       description: "Install dependencies with frozen lockfile",
-      exec: "poetry check --lock && poetry install",
+      steps: [
+        { execArgs: ["poetry", "check", "--lock"] },
+        { execArgs: ["poetry", "install"] },
+      ],
     });
 
     this.project.tasks.addEnvironment(

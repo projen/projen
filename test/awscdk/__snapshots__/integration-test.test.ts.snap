@@ -6,10 +6,29 @@ exports[`IntegrationTest tasks 1`] = `
   "name": "integ:foo:assert",
   "steps": [
     {
-      "exec": "[ -d "test/foo.integ.snapshot" ] || (echo "No snapshot available for integration test 'foo'. Run 'projen integ:foo:deploy' to capture." && exit 1)",
+      "execArgs": [
+        "node",
+        "-e",
+        "const [dir, name, task] = process.argv.slice(1); const stat = require('fs').statSync(dir, { throwIfNoEntry: false }); if (!stat || !stat.isDirectory()) { console.error(\`No snapshot available for integration test '\${name}'. Run 'projen \${task}' to capture.\`); process.exit(1); }",
+        "test/foo.integ.snapshot",
+        "foo",
+        "integ:foo:deploy",
+      ],
     },
     {
-      "exec": "cdk synth --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/.tmp/foo.integ/assert.cdk.out > /dev/null",
+      "execArgs": [
+        "cdk",
+        "synth",
+        "--quiet",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "-o",
+        "test/.tmp/foo.integ/assert.cdk.out",
+      ],
     },
     {
       "execArgs": [
@@ -44,7 +63,20 @@ exports[`IntegrationTest tasks 2`] = `
       ],
     },
     {
-      "exec": "cdk deploy --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "deploy",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "**",
+        "--require-approval=never",
+        "-o",
+        "test/.tmp/foo.integ/deploy.cdk.out",
+      ],
     },
     {
       "execArgs": [
@@ -73,7 +105,14 @@ exports[`IntegrationTest tasks 3`] = `
   "name": "integ:foo:destroy",
   "steps": [
     {
-      "exec": "cdk destroy --app test/foo.integ.snapshot '**' --no-version-reporting",
+      "execArgs": [
+        "cdk",
+        "destroy",
+        "--app",
+        "test/foo.integ.snapshot",
+        "**",
+        "--no-version-reporting",
+      ],
     },
   ],
 }
@@ -85,7 +124,19 @@ exports[`IntegrationTest tasks 4`] = `
   "name": "integ:foo:snapshot",
   "steps": [
     {
-      "exec": "cdk synth --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
+      "execArgs": [
+        "cdk",
+        "synth",
+        "--quiet",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "-o",
+        "test/foo.integ.snapshot",
+      ],
     },
   ],
 }
@@ -97,7 +148,19 @@ exports[`IntegrationTest tasks 5`] = `
   "name": "integ:foo:watch",
   "steps": [
     {
-      "exec": "cdk watch --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "watch",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "**",
+        "-o",
+        "test/.tmp/foo.integ/deploy.cdk.out",
+      ],
     },
   ],
 }
@@ -131,7 +194,20 @@ exports[`synthesizing an integration test containing a multi-stack stage 1`] = `
       ],
     },
     {
-      "exec": "cdk deploy --app "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' --require-approval=never -o test/.tmp/my-stage.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "deploy",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "my-stage/*",
+        "--require-approval=never",
+        "-o",
+        "test/.tmp/my-stage.integ/deploy.cdk.out",
+      ],
     },
     {
       "execArgs": [
@@ -160,7 +236,19 @@ exports[`synthesizing an integration test containing a multi-stack stage 2`] = `
   "name": "integ:my-stage:snapshot",
   "steps": [
     {
-      "exec": "cdk synth --app "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/my-stage.integ.snapshot > /dev/null",
+      "execArgs": [
+        "cdk",
+        "synth",
+        "--quiet",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "-o",
+        "test/my-stage.integ.snapshot",
+      ],
     },
   ],
 }
@@ -172,7 +260,19 @@ exports[`synthesizing an integration test containing a multi-stack stage 3`] = `
   "name": "integ:my-stage:watch",
   "steps": [
     {
-      "exec": "cdk watch --app "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' -o test/.tmp/my-stage.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "watch",
+        "--app",
+        "ts-node -P test/tsconfig.json test/my-stage.myinteg.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "my-stage/*",
+        "-o",
+        "test/.tmp/my-stage.integ/deploy.cdk.out",
+      ],
     },
   ],
 }
@@ -191,7 +291,20 @@ exports[`synthesizing cdk v2 integration tests 1`] = `
       ],
     },
     {
-      "exec": "cdk deploy --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "deploy",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "**",
+        "--require-approval=never",
+        "-o",
+        "test/.tmp/foo.integ/deploy.cdk.out",
+      ],
     },
     {
       "execArgs": [
@@ -220,7 +333,19 @@ exports[`synthesizing cdk v2 integration tests 2`] = `
   "name": "integ:foo:snapshot",
   "steps": [
     {
-      "exec": "cdk synth --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
+      "execArgs": [
+        "cdk",
+        "synth",
+        "--quiet",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "-o",
+        "test/foo.integ.snapshot",
+      ],
     },
   ],
 }
@@ -232,7 +357,19 @@ exports[`synthesizing cdk v2 integration tests 3`] = `
   "name": "integ:foo:watch",
   "steps": [
     {
-      "exec": "cdk watch --app "ts-node -P test/tsconfig.json test/foo.integ.ts" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+      "execArgs": [
+        "cdk",
+        "watch",
+        "--app",
+        "ts-node -P test/tsconfig.json test/foo.integ.ts",
+        "--no-notices",
+        "--no-version-reporting",
+        "--no-asset-metadata",
+        "--no-path-metadata",
+        "**",
+        "-o",
+        "test/.tmp/foo.integ/deploy.cdk.out",
+      ],
     },
   ],
 }

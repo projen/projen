@@ -423,7 +423,7 @@ describe("eslint settings", () => {
 
     // THEN
     const taskStep = eslint.eslintTask.steps[0];
-    expect(taskStep.exec).not.toContain("--fix");
+    expect(taskStep.execArgs).not.toContain("--fix");
     expect(taskStep?.args ?? []).not.toContain(
       expect.stringContaining("--fix"),
     );
@@ -445,7 +445,7 @@ describe("eslint settings", () => {
 
     // THEN
     const taskStep = eslint.eslintTask.steps[0];
-    expect(taskStep.exec).not.toContain("--ext");
+    expect(taskStep.execArgs).not.toContain("--ext");
     expect(taskStep?.args ?? []).not.toContain(
       expect.stringContaining("--ext"),
     );
@@ -466,7 +466,8 @@ describe("eslint settings", () => {
 
     // THEN
     const taskStep = eslint.eslintTask.steps[0];
-    expect(taskStep.exec).toContain("--ext");
+    // the flag and its value are separate arguments
+    expect(taskStep.execArgs).toEqual(expect.arrayContaining(["--ext", ".ts"]));
   });
 
   test("supports specifying extra task args", () => {
@@ -485,7 +486,7 @@ describe("eslint settings", () => {
 
     // THEN
     const taskStep = eslint.eslintTask.steps[0];
-    expect(taskStep.exec).toContain("--cache");
+    expect(taskStep.execArgs).toContain("--cache");
   });
 
   test("allow modification of the eslint task", () => {
@@ -503,7 +504,8 @@ describe("eslint settings", () => {
 
     const taskStep = eslint.eslintTask.steps[0];
     const newTestArg = "--foo";
-    eslint.eslintTask.reset(taskStep.exec, { args: [newTestArg] });
+    eslint.eslintTask.reset();
+    eslint.eslintTask.execArgs(taskStep.execArgs!, { args: [newTestArg] });
 
     eslint.addLintPattern("bar");
 

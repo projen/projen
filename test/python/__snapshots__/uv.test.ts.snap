@@ -163,7 +163,7 @@ cython_debug/
       {
         "name": "pytest",
         "type": "test",
-        "version": "7.4.3",
+        "version": "8.3.5",
       },
     ],
   },
@@ -244,7 +244,16 @@ cython_debug/
         "name": "install",
         "steps": [
           {
-            "exec": "uv sync && uv lock",
+            "execArgs": [
+              "uv",
+              "sync",
+            ],
+          },
+          {
+            "execArgs": [
+              "uv",
+              "lock",
+            ],
           },
         ],
       },
@@ -311,7 +320,9 @@ cython_debug/
         "name": "test",
         "steps": [
           {
-            "exec": "pytest",
+            "execArgs": [
+              "pytest",
+            ],
           },
         ],
       },

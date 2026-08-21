@@ -13,15 +13,20 @@ export class Clobber extends Component {
       },
     });
 
-    task.exec("git checkout -b scratch", {
+    task.execArgs(["git", "checkout", "-b", "scratch"], {
       name: 'save current HEAD in "scratch" branch',
     });
-    task.exec("git checkout $BRANCH");
-    task.exec("git fetch origin", { name: "fetch latest changes from origin" });
-    task.exec("git reset --hard origin/$BRANCH", {
+    // `$BRANCH` needs a shell to expand
+    task.exec('git checkout "$BRANCH"');
+    task.execArgs(["git", "fetch", "origin"], {
+      name: "fetch latest changes from origin",
+    });
+    task.exec('git reset --hard "origin/$BRANCH"', {
       name: "hard reset to origin commit",
     });
-    task.exec("git clean -fdx", { name: "clean all untracked files" });
+    task.execArgs(["git", "clean", "-fdx"], {
+      name: "clean all untracked files",
+    });
     task.say(
       'ready to rock! (unpushed commits are under the "scratch" branch)',
     );

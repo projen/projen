@@ -68,7 +68,12 @@ export class Projenrc extends ProjenrcFile {
     const depType = this.testScope
       ? DependencyType.TEST
       : DependencyType.RUNTIME;
-    const execOpts = this.testScope ? ' -Dexec.classpathScope="test"' : "";
+
+    const execOpts: string[] = [];
+    if (this.testScope) {
+      execOpts.push("-Dexec.classpathScope=test");
+    }
+
     const compileGoal = this.testScope
       ? "compiler:testCompile"
       : "compiler:compile";
@@ -81,9 +86,13 @@ export class Projenrc extends ProjenrcFile {
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
     project.defaultTask?.execArgs(["mvn", compileGoal, "--quiet"]);
-    project.defaultTask?.exec(
-      `mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`,
-    );
+    project.defaultTask?.execArgs([
+      "mvn",
+      "exec:java",
+      "--quiet",
+      `-Dexec.mainClass=${this.className}`,
+      ...execOpts,
+    ]);
   }
 
   public projectCreation(initProject: InitProject) {

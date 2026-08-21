@@ -672,6 +672,14 @@ export interface JestOptions {
 
   /**
    * Additional options to pass to the Jest CLI invocation
+   *
+   * Each element is passed to jest as a single argument, exactly as given: no
+   * shell parses these, so a flag and its value need separate elements
+   * (`["--reporters", "jest-junit"]`, not `["--reporters jest-junit"]`) and
+   * values must not be quoted (`["--testPathIgnorePatterns=/node_modules/"]`,
+   * not `["--testPathIgnorePatterns='/node_modules/'"]`).
+   *
+   * @example ["--runInBand", "--testNamePattern=a test name with spaces"]
    * @default - no extra options
    */
   readonly extraCliOptions?: string[];
@@ -1142,10 +1150,10 @@ export class Jest extends Component {
 
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
     const jestOpts = this.extraCliOptions;
-    const jestConfigOpts =
-      this.file && this.file.path != "jest.config.json"
-        ? ` -c ${this.file.path}`
-        : "";
+    const jestConfigOpts: string[] = [];
+    if (this.file && this.file.path != "jest.config.json") {
+      jestConfigOpts.push("-c", this.file.path);
+    }
 
     if (this.passWithNoTests) {
       jestOpts.push("--passWithNoTests");
@@ -1159,13 +1167,18 @@ export class Jest extends Component {
       if (!testUpdate) {
         this.project.addTask("test:update", {
           description: "Update jest snapshots",
-          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+          execArgs: [
+            "jest",
+            "--updateSnapshot",
+            ...jestOpts,
+            ...jestConfigOpts,
+          ],
           receiveArgs: true,
         });
       }
     }
 
-    this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`, {
+    this.project.testTask.execArgs(["jest", ...jestOpts, ...jestConfigOpts], {
       receiveArgs: true,
     });
 
@@ -1173,7 +1186,7 @@ export class Jest extends Component {
     if (!testWatch) {
       this.project.addTask("test:watch", {
         description: "Run jest in watch mode",
-        exec: `jest --watch${jestConfigOpts}`,
+        execArgs: ["jest", "--watch", ...jestConfigOpts],
       });
     }
   }

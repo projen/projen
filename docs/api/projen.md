@@ -14640,6 +14640,8 @@ public readonly before: string;
 
 In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.
 
+A shell command, chained with the other task commands using `&&`.
+
 ---
 
 ##### `init`<sup>Optional</sup> <a name="init" id="projen.GitpodTask.property.init"></a>
@@ -14708,6 +14710,8 @@ The optional prebuild command will be executed during prebuilds.
 
 It is meant to run additional long running
 processes that could be useful, e.g. running test suites.
+
+A shell command, chained with the other task commands using `&&`.
 
 ---
 
@@ -15823,6 +15827,10 @@ public readonly projenCommand: string;
 
 The shell command to use in order to run the projen CLI.
 
+Inserted verbatim into task steps, workflows and IDE configuration, and run
+by each of their shells - locally, in CI and in dev containers. Keep it a
+plain unquoted command, since shell syntax in it executes in all of them.
+
 Can be used to customize in special environments.
 
 ---
@@ -16270,6 +16278,8 @@ public readonly recipe: string[];
 - *Default:* []
 
 Commands that are run (using prerequisites as inputs) to create a target.
+
+Each entry is a shell command, run by make in its own shell.
 
 ---
 
@@ -16819,6 +16829,10 @@ public readonly exec: string;
 
 Shell command to execute as the first command of the task.
 
+A single shell string, so only pass trusted input: an interpolated value is
+interpreted by the shell too. Use `execArgs` for arguments you did not write
+literally.
+
 Mutually exclusive with `execArgs`.
 
 ---
@@ -17215,9 +17229,9 @@ public readonly exec: string;
 
 Shell command to execute.
 
-The whole command is a single shell string. To pass arguments as a list
-instead - without having to quote spaces or other characters yourself -
-use `execArgs`.
+A single shell string, so only pass trusted input: an interpolated value is
+interpreted by the shell too. Use `execArgs` for arguments you did not write
+literally.
 
 ---
 
@@ -19800,6 +19814,9 @@ The operating system's native shell (`/bin/sh` on POSIX, `cmd.exe` on Windows).
 
 Use this to opt out of the cross-platform shell and run commands through
 whatever shell the host provides.
+
+Steps given as an argv (`execArgs`) are spawned without a shell, so on
+Windows they cannot run `.cmd`/`.bat` shims such as npm-installed CLIs.
 
 
 
