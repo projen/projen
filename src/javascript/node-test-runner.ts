@@ -11,8 +11,6 @@ import { toJson_NodeConfigSchema } from "./node-config";
 import { TestRunnerBase, UpdateSnapshot } from "./test-runner-base";
 import type { TestRunnerBaseOptions } from "./test-runner-base";
 
-const DEFAULT_TEST_REPORTS_DIR = "test-reports";
-
 export interface NodeTestRunnerOptions extends TestRunnerBaseOptions {
   /**
    * Glob patterns matching the files that contain tests.
@@ -124,9 +122,6 @@ export class NodeTestRunner extends TestRunnerBase {
 
     const collectCoverage = options.collectCoverage ?? true;
     const coverageDirectory = options.coverageDirectory ?? "coverage";
-    const coverageText = options.coverageText ?? true;
-    const junitReporting = options.junitReporting ?? true;
-    const preserveDefaultReporters = options.preserveDefaultReporters ?? true;
 
     const reporters: string[] = [];
     const reporterDestinations: string[] = [];
@@ -135,22 +130,22 @@ export class NodeTestRunner extends TestRunnerBase {
       reporterDestinations.push(destination);
     };
 
-    if (preserveDefaultReporters && coverageText) {
+    if (this.preserveDefaultReporters && this.coverageText) {
       addReporter("spec", "stdout");
     }
 
     if (collectCoverage) {
       addReporter("lcov", `${coverageDirectory}/lcov.info`);
-      this.project.gitignore.exclude(`/${coverageDirectory}/`);
-      this.project.npmignore?.exclude(`/${coverageDirectory}/`);
+      this.excludeCoverageDirectory(coverageDirectory);
+
+      // the lcov reporter does not create the coverage directory itself, so
+      // it must exist before the test runner is invoked.
+      this.project.testTask.prependExec(`mkdir -p ${coverageDirectory}`);
     }
 
-    if (junitReporting) {
-      const reportsDir = DEFAULT_TEST_REPORTS_DIR;
-      addReporter("junit", `${reportsDir}/junit.xml`);
-
-      this.project.gitignore.exclude("# junit artifacts", `/${reportsDir}/`);
-      this.project.npmignore?.exclude("# junit artifacts", `/${reportsDir}/`);
+    if (this.junitReporting) {
+      addReporter("junit", `${this.testReportsDir}/junit.xml`);
+      this.excludeTestReportsDirectory("# junit artifacts");
     }
 
     this.config = {

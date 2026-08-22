@@ -1,4 +1,3 @@
-import * as path from "path";
 import type { IConstruct } from "constructs";
 import type { Component } from "../component";
 import { JsonFile } from "../json";
@@ -6,8 +5,6 @@ import type { Project } from "../project";
 import { normalizePersistedPath } from "../util";
 import { TestRunnerBase, UpdateSnapshot } from "./test-runner-base";
 import type { TestRunnerBaseOptions } from "./test-runner-base";
-
-const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
 // Pulled from https://jestjs.io/docs/configuration
 export interface JestConfigOptions {
@@ -881,7 +878,7 @@ export class Jest extends TestRunnerBase {
 
     this.reporters = [];
 
-    if (options.preserveDefaultReporters ?? true) {
+    if (this.preserveDefaultReporters) {
       this.reporters.unshift(new JestReporter("default"));
     }
 
@@ -904,25 +901,16 @@ export class Jest extends TestRunnerBase {
       snapshotResolver: (() => this._snapshotResolver) as any,
     } satisfies JestConfigOptions;
 
-    if (options.junitReporting ?? true) {
-      const reportsDir = DEFAULT_TEST_REPORTS_DIR;
-
+    if (this.junitReporting) {
       this.addReporter(
-        new JestReporter("jest-junit", { outputDirectory: reportsDir }),
+        new JestReporter("jest-junit", {
+          outputDirectory: this.testReportsDir,
+        }),
       );
 
       this.project.addDevDeps("jest-junit@^17");
 
-      this.project.gitignore.exclude(
-        "# jest-junit artifacts",
-        `/${reportsDir}/`,
-        "junit.xml",
-      );
-      this.project.npmignore?.exclude(
-        "# jest-junit artifacts",
-        `/${reportsDir}/`,
-        "junit.xml",
-      );
+      this.excludeTestReportsDirectory("# jest-junit artifacts", "junit.xml");
     }
 
     if (this.jestConfig?.reporters) {
@@ -951,11 +939,9 @@ export class Jest extends TestRunnerBase {
       this.project.addFields({ jest: this.config });
     }
 
-    const coverageDirectoryPath = path.posix.join("/", coverageDirectory, "/");
-    this.project.npmignore?.exclude(coverageDirectoryPath);
-    this.project.gitignore.exclude(coverageDirectoryPath);
+    this.excludeCoverageDirectory(coverageDirectory);
 
-    if (options.coverageText ?? true) {
+    if (this.coverageText) {
       this.coverageReporters.push("text");
     }
   }

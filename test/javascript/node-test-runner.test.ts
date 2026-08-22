@@ -36,10 +36,11 @@ test("Node Project native test runner defaults configured", () => {
   ]);
 
   const testTask = snapshot[".projen/tasks.json"].tasks.test;
-  expect(testTask.steps[0].execArgs).toContain(
+  expect(testTask.steps[0].exec).toEqual("mkdir -p coverage");
+  expect(testTask.steps[1].execArgs).toContain(
     "--experimental-config-file=node.test-coverage-config.json",
   );
-  expect(testTask.steps[0].execArgs).toContain("--test-update-snapshots");
+  expect(testTask.steps[1].execArgs).toContain("--test-update-snapshots");
 
   const watchArgs =
     snapshot[".projen/tasks.json"].tasks["test:watch"].steps[0].execArgs;

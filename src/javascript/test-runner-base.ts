@@ -1,7 +1,13 @@
+import * as path from "path";
 import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { closestProjectMustBe } from "../util/constructs";
+
+/**
+ * The default directory used for JUnit-compatible test reports.
+ */
+export const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
 /**
  * Whether to update snapshots in task "test" (which is executed in task
@@ -101,6 +107,27 @@ export abstract class TestRunnerBase extends Component {
   protected readonly testMatch: string[] = [];
 
   /**
+   * Include the default text/spec reporter, so that a summary is printed to
+   * stdout upon completion.
+   */
+  protected readonly coverageText: boolean;
+
+  /**
+   * Result processing with a JUnit-compatible reporter.
+   */
+  protected readonly junitReporting: boolean;
+
+  /**
+   * Preserve the default reporter when additional reporters are added.
+   */
+  protected readonly preserveDefaultReporters: boolean;
+
+  /**
+   * The directory used for JUnit-compatible test reports.
+   */
+  protected readonly testReportsDir: string = DEFAULT_TEST_REPORTS_DIR;
+
+  /**
    * The CLI binary used to invoke the test runner (e.g. `jest`, `node`).
    */
   protected abstract readonly binary: string;
@@ -121,6 +148,9 @@ export abstract class TestRunnerBase extends Component {
     super(scope);
     this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
     this.extraCliOptions = options.extraCliOptions ?? [];
+    this.coverageText = options.coverageText ?? true;
+    this.junitReporting = options.junitReporting ?? true;
+    this.preserveDefaultReporters = options.preserveDefaultReporters ?? true;
   }
 
   /**
@@ -129,6 +159,42 @@ export abstract class TestRunnerBase extends Component {
    */
   public addTestMatch(pattern: string) {
     this.testMatch.push(pattern);
+  }
+
+  /**
+   * Excludes a set of patterns from both the project's `.gitignore` and
+   * `.npmignore` files (if present).
+   */
+  protected excludeFromVcs(...patterns: string[]) {
+    this.project.gitignore.exclude(...patterns);
+    this.project.npmignore?.exclude(...patterns);
+  }
+
+  /**
+   * Excludes a coverage directory from both the project's `.gitignore` and
+   * `.npmignore` files (if present).
+   * @param coverageDirectory The coverage output directory to exclude.
+   */
+  protected excludeCoverageDirectory(coverageDirectory: string) {
+    const coverageDirectoryPath = path.posix.join("/", coverageDirectory, "/");
+    this.excludeFromVcs(coverageDirectoryPath);
+  }
+
+  /**
+   * Excludes the JUnit test reports directory from both the project's
+   * `.gitignore` and `.npmignore` files (if present).
+   * @param comment Comment to add above the excluded patterns.
+   * @param additionalPatterns Additional patterns to exclude alongside the reports directory.
+   */
+  protected excludeTestReportsDirectory(
+    comment: string,
+    ...additionalPatterns: string[]
+  ) {
+    this.excludeFromVcs(
+      comment,
+      `/${this.testReportsDir}/`,
+      ...additionalPatterns,
+    );
   }
 
   /**
