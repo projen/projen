@@ -1,5 +1,6 @@
 import type { IConstruct } from "constructs";
 import { Component } from "../component";
+import { UpdateSnapshot } from "./jest";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import type {
@@ -10,6 +11,8 @@ import type {
 import { toJson_NodeConfigSchema } from "./node-config";
 import type { Project } from "../project";
 import { closestProjectMustBe } from "../util/constructs";
+
+const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
 export interface NodeTestRunnerOptions {
   /**
@@ -32,39 +35,68 @@ export interface NodeTestRunnerOptions {
   readonly testMatch?: string[];
 
   /**
-   * Enable code coverage collection via `--experimental-test-coverage`.
+   * Indicates whether the coverage information should be collected while
+   * executing the test, via `--experimental-test-coverage`.
    *
    * @default true
    */
-  readonly coverage?: boolean;
+  readonly collectCoverage?: boolean;
 
   /**
-   * The directory where coverage output should be written when using an
-   * lcov reporter.
+   * The directory where Node should output its coverage files.
    *
    * @default "coverage"
    */
   readonly coverageDirectory?: string;
 
   /**
-   * Glob patterns of files to exclude from code coverage.
+   * An array of glob patterns that are matched against all file paths before
+   * executing coverage collection. If a file path matches any of the
+   * patterns, coverage information will be skipped for it.
    *
-   * @default ["**\/test/**","**\/__tests__/**"]
+   * @default ["**\/test/**", "**\/__tests__/**"]
    */
-  readonly coverageExclude?: string[];
+  readonly coveragePathIgnorePatterns?: string[];
 
   /**
-   * Update snapshots when running the "test" task (which is executed in the
-   * "build" task and build workflows) via `--test-update-snapshots`.
+   * Include the `spec` reporter, which means that a coverage summary and
+   * test results are printed to stdout.
    *
-   * @default false
+   * @default true
    */
-  readonly updateSnapshots?: boolean;
+  readonly coverageText?: boolean;
 
   /**
-   * Path to a module that is required before running any test files, used
-   * for one-time global setup. Written as `test-global-setup` in the
-   * generated Node.js configuration file.
+   * Result processing with Node's built-in `junit` reporter.
+   *
+   * Output directory is `test-reports/`.
+   *
+   * @default true
+   */
+  readonly junitReporting?: boolean;
+
+  /**
+   * Preserve the default `spec` reporter when additional reporters (e.g.
+   * `junit`) are added.
+   *
+   * @default true
+   */
+  readonly preserveDefaultReporters?: boolean;
+
+  /**
+   * Whether to update snapshots in task "test" (which is executed in task
+   * "build" and build workflows), or create a separate task "test:update"
+   * for updating snapshots.
+   *
+   * @default - ALWAYS
+   */
+  readonly updateSnapshot?: UpdateSnapshot;
+
+  /**
+   * This option allows the use of a custom global setup module which
+   * exports a function that is triggered once before all test suites.
+   * Written as `test-global-setup` in the generated Node.js configuration
+   * file.
    *
    * @default - undefined
    */
@@ -99,17 +131,18 @@ export interface NodeTestRunnerOptions {
    *
    * @default - no additional options
    */
-  readonly additionalOptions?: NodeConfigSchemaTest;
+  readonly testConfig?: NodeConfigSchemaTest;
 }
 
 /**
  * Installs the following npm scripts:
  *
- * - `test`, intended for testing locally and in CI, running the tests with
- *   Node.js' built-in test runner (`node --test`).
+ * - `test`, intended for testing locally and in CI. Will update snapshots
+ *   unless `updateSnapshot: UpdateSnapshot.NEVER` is set.
  * - `test:watch`, intended for automatically rerunning tests when files change.
- * - `test:update`, intended for updating snapshots to match the latest unit
- *   under test.
+ * - `test:update`, intended for testing locally and updating snapshots to
+ *   match the latest unit under test. Only available when
+ *   `updateSnapshot: UpdateSnapshot.NEVER`.
  *
  * Configuration (coverage, reporters, global setup, etc.) is written to a
  * Node.js configuration file (following the schema at
@@ -149,31 +182,58 @@ export class NodeTestRunner extends Component {
     this.extraCliOptions = options.extraCliOptions ?? [];
     this.testMatch = options.testMatch ?? [];
 
-    const coverage = options.coverage ?? true;
+    const collectCoverage = options.collectCoverage ?? true;
     const coverageDirectory = options.coverageDirectory ?? "coverage";
+    const coverageText = options.coverageText ?? true;
+    const junitReporting = options.junitReporting ?? true;
+    const preserveDefaultReporters = options.preserveDefaultReporters ?? true;
 
-    if (coverage) {
+    const reporters: string[] = [];
+    const reporterDestinations: string[] = [];
+    const addReporter = (reporter: string, destination: string) => {
+      reporters.push(reporter);
+      reporterDestinations.push(destination);
+    };
+
+    if (preserveDefaultReporters && coverageText) {
+      addReporter("spec", "stdout");
+    }
+
+    if (collectCoverage) {
+      addReporter("lcov", `${coverageDirectory}/lcov.info`);
       this.project.gitignore.exclude(`/${coverageDirectory}/`);
       this.project.npmignore?.exclude(`/${coverageDirectory}/`);
+    }
+
+    if (junitReporting) {
+      const reportsDir = DEFAULT_TEST_REPORTS_DIR;
+      addReporter("junit", `${reportsDir}/junit.xml`);
+
+      this.project.gitignore.exclude("# junit artifacts", `/${reportsDir}/`);
+      this.project.npmignore?.exclude("# junit artifacts", `/${reportsDir}/`);
     }
 
     this.config = {
       test: {
         test: true,
         testGlobalSetup: options.globalSetup,
-        ...(coverage
+        ...(collectCoverage
           ? {
               experimentalTestCoverage: true,
-              testReporter: ["spec", "lcov"],
-              testReporterDestination: [
-                "stdout",
-                `${coverageDirectory}/lcov.info`,
+              testCoverageExclude: options.coveragePathIgnorePatterns ?? [
+                "**/test/**",
+                "**/__tests__/**",
               ],
-              testCoverageExclude: options.coverageExclude ?? ["**/test/**", "**/__tests__/**"],
+            }
+          : {}),
+        ...(reporters.length
+          ? {
+              testReporter: reporters,
+              testReporterDestination: reporterDestinations,
             }
           : {}),
         experimentalTestModuleMocks: options.moduleMocks,
-        ...options.additionalOptions,
+        ...options.testConfig,
       },
       nodeOptions: options.nodeOptions,
     };
@@ -185,7 +245,7 @@ export class NodeTestRunner extends Component {
     });
     this.project.npmignore?.addPatterns(`/${this.file.path}`);
 
-    this.configureTestCommand(options.updateSnapshots ?? false);
+    this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
   }
 
   /**
@@ -204,10 +264,10 @@ export class NodeTestRunner extends Component {
     ];
   }
 
-  private configureTestCommand(updateSnapshots: boolean) {
+  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
     const baseArgs = this.buildBaseArgs();
 
-    if (updateSnapshots) {
+    if (updateSnapshot === UpdateSnapshot.ALWAYS) {
       baseArgs.push("--test-update-snapshots");
     } else {
       const testUpdate = this.project.tasks.tryFind("test:update");

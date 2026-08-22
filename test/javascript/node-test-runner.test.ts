@@ -1,4 +1,8 @@
-import { NodeProject, NodeTestRunner } from "../../src/javascript";
+import {
+  NodeProject,
+  NodeTestRunner,
+  UpdateSnapshot,
+} from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { mkdtemp, synthSnapshot } from "../util";
 
@@ -24,23 +28,23 @@ test("Node Project native test runner defaults configured", () => {
   expect(configFile).toBeTruthy();
   expect(configFile.test.test).toEqual(true);
   expect(configFile.test["experimental-test-coverage"]).toEqual(true);
-  expect(configFile.test["test-reporter"]).toEqual(["spec", "lcov"]);
+  expect(configFile.test["test-reporter"]).toEqual(["spec", "lcov", "junit"]);
   expect(configFile.test["test-reporter-destination"]).toEqual([
     "stdout",
     "coverage/lcov.info",
+    "test-reports/junit.xml",
   ]);
 
   const testTask = snapshot[".projen/tasks.json"].tasks.test;
   expect(testTask.steps[0].execArgs).toContain(
     "--experimental-config-file=node.test-coverage-config.json",
   );
+  expect(testTask.steps[0].execArgs).toContain("--test-update-snapshots");
 
   const watchArgs =
     snapshot[".projen/tasks.json"].tasks["test:watch"].steps[0].execArgs;
   expect(watchArgs).toContain("--watch");
-  expect(
-    snapshot[".projen/tasks.json"].tasks["test:update"].steps[0].execArgs,
-  ).toContain("--test-update-snapshots");
+  expect(snapshot[".projen/tasks.json"].tasks["test:update"]).toBeUndefined();
 });
 
 test("Node Project native test runner with options", () => {
@@ -53,9 +57,10 @@ test("Node Project native test runner with options", () => {
     jest: false,
     nodeTestRunner: true,
     nodeTestRunnerOptions: {
-      coverage: false,
+      collectCoverage: false,
+      junitReporting: false,
       testMatch: ["test/**/*.test.ts"],
-      updateSnapshots: true,
+      updateSnapshot: UpdateSnapshot.NEVER,
       globalSetup: "./test.setup.js",
       moduleMocks: true,
       nodeOptions: {
@@ -74,8 +79,10 @@ test("Node Project native test runner with options", () => {
 
   const testTask = snapshot[".projen/tasks.json"].tasks.test;
   expect(testTask.steps[0].execArgs).toContain("test/**/*.test.ts");
-  expect(testTask.steps[0].execArgs).toContain("--test-update-snapshots");
-  expect(snapshot[".projen/tasks.json"].tasks["test:update"]).toBeUndefined();
+  expect(testTask.steps[0].execArgs).not.toContain("--test-update-snapshots");
+
+  const testUpdateTask = snapshot[".projen/tasks.json"].tasks["test:update"];
+  expect(testUpdateTask.steps[0].execArgs).toContain("--test-update-snapshots");
 });
 
 test("jest and nodeTestRunner are mutually exclusive", () => {
