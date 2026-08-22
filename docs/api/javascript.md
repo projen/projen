@@ -4029,9 +4029,7 @@ Installs the following npm scripts:.
   `updateSnapshot: UpdateSnapshot.NEVER`.
 
 Configuration (coverage, reporters, global setup, etc.) is written to a
-Node.js configuration file (following the schema at
-https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json), which
-is loaded via `--experimental-config-file`.
+Node.js configuration file, which is loaded via `--experimental-config-file`.
 
 #### Initializers <a name="Initializers" id="projen.javascript.NodeTestRunner.Initializer"></a>
 

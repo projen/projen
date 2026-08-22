@@ -88,9 +88,7 @@ export interface NodeTestRunnerOptions extends TestRunnerBaseOptions {
  *   `updateSnapshot: UpdateSnapshot.NEVER`.
  *
  * Configuration (coverage, reporters, global setup, etc.) is written to a
- * Node.js configuration file (following the schema at
- * https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json), which
- * is loaded via `--experimental-config-file`.
+ * Node.js configuration file, which is loaded via `--experimental-config-file`.
  */
 export class NodeTestRunner extends TestRunnerBase {
   /**
@@ -146,6 +144,10 @@ export class NodeTestRunner extends TestRunnerBase {
     if (this.junitReporting) {
       addReporter("junit", `${this.testReportsDir}/junit.xml`);
       this.excludeTestReportsDirectory("# junit artifacts");
+
+      // the junit reporter does not create the test reports directory
+      // itself, so it must exist before the test runner is invoked.
+      this.project.testTask.prependExec(`mkdir -p ${this.testReportsDir}`);
     }
 
     this.config = {

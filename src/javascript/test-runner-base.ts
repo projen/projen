@@ -1,7 +1,7 @@
 import * as path from "path";
 import type { IConstruct } from "constructs";
 import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import type { NodeProject } from "./node-project";
 import { closestProjectMustBe } from "../util/constructs";
 
 /**
@@ -146,6 +146,11 @@ export abstract class TestRunnerBase extends Component {
 
   constructor(scope: IConstruct, options: TestRunnerBaseOptions = {}) {
     super(scope);
+    // Lazy require to avoid a circular-require deadlock: this module is
+    // loaded from `jest.ts`/`node-test-runner.ts`, which are themselves
+    // loaded from `node-project.ts` - a static, module-scope import of
+    // `NodeProject` here would be `undefined` at class-evaluation time.
+    const { NodeProject } = require("./node-project"); // eslint-disable-line @typescript-eslint/no-require-imports
     this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
     this.extraCliOptions = options.extraCliOptions ?? [];
     this.coverageText = options.coverageText ?? true;
