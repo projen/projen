@@ -2,6 +2,12 @@ import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import type {
+  NodeConfigSchema,
+  NodeConfigSchemaNodeOptions,
+  NodeConfigSchemaTest,
+} from "./node-config";
+import { toJson_NodeConfigSchema } from "./node-config";
 import type { Project } from "../project";
 import { closestProjectMustBe } from "../util/constructs";
 
@@ -43,7 +49,7 @@ export interface NodeTestRunnerOptions {
   /**
    * Glob patterns of files to exclude from code coverage.
    *
-   * @default ["**\/test/**"]
+   * @default ["**\/test/**","**\/__tests__/**"]
    */
   readonly coverageExclude?: string[];
 
@@ -81,12 +87,11 @@ export interface NodeTestRunnerOptions {
 
   /**
    * Additional entries for the `nodeOptions` section of the generated
-   * configuration file (e.g. `experimental-transform-types`,
-   * `disable-warning`).
+   * configuration file (e.g. `experimentalTransformTypes`, `disableWarning`).
    *
    * @default - no additional node options
    */
-  readonly nodeOptions?: { [key: string]: any };
+  readonly nodeOptions?: NodeConfigSchemaNodeOptions;
 
   /**
    * Escape hatch to add or override any value in the `test` section of the
@@ -94,7 +99,7 @@ export interface NodeTestRunnerOptions {
    *
    * @default - no additional options
    */
-  readonly additionalOptions?: { [key: string]: any };
+  readonly additionalOptions?: NodeConfigSchemaTest;
 }
 
 /**
@@ -107,8 +112,9 @@ export interface NodeTestRunnerOptions {
  *   under test.
  *
  * Configuration (coverage, reporters, global setup, etc.) is written to a
- * Node.js configuration file which is loaded via
- * `--experimental-config-file`.
+ * Node.js configuration file (following the schema at
+ * https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json), which
+ * is loaded via `--experimental-config-file`.
  */
 export class NodeTestRunner extends Component {
   /**
@@ -126,7 +132,7 @@ export class NodeTestRunner extends Component {
   /**
    * Escape hatch for the generated configuration file.
    */
-  public readonly config: any;
+  public readonly config: NodeConfigSchema;
 
   /**
    * The generated Node.js configuration file.
@@ -152,39 +158,30 @@ export class NodeTestRunner extends Component {
     }
 
     this.config = {
-      $schema: "https://nodejs.org/dist/latest/docs/node-config-schema.json",
       test: {
         test: true,
-        ...(options.globalSetup
-          ? { "test-global-setup": options.globalSetup }
-          : {}),
+        testGlobalSetup: options.globalSetup,
         ...(coverage
           ? {
-              "experimental-test-coverage": true,
-              "test-reporter": ["spec", "lcov"],
-              "test-reporter-destination": [
+              experimentalTestCoverage: true,
+              testReporter: ["spec", "lcov"],
+              testReporterDestination: [
                 "stdout",
                 `${coverageDirectory}/lcov.info`,
               ],
-              "test-coverage-exclude": options.coverageExclude ?? [
-                "**/test/**",
-              ],
+              testCoverageExclude: options.coverageExclude ?? ["**/test/**", "**/__tests__/**"],
             }
           : {}),
-        ...(options.moduleMocks
-          ? { "experimental-test-module-mocks": true }
-          : {}),
+        experimentalTestModuleMocks: options.moduleMocks,
         ...options.additionalOptions,
       },
-      ...(options.nodeOptions
-        ? { nodeOptions: { ...options.nodeOptions } }
-        : {}),
+      nodeOptions: options.nodeOptions,
     };
 
     const configFilePath =
       options.configFilePath ?? "node.test-coverage-config.json";
     this.file = new JsonFile(this.project, configFilePath, {
-      obj: this.config,
+      obj: () => toJson_NodeConfigSchema(this.config),
     });
     this.project.npmignore?.addPatterns(`/${this.file.path}`);
 

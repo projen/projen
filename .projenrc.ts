@@ -364,7 +364,8 @@ new JsiiFromJsonSchema(project, {
 
 new JsiiFromJsonSchema(project, {
   structName: "NodeConfigSchema",
-  schemaPath: "https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json",
+  schemaPath:
+    "https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json",
   filePath: path.join("src", "javascript", "node-config.ts"),
 });
 

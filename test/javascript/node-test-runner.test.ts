@@ -59,7 +59,7 @@ test("Node Project native test runner with options", () => {
       globalSetup: "./test.setup.js",
       moduleMocks: true,
       nodeOptions: {
-        "experimental-transform-types": true,
+        experimentalTransformTypes: true,
       },
     },
   });

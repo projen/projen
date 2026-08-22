@@ -2,6 +2,7 @@ export * from "./bundler";
 export * from "./eslint";
 export * from "./jest";
 export * from "./license-checker";
+export * from "./node-config";
 export * from "./node-package";
 export * from "./node-project";
 export * from "./node-test-runner";
