@@ -1,5 +1,7 @@
 import { relative, posix } from "path";
 import * as semver from "semver";
+import type { BiomeOptions } from "./biome/biome";
+import { Biome } from "./biome/biome";
 import type { BundlerOptions } from "./bundler";
 import { Bundler } from "./bundler";
 import type { JestOptions } from "./jest";
@@ -12,10 +14,18 @@ import {
   NodePackage,
   NodePackageManager,
 } from "./node-package";
+import type { NodeTestRunnerOptions } from "./node-test-runner";
+import { NodeTestRunner } from "./node-test-runner";
 import type { ProjenrcOptions } from "./projenrc";
 import { Projenrc } from "./projenrc";
 import type { BuildWorkflowCommonOptions } from "../build";
 import { BuildWorkflow } from "../build";
+import {
+  execCommand,
+  executeCommandPriorInstallation,
+  isYarnBerry,
+  isYarnClassic,
+} from "./util";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
@@ -25,14 +35,6 @@ import type {
   GitIdentity,
 } from "../github";
 import { AutoMerge, GitHub, GitHubProject } from "../github";
-import type { BiomeOptions } from "./biome/biome";
-import { Biome } from "./biome/biome";
-import {
-  execCommand,
-  executeCommandPriorInstallation,
-  isYarnBerry,
-  isYarnClassic,
-} from "./util";
 import { GitHubActions } from "../github/actions.const";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/private/util";
@@ -313,6 +315,21 @@ export interface NodeProjectOptions
   readonly jestOptions?: JestOptions;
 
   /**
+   * Setup unit tests using Node.js' built-in test runner (`node --test`).
+   *
+   * Mutually exclusive with `jest`.
+   *
+   * @default false
+   */
+  readonly nodeTestRunner?: boolean;
+
+  /**
+   * Node test runner options
+   * @default - default options
+   */
+  readonly nodeTestRunnerOptions?: NodeTestRunnerOptions;
+
+  /**
    * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
    * .projenrc.js generation.
    *
@@ -514,6 +531,11 @@ export class NodeProject extends GitHubProject {
    */
   public readonly jest?: Jest;
 
+  /**
+   * The Node.js native test runner configuration (if enabled)
+   */
+  public readonly nodeTestRunner?: NodeTestRunner;
+
   public readonly bundler: Bundler;
 
   /**
@@ -654,9 +676,18 @@ export class NodeProject extends GitHubProject {
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
 
-    // configure jest if enabled
+    if (multipleSelected([options.jest, options.nodeTestRunner])) {
+      throw new Error("Only one of jest and nodeTestRunner can be enabled.");
+    }
+
+    // configure test runner if enabled
     // must be before the build/release workflows
-    if (options.jest ?? true) {
+    if (options.nodeTestRunner) {
+      this.nodeTestRunner = new NodeTestRunner(
+        this,
+        options.nodeTestRunnerOptions,
+      );
+    } else if (options.jest ?? true) {
       this.jest = new Jest(this, options.jestOptions);
     }
 

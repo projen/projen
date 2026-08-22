@@ -4,6 +4,7 @@ export * from "./jest";
 export * from "./license-checker";
 export * from "./node-package";
 export * from "./node-project";
+export * from "./node-test-runner";
 export * from "./npm-config";
 export * from "./pnpm-workspace";
 export * from "./pnpm-workspace-config";
