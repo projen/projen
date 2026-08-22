@@ -1,11 +1,11 @@
 import * as path from "path";
 import type { IConstruct } from "constructs";
-import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import type { Component } from "../component";
 import { JsonFile } from "../json";
 import type { Project } from "../project";
 import { normalizePersistedPath } from "../util";
-import { closestProjectMustBe } from "../util/constructs";
+import { TestRunnerBase, UpdateSnapshot } from "./test-runner-base";
+import type { TestRunnerBaseOptions } from "./test-runner-base";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
@@ -613,39 +613,7 @@ export class WatchPlugin {
   }
 }
 
-export interface JestOptions {
-  /**
-   * Include the `text` coverage reporter, which means that coverage summary is printed
-   * at the end of the jest execution.
-   *
-   * @default true
-   */
-  readonly coverageText?: boolean;
-
-  /**
-   * Result processing with jest-junit.
-   *
-   * Output directory is `test-reports/`.
-   *
-   * @default true
-   */
-  readonly junitReporting?: boolean;
-
-  /**
-   * Preserve the default Jest reporter when additional reporters are added.
-   *
-   * @default true
-   */
-  readonly preserveDefaultReporters?: boolean;
-
-  /**
-   * Whether to update snapshots in task "test" (which is executed in task "build" and build workflows),
-   * or create a separate task "test:update" for updating snapshots.
-   *
-   * @default - ALWAYS
-   */
-  readonly updateSnapshot?: UpdateSnapshot;
-
+export interface JestOptions extends TestRunnerBaseOptions {
   /**
    * The version of jest to use.
    *
@@ -658,31 +626,10 @@ export interface JestOptions {
   readonly jestVersion?: string;
 
   /**
-   * Path to JSON config file for Jest
-   *
-   * @default - No separate config file, jest settings are stored in package.json
-   */
-  readonly configFilePath?: string;
-
-  /**
    * Jest configuration.
    * @default - default jest configuration
    */
   readonly jestConfig?: JestConfigOptions;
-
-  /**
-   * Additional options to pass to the Jest CLI invocation
-   *
-   * Each element is passed to jest as a single argument, exactly as given: no
-   * shell parses these, so a flag and its value need separate elements
-   * (`["--reporters", "jest-junit"]`, not `["--reporters jest-junit"]`) and
-   * values must not be quoted (`["--testPathIgnorePatterns=/node_modules/"]`,
-   * not `["--testPathIgnorePatterns='/node_modules/'"]`).
-   *
-   * @example ["--runInBand", "--testNamePattern=a test name with spaces"]
-   * @default - no extra options
-   */
-  readonly extraCliOptions?: string[];
 
   /**
    * Pass with no tests
@@ -696,18 +643,6 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
-}
-
-export enum UpdateSnapshot {
-  /**
-   * Always update snapshots in "test" task.
-   */
-  ALWAYS = "always",
-
-  /**
-   * Never update snapshots in "test" task and create a separate "test:update" task.
-   */
-  NEVER = "never",
 }
 
 export interface HasteConfig {
@@ -856,7 +791,7 @@ export class JestReporter {
  * - `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
  *
  */
-export class Jest extends Component {
+export class Jest extends TestRunnerBase {
   /**
    * Returns the singleton Jest component of a project or undefined if there is none.
    */
@@ -865,7 +800,9 @@ export class Jest extends Component {
     return project.components.find(isJest);
   }
 
-  public readonly project: NodeProject;
+  protected readonly binary = "jest";
+  protected readonly testUpdateTaskDescription = "Update jest snapshots";
+  protected readonly testWatchTaskDescription = "Run jest in watch mode";
 
   /**
    * Escape hatch.
@@ -882,7 +819,6 @@ export class Jest extends Component {
    */
   readonly file?: JsonFile;
 
-  private readonly testMatch = new Array<string>();
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -891,13 +827,12 @@ export class Jest extends Component {
     readonly additionalOptions: undefined;
     [key: string]: unknown;
   };
-  private readonly extraCliOptions: string[];
   private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
+  private jestConfigOpts: string[] = [];
 
   constructor(scope: IConstruct, options: JestOptions = {}) {
-    super(scope);
-    this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
+    super(scope, options);
 
     // hard deprecation
     if ((options as any).typescriptConfig) {
@@ -921,7 +856,6 @@ export class Jest extends Component {
       additionalOptions: undefined,
       ...options.jestConfig?.additionalOptions,
     };
-    this.extraCliOptions = options.extraCliOptions ?? [];
     this.passWithNoTests = options.passWithNoTests ?? true;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
@@ -1003,6 +937,9 @@ export class Jest extends Component {
       };
     }
 
+    // NOTE: `this.file` is assigned below, after the test command is
+    // configured, so `jestConfigOpts` remains empty (preserving prior
+    // behavior).
     this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
 
     if (options.configFilePath) {
@@ -1148,12 +1085,8 @@ export class Jest extends Component {
     this.config.roots = [...new Set([...existingRoots, ...roots])];
   }
 
-  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
-    const jestOpts = this.extraCliOptions;
-    const jestConfigOpts: string[] = [];
-    if (this.file && this.file.path != "jest.config.json") {
-      jestConfigOpts.push("-c", this.file.path);
-    }
+  protected buildTestArgs(updateSnapshot: UpdateSnapshot): string[] {
+    const jestOpts = [...this.extraCliOptions];
 
     if (this.passWithNoTests) {
       jestOpts.push("--passWithNoTests");
@@ -1162,32 +1095,20 @@ export class Jest extends Component {
       jestOpts.push("--updateSnapshot");
     } else {
       jestOpts.push("--ci"); // to prevent accepting new snapshots
-
-      const testUpdate = this.project.tasks.tryFind("test:update");
-      if (!testUpdate) {
-        this.project.addTask("test:update", {
-          description: "Update jest snapshots",
-          execArgs: [
-            "jest",
-            "--updateSnapshot",
-            ...jestOpts,
-            ...jestConfigOpts,
-          ],
-          receiveArgs: true,
-        });
-      }
     }
 
-    this.project.testTask.execArgs(["jest", ...jestOpts, ...jestConfigOpts], {
-      receiveArgs: true,
-    });
+    return [...jestOpts, ...this.jestConfigOpts];
+  }
 
-    const testWatch = this.project.tasks.tryFind("test:watch");
-    if (!testWatch) {
-      this.project.addTask("test:watch", {
-        description: "Run jest in watch mode",
-        execArgs: ["jest", "--watch", ...jestConfigOpts],
-      });
-    }
+  protected buildUpdateArgs(): string[] {
+    return [
+      "--updateSnapshot",
+      ...this.extraCliOptions,
+      ...this.jestConfigOpts,
+    ];
+  }
+
+  protected buildWatchArgs(): string[] {
+    return ["--watch", ...this.jestConfigOpts];
   }
 }

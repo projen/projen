@@ -1,32 +1,19 @@
 import type { IConstruct } from "constructs";
-import { Component } from "../component";
-import { UpdateSnapshot } from "./jest";
-import { NodeProject } from "../javascript";
+import type { Component } from "../component";
 import { JsonFile } from "../json";
+import type { Project } from "../project";
 import type {
   NodeConfigSchema,
   NodeConfigSchemaNodeOptions,
   NodeConfigSchemaTest,
 } from "./node-config";
 import { toJson_NodeConfigSchema } from "./node-config";
-import type { Project } from "../project";
-import { closestProjectMustBe } from "../util/constructs";
+import { TestRunnerBase, UpdateSnapshot } from "./test-runner-base";
+import type { TestRunnerBaseOptions } from "./test-runner-base";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
-export interface NodeTestRunnerOptions {
-  /**
-   * Additional options to pass to the `node` CLI invocation.
-   *
-   * Each element is passed as a single argument, exactly as given: no shell
-   * parses these, so a flag and its value need separate elements
-   * (`["--test-name-pattern", "foo"]`, not `["--test-name-pattern foo"]`).
-   *
-   * @example ["--test-concurrency=4"]
-   * @default - no extra options
-   */
-  readonly extraCliOptions?: string[];
-
+export interface NodeTestRunnerOptions extends TestRunnerBaseOptions {
   /**
    * Glob patterns matching the files that contain tests.
    *
@@ -59,40 +46,6 @@ export interface NodeTestRunnerOptions {
   readonly coveragePathIgnorePatterns?: string[];
 
   /**
-   * Include the `spec` reporter, which means that a coverage summary and
-   * test results are printed to stdout.
-   *
-   * @default true
-   */
-  readonly coverageText?: boolean;
-
-  /**
-   * Result processing with Node's built-in `junit` reporter.
-   *
-   * Output directory is `test-reports/`.
-   *
-   * @default true
-   */
-  readonly junitReporting?: boolean;
-
-  /**
-   * Preserve the default `spec` reporter when additional reporters (e.g.
-   * `junit`) are added.
-   *
-   * @default true
-   */
-  readonly preserveDefaultReporters?: boolean;
-
-  /**
-   * Whether to update snapshots in task "test" (which is executed in task
-   * "build" and build workflows), or create a separate task "test:update"
-   * for updating snapshots.
-   *
-   * @default - ALWAYS
-   */
-  readonly updateSnapshot?: UpdateSnapshot;
-
-  /**
    * This option allows the use of a custom global setup module which
    * exports a function that is triggered once before all test suites.
    * Written as `test-global-setup` in the generated Node.js configuration
@@ -108,14 +61,6 @@ export interface NodeTestRunnerOptions {
    * @default false
    */
   readonly moduleMocks?: boolean;
-
-  /**
-   * Path to the Node.js configuration file, passed to the test runner via
-   * `--experimental-config-file`.
-   *
-   * @default "node.test-coverage-config.json"
-   */
-  readonly configFilePath?: string;
 
   /**
    * Additional entries for the `nodeOptions` section of the generated
@@ -149,7 +94,7 @@ export interface NodeTestRunnerOptions {
  * https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json), which
  * is loaded via `--experimental-config-file`.
  */
-export class NodeTestRunner extends Component {
+export class NodeTestRunner extends TestRunnerBase {
   /**
    * Returns the singleton NodeTestRunner component of a project or undefined
    * if there is none.
@@ -160,7 +105,7 @@ export class NodeTestRunner extends Component {
     return project.components.find(isNodeTestRunner);
   }
 
-  public readonly project: NodeProject;
+  protected readonly binary = "node";
 
   /**
    * Escape hatch for the generated configuration file.
@@ -172,15 +117,10 @@ export class NodeTestRunner extends Component {
    */
   public readonly file: JsonFile;
 
-  private readonly extraCliOptions: string[];
-  private readonly testMatch: string[];
-
   constructor(scope: IConstruct, options: NodeTestRunnerOptions = {}) {
-    super(scope);
-    this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
+    super(scope, options);
 
-    this.extraCliOptions = options.extraCliOptions ?? [];
-    this.testMatch = options.testMatch ?? [];
+    this.testMatch.push(...(options.testMatch ?? []));
 
     const collectCoverage = options.collectCoverage ?? true;
     const coverageDirectory = options.coverageDirectory ?? "coverage";
@@ -248,14 +188,6 @@ export class NodeTestRunner extends Component {
     this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
   }
 
-  /**
-   * Adds a test match pattern.
-   * @param pattern glob pattern to match for tests
-   */
-  public addTestMatch(pattern: string) {
-    this.testMatch.push(pattern);
-  }
-
   private buildBaseArgs(): string[] {
     return [
       `--experimental-config-file=${this.file.path}`,
@@ -264,32 +196,19 @@ export class NodeTestRunner extends Component {
     ];
   }
 
-  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
-    const baseArgs = this.buildBaseArgs();
-
+  protected buildTestArgs(updateSnapshot: UpdateSnapshot): string[] {
+    const args = this.buildBaseArgs();
     if (updateSnapshot === UpdateSnapshot.ALWAYS) {
-      baseArgs.push("--test-update-snapshots");
-    } else {
-      const testUpdate = this.project.tasks.tryFind("test:update");
-      if (!testUpdate) {
-        this.project.addTask("test:update", {
-          description: "Update test snapshots",
-          execArgs: ["node", ...baseArgs, "--test-update-snapshots"],
-          receiveArgs: true,
-        });
-      }
+      args.push("--test-update-snapshots");
     }
+    return args;
+  }
 
-    this.project.testTask.execArgs(["node", ...baseArgs], {
-      receiveArgs: true,
-    });
+  protected buildUpdateArgs(): string[] {
+    return [...this.buildBaseArgs(), "--test-update-snapshots"];
+  }
 
-    const testWatch = this.project.tasks.tryFind("test:watch");
-    if (!testWatch) {
-      this.project.addTask("test:watch", {
-        description: "Run tests in watch mode",
-        execArgs: ["node", ...this.buildBaseArgs(), "--watch"],
-      });
-    }
+  protected buildWatchArgs(): string[] {
+    return [...this.buildBaseArgs(), "--watch"];
   }
 }
