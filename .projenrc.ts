@@ -362,6 +362,12 @@ new JsiiFromJsonSchema(project, {
   filePath: path.join("src", "javascript", "pnpm-workspace-config.ts"),
 });
 
+new JsiiFromJsonSchema(project, {
+  structName: "NodeConfigSchema",
+  schemaPath: "https://nodejs.org/dist/latest-v24.x/docs/node-config-schema.json",
+  filePath: path.join("src", "javascript", "node-config.ts"),
+});
+
 new JsonConst(project, {
   jsonPath: require.resolve("aws-cdk-lib/recommended-feature-flags.json"),
   filePath: path.join("src", "awscdk", "private", "feature-flags-v2.const.ts"),
