@@ -252,10 +252,18 @@
           "path": ".npmignore"
         }
       },
-      "Jest#AutoId14": {
+      "AutoId14": {
         "metadata": {
           "type": "component",
-          "construct": "Jest"
+          "construct": "JavaScriptTestRunner"
+        },
+        "nodes": {
+          "Jest#AutoId1": {
+            "metadata": {
+              "type": "component",
+              "construct": "Jest"
+            }
+          }
         }
       },
       "BuildWorkflow#AutoId15": {

@@ -1,9 +1,11 @@
 import { relative, posix } from "path";
 import * as semver from "semver";
+import type { BiomeOptions } from "./biome/biome";
+import { Biome } from "./biome/biome";
 import type { BundlerOptions } from "./bundler";
 import { Bundler } from "./bundler";
-import type { JestOptions } from "./jest";
-import { Jest } from "./jest";
+import { JavaScriptTestRunner } from "./javascript-test-runner";
+import type { JestOptions, Jest } from "./jest";
 import type { LicenseCheckerOptions } from "./license-checker";
 import { LicenseChecker } from "./license-checker";
 import type { CodeArtifactOptions, NodePackageOptions } from "./node-package";
@@ -16,6 +18,12 @@ import type { ProjenrcOptions } from "./projenrc";
 import { Projenrc } from "./projenrc";
 import type { BuildWorkflowCommonOptions } from "../build";
 import { BuildWorkflow } from "../build";
+import {
+  execCommand,
+  executeCommandPriorInstallation,
+  isYarnBerry,
+  isYarnClassic,
+} from "./util";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
 import { DependencyType } from "../dependencies";
@@ -25,14 +33,6 @@ import type {
   GitIdentity,
 } from "../github";
 import { AutoMerge, GitHub, GitHubProject } from "../github";
-import type { BiomeOptions } from "./biome/biome";
-import { Biome } from "./biome/biome";
-import {
-  execCommand,
-  executeCommandPriorInstallation,
-  isYarnBerry,
-  isYarnClassic,
-} from "./util";
 import { GitHubActions } from "../github/actions.const";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/private/util";
@@ -302,15 +302,26 @@ export interface NodeProjectOptions
 
   /**
    * Setup jest unit tests
+   *
+   * @deprecated Use `testRunner: JavaScriptTestRunner.useJest()` instead.
    * @default true
    */
   readonly jest?: boolean;
 
   /**
    * Jest options
+   *
+   * @deprecated Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
    * @default - default options
    */
   readonly jestOptions?: JestOptions;
+
+  /**
+   * The test runner used to execute unit tests.
+   *
+   * @default - `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+   */
+  readonly testRunner?: JavaScriptTestRunner;
 
   /**
    * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
@@ -510,7 +521,14 @@ export class NodeProject extends GitHubProject {
   public readonly runScriptCommand: string;
 
   /**
+   * The test runner used to execute unit tests.
+   */
+  public readonly testRunner?: JavaScriptTestRunner;
+
+  /**
    * The Jest configuration (if enabled)
+   *
+   * @deprecated Use `testRunner?.jest` instead.
    */
   public readonly jest?: Jest;
 
@@ -654,11 +672,18 @@ export class NodeProject extends GitHubProject {
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
 
-    // configure jest if enabled
-    // must be before the build/release workflows
-    if (options.jest ?? true) {
-      this.jest = new Jest(this, options.jestOptions);
+    if (options.testRunner && options.jest !== undefined) {
+      throw new Error(
+        "Cannot use `testRunner` together with the deprecated `jest` option. Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.",
+      );
     }
+
+    // configure test runner if enabled
+    // must be before the build/release workflows
+    this.testRunner = this.resolveTestRunner(options);
+    this.testRunner?.tryAttach(this);
+    // Only needed for backward compatibility
+    this.jest = this.testRunner?.jest;
 
     const workflowPermissions: JobPermissions = {
       idToken: this.determineIdTokenPermissions(options),
@@ -923,6 +948,23 @@ export class NodeProject extends GitHubProject {
     }
   }
 
+  /**
+   * Resolves the test runner to use, from either the `testRunner` option or
+   * the deprecated `jest`/`jestOptions` options.
+   */
+  private resolveTestRunner(
+    options: NodeProjectOptions,
+  ): JavaScriptTestRunner | undefined {
+    if (options.testRunner) {
+      return options.testRunner;
+    }
+
+    const jestEnabled = options.jest ?? true;
+    return jestEnabled
+      ? JavaScriptTestRunner.useJest(options.jestOptions)
+      : undefined;
+  }
+
   private determineInstallWorkingDirectory(): string | undefined {
     if (this.parent) {
       return ensureRelativePathStartsWithDot(relative(".", this.root.outdir));
@@ -951,8 +993,11 @@ export class NodeProject extends GitHubProject {
 
   private useCodecov(options: NodeProjectOptions): boolean {
     // Use Codecov when it is enabled or if or a secret token name is passed in
-    // AND jest must be configured
-    return (options.codeCov || options.codeCovTokenSecret) && this.jest?.config;
+    // AND testing must be configured
+    return Boolean(
+      (options.codeCov || options.codeCovTokenSecret) &&
+      this.testRunner?.initialized,
+    );
   }
 
   private maybeAddCodecovIgnores(options: NodeProjectOptions) {
@@ -964,7 +1009,7 @@ export class NodeProject extends GitHubProject {
 
   private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
     // run codecov if enabled or a secret token name is passed in
-    // AND jest must be configured
+    // AND testing must be configured
     if (this.useCodecov(options)) {
       return [
         {
@@ -973,10 +1018,10 @@ export class NodeProject extends GitHubProject {
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest?.config.coverageDirectory,
+                directory: this.testRunner?.coverageDirectory,
               }
             : {
-                directory: this.jest?.config.coverageDirectory,
+                directory: this.testRunner?.coverageDirectory,
                 use_oidc: true,
               },
         },

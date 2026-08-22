@@ -3625,6 +3625,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -3642,6 +3643,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -5059,6 +5061,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -6797,6 +6818,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -6814,6 +6836,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -8339,6 +8362,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -11252,6 +11294,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -11269,6 +11312,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -12631,6 +12675,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -14308,6 +14371,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -14325,6 +14389,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -15780,6 +15845,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -17371,6 +17455,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -17388,6 +17473,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -18794,6 +18880,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -20436,6 +20541,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -20453,6 +20559,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -21908,6 +22015,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -24279,6 +24405,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -24296,6 +24423,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -25754,6 +25882,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
+        },
+      },
+      {
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
@@ -27099,6 +27246,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -27116,6 +27264,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -28372,6 +28521,25 @@ exports[`inventory 1`] = `
         "switch": "tailwind",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -29715,6 +29883,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -29732,6 +29901,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -31080,6 +31250,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
+        },
+      },
+      {
         "default": "- default options",
         "docs": "Custom TSConfig.",
         "featured": false,
@@ -32389,6 +32578,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -32406,6 +32596,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -33611,6 +33802,25 @@ exports[`inventory 1`] = `
         "switch": "stale-options",
         "type": {
           "fqn": "projen.github.StaleOptions",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -36082,6 +36292,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -36099,6 +36310,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -37360,6 +37572,25 @@ exports[`inventory 1`] = `
         "switch": "stale-options",
         "type": {
           "fqn": "projen.github.StaleOptions",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -38686,6 +38917,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -38703,6 +38935,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -40053,6 +40286,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -41486,6 +41738,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -41503,6 +41756,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -42831,6 +43085,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {
@@ -44264,6 +44537,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "true",
+        "deprecated": true,
         "docs": "Setup jest unit tests.",
         "featured": false,
         "jsonLike": true,
@@ -44281,6 +44555,7 @@ exports[`inventory 1`] = `
       },
       {
         "default": "- default options",
+        "deprecated": true,
         "docs": "Jest options.",
         "featured": false,
         "fqn": "projen.javascript.JestOptions",
@@ -45609,6 +45884,25 @@ exports[`inventory 1`] = `
         "switch": "testdir",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- \`JavaScriptTestRunner.useJest()\`, unless \`jest\` is set to \`false\`",
+        "docs": "The test runner used to execute unit tests.",
+        "featured": false,
+        "fqn": "projen.javascript.JavaScriptTestRunner",
+        "jsonLike": false,
+        "kind": "class",
+        "name": "testRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "testRunner",
+        ],
+        "simpleType": "JavaScriptTestRunner",
+        "switch": "test-runner",
+        "type": {
+          "fqn": "projen.javascript.JavaScriptTestRunner",
         },
       },
       {

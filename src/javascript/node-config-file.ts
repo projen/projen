@@ -54,7 +54,7 @@ export class NodeConfigFile extends Component {
     this.file = new JsonFile(project, filePath, {
       obj: () => toJson_NodeConfigSchema(this.config),
       omitEmpty: true,
-      marker: false,
+      marker: true,
     });
   }
 }

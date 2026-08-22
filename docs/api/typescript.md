@@ -1196,6 +1196,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
+| <code><a href="#projen.typescript.TypeScriptAppProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptAppProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
@@ -1700,7 +1701,9 @@ The job ID of the build workflow.
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptAppProject.property.jest"></a>
+##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptAppProject.property.jest"></a>
+
+- *Deprecated:* Use `testRunner?.jest` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -1771,6 +1774,18 @@ public readonly release: Release;
 - *Type:* projen.release.Release
 
 Release management.
+
+---
+
+##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.typescript.TypeScriptAppProject.property.testRunner"></a>
+
+```typescript
+public readonly testRunner: JavaScriptTestRunner;
+```
+
+- *Type:* projen.javascript.JavaScriptTestRunner
+
+The test runner used to execute unit tests.
 
 ---
 
@@ -2589,6 +2604,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.typescript.TypeScriptProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
+| <code><a href="#projen.typescript.TypeScriptProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.typescript.TypeScriptProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.typescript.TypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
@@ -3093,7 +3109,9 @@ The job ID of the build workflow.
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptProject.property.jest"></a>
+##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptProject.property.jest"></a>
+
+- *Deprecated:* Use `testRunner?.jest` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -3164,6 +3182,18 @@ public readonly release: Release;
 - *Type:* projen.release.Release
 
 Release management.
+
+---
+
+##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.typescript.TypeScriptProject.property.testRunner"></a>
+
+```typescript
+public readonly testRunner: JavaScriptTestRunner;
+```
+
+- *Type:* projen.javascript.JavaScriptTestRunner
+
+The test runner used to execute unit tests.
 
 ---
 
@@ -4388,6 +4418,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -6163,7 +6194,9 @@ Additional entries to .gitignore.
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptProjectOptions.property.jest"></a>
+##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.typescript.TypeScriptProjectOptions.property.jest"></a>
+
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -6176,7 +6209,9 @@ Setup jest unit tests.
 
 ---
 
-##### `jestOptions`<sup>Optional</sup> <a name="jestOptions" id="projen.typescript.TypeScriptProjectOptions.property.jestOptions"></a>
+##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.typescript.TypeScriptProjectOptions.property.jestOptions"></a>
+
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -6354,6 +6389,19 @@ public readonly releaseToNpm: boolean;
 - *Default:* false
 
 Automatically release to npm when new versions are introduced.
+
+---
+
+##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.typescript.TypeScriptProjectOptions.property.testRunner"></a>
+
+```typescript
+public readonly testRunner: JavaScriptTestRunner;
+```
+
+- *Type:* projen.javascript.JavaScriptTestRunner
+- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+
+The test runner used to execute unit tests.
 
 ---
 
