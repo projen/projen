@@ -879,6 +879,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.nodeTestRunner">nodeTestRunner</a></code> | <code>projen.javascript.NodeTestRunner</code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -1425,6 +1426,18 @@ public readonly minNodeVersion: string;
 The minimum node version required by this package to function.
 
 This value indicates the package is incompatible with older versions.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.awscdk.AwsCdkConstructLibrary.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* projen.javascript.NodeTestRunner
+
+The Node.js native test runner configuration (if enabled).
 
 ---
 
@@ -5443,6 +5456,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.nodeTestRunner">nodeTestRunner</a></code> | <code>projen.javascript.NodeTestRunner</code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -5992,6 +6006,18 @@ public readonly minNodeVersion: string;
 The minimum node version required by this package to function.
 
 This value indicates the package is incompatible with older versions.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.awscdk.AwsCdkTypeScriptApp.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* projen.javascript.NodeTestRunner
+
+The Node.js native test runner configuration (if enabled).
 
 ---
 
@@ -9229,6 +9255,8 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.jestOptions">jestOptions</a></code> | <code>projen.javascript.JestOptions</code> | Jest options. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code>projen.javascript.NodeTestRunnerOptions</code> | Node test runner options. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -11033,6 +11061,34 @@ public readonly jestOptions: JestOptions;
 - *Default:* default options
 
 Jest options.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* projen.javascript.NodeTestRunnerOptions
+- *Default:* default options
+
+Node test runner options.
 
 ---
 
@@ -14210,6 +14266,8 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.jestOptions">jestOptions</a></code> | <code>projen.javascript.JestOptions</code> | Jest options. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code>projen.javascript.NodeTestRunnerOptions</code> | Node test runner options. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -16007,6 +16065,34 @@ public readonly jestOptions: JestOptions;
 - *Default:* default options
 
 Jest options.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* projen.javascript.NodeTestRunnerOptions
+- *Default:* default options
+
+Node test runner options.
 
 ---
 
