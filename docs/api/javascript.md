@@ -1166,6 +1166,7 @@ new javascript.Jest(scope: IConstruct, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.Jest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.javascript.Jest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 | <code><a href="#projen.javascript.Jest.addIgnorePattern">addIgnorePattern</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.addModuleNameMappers">addModuleNameMappers</a></code> | Adds one or more moduleNameMapper entries to Jest's configuration. |
 | <code><a href="#projen.javascript.Jest.addModulePaths">addModulePaths</a></code> | Adds one or more modulePaths to Jest's configuration. |
@@ -1174,7 +1175,6 @@ new javascript.Jest(scope: IConstruct, options?: JestOptions)
 | <code><a href="#projen.javascript.Jest.addSetupFile">addSetupFile</a></code> | Adds a a setup file to Jest's setupFiles configuration. |
 | <code><a href="#projen.javascript.Jest.addSetupFileAfterEnv">addSetupFileAfterEnv</a></code> | Adds a a setup file to Jest's setupFilesAfterEnv configuration. |
 | <code><a href="#projen.javascript.Jest.addSnapshotResolver">addSnapshotResolver</a></code> | *No description.* |
-| <code><a href="#projen.javascript.Jest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 | <code><a href="#projen.javascript.Jest.addWatchIgnorePattern">addWatchIgnorePattern</a></code> | Adds a watch ignore pattern. |
 | <code><a href="#projen.javascript.Jest.discoverTestMatchPatternsForDirs">discoverTestMatchPatternsForDirs</a></code> | Build standard test match patterns for a directory. |
 
@@ -1274,6 +1274,22 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
+
+```typescript
+public addTestMatch(pattern: string): void
+```
+
+Adds a test match pattern.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Jest.addTestMatch.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to match for tests.
+
+---
 
 ##### `addIgnorePattern` <a name="addIgnorePattern" id="projen.javascript.Jest.addIgnorePattern"></a>
 
@@ -1390,22 +1406,6 @@ public addSnapshotResolver(file: string): void
 ###### `file`<sup>Required</sup> <a name="file" id="projen.javascript.Jest.addSnapshotResolver.parameter.file"></a>
 
 - *Type:* string
-
----
-
-##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
-
-```typescript
-public addTestMatch(pattern: string): void
-```
-
-Adds a test match pattern.
-
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.Jest.addTestMatch.parameter.pattern"></a>
-
-- *Type:* string
-
-glob pattern to match for tests.
 
 ---
 
@@ -3399,6 +3399,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.javascript.NodeProject.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.javascript.NodeProject.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.javascript.NodeProject.property.nodeTestRunner">nodeTestRunner</a></code> | <code><a href="#projen.javascript.NodeTestRunner">NodeTestRunner</a></code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.javascript.NodeProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.javascript.NodeProject.property.prettier">prettier</a></code> | <code><a href="#projen.javascript.Prettier">Prettier</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -3935,6 +3936,18 @@ This value indicates the package is incompatible with older versions.
 
 ---
 
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.javascript.NodeProject.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* <a href="#projen.javascript.NodeTestRunner">NodeTestRunner</a>
+
+The Node.js native test runner configuration (if enabled).
+
+---
+
 ##### `npmignore`<sup>Optional</sup> <a name="npmignore" id="projen.javascript.NodeProject.property.npmignore"></a>
 
 ```typescript
@@ -4003,6 +4016,305 @@ Normally
 this task should synthesize the project files.
 
 ---
+
+### NodeTestRunner <a name="NodeTestRunner" id="projen.javascript.NodeTestRunner"></a>
+
+Installs the following npm scripts:.
+
+`test`, intended for testing locally and in CI. Will update snapshots
+  unless `updateSnapshot: UpdateSnapshot.NEVER` is set.
+- `test:watch`, intended for automatically rerunning tests when files change.
+- `test:update`, intended for testing locally and updating snapshots to
+  match the latest unit under test. Only available when
+  `updateSnapshot: UpdateSnapshot.NEVER`.
+
+Configuration (coverage, reporters, global setup, etc.) is written to a
+Node.js configuration file, which is loaded via `--experimental-config-file`.
+
+#### Initializers <a name="Initializers" id="projen.javascript.NodeTestRunner.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.NodeTestRunner(scope: IConstruct, options?: NodeTestRunnerOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeTestRunner.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeTestRunner.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.NodeTestRunnerOptions">NodeTestRunnerOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeTestRunner.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.NodeTestRunner.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.NodeTestRunnerOptions">NodeTestRunnerOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeTestRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.NodeTestRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.NodeTestRunner.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeTestRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.NodeTestRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.NodeTestRunner.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeTestRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.NodeTestRunner.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.NodeTestRunner.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.javascript.NodeTestRunner.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeTestRunner.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeTestRunner.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeTestRunner.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeTestRunner.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeTestRunner.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeTestRunner.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeTestRunner.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.NodeTestRunner.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.NodeTestRunner.addTestMatch"></a>
+
+```typescript
+public addTestMatch(pattern: string): void
+```
+
+Adds a test match pattern.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeTestRunner.addTestMatch.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to match for tests.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeTestRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.NodeTestRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.NodeTestRunner.of">of</a></code> | Returns the singleton NodeTestRunner component of a project or undefined if there is none. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeTestRunner.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeTestRunner.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeTestRunner.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.NodeTestRunner.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeTestRunner.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeTestRunner.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.NodeTestRunner.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeTestRunner.of(project: Project)
+```
+
+Returns the singleton NodeTestRunner component of a project or undefined if there is none.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeTestRunner.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeTestRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.NodeTestRunner.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeTestRunner.property.config">config</a></code> | <code><a href="#projen.javascript.NodeConfigSchema">NodeConfigSchema</a></code> | Escape hatch for the generated configuration file. |
+| <code><a href="#projen.javascript.NodeTestRunner.property.file">file</a></code> | <code>projen.JsonFile</code> | The generated Node.js configuration file. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeTestRunner.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeTestRunner.property.project"></a>
+
+```typescript
+public readonly project: NodeProject;
+```
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `config`<sup>Required</sup> <a name="config" id="projen.javascript.NodeTestRunner.property.config"></a>
+
+```typescript
+public readonly config: NodeConfigSchema;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchema">NodeConfigSchema</a>
+
+Escape hatch for the generated configuration file.
+
+---
+
+##### `file`<sup>Required</sup> <a name="file" id="projen.javascript.NodeTestRunner.property.file"></a>
+
+```typescript
+public readonly file: JsonFile;
+```
+
+- *Type:* projen.JsonFile
+
+The generated Node.js configuration file.
+
+---
+
 
 ### NpmConfig <a name="NpmConfig" id="projen.javascript.NpmConfig"></a>
 
@@ -5121,6 +5433,261 @@ public readonly filePath: string;
 - *Type:* string
 
 The path of the projenrc file.
+
+---
+
+
+### TestRunnerBase <a name="TestRunnerBase" id="projen.javascript.TestRunnerBase"></a>
+
+Base class shared by test runner components (e.g. `Jest`, `NodeTestRunner`).
+
+Installs the following npm scripts:
+
+- `test`, intended for testing locally and in CI. Will update snapshots
+  unless `updateSnapshot: UpdateSnapshot.NEVER` is set.
+- `test:watch`, intended for automatically rerunning tests when files change.
+- `test:update`, intended for testing locally and updating snapshots to
+  match the latest unit under test. Only available when
+  `updateSnapshot: UpdateSnapshot.NEVER`.
+
+#### Initializers <a name="Initializers" id="projen.javascript.TestRunnerBase.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.TestRunnerBase(scope: IConstruct, options?: TestRunnerBaseOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.TestRunnerBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.javascript.TestRunnerBase.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.TestRunnerBaseOptions">TestRunnerBaseOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.TestRunnerBase.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.TestRunnerBase.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.TestRunnerBaseOptions">TestRunnerBaseOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.TestRunnerBase.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.TestRunnerBase.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.TestRunnerBase.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.TestRunnerBase.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.TestRunnerBase.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.TestRunnerBase.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.TestRunnerBase.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.TestRunnerBase.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.TestRunnerBase.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.javascript.TestRunnerBase.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.TestRunnerBase.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.TestRunnerBase.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.TestRunnerBase.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.TestRunnerBase.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.TestRunnerBase.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.TestRunnerBase.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.TestRunnerBase.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.TestRunnerBase.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.TestRunnerBase.addTestMatch"></a>
+
+```typescript
+public addTestMatch(pattern: string): void
+```
+
+Adds a test match pattern.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.TestRunnerBase.addTestMatch.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to match for tests.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.TestRunnerBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.TestRunnerBase.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.TestRunnerBase.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.TestRunnerBase.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.TestRunnerBase.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.TestRunnerBase.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.TestRunnerBase.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.TestRunnerBase.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.TestRunnerBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.TestRunnerBase.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.TestRunnerBase.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.TestRunnerBase.property.project"></a>
+
+```typescript
+public readonly project: NodeProject;
+```
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
 
 ---
 
@@ -9295,15 +9862,15 @@ const jestOptions: javascript.JestOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.JestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to JSON config file for Jest. |
-| <code><a href="#projen.javascript.JestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. |
-| <code><a href="#projen.javascript.JestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the Jest CLI invocation. |
+| <code><a href="#projen.javascript.JestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
+| <code><a href="#projen.javascript.JestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
+| <code><a href="#projen.javascript.JestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
+| <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
+| <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.JestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 | <code><a href="#projen.javascript.JestOptions.property.jestConfig">jestConfig</a></code> | <code><a href="#projen.javascript.JestConfigOptions">JestConfigOptions</a></code> | Jest configuration. |
 | <code><a href="#projen.javascript.JestOptions.property.jestVersion">jestVersion</a></code> | <code>string</code> | The version of jest to use. |
-| <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with jest-junit. |
 | <code><a href="#projen.javascript.JestOptions.property.passWithNoTests">passWithNoTests</a></code> | <code>boolean</code> | Pass with no tests. |
-| <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added. |
-| <code><a href="#projen.javascript.JestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 
 ---
 
@@ -9314,9 +9881,9 @@ public readonly configFilePath: string;
 ```
 
 - *Type:* string
-- *Default:* No separate config file, jest settings are stored in package.json
+- *Default:* no separate config file
 
-Path to JSON config file for Jest.
+Path to the JSON configuration file for the test runner.
 
 ---
 
@@ -9329,7 +9896,7 @@ public readonly coverageText: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.
+Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
 
 ---
 
@@ -9342,22 +9909,54 @@ public readonly extraCliOptions: string[];
 - *Type:* string[]
 - *Default:* no extra options
 
-Additional options to pass to the Jest CLI invocation.
+Additional options to pass to the test runner's CLI invocation.
 
-Each element is passed to jest as a single argument, exactly as given: no
-shell parses these, so a flag and its value need separate elements
-(`["--reporters", "jest-junit"]`, not `["--reporters jest-junit"]`) and
-values must not be quoted (`["--testPathIgnorePatterns=/node_modules/"]`,
-not `["--testPathIgnorePatterns='/node_modules/'"]`).
+Each element is passed as a single argument, exactly as given: no shell
+parses these, so a flag and its value need separate elements
+(`["--foo", "bar"]`, not `["--foo bar"]`).
 
 ---
 
-*Example*
+##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
 
 ```typescript
-["--runInBand", "--testNamePattern=a test name with spaces"]
+public readonly junitReporting: boolean;
 ```
 
+- *Type:* boolean
+- *Default:* true
+
+Result processing with a JUnit-compatible reporter.
+
+Output directory is `test-reports/`.
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.JestOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default reporter when additional reporters are added.
+
+---
+
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.JestOptions.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+- *Default:* ALWAYS
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+---
 
 ##### `jestConfig`<sup>Optional</sup> <a name="jestConfig" id="projen.javascript.JestOptions.property.jestConfig"></a>
 
@@ -9389,21 +9988,6 @@ With Jest 30 ts-jest version 29 is used (if Typescript in use)
 
 ---
 
-##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
-
-```typescript
-public readonly junitReporting: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Result processing with jest-junit.
-
-Output directory is `test-reports/`.
-
----
-
 ##### `passWithNoTests`<sup>Optional</sup> <a name="passWithNoTests" id="projen.javascript.JestOptions.property.passWithNoTests"></a>
 
 ```typescript
@@ -9414,32 +9998,6 @@ public readonly passWithNoTests: boolean;
 - *Default:* true
 
 Pass with no tests.
-
----
-
-##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.JestOptions.property.preserveDefaultReporters"></a>
-
-```typescript
-public readonly preserveDefaultReporters: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Preserve the default Jest reporter when additional reporters are added.
-
----
-
-##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.JestOptions.property.updateSnapshot"></a>
-
-```typescript
-public readonly updateSnapshot: UpdateSnapshot;
-```
-
-- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
-- *Default:* ALWAYS
-
-Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
 
 ---
 
@@ -9535,6 +10093,2528 @@ public readonly taskName: string;
 - *Default:* "check-licenses"
 
 The name of the task that is added to check licenses.
+
+---
+
+### NodeConfigSchema <a name="NodeConfigSchema" id="projen.javascript.NodeConfigSchema"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchema.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchema: javascript.NodeConfigSchema = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.permission">permission</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.schema">schema</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.test">test</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.watch">watch</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaWatch">NodeConfigSchemaWatch</a></code> | *No description.* |
+
+---
+
+##### `nodeOptions`<sup>Optional</sup> <a name="nodeOptions" id="projen.javascript.NodeConfigSchema.property.nodeOptions"></a>
+
+```typescript
+public readonly nodeOptions: NodeConfigSchemaNodeOptions;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
+
+---
+
+##### `permission`<sup>Optional</sup> <a name="permission" id="projen.javascript.NodeConfigSchema.property.permission"></a>
+
+```typescript
+public readonly permission: NodeConfigSchemaPermission;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a>
+
+---
+
+##### `schema`<sup>Optional</sup> <a name="schema" id="projen.javascript.NodeConfigSchema.property.schema"></a>
+
+```typescript
+public readonly schema: string;
+```
+
+- *Type:* string
+
+---
+
+##### `test`<sup>Optional</sup> <a name="test" id="projen.javascript.NodeConfigSchema.property.test"></a>
+
+```typescript
+public readonly test: NodeConfigSchemaTest;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a>
+
+---
+
+##### `watch`<sup>Optional</sup> <a name="watch" id="projen.javascript.NodeConfigSchema.property.watch"></a>
+
+```typescript
+public readonly watch: NodeConfigSchemaWatch;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaWatch">NodeConfigSchemaWatch</a>
+
+---
+
+### NodeConfigSchemaNodeOptions <a name="NodeConfigSchemaNodeOptions" id="projen.javascript.NodeConfigSchemaNodeOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaNodeOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.addons">addons</a></code> | <code>boolean</code> | disable loading native addons. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowAddons">allowAddons</a></code> | <code>boolean</code> | allow use of addons when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowChildProcess">allowChildProcess</a></code> | <code>boolean</code> | allow use of child process when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsRead">allowFsRead</a></code> | <code>string[]</code> | allow permissions to read the filesystem. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsWrite">allowFsWrite</a></code> | <code>string[]</code> | allow permissions to write in the filesystem. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowInspector">allowInspector</a></code> | <code>boolean</code> | allow use of inspector when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWasi">allowWasi</a></code> | <code>boolean</code> | allow wasi when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWorker">allowWorker</a></code> | <code>boolean</code> | allow worker threads when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.asyncContextFrame">asyncContextFrame</a></code> | <code>boolean</code> | Improve AsyncLocalStorage performance with AsyncContextFrame. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.conditions">conditions</a></code> | <code>string[]</code> | additional user conditions for conditional exports and imports. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProf">cpuProf</a></code> | <code>boolean</code> | Start the V8 CPU profiler on start up, and write the CPU profile to disk before exit. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfDir">cpuProfDir</a></code> | <code>string</code> | Directory where the V8 profiles generated by --cpu-prof will be placed. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfInterval">cpuProfInterval</a></code> | <code>number</code> | specified sampling interval in microseconds for the V8 CPU profile generated with --cpu-prof. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfName">cpuProfName</a></code> | <code>string</code> | specified file name of the V8 CPU profile generated with --cpu-prof. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.debugArraybufferAllocations">debugArraybufferAllocations</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.deprecation">deprecation</a></code> | <code>boolean</code> | silence deprecation warnings. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.diagnosticDir">diagnosticDir</a></code> | <code>string</code> | set dir for all output files (default: current working directory). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.disableProto">disableProto</a></code> | <code>string</code> | disable Object.prototype.__proto__. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.disableSigusr1">disableSigusr1</a></code> | <code>boolean</code> | Disable inspector thread to be listening for SIGUSR1 signal. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.disableWarning">disableWarning</a></code> | <code>string[]</code> | silence specific process warnings. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.disableWasmTrapHandler">disableWasmTrapHandler</a></code> | <code>boolean</code> | Disable trap-handler-based WebAssembly bound checks. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.dnsResultOrder">dnsResultOrder</a></code> | <code>string</code> | set default value of verbatim in dns.lookup. Options are 'ipv4first' (IPv4 addresses are placed before IPv6 addresses) 'ipv6first' (IPv6 addresses are placed before IPv4 addresses) 'verbatim' (addresses are in the order the DNS resolver returned). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.enableFips">enableFips</a></code> | <code>boolean</code> | enable FIPS crypto at startup. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.enableSourceMaps">enableSourceMaps</a></code> | <code>boolean</code> | Source Map V3 support for stack traces. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.entryUrl">entryUrl</a></code> | <code>boolean</code> | Treat the entrypoint as a URL. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalAddonModules">experimentalAddonModules</a></code> | <code>boolean</code> | experimental import support for addons. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalDetectModule">experimentalDetectModule</a></code> | <code>boolean</code> | when ambiguous modules fail to evaluate because they contain ES module syntax, try again to evaluate them as ES modules. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalEventsource">experimentalEventsource</a></code> | <code>boolean</code> | experimental EventSource API. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalGlobalNavigator">experimentalGlobalNavigator</a></code> | <code>boolean</code> | expose experimental Navigator API on the global scope. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalImportMetaResolve">experimentalImportMetaResolve</a></code> | <code>boolean</code> | experimental ES Module import.meta.resolve() parentURL support. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalLoader">experimentalLoader</a></code> | <code>string[]</code> | use the specified module as a custom loader. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalPrintRequiredTla">experimentalPrintRequiredTla</a></code> | <code>boolean</code> | Print pending top-level await. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalReplAwait">experimentalReplAwait</a></code> | <code>boolean</code> | experimental await keyword support in REPL. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalRequireModule">experimentalRequireModule</a></code> | <code>boolean</code> | Legacy alias for --require-module. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalShadowRealm">experimentalShadowRealm</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalSqlite">experimentalSqlite</a></code> | <code>boolean</code> | experimental node:sqlite module. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalTransformTypes">experimentalTransformTypes</a></code> | <code>boolean</code> | enable transformation of TypeScript-onlysyntax into JavaScript code. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalVmModules">experimentalVmModules</a></code> | <code>boolean</code> | experimental ES Module support in vm module. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebsocket">experimentalWebsocket</a></code> | <code>boolean</code> | experimental WebSocket API. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebstorage">experimentalWebstorage</a></code> | <code>boolean</code> | experimental Web Storage API. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.extraInfoOnFatalException">extraInfoOnFatalException</a></code> | <code>boolean</code> | hide extra information on fatal exception that causes exit. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.forceAsyncHooksChecks">forceAsyncHooksChecks</a></code> | <code>boolean</code> | disable checks for async_hooks. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.forceContextAware">forceContextAware</a></code> | <code>boolean</code> | disable loading non-context-aware addons. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.forceFips">forceFips</a></code> | <code>boolean</code> | force FIPS crypto (cannot be disabled). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.forceNodeApiUncaughtExceptionsPolicy">forceNodeApiUncaughtExceptionsPolicy</a></code> | <code>boolean</code> | enforces 'uncaughtException' event on Node API asynchronous callbacks. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.frozenIntrinsics">frozenIntrinsics</a></code> | <code>boolean</code> | experimental frozen intrinsics support. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.globalSearchPaths">globalSearchPaths</a></code> | <code>boolean</code> | disable global module search paths. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapProf">heapProf</a></code> | <code>boolean</code> | Start the V8 heap profiler on start up, and write the heap profile to disk before exit. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfDir">heapProfDir</a></code> | <code>string</code> | Directory where the V8 heap profiles generated by --heap-prof will be placed. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfInterval">heapProfInterval</a></code> | <code>number</code> | specified sampling interval in bytes for the V8 heap profile generated with --heap-prof. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfName">heapProfName</a></code> | <code>string</code> | specified file name of the V8 heap profile generated with --heap-prof. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapsnapshotNearHeapLimit">heapsnapshotNearHeapLimit</a></code> | <code>number</code> | Generate heap snapshots whenever V8 is approaching the heap limit. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.heapsnapshotSignal">heapsnapshotSignal</a></code> | <code>string</code> | Generate heap snapshot on specified signal. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.icuDataDir">icuDataDir</a></code> | <code>string</code> | set ICU data load path to dir (overrides NODE_ICU_DATA) (note: linked-in ICU data is present). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.import">import</a></code> | <code>string[]</code> | ES module to preload (option can be repeated). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inputType">inputType</a></code> | <code>string</code> | set module type for string input. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.insecureHttpParser">insecureHttpParser</a></code> | <code>boolean</code> | use an insecure HTTP parser that accepts invalid HTTP headers. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inspect">inspect</a></code> | <code>boolean</code> | activate inspector on host:port (default: 127.0.0.1:9229). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inspectBrk">inspectBrk</a></code> | <code>boolean</code> | activate inspector on host:port and break at start of user script. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inspectPort">inspectPort</a></code> | <code>number</code> | set host:port for inspector. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inspectPublishUid">inspectPublishUid</a></code> | <code>string</code> | comma separated list of destinations for inspector uid(default: stderr,http). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.inspectWait">inspectWait</a></code> | <code>boolean</code> | activate inspector on host:port and wait for debugger to be attached. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.localstorageFile">localstorageFile</a></code> | <code>string</code> | file used to persist localStorage data. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.maxHttpHeaderSize">maxHttpHeaderSize</a></code> | <code>number</code> | set the maximum size of HTTP headers (default: 16384 (16KB)). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.maxOldSpaceSizePercentage">maxOldSpaceSizePercentage</a></code> | <code>string</code> | set V8's max old space size as a percentage of available memory (e.g., '50%'). Takes precedence over --max-old-space-size. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.networkFamilyAutoselection">networkFamilyAutoselection</a></code> | <code>boolean</code> | Disable network address family autodetection algorithm. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.networkFamilyAutoselectionAttemptTimeout">networkFamilyAutoselectionAttemptTimeout</a></code> | <code>number</code> | Sets the default value for the network family autoselection attempt timeout. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.nodeSnapshot">nodeSnapshot</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.opensslConfig">opensslConfig</a></code> | <code>string</code> | load OpenSSL configuration from the specified file (overrides OPENSSL_CONF). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.opensslLegacyProvider">opensslLegacyProvider</a></code> | <code>boolean</code> | enable OpenSSL 3.0 legacy provider. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.opensslSharedConfig">opensslSharedConfig</a></code> | <code>boolean</code> | enable OpenSSL shared configuration. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.pendingDeprecation">pendingDeprecation</a></code> | <code>boolean</code> | emit pending deprecation warnings. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.permission">permission</a></code> | <code>boolean</code> | enable the permission system. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinks">preserveSymlinks</a></code> | <code>boolean</code> | preserve symbolic links when resolving. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinksMain">preserveSymlinksMain</a></code> | <code>boolean</code> | preserve symbolic links when resolving the main module. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.redirectWarnings">redirectWarnings</a></code> | <code>string</code> | write warnings to file instead of stderr. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportCompact">reportCompact</a></code> | <code>boolean</code> | output compact single-line JSON. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportDir">reportDir</a></code> | <code>string</code> | define custom report pathname. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportExcludeEnv">reportExcludeEnv</a></code> | <code>boolean</code> | Exclude environment variables when generating report (default: false). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportExcludeNetwork">reportExcludeNetwork</a></code> | <code>boolean</code> | exclude network interface diagnostics. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportFilename">reportFilename</a></code> | <code>string</code> | define custom report file name. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportOnFatalerror">reportOnFatalerror</a></code> | <code>boolean</code> | generate diagnostic report on fatal (internal) errors. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportOnSignal">reportOnSignal</a></code> | <code>boolean</code> | generate diagnostic report upon receiving signals. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportSignal">reportSignal</a></code> | <code>string</code> | causes diagnostic report to be produced on provided signal, unsupported in Windows. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.reportUncaughtException">reportUncaughtException</a></code> | <code>boolean</code> | generate diagnostic report on uncaught exceptions. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.require">require</a></code> | <code>string[]</code> | CommonJS module to preload (option can be repeated). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.requireModule">requireModule</a></code> | <code>boolean</code> | Allow loading synchronous ES Modules in require(). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.secureHeap">secureHeap</a></code> | <code>number</code> | total size of the OpenSSL secure heap. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.secureHeapMin">secureHeapMin</a></code> | <code>number</code> | minimum allocation size from the OpenSSL secure heap. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.snapshotBlob">snapshotBlob</a></code> | <code>string</code> | Path to the snapshot blob that's either the result of snapshotbuilding, or the blob that is used to restore the application state. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.stackTraceLimit">stackTraceLimit</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.stripTypes">stripTypes</a></code> | <code>boolean</code> | Type-stripping for TypeScript files. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageBranches">testCoverageBranches</a></code> | <code>number</code> | the branch coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageExclude">testCoverageExclude</a></code> | <code>string[]</code> | exclude files from coverage report that match this glob pattern. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageFunctions">testCoverageFunctions</a></code> | <code>number</code> | the function coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageInclude">testCoverageInclude</a></code> | <code>string[]</code> | include files in coverage report that match this glob pattern. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageLines">testCoverageLines</a></code> | <code>number</code> | the line coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testGlobalSetup">testGlobalSetup</a></code> | <code>string</code> | specifies the path to the global setup file. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testIsolation">testIsolation</a></code> | <code>string</code> | configures the type of test isolation used in the test runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testNamePattern">testNamePattern</a></code> | <code>string[]</code> | run tests whose name matches this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testOnly">testOnly</a></code> | <code>boolean</code> | run tests with 'only' option set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testRandomize">testRandomize</a></code> | <code>boolean</code> | run tests in a random order. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testRandomSeed">testRandomSeed</a></code> | <code>number</code> | seed used to randomize test execution order. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testReporter">testReporter</a></code> | <code>string[]</code> | report test output using the given reporter. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testReporterDestination">testReporterDestination</a></code> | <code>string[]</code> | report given reporter to the given destination. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testRerunFailures">testRerunFailures</a></code> | <code>string</code> | specifies the path to the rerun state file. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testShard">testShard</a></code> | <code>string</code> | run test at specific shard. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.testSkipPattern">testSkipPattern</a></code> | <code>string[]</code> | run tests whose name do not match this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.throwDeprecation">throwDeprecation</a></code> | <code>boolean</code> | throw an exception on deprecations. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.title">title</a></code> | <code>string</code> | the process title to use on startup. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsCipherList">tlsCipherList</a></code> | <code>string</code> | use an alternative default TLS cipher list. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsKeylog">tlsKeylog</a></code> | <code>string</code> | log TLS decryption keys to named file for traffic analysis. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMaxV12">tlsMaxV12</a></code> | <code>boolean</code> | set default TLS maximum to TLSv1.2 (default: TLSv1.3). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMaxV13">tlsMaxV13</a></code> | <code>boolean</code> | set default TLS maximum to TLSv1.3 (default: TLSv1.3). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV10">tlsMinV10</a></code> | <code>boolean</code> | set default TLS minimum to TLSv1.0 (default: TLSv1.2). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV11">tlsMinV11</a></code> | <code>boolean</code> | set default TLS minimum to TLSv1.1 (default: TLSv1.2). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV12">tlsMinV12</a></code> | <code>boolean</code> | set default TLS minimum to TLSv1.2 (default: TLSv1.2). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV13">tlsMinV13</a></code> | <code>boolean</code> | set default TLS minimum to TLSv1.3 (default: TLSv1.2). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceDeprecation">traceDeprecation</a></code> | <code>boolean</code> | show stack traces on deprecations. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnv">traceEnv</a></code> | <code>boolean</code> | Print accesses to the environment variables. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnvJsStack">traceEnvJsStack</a></code> | <code>boolean</code> | Print accesses to the environment variables and the JavaScript stack trace. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnvNativeStack">traceEnvNativeStack</a></code> | <code>boolean</code> | Print accesses to the environment variables and the native stack trace. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceEventCategories">traceEventCategories</a></code> | <code>string</code> | comma separated list of trace event categories to record. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceEventFilePattern">traceEventFilePattern</a></code> | <code>string</code> | Template string specifying the filepath for the trace-events data, it supports ${rotation} and ${pid}. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceExit">traceExit</a></code> | <code>boolean</code> | show stack trace when an environment exits. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.tracePromises">tracePromises</a></code> | <code>boolean</code> | show stack traces on promise initialization and resolution. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceRequireModule">traceRequireModule</a></code> | <code>string</code> | Print access to require(esm). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceSigint">traceSigint</a></code> | <code>boolean</code> | enable printing JavaScript stacktrace on SIGINT. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceSyncIo">traceSyncIo</a></code> | <code>boolean</code> | show stack trace when use of sync IO is detected after the first tick. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceTls">traceTls</a></code> | <code>boolean</code> | prints TLS packet trace information to stderr. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceUncaught">traceUncaught</a></code> | <code>boolean</code> | show stack traces for the `throw` behind uncaught exceptions. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.traceWarnings">traceWarnings</a></code> | <code>boolean</code> | show stack traces on process warnings. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.trackHeapObjects">trackHeapObjects</a></code> | <code>boolean</code> | track heap object allocations for heap snapshots. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.unhandledRejections">unhandledRejections</a></code> | <code>string</code> | define unhandled rejections behavior. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useBundledCa">useBundledCa</a></code> | <code>boolean</code> | use bundled CA store (default). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useEnvProxy">useEnvProxy</a></code> | <code>boolean</code> | parse proxy settings from HTTP_PROXY/HTTPS_PROXY/NO_PROXYenvironment variables and apply the setting in global HTTP/HTTPS clients. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useLargepages">useLargepages</a></code> | <code>string</code> | Map the Node.js static code to large pages. Options are 'off' (the default value, meaning do not map), 'on' (map and ignore failure, reporting it to stderr), or 'silent' (map and silently ignore failure). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useOpensslCa">useOpensslCa</a></code> | <code>boolean</code> | use OpenSSL's default CA store. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useSystemCa">useSystemCa</a></code> | <code>boolean</code> | use system's CA store. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.v8PoolSize">v8PoolSize</a></code> | <code>number</code> | set V8's thread pool size. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.verifyBaseObjects">verifyBaseObjects</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.warnings">warnings</a></code> | <code>boolean</code> | silence all process warnings. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.watch">watch</a></code> | <code>boolean</code> | run in watch mode. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.watchKillSignal">watchKillSignal</a></code> | <code>string</code> | kill signal to send to the process on watch mode restarts(default: SIGTERM). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.watchPath">watchPath</a></code> | <code>string[]</code> | path to watch. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.watchPreserveOutput">watchPreserveOutput</a></code> | <code>boolean</code> | preserve outputs on watch mode restart. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.zeroFillBuffers">zeroFillBuffers</a></code> | <code>boolean</code> | automatically zero-fill all newly allocated Buffer instances. |
+
+---
+
+##### `addons`<sup>Optional</sup> <a name="addons" id="projen.javascript.NodeConfigSchemaNodeOptions.property.addons"></a>
+
+```typescript
+public readonly addons: boolean;
+```
+
+- *Type:* boolean
+
+disable loading native addons.
+
+---
+
+##### `allowAddons`<sup>Optional</sup> <a name="allowAddons" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowAddons"></a>
+
+```typescript
+public readonly allowAddons: boolean;
+```
+
+- *Type:* boolean
+
+allow use of addons when any permissions are set.
+
+---
+
+##### `allowChildProcess`<sup>Optional</sup> <a name="allowChildProcess" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowChildProcess"></a>
+
+```typescript
+public readonly allowChildProcess: boolean;
+```
+
+- *Type:* boolean
+
+allow use of child process when any permissions are set.
+
+---
+
+##### `allowFsRead`<sup>Optional</sup> <a name="allowFsRead" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsRead"></a>
+
+```typescript
+public readonly allowFsRead: string[];
+```
+
+- *Type:* string[]
+
+allow permissions to read the filesystem.
+
+---
+
+##### `allowFsWrite`<sup>Optional</sup> <a name="allowFsWrite" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsWrite"></a>
+
+```typescript
+public readonly allowFsWrite: string[];
+```
+
+- *Type:* string[]
+
+allow permissions to write in the filesystem.
+
+---
+
+##### `allowInspector`<sup>Optional</sup> <a name="allowInspector" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowInspector"></a>
+
+```typescript
+public readonly allowInspector: boolean;
+```
+
+- *Type:* boolean
+
+allow use of inspector when any permissions are set.
+
+---
+
+##### `allowWasi`<sup>Optional</sup> <a name="allowWasi" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowWasi"></a>
+
+```typescript
+public readonly allowWasi: boolean;
+```
+
+- *Type:* boolean
+
+allow wasi when any permissions are set.
+
+---
+
+##### `allowWorker`<sup>Optional</sup> <a name="allowWorker" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowWorker"></a>
+
+```typescript
+public readonly allowWorker: boolean;
+```
+
+- *Type:* boolean
+
+allow worker threads when any permissions are set.
+
+---
+
+##### `asyncContextFrame`<sup>Optional</sup> <a name="asyncContextFrame" id="projen.javascript.NodeConfigSchemaNodeOptions.property.asyncContextFrame"></a>
+
+```typescript
+public readonly asyncContextFrame: boolean;
+```
+
+- *Type:* boolean
+
+Improve AsyncLocalStorage performance with AsyncContextFrame.
+
+---
+
+##### `conditions`<sup>Optional</sup> <a name="conditions" id="projen.javascript.NodeConfigSchemaNodeOptions.property.conditions"></a>
+
+```typescript
+public readonly conditions: string[];
+```
+
+- *Type:* string[]
+
+additional user conditions for conditional exports and imports.
+
+---
+
+##### `cpuProf`<sup>Optional</sup> <a name="cpuProf" id="projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProf"></a>
+
+```typescript
+public readonly cpuProf: boolean;
+```
+
+- *Type:* boolean
+
+Start the V8 CPU profiler on start up, and write the CPU profile to disk before exit.
+
+If --cpu-prof-dir is not specified, write the profile to the current working directory.
+
+---
+
+##### `cpuProfDir`<sup>Optional</sup> <a name="cpuProfDir" id="projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfDir"></a>
+
+```typescript
+public readonly cpuProfDir: string;
+```
+
+- *Type:* string
+
+Directory where the V8 profiles generated by --cpu-prof will be placed.
+
+Does not affect --prof.
+
+---
+
+##### `cpuProfInterval`<sup>Optional</sup> <a name="cpuProfInterval" id="projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfInterval"></a>
+
+```typescript
+public readonly cpuProfInterval: number;
+```
+
+- *Type:* number
+
+specified sampling interval in microseconds for the V8 CPU profile generated with --cpu-prof.
+
+(default: 1000)
+
+---
+
+##### `cpuProfName`<sup>Optional</sup> <a name="cpuProfName" id="projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfName"></a>
+
+```typescript
+public readonly cpuProfName: string;
+```
+
+- *Type:* string
+
+specified file name of the V8 CPU profile generated with --cpu-prof.
+
+---
+
+##### `debugArraybufferAllocations`<sup>Optional</sup> <a name="debugArraybufferAllocations" id="projen.javascript.NodeConfigSchemaNodeOptions.property.debugArraybufferAllocations"></a>
+
+```typescript
+public readonly debugArraybufferAllocations: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `deprecation`<sup>Optional</sup> <a name="deprecation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.deprecation"></a>
+
+```typescript
+public readonly deprecation: boolean;
+```
+
+- *Type:* boolean
+
+silence deprecation warnings.
+
+---
+
+##### `diagnosticDir`<sup>Optional</sup> <a name="diagnosticDir" id="projen.javascript.NodeConfigSchemaNodeOptions.property.diagnosticDir"></a>
+
+```typescript
+public readonly diagnosticDir: string;
+```
+
+- *Type:* string
+
+set dir for all output files (default: current working directory).
+
+---
+
+##### `disableProto`<sup>Optional</sup> <a name="disableProto" id="projen.javascript.NodeConfigSchemaNodeOptions.property.disableProto"></a>
+
+```typescript
+public readonly disableProto: string;
+```
+
+- *Type:* string
+
+disable Object.prototype.__proto__.
+
+---
+
+##### `disableSigusr1`<sup>Optional</sup> <a name="disableSigusr1" id="projen.javascript.NodeConfigSchemaNodeOptions.property.disableSigusr1"></a>
+
+```typescript
+public readonly disableSigusr1: boolean;
+```
+
+- *Type:* boolean
+
+Disable inspector thread to be listening for SIGUSR1 signal.
+
+---
+
+##### `disableWarning`<sup>Optional</sup> <a name="disableWarning" id="projen.javascript.NodeConfigSchemaNodeOptions.property.disableWarning"></a>
+
+```typescript
+public readonly disableWarning: string[];
+```
+
+- *Type:* string[]
+
+silence specific process warnings.
+
+---
+
+##### `disableWasmTrapHandler`<sup>Optional</sup> <a name="disableWasmTrapHandler" id="projen.javascript.NodeConfigSchemaNodeOptions.property.disableWasmTrapHandler"></a>
+
+```typescript
+public readonly disableWasmTrapHandler: boolean;
+```
+
+- *Type:* boolean
+
+Disable trap-handler-based WebAssembly bound checks.
+
+V8 will insert inline bound checks when compiling WebAssembly which may slow down performance.
+
+---
+
+##### `dnsResultOrder`<sup>Optional</sup> <a name="dnsResultOrder" id="projen.javascript.NodeConfigSchemaNodeOptions.property.dnsResultOrder"></a>
+
+```typescript
+public readonly dnsResultOrder: string;
+```
+
+- *Type:* string
+
+set default value of verbatim in dns.lookup. Options are 'ipv4first' (IPv4 addresses are placed before IPv6 addresses) 'ipv6first' (IPv6 addresses are placed before IPv4 addresses) 'verbatim' (addresses are in the order the DNS resolver returned).
+
+---
+
+##### `enableFips`<sup>Optional</sup> <a name="enableFips" id="projen.javascript.NodeConfigSchemaNodeOptions.property.enableFips"></a>
+
+```typescript
+public readonly enableFips: boolean;
+```
+
+- *Type:* boolean
+
+enable FIPS crypto at startup.
+
+---
+
+##### `enableSourceMaps`<sup>Optional</sup> <a name="enableSourceMaps" id="projen.javascript.NodeConfigSchemaNodeOptions.property.enableSourceMaps"></a>
+
+```typescript
+public readonly enableSourceMaps: boolean;
+```
+
+- *Type:* boolean
+
+Source Map V3 support for stack traces.
+
+---
+
+##### `entryUrl`<sup>Optional</sup> <a name="entryUrl" id="projen.javascript.NodeConfigSchemaNodeOptions.property.entryUrl"></a>
+
+```typescript
+public readonly entryUrl: boolean;
+```
+
+- *Type:* boolean
+
+Treat the entrypoint as a URL.
+
+---
+
+##### `experimentalAddonModules`<sup>Optional</sup> <a name="experimentalAddonModules" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalAddonModules"></a>
+
+```typescript
+public readonly experimentalAddonModules: boolean;
+```
+
+- *Type:* boolean
+
+experimental import support for addons.
+
+---
+
+##### `experimentalDetectModule`<sup>Optional</sup> <a name="experimentalDetectModule" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalDetectModule"></a>
+
+```typescript
+public readonly experimentalDetectModule: boolean;
+```
+
+- *Type:* boolean
+
+when ambiguous modules fail to evaluate because they contain ES module syntax, try again to evaluate them as ES modules.
+
+---
+
+##### `experimentalEventsource`<sup>Optional</sup> <a name="experimentalEventsource" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalEventsource"></a>
+
+```typescript
+public readonly experimentalEventsource: boolean;
+```
+
+- *Type:* boolean
+
+experimental EventSource API.
+
+---
+
+##### `experimentalGlobalNavigator`<sup>Optional</sup> <a name="experimentalGlobalNavigator" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalGlobalNavigator"></a>
+
+```typescript
+public readonly experimentalGlobalNavigator: boolean;
+```
+
+- *Type:* boolean
+
+expose experimental Navigator API on the global scope.
+
+---
+
+##### `experimentalImportMetaResolve`<sup>Optional</sup> <a name="experimentalImportMetaResolve" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalImportMetaResolve"></a>
+
+```typescript
+public readonly experimentalImportMetaResolve: boolean;
+```
+
+- *Type:* boolean
+
+experimental ES Module import.meta.resolve() parentURL support.
+
+---
+
+##### `experimentalLoader`<sup>Optional</sup> <a name="experimentalLoader" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalLoader"></a>
+
+```typescript
+public readonly experimentalLoader: string[];
+```
+
+- *Type:* string[]
+
+use the specified module as a custom loader.
+
+---
+
+##### `experimentalPrintRequiredTla`<sup>Optional</sup> <a name="experimentalPrintRequiredTla" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalPrintRequiredTla"></a>
+
+```typescript
+public readonly experimentalPrintRequiredTla: boolean;
+```
+
+- *Type:* boolean
+
+Print pending top-level await.
+
+If --require-module is true, evaluate asynchronous graphs loaded by `require()` but do not run the microtasks, in order to to find and print top-level await in the graph
+
+---
+
+##### `experimentalReplAwait`<sup>Optional</sup> <a name="experimentalReplAwait" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalReplAwait"></a>
+
+```typescript
+public readonly experimentalReplAwait: boolean;
+```
+
+- *Type:* boolean
+
+experimental await keyword support in REPL.
+
+---
+
+##### `experimentalRequireModule`<sup>Optional</sup> <a name="experimentalRequireModule" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalRequireModule"></a>
+
+```typescript
+public readonly experimentalRequireModule: boolean;
+```
+
+- *Type:* boolean
+
+Legacy alias for --require-module.
+
+---
+
+##### `experimentalShadowRealm`<sup>Optional</sup> <a name="experimentalShadowRealm" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalShadowRealm"></a>
+
+```typescript
+public readonly experimentalShadowRealm: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `experimentalSqlite`<sup>Optional</sup> <a name="experimentalSqlite" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalSqlite"></a>
+
+```typescript
+public readonly experimentalSqlite: boolean;
+```
+
+- *Type:* boolean
+
+experimental node:sqlite module.
+
+---
+
+##### `experimentalTransformTypes`<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalTransformTypes"></a>
+
+```typescript
+public readonly experimentalTransformTypes: boolean;
+```
+
+- *Type:* boolean
+
+enable transformation of TypeScript-onlysyntax into JavaScript code.
+
+---
+
+##### `experimentalVmModules`<sup>Optional</sup> <a name="experimentalVmModules" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalVmModules"></a>
+
+```typescript
+public readonly experimentalVmModules: boolean;
+```
+
+- *Type:* boolean
+
+experimental ES Module support in vm module.
+
+---
+
+##### `experimentalWebsocket`<sup>Optional</sup> <a name="experimentalWebsocket" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebsocket"></a>
+
+```typescript
+public readonly experimentalWebsocket: boolean;
+```
+
+- *Type:* boolean
+
+experimental WebSocket API.
+
+---
+
+##### `experimentalWebstorage`<sup>Optional</sup> <a name="experimentalWebstorage" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebstorage"></a>
+
+```typescript
+public readonly experimentalWebstorage: boolean;
+```
+
+- *Type:* boolean
+
+experimental Web Storage API.
+
+---
+
+##### `extraInfoOnFatalException`<sup>Optional</sup> <a name="extraInfoOnFatalException" id="projen.javascript.NodeConfigSchemaNodeOptions.property.extraInfoOnFatalException"></a>
+
+```typescript
+public readonly extraInfoOnFatalException: boolean;
+```
+
+- *Type:* boolean
+
+hide extra information on fatal exception that causes exit.
+
+---
+
+##### `forceAsyncHooksChecks`<sup>Optional</sup> <a name="forceAsyncHooksChecks" id="projen.javascript.NodeConfigSchemaNodeOptions.property.forceAsyncHooksChecks"></a>
+
+```typescript
+public readonly forceAsyncHooksChecks: boolean;
+```
+
+- *Type:* boolean
+
+disable checks for async_hooks.
+
+---
+
+##### `forceContextAware`<sup>Optional</sup> <a name="forceContextAware" id="projen.javascript.NodeConfigSchemaNodeOptions.property.forceContextAware"></a>
+
+```typescript
+public readonly forceContextAware: boolean;
+```
+
+- *Type:* boolean
+
+disable loading non-context-aware addons.
+
+---
+
+##### `forceFips`<sup>Optional</sup> <a name="forceFips" id="projen.javascript.NodeConfigSchemaNodeOptions.property.forceFips"></a>
+
+```typescript
+public readonly forceFips: boolean;
+```
+
+- *Type:* boolean
+
+force FIPS crypto (cannot be disabled).
+
+---
+
+##### `forceNodeApiUncaughtExceptionsPolicy`<sup>Optional</sup> <a name="forceNodeApiUncaughtExceptionsPolicy" id="projen.javascript.NodeConfigSchemaNodeOptions.property.forceNodeApiUncaughtExceptionsPolicy"></a>
+
+```typescript
+public readonly forceNodeApiUncaughtExceptionsPolicy: boolean;
+```
+
+- *Type:* boolean
+
+enforces 'uncaughtException' event on Node API asynchronous callbacks.
+
+---
+
+##### `frozenIntrinsics`<sup>Optional</sup> <a name="frozenIntrinsics" id="projen.javascript.NodeConfigSchemaNodeOptions.property.frozenIntrinsics"></a>
+
+```typescript
+public readonly frozenIntrinsics: boolean;
+```
+
+- *Type:* boolean
+
+experimental frozen intrinsics support.
+
+---
+
+##### `globalSearchPaths`<sup>Optional</sup> <a name="globalSearchPaths" id="projen.javascript.NodeConfigSchemaNodeOptions.property.globalSearchPaths"></a>
+
+```typescript
+public readonly globalSearchPaths: boolean;
+```
+
+- *Type:* boolean
+
+disable global module search paths.
+
+---
+
+##### `heapProf`<sup>Optional</sup> <a name="heapProf" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapProf"></a>
+
+```typescript
+public readonly heapProf: boolean;
+```
+
+- *Type:* boolean
+
+Start the V8 heap profiler on start up, and write the heap profile to disk before exit.
+
+If --heap-prof-dir is not specified, write the profile to the current working directory.
+
+---
+
+##### `heapProfDir`<sup>Optional</sup> <a name="heapProfDir" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfDir"></a>
+
+```typescript
+public readonly heapProfDir: string;
+```
+
+- *Type:* string
+
+Directory where the V8 heap profiles generated by --heap-prof will be placed.
+
+---
+
+##### `heapProfInterval`<sup>Optional</sup> <a name="heapProfInterval" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfInterval"></a>
+
+```typescript
+public readonly heapProfInterval: number;
+```
+
+- *Type:* number
+
+specified sampling interval in bytes for the V8 heap profile generated with --heap-prof.
+
+(default: 512 * 1024)
+
+---
+
+##### `heapProfName`<sup>Optional</sup> <a name="heapProfName" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapProfName"></a>
+
+```typescript
+public readonly heapProfName: string;
+```
+
+- *Type:* string
+
+specified file name of the V8 heap profile generated with --heap-prof.
+
+---
+
+##### `heapsnapshotNearHeapLimit`<sup>Optional</sup> <a name="heapsnapshotNearHeapLimit" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapsnapshotNearHeapLimit"></a>
+
+```typescript
+public readonly heapsnapshotNearHeapLimit: number;
+```
+
+- *Type:* number
+
+Generate heap snapshots whenever V8 is approaching the heap limit.
+
+No more than the specified number of heap snapshots will be generated.
+
+---
+
+##### `heapsnapshotSignal`<sup>Optional</sup> <a name="heapsnapshotSignal" id="projen.javascript.NodeConfigSchemaNodeOptions.property.heapsnapshotSignal"></a>
+
+```typescript
+public readonly heapsnapshotSignal: string;
+```
+
+- *Type:* string
+
+Generate heap snapshot on specified signal.
+
+---
+
+##### `icuDataDir`<sup>Optional</sup> <a name="icuDataDir" id="projen.javascript.NodeConfigSchemaNodeOptions.property.icuDataDir"></a>
+
+```typescript
+public readonly icuDataDir: string;
+```
+
+- *Type:* string
+
+set ICU data load path to dir (overrides NODE_ICU_DATA) (note: linked-in ICU data is present).
+
+---
+
+##### `import`<sup>Optional</sup> <a name="import" id="projen.javascript.NodeConfigSchemaNodeOptions.property.import"></a>
+
+```typescript
+public readonly import: string[];
+```
+
+- *Type:* string[]
+
+ES module to preload (option can be repeated).
+
+---
+
+##### `inputType`<sup>Optional</sup> <a name="inputType" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inputType"></a>
+
+```typescript
+public readonly inputType: string;
+```
+
+- *Type:* string
+
+set module type for string input.
+
+---
+
+##### `insecureHttpParser`<sup>Optional</sup> <a name="insecureHttpParser" id="projen.javascript.NodeConfigSchemaNodeOptions.property.insecureHttpParser"></a>
+
+```typescript
+public readonly insecureHttpParser: boolean;
+```
+
+- *Type:* boolean
+
+use an insecure HTTP parser that accepts invalid HTTP headers.
+
+---
+
+##### `inspect`<sup>Optional</sup> <a name="inspect" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inspect"></a>
+
+```typescript
+public readonly inspect: boolean;
+```
+
+- *Type:* boolean
+
+activate inspector on host:port (default: 127.0.0.1:9229).
+
+---
+
+##### `inspectBrk`<sup>Optional</sup> <a name="inspectBrk" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inspectBrk"></a>
+
+```typescript
+public readonly inspectBrk: boolean;
+```
+
+- *Type:* boolean
+
+activate inspector on host:port and break at start of user script.
+
+---
+
+##### `inspectPort`<sup>Optional</sup> <a name="inspectPort" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inspectPort"></a>
+
+```typescript
+public readonly inspectPort: number;
+```
+
+- *Type:* number
+
+set host:port for inspector.
+
+---
+
+##### `inspectPublishUid`<sup>Optional</sup> <a name="inspectPublishUid" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inspectPublishUid"></a>
+
+```typescript
+public readonly inspectPublishUid: string;
+```
+
+- *Type:* string
+
+comma separated list of destinations for inspector uid(default: stderr,http).
+
+---
+
+##### `inspectWait`<sup>Optional</sup> <a name="inspectWait" id="projen.javascript.NodeConfigSchemaNodeOptions.property.inspectWait"></a>
+
+```typescript
+public readonly inspectWait: boolean;
+```
+
+- *Type:* boolean
+
+activate inspector on host:port and wait for debugger to be attached.
+
+---
+
+##### `localstorageFile`<sup>Optional</sup> <a name="localstorageFile" id="projen.javascript.NodeConfigSchemaNodeOptions.property.localstorageFile"></a>
+
+```typescript
+public readonly localstorageFile: string;
+```
+
+- *Type:* string
+
+file used to persist localStorage data.
+
+---
+
+##### `maxHttpHeaderSize`<sup>Optional</sup> <a name="maxHttpHeaderSize" id="projen.javascript.NodeConfigSchemaNodeOptions.property.maxHttpHeaderSize"></a>
+
+```typescript
+public readonly maxHttpHeaderSize: number;
+```
+
+- *Type:* number
+
+set the maximum size of HTTP headers (default: 16384 (16KB)).
+
+---
+
+##### `maxOldSpaceSizePercentage`<sup>Optional</sup> <a name="maxOldSpaceSizePercentage" id="projen.javascript.NodeConfigSchemaNodeOptions.property.maxOldSpaceSizePercentage"></a>
+
+```typescript
+public readonly maxOldSpaceSizePercentage: string;
+```
+
+- *Type:* string
+
+set V8's max old space size as a percentage of available memory (e.g., '50%'). Takes precedence over --max-old-space-size.
+
+---
+
+##### `networkFamilyAutoselection`<sup>Optional</sup> <a name="networkFamilyAutoselection" id="projen.javascript.NodeConfigSchemaNodeOptions.property.networkFamilyAutoselection"></a>
+
+```typescript
+public readonly networkFamilyAutoselection: boolean;
+```
+
+- *Type:* boolean
+
+Disable network address family autodetection algorithm.
+
+---
+
+##### `networkFamilyAutoselectionAttemptTimeout`<sup>Optional</sup> <a name="networkFamilyAutoselectionAttemptTimeout" id="projen.javascript.NodeConfigSchemaNodeOptions.property.networkFamilyAutoselectionAttemptTimeout"></a>
+
+```typescript
+public readonly networkFamilyAutoselectionAttemptTimeout: number;
+```
+
+- *Type:* number
+
+Sets the default value for the network family autoselection attempt timeout.
+
+---
+
+##### `nodeSnapshot`<sup>Optional</sup> <a name="nodeSnapshot" id="projen.javascript.NodeConfigSchemaNodeOptions.property.nodeSnapshot"></a>
+
+```typescript
+public readonly nodeSnapshot: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `opensslConfig`<sup>Optional</sup> <a name="opensslConfig" id="projen.javascript.NodeConfigSchemaNodeOptions.property.opensslConfig"></a>
+
+```typescript
+public readonly opensslConfig: string;
+```
+
+- *Type:* string
+
+load OpenSSL configuration from the specified file (overrides OPENSSL_CONF).
+
+---
+
+##### `opensslLegacyProvider`<sup>Optional</sup> <a name="opensslLegacyProvider" id="projen.javascript.NodeConfigSchemaNodeOptions.property.opensslLegacyProvider"></a>
+
+```typescript
+public readonly opensslLegacyProvider: boolean;
+```
+
+- *Type:* boolean
+
+enable OpenSSL 3.0 legacy provider.
+
+---
+
+##### `opensslSharedConfig`<sup>Optional</sup> <a name="opensslSharedConfig" id="projen.javascript.NodeConfigSchemaNodeOptions.property.opensslSharedConfig"></a>
+
+```typescript
+public readonly opensslSharedConfig: boolean;
+```
+
+- *Type:* boolean
+
+enable OpenSSL shared configuration.
+
+---
+
+##### `pendingDeprecation`<sup>Optional</sup> <a name="pendingDeprecation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.pendingDeprecation"></a>
+
+```typescript
+public readonly pendingDeprecation: boolean;
+```
+
+- *Type:* boolean
+
+emit pending deprecation warnings.
+
+---
+
+##### `permission`<sup>Optional</sup> <a name="permission" id="projen.javascript.NodeConfigSchemaNodeOptions.property.permission"></a>
+
+```typescript
+public readonly permission: boolean;
+```
+
+- *Type:* boolean
+
+enable the permission system.
+
+---
+
+##### `preserveSymlinks`<sup>Optional</sup> <a name="preserveSymlinks" id="projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinks"></a>
+
+```typescript
+public readonly preserveSymlinks: boolean;
+```
+
+- *Type:* boolean
+
+preserve symbolic links when resolving.
+
+---
+
+##### `preserveSymlinksMain`<sup>Optional</sup> <a name="preserveSymlinksMain" id="projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinksMain"></a>
+
+```typescript
+public readonly preserveSymlinksMain: boolean;
+```
+
+- *Type:* boolean
+
+preserve symbolic links when resolving the main module.
+
+---
+
+##### `redirectWarnings`<sup>Optional</sup> <a name="redirectWarnings" id="projen.javascript.NodeConfigSchemaNodeOptions.property.redirectWarnings"></a>
+
+```typescript
+public readonly redirectWarnings: string;
+```
+
+- *Type:* string
+
+write warnings to file instead of stderr.
+
+---
+
+##### `reportCompact`<sup>Optional</sup> <a name="reportCompact" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportCompact"></a>
+
+```typescript
+public readonly reportCompact: boolean;
+```
+
+- *Type:* boolean
+
+output compact single-line JSON.
+
+---
+
+##### `reportDir`<sup>Optional</sup> <a name="reportDir" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportDir"></a>
+
+```typescript
+public readonly reportDir: string;
+```
+
+- *Type:* string
+
+define custom report pathname.
+
+(default: current working directory)
+
+---
+
+##### `reportExcludeEnv`<sup>Optional</sup> <a name="reportExcludeEnv" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportExcludeEnv"></a>
+
+```typescript
+public readonly reportExcludeEnv: boolean;
+```
+
+- *Type:* boolean
+
+Exclude environment variables when generating report (default: false).
+
+---
+
+##### `reportExcludeNetwork`<sup>Optional</sup> <a name="reportExcludeNetwork" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportExcludeNetwork"></a>
+
+```typescript
+public readonly reportExcludeNetwork: boolean;
+```
+
+- *Type:* boolean
+
+exclude network interface diagnostics.
+
+(default: false)
+
+---
+
+##### `reportFilename`<sup>Optional</sup> <a name="reportFilename" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportFilename"></a>
+
+```typescript
+public readonly reportFilename: string;
+```
+
+- *Type:* string
+
+define custom report file name.
+
+(default: YYYYMMDD.HHMMSS.PID.SEQUENCE#.txt)
+
+---
+
+##### `reportOnFatalerror`<sup>Optional</sup> <a name="reportOnFatalerror" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportOnFatalerror"></a>
+
+```typescript
+public readonly reportOnFatalerror: boolean;
+```
+
+- *Type:* boolean
+
+generate diagnostic report on fatal (internal) errors.
+
+---
+
+##### `reportOnSignal`<sup>Optional</sup> <a name="reportOnSignal" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportOnSignal"></a>
+
+```typescript
+public readonly reportOnSignal: boolean;
+```
+
+- *Type:* boolean
+
+generate diagnostic report upon receiving signals.
+
+---
+
+##### `reportSignal`<sup>Optional</sup> <a name="reportSignal" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportSignal"></a>
+
+```typescript
+public readonly reportSignal: string;
+```
+
+- *Type:* string
+
+causes diagnostic report to be produced on provided signal, unsupported in Windows.
+
+(default: SIGUSR2)
+
+---
+
+##### `reportUncaughtException`<sup>Optional</sup> <a name="reportUncaughtException" id="projen.javascript.NodeConfigSchemaNodeOptions.property.reportUncaughtException"></a>
+
+```typescript
+public readonly reportUncaughtException: boolean;
+```
+
+- *Type:* boolean
+
+generate diagnostic report on uncaught exceptions.
+
+---
+
+##### `require`<sup>Optional</sup> <a name="require" id="projen.javascript.NodeConfigSchemaNodeOptions.property.require"></a>
+
+```typescript
+public readonly require: string[];
+```
+
+- *Type:* string[]
+
+CommonJS module to preload (option can be repeated).
+
+---
+
+##### `requireModule`<sup>Optional</sup> <a name="requireModule" id="projen.javascript.NodeConfigSchemaNodeOptions.property.requireModule"></a>
+
+```typescript
+public readonly requireModule: boolean;
+```
+
+- *Type:* boolean
+
+Allow loading synchronous ES Modules in require().
+
+---
+
+##### `secureHeap`<sup>Optional</sup> <a name="secureHeap" id="projen.javascript.NodeConfigSchemaNodeOptions.property.secureHeap"></a>
+
+```typescript
+public readonly secureHeap: number;
+```
+
+- *Type:* number
+
+total size of the OpenSSL secure heap.
+
+---
+
+##### `secureHeapMin`<sup>Optional</sup> <a name="secureHeapMin" id="projen.javascript.NodeConfigSchemaNodeOptions.property.secureHeapMin"></a>
+
+```typescript
+public readonly secureHeapMin: number;
+```
+
+- *Type:* number
+
+minimum allocation size from the OpenSSL secure heap.
+
+---
+
+##### `snapshotBlob`<sup>Optional</sup> <a name="snapshotBlob" id="projen.javascript.NodeConfigSchemaNodeOptions.property.snapshotBlob"></a>
+
+```typescript
+public readonly snapshotBlob: string;
+```
+
+- *Type:* string
+
+Path to the snapshot blob that's either the result of snapshotbuilding, or the blob that is used to restore the application state.
+
+---
+
+##### `stackTraceLimit`<sup>Optional</sup> <a name="stackTraceLimit" id="projen.javascript.NodeConfigSchemaNodeOptions.property.stackTraceLimit"></a>
+
+```typescript
+public readonly stackTraceLimit: number;
+```
+
+- *Type:* number
+
+---
+
+##### `stripTypes`<sup>Optional</sup> <a name="stripTypes" id="projen.javascript.NodeConfigSchemaNodeOptions.property.stripTypes"></a>
+
+```typescript
+public readonly stripTypes: boolean;
+```
+
+- *Type:* boolean
+
+Type-stripping for TypeScript files.
+
+---
+
+##### `testCoverageBranches`<sup>Optional</sup> <a name="testCoverageBranches" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageBranches"></a>
+
+```typescript
+public readonly testCoverageBranches: number;
+```
+
+- *Type:* number
+
+the branch coverage minimum threshold.
+
+---
+
+##### `testCoverageExclude`<sup>Optional</sup> <a name="testCoverageExclude" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageExclude"></a>
+
+```typescript
+public readonly testCoverageExclude: string[];
+```
+
+- *Type:* string[]
+
+exclude files from coverage report that match this glob pattern.
+
+---
+
+##### `testCoverageFunctions`<sup>Optional</sup> <a name="testCoverageFunctions" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageFunctions"></a>
+
+```typescript
+public readonly testCoverageFunctions: number;
+```
+
+- *Type:* number
+
+the function coverage minimum threshold.
+
+---
+
+##### `testCoverageInclude`<sup>Optional</sup> <a name="testCoverageInclude" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageInclude"></a>
+
+```typescript
+public readonly testCoverageInclude: string[];
+```
+
+- *Type:* string[]
+
+include files in coverage report that match this glob pattern.
+
+---
+
+##### `testCoverageLines`<sup>Optional</sup> <a name="testCoverageLines" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testCoverageLines"></a>
+
+```typescript
+public readonly testCoverageLines: number;
+```
+
+- *Type:* number
+
+the line coverage minimum threshold.
+
+---
+
+##### `testGlobalSetup`<sup>Optional</sup> <a name="testGlobalSetup" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testGlobalSetup"></a>
+
+```typescript
+public readonly testGlobalSetup: string;
+```
+
+- *Type:* string
+
+specifies the path to the global setup file.
+
+---
+
+##### `testIsolation`<sup>Optional</sup> <a name="testIsolation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testIsolation"></a>
+
+```typescript
+public readonly testIsolation: string;
+```
+
+- *Type:* string
+
+configures the type of test isolation used in the test runner.
+
+---
+
+##### `testNamePattern`<sup>Optional</sup> <a name="testNamePattern" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testNamePattern"></a>
+
+```typescript
+public readonly testNamePattern: string[];
+```
+
+- *Type:* string[]
+
+run tests whose name matches this regular expression.
+
+---
+
+##### `testOnly`<sup>Optional</sup> <a name="testOnly" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testOnly"></a>
+
+```typescript
+public readonly testOnly: boolean;
+```
+
+- *Type:* boolean
+
+run tests with 'only' option set.
+
+---
+
+##### `testRandomize`<sup>Optional</sup> <a name="testRandomize" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testRandomize"></a>
+
+```typescript
+public readonly testRandomize: boolean;
+```
+
+- *Type:* boolean
+
+run tests in a random order.
+
+---
+
+##### `testRandomSeed`<sup>Optional</sup> <a name="testRandomSeed" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testRandomSeed"></a>
+
+```typescript
+public readonly testRandomSeed: number;
+```
+
+- *Type:* number
+
+seed used to randomize test execution order.
+
+---
+
+##### `testReporter`<sup>Optional</sup> <a name="testReporter" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testReporter"></a>
+
+```typescript
+public readonly testReporter: string[];
+```
+
+- *Type:* string[]
+
+report test output using the given reporter.
+
+---
+
+##### `testReporterDestination`<sup>Optional</sup> <a name="testReporterDestination" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testReporterDestination"></a>
+
+```typescript
+public readonly testReporterDestination: string[];
+```
+
+- *Type:* string[]
+
+report given reporter to the given destination.
+
+---
+
+##### `testRerunFailures`<sup>Optional</sup> <a name="testRerunFailures" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testRerunFailures"></a>
+
+```typescript
+public readonly testRerunFailures: string;
+```
+
+- *Type:* string
+
+specifies the path to the rerun state file.
+
+---
+
+##### `testShard`<sup>Optional</sup> <a name="testShard" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testShard"></a>
+
+```typescript
+public readonly testShard: string;
+```
+
+- *Type:* string
+
+run test at specific shard.
+
+---
+
+##### `testSkipPattern`<sup>Optional</sup> <a name="testSkipPattern" id="projen.javascript.NodeConfigSchemaNodeOptions.property.testSkipPattern"></a>
+
+```typescript
+public readonly testSkipPattern: string[];
+```
+
+- *Type:* string[]
+
+run tests whose name do not match this regular expression.
+
+---
+
+##### `throwDeprecation`<sup>Optional</sup> <a name="throwDeprecation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.throwDeprecation"></a>
+
+```typescript
+public readonly throwDeprecation: boolean;
+```
+
+- *Type:* boolean
+
+throw an exception on deprecations.
+
+---
+
+##### `title`<sup>Optional</sup> <a name="title" id="projen.javascript.NodeConfigSchemaNodeOptions.property.title"></a>
+
+```typescript
+public readonly title: string;
+```
+
+- *Type:* string
+
+the process title to use on startup.
+
+---
+
+##### `tlsCipherList`<sup>Optional</sup> <a name="tlsCipherList" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsCipherList"></a>
+
+```typescript
+public readonly tlsCipherList: string;
+```
+
+- *Type:* string
+
+use an alternative default TLS cipher list.
+
+---
+
+##### `tlsKeylog`<sup>Optional</sup> <a name="tlsKeylog" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsKeylog"></a>
+
+```typescript
+public readonly tlsKeylog: string;
+```
+
+- *Type:* string
+
+log TLS decryption keys to named file for traffic analysis.
+
+---
+
+##### `tlsMaxV12`<sup>Optional</sup> <a name="tlsMaxV12" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMaxV12"></a>
+
+```typescript
+public readonly tlsMaxV12: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS maximum to TLSv1.2 (default: TLSv1.3).
+
+---
+
+##### `tlsMaxV13`<sup>Optional</sup> <a name="tlsMaxV13" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMaxV13"></a>
+
+```typescript
+public readonly tlsMaxV13: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS maximum to TLSv1.3 (default: TLSv1.3).
+
+---
+
+##### `tlsMinV10`<sup>Optional</sup> <a name="tlsMinV10" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV10"></a>
+
+```typescript
+public readonly tlsMinV10: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS minimum to TLSv1.0 (default: TLSv1.2).
+
+---
+
+##### `tlsMinV11`<sup>Optional</sup> <a name="tlsMinV11" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV11"></a>
+
+```typescript
+public readonly tlsMinV11: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS minimum to TLSv1.1 (default: TLSv1.2).
+
+---
+
+##### `tlsMinV12`<sup>Optional</sup> <a name="tlsMinV12" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV12"></a>
+
+```typescript
+public readonly tlsMinV12: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS minimum to TLSv1.2 (default: TLSv1.2).
+
+---
+
+##### `tlsMinV13`<sup>Optional</sup> <a name="tlsMinV13" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tlsMinV13"></a>
+
+```typescript
+public readonly tlsMinV13: boolean;
+```
+
+- *Type:* boolean
+
+set default TLS minimum to TLSv1.3 (default: TLSv1.2).
+
+---
+
+##### `traceDeprecation`<sup>Optional</sup> <a name="traceDeprecation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceDeprecation"></a>
+
+```typescript
+public readonly traceDeprecation: boolean;
+```
+
+- *Type:* boolean
+
+show stack traces on deprecations.
+
+---
+
+##### `traceEnv`<sup>Optional</sup> <a name="traceEnv" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnv"></a>
+
+```typescript
+public readonly traceEnv: boolean;
+```
+
+- *Type:* boolean
+
+Print accesses to the environment variables.
+
+---
+
+##### `traceEnvJsStack`<sup>Optional</sup> <a name="traceEnvJsStack" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnvJsStack"></a>
+
+```typescript
+public readonly traceEnvJsStack: boolean;
+```
+
+- *Type:* boolean
+
+Print accesses to the environment variables and the JavaScript stack trace.
+
+---
+
+##### `traceEnvNativeStack`<sup>Optional</sup> <a name="traceEnvNativeStack" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceEnvNativeStack"></a>
+
+```typescript
+public readonly traceEnvNativeStack: boolean;
+```
+
+- *Type:* boolean
+
+Print accesses to the environment variables and the native stack trace.
+
+---
+
+##### `traceEventCategories`<sup>Optional</sup> <a name="traceEventCategories" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceEventCategories"></a>
+
+```typescript
+public readonly traceEventCategories: string;
+```
+
+- *Type:* string
+
+comma separated list of trace event categories to record.
+
+---
+
+##### `traceEventFilePattern`<sup>Optional</sup> <a name="traceEventFilePattern" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceEventFilePattern"></a>
+
+```typescript
+public readonly traceEventFilePattern: string;
+```
+
+- *Type:* string
+
+Template string specifying the filepath for the trace-events data, it supports ${rotation} and ${pid}.
+
+---
+
+##### `traceExit`<sup>Optional</sup> <a name="traceExit" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceExit"></a>
+
+```typescript
+public readonly traceExit: boolean;
+```
+
+- *Type:* boolean
+
+show stack trace when an environment exits.
+
+---
+
+##### `tracePromises`<sup>Optional</sup> <a name="tracePromises" id="projen.javascript.NodeConfigSchemaNodeOptions.property.tracePromises"></a>
+
+```typescript
+public readonly tracePromises: boolean;
+```
+
+- *Type:* boolean
+
+show stack traces on promise initialization and resolution.
+
+---
+
+##### `traceRequireModule`<sup>Optional</sup> <a name="traceRequireModule" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceRequireModule"></a>
+
+```typescript
+public readonly traceRequireModule: string;
+```
+
+- *Type:* string
+
+Print access to require(esm).
+
+Options are 'all' (print all usage) and 'no-node-modules' (excluding usage from the node_modules folder)
+
+---
+
+##### `traceSigint`<sup>Optional</sup> <a name="traceSigint" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceSigint"></a>
+
+```typescript
+public readonly traceSigint: boolean;
+```
+
+- *Type:* boolean
+
+enable printing JavaScript stacktrace on SIGINT.
+
+---
+
+##### `traceSyncIo`<sup>Optional</sup> <a name="traceSyncIo" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceSyncIo"></a>
+
+```typescript
+public readonly traceSyncIo: boolean;
+```
+
+- *Type:* boolean
+
+show stack trace when use of sync IO is detected after the first tick.
+
+---
+
+##### `traceTls`<sup>Optional</sup> <a name="traceTls" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceTls"></a>
+
+```typescript
+public readonly traceTls: boolean;
+```
+
+- *Type:* boolean
+
+prints TLS packet trace information to stderr.
+
+---
+
+##### `traceUncaught`<sup>Optional</sup> <a name="traceUncaught" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceUncaught"></a>
+
+```typescript
+public readonly traceUncaught: boolean;
+```
+
+- *Type:* boolean
+
+show stack traces for the `throw` behind uncaught exceptions.
+
+---
+
+##### `traceWarnings`<sup>Optional</sup> <a name="traceWarnings" id="projen.javascript.NodeConfigSchemaNodeOptions.property.traceWarnings"></a>
+
+```typescript
+public readonly traceWarnings: boolean;
+```
+
+- *Type:* boolean
+
+show stack traces on process warnings.
+
+---
+
+##### `trackHeapObjects`<sup>Optional</sup> <a name="trackHeapObjects" id="projen.javascript.NodeConfigSchemaNodeOptions.property.trackHeapObjects"></a>
+
+```typescript
+public readonly trackHeapObjects: boolean;
+```
+
+- *Type:* boolean
+
+track heap object allocations for heap snapshots.
+
+---
+
+##### `unhandledRejections`<sup>Optional</sup> <a name="unhandledRejections" id="projen.javascript.NodeConfigSchemaNodeOptions.property.unhandledRejections"></a>
+
+```typescript
+public readonly unhandledRejections: string;
+```
+
+- *Type:* string
+
+define unhandled rejections behavior.
+
+Options are 'strict' (always raise an error), 'throw' (raise an error unless 'unhandledRejection' hook is set), 'warn' (log a warning), 'none' (silence warnings), 'warn-with-error-code' (log a warning and set exit code 1 unless 'unhandledRejection' hook is set). (default: throw)
+
+---
+
+##### `useBundledCa`<sup>Optional</sup> <a name="useBundledCa" id="projen.javascript.NodeConfigSchemaNodeOptions.property.useBundledCa"></a>
+
+```typescript
+public readonly useBundledCa: boolean;
+```
+
+- *Type:* boolean
+
+use bundled CA store (default).
+
+---
+
+##### `useEnvProxy`<sup>Optional</sup> <a name="useEnvProxy" id="projen.javascript.NodeConfigSchemaNodeOptions.property.useEnvProxy"></a>
+
+```typescript
+public readonly useEnvProxy: boolean;
+```
+
+- *Type:* boolean
+
+parse proxy settings from HTTP_PROXY/HTTPS_PROXY/NO_PROXYenvironment variables and apply the setting in global HTTP/HTTPS clients.
+
+---
+
+##### `useLargepages`<sup>Optional</sup> <a name="useLargepages" id="projen.javascript.NodeConfigSchemaNodeOptions.property.useLargepages"></a>
+
+```typescript
+public readonly useLargepages: string;
+```
+
+- *Type:* string
+
+Map the Node.js static code to large pages. Options are 'off' (the default value, meaning do not map), 'on' (map and ignore failure, reporting it to stderr), or 'silent' (map and silently ignore failure).
+
+---
+
+##### `useOpensslCa`<sup>Optional</sup> <a name="useOpensslCa" id="projen.javascript.NodeConfigSchemaNodeOptions.property.useOpensslCa"></a>
+
+```typescript
+public readonly useOpensslCa: boolean;
+```
+
+- *Type:* boolean
+
+use OpenSSL's default CA store.
+
+---
+
+##### `useSystemCa`<sup>Optional</sup> <a name="useSystemCa" id="projen.javascript.NodeConfigSchemaNodeOptions.property.useSystemCa"></a>
+
+```typescript
+public readonly useSystemCa: boolean;
+```
+
+- *Type:* boolean
+
+use system's CA store.
+
+---
+
+##### `v8PoolSize`<sup>Optional</sup> <a name="v8PoolSize" id="projen.javascript.NodeConfigSchemaNodeOptions.property.v8PoolSize"></a>
+
+```typescript
+public readonly v8PoolSize: number;
+```
+
+- *Type:* number
+
+set V8's thread pool size.
+
+---
+
+##### `verifyBaseObjects`<sup>Optional</sup> <a name="verifyBaseObjects" id="projen.javascript.NodeConfigSchemaNodeOptions.property.verifyBaseObjects"></a>
+
+```typescript
+public readonly verifyBaseObjects: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `warnings`<sup>Optional</sup> <a name="warnings" id="projen.javascript.NodeConfigSchemaNodeOptions.property.warnings"></a>
+
+```typescript
+public readonly warnings: boolean;
+```
+
+- *Type:* boolean
+
+silence all process warnings.
+
+---
+
+##### `watch`<sup>Optional</sup> <a name="watch" id="projen.javascript.NodeConfigSchemaNodeOptions.property.watch"></a>
+
+```typescript
+public readonly watch: boolean;
+```
+
+- *Type:* boolean
+
+run in watch mode.
+
+---
+
+##### `watchKillSignal`<sup>Optional</sup> <a name="watchKillSignal" id="projen.javascript.NodeConfigSchemaNodeOptions.property.watchKillSignal"></a>
+
+```typescript
+public readonly watchKillSignal: string;
+```
+
+- *Type:* string
+
+kill signal to send to the process on watch mode restarts(default: SIGTERM).
+
+---
+
+##### `watchPath`<sup>Optional</sup> <a name="watchPath" id="projen.javascript.NodeConfigSchemaNodeOptions.property.watchPath"></a>
+
+```typescript
+public readonly watchPath: string[];
+```
+
+- *Type:* string[]
+
+path to watch.
+
+---
+
+##### `watchPreserveOutput`<sup>Optional</sup> <a name="watchPreserveOutput" id="projen.javascript.NodeConfigSchemaNodeOptions.property.watchPreserveOutput"></a>
+
+```typescript
+public readonly watchPreserveOutput: boolean;
+```
+
+- *Type:* boolean
+
+preserve outputs on watch mode restart.
+
+---
+
+##### `zeroFillBuffers`<sup>Optional</sup> <a name="zeroFillBuffers" id="projen.javascript.NodeConfigSchemaNodeOptions.property.zeroFillBuffers"></a>
+
+```typescript
+public readonly zeroFillBuffers: boolean;
+```
+
+- *Type:* boolean
+
+automatically zero-fill all newly allocated Buffer instances.
+
+---
+
+### NodeConfigSchemaPermission <a name="NodeConfigSchemaPermission" id="projen.javascript.NodeConfigSchemaPermission"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaPermission.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchemaPermission: javascript.NodeConfigSchemaPermission = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowAddons">allowAddons</a></code> | <code>boolean</code> | allow use of addons when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowChildProcess">allowChildProcess</a></code> | <code>boolean</code> | allow use of child process when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowFsRead">allowFsRead</a></code> | <code>string[]</code> | allow permissions to read the filesystem. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowFsWrite">allowFsWrite</a></code> | <code>string[]</code> | allow permissions to write in the filesystem. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowInspector">allowInspector</a></code> | <code>boolean</code> | allow use of inspector when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowWasi">allowWasi</a></code> | <code>boolean</code> | allow wasi when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowWorker">allowWorker</a></code> | <code>boolean</code> | allow worker threads when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.permission">permission</a></code> | <code>boolean</code> | enable the permission system. |
+
+---
+
+##### `allowAddons`<sup>Optional</sup> <a name="allowAddons" id="projen.javascript.NodeConfigSchemaPermission.property.allowAddons"></a>
+
+```typescript
+public readonly allowAddons: boolean;
+```
+
+- *Type:* boolean
+
+allow use of addons when any permissions are set.
+
+---
+
+##### `allowChildProcess`<sup>Optional</sup> <a name="allowChildProcess" id="projen.javascript.NodeConfigSchemaPermission.property.allowChildProcess"></a>
+
+```typescript
+public readonly allowChildProcess: boolean;
+```
+
+- *Type:* boolean
+
+allow use of child process when any permissions are set.
+
+---
+
+##### `allowFsRead`<sup>Optional</sup> <a name="allowFsRead" id="projen.javascript.NodeConfigSchemaPermission.property.allowFsRead"></a>
+
+```typescript
+public readonly allowFsRead: string[];
+```
+
+- *Type:* string[]
+
+allow permissions to read the filesystem.
+
+---
+
+##### `allowFsWrite`<sup>Optional</sup> <a name="allowFsWrite" id="projen.javascript.NodeConfigSchemaPermission.property.allowFsWrite"></a>
+
+```typescript
+public readonly allowFsWrite: string[];
+```
+
+- *Type:* string[]
+
+allow permissions to write in the filesystem.
+
+---
+
+##### `allowInspector`<sup>Optional</sup> <a name="allowInspector" id="projen.javascript.NodeConfigSchemaPermission.property.allowInspector"></a>
+
+```typescript
+public readonly allowInspector: boolean;
+```
+
+- *Type:* boolean
+
+allow use of inspector when any permissions are set.
+
+---
+
+##### `allowWasi`<sup>Optional</sup> <a name="allowWasi" id="projen.javascript.NodeConfigSchemaPermission.property.allowWasi"></a>
+
+```typescript
+public readonly allowWasi: boolean;
+```
+
+- *Type:* boolean
+
+allow wasi when any permissions are set.
+
+---
+
+##### `allowWorker`<sup>Optional</sup> <a name="allowWorker" id="projen.javascript.NodeConfigSchemaPermission.property.allowWorker"></a>
+
+```typescript
+public readonly allowWorker: boolean;
+```
+
+- *Type:* boolean
+
+allow worker threads when any permissions are set.
+
+---
+
+##### `permission`<sup>Optional</sup> <a name="permission" id="projen.javascript.NodeConfigSchemaPermission.property.permission"></a>
+
+```typescript
+public readonly permission: boolean;
+```
+
+- *Type:* boolean
+
+enable the permission system.
+
+---
+
+### NodeConfigSchemaTest <a name="NodeConfigSchemaTest" id="projen.javascript.NodeConfigSchemaTest"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaTest.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchemaTest: javascript.NodeConfigSchemaTest = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.experimentalTestCoverage">experimentalTestCoverage</a></code> | <code>boolean</code> | enable code coverage in the test runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.experimentalTestModuleMocks">experimentalTestModuleMocks</a></code> | <code>boolean</code> | enable module mocking in the test runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.test">test</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testConcurrency">testConcurrency</a></code> | <code>number</code> | specify test runner concurrency. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageBranches">testCoverageBranches</a></code> | <code>number</code> | the branch coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageExclude">testCoverageExclude</a></code> | <code>string[]</code> | exclude files from coverage report that match this glob pattern. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageFunctions">testCoverageFunctions</a></code> | <code>number</code> | the function coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageInclude">testCoverageInclude</a></code> | <code>string[]</code> | include files in coverage report that match this glob pattern. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageLines">testCoverageLines</a></code> | <code>number</code> | the line coverage minimum threshold. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testForceExit">testForceExit</a></code> | <code>boolean</code> | force test runner to exit upon completion. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testGlobalSetup">testGlobalSetup</a></code> | <code>string</code> | specifies the path to the global setup file. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testIsolation">testIsolation</a></code> | <code>string</code> | configures the type of test isolation used in the test runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testNamePattern">testNamePattern</a></code> | <code>string[]</code> | run tests whose name matches this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testOnly">testOnly</a></code> | <code>boolean</code> | run tests with 'only' option set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testRandomize">testRandomize</a></code> | <code>boolean</code> | run tests in a random order. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testRandomSeed">testRandomSeed</a></code> | <code>number</code> | seed used to randomize test execution order. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testReporter">testReporter</a></code> | <code>string[]</code> | report test output using the given reporter. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testReporterDestination">testReporterDestination</a></code> | <code>string[]</code> | report given reporter to the given destination. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testRerunFailures">testRerunFailures</a></code> | <code>string</code> | specifies the path to the rerun state file. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testShard">testShard</a></code> | <code>string</code> | run test at specific shard. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testSkipPattern">testSkipPattern</a></code> | <code>string[]</code> | run tests whose name do not match this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testTimeout">testTimeout</a></code> | <code>number</code> | specify test runner timeout. |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testUpdateSnapshots">testUpdateSnapshots</a></code> | <code>boolean</code> | regenerate test snapshots. |
+
+---
+
+##### `experimentalTestCoverage`<sup>Optional</sup> <a name="experimentalTestCoverage" id="projen.javascript.NodeConfigSchemaTest.property.experimentalTestCoverage"></a>
+
+```typescript
+public readonly experimentalTestCoverage: boolean;
+```
+
+- *Type:* boolean
+
+enable code coverage in the test runner.
+
+---
+
+##### `experimentalTestModuleMocks`<sup>Optional</sup> <a name="experimentalTestModuleMocks" id="projen.javascript.NodeConfigSchemaTest.property.experimentalTestModuleMocks"></a>
+
+```typescript
+public readonly experimentalTestModuleMocks: boolean;
+```
+
+- *Type:* boolean
+
+enable module mocking in the test runner.
+
+---
+
+##### `test`<sup>Optional</sup> <a name="test" id="projen.javascript.NodeConfigSchemaTest.property.test"></a>
+
+```typescript
+public readonly test: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `testConcurrency`<sup>Optional</sup> <a name="testConcurrency" id="projen.javascript.NodeConfigSchemaTest.property.testConcurrency"></a>
+
+```typescript
+public readonly testConcurrency: number;
+```
+
+- *Type:* number
+
+specify test runner concurrency.
+
+---
+
+##### `testCoverageBranches`<sup>Optional</sup> <a name="testCoverageBranches" id="projen.javascript.NodeConfigSchemaTest.property.testCoverageBranches"></a>
+
+```typescript
+public readonly testCoverageBranches: number;
+```
+
+- *Type:* number
+
+the branch coverage minimum threshold.
+
+---
+
+##### `testCoverageExclude`<sup>Optional</sup> <a name="testCoverageExclude" id="projen.javascript.NodeConfigSchemaTest.property.testCoverageExclude"></a>
+
+```typescript
+public readonly testCoverageExclude: string[];
+```
+
+- *Type:* string[]
+
+exclude files from coverage report that match this glob pattern.
+
+---
+
+##### `testCoverageFunctions`<sup>Optional</sup> <a name="testCoverageFunctions" id="projen.javascript.NodeConfigSchemaTest.property.testCoverageFunctions"></a>
+
+```typescript
+public readonly testCoverageFunctions: number;
+```
+
+- *Type:* number
+
+the function coverage minimum threshold.
+
+---
+
+##### `testCoverageInclude`<sup>Optional</sup> <a name="testCoverageInclude" id="projen.javascript.NodeConfigSchemaTest.property.testCoverageInclude"></a>
+
+```typescript
+public readonly testCoverageInclude: string[];
+```
+
+- *Type:* string[]
+
+include files in coverage report that match this glob pattern.
+
+---
+
+##### `testCoverageLines`<sup>Optional</sup> <a name="testCoverageLines" id="projen.javascript.NodeConfigSchemaTest.property.testCoverageLines"></a>
+
+```typescript
+public readonly testCoverageLines: number;
+```
+
+- *Type:* number
+
+the line coverage minimum threshold.
+
+---
+
+##### `testForceExit`<sup>Optional</sup> <a name="testForceExit" id="projen.javascript.NodeConfigSchemaTest.property.testForceExit"></a>
+
+```typescript
+public readonly testForceExit: boolean;
+```
+
+- *Type:* boolean
+
+force test runner to exit upon completion.
+
+---
+
+##### `testGlobalSetup`<sup>Optional</sup> <a name="testGlobalSetup" id="projen.javascript.NodeConfigSchemaTest.property.testGlobalSetup"></a>
+
+```typescript
+public readonly testGlobalSetup: string;
+```
+
+- *Type:* string
+
+specifies the path to the global setup file.
+
+---
+
+##### `testIsolation`<sup>Optional</sup> <a name="testIsolation" id="projen.javascript.NodeConfigSchemaTest.property.testIsolation"></a>
+
+```typescript
+public readonly testIsolation: string;
+```
+
+- *Type:* string
+
+configures the type of test isolation used in the test runner.
+
+---
+
+##### `testNamePattern`<sup>Optional</sup> <a name="testNamePattern" id="projen.javascript.NodeConfigSchemaTest.property.testNamePattern"></a>
+
+```typescript
+public readonly testNamePattern: string[];
+```
+
+- *Type:* string[]
+
+run tests whose name matches this regular expression.
+
+---
+
+##### `testOnly`<sup>Optional</sup> <a name="testOnly" id="projen.javascript.NodeConfigSchemaTest.property.testOnly"></a>
+
+```typescript
+public readonly testOnly: boolean;
+```
+
+- *Type:* boolean
+
+run tests with 'only' option set.
+
+---
+
+##### `testRandomize`<sup>Optional</sup> <a name="testRandomize" id="projen.javascript.NodeConfigSchemaTest.property.testRandomize"></a>
+
+```typescript
+public readonly testRandomize: boolean;
+```
+
+- *Type:* boolean
+
+run tests in a random order.
+
+---
+
+##### `testRandomSeed`<sup>Optional</sup> <a name="testRandomSeed" id="projen.javascript.NodeConfigSchemaTest.property.testRandomSeed"></a>
+
+```typescript
+public readonly testRandomSeed: number;
+```
+
+- *Type:* number
+
+seed used to randomize test execution order.
+
+---
+
+##### `testReporter`<sup>Optional</sup> <a name="testReporter" id="projen.javascript.NodeConfigSchemaTest.property.testReporter"></a>
+
+```typescript
+public readonly testReporter: string[];
+```
+
+- *Type:* string[]
+
+report test output using the given reporter.
+
+---
+
+##### `testReporterDestination`<sup>Optional</sup> <a name="testReporterDestination" id="projen.javascript.NodeConfigSchemaTest.property.testReporterDestination"></a>
+
+```typescript
+public readonly testReporterDestination: string[];
+```
+
+- *Type:* string[]
+
+report given reporter to the given destination.
+
+---
+
+##### `testRerunFailures`<sup>Optional</sup> <a name="testRerunFailures" id="projen.javascript.NodeConfigSchemaTest.property.testRerunFailures"></a>
+
+```typescript
+public readonly testRerunFailures: string;
+```
+
+- *Type:* string
+
+specifies the path to the rerun state file.
+
+---
+
+##### `testShard`<sup>Optional</sup> <a name="testShard" id="projen.javascript.NodeConfigSchemaTest.property.testShard"></a>
+
+```typescript
+public readonly testShard: string;
+```
+
+- *Type:* string
+
+run test at specific shard.
+
+---
+
+##### `testSkipPattern`<sup>Optional</sup> <a name="testSkipPattern" id="projen.javascript.NodeConfigSchemaTest.property.testSkipPattern"></a>
+
+```typescript
+public readonly testSkipPattern: string[];
+```
+
+- *Type:* string[]
+
+run tests whose name do not match this regular expression.
+
+---
+
+##### `testTimeout`<sup>Optional</sup> <a name="testTimeout" id="projen.javascript.NodeConfigSchemaTest.property.testTimeout"></a>
+
+```typescript
+public readonly testTimeout: number;
+```
+
+- *Type:* number
+
+specify test runner timeout.
+
+---
+
+##### `testUpdateSnapshots`<sup>Optional</sup> <a name="testUpdateSnapshots" id="projen.javascript.NodeConfigSchemaTest.property.testUpdateSnapshots"></a>
+
+```typescript
+public readonly testUpdateSnapshots: boolean;
+```
+
+- *Type:* boolean
+
+regenerate test snapshots.
+
+---
+
+### NodeConfigSchemaWatch <a name="NodeConfigSchemaWatch" id="projen.javascript.NodeConfigSchemaWatch"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaWatch.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchemaWatch: javascript.NodeConfigSchemaWatch = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchemaWatch.property.watch">watch</a></code> | <code>boolean</code> | run in watch mode. |
+| <code><a href="#projen.javascript.NodeConfigSchemaWatch.property.watchKillSignal">watchKillSignal</a></code> | <code>string</code> | kill signal to send to the process on watch mode restarts(default: SIGTERM). |
+| <code><a href="#projen.javascript.NodeConfigSchemaWatch.property.watchPath">watchPath</a></code> | <code>string[]</code> | path to watch. |
+| <code><a href="#projen.javascript.NodeConfigSchemaWatch.property.watchPreserveOutput">watchPreserveOutput</a></code> | <code>boolean</code> | preserve outputs on watch mode restart. |
+
+---
+
+##### `watch`<sup>Optional</sup> <a name="watch" id="projen.javascript.NodeConfigSchemaWatch.property.watch"></a>
+
+```typescript
+public readonly watch: boolean;
+```
+
+- *Type:* boolean
+
+run in watch mode.
+
+---
+
+##### `watchKillSignal`<sup>Optional</sup> <a name="watchKillSignal" id="projen.javascript.NodeConfigSchemaWatch.property.watchKillSignal"></a>
+
+```typescript
+public readonly watchKillSignal: string;
+```
+
+- *Type:* string
+
+kill signal to send to the process on watch mode restarts(default: SIGTERM).
+
+---
+
+##### `watchPath`<sup>Optional</sup> <a name="watchPath" id="projen.javascript.NodeConfigSchemaWatch.property.watchPath"></a>
+
+```typescript
+public readonly watchPath: string[];
+```
+
+- *Type:* string[]
+
+path to watch.
+
+---
+
+##### `watchPreserveOutput`<sup>Optional</sup> <a name="watchPreserveOutput" id="projen.javascript.NodeConfigSchemaWatch.property.watchPreserveOutput"></a>
+
+```typescript
+public readonly watchPreserveOutput: boolean;
+```
+
+- *Type:* boolean
+
+preserve outputs on watch mode restart.
 
 ---
 
@@ -10423,6 +13503,8 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.jestOptions">jestOptions</a></code> | <code><a href="#projen.javascript.JestOptions">JestOptions</a></code> | Jest options. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code><a href="#projen.javascript.NodeTestRunnerOptions">NodeTestRunnerOptions</a></code> | Node test runner options. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -12184,6 +15266,34 @@ Jest options.
 
 ---
 
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.javascript.NodeProjectOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.javascript.NodeProjectOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* <a href="#projen.javascript.NodeTestRunnerOptions">NodeTestRunnerOptions</a>
+- *Default:* default options
+
+Node test runner options.
+
+---
+
 ##### `npmignoreEnabled`<sup>Optional</sup> <a name="npmignoreEnabled" id="projen.javascript.NodeProjectOptions.property.npmignoreEnabled"></a>
 
 ```typescript
@@ -12403,6 +15513,231 @@ public readonly workflowPackageCache: boolean;
 - *Default:* false
 
 Enable Node.js package cache in GitHub workflows.
+
+---
+
+### NodeTestRunnerOptions <a name="NodeTestRunnerOptions" id="projen.javascript.NodeTestRunnerOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeTestRunnerOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeTestRunnerOptions: javascript.NodeTestRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.collectCoverage">collectCoverage</a></code> | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Node should output its coverage files. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.coveragePathIgnorePatterns">coveragePathIgnorePatterns</a></code> | <code>string[]</code> | An array of glob patterns that are matched against all file paths before executing coverage collection. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.moduleMocks">moduleMocks</a></code> | <code>boolean</code> | Enable module mocking support via `--experimental-test-module-mocks`. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `experimentalTransformTypes`, `disableWarning`). |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.testConfig">testConfig</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | Escape hatch to add or override any value in the `test` section of the generated configuration file. |
+| <code><a href="#projen.javascript.NodeTestRunnerOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | Glob patterns matching the files that contain tests. |
+
+---
+
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeTestRunnerOptions.property.configFilePath"></a>
+
+```typescript
+public readonly configFilePath: string;
+```
+
+- *Type:* string
+- *Default:* no separate config file
+
+Path to the JSON configuration file for the test runner.
+
+---
+
+##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.NodeTestRunnerOptions.property.coverageText"></a>
+
+```typescript
+public readonly coverageText: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
+
+---
+
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeTestRunnerOptions.property.extraCliOptions"></a>
+
+```typescript
+public readonly extraCliOptions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no extra options
+
+Additional options to pass to the test runner's CLI invocation.
+
+Each element is passed as a single argument, exactly as given: no shell
+parses these, so a flag and its value need separate elements
+(`["--foo", "bar"]`, not `["--foo bar"]`).
+
+---
+
+##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.NodeTestRunnerOptions.property.junitReporting"></a>
+
+```typescript
+public readonly junitReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Result processing with a JUnit-compatible reporter.
+
+Output directory is `test-reports/`.
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeTestRunnerOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default reporter when additional reporters are added.
+
+---
+
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.NodeTestRunnerOptions.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+- *Default:* ALWAYS
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+---
+
+##### `collectCoverage`<sup>Optional</sup> <a name="collectCoverage" id="projen.javascript.NodeTestRunnerOptions.property.collectCoverage"></a>
+
+```typescript
+public readonly collectCoverage: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`.
+
+---
+
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeTestRunnerOptions.property.coverageDirectory"></a>
+
+```typescript
+public readonly coverageDirectory: string;
+```
+
+- *Type:* string
+- *Default:* "coverage"
+
+The directory where Node should output its coverage files.
+
+---
+
+##### `coveragePathIgnorePatterns`<sup>Optional</sup> <a name="coveragePathIgnorePatterns" id="projen.javascript.NodeTestRunnerOptions.property.coveragePathIgnorePatterns"></a>
+
+```typescript
+public readonly coveragePathIgnorePatterns: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["**\/test/**", "**\/__tests__/**"]
+
+An array of glob patterns that are matched against all file paths before executing coverage collection.
+
+If a file path matches any of the
+patterns, coverage information will be skipped for it.
+
+---
+
+##### `globalSetup`<sup>Optional</sup> <a name="globalSetup" id="projen.javascript.NodeTestRunnerOptions.property.globalSetup"></a>
+
+```typescript
+public readonly globalSetup: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites.
+
+Written as `test-global-setup` in the generated Node.js configuration
+file.
+
+---
+
+##### `moduleMocks`<sup>Optional</sup> <a name="moduleMocks" id="projen.javascript.NodeTestRunnerOptions.property.moduleMocks"></a>
+
+```typescript
+public readonly moduleMocks: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable module mocking support via `--experimental-test-module-mocks`.
+
+---
+
+##### `nodeOptions`<sup>Optional</sup> <a name="nodeOptions" id="projen.javascript.NodeTestRunnerOptions.property.nodeOptions"></a>
+
+```typescript
+public readonly nodeOptions: NodeConfigSchemaNodeOptions;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
+- *Default:* no additional node options
+
+Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `experimentalTransformTypes`, `disableWarning`).
+
+---
+
+##### `testConfig`<sup>Optional</sup> <a name="testConfig" id="projen.javascript.NodeTestRunnerOptions.property.testConfig"></a>
+
+```typescript
+public readonly testConfig: NodeConfigSchemaTest;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a>
+- *Default:* no additional options
+
+Escape hatch to add or override any value in the `test` section of the generated configuration file.
+
+---
+
+##### `testMatch`<sup>Optional</sup> <a name="testMatch" id="projen.javascript.NodeTestRunnerOptions.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: string[];
+```
+
+- *Type:* string[]
+- *Default:* Node's own default test file discovery
+
+Glob patterns matching the files that contain tests.
 
 ---
 
@@ -18329,6 +21664,115 @@ Prints the name of functions.
 
 ---
 
+### TestRunnerBaseOptions <a name="TestRunnerBaseOptions" id="projen.javascript.TestRunnerBaseOptions"></a>
+
+Options shared by all test runner components (e.g. `Jest`, `NodeTestRunner`).
+
+#### Initializer <a name="Initializer" id="projen.javascript.TestRunnerBaseOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const testRunnerBaseOptions: javascript.TestRunnerBaseOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.TestRunnerBaseOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+
+---
+
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.TestRunnerBaseOptions.property.configFilePath"></a>
+
+```typescript
+public readonly configFilePath: string;
+```
+
+- *Type:* string
+- *Default:* no separate config file
+
+Path to the JSON configuration file for the test runner.
+
+---
+
+##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.TestRunnerBaseOptions.property.coverageText"></a>
+
+```typescript
+public readonly coverageText: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
+
+---
+
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.TestRunnerBaseOptions.property.extraCliOptions"></a>
+
+```typescript
+public readonly extraCliOptions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no extra options
+
+Additional options to pass to the test runner's CLI invocation.
+
+Each element is passed as a single argument, exactly as given: no shell
+parses these, so a flag and its value need separate elements
+(`["--foo", "bar"]`, not `["--foo bar"]`).
+
+---
+
+##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.TestRunnerBaseOptions.property.junitReporting"></a>
+
+```typescript
+public readonly junitReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Result processing with a JUnit-compatible reporter.
+
+Output directory is `test-reports/`.
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.TestRunnerBaseOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default reporter when additional reporters are added.
+
+---
+
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.TestRunnerBaseOptions.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+- *Default:* ALWAYS
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+---
+
 ### TypeScriptCompilerOptions <a name="TypeScriptCompilerOptions" id="projen.javascript.TypeScriptCompilerOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.TypeScriptCompilerOptions.Initializer"></a>
@@ -23452,6 +26896,8 @@ from TypeScript 5.0 onwards.
 
 
 ### UpdateSnapshot <a name="UpdateSnapshot" id="projen.javascript.UpdateSnapshot"></a>
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
 
 #### Members <a name="Members" id="Members"></a>
 

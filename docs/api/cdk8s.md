@@ -2365,6 +2365,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.nodeTestRunner">nodeTestRunner</a></code> | <code>projen.javascript.NodeTestRunner</code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -2911,6 +2912,18 @@ public readonly minNodeVersion: string;
 The minimum node version required by this package to function.
 
 This value indicates the package is incompatible with older versions.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdk8s.Cdk8sTypeScriptApp.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* projen.javascript.NodeTestRunner
+
+The Node.js native test runner configuration (if enabled).
 
 ---
 
@@ -3786,6 +3799,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.nodeTestRunner">nodeTestRunner</a></code> | <code>projen.javascript.NodeTestRunner</code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -4332,6 +4346,18 @@ public readonly minNodeVersion: string;
 The minimum node version required by this package to function.
 
 This value indicates the package is incompatible with older versions.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdk8s.ConstructLibraryCdk8s.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* projen.javascript.NodeTestRunner
+
+The Node.js native test runner configuration (if enabled).
 
 ---
 
@@ -6760,6 +6786,8 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.jestOptions">jestOptions</a></code> | <code>projen.javascript.JestOptions</code> | Jest options. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code>projen.javascript.NodeTestRunnerOptions</code> | Node test runner options. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -8554,6 +8582,34 @@ Jest options.
 
 ---
 
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* projen.javascript.NodeTestRunnerOptions
+- *Default:* default options
+
+Node test runner options.
+
+---
+
 ##### `npmignoreEnabled`<sup>Optional</sup> <a name="npmignoreEnabled" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.npmignoreEnabled"></a>
 
 ```typescript
@@ -9359,6 +9415,8 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.jestOptions">jestOptions</a></code> | <code>projen.javascript.JestOptions</code> | Jest options. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code>projen.javascript.NodeTestRunnerOptions</code> | Node test runner options. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -11158,6 +11216,34 @@ public readonly jestOptions: JestOptions;
 - *Default:* default options
 
 Jest options.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* projen.javascript.NodeTestRunnerOptions
+- *Default:* default options
+
+Node test runner options.
 
 ---
 

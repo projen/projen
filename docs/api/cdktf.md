@@ -650,6 +650,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.jest">jest</a></code> | <code>projen.javascript.Jest</code> | The Jest configuration (if enabled). |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.maxNodeVersion">maxNodeVersion</a></code> | <code>string</code> | Maximum node version supported by this package. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.minNodeVersion">minNodeVersion</a></code> | <code>string</code> | The minimum node version required by this package to function. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.nodeTestRunner">nodeTestRunner</a></code> | <code>projen.javascript.NodeTestRunner</code> | The Node.js native test runner configuration (if enabled). |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
@@ -1323,6 +1324,21 @@ This value indicates the package is incompatible with older versions.
 
 ---
 
+##### ~~`nodeTestRunner`~~<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdktf.ConstructLibraryCdktf.property.nodeTestRunner"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
+
+```typescript
+public readonly nodeTestRunner: NodeTestRunner;
+```
+
+- *Type:* projen.javascript.NodeTestRunner
+
+The Node.js native test runner configuration (if enabled).
+
+---
+
 ##### ~~`npmignore`~~<sup>Optional</sup> <a name="npmignore" id="projen.cdktf.ConstructLibraryCdktf.property.npmignore"></a>
 
 - *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
@@ -1707,6 +1723,8 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.gitignore">gitignore</a></code> | <code>string[]</code> | Additional entries to .gitignore. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.jest">jest</a></code> | <code>boolean</code> | Setup jest unit tests. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.jestOptions">jestOptions</a></code> | <code>projen.javascript.JestOptions</code> | Jest options. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.nodeTestRunner">nodeTestRunner</a></code> | <code>boolean</code> | Setup unit tests using Node.js' built-in test runner (`node --test`). |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.nodeTestRunnerOptions">nodeTestRunnerOptions</a></code> | <code>projen.javascript.NodeTestRunnerOptions</code> | Node test runner options. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.npmignoreEnabled">npmignoreEnabled</a></code> | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.npmIgnoreOptions">npmIgnoreOptions</a></code> | <code>projen.IgnoreFileOptions</code> | Configuration options for .npmignore file. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.package">package</a></code> | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). |
@@ -3502,6 +3520,34 @@ public readonly jestOptions: JestOptions;
 - *Default:* default options
 
 Jest options.
+
+---
+
+##### `nodeTestRunner`<sup>Optional</sup> <a name="nodeTestRunner" id="projen.cdktf.ConstructLibraryCdktfOptions.property.nodeTestRunner"></a>
+
+```typescript
+public readonly nodeTestRunner: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setup unit tests using Node.js' built-in test runner (`node --test`).
+
+Mutually exclusive with `jest`.
+
+---
+
+##### `nodeTestRunnerOptions`<sup>Optional</sup> <a name="nodeTestRunnerOptions" id="projen.cdktf.ConstructLibraryCdktfOptions.property.nodeTestRunnerOptions"></a>
+
+```typescript
+public readonly nodeTestRunnerOptions: NodeTestRunnerOptions;
+```
+
+- *Type:* projen.javascript.NodeTestRunnerOptions
+- *Default:* default options
+
+Node test runner options.
 
 ---
 

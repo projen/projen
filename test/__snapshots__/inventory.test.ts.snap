@@ -3884,6 +3884,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -7015,6 +7051,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -11380,6 +11452,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -14361,6 +14469,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -17350,6 +17494,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -20377,6 +20557,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -24167,6 +24383,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -26896,6 +27148,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -29487,6 +29775,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -32088,6 +32412,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -35745,6 +36105,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -38324,6 +38720,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
@@ -41071,6 +41503,42 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
+        },
+      },
+      {
         "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
 \`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
 \`NpmAccess.PUBLIC\`.",
@@ -43790,6 +44258,42 @@ exports[`inventory 1`] = `
         "switch": "next-version-command",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Setup unit tests using Node.js' built-in test runner (\`node --test\`).",
+        "featured": false,
+        "jsonLike": true,
+        "name": "nodeTestRunner",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunner",
+        ],
+        "simpleType": "boolean",
+        "switch": "node-test-runner",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- default options",
+        "docs": "Node test runner options.",
+        "featured": false,
+        "fqn": "projen.javascript.NodeTestRunnerOptions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "nodeTestRunnerOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "nodeTestRunnerOptions",
+        ],
+        "simpleType": "NodeTestRunnerOptions",
+        "switch": "node-test-runner-options",
+        "type": {
+          "fqn": "projen.javascript.NodeTestRunnerOptions",
         },
       },
       {
