@@ -605,6 +605,22 @@
         }
       ]
     },
+    "update-github-actions": {
+      "name": "update-github-actions",
+      "description": "Resolve GitHub Action version lines to pinned refs and file issues for new majors",
+      "steps": [
+        {
+          "execArgs": [
+            "node",
+            "scripts/update-github-actions.js"
+          ],
+          "receiveArgs": true
+        },
+        {
+          "spawn": "default"
+        }
+      ]
+    },
     "update-schemas": {
       "name": "update-schemas",
       "description": "Updates vendored JSON schemas from their source URL",

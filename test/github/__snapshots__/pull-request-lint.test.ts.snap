@@ -30,8 +30,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -51,8 +51,8 @@ jobs:
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && !(contains(github.event.pull_request.labels.*.name, 'automation') || github.event.pull_request.user.login == 'github-bot[bot]')
     steps:
-      - id: auto_152a9d6d
-        uses: actions/github-script@v9
+      - id: auto_b0c7520c
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |-
             const actual = process.env.PR_BODY.replace(/\\r?\\n/g, "\\n");
@@ -95,8 +95,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -116,8 +116,8 @@ jobs:
       HELP: Contributor statement missing from PR description. Please include the following text in the PR description
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_152a9d6d
-        uses: actions/github-script@v9
+      - id: auto_b0c7520c
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
         with:
           script: |-
             const actual = process.env.PR_BODY.replace(/\\r?\\n/g, "\\n");
@@ -152,8 +152,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -187,8 +187,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -225,8 +225,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -259,8 +259,8 @@ jobs:
       pull-requests: write
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - id: auto_5940c89f
-        uses: amannn/action-semantic-pull-request@v6
+      - id: validate-pr-title
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:

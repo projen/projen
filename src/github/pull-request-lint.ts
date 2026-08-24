@@ -138,6 +138,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
+            id: "validate-pr-title",
             uses: GitHubActions.AMANNN_ACTION_SEMANTIC_PULL_REQUEST,
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",

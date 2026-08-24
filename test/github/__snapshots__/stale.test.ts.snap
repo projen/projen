@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     steps:
       - id: run-actions-stale
-        uses: actions/stale@v11
+        uses: actions/stale@v11.0.0
         with:
           days-before-stale: -1
           days-before-close: -1
@@ -47,7 +47,7 @@ jobs:
       pull-requests: write
     steps:
       - id: run-actions-stale
-        uses: actions/stale@v11
+        uses: actions/stale@v11.0.0
         with:
           days-before-stale: -1
           days-before-close: -1
