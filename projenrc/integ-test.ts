@@ -408,6 +408,9 @@ export class IntegrationTests extends Component {
         this.installDepsStep(project),
         this.compileStep(project),
         this.runTaskStep(project, "Package", config.packageTask),
+        // The python integ test also drives a python project through the
+        // npm-distributed CLI (`npx projen`), so it needs the js tarball too.
+        this.runTaskStep(project, "Package js", "package:js"),
         this.runTaskStep(
           project,
           "Run Python integration test",

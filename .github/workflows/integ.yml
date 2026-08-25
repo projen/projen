@@ -89,6 +89,9 @@ jobs:
       - name: Package
         id: package
         run: node ./projen.js package:python
+      - name: Package js
+        id: package_js
+        run: node ./projen.js package:js
       - name: Run Python integration test
         id: run_python_integration_test
         run: node ./projen.js integ:python
