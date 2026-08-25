@@ -1,6 +1,6 @@
 import * as fs from "fs";
+import { DEFAULT_TASK } from "../../common";
 import * as logging from "../../logging";
-import { Project } from "../../project";
 import type { TaskRuntime } from "../task-runtime";
 
 export interface SynthOptions {
@@ -44,9 +44,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     // determine if post synthesis tasks should be executed (e.g. "yarn install").
     process.env.PROJEN_DISABLE_POST = (!options.post).toString();
     try {
-      const defaultTask = runtime.tasks.find(
-        (t) => t.name === Project.DEFAULT_TASK,
-      );
+      const defaultTask = runtime.tasks.find((t) => t.name === DEFAULT_TASK);
 
       if (!defaultTask) {
         throw new Error('Unable to find a task named "default"');
