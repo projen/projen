@@ -1,0 +1,65 @@
+import { NodeConfigFile } from "../../src/javascript/node-config-file";
+import { synthSnapshot, TestProject } from "../util";
+
+test("renders options into the generated node.config.json", () => {
+  const project = new TestProject();
+
+  new NodeConfigFile(project, {
+    test: { test: true },
+    nodeOptions: { experimentalTransformTypes: true },
+  });
+
+  const files = synthSnapshot(project);
+  expect(files["node.config.json"]).toStrictEqual({
+    test: { test: true },
+    nodeOptions: { "experimental-transform-types": true },
+  });
+});
+
+test("defaults to node.config.json when filePath is not provided", () => {
+  const project = new TestProject();
+
+  const nodeConfigFile = new NodeConfigFile(project, {
+    test: { test: true },
+  });
+
+  expect(nodeConfigFile.file.path).toBe("node.config.json");
+});
+
+test("supports a custom filePath", () => {
+  const project = new TestProject();
+
+  const nodeConfigFile = new NodeConfigFile(project, {
+    filePath: "custom.node.config.json",
+    test: { test: true },
+  });
+
+  const files = synthSnapshot(project);
+  expect(nodeConfigFile.file.path).toBe("custom.node.config.json");
+  expect(files["custom.node.config.json"]).toBeDefined();
+  expect(files["node.config.json"]).toBeUndefined();
+});
+
+test("omits empty file when no options are provided", () => {
+  const project = new TestProject();
+
+  new NodeConfigFile(project);
+
+  const files = synthSnapshot(project);
+  expect(files["node.config.json"]).toBeUndefined();
+});
+
+test("of() returns the NodeConfigFile instance associated with a project", () => {
+  const project = new TestProject();
+  const nodeConfigFile = new NodeConfigFile(project, {
+    test: { test: true },
+  });
+
+  expect(NodeConfigFile.of(project)).toBe(nodeConfigFile);
+});
+
+test("of() returns undefined when there is no NodeConfigFile component", () => {
+  const project = new TestProject();
+
+  expect(NodeConfigFile.of(project)).toBeUndefined();
+});
