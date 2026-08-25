@@ -5,7 +5,7 @@ import type { IConstruct } from "constructs";
 import { Construct } from "constructs";
 import * as glob from "fast-glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
-import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
+import { DEFAULT_TASK, IS_TEST_RUN, PROJEN_VERSION } from "./common";
 import type { Component } from "./component";
 import { Dependencies } from "./dependencies";
 import { FileBase } from "./file";
@@ -177,7 +177,7 @@ export class Project extends Construct {
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
    */
-  public static readonly DEFAULT_TASK = "default";
+  public static readonly DEFAULT_TASK = DEFAULT_TASK;
 
   /**
    * Test whether the given construct is a project.

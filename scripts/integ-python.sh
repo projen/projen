@@ -25,17 +25,45 @@ python3 "$WORKDIR/.projenrc.py"
 echo "Python import compatibility test passed!"
 
 # Test 2: Create a new Python project using CLI
+#
+# Post-synthesis is enabled (the default): it sets up the project's virtual
+# environment, installs dependencies, and makes synthesis run the "install"
+# task from inside the Python jsii runtime.
 echo ""
 echo "=== Test 2: Python project creation ==="
 setup_workdir
 
-# Create project without post-synthesis (which tries to install deps from PyPI)
-pipx run -q --spec="$WHEEL" projen new python --no-post --project-tree
+# Generated projects pin projen==0.0.0, which does not exist on PyPI. Point
+# pip at the locally built wheel so dependency installation can resolve it.
+export PIP_FIND_LINKS="$REPO_ROOT/dist/python"
 
-# Synthesize the project (skip post to avoid pip install of projen==0.0.0 from PyPI)
-# Use --project-tree to generate tree.json for version validation
+pipx run -q --spec="$WHEEL" projen new python --project-tree
+
+# Synthesize the project again, like a user running `projen`.
 echo "Synthesizing project..."
-pipx run -q --spec="$WHEEL" projen --no-post
+pipx run -q --spec="$WHEEL" projen
+
+verify_synth_version
+
+# Test 3: Create and synthesize a python project through the npm CLI
+#
+# Regression test for https://github.com/projen/projen/issues/4840, using
+# the exact commands from the issue report: `npx projen new python` followed
+# by `npx projen`. Unlike Test 2 this drives the python project through the
+# npm-distributed CLI, so the default task (`python .projenrc.py`) runs the
+# jsii runtime the way it behaves out of the box - which is where the
+# "install" task spawned from inside the kernel crashed with
+# `Cannot find module 'constructs'`.
+echo ""
+echo "=== Test 3: Python project via the npm CLI (npx projen) ==="
+TARBALL=$(find_npm_tarball "$REPO_ROOT")
+setup_workdir
+setup_npm_projen "$TARBALL"
+
+npx projen new python --project-tree
+
+echo "Synthesizing project..."
+npx projen
 
 verify_synth_version
 

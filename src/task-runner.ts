@@ -53,7 +53,27 @@ export class ProjenTaskRunner extends Component implements ITaskRunner {
     // ts-jest, where a module-relative `./cli/index.js` would not exist.
     const moduleRoot = path.dirname(require.resolve("../package.json"));
     const cli = path.join(moduleRoot, "lib", "cli", "index.js");
-    const argv = [cli, task.name, ...(args ?? []).map((a) => a.toString())];
+
+    // When projen runs inside a jsii language runtime (Python, Java, Go, ...)
+    // the kernel loads it through a symlinked module closure and runs node
+    // with `--preserve-symlinks`: the symlink target - the jsii package
+    // cache - is a bare tarball extraction where non-bundled dependencies
+    // (`constructs`) are not resolvable. A spawned child does not inherit
+    // execArgv, so without the flag it would realpath the CLI back into the
+    // bare extraction and crash with `Cannot find module 'constructs'`.
+    // Forward the flag, plus `--preserve-symlinks-main` so the CLI entrypoint
+    // path itself (which lives inside the symlinked closure) is not
+    // realpathed either. See https://github.com/projen/projen/issues/4840.
+    const execArgv = process.execArgv.includes("--preserve-symlinks")
+      ? ["--preserve-symlinks", "--preserve-symlinks-main"]
+      : [];
+
+    const argv = [
+      ...execArgv,
+      cli,
+      task.name,
+      ...(args ?? []).map((a) => a.toString()),
+    ];
     try {
       node.run(argv, {
         cwd: this.project.outdir,
