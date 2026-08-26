@@ -636,6 +636,10 @@
         {
           "exec": "node scripts/update-schema.js https://json.schemastore.org/pnpm-workspace.json schemas/pnpm-workspace.json",
           "name": "update schema: schemas/pnpm-workspace.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://nodejs.org/dist/latest/docs/node-config-schema.json schemas/node-config-schema.json",
+          "name": "update schema: schemas/node-config-schema.json"
         }
       ]
     },

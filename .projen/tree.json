@@ -588,6 +588,13 @@
           "path": "src/javascript/pnpm-workspace-config.ts"
         }
       },
+      "JsiiFromJsonSchema@src--javascript--node-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/javascript/node-config.ts"
+        }
+      },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
         "metadata": {
           "type": "file",
