@@ -6,6 +6,7 @@ import {
   decamelizeKeysRecursively,
   dedupArray,
   deepMerge,
+  flattenToDotNotation,
   isTruthy,
   getFilePermissions,
   formatAsPythonModule,
@@ -267,6 +268,71 @@ describe("deepMerge (mergeArray: true)", () => {
 test("dedupArray", () => {
   expect(dedupArray(["a", "b", "c"])).toEqual(["a", "b", "c"]);
   expect(dedupArray(["a", "a", "b", "a"])).toEqual(["a", "b"]);
+});
+
+describe("flattenToDotNotation", () => {
+  test("flattens nested objects into dotted keys", () => {
+    expect(
+      flattenToDotNotation({
+        sonar: {
+          projectKey: "my-project",
+          coverage: { exclusions: "**/test/**" },
+        },
+      }),
+    ).toEqual([
+      ["sonar.projectKey", "my-project"],
+      ["sonar.coverage.exclusions", "**/test/**"],
+    ]);
+  });
+
+  test("keeps already-flat keys as-is", () => {
+    expect(flattenToDotNotation({ "my.key": "value" })).toEqual([
+      ["my.key", "value"],
+    ]);
+  });
+
+  test("prefixes keys when a prefix is provided", () => {
+    expect(flattenToDotNotation({ key: "value" }, "prefix")).toEqual([
+      ["prefix.key", "value"],
+    ]);
+  });
+
+  test("skips null and undefined values", () => {
+    expect(
+      flattenToDotNotation({
+        present: "value",
+        nullKey: null,
+        undefinedKey: undefined,
+      }),
+    ).toEqual([["present", "value"]]);
+  });
+
+  test("comma-joins arrays of scalars", () => {
+    expect(
+      flattenToDotNotation({
+        exclusions: ["**/node_modules/**", "**/coverage/**"],
+        flags: [true, 1, "three"],
+      }),
+    ).toEqual([
+      ["exclusions", "**/node_modules/**,**/coverage/**"],
+      ["flags", "true,1,three"],
+    ]);
+  });
+
+  test("throws on arrays containing non-scalar elements", () => {
+    expect(() => flattenToDotNotation({ sonar: { bad: [{ x: 1 }] } })).toThrow(
+      /Invalid value for property "sonar.bad"/,
+    );
+  });
+
+  test("throws on duplicate keys after flattening", () => {
+    expect(() =>
+      flattenToDotNotation({
+        "sonar.sources": "src",
+        sonar: { sources: "lib" },
+      }),
+    ).toThrow(/Duplicate property key "sonar.sources"/);
+  });
 });
 
 test("getFilePermissions", () => {

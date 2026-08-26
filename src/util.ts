@@ -131,6 +131,50 @@ export function decamelizeKeysRecursively(
 }
 
 /**
+ * Recursively flattens a nested object into dot-separated key/value pairs.
+ *
+ * For example, `{ sonar: { sources: "src" } }` becomes `[["sonar.sources", "src"]]`.
+ * Leaf values (strings, numbers, booleans) are emitted as entries.
+ * Null/undefined values are skipped. Arrays of scalars are joined with a
+ * comma; arrays containing non-scalar elements throw.
+ */
+export function flattenToDotNotation(
+  obj: Record<string, any>,
+  prefix?: string,
+): Array<[string, string]> {
+  const entries: Array<[string, string]> = [];
+  for (const [key, value] of Object.entries(obj)) {
+    const fullKey = prefix ? `${prefix}.${key}` : key;
+    if (value === undefined || value === null) {
+      continue;
+    } else if (Array.isArray(value)) {
+      if (value.some((v) => v !== null && typeof v === "object")) {
+        throw new Error(
+          `Invalid value for property "${fullKey}": arrays must only contain strings, numbers, or booleans`,
+        );
+      }
+      entries.push([fullKey, value.map((v) => String(v)).join(",")]);
+    } else if (typeof value === "object") {
+      entries.push(...flattenToDotNotation(value, fullKey));
+    } else {
+      entries.push([fullKey, String(value)]);
+    }
+  }
+
+  const seen = new Set<string>();
+  for (const [key] of entries) {
+    if (seen.has(key)) {
+      throw new Error(
+        `Duplicate property key "${key}" after flattening; use either dot-notation or nested objects for this key, not both`,
+      );
+    }
+    seen.add(key);
+  }
+
+  return entries;
+}
+
+/**
  * Returns false if value is unset or a falsey value, and true otherwise.
  * @param value an environment variable
  */

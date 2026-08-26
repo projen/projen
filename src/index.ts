@@ -17,6 +17,7 @@ export * from "./license";
 export * from "./makefile";
 export * from "./object-file";
 export * from "./option-hints";
+export * from "./properties-file";
 export * from "./project";
 export * from "./project-build";
 export * from "./project-tree";
@@ -43,6 +44,7 @@ export * from "./xmlfile";
 export type { ProjectType, ProjectOption } from "./inventory";
 
 // export submodules
+export * as sonarqube from "./sonarqube";
 export * as web from "./web";
 export * as github from "./github";
 export * as gitlab from "./gitlab";

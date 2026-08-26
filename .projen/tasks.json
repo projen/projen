@@ -735,7 +735,7 @@
             "--peer",
             "--no-deprecated",
             "--dep=prod",
-            "--filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,dax,fast-glob,fast-json-patch,ini,parse-conflict-json,semver,xmlbuilder2,yargs"
+            "--filter=@iarna/toml,case,chalk,conventional-changelog-config-spec,dax,fast-glob,fast-json-patch,ini,parse-conflict-json,properties-file,semver,xmlbuilder2,yargs"
           ]
         },
         {
@@ -755,6 +755,7 @@
             "fast-json-patch",
             "ini",
             "parse-conflict-json",
+            "properties-file",
             "semver",
             "xmlbuilder2",
             "yaml",
