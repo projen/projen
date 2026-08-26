@@ -1680,6 +1680,8 @@ export class NodePackage extends Component {
       return { devDependencies, peerDependencies, dependencies };
     }
 
+    const unmanagedRemoved: string[] = [];
+
     const readDeps = (
       user: Record<string, string>,
       current: Record<string, string> = {},
@@ -1700,6 +1702,7 @@ export class NodePackage extends Component {
       for (const name of Object.keys(current ?? {})) {
         if (!user[name]) {
           this.project.logger.verbose(`${name}: removed`);
+          unmanagedRemoved.push(name);
         }
       }
     };
@@ -1707,6 +1710,14 @@ export class NodePackage extends Component {
     readDeps(devDependencies, this._prev.devDependencies);
     readDeps(dependencies, this._prev.dependencies);
     readDeps(peerDependencies, this._prev.peerDependencies);
+
+    if (unmanagedRemoved.length > 0) {
+      this.project.logger.warn(
+        `Removing unmanaged dependencies not declared in .projenrc: ${unmanagedRemoved.join(", ")}. ` +
+          "These were likely installed via a package manager (e.g. npm install). " +
+          "To keep them, add them to your .projenrc and run projen again.",
+      );
+    }
 
     return { devDependencies, dependencies, peerDependencies };
   }
