@@ -14,6 +14,11 @@ export interface NodeConfigSchema {
   readonly nodeOptions?: NodeConfigSchemaNodeOptions;
 
   /**
+   * @schema NodeConfigSchema#nodeVersion
+   */
+  readonly nodeVersion?: number;
+
+  /**
    * @schema NodeConfigSchema#permission
    */
   readonly permission?: NodeConfigSchemaPermission;
@@ -39,6 +44,7 @@ export function toJson_NodeConfigSchema(obj: NodeConfigSchema | undefined): Reco
   const result = {
     '$schema': obj.schema,
     'nodeOptions': toJson_NodeConfigSchemaNodeOptions(obj.nodeOptions),
+    'nodeVersion': obj.nodeVersion,
     'permission': toJson_NodeConfigSchemaPermission(obj.permission),
     'test': toJson_NodeConfigSchemaTest(obj.test),
     'watch': toJson_NodeConfigSchemaWatch(obj.watch),
@@ -74,6 +80,13 @@ export interface NodeConfigSchemaNodeOptions {
   readonly allowChildProcess?: boolean;
 
   /**
+   * allow use of FFI when any permissions are set
+   *
+   * @schema NodeConfigSchemaNodeOptions#allow-ffi
+   */
+  readonly allowFfi?: boolean;
+
+  /**
    * allow permissions to read the filesystem
    *
    * @schema NodeConfigSchemaNodeOptions#allow-fs-read
@@ -93,6 +106,20 @@ export interface NodeConfigSchemaNodeOptions {
    * @schema NodeConfigSchemaNodeOptions#allow-inspector
    */
   readonly allowInspector?: boolean;
+
+  /**
+   * allow use of network when any permissions are set
+   *
+   * @schema NodeConfigSchemaNodeOptions#allow-net
+   */
+  readonly allowNet?: boolean;
+
+  /**
+   * allow use of OpenSSL STORE loaders when any permissions are set
+   *
+   * @schema NodeConfigSchemaNodeOptions#allow-openssl-store
+   */
+  readonly allowOpensslStore?: boolean;
 
   /**
    * allow wasi when any permissions are set
@@ -247,6 +274,13 @@ export interface NodeConfigSchemaNodeOptions {
   readonly experimentalEventsource?: boolean;
 
   /**
+   * experimental node:ffi module
+   *
+   * @schema NodeConfigSchemaNodeOptions#experimental-ffi
+   */
+  readonly experimentalFfi?: boolean;
+
+  /**
    * expose experimental Navigator API on the global scope
    *
    * @schema NodeConfigSchemaNodeOptions#experimental-global-navigator
@@ -268,7 +302,7 @@ export interface NodeConfigSchemaNodeOptions {
   readonly experimentalLoader?: string[];
 
   /**
-   * Print pending top-level await. If --require-module is true, evaluate asynchronous graphs loaded by `require()` but do not run the microtasks, in order to to find and print top-level await in the graph
+   * Print pending top-level await. If --require-module is true, evaluate asynchronous graphs loaded by `require()` but do not run the microtasks, in order to find and print top-level await in the graph
    *
    * @schema NodeConfigSchemaNodeOptions#experimental-print-required-tla
    */
@@ -301,11 +335,11 @@ export interface NodeConfigSchemaNodeOptions {
   readonly experimentalSqlite?: boolean;
 
   /**
-   * enable transformation of TypeScript-onlysyntax into JavaScript code
+   * experimental iterable streams API (node:stream/iter)
    *
-   * @schema NodeConfigSchemaNodeOptions#experimental-transform-types
+   * @schema NodeConfigSchemaNodeOptions#experimental-stream-iter
    */
-  readonly experimentalTransformTypes?: boolean;
+  readonly experimentalStreamIter?: boolean;
 
   /**
    * experimental ES Module support in vm module
@@ -556,6 +590,13 @@ export interface NodeConfigSchemaNodeOptions {
    * @schema NodeConfigSchemaNodeOptions#permission
    */
   readonly permission?: boolean;
+
+  /**
+   * enable audit only for the permission system
+   *
+   * @schema NodeConfigSchemaNodeOptions#permission-audit
+   */
+  readonly permissionAudit?: boolean;
 
   /**
    * preserve symbolic links when resolving
@@ -1083,9 +1124,12 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'addons': obj.addons,
     'allow-addons': obj.allowAddons,
     'allow-child-process': obj.allowChildProcess,
+    'allow-ffi': obj.allowFfi,
     'allow-fs-read': obj.allowFsRead?.map(y => y),
     'allow-fs-write': obj.allowFsWrite?.map(y => y),
     'allow-inspector': obj.allowInspector,
+    'allow-net': obj.allowNet,
+    'allow-openssl-store': obj.allowOpensslStore,
     'allow-wasi': obj.allowWasi,
     'allow-worker': obj.allowWorker,
     'async-context-frame': obj.asyncContextFrame,
@@ -1108,6 +1152,7 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'experimental-addon-modules': obj.experimentalAddonModules,
     'experimental-detect-module': obj.experimentalDetectModule,
     'experimental-eventsource': obj.experimentalEventsource,
+    'experimental-ffi': obj.experimentalFfi,
     'experimental-global-navigator': obj.experimentalGlobalNavigator,
     'experimental-import-meta-resolve': obj.experimentalImportMetaResolve,
     'experimental-loader': obj.experimentalLoader?.map(y => y),
@@ -1116,7 +1161,7 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'experimental-require-module': obj.experimentalRequireModule,
     'experimental-shadow-realm': obj.experimentalShadowRealm,
     'experimental-sqlite': obj.experimentalSqlite,
-    'experimental-transform-types': obj.experimentalTransformTypes,
+    'experimental-stream-iter': obj.experimentalStreamIter,
     'experimental-vm-modules': obj.experimentalVmModules,
     'experimental-websocket': obj.experimentalWebsocket,
     'experimental-webstorage': obj.experimentalWebstorage,
@@ -1153,6 +1198,7 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'openssl-shared-config': obj.opensslSharedConfig,
     'pending-deprecation': obj.pendingDeprecation,
     'permission': obj.permission,
+    'permission-audit': obj.permissionAudit,
     'preserve-symlinks': obj.preserveSymlinks,
     'preserve-symlinks-main': obj.preserveSymlinksMain,
     'redirect-warnings': obj.redirectWarnings,
@@ -1252,6 +1298,13 @@ export interface NodeConfigSchemaPermission {
   readonly allowChildProcess?: boolean;
 
   /**
+   * allow use of FFI when any permissions are set
+   *
+   * @schema NodeConfigSchemaPermission#allow-ffi
+   */
+  readonly allowFfi?: boolean;
+
+  /**
    * allow permissions to read the filesystem
    *
    * @schema NodeConfigSchemaPermission#allow-fs-read
@@ -1271,6 +1324,20 @@ export interface NodeConfigSchemaPermission {
    * @schema NodeConfigSchemaPermission#allow-inspector
    */
   readonly allowInspector?: boolean;
+
+  /**
+   * allow use of network when any permissions are set
+   *
+   * @schema NodeConfigSchemaPermission#allow-net
+   */
+  readonly allowNet?: boolean;
+
+  /**
+   * allow use of OpenSSL STORE loaders when any permissions are set
+   *
+   * @schema NodeConfigSchemaPermission#allow-openssl-store
+   */
+  readonly allowOpensslStore?: boolean;
 
   /**
    * allow wasi when any permissions are set
@@ -1304,9 +1371,12 @@ export function toJson_NodeConfigSchemaPermission(obj: NodeConfigSchemaPermissio
   const result = {
     'allow-addons': obj.allowAddons,
     'allow-child-process': obj.allowChildProcess,
+    'allow-ffi': obj.allowFfi,
     'allow-fs-read': obj.allowFsRead?.map(y => y),
     'allow-fs-write': obj.allowFsWrite?.map(y => y),
     'allow-inspector': obj.allowInspector,
+    'allow-net': obj.allowNet,
+    'allow-openssl-store': obj.allowOpensslStore,
     'allow-wasi': obj.allowWasi,
     'allow-worker': obj.allowWorker,
     'permission': obj.permission,
@@ -1335,6 +1405,8 @@ export interface NodeConfigSchemaTest {
   readonly experimentalTestModuleMocks?: boolean;
 
   /**
+   * launch test runner on startup
+   *
    * @schema NodeConfigSchemaTest#test
    */
   readonly test?: boolean;
