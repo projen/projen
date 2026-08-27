@@ -29,8 +29,16 @@ npx projen new cdktn-construct \
   --author-address "you@example.com" \
   --cdktn-version "^0.24.0" \
   --name "my-cdktn-construct" \
-  --repository-url "https://github.com/yourusername/my-cdktn-construct.git"
+  --repository-url "https://github.com/yourusername/my-cdktn-construct.git" \
+  --jsii-version "~5.9.0"
 ```
+
+:::note
+`--jsii-version "~5.9.0"` is required for now: `cdktn-cli@0.24.0` has a peer
+dependency on `jsii@~5.9.0`, while `projen new` otherwise defaults new jsii
+projects to `jsii@~6.0.0`. Omitting this flag causes the scaffolded project's
+`npm install` to fail with an ERESOLVE error.
+:::
 
 This will scaffold a complete CDKTN construct library project with:
 - TypeScript configuration optimized for CDKTN
@@ -50,6 +58,7 @@ new cdktn.ConstructLibraryCdktn({
   author: 'Your Name',
   authorAddress: 'you@example.com',
   cdktnVersion: '^0.24.0',
+  jsiiVersion: '~5.9.0',
   defaultReleaseBranch: 'main',
   name: 'my-cdktn-construct',
   repositoryUrl: 'https://github.com/yourusername/my-cdktn-construct.git',
@@ -89,9 +98,22 @@ A typical CDKTN construct library has this structure:
 
 Create reusable infrastructure patterns in your `src/` directory:
 
+:::note
+Since `S3Bucket` is exposed as part of this construct's public API, declare
+`@cdktn/provider-aws` with `peerDeps` (not just `deps`/`devDeps`) in your
+`.projenrc.ts` so jsii can package it correctly:
+
+```typescript
+new cdktn.ConstructLibraryCdktn({
+  // ... other config
+  peerDeps: ['@cdktn/provider-aws'],
+  devDeps: ['@cdktn/provider-aws'],
+});
+```
+:::
+
 ```typescript
 import { Construct } from 'constructs';
-import { TerraformStack } from 'cdktn';
 import { AwsProvider } from '@cdktn/provider-aws/lib/provider';
 import { S3Bucket } from '@cdktn/provider-aws/lib/s3-bucket';
 
@@ -125,7 +147,9 @@ export class MyBucketConstruct extends Construct {
 CDKTN constructs can be tested using Jest:
 
 ```typescript
-import { Testing } from 'cdktn';
+import 'cdktn/lib/testing/adapters/jest';
+import { TerraformStack, Testing } from 'cdktn';
+import { S3Bucket } from '@cdktn/provider-aws/lib/s3-bucket';
 import { MyBucketConstruct } from '../src';
 
 describe('MyBucketConstruct', () => {
@@ -139,9 +163,9 @@ describe('MyBucketConstruct', () => {
     });
 
     const synthesized = Testing.synth(stack);
-    expect(synthesized).toHaveResourceWithProperties('aws_s3_bucket', {
+    expect(synthesized).toHaveResourceWithProperties(S3Bucket, {
       bucket: 'my-test-bucket',
-      versioning: [{ enabled: true }],
+      versioning: { enabled: true },
     });
   });
 });
@@ -225,5 +249,5 @@ If you have an existing CDKTF construct library, see the [CDKTN Migration Guide]
 
 - [CDK Terrain Website](https://cdktn.io/)
 - [CDKTN npm package](https://www.npmjs.com/package/cdktn)
-- [Projen CDKTN API Reference](https://projen.io/api/cdktn.html)
+- [Projen CDKTN API Reference](https://projen.io/docs/api/cdktn)
 - [Terraform Registry](https://registry.terraform.io/) - Find pre-built providers
