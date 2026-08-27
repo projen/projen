@@ -38,6 +38,15 @@ new cdktn.ConstructLibraryCdktn({
 });
 ```
 
+:::note
+If your existing project already has a working `jsii` version pinned, leave
+`jsiiVersion` unset so it carries over. If you're setting it explicitly (or
+hit an `npm install` ERESOLVE error mentioning `jsii`), use `jsiiVersion:
+'~5.9.0'` — `cdktn-cli@0.24.0` has a peer dependency on `jsii@~5.9.0`, which
+is incompatible with the `jsii@~6.0.0` default used by `projen new` for
+brand-new jsii projects.
+:::
+
 ### 2. Regenerate project files
 
 After updating your `.projenrc` file:
@@ -86,5 +95,5 @@ If you encounter issues during migration:
 
 1. Check the [CDKTN website](https://cdktn.io/)
 2. Review the [CDKTN documentation](https://www.npmjs.com/package/cdktn)
-3. Review the [projen API reference](https://projen.io/api/cdktn.html)
+3. Review the [projen API reference](https://projen.io/docs/api/cdktn)
 4. Open an issue on the [projen GitHub repository](https://github.com/projen/projen/issues)
