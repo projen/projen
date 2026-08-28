@@ -436,6 +436,12 @@ new AiInstructions(project, {
     - Wire them through the \`IntegrationTests\` component in \`projenrc/integ-test.ts\`.
     - These tests will be run against the standard build output (the npm tarball in \`dist/js\`, wheels in \`dist/python\`, etc.).
     - Do NOT write Jest tests that rebuild projen or bundle their own artifacts - always consume the build output so the tests exercise what is actually shipped.`,
+
+    `## Design guidelines
+
+    - **Actionable error messages**: Error messages must tell the user what to do to resolve the problem, not just what went wrong. Name the exact options or values involved and state the required action.
+    - **Mutually exclusive options**: When two options cannot be used together, throw an error at construction time instead of silently picking one. Use the established message pattern: \`Only one of 'optionA' or 'optionB' may be specified, not both.\`
+    - **Deprecating options**: When replacing a deprecated option with a new one, keep the deprecated option working as before, mark it with \`@deprecated\` pointing to the replacement, and throw if both are set: \`Only one of 'newOption' or 'deprecatedOption' may be specified, not both. Remove the deprecated 'deprecatedOption'.\``,
   ],
 });
 

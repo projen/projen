@@ -171,6 +171,11 @@ export class TypeScriptRunner extends ScriptRunner {
    * reserved by `constructs.Construct` for the construct's tree node.
    */
   public static nodejs(options: NodeRunnerOptions = {}): TypeScriptRunner {
+    if (options.transformTypes && options.experimentalTransformTypes) {
+      throw new Error(
+        "Only one of 'transformTypes' or 'experimentalTransformTypes' may be specified, not both. Remove the deprecated 'experimentalTransformTypes'.",
+      );
+    }
     return new TypeScriptRunner("node", options);
   }
 
