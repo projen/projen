@@ -367,6 +367,12 @@ new JsiiFromJsonSchema(project, {
   structName: "NodeConfigSchema",
   schemaPath: "https://nodejs.org/dist/latest/docs/node-config-schema.json",
   filePath: path.join("src", "javascript", "node-config.ts"),
+  transform: (schema) => {
+    const config = schema.$defs.config;
+    delete schema.oneOf;
+    delete schema.$defs.config;
+    return { ...schema, ...config };
+  },
 });
 
 new JsonConst(project, {
