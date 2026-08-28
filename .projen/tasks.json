@@ -564,6 +564,15 @@
       "description": "Run tests",
       "steps": [
         {
+          "name": "Type-check the test suite",
+          "execArgs": [
+            "tsc",
+            "--noEmit",
+            "-p",
+            "test/tsconfig.json"
+          ]
+        },
+        {
           "execArgs": [
             "jest",
             "--passWithNoTests",

@@ -378,6 +378,15 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * Options for ts-jest
    */
   readonly tsJestOptions?: TsJestOptions;
+
+  /**
+   * Type-check the test suite as part of the `test` task.
+   *
+   * Adds a `tsc --noEmit` step against the development tsconfig.
+   *
+   * @default false
+   */
+  readonly typecheckTests?: boolean;
 }
 
 /**
@@ -539,6 +548,13 @@ export class TypeScriptProject extends NodeProject {
       } else {
         this.addJestNoCompile(this.jest, options?.tsJestOptions);
       }
+    }
+
+    if (options.typecheckTests ?? false) {
+      this.testTask.prependSteps({
+        name: "Type-check the test suite",
+        execArgs: ["tsc", "--noEmit", "-p", this.tsconfigDev.fileName],
+      });
     }
 
     // Linter tool selection
