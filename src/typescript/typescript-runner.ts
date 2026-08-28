@@ -83,6 +83,7 @@ export interface NodeRunnerOptions {
 
   /**
    * Whether to also enable `--experimental-transform-types`.
+   * @deprecated This flag has been removed from Node.js 26
    * @default false
    */
   readonly experimentalTransformTypes?: boolean;

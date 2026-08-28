@@ -9831,6 +9831,7 @@ const nodeConfigFileOptions: javascript.NodeConfigFileOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigFileOptions.property.nodeVersion">nodeVersion</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.permission">permission</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.schema">schema</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.test">test</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | *No description.* |
@@ -9846,6 +9847,16 @@ public readonly nodeOptions: NodeConfigSchemaNodeOptions;
 ```
 
 - *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
+
+---
+
+##### `nodeVersion`<sup>Optional</sup> <a name="nodeVersion" id="projen.javascript.NodeConfigFileOptions.property.nodeVersion"></a>
+
+```typescript
+public readonly nodeVersion: number;
+```
+
+- *Type:* number
 
 ---
 
@@ -9917,6 +9928,7 @@ const nodeConfigSchema: javascript.NodeConfigSchema = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.nodeVersion">nodeVersion</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.permission">permission</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.schema">schema</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.test">test</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | *No description.* |
@@ -9931,6 +9943,16 @@ public readonly nodeOptions: NodeConfigSchemaNodeOptions;
 ```
 
 - *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
+
+---
+
+##### `nodeVersion`<sup>Optional</sup> <a name="nodeVersion" id="projen.javascript.NodeConfigSchema.property.nodeVersion"></a>
+
+```typescript
+public readonly nodeVersion: number;
+```
+
+- *Type:* number
 
 ---
 
@@ -9991,9 +10013,12 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.addons">addons</a></code> | <code>boolean</code> | disable loading native addons. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowAddons">allowAddons</a></code> | <code>boolean</code> | allow use of addons when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowChildProcess">allowChildProcess</a></code> | <code>boolean</code> | allow use of child process when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowFfi">allowFfi</a></code> | <code>boolean</code> | allow use of FFI when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsRead">allowFsRead</a></code> | <code>string[]</code> | allow permissions to read the filesystem. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsWrite">allowFsWrite</a></code> | <code>string[]</code> | allow permissions to write in the filesystem. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowInspector">allowInspector</a></code> | <code>boolean</code> | allow use of inspector when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowNet">allowNet</a></code> | <code>boolean</code> | allow use of network when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowOpensslStore">allowOpensslStore</a></code> | <code>boolean</code> | allow use of OpenSSL STORE loaders when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWasi">allowWasi</a></code> | <code>boolean</code> | allow wasi when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWorker">allowWorker</a></code> | <code>boolean</code> | allow worker threads when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.asyncContextFrame">asyncContextFrame</a></code> | <code>boolean</code> | Improve AsyncLocalStorage performance with AsyncContextFrame. |
@@ -10016,6 +10041,7 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalAddonModules">experimentalAddonModules</a></code> | <code>boolean</code> | experimental import support for addons. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalDetectModule">experimentalDetectModule</a></code> | <code>boolean</code> | when ambiguous modules fail to evaluate because they contain ES module syntax, try again to evaluate them as ES modules. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalEventsource">experimentalEventsource</a></code> | <code>boolean</code> | experimental EventSource API. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalFfi">experimentalFfi</a></code> | <code>boolean</code> | experimental node:ffi module. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalGlobalNavigator">experimentalGlobalNavigator</a></code> | <code>boolean</code> | expose experimental Navigator API on the global scope. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalImportMetaResolve">experimentalImportMetaResolve</a></code> | <code>boolean</code> | experimental ES Module import.meta.resolve() parentURL support. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalLoader">experimentalLoader</a></code> | <code>string[]</code> | use the specified module as a custom loader. |
@@ -10024,7 +10050,7 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalRequireModule">experimentalRequireModule</a></code> | <code>boolean</code> | Legacy alias for --require-module. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalShadowRealm">experimentalShadowRealm</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalSqlite">experimentalSqlite</a></code> | <code>boolean</code> | experimental node:sqlite module. |
-| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalTransformTypes">experimentalTransformTypes</a></code> | <code>boolean</code> | enable transformation of TypeScript-onlysyntax into JavaScript code. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalStreamIter">experimentalStreamIter</a></code> | <code>boolean</code> | experimental iterable streams API (node:stream/iter). |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalVmModules">experimentalVmModules</a></code> | <code>boolean</code> | experimental ES Module support in vm module. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebsocket">experimentalWebsocket</a></code> | <code>boolean</code> | experimental WebSocket API. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalWebstorage">experimentalWebstorage</a></code> | <code>boolean</code> | experimental Web Storage API. |
@@ -10061,6 +10087,7 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.opensslSharedConfig">opensslSharedConfig</a></code> | <code>boolean</code> | enable OpenSSL shared configuration. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.pendingDeprecation">pendingDeprecation</a></code> | <code>boolean</code> | emit pending deprecation warnings. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.permission">permission</a></code> | <code>boolean</code> | enable the permission system. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.permissionAudit">permissionAudit</a></code> | <code>boolean</code> | enable audit only for the permission system. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinks">preserveSymlinks</a></code> | <code>boolean</code> | preserve symbolic links when resolving. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.preserveSymlinksMain">preserveSymlinksMain</a></code> | <code>boolean</code> | preserve symbolic links when resolving the main module. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.redirectWarnings">redirectWarnings</a></code> | <code>string</code> | write warnings to file instead of stderr. |
@@ -10174,6 +10201,18 @@ allow use of child process when any permissions are set.
 
 ---
 
+##### `allowFfi`<sup>Optional</sup> <a name="allowFfi" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowFfi"></a>
+
+```typescript
+public readonly allowFfi: boolean;
+```
+
+- *Type:* boolean
+
+allow use of FFI when any permissions are set.
+
+---
+
 ##### `allowFsRead`<sup>Optional</sup> <a name="allowFsRead" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowFsRead"></a>
 
 ```typescript
@@ -10207,6 +10246,30 @@ public readonly allowInspector: boolean;
 - *Type:* boolean
 
 allow use of inspector when any permissions are set.
+
+---
+
+##### `allowNet`<sup>Optional</sup> <a name="allowNet" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowNet"></a>
+
+```typescript
+public readonly allowNet: boolean;
+```
+
+- *Type:* boolean
+
+allow use of network when any permissions are set.
+
+---
+
+##### `allowOpensslStore`<sup>Optional</sup> <a name="allowOpensslStore" id="projen.javascript.NodeConfigSchemaNodeOptions.property.allowOpensslStore"></a>
+
+```typescript
+public readonly allowOpensslStore: boolean;
+```
+
+- *Type:* boolean
+
+allow use of OpenSSL STORE loaders when any permissions are set.
 
 ---
 
@@ -10480,6 +10543,18 @@ experimental EventSource API.
 
 ---
 
+##### `experimentalFfi`<sup>Optional</sup> <a name="experimentalFfi" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalFfi"></a>
+
+```typescript
+public readonly experimentalFfi: boolean;
+```
+
+- *Type:* boolean
+
+experimental node:ffi module.
+
+---
+
 ##### `experimentalGlobalNavigator`<sup>Optional</sup> <a name="experimentalGlobalNavigator" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalGlobalNavigator"></a>
 
 ```typescript
@@ -10526,7 +10601,7 @@ public readonly experimentalPrintRequiredTla: boolean;
 
 Print pending top-level await.
 
-If --require-module is true, evaluate asynchronous graphs loaded by `require()` but do not run the microtasks, in order to to find and print top-level await in the graph
+If --require-module is true, evaluate asynchronous graphs loaded by `require()` but do not run the microtasks, in order to find and print top-level await in the graph
 
 ---
 
@@ -10576,15 +10651,15 @@ experimental node:sqlite module.
 
 ---
 
-##### `experimentalTransformTypes`<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalTransformTypes"></a>
+##### `experimentalStreamIter`<sup>Optional</sup> <a name="experimentalStreamIter" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalStreamIter"></a>
 
 ```typescript
-public readonly experimentalTransformTypes: boolean;
+public readonly experimentalStreamIter: boolean;
 ```
 
 - *Type:* boolean
 
-enable transformation of TypeScript-onlysyntax into JavaScript code.
+experimental iterable streams API (node:stream/iter).
 
 ---
 
@@ -11021,6 +11096,18 @@ public readonly permission: boolean;
 - *Type:* boolean
 
 enable the permission system.
+
+---
+
+##### `permissionAudit`<sup>Optional</sup> <a name="permissionAudit" id="projen.javascript.NodeConfigSchemaNodeOptions.property.permissionAudit"></a>
+
+```typescript
+public readonly permissionAudit: boolean;
+```
+
+- *Type:* boolean
+
+enable audit only for the permission system.
 
 ---
 
@@ -11936,9 +12023,12 @@ const nodeConfigSchemaPermission: javascript.NodeConfigSchemaPermission = { ... 
 | --- | --- | --- |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowAddons">allowAddons</a></code> | <code>boolean</code> | allow use of addons when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowChildProcess">allowChildProcess</a></code> | <code>boolean</code> | allow use of child process when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowFfi">allowFfi</a></code> | <code>boolean</code> | allow use of FFI when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowFsRead">allowFsRead</a></code> | <code>string[]</code> | allow permissions to read the filesystem. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowFsWrite">allowFsWrite</a></code> | <code>string[]</code> | allow permissions to write in the filesystem. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowInspector">allowInspector</a></code> | <code>boolean</code> | allow use of inspector when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowNet">allowNet</a></code> | <code>boolean</code> | allow use of network when any permissions are set. |
+| <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowOpensslStore">allowOpensslStore</a></code> | <code>boolean</code> | allow use of OpenSSL STORE loaders when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowWasi">allowWasi</a></code> | <code>boolean</code> | allow wasi when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.allowWorker">allowWorker</a></code> | <code>boolean</code> | allow worker threads when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaPermission.property.permission">permission</a></code> | <code>boolean</code> | enable the permission system. |
@@ -11966,6 +12056,18 @@ public readonly allowChildProcess: boolean;
 - *Type:* boolean
 
 allow use of child process when any permissions are set.
+
+---
+
+##### `allowFfi`<sup>Optional</sup> <a name="allowFfi" id="projen.javascript.NodeConfigSchemaPermission.property.allowFfi"></a>
+
+```typescript
+public readonly allowFfi: boolean;
+```
+
+- *Type:* boolean
+
+allow use of FFI when any permissions are set.
 
 ---
 
@@ -12002,6 +12104,30 @@ public readonly allowInspector: boolean;
 - *Type:* boolean
 
 allow use of inspector when any permissions are set.
+
+---
+
+##### `allowNet`<sup>Optional</sup> <a name="allowNet" id="projen.javascript.NodeConfigSchemaPermission.property.allowNet"></a>
+
+```typescript
+public readonly allowNet: boolean;
+```
+
+- *Type:* boolean
+
+allow use of network when any permissions are set.
+
+---
+
+##### `allowOpensslStore`<sup>Optional</sup> <a name="allowOpensslStore" id="projen.javascript.NodeConfigSchemaPermission.property.allowOpensslStore"></a>
+
+```typescript
+public readonly allowOpensslStore: boolean;
+```
+
+- *Type:* boolean
+
+allow use of OpenSSL STORE loaders when any permissions are set.
 
 ---
 
@@ -12057,7 +12183,7 @@ const nodeConfigSchemaTest: javascript.NodeConfigSchemaTest = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.javascript.NodeConfigSchemaTest.property.experimentalTestCoverage">experimentalTestCoverage</a></code> | <code>boolean</code> | enable code coverage in the test runner. |
 | <code><a href="#projen.javascript.NodeConfigSchemaTest.property.experimentalTestModuleMocks">experimentalTestModuleMocks</a></code> | <code>boolean</code> | enable module mocking in the test runner. |
-| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.test">test</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeConfigSchemaTest.property.test">test</a></code> | <code>boolean</code> | launch test runner on startup. |
 | <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testConcurrency">testConcurrency</a></code> | <code>number</code> | specify test runner concurrency. |
 | <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageBranches">testCoverageBranches</a></code> | <code>number</code> | the branch coverage minimum threshold. |
 | <code><a href="#projen.javascript.NodeConfigSchemaTest.property.testCoverageExclude">testCoverageExclude</a></code> | <code>string[]</code> | exclude files from coverage report that match this glob pattern. |
@@ -12112,6 +12238,8 @@ public readonly test: boolean;
 ```
 
 - *Type:* boolean
+
+launch test runner on startup.
 
 ---
 

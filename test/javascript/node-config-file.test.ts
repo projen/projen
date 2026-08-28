@@ -6,13 +6,13 @@ test("renders options into the generated node.config.json", () => {
 
   new NodeConfigFile(project, {
     test: { test: true },
-    nodeOptions: { experimentalTransformTypes: true },
+    nodeOptions: { enableSourceMaps: true },
   });
 
   const files = synthSnapshot(project);
   expect(files["node.config.json"]).toStrictEqual({
     test: { test: true },
-    nodeOptions: { "experimental-transform-types": true },
+    nodeOptions: { "enable-source-maps": true },
   });
 });
 

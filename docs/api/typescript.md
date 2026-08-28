@@ -3726,7 +3726,9 @@ const nodeRunnerOptions: typescript.NodeRunnerOptions = { ... }
 
 ---
 
-##### `experimentalTransformTypes`<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes"></a>
+##### ~~`experimentalTransformTypes`~~<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes"></a>
+
+- *Deprecated:* This flag has been removed from Node.js 26
 
 ```typescript
 public readonly experimentalTransformTypes: boolean;
