@@ -61,10 +61,9 @@ export class CdktnTypeScriptApp extends TypeScriptAppProject {
   constructor(options: CdktnTypeScriptAppOptions) {
     super({
       ...options,
-      // Default to native Node.js TypeScript runner with transform-types
+      // Default to native Node.js TypeScript runner with type transformation via amaro
       runner:
-        options.runner ??
-        TypeScriptRunner.nodejs({ experimentalTransformTypes: true }),
+        options.runner ?? TypeScriptRunner.nodejs({ transformTypes: true }),
       sampleCode: false,
     });
 

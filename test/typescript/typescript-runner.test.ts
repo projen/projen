@@ -103,6 +103,47 @@ describe("nodejs", () => {
     });
   });
 
+  test("transformTypes uses amaro via --import and adds the dependency", () => {
+    expect(configOf(TypeScriptRunner.nodejs({ transformTypes: true }))).toEqual(
+      {
+        dependencies: [{ name: "amaro" }],
+        steps: [
+          {
+            execArgs: [
+              "node",
+              "--enable-source-maps",
+              "--import=amaro/transform",
+              "x.ts",
+            ],
+          },
+        ],
+      },
+    );
+  });
+
+  test("transformTypes takes precedence over deprecated experimentalTransformTypes", () => {
+    expect(
+      configOf(
+        TypeScriptRunner.nodejs({
+          transformTypes: true,
+          experimentalTransformTypes: true,
+        }),
+      ),
+    ).toEqual({
+      dependencies: [{ name: "amaro" }],
+      steps: [
+        {
+          execArgs: [
+            "node",
+            "--enable-source-maps",
+            "--import=amaro/transform",
+            "x.ts",
+          ],
+        },
+      ],
+    });
+  });
+
   test("typeCheck adds a tsc step and the typescript dependency", () => {
     expect(
       configOf(

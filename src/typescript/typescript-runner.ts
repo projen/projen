@@ -83,10 +83,23 @@ export interface NodeRunnerOptions {
 
   /**
    * Whether to also enable `--experimental-transform-types`.
-   * @deprecated This flag has been removed from Node.js 26
+   * @deprecated This flag has been removed from Node.js 26. Use `transformTypes` instead.
    * @default false
    */
   readonly experimentalTransformTypes?: boolean;
+
+  /**
+   * Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces).
+   *
+   * Uses `amaro` (the TypeScript transformer used internally by Node.js) as an
+   * external loader via `--import=amaro/transform`. Adds a dependency on the
+   * `amaro` package and enables `--enable-source-maps` to preserve accurate
+   * stack traces.
+   *
+   * @see https://github.com/nodejs/amaro
+   * @default false
+   */
+  readonly transformTypes?: boolean;
 }
 
 /**
@@ -119,6 +132,7 @@ type RunnerKind = "ts-node" | "tsx" | "node";
 interface RunnerState extends TypeScriptRunnerOptions {
   readonly swc?: boolean;
   readonly experimentalTransformTypes?: boolean;
+  readonly transformTypes?: boolean;
 }
 
 /**
@@ -249,7 +263,11 @@ export class TypeScriptRunner extends ScriptRunner {
     const steps: TaskStep[] = [];
     const dependencies: DependencyRequest[] = [];
 
-    if (this._options.experimentalTransformTypes ?? false) {
+    if (this._options.transformTypes ?? false) {
+      dependencies.push({ name: "amaro" });
+      command.push("--enable-source-maps");
+      command.push("--import=amaro/transform");
+    } else if (this._options.experimentalTransformTypes ?? false) {
       command.push("--experimental-transform-types");
       command.push("--disable-warning=ExperimentalWarning");
     }

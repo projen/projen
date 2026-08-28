@@ -24,7 +24,7 @@ describe("cdktf.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdktf.json"].app).toStrictEqual(
-      "node --experimental-transform-types --disable-warning=ExperimentalWarning src/main.ts",
+      "node --enable-source-maps --import=amaro/transform src/main.ts",
     );
   });
 
@@ -37,7 +37,7 @@ describe("cdktf.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdktf.json"].app).toStrictEqual(
-      "node --experimental-transform-types --disable-warning=ExperimentalWarning src/my-app.ts",
+      "node --enable-source-maps --import=amaro/transform src/my-app.ts",
     );
   });
 
@@ -77,7 +77,7 @@ describe("cdktf.json", () => {
     });
     const files = synthSnapshot(project);
     expect(files["cdktf.json"].app).toStrictEqual(
-      "node --experimental-transform-types --disable-warning=ExperimentalWarning src/main.ts",
+      "node --enable-source-maps --import=amaro/transform src/main.ts",
     );
   });
 
