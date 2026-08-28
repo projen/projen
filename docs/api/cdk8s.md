@@ -6795,6 +6795,7 @@ const cdk8sTypeScriptAppOptions: cdk8s.Cdk8sTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.cdk8sVersion">cdk8sVersion</a></code> | <code>string</code> | Minimum version of the cdk8s to depend on. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptAppOptions.property.cdk8sCliVersion">cdk8sCliVersion</a></code> | <code>string</code> | Minimum version of the cdk8s-cli to depend on. |
@@ -9020,6 +9021,21 @@ Options for ts-jest.
 
 ---
 
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
+
+---
+
 ##### `typescriptVersion`<sup>Optional</sup> <a name="typescriptVersion" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.typescriptVersion"></a>
 
 ```typescript
@@ -9394,6 +9410,7 @@ const constructLibraryCdk8sOptions: cdk8s.ConstructLibraryCdk8sOptions = { ... }
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.author">author</a></code> | <code>string</code> | The name of the library author. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8sOptions.property.authorAddress">authorAddress</a></code> | <code>string</code> | Email or URL of the library author. |
@@ -11624,6 +11641,21 @@ public readonly tsJestOptions: TsJestOptions;
 - *Type:* projen.typescript.TsJestOptions
 
 Options for ts-jest.
+
+---
+
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
 
 ---
 

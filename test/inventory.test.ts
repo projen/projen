@@ -138,7 +138,7 @@ test("all allowed default values can be discovered and rendered", () => {
   });
 });
 
-function throwIfNotRenderable(option: inventory.ProjectOption) {
+function throwIfNotRenderable(option: inventory.InventoryProjectOption) {
   return (
     option.default === undefined ||
     option.default === "undefined" ||

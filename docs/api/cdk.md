@@ -4036,6 +4036,7 @@ const constructLibraryOptions: cdk.ConstructLibraryOptions = { ... }
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdk.ConstructLibraryOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.author">author</a></code> | <code>string</code> | The name of the library author. |
 | <code><a href="#projen.cdk.ConstructLibraryOptions.property.authorAddress">authorAddress</a></code> | <code>string</code> | Email or URL of the library author. |
@@ -6263,6 +6264,21 @@ Options for ts-jest.
 
 ---
 
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdk.ConstructLibraryOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
+
+---
+
 ##### `typescriptVersion`<sup>Optional</sup> <a name="typescriptVersion" id="projen.cdk.ConstructLibraryOptions.property.typescriptVersion"></a>
 
 ```typescript
@@ -7854,6 +7870,7 @@ const jsiiProjectOptions: cdk.JsiiProjectOptions = { ... }
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdk.JsiiProjectOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.author">author</a></code> | <code>string</code> | The name of the library author. |
 | <code><a href="#projen.cdk.JsiiProjectOptions.property.authorAddress">authorAddress</a></code> | <code>string</code> | Email or URL of the library author. |
@@ -10077,6 +10094,21 @@ public readonly tsJestOptions: TsJestOptions;
 - *Type:* projen.typescript.TsJestOptions
 
 Options for ts-jest.
+
+---
+
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdk.JsiiProjectOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
 
 ---
 

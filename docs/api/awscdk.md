@@ -9264,6 +9264,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.author">author</a></code> | <code>string</code> | The name of the library author. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.authorAddress">authorAddress</a></code> | <code>string</code> | Email or URL of the library author. |
@@ -11499,6 +11500,21 @@ public readonly tsJestOptions: TsJestOptions;
 - *Type:* projen.typescript.TsJestOptions
 
 Options for ts-jest.
+
+---
+
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
 
 ---
 
@@ -14245,6 +14261,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.buildCommand">buildCommand</a></code> | <code>string</code> | A command to execute before synthesis. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkout">cdkout</a></code> | <code>string</code> | cdk.out directory. |
@@ -16473,6 +16490,21 @@ public readonly tsJestOptions: TsJestOptions;
 - *Type:* projen.typescript.TsJestOptions
 
 Options for ts-jest.
+
+---
+
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
 
 ---
 

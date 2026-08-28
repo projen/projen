@@ -5096,6 +5096,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -8317,6 +8334,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -12556,6 +12590,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -15649,6 +15700,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -18604,6 +18672,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -21662,6 +21747,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -25449,6 +25551,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -30680,6 +30799,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -39525,6 +39661,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -42247,6 +42400,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": ""latest"",
         "docs": "TypeScript version to use.",
         "featured": false,
@@ -44966,6 +45136,23 @@ exports[`inventory 1`] = `
         "switch": "ts-jest-options",
         "type": {
           "fqn": "projen.typescript.TsJestOptions",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Type-check the test suite as part of the \`test\` task.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "typecheckTests",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": [
+          "typecheckTests",
+        ],
+        "simpleType": "boolean",
+        "switch": "typecheck-tests",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {

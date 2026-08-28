@@ -169,6 +169,54 @@ test("tsconfigDevFile can be used to control the name of the tsconfig dev file",
   expect(snapshot["tsconfig.foo.json"]).not.toBeUndefined();
 });
 
+describe("typecheckTests", () => {
+  const typecheckStep = (tsconfig: string) => ({
+    name: "Type-check the test suite",
+    execArgs: ["tsc", "--noEmit", "-p", tsconfig],
+  });
+
+  test("is disabled by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    const tasks = synthSnapshot(prj)[".projen/tasks.json"].tasks;
+    expect(tasks["typecheck:tests"]).toBeUndefined();
+    expect(tasks.test.steps).not.toContainEqual(
+      typecheckStep("test/tsconfig.json"),
+    );
+  });
+
+  test("prepends a type-check step to the test task", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      typecheckTests: true,
+    });
+
+    const tasks = synthSnapshot(prj)[".projen/tasks.json"].tasks;
+    expect(tasks["typecheck:tests"]).toBeUndefined();
+    expect(tasks.test.steps[0]).toStrictEqual(
+      typecheckStep("test/tsconfig.json"),
+    );
+  });
+
+  test("uses the dev tsconfig file name", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      typecheckTests: true,
+      tsconfigDevFile: "tsconfig.foo.json",
+    });
+
+    const tasks = synthSnapshot(prj)[".projen/tasks.json"].tasks;
+    expect(tasks.test.steps[0]).toStrictEqual(
+      typecheckStep("tsconfig.foo.json"),
+    );
+  });
+});
+
 test("projenrc.ts", () => {
   const prj = new TypeScriptProject({
     name: "test",

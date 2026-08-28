@@ -144,6 +144,7 @@ const project = new TypeScriptProject({
     },
   },
 
+  typecheckTests: true,
   jestOptions: {
     // makes it very hard to iterate with jest --watch
     coverageText: false,

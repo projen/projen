@@ -4333,6 +4333,7 @@ const cdktnTypeScriptAppOptions: cdktn.CdktnTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.cdktnVersion">cdktnVersion</a></code> | <code>string</code> | Minimum version of the CDKTN to depend on. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.cdktnCliVersion">cdktnCliVersion</a></code> | <code>string</code> | Version range of the CDKTN CLI to depend on. |
@@ -6556,6 +6557,21 @@ Options for ts-jest.
 
 ---
 
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdktn.CdktnTypeScriptAppOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
+
+---
+
 ##### `typescriptVersion`<sup>Optional</sup> <a name="typescriptVersion" id="projen.cdktn.CdktnTypeScriptAppOptions.property.typescriptVersion"></a>
 
 ```typescript
@@ -6900,6 +6916,7 @@ const constructLibraryCdktnOptions: cdktn.ConstructLibraryCdktnOptions = { ... }
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.tsconfigDev">tsconfigDev</a></code> | <code>projen.javascript.TypescriptConfigOptions</code> | Custom tsconfig options for the development tsconfig.json file (used for testing). |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.tsconfigDevFile">tsconfigDevFile</a></code> | <code>string</code> | The name (and path) of the development tsconfig file. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.tsJestOptions">tsJestOptions</a></code> | <code>projen.typescript.TsJestOptions</code> | Options for ts-jest. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.typecheckTests">typecheckTests</a></code> | <code>boolean</code> | Type-check the test suite as part of the `test` task. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.typescriptVersion">typescriptVersion</a></code> | <code>string</code> | TypeScript version to use. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.author">author</a></code> | <code>string</code> | The name of the library author. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.authorAddress">authorAddress</a></code> | <code>string</code> | Email or URL of the library author. |
@@ -9128,6 +9145,21 @@ public readonly tsJestOptions: TsJestOptions;
 - *Type:* projen.typescript.TsJestOptions
 
 Options for ts-jest.
+
+---
+
+##### `typecheckTests`<sup>Optional</sup> <a name="typecheckTests" id="projen.cdktn.ConstructLibraryCdktnOptions.property.typecheckTests"></a>
+
+```typescript
+public readonly typecheckTests: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Type-check the test suite as part of the `test` task.
+
+Adds a `tsc --noEmit` step against the development tsconfig.
 
 ---
 
