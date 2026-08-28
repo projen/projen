@@ -327,7 +327,7 @@
           "type": "string"
         },
         "failure-threshold-percent": {
-          "default": 0.0,
+          "default": 0,
           "description": "Specifies the minimum percentage of files that must be captured in order to proceed with the analysis.",
           "type": "number"
         },
