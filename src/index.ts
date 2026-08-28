@@ -44,6 +44,7 @@ export * from "./xmlfile";
 export type { ProjectType, ProjectOption } from "./inventory";
 
 // export submodules
+export * as polaris from "./polaris";
 export * as sonarqube from "./sonarqube";
 export * as web from "./web";
 export * as github from "./github";

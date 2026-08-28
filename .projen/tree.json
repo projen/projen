@@ -595,6 +595,13 @@
           "path": "src/javascript/node-config.ts"
         }
       },
+      "JsiiFromJsonSchema@src--polaris--coverity-config.ts": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsiiFromJsonSchema",
+          "path": "src/polaris/coverity-config.ts"
+        }
+      },
       "JsonConst@src--awscdk--private--feature-flags-v2.const.ts": {
         "metadata": {
           "type": "file",

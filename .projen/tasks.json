@@ -640,6 +640,10 @@
         {
           "exec": "node scripts/update-schema.js https://nodejs.org/dist/latest/docs/node-config-schema.json schemas/node-config-schema.json",
           "name": "update schema: schemas/node-config-schema.json"
+        },
+        {
+          "exec": "node scripts/update-schema.js https://raw.githubusercontent.com/mongodb/mongo/refs/heads/master/etc/coverity_config_schema.json schemas/coverity_config_schema.json",
+          "name": "update schema: schemas/coverity_config_schema.json"
         }
       ]
     },

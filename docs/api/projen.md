@@ -17,6 +17,7 @@ The following submodules are available:
 - [java](./java.md)
 - [javascript](./javascript.md)
 - [javascript.biome_config](./javascript.biome_config.md)
+- [polaris](./polaris.md)
 - [python](./python.md)
 - [python.uvConfig](./python.uvConfig.md)
 - [release](./release.md)
