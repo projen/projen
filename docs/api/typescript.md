@@ -3721,6 +3721,7 @@ const nodeRunnerOptions: typescript.NodeRunnerOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes">experimentalTransformTypes</a></code> | <code>boolean</code> | Whether to also enable `--experimental-transform-types`. |
+| <code><a href="#projen.typescript.NodeRunnerOptions.property.transformTypes">transformTypes</a></code> | <code>boolean</code> | Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces). |
 | <code><a href="#projen.typescript.NodeRunnerOptions.property.tsconfig">tsconfig</a></code> | <code>string</code> | Path to the tsconfig file for type-checking. |
 | <code><a href="#projen.typescript.NodeRunnerOptions.property.typeCheck">typeCheck</a></code> | <code>boolean</code> | Whether to type-check the entrypoint before executing. |
 
@@ -3728,7 +3729,7 @@ const nodeRunnerOptions: typescript.NodeRunnerOptions = { ... }
 
 ##### ~~`experimentalTransformTypes`~~<sup>Optional</sup> <a name="experimentalTransformTypes" id="projen.typescript.NodeRunnerOptions.property.experimentalTransformTypes"></a>
 
-- *Deprecated:* This flag has been removed from Node.js 26
+- *Deprecated:* This flag has been removed from Node.js 26. Use `transformTypes` instead.
 
 ```typescript
 public readonly experimentalTransformTypes: boolean;
@@ -3738,6 +3739,26 @@ public readonly experimentalTransformTypes: boolean;
 - *Default:* false
 
 Whether to also enable `--experimental-transform-types`.
+
+---
+
+##### `transformTypes`<sup>Optional</sup> <a name="transformTypes" id="projen.typescript.NodeRunnerOptions.property.transformTypes"></a>
+
+```typescript
+public readonly transformTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces).
+
+Uses `amaro` (the TypeScript transformer used internally by Node.js) as an
+external loader via `--import=amaro/transform`. Adds a dependency on the
+`amaro` package and enables `--enable-source-maps` to preserve accurate
+stack traces.
+
+> [https://github.com/nodejs/amaro](https://github.com/nodejs/amaro)
 
 ---
 
