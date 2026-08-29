@@ -68,13 +68,20 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
     for (const step of task.steps ?? []) {
       if (step.spawn) {
         writeln(`- ${chalk.bold(step.spawn)}`);
-        inspectTask(step.spawn, indent + 2);
       } else if (step.exec) {
         writeln(`- exec: ${step.exec}`);
       } else if (step.execArgs) {
         writeln(`- execArgs: ${step.execArgs.join(" ")}`);
       } else if (step.builtin) {
         writeln(`- builtin: ${step.builtin}`);
+      }
+
+      if (step.args?.length) {
+        writeln(`  args: ${JSON.stringify(step.args)}`);
+      }
+
+      if (step.spawn) {
+        inspectTask(step.spawn, indent + 2);
       }
     }
   }
