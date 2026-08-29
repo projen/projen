@@ -6005,6 +6005,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -7179,6 +7180,22 @@ This can be any compatible package version, including the deprecated `standard-v
 
 ---
 
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.web.NextJsProjectOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
+
+---
+
 ##### `jsiiReleaseVersion`<sup>Optional</sup> <a name="jsiiReleaseVersion" id="projen.web.NextJsProjectOptions.property.jsiiReleaseVersion"></a>
 
 ```typescript
@@ -8175,6 +8192,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -9364,6 +9382,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.web.NextJsTypeScriptProjectOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 
@@ -10737,6 +10771,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.web.ReactProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.web.ReactProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.web.ReactProjectOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.web.ReactProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.web.ReactProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.web.ReactProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -11884,6 +11919,22 @@ This can be any compatible package version, including the deprecated `standard-v
 
 ---
 
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.web.ReactProjectOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
+
+---
+
 ##### `jsiiReleaseVersion`<sup>Optional</sup> <a name="jsiiReleaseVersion" id="projen.web.ReactProjectOptions.property.jsiiReleaseVersion"></a>
 
 ```typescript
@@ -12974,6 +13025,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -14136,6 +14188,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.web.ReactTypeScriptProjectOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 

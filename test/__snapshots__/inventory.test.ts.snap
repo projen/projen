@@ -3478,6 +3478,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -6608,6 +6625,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -11027,6 +11061,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -14041,6 +14092,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -17085,6 +17153,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -20108,6 +20193,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -23915,6 +24017,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -26696,6 +26815,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -29270,6 +29406,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -31905,6 +32058,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -35562,6 +35732,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -38124,6 +38311,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -40888,6 +41092,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "docs": "Additional entries to .gitignore.",
         "featured": false,
         "jsonLike": true,
@@ -43624,6 +43845,23 @@ exports[`inventory 1`] = `
         "switch": "github-options",
         "type": {
           "fqn": "projen.github.GitHubOptions",
+        },
+      },
+      {
+        "default": "- GitHub determines the latest release based on date and semantic version.",
+        "docs": "Whether GitHub should explicitly mark the release from the default branch as the latest release.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "githubReleaseLatest",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": [
+          "githubReleaseLatest",
+        ],
+        "simpleType": "boolean",
+        "switch": "github-release-latest",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {

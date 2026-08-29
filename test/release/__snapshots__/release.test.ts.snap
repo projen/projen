@@ -149,7 +149,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -375,7 +380,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -660,7 +670,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -886,7 +901,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -1171,7 +1191,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -1406,7 +1431,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -1686,7 +1716,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -1875,7 +1910,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -2127,7 +2167,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -2235,7 +2280,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -2343,7 +2393,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -2504,7 +2559,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -2544,7 +2604,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -2584,7 +2649,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -2828,7 +2898,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -3007,7 +3082,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -3203,7 +3283,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -3243,7 +3328,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -3554,7 +3644,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -3713,7 +3808,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -3886,7 +3986,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -4103,7 +4208,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -4361,7 +4471,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -4531,6 +4646,163 @@ if (current !== expected) {
 }
 `;
 
+exports[`Single Project githubReleaseLatest: default for the default and additional release branches 1`] = `
+[
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+]
+`;
+
+exports[`Single Project githubReleaseLatest: latest for the default and additional release branches 1`] = `
+[
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_RELEASE_LATEST": "true",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_RELEASE_LATEST": "true",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+]
+`;
+
+exports[`Single Project githubReleaseLatest: not latest for the default and additional release branches 1`] = `
+[
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_RELEASE_LATEST": "false",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+  {
+    "env": {
+      "CHANGELOG_FILE": "dist/changelog.md",
+      "GITHUB_RELEASE_LATEST": "false",
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      "RELEASE_TAG_FILE": "dist/releasetag.txt",
+    },
+    "id": "release",
+    "if": "\${{ !inputs.dry_run }}",
+    "name": "Release",
+    "run": "errout=$(mktemp)
+tag=$(cat "$RELEASE_TAG_FILE")
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
+exitcode=$?
+if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
+  cat "$errout"
+  exit $exitcode
+fi",
+  },
+]
+`;
+
 exports[`Single Project majorVersion can be 0 1`] = `
 "# ~~ Generated by projen. To modify, edit .projenrc.js and run "npx projen".
 
@@ -4633,7 +4905,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -4770,7 +5047,12 @@ if (current !== expected) {
         {
           "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -4965,7 +5247,12 @@ if (current !== expected) {
         {
           "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -5178,7 +5465,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -5335,7 +5627,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -5505,7 +5802,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -5644,7 +5946,12 @@ if (current !== expected) {
         {
           "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -5685,7 +5992,12 @@ if (current !== expected) {
         {
           "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -5890,7 +6202,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -6191,7 +6508,12 @@ if (current !== expected) {
         {
           "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -6573,7 +6895,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -6681,7 +7008,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -6840,7 +7172,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -6880,7 +7217,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -7128,7 +7470,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -7237,7 +7584,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -7345,7 +7697,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -7506,7 +7863,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -7546,7 +7908,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -7587,7 +7954,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -7861,7 +8233,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -8018,7 +8395,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -8233,7 +8615,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"
@@ -8390,7 +8777,12 @@ if (current !== expected) {
           {
             "exec": "errout=$(mktemp)
 tag=$(cat "$RELEASE_TAG_FILE")
-gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+set --
+case "\${GITHUB_RELEASE_LATEST:-}" in
+  true) set -- --latest ;;
+  false) set -- --latest=false ;;
+esac
+gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
 exitcode=$?
 if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
   cat "$errout"
@@ -8565,7 +8957,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" \${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "\${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" \${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"

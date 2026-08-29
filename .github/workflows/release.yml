@@ -122,7 +122,12 @@ jobs:
         run: |-
           errout=$(mktemp)
           tag=$(cat "$RELEASE_TAG_FILE")
-          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" ${PRERELEASE:+-p} 2> "$errout" && true
+          set --
+          case "${GITHUB_RELEASE_LATEST:-}" in
+            true) set -- --latest ;;
+            false) set -- --latest=false ;;
+          esac
+          gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" ${PRERELEASE:+-p} 2> "$errout" && true
           exitcode=$?
           if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then
             cat "$errout"

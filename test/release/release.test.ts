@@ -642,6 +642,87 @@ describe("Single Project", () => {
     expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
   });
 
+  test.each<[string, boolean | undefined, string | undefined]>([
+    ["default", undefined, undefined],
+    ["latest", true, "true"],
+    ["not latest", false, "false"],
+  ])(
+    "githubReleaseLatest: %s for the default and additional release branches",
+    (_name, latest, expectedEnv) => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN
+      new Release(project, {
+        tasks: [project.buildTask],
+        versionFile: "goo.json",
+        branch: "main",
+        majorVersion: 1,
+        githubReleaseLatest: latest,
+        releaseBranches: {
+          "2.x": { majorVersion: 2, githubReleaseLatest: latest },
+        },
+        publishTasks: true,
+        artifactsDirectory: "dist",
+      });
+
+      // THEN
+      const outdir = synthSnapshot(project);
+      const releaseSteps = [
+        YAML.parse(outdir[".github/workflows/release.yml"]),
+        YAML.parse(outdir[".github/workflows/release-2.x.yml"]),
+      ].map((workflow) =>
+        workflow.jobs.release_github.steps.find(
+          (step: JobStep) => step.name === "Release",
+        ),
+      );
+
+      for (const step of releaseSteps) {
+        expect(step.env.GITHUB_RELEASE_LATEST).toBe(expectedEnv);
+      }
+      const tasks = outdir[".projen/tasks.json"].tasks;
+      for (const task of [
+        tasks["publish:github"],
+        tasks["publish:github:2.x"],
+      ]) {
+        expect(task.env.GITHUB_RELEASE_LATEST).toBe(expectedEnv);
+      }
+      expect(releaseSteps).toMatchSnapshot();
+    },
+  );
+
+  test.each<[boolean | undefined, string | undefined]>([
+    [undefined, undefined],
+    [true, "true"],
+    [false, "false"],
+  ])("Publisher latest: %s", (latest, expectedEnv) => {
+    // GIVEN
+    const project = new TestProject();
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "goo.json",
+      branch: "main",
+      githubRelease: false,
+      artifactsDirectory: "dist",
+    });
+
+    // WHEN
+    release.publisher.publishToGitHubReleases({
+      latest,
+      changelogFile: "dist/changelog.md",
+      releaseTagFile: "dist/releasetag.txt",
+      versionFile: "dist/version.txt",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    const releaseStep = workflow.jobs.release_github.steps.find(
+      (step: JobStep) => step.name === "Release",
+    );
+    expect(releaseStep.env.GITHUB_RELEASE_LATEST).toBe(expectedEnv);
+  });
+
   test("releaseBranches can be use to define additional branches", () => {
     // GIVEN
     const project = new TestProject();

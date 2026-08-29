@@ -823,6 +823,7 @@ const branchOptions: release.BranchOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.release.BranchOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | The major versions released from this branch. |
 | <code><a href="#projen.release.BranchOptions.property.environment">environment</a></code> | <code>string</code> | The GitHub Actions environment used for the release. |
+| <code><a href="#projen.release.BranchOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from this branch as the latest release. |
 | <code><a href="#projen.release.BranchOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | The minimum major version to release. |
 | <code><a href="#projen.release.BranchOptions.property.minorVersion">minorVersion</a></code> | <code>number</code> | The minor versions released from this branch. |
 | <code><a href="#projen.release.BranchOptions.property.npmDistTag">npmDistTag</a></code> | <code>string</code> | The npm distribution tag to use for this branch. |
@@ -860,6 +861,22 @@ or limit who can initiate a release through environment protection rules.
 
 When multiple artifacts are released, the environment can be overwritten
 on a per artifact basis.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.release.BranchOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from this branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 
@@ -1167,6 +1184,7 @@ const gitHubReleasesPublishOptions: release.GitHubReleasesPublishOptions = { ...
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.changelogFile">changelogFile</a></code> | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.releaseTagFile">releaseTagFile</a></code> | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag. |
 | <code><a href="#projen.release.GitHubReleasesPublishOptions.property.versionFile">versionFile</a></code> | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number. |
+| <code><a href="#projen.release.GitHubReleasesPublishOptions.property.latest">latest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release as the latest release. |
 
 ---
 
@@ -1292,6 +1310,22 @@ The location of a text file (relative to `dist/`) that contains the version numb
 version.txt
 ```
 
+
+##### `latest`<sup>Optional</sup> <a name="latest" id="projen.release.GitHubReleasesPublishOptions.property.latest"></a>
+
+```typescript
+public readonly latest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest. A branch-specific setting takes precedence.
+
+---
 
 ### GitPublishOptions <a name="GitPublishOptions" id="projen.release.GitPublishOptions"></a>
 
@@ -2653,6 +2687,7 @@ const releaseOptions: release.ReleaseOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.release.ReleaseOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.release.ReleaseOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.release.ReleaseOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.release.ReleaseOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.release.ReleaseOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -2700,6 +2735,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.release.ReleaseOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 
@@ -3208,6 +3259,7 @@ const releaseProjectOptions: release.ReleaseProjectOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.release.ReleaseProjectOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.release.ReleaseProjectOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -3246,6 +3298,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.release.ReleaseProjectOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 

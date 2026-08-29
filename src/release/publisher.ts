@@ -30,15 +30,21 @@ const PUBLIB_VERSION = "latest";
  * re-running a release is a no-op rather than a failure.
  *
  * A fixed script: the release tag file, the changelog file and the prerelease
- * flag arrive through the environment (`RELEASE_TAG_FILE`, `CHANGELOG_FILE`,
- * `PRERELEASE`), so no value is ever interpolated into shell text.
+ * flags arrive through the environment (`RELEASE_TAG_FILE`, `CHANGELOG_FILE`,
+ * `PRERELEASE`, `GITHUB_RELEASE_LATEST`), so no value is ever interpolated into
+ * shell text.
  *
  * @TODO This is quite complex and should be solved differently in future
  */
 const GITHUB_RELEASE_SCRIPT = [
   "errout=$(mktemp)",
   'tag=$(cat "$RELEASE_TAG_FILE")',
-  'gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" ${PRERELEASE:+-p} 2> "$errout" && true',
+  "set --",
+  'case "${GITHUB_RELEASE_LATEST:-}" in',
+  "  true) set -- --latest ;;",
+  "  false) set -- --latest=false ;;",
+  "esac",
+  'gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" "$@" ${PRERELEASE:+-p} 2> "$errout" && true',
   "exitcode=$?",
   'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then',
   '  cat "$errout"',
@@ -928,6 +934,7 @@ export class Publisher extends Component {
     options: GitHubReleasesPublishOptions,
     branchOptions: Partial<BranchOptions>,
   ): PublishRun {
+    const latest = branchOptions.githubReleaseLatest ?? options.latest;
     return {
       script: GITHUB_RELEASE_SCRIPT,
       // the script uses `if`, `!` and `$?`, which the built-in shell does not
@@ -937,6 +944,9 @@ export class Publisher extends Component {
         RELEASE_TAG_FILE: options.releaseTagFile,
         CHANGELOG_FILE: options.changelogFile,
         ...(branchOptions.prerelease ? { PRERELEASE: "true" } : {}),
+        ...(latest !== undefined
+          ? { GITHUB_RELEASE_LATEST: latest.toString() }
+          : {}),
       },
     };
   }
@@ -1501,7 +1511,17 @@ function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
  * Publishing options for GitHub releases.
  */
 export interface GitHubReleasesPublishOptions
-  extends VersionArtifactOptions, CommonPublishOptions {}
+  extends VersionArtifactOptions, CommonPublishOptions {
+  /**
+   * Whether GitHub should explicitly mark the release as the latest release.
+   *
+   * Set to `true` to mark the release as latest, or `false` to explicitly not
+   * mark it as latest. A branch-specific setting takes precedence.
+   *
+   * @default - GitHub determines the latest release based on date and semantic version.
+   */
+  readonly latest?: boolean;
+}
 
 /**
  * Publishing options for Git releases
