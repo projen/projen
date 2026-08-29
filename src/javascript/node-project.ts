@@ -4,8 +4,10 @@ import type { BiomeOptions } from "./biome/biome";
 import { Biome } from "./biome/biome";
 import type { BundlerOptions } from "./bundler";
 import { Bundler } from "./bundler";
+import type { IJavaScriptTestRunner } from "./javascript-test-runner";
 import { JavaScriptTestRunner } from "./javascript-test-runner";
-import type { JestOptions, Jest } from "./jest";
+import type { JestOptions } from "./jest";
+import { Jest } from "./jest";
 import type { LicenseCheckerOptions } from "./license-checker";
 import { LicenseChecker } from "./license-checker";
 import type { CodeArtifactOptions, NodePackageOptions } from "./node-package";
@@ -303,7 +305,7 @@ export interface NodeProjectOptions
   /**
    * Setup jest unit tests
    *
-   * @deprecated Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+   * @deprecated Use `testRunner: JavaScriptTestRunner.jest()` instead.
    * @default true
    */
   readonly jest?: boolean;
@@ -311,15 +313,15 @@ export interface NodeProjectOptions
   /**
    * Jest options
    *
-   * @deprecated Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+   * @deprecated Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
    * @default - default options
    */
   readonly jestOptions?: JestOptions;
 
   /**
-   * The test runner used to execute unit tests.
+   * The runner used to execute tests.
    *
-   * @default - `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+   * @default - `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
    */
   readonly testRunner?: JavaScriptTestRunner;
 
@@ -521,14 +523,14 @@ export class NodeProject extends GitHubProject {
   public readonly runScriptCommand: string;
 
   /**
-   * The test runner used to execute unit tests.
+   * The runner used to execute tests. When available, it is already attached to project.
    */
-  public readonly testRunner?: JavaScriptTestRunner;
+  public readonly testRunner?: IJavaScriptTestRunner;
 
   /**
    * The Jest configuration (if enabled)
    *
-   * @deprecated Use `testRunner?.jest` instead.
+   * @deprecated Use `Jest.of(project)` instead.
    */
   public readonly jest?: Jest;
 
@@ -674,16 +676,16 @@ export class NodeProject extends GitHubProject {
 
     if (options.testRunner && options.jest !== undefined) {
       throw new Error(
-        "Cannot use `testRunner` together with the deprecated `jest` option. Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.",
+        "Cannot use `testRunner` together with the deprecated `jest` option. Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.",
       );
     }
 
     // configure test runner if enabled
     // must be before the build/release workflows
-    this.testRunner = this.resolveTestRunner(options);
-    this.testRunner?.tryAttach(this);
+    const testRunnerFactory = this.resolveTestRunner(options);
+    this.testRunner = testRunnerFactory?.tryAttach(this);
     // Only needed for backward compatibility
-    this.jest = this.testRunner?.jest;
+    this.jest = Jest.of(this);
 
     const workflowPermissions: JobPermissions = {
       idToken: this.determineIdTokenPermissions(options),
@@ -959,9 +961,10 @@ export class NodeProject extends GitHubProject {
       return options.testRunner;
     }
 
+    // @deprecated
     const jestEnabled = options.jest ?? true;
     return jestEnabled
-      ? JavaScriptTestRunner.useJest(options.jestOptions)
+      ? JavaScriptTestRunner.jest(options.jestOptions)
       : undefined;
   }
 
@@ -995,8 +998,7 @@ export class NodeProject extends GitHubProject {
     // Use Codecov when it is enabled or if or a secret token name is passed in
     // AND testing must be configured
     return Boolean(
-      (options.codeCov || options.codeCovTokenSecret) &&
-      this.testRunner?.initialized,
+      (options.codeCov || options.codeCovTokenSecret) && this.testRunner,
     );
   }
 

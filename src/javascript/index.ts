@@ -13,7 +13,6 @@ export * from "./pnpm-workspace";
 export * from "./pnpm-workspace-config";
 export * from "./prettier";
 export * from "./projenrc";
-export * from "./test-runner-options";
 export * from "./typescript-config";
 export * from "./upgrade-dependencies";
 export * from "./yarnrc";

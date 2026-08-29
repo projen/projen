@@ -256,17 +256,15 @@
         "metadata": {
           "type": "component",
           "construct": "JavaScriptTestRunner"
-        },
-        "nodes": {
-          "Jest#AutoId1": {
-            "metadata": {
-              "type": "component",
-              "construct": "Jest"
-            }
-          }
         }
       },
-      "BuildWorkflow#AutoId15": {
+      "Jest#AutoId15": {
+        "metadata": {
+          "type": "component",
+          "construct": "Jest"
+        }
+      },
+      "BuildWorkflow#AutoId16": {
         "metadata": {
           "type": "component",
           "construct": "BuildWorkflow"
@@ -285,7 +283,7 @@
           "path": ".github/workflows/build.yml"
         }
       },
-      "Release#AutoId16": {
+      "Release#AutoId17": {
         "metadata": {
           "type": "component",
           "construct": "Release"
@@ -299,13 +297,13 @@
           }
         }
       },
-      "Version#AutoId17": {
+      "Version#AutoId18": {
         "metadata": {
           "type": "component",
           "construct": "Version"
         }
       },
-      "Publisher#AutoId18": {
+      "Publisher#AutoId19": {
         "metadata": {
           "type": "component",
           "construct": "Publisher"
@@ -331,13 +329,13 @@
           "path": ".github/pull_request_template.md"
         }
       },
-      "Bundler#AutoId19": {
+      "Bundler#AutoId20": {
         "metadata": {
           "type": "component",
           "construct": "Bundler"
         }
       },
-      "Prettier#AutoId20": {
+      "Prettier#AutoId21": {
         "metadata": {
           "type": "component",
           "construct": "Prettier"
@@ -363,13 +361,13 @@
           "construct": "LicenseChecker"
         }
       },
-      "AutoId21": {
+      "AutoId22": {
         "metadata": {
           "type": "component",
           "construct": "TypeScriptRunner"
         }
       },
-      "TypescriptConfig#AutoId22": {
+      "TypescriptConfig#AutoId23": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -382,7 +380,7 @@
           "path": "tsconfig.json"
         }
       },
-      "TypescriptConfig#AutoId23": {
+      "TypescriptConfig#AutoId24": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -395,7 +393,7 @@
           "path": "test/tsconfig.json"
         }
       },
-      "Eslint#AutoId24": {
+      "Eslint#AutoId25": {
         "metadata": {
           "type": "component",
           "construct": "Eslint"
@@ -408,13 +406,13 @@
           "path": ".eslintrc.json"
         }
       },
-      "Projenrc#AutoId25": {
+      "Projenrc#AutoId26": {
         "metadata": {
           "type": "component",
           "construct": "Projenrc"
         }
       },
-      "TypescriptConfig#AutoId26": {
+      "TypescriptConfig#AutoId27": {
         "metadata": {
           "type": "component",
           "construct": "TypescriptConfig"
@@ -427,22 +425,16 @@
           "path": "projenrc/tsconfig.json"
         }
       },
-      "AutoId27": {
+      "AutoId28": {
         "metadata": {
           "type": "component",
           "construct": "TypeScriptRunner"
         }
       },
-      "SampleCode#AutoId28": {
+      "SampleCode#AutoId29": {
         "metadata": {
           "type": "component",
           "construct": "SampleCode"
-        }
-      },
-      "SampleDir#AutoId29": {
-        "metadata": {
-          "type": "component",
-          "construct": "SampleDir"
         }
       },
       "SampleDir#AutoId30": {
@@ -451,7 +443,13 @@
           "construct": "SampleDir"
         }
       },
-      "JsiiDocgen#AutoId31": {
+      "SampleDir#AutoId31": {
+        "metadata": {
+          "type": "component",
+          "construct": "SampleDir"
+        }
+      },
+      "JsiiDocgen#AutoId32": {
         "metadata": {
           "type": "component",
           "construct": "JsiiDocgen"
@@ -478,7 +476,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId32": {
+      "UpgradeDependencies#AutoId33": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -497,7 +495,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId33": {
+      "UpgradeDependencies#AutoId34": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -530,7 +528,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId34": {
+      "VsCodeLaunchConfig#AutoId35": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -543,7 +541,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId35": {
+      "IntegrationTests#AutoId36": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -630,7 +628,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId36": {
+      "AiInstructions#AutoId37": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"

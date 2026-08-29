@@ -2,54 +2,8 @@ import { existsSync, readFileSync } from "fs";
 import { basename, dirname, extname, join, sep, resolve, posix } from "path";
 import * as semver from "semver";
 import { NodePackage, NodePackageManager } from "./node-package";
-import type { NodeProject } from "./node-project";
 import type { Project } from "../project";
 import { findUp } from "../util";
-
-/**
- * Excludes a set of patterns from both the project's `.gitignore` and
- * `.npmignore` files (if present).
- */
-export function excludeFromVcs(project: NodeProject, ...patterns: string[]) {
-  project.gitignore.exclude(...patterns);
-  project.npmignore?.exclude(...patterns);
-}
-
-/**
- * Excludes a coverage directory from both the project's `.gitignore` and
- * `.npmignore` files (if present).
- * @param project The project to exclude the directory from.
- * @param coverageDirectory The coverage output directory to exclude.
- */
-export function excludeCoverageDirectory(
-  project: NodeProject,
-  coverageDirectory: string,
-) {
-  const coverageDirectoryPath = posix.join("/", coverageDirectory, "/");
-  excludeFromVcs(project, coverageDirectoryPath);
-}
-
-/**
- * Excludes the JUnit test reports directory from both the project's
- * `.gitignore` and `.npmignore` files (if present).
- * @param project The project to exclude the directory from.
- * @param testReportsDir The JUnit-compatible test reports directory to exclude.
- * @param comment Comment to add above the excluded patterns.
- * @param additionalPatterns Additional patterns to exclude alongside the reports directory.
- */
-export function excludeTestReportsDirectory(
-  project: NodeProject,
-  testReportsDir: string,
-  comment: string,
-  ...additionalPatterns: string[]
-) {
-  excludeFromVcs(
-    project,
-    comment,
-    `/${testReportsDir}/`,
-    ...additionalPatterns,
-  );
-}
 
 /**
  * Check if package manager is yarn classic.

@@ -1124,11 +1124,12 @@ eslint rules.
 
 - *Implements:* <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
 
-The test runner used to execute a `NodeProject`'s unit tests.
+The runner used to execute a JavaScript project's tests.
 
-A runner is a {@link FutureComponent}: create it standalone (e.g. via one of
-the static factories) and it is attached to a project by whoever consumes
-it (typically `NodeProject` itself, via its `testRunner` option).
+A runner is a {@link TestRunner} (and therefore a `FutureComponent`):
+create it standalone (e.g. via one of the static factories) and it is
+attached to a project by whoever consumes it (typically `NodeProject`
+itself, via its `testRunner` option).
 
 #### Methods <a name="Methods" id="Methods"></a>
 
@@ -1143,6 +1144,7 @@ it (typically `NodeProject` itself, via its `testRunner` option).
 | <code><a href="#projen.javascript.JavaScriptTestRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.configFor">configFor</a></code> | Produce the {@link RunTestConfig} to run the given entrypoint with this runner. |
 
 ---
 
@@ -1291,14 +1293,22 @@ and a pre-existing attachment elsewhere would be a bug.
 
 ---
 
+##### `configFor` <a name="configFor" id="projen.javascript.JavaScriptTestRunner.configFor"></a>
+
+```typescript
+public configFor(): RunTestConfig
+```
+
+Produce the {@link RunTestConfig} to run the given entrypoint with this runner.
+
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.JavaScriptTestRunner.useJest">useJest</a></code> | Use Jest to execute unit tests. |
-| <code><a href="#projen.javascript.JavaScriptTestRunner.useNode">useNode</a></code> | Use Node.js' built-in test runner (`node --test`) to execute unit tests. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.jest">jest</a></code> | Use Jest to execute tests. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.nodejs">nodejs</a></code> | Use Node.js' built-in test runner (`node --test`) to execute tests. |
 
 ---
 
@@ -1350,33 +1360,33 @@ Test whether the given construct is a component.
 
 ---
 
-##### `useJest` <a name="useJest" id="projen.javascript.JavaScriptTestRunner.useJest"></a>
+##### `jest` <a name="jest" id="projen.javascript.JavaScriptTestRunner.jest"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-javascript.JavaScriptTestRunner.useJest(options?: JestOptions)
+javascript.JavaScriptTestRunner.jest(options?: JestOptions)
 ```
 
-Use Jest to execute unit tests.
+Use Jest to execute tests.
 
-###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.JavaScriptTestRunner.useJest.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.JavaScriptTestRunner.jest.parameter.options"></a>
 
 - *Type:* <a href="#projen.javascript.JestOptions">JestOptions</a>
 
 ---
 
-##### `useNode` <a name="useNode" id="projen.javascript.JavaScriptTestRunner.useNode"></a>
+##### `nodejs` <a name="nodejs" id="projen.javascript.JavaScriptTestRunner.nodejs"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-javascript.JavaScriptTestRunner.useNode(options?: NodeNativeTestOptions)
+javascript.JavaScriptTestRunner.nodejs(options?: NodeNativeTestOptions)
 ```
 
-Use Node.js' built-in test runner (`node --test`) to execute unit tests.
+Use Node.js' built-in test runner (`node --test`) to execute tests.
 
-###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.JavaScriptTestRunner.useNode.parameter.options"></a>
+###### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.JavaScriptTestRunner.nodejs.parameter.options"></a>
 
 - *Type:* <a href="#projen.javascript.NodeNativeTestOptions">NodeNativeTestOptions</a>
 
@@ -1389,10 +1399,9 @@ Use Node.js' built-in test runner (`node --test`) to execute unit tests.
 | <code><a href="#projen.javascript.JavaScriptTestRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.property.attached">attached</a></code> | <code>boolean</code> | Whether `attach()` has been called. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.property.testMatch">testMatch</a></code> | <code>projen.TestMatch</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
 | <code><a href="#projen.javascript.JavaScriptTestRunner.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
-| <code><a href="#projen.javascript.JavaScriptTestRunner.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The underlying `Jest` component, if this runner is backed by Jest. |
-| <code><a href="#projen.javascript.JavaScriptTestRunner.property.nodeNativeTest">nodeNativeTest</a></code> | <code><a href="#projen.javascript.NodeNativeTest">NodeNativeTest</a></code> | The underlying `NodeNativeTest` component, if this runner is backed by Node.js' built-in test runner. |
-| <code><a href="#projen.javascript.JavaScriptTestRunner.property.initialized">initialized</a></code> | <code>boolean</code> | *No description.* |
 
 ---
 
@@ -1433,6 +1442,30 @@ prefer `tryAttach()` over reading this and branching.
 
 ---
 
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.javascript.JavaScriptTestRunner.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: TestMatch;
+```
+
+- *Type:* projen.TestMatch
+
+Glob patterns matching the files that contain tests.
+
+---
+
+##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.JavaScriptTestRunner.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+
+Whether snapshots are updated in task "test", or in a separate "test:update" task.
+
+---
+
 ##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.JavaScriptTestRunner.property.coverageDirectory"></a>
 
 ```typescript
@@ -1445,48 +1478,18 @@ The directory where coverage files are output, if coverage collection is enabled
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.javascript.JavaScriptTestRunner.property.jest"></a>
-
-```typescript
-public readonly jest: Jest;
-```
-
-- *Type:* <a href="#projen.javascript.Jest">Jest</a>
-
-The underlying `Jest` component, if this runner is backed by Jest.
-
----
-
-##### `nodeNativeTest`<sup>Optional</sup> <a name="nodeNativeTest" id="projen.javascript.JavaScriptTestRunner.property.nodeNativeTest"></a>
-
-```typescript
-public readonly nodeNativeTest: NodeNativeTest;
-```
-
-- *Type:* <a href="#projen.javascript.NodeNativeTest">NodeNativeTest</a>
-
-The underlying `NodeNativeTest` component, if this runner is backed by Node.js' built-in test runner.
-
----
-
-##### `initialized`<sup>Required</sup> <a name="initialized" id="projen.javascript.JavaScriptTestRunner.property.initialized"></a>
-
-```typescript
-public readonly initialized: boolean;
-```
-
-- *Type:* boolean
-
----
-
 
 ### Jest <a name="Jest" id="projen.javascript.Jest"></a>
 
-Installs the following npm scripts:.
+- *Implements:* <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
 
-`test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
-- `test:watch`, intended for automatically rerunning tests when files change.
-- `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
+Configures Jest for a project: its `jest.config.json`/`package.json` config (test match patterns, coverage, reporters, etc.).
+
+The "test"/"test:update"/"test:watch" tasks themselves - and the CLI
+arguments built from this component's options - are owned by
+`JavaScriptTestRunner`, which constructs this component from
+`JavaScriptTestRunner.jest()` and is the only supported way to attach it
+to a project.
 
 #### Initializers <a name="Initializers" id="projen.javascript.Jest.Initializer"></a>
 
@@ -1753,7 +1756,7 @@ public addSnapshotResolver(file: string): void
 
 ---
 
-##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
+##### ~~`addTestMatch`~~ <a name="addTestMatch" id="projen.javascript.Jest.addTestMatch"></a>
 
 ```typescript
 public addTestMatch(pattern: string): void
@@ -1892,8 +1895,10 @@ Returns the singleton Jest component of a project or undefined if there is none.
 | <code><a href="#projen.javascript.Jest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.Jest.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.Jest.property.config">config</a></code> | <code>any</code> | Escape hatch. |
-| <code><a href="#projen.javascript.Jest.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Jest outputs its coverage files. |
 | <code><a href="#projen.javascript.Jest.property.jestVersion">jestVersion</a></code> | <code>string</code> | Jest version, including `@` symbol, like `@^29`. |
+| <code><a href="#projen.javascript.Jest.property.testMatch">testMatch</a></code> | <code>projen.TestMatch</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.Jest.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
+| <code><a href="#projen.javascript.Jest.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Jest outputs its coverage files. |
 | <code><a href="#projen.javascript.Jest.property.file">file</a></code> | <code>projen.JsonFile</code> | Jest config file. |
 
 ---
@@ -1932,18 +1937,6 @@ Escape hatch.
 
 ---
 
-##### `coverageDirectory`<sup>Required</sup> <a name="coverageDirectory" id="projen.javascript.Jest.property.coverageDirectory"></a>
-
-```typescript
-public readonly coverageDirectory: string;
-```
-
-- *Type:* string
-
-The directory where Jest outputs its coverage files.
-
----
-
 ##### `jestVersion`<sup>Required</sup> <a name="jestVersion" id="projen.javascript.Jest.property.jestVersion"></a>
 
 ```typescript
@@ -1953,6 +1946,42 @@ public readonly jestVersion: string;
 - *Type:* string
 
 Jest version, including `@` symbol, like `@^29`.
+
+---
+
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.javascript.Jest.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: TestMatch;
+```
+
+- *Type:* projen.TestMatch
+
+Glob patterns matching the files that contain tests.
+
+---
+
+##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.Jest.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+
+Whether snapshots are updated in task "test", or in a separate "test:update" task.
+
+---
+
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.Jest.property.coverageDirectory"></a>
+
+```typescript
+public readonly coverageDirectory: string;
+```
+
+- *Type:* string
+
+The directory where Jest outputs its coverage files.
 
 ---
 
@@ -2487,17 +2516,13 @@ The underlying Node.js configuration file.
 
 ### NodeNativeTest <a name="NodeNativeTest" id="projen.javascript.NodeNativeTest"></a>
 
-Installs the following npm scripts:.
+Wires up Node's built-in test runner (`node --test`): the generated configuration file (coverage, reporters, global setup, etc., written via `--experimental-config-file`), the coverage/report directories' gitignore/npmignore entries, and the live `testMatch`/`reporters` collections that feed into it.
 
-`test`, intended for testing locally and in CI. Will update snapshots
-  unless `updateSnapshot: UpdateSnapshot.NEVER` is set.
-- `test:watch`, intended for automatically rerunning tests when files change.
-- `test:update`, intended for testing locally and updating snapshots to
-  match the latest unit under test. Only available when
-  `updateSnapshot: UpdateSnapshot.NEVER`.
-
-Configuration (coverage, reporters, global setup, etc.) is written to a
-Node.js configuration file, which is loaded via `--experimental-config-file`.
+The "test"/"test:update"/"test:watch" tasks themselves - and the CLI
+arguments built from this component's options - are owned by
+`JavaScriptTestRunner`, which constructs this component from
+`JavaScriptTestRunner.nodejs()` and is the only supported way to attach it
+to a project.
 
 #### Initializers <a name="Initializers" id="projen.javascript.NodeNativeTest.Initializer"></a>
 
@@ -2537,7 +2562,6 @@ new javascript.NodeNativeTest(scope: IConstruct, options?: NodeNativeTestOptions
 | <code><a href="#projen.javascript.NodeNativeTest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.javascript.NodeNativeTest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.javascript.NodeNativeTest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.NodeNativeTest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
 
 ---
 
@@ -2636,22 +2660,6 @@ public synthesize(): void
 
 Synthesizes files to the project output directory.
 
-##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.NodeNativeTest.addTestMatch"></a>
-
-```typescript
-public addTestMatch(pattern: string): void
-```
-
-Adds a test match pattern.
-
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTest.addTestMatch.parameter.pattern"></a>
-
-- *Type:* string
-
-glob pattern to match for tests.
-
----
-
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
 | **Name** | **Description** |
@@ -2733,6 +2741,9 @@ Returns the singleton NodeNativeTest component of a project or undefined if ther
 | <code><a href="#projen.javascript.NodeNativeTest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.javascript.NodeNativeTest.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeNativeTest.property.configFile">configFile</a></code> | <code><a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a></code> | The generated Node.js configuration file. |
+| <code><a href="#projen.javascript.NodeNativeTest.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporters">NodeReporters</a></code> | The reporters configured for this test runner. |
+| <code><a href="#projen.javascript.NodeNativeTest.property.testMatch">testMatch</a></code> | <code>projen.TestMatch</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.NodeNativeTest.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
 | <code><a href="#projen.javascript.NodeNativeTest.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Node outputs its coverage files. |
 
 ---
@@ -2768,6 +2779,45 @@ public readonly configFile: NodeConfigFile;
 - *Type:* <a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a>
 
 The generated Node.js configuration file.
+
+---
+
+##### `reporters`<sup>Required</sup> <a name="reporters" id="projen.javascript.NodeNativeTest.property.reporters"></a>
+
+```typescript
+public readonly reporters: NodeReporters;
+```
+
+- *Type:* <a href="#projen.javascript.NodeReporters">NodeReporters</a>
+
+The reporters configured for this test runner.
+
+Use `add`/`remove`/`list`
+to manage reporters after construction.
+
+---
+
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.javascript.NodeNativeTest.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: TestMatch;
+```
+
+- *Type:* projen.TestMatch
+
+Glob patterns matching the files that contain tests.
+
+---
+
+##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.NodeNativeTest.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+
+Whether snapshots are updated in task "test", or in a separate "test:update" task.
 
 ---
 
@@ -4348,7 +4398,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.javascript.NodeProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.javascript.NodeProject.property.prettier">prettier</a></code> | <code><a href="#projen.javascript.Prettier">Prettier</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
-| <code><a href="#projen.javascript.NodeProject.property.testRunner">testRunner</a></code> | <code><a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a></code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.javascript.NodeProject.property.testRunner">testRunner</a></code> | <code><a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a></code> | The runner used to execute tests. |
 | <code><a href="#projen.javascript.NodeProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code><a href="#projen.javascript.UpgradeDependencies">UpgradeDependencies</a></code> | The upgrade workflow. |
 
 ---
@@ -4844,7 +4894,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.javascript.NodeProject.property.jest"></a>
 
-- *Deprecated:* Use `testRunner?.jest` instead.
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -4921,12 +4971,14 @@ Release management.
 ##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.javascript.NodeProject.property.testRunner"></a>
 
 ```typescript
-public readonly testRunner: JavaScriptTestRunner;
+public readonly testRunner: IJavaScriptTestRunner;
 ```
 
-- *Type:* <a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a>
+- *Type:* <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -4964,6 +5016,279 @@ Normally
 this task should synthesize the project files.
 
 ---
+
+### NodeReporters <a name="NodeReporters" id="projen.javascript.NodeReporters"></a>
+
+Holds the set of reporters configured for a `NodeNativeTest` component, backing the `test.testReporter`/`test.testReporterDestination` fields of the generated Node.js configuration file.
+
+#### Initializers <a name="Initializers" id="projen.javascript.NodeReporters.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.NodeReporters(scope: IConstruct)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeReporters.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.NodeReporters.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.NodeReporters.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeReporters.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.NodeReporters.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.NodeReporters.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeReporters.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.NodeReporters.add">add</a></code> | Adds a reporter, or updates its destination if one with the same name is already configured. |
+| <code><a href="#projen.javascript.NodeReporters.list">list</a></code> | Lists the configured reporters, in the order they were added. |
+| <code><a href="#projen.javascript.NodeReporters.remove">remove</a></code> | Removes a reporter, if configured. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.NodeReporters.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.javascript.NodeReporters.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeReporters.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeReporters.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeReporters.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeReporters.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeReporters.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeReporters.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeReporters.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.NodeReporters.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `add` <a name="add" id="projen.javascript.NodeReporters.add"></a>
+
+```typescript
+public add(name: string, destination?: string): void
+```
+
+Adds a reporter, or updates its destination if one with the same name is already configured.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporters.add.parameter.name"></a>
+
+- *Type:* string
+
+The name/kind of the reporter, e.g. `spec`, `junit`, `lcov`.
+
+---
+
+###### `destination`<sup>Optional</sup> <a name="destination" id="projen.javascript.NodeReporters.add.parameter.destination"></a>
+
+- *Type:* string
+
+Where the reporter's output is written.
+
+---
+
+##### `list` <a name="list" id="projen.javascript.NodeReporters.list"></a>
+
+```typescript
+public list(): NodeReporter[]
+```
+
+Lists the configured reporters, in the order they were added.
+
+##### `remove` <a name="remove" id="projen.javascript.NodeReporters.remove"></a>
+
+```typescript
+public remove(name: string): void
+```
+
+Removes a reporter, if configured.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporters.remove.parameter.name"></a>
+
+- *Type:* string
+
+The name/kind of the reporter to remove.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.NodeReporters.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeReporters.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeReporters.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeReporters.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.NodeReporters.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeReporters.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeReporters.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.NodeReporters.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeReporters.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeReporters.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
 
 ### NpmConfig <a name="NpmConfig" id="projen.javascript.NpmConfig"></a>
 
@@ -8136,120 +8461,6 @@ This property must be specified only when publishing to AWS CodeArtifact (`npmRe
 
 ---
 
-### ConfigureTestCommandOptions <a name="ConfigureTestCommandOptions" id="projen.javascript.ConfigureTestCommandOptions"></a>
-
-Options for `configureTestCommand`.
-
-#### Initializer <a name="Initializer" id="projen.javascript.ConfigureTestCommandOptions.Initializer"></a>
-
-```typescript
-import { javascript } from 'projen'
-
-const configureTestCommandOptions: javascript.ConfigureTestCommandOptions = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.binary">binary</a></code> | <code>string</code> | The CLI binary used to invoke the test runner (e.g. `jest`, `node`). |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.testArgs">testArgs</a></code> | <code>string[]</code> | The CLI arguments (after the binary) used for the "test" task. |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.updateArgs">updateArgs</a></code> | <code>string[]</code> | The CLI arguments (after the binary) used for the "test:update" task. |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test", or create a separate task "test:update" for updating snapshots. |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.watchArgs">watchArgs</a></code> | <code>string[]</code> | The CLI arguments (after the binary) used for the "test:watch" task. |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.testUpdateTaskDescription">testUpdateTaskDescription</a></code> | <code>string</code> | Description used for the "test:update" task. |
-| <code><a href="#projen.javascript.ConfigureTestCommandOptions.property.testWatchTaskDescription">testWatchTaskDescription</a></code> | <code>string</code> | Description used for the "test:watch" task. |
-
----
-
-##### `binary`<sup>Required</sup> <a name="binary" id="projen.javascript.ConfigureTestCommandOptions.property.binary"></a>
-
-```typescript
-public readonly binary: string;
-```
-
-- *Type:* string
-
-The CLI binary used to invoke the test runner (e.g. `jest`, `node`).
-
----
-
-##### `testArgs`<sup>Required</sup> <a name="testArgs" id="projen.javascript.ConfigureTestCommandOptions.property.testArgs"></a>
-
-```typescript
-public readonly testArgs: string[];
-```
-
-- *Type:* string[]
-
-The CLI arguments (after the binary) used for the "test" task.
-
----
-
-##### `updateArgs`<sup>Required</sup> <a name="updateArgs" id="projen.javascript.ConfigureTestCommandOptions.property.updateArgs"></a>
-
-```typescript
-public readonly updateArgs: string[];
-```
-
-- *Type:* string[]
-
-The CLI arguments (after the binary) used for the "test:update" task.
-
-Only used when `updateSnapshot` is `UpdateSnapshot.NEVER`.
-
----
-
-##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.ConfigureTestCommandOptions.property.updateSnapshot"></a>
-
-```typescript
-public readonly updateSnapshot: UpdateSnapshot;
-```
-
-- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
-
-Whether to update snapshots in task "test", or create a separate task "test:update" for updating snapshots.
-
----
-
-##### `watchArgs`<sup>Required</sup> <a name="watchArgs" id="projen.javascript.ConfigureTestCommandOptions.property.watchArgs"></a>
-
-```typescript
-public readonly watchArgs: string[];
-```
-
-- *Type:* string[]
-
-The CLI arguments (after the binary) used for the "test:watch" task.
-
----
-
-##### `testUpdateTaskDescription`<sup>Optional</sup> <a name="testUpdateTaskDescription" id="projen.javascript.ConfigureTestCommandOptions.property.testUpdateTaskDescription"></a>
-
-```typescript
-public readonly testUpdateTaskDescription: string;
-```
-
-- *Type:* string
-- *Default:* "Update test snapshots"
-
-Description used for the "test:update" task.
-
----
-
-##### `testWatchTaskDescription`<sup>Optional</sup> <a name="testWatchTaskDescription" id="projen.javascript.ConfigureTestCommandOptions.property.testWatchTaskDescription"></a>
-
-```typescript
-public readonly testWatchTaskDescription: string;
-```
-
-- *Type:* string
-- *Default:* "Run tests in watch mode"
-
-Description used for the "test:watch" task.
-
----
-
 ### CoverageThreshold <a name="CoverageThreshold" id="projen.javascript.CoverageThreshold"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.CoverageThreshold.Initializer"></a>
@@ -9066,8 +9277,6 @@ Only present when reason is `DEPS_RESOLVED`.
 
 ### JavaScriptTestRunnerOptions <a name="JavaScriptTestRunnerOptions" id="projen.javascript.JavaScriptTestRunnerOptions"></a>
 
-Options shared by all JavaScript test runner components (e.g. `Jest`, `NodeNativeTest`).
-
 #### Initializer <a name="Initializer" id="projen.javascript.JavaScriptTestRunnerOptions.Initializer"></a>
 
 ```typescript
@@ -9080,83 +9289,21 @@ const javaScriptTestRunnerOptions: javascript.JavaScriptTestRunnerOptions = { ..
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
-| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
-| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
-| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
-| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
 | <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 
 ---
 
-##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.JavaScriptTestRunnerOptions.property.configFilePath"></a>
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.JavaScriptTestRunnerOptions.property.coverageDirectory"></a>
 
 ```typescript
-public readonly configFilePath: string;
+public readonly coverageDirectory: string;
 ```
 
 - *Type:* string
-- *Default:* no separate config file
+- *Default:* "coverage"
 
-Path to the JSON configuration file for the test runner.
-
----
-
-##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.JavaScriptTestRunnerOptions.property.coverageText"></a>
-
-```typescript
-public readonly coverageText: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
-
----
-
-##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.JavaScriptTestRunnerOptions.property.extraCliOptions"></a>
-
-```typescript
-public readonly extraCliOptions: string[];
-```
-
-- *Type:* string[]
-- *Default:* no extra options
-
-Additional options to pass to the test runner's CLI invocation.
-
-Each element is passed as a single argument, exactly as given: no shell
-parses these, so a flag and its value need separate elements
-(`["--foo", "bar"]`, not `["--foo bar"]`).
-
----
-
-##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JavaScriptTestRunnerOptions.property.junitReporting"></a>
-
-```typescript
-public readonly junitReporting: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Result processing with a JUnit-compatible reporter.
-
-Output directory is `test-reports/`.
-
----
-
-##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.JavaScriptTestRunnerOptions.property.preserveDefaultReporters"></a>
-
-```typescript
-public readonly preserveDefaultReporters: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Preserve the default reporter when additional reporters are added.
+The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
 
 ---
 
@@ -10479,86 +10626,29 @@ const jestOptions: javascript.JestOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.JestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
-| <code><a href="#projen.javascript.JestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
-| <code><a href="#projen.javascript.JestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
-| <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
-| <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.JestOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
 | <code><a href="#projen.javascript.JestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+| <code><a href="#projen.javascript.JestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to JSON config file for Jest. |
+| <code><a href="#projen.javascript.JestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. |
+| <code><a href="#projen.javascript.JestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the Jest CLI invocation. |
 | <code><a href="#projen.javascript.JestOptions.property.jestConfig">jestConfig</a></code> | <code><a href="#projen.javascript.JestConfigOptions">JestConfigOptions</a></code> | Jest configuration. |
 | <code><a href="#projen.javascript.JestOptions.property.jestVersion">jestVersion</a></code> | <code>string</code> | The version of jest to use. |
+| <code><a href="#projen.javascript.JestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with jest-junit. |
 | <code><a href="#projen.javascript.JestOptions.property.passWithNoTests">passWithNoTests</a></code> | <code>boolean</code> | Pass with no tests. |
+| <code><a href="#projen.javascript.JestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added. |
 
 ---
 
-##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.JestOptions.property.configFilePath"></a>
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.JestOptions.property.coverageDirectory"></a>
 
 ```typescript
-public readonly configFilePath: string;
+public readonly coverageDirectory: string;
 ```
 
 - *Type:* string
-- *Default:* no separate config file
+- *Default:* "coverage"
 
-Path to the JSON configuration file for the test runner.
-
----
-
-##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.JestOptions.property.coverageText"></a>
-
-```typescript
-public readonly coverageText: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
-
----
-
-##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.JestOptions.property.extraCliOptions"></a>
-
-```typescript
-public readonly extraCliOptions: string[];
-```
-
-- *Type:* string[]
-- *Default:* no extra options
-
-Additional options to pass to the test runner's CLI invocation.
-
-Each element is passed as a single argument, exactly as given: no shell
-parses these, so a flag and its value need separate elements
-(`["--foo", "bar"]`, not `["--foo bar"]`).
-
----
-
-##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
-
-```typescript
-public readonly junitReporting: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Result processing with a JUnit-compatible reporter.
-
-Output directory is `test-reports/`.
-
----
-
-##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.JestOptions.property.preserveDefaultReporters"></a>
-
-```typescript
-public readonly preserveDefaultReporters: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Preserve the default reporter when additional reporters are added.
+The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
 
 ---
 
@@ -10574,6 +10664,58 @@ public readonly updateSnapshot: UpdateSnapshot;
 Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
 
 ---
+
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.JestOptions.property.configFilePath"></a>
+
+```typescript
+public readonly configFilePath: string;
+```
+
+- *Type:* string
+- *Default:* No separate config file, jest settings are stored in package.json
+
+Path to JSON config file for Jest.
+
+---
+
+##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.JestOptions.property.coverageText"></a>
+
+```typescript
+public readonly coverageText: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.
+
+---
+
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.JestOptions.property.extraCliOptions"></a>
+
+```typescript
+public readonly extraCliOptions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no extra options
+
+Additional options to pass to the Jest CLI invocation.
+
+Each element is passed to jest as a single argument, exactly as given: no
+shell parses these, so a flag and its value need separate elements
+(`["--reporters", "jest-junit"]`, not `["--reporters jest-junit"]`) and
+values must not be quoted (`["--testPathIgnorePatterns=/node_modules/"]`,
+not `["--testPathIgnorePatterns='/node_modules/'"]`).
+
+---
+
+*Example*
+
+```typescript
+["--runInBand", "--testNamePattern=a test name with spaces"]
+```
+
 
 ##### `jestConfig`<sup>Optional</sup> <a name="jestConfig" id="projen.javascript.JestOptions.property.jestConfig"></a>
 
@@ -10605,6 +10747,21 @@ With Jest 30 ts-jest version 29 is used (if Typescript in use)
 
 ---
 
+##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.JestOptions.property.junitReporting"></a>
+
+```typescript
+public readonly junitReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Result processing with jest-junit.
+
+Output directory is `test-reports/`.
+
+---
+
 ##### `passWithNoTests`<sup>Optional</sup> <a name="passWithNoTests" id="projen.javascript.JestOptions.property.passWithNoTests"></a>
 
 ```typescript
@@ -10615,6 +10772,19 @@ public readonly passWithNoTests: boolean;
 - *Default:* true
 
 Pass with no tests.
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.JestOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default Jest reporter when additional reporters are added.
 
 ---
 
@@ -13455,6 +13625,8 @@ preserve outputs on watch mode restart.
 
 ### NodeNativeTestOptions <a name="NodeNativeTestOptions" id="projen.javascript.NodeNativeTestOptions"></a>
 
+Options for Node.js' built-in test runner (`node --test`).
+
 #### Initializer <a name="Initializer" id="projen.javascript.NodeNativeTestOptions.Initializer"></a>
 
 ```typescript
@@ -13467,91 +13639,33 @@ const nodeNativeTestOptions: javascript.NodeNativeTestOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the default text/spec reporter, so that a summary is printed to stdout upon completion. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the test runner's CLI invocation. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.junitReporting">junitReporting</a></code> | <code>boolean</code> | Result processing with a JUnit-compatible reporter. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.collectCoverage">collectCoverage</a></code> | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Node should output its coverage files. |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.coveragePathIgnorePatterns">coveragePathIgnorePatterns</a></code> | <code>string[]</code> | An array of glob patterns that are matched against all file paths before executing coverage collection. |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the `node --test` CLI invocation. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.moduleMocks">moduleMocks</a></code> | <code>boolean</code> | Enable module mocking support via `--experimental-test-module-mocks`. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `experimentalTransformTypes`, `disableWarning`). |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`). |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporter">NodeReporter</a>[]</code> | Additional reporters to configure, as reporter name to destination key-value pairs (e.g. `{ dot: "stdout", tap: "test-reports/tap.txt" }`). |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.testConfig">testConfig</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | Escape hatch to add or override any value in the `test` section of the generated configuration file. |
 | <code><a href="#projen.javascript.NodeNativeTestOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.NodeNativeTestOptions.property.transformTypes">transformTypes</a></code> | <code>boolean</code> | Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces). |
 
 ---
 
-##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeNativeTestOptions.property.configFilePath"></a>
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTestOptions.property.coverageDirectory"></a>
 
 ```typescript
-public readonly configFilePath: string;
+public readonly coverageDirectory: string;
 ```
 
 - *Type:* string
-- *Default:* no separate config file
+- *Default:* "coverage"
 
-Path to the JSON configuration file for the test runner.
-
----
-
-##### `coverageText`<sup>Optional</sup> <a name="coverageText" id="projen.javascript.NodeNativeTestOptions.property.coverageText"></a>
-
-```typescript
-public readonly coverageText: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Include the default text/spec reporter, so that a summary is printed to stdout upon completion.
-
----
-
-##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeNativeTestOptions.property.extraCliOptions"></a>
-
-```typescript
-public readonly extraCliOptions: string[];
-```
-
-- *Type:* string[]
-- *Default:* no extra options
-
-Additional options to pass to the test runner's CLI invocation.
-
-Each element is passed as a single argument, exactly as given: no shell
-parses these, so a flag and its value need separate elements
-(`["--foo", "bar"]`, not `["--foo bar"]`).
-
----
-
-##### `junitReporting`<sup>Optional</sup> <a name="junitReporting" id="projen.javascript.NodeNativeTestOptions.property.junitReporting"></a>
-
-```typescript
-public readonly junitReporting: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Result processing with a JUnit-compatible reporter.
-
-Output directory is `test-reports/`.
-
----
-
-##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters"></a>
-
-```typescript
-public readonly preserveDefaultReporters: boolean;
-```
-
-- *Type:* boolean
-- *Default:* true
-
-Preserve the default reporter when additional reporters are added.
+The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
 
 ---
 
@@ -13581,16 +13695,16 @@ Indicates whether the coverage information should be collected while executing t
 
 ---
 
-##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTestOptions.property.coverageDirectory"></a>
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeNativeTestOptions.property.configFilePath"></a>
 
 ```typescript
-public readonly coverageDirectory: string;
+public readonly configFilePath: string;
 ```
 
 - *Type:* string
-- *Default:* "coverage"
+- *Default:* "node.config.json"
 
-The directory where Node should output its coverage files.
+Path to the JSON configuration file for the test runner.
 
 ---
 
@@ -13607,6 +13721,23 @@ An array of glob patterns that are matched against all file paths before executi
 
 If a file path matches any of the
 patterns, coverage information will be skipped for it.
+
+---
+
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeNativeTestOptions.property.extraCliOptions"></a>
+
+```typescript
+public readonly extraCliOptions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no extra options
+
+Additional options to pass to the `node --test` CLI invocation.
+
+Each element is passed as a single argument, exactly as given: no shell
+parses these, so a flag and its value need separate elements
+(`["--foo", "bar"]`, not `["--foo bar"]`).
 
 ---
 
@@ -13648,7 +13779,37 @@ public readonly nodeOptions: NodeConfigSchemaNodeOptions;
 - *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
 - *Default:* no additional node options
 
-Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `experimentalTransformTypes`, `disableWarning`).
+Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`).
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default reporter when additional reporters are added.
+
+---
+
+##### `reporters`<sup>Optional</sup> <a name="reporters" id="projen.javascript.NodeNativeTestOptions.property.reporters"></a>
+
+```typescript
+public readonly reporters: NodeReporter[];
+```
+
+- *Type:* <a href="#projen.javascript.NodeReporter">NodeReporter</a>[]
+- *Default:* no additional reporters
+
+Additional reporters to configure, as reporter name to destination key-value pairs (e.g. `{ dot: "stdout", tap: "test-reports/tap.txt" }`).
+
+These are added on top of the default reporters (`spec`, `lcov`, `junit`),
+which are controlled via `collectCoverage`. `NodeNativeTest.reporters`
+give access to add, remove or list reporters after construction.
 
 ---
 
@@ -13672,9 +13833,32 @@ public readonly testMatch: string[];
 ```
 
 - *Type:* string[]
-- *Default:* Node's own default test file discovery
+- *Default:* combines Node.js' own default test file discovery with Jest conventions
 
 Glob patterns matching the files that contain tests.
+
+By default it
+combines Node.js' own default test file discovery with Jest conventions.
+
+---
+
+##### `transformTypes`<sup>Optional</sup> <a name="transformTypes" id="projen.javascript.NodeNativeTestOptions.property.transformTypes"></a>
+
+```typescript
+public readonly transformTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces).
+
+Uses `amaro` (the TypeScript transformer used internally by Node.js) as an
+external loader via `--import=amaro/transform`. Adds a dependency on the
+`amaro` package and enables `--enable-source-maps` to preserve accurate
+stack traces.
+
+> [https://github.com/nodejs/amaro](https://github.com/nodejs/amaro)
 
 ---
 
@@ -14596,7 +14780,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
-| <code><a href="#projen.javascript.NodeProjectOptions.property.testRunner">testRunner</a></code> | <code><a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a></code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.testRunner">testRunner</a></code> | <code><a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a></code> | The runner used to execute tests. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -16354,7 +16538,7 @@ Additional entries to .gitignore.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.javascript.NodeProjectOptions.property.jest"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -16369,7 +16553,7 @@ Setup jest unit tests.
 
 ##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.javascript.NodeProjectOptions.property.jestOptions"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -16557,9 +16741,9 @@ public readonly testRunner: JavaScriptTestRunner;
 ```
 
 - *Type:* <a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a>
-- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
 
 ---
 
@@ -16614,6 +16798,54 @@ public readonly workflowPackageCache: boolean;
 - *Default:* false
 
 Enable Node.js package cache in GitHub workflows.
+
+---
+
+### NodeReporter <a name="NodeReporter" id="projen.javascript.NodeReporter"></a>
+
+A single reporter/destination pair for the Node.js native test runner.
+
+> [https://nodejs.org/api/test.html#test-reporters](https://nodejs.org/api/test.html#test-reporters)
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeReporter.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeReporter: javascript.NodeReporter = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporter.property.destination">destination</a></code> | <code>string</code> | Where the reporter's output is written. |
+| <code><a href="#projen.javascript.NodeReporter.property.name">name</a></code> | <code>string</code> | The name/kind of the reporter. |
+
+---
+
+##### `destination`<sup>Required</sup> <a name="destination" id="projen.javascript.NodeReporter.property.destination"></a>
+
+```typescript
+public readonly destination: string;
+```
+
+- *Type:* string
+- *Default:* "stdout"
+
+Where the reporter's output is written.
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporter.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name/kind of the reporter.
 
 ---
 
@@ -26392,18 +26624,42 @@ new javascript.WatchPlugin(name: string, options?: any)
 
 ### IJavaScriptTestRunner <a name="IJavaScriptTestRunner" id="projen.javascript.IJavaScriptTestRunner"></a>
 
-- *Implemented By:* <a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a>, <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
+- *Implemented By:* <a href="#projen.javascript.JavaScriptTestRunner">JavaScriptTestRunner</a>, <a href="#projen.javascript.Jest">Jest</a>, <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
 
-A test runner that can execute a `NodeProject`'s unit tests.
+A runner that can execute the tests for a JavaScript project.
 
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.testMatch">testMatch</a></code> | <code>projen.TestMatch</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
 | <code><a href="#projen.javascript.IJavaScriptTestRunner.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
-| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.jest">jest</a></code> | <code><a href="#projen.javascript.Jest">Jest</a></code> | The underlying `Jest` component, if this runner is backed by Jest. |
-| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.nodeNativeTest">nodeNativeTest</a></code> | <code><a href="#projen.javascript.NodeNativeTest">NodeNativeTest</a></code> | The underlying `NodeNativeTest` component, if this runner is backed by Node.js' built-in test runner. |
+
+---
+
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.javascript.IJavaScriptTestRunner.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: TestMatch;
+```
+
+- *Type:* projen.TestMatch
+
+Glob patterns matching the files that contain tests.
+
+---
+
+##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.IJavaScriptTestRunner.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+
+Whether snapshots are updated in task "test", or in a separate "test:update" task.
 
 ---
 
@@ -26416,30 +26672,6 @@ public readonly coverageDirectory: string;
 - *Type:* string
 
 The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
-
----
-
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.javascript.IJavaScriptTestRunner.property.jest"></a>
-
-```typescript
-public readonly jest: Jest;
-```
-
-- *Type:* <a href="#projen.javascript.Jest">Jest</a>
-
-The underlying `Jest` component, if this runner is backed by Jest.
-
----
-
-##### `nodeNativeTest`<sup>Optional</sup> <a name="nodeNativeTest" id="projen.javascript.IJavaScriptTestRunner.property.nodeNativeTest"></a>
-
-```typescript
-public readonly nodeNativeTest: NodeNativeTest;
-```
-
-- *Type:* <a href="#projen.javascript.NodeNativeTest">NodeNativeTest</a>
-
-The underlying `NodeNativeTest` component, if this runner is backed by Node.js' built-in test runner.
 
 ---
 

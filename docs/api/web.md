@@ -876,7 +876,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.web.NextJsProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.web.NextJsProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
-| <code><a href="#projen.web.NextJsProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.NextJsProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.IJavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.NextJsProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.web.NextJsProject.property.assetsdir">assetsdir</a></code> | <code>string</code> | The directory in which app assets reside. |
 | <code><a href="#projen.web.NextJsProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which source files reside. |
@@ -1375,7 +1375,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.NextJsProject.property.jest"></a>
 
-- *Deprecated:* Use `testRunner?.jest` instead.
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -1452,12 +1452,14 @@ Release management.
 ##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.web.NextJsProject.property.testRunner"></a>
 
 ```typescript
-public readonly testRunner: JavaScriptTestRunner;
+public readonly testRunner: IJavaScriptTestRunner;
 ```
 
-- *Type:* projen.javascript.JavaScriptTestRunner
+- *Type:* projen.javascript.IJavaScriptTestRunner
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -2181,7 +2183,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
-| <code><a href="#projen.web.NextJsTypeScriptProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.NextJsTypeScriptProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.IJavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.web.NextJsTypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
@@ -2690,7 +2692,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.NextJsTypeScriptProject.property.jest"></a>
 
-- *Deprecated:* Use `testRunner?.jest` instead.
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -2767,12 +2769,14 @@ Release management.
 ##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.web.NextJsTypeScriptProject.property.testRunner"></a>
 
 ```typescript
-public readonly testRunner: JavaScriptTestRunner;
+public readonly testRunner: IJavaScriptTestRunner;
 ```
 
-- *Type:* projen.javascript.JavaScriptTestRunner
+- *Type:* projen.javascript.IJavaScriptTestRunner
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -3844,7 +3848,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.web.ReactProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.web.ReactProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
-| <code><a href="#projen.web.ReactProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.ReactProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.IJavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.ReactProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.web.ReactProject.property.srcdir">srcdir</a></code> | <code>string</code> | The directory in which source files reside. |
 
@@ -4341,7 +4345,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.ReactProject.property.jest"></a>
 
-- *Deprecated:* Use `testRunner?.jest` instead.
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -4418,12 +4422,14 @@ Release management.
 ##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.web.ReactProject.property.testRunner"></a>
 
 ```typescript
-public readonly testRunner: JavaScriptTestRunner;
+public readonly testRunner: IJavaScriptTestRunner;
 ```
 
-- *Type:* projen.javascript.JavaScriptTestRunner
+- *Type:* projen.javascript.IJavaScriptTestRunner
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -5122,7 +5128,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.web.ReactTypeScriptProject.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
-| <code><a href="#projen.web.ReactTypeScriptProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.ReactTypeScriptProject.property.testRunner">testRunner</a></code> | <code>projen.javascript.IJavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.web.ReactTypeScriptProject.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
@@ -5629,7 +5635,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.ReactTypeScriptProject.property.jest"></a>
 
-- *Deprecated:* Use `testRunner?.jest` instead.
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -5706,12 +5712,14 @@ Release management.
 ##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.web.ReactTypeScriptProject.property.testRunner"></a>
 
 ```typescript
-public readonly testRunner: JavaScriptTestRunner;
+public readonly testRunner: IJavaScriptTestRunner;
 ```
 
-- *Type:* projen.javascript.JavaScriptTestRunner
+- *Type:* projen.javascript.IJavaScriptTestRunner
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -6125,7 +6133,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
-| <code><a href="#projen.web.NextJsProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -7913,7 +7921,7 @@ Additional entries to .gitignore.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.NextJsProjectOptions.property.jest"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -7928,7 +7936,7 @@ Setup jest unit tests.
 
 ##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.web.NextJsProjectOptions.property.jestOptions"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -8116,9 +8124,9 @@ public readonly testRunner: JavaScriptTestRunner;
 ```
 
 - *Type:* projen.javascript.JavaScriptTestRunner
-- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
 
 ---
 
@@ -8348,7 +8356,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
-| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -10154,7 +10162,7 @@ Additional entries to .gitignore.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.NextJsTypeScriptProjectOptions.property.jest"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -10169,7 +10177,7 @@ Setup jest unit tests.
 
 ##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.web.NextJsTypeScriptProjectOptions.property.jestOptions"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -10357,9 +10365,9 @@ public readonly testRunner: JavaScriptTestRunner;
 ```
 
 - *Type:* projen.javascript.JavaScriptTestRunner
-- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
 
 ---
 
@@ -10963,7 +10971,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.web.ReactProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.web.ReactProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
-| <code><a href="#projen.web.ReactProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.ReactProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.web.ReactProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -12724,7 +12732,7 @@ Additional entries to .gitignore.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.ReactProjectOptions.property.jest"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -12739,7 +12747,7 @@ Setup jest unit tests.
 
 ##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.web.ReactProjectOptions.property.jestOptions"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -12927,9 +12935,9 @@ public readonly testRunner: JavaScriptTestRunner;
 ```
 
 - *Type:* projen.javascript.JavaScriptTestRunner
-- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
 
 ---
 
@@ -13253,7 +13261,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
-| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The test runner used to execute unit tests. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -15032,7 +15040,7 @@ Additional entries to .gitignore.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.web.ReactTypeScriptProjectOptions.property.jest"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest()` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -15047,7 +15055,7 @@ Setup jest unit tests.
 
 ##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.web.ReactTypeScriptProjectOptions.property.jestOptions"></a>
 
-- *Deprecated:* Use `testRunner: JavaScriptTestRunner.useJest(jestOptions)` instead.
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -15235,9 +15243,9 @@ public readonly testRunner: JavaScriptTestRunner;
 ```
 
 - *Type:* projen.javascript.JavaScriptTestRunner
-- *Default:* `JavaScriptTestRunner.useJest()`, unless `jest` is set to `false`
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
 
-The test runner used to execute unit tests.
+The runner used to execute tests.
 
 ---
 

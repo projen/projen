@@ -33,6 +33,7 @@ export * from "./task";
 export * from "./tasks";
 export type * from "./task-model";
 export * from "./task-shell";
+export type * from "./test-runner";
 export * from "./testing";
 export * from "./textfile";
 export * from "./toml";
