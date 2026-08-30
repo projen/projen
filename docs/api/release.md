@@ -211,6 +211,9 @@ public publishToGitHubReleases(options: GitHubReleasesPublishOptions): void
 
 Creates a GitHub Release.
 
+Tolerates a release that already exists, so that re-running a release is
+a no-op rather than a failure.
+
 ###### `options`<sup>Required</sup> <a name="options" id="projen.release.Publisher.publishToGitHubReleases.parameter.options"></a>
 
 - *Type:* <a href="#projen.release.GitHubReleasesPublishOptions">GitHubReleasesPublishOptions</a>
