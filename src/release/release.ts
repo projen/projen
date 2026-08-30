@@ -156,6 +156,17 @@ export interface ReleaseProjectOptions {
   readonly releaseBranches?: { [name: string]: BranchOptions };
 
   /**
+   * Whether GitHub should explicitly mark the release from the default branch
+   * as the latest release.
+   *
+   * Set to `true` to mark the release as latest, or `false` to explicitly not
+   * mark it as latest.
+   *
+   * @default - GitHub determines the latest release based on date and semantic version.
+   */
+  readonly githubReleaseLatest?: boolean;
+
+  /**
    * Create a github issue on every failed publishing task.
    *
    * @default false
@@ -493,6 +504,7 @@ export class Release extends Component {
     // add the default branch (we need the internal method which does not require majorVersion)
     this.defaultBranch = this._addBranch(options.branch, {
       prerelease: options.prerelease,
+      githubReleaseLatest: options.githubReleaseLatest,
       majorVersion: options.majorVersion,
       minMajorVersion: options.minMajorVersion,
       workflowName:
@@ -870,6 +882,17 @@ export interface BranchOptions {
    * @default - normal releases
    */
   readonly prerelease?: string;
+
+  /**
+   * Whether GitHub should explicitly mark the release from this branch as the
+   * latest release.
+   *
+   * Set to `true` to mark the release as latest, or `false` to explicitly not
+   * mark it as latest.
+   *
+   * @default - GitHub determines the latest release based on date and semantic version.
+   */
+  readonly githubReleaseLatest?: boolean;
 
   /**
    * Automatically add the given prefix to release tags.

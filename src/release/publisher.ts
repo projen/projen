@@ -19,32 +19,10 @@ import { defaultNpmToken } from "../javascript/node-package";
 import type { Project } from "../project";
 import type { GroupRunnerOptions } from "../runner-options";
 import { filteredRunsOnOptions } from "../runner-options";
-import { TaskShell } from "../task-shell";
 import { escapeCommand } from "../util/dax";
 import { CHANGES_SINCE_LAST_RELEASE } from "../version";
 
 const PUBLIB_VERSION = "latest";
-
-/**
- * Creates a GitHub release, tolerating a release that already exists so that
- * re-running a release is a no-op rather than a failure.
- *
- * A fixed script: the release tag file, the changelog file and the prerelease
- * flag arrive through the environment (`RELEASE_TAG_FILE`, `CHANGELOG_FILE`,
- * `PRERELEASE`), so no value is ever interpolated into shell text.
- *
- * @TODO This is quite complex and should be solved differently in future
- */
-const GITHUB_RELEASE_SCRIPT = [
-  "errout=$(mktemp)",
-  'tag=$(cat "$RELEASE_TAG_FILE")',
-  'gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" --target "$GITHUB_SHA" ${PRERELEASE:+-p} 2> "$errout" && true',
-  "exitcode=$?",
-  'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" "$errout"; then',
-  '  cat "$errout"',
-  "  exit $exitcode",
-  "fi",
-].join("\n");
 
 /**
  * Fails unless the checked out branch is the one a publish task releases.
@@ -340,6 +318,10 @@ export class Publisher extends Component {
 
   /**
    * Creates a GitHub Release.
+   *
+   * Tolerates a release that already exists, so that re-running a release is
+   * a no-op rather than a failure.
+   *
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
@@ -831,7 +813,7 @@ export class Publisher extends Component {
         if ("argv" in commandToRun) {
           task.execArgs(commandToRun.argv);
         } else {
-          task.exec(commandToRun.script, { shell: commandToRun.shell });
+          task.exec(commandToRun.script);
         }
       }
 
@@ -924,19 +906,50 @@ export class Publisher extends Component {
     return { argv: ["npx", "-p", `publib@${this.publibVersion}`, command] };
   }
 
+  /**
+   * Creates a GitHub release, tolerating a release that already exists so
+   * that re-running a release is a no-op rather than a failure: if
+   * `gh release view` finds a release for the tag, creation is skipped and
+   * the existing release is left untouched.
+   *
+   * A fixed script: variable values arrive through the environment
+   * (`RELEASE_TAG_FILE`, `CHANGELOG_FILE`), never interpolated into shell
+   * text. Uses only syntax the built-in cross-platform shell implements.
+   */
   private githubReleaseCommand(
     options: GitHubReleasesPublishOptions,
     branchOptions: Partial<BranchOptions>,
   ): PublishRun {
+    const latest = branchOptions.githubReleaseLatest ?? options.latest;
+
+    // map each value to a fixed literal flag; never interpolate the value
+    // into the shell text
+    const latestFlag: string[] = [];
+    if (latest === true) {
+      latestFlag.push("--latest=true");
+    } else if (latest === false) {
+      latestFlag.push("--latest=false");
+    }
+
+    const createArgs = [
+      '"$tag"',
+      '-R "$GITHUB_REPOSITORY"',
+      '-F "$CHANGELOG_FILE"',
+      '-t "$tag"',
+      '--target "$GITHUB_SHA"',
+      ...(branchOptions.prerelease ? ["--prerelease"] : []),
+      ...latestFlag,
+    ];
+
     return {
-      script: GITHUB_RELEASE_SCRIPT,
-      // the script uses `if`, `!` and `$?`, which the built-in shell does not
-      // implement
-      shell: TaskShell.sh(),
+      script: [
+        'tag=$(cat "$RELEASE_TAG_FILE") &&',
+        'gh release view "$tag" -R "$GITHUB_REPOSITORY" 2>/dev/null ||',
+        `gh release create ${createArgs.join(" ")}`,
+      ].join("\n"),
       env: {
         RELEASE_TAG_FILE: options.releaseTagFile,
         CHANGELOG_FILE: options.changelogFile,
-        ...(branchOptions.prerelease ? { PRERELEASE: "true" } : {}),
       },
     };
   }
@@ -952,15 +965,13 @@ function secret(secretName: string) {
  *
  * A script is a fixed string - everything variable about it is passed in `env`,
  * which is never shell-parsed - so no value is ever interpolated into shell
- * text. It also declares the `shell` it is written for, since the built-in shell
- * only implements a subset of POSIX syntax.
+ * text.
  */
 type PublishRun =
   | { readonly argv: string[] }
   | {
       readonly script: string;
       readonly env?: Record<string, string>;
-      readonly shell?: TaskShell;
     };
 
 /**
@@ -1501,7 +1512,17 @@ function awsCodeArtifactInfoFromUrl(url?: string): AwsCodeArtifactInfo {
  * Publishing options for GitHub releases.
  */
 export interface GitHubReleasesPublishOptions
-  extends VersionArtifactOptions, CommonPublishOptions {}
+  extends VersionArtifactOptions, CommonPublishOptions {
+  /**
+   * Whether GitHub should explicitly mark the release as the latest release.
+   *
+   * Set to `true` to mark the release as latest, or `false` to explicitly not
+   * mark it as latest. A branch-specific setting takes precedence.
+   *
+   * @default - GitHub determines the latest release based on date and semantic version.
+   */
+  readonly latest?: boolean;
+}
 
 /**
  * Publishing options for Git releases

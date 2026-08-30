@@ -638,8 +638,159 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
-    expect(outdir[".github/workflows/release.10.x.yml"]).toMatchSnapshot();
+    expect(outdir[".github/workflows/release-10.x.yml"]).toMatchSnapshot();
     expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
+  });
+
+  test("github release tolerates an existing release and marks prereleases", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 0,
+      artifactsDirectory: "dist",
+    });
+    release.addBranch("10.x", { majorVersion: 10, prerelease: "pre" });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const mainRun = githubReleaseStepRun(
+      outdir[".github/workflows/release.yml"],
+    );
+    expect(mainRun).toContain("gh release view");
+    expect(mainRun).toContain("gh release create");
+    expect(mainRun).not.toContain("--prerelease");
+    expect(mainRun).not.toContain("--latest");
+
+    const branchRun = githubReleaseStepRun(
+      outdir[".github/workflows/release-10.x.yml"],
+    );
+    expect(branchRun).toContain("--prerelease");
+  });
+
+  test.each<[string, boolean | undefined, string | undefined]>([
+    ["default", undefined, undefined],
+    ["latest", true, "--latest=true"],
+    ["not latest", false, "--latest=false"],
+  ])(
+    "githubReleaseLatest: %s for the default and additional release branches",
+    (_name, latest, expectedFlag) => {
+      // GIVEN
+      const project = new TestProject();
+
+      // WHEN
+      new Release(project, {
+        tasks: [project.buildTask],
+        versionFile: "goo.json",
+        branch: "main",
+        majorVersion: 1,
+        githubReleaseLatest: latest,
+        releaseBranches: {
+          "2.x": { majorVersion: 2, githubReleaseLatest: latest },
+        },
+        publishTasks: true,
+        artifactsDirectory: "dist",
+      });
+
+      // THEN
+      const outdir = synthSnapshot(project);
+      const releaseSteps = [
+        YAML.parse(outdir[".github/workflows/release.yml"]),
+        YAML.parse(outdir[".github/workflows/release-2.x.yml"]),
+      ].map((workflow) =>
+        workflow.jobs.release_github.steps.find(
+          (step: JobStep) => step.name === "Release",
+        ),
+      );
+
+      for (const step of releaseSteps) {
+        if (expectedFlag) {
+          expect(step.run).toContain(expectedFlag);
+        } else {
+          expect(step.run).not.toContain("--latest");
+        }
+      }
+      const tasks = outdir[".projen/tasks.json"].tasks;
+      for (const task of [
+        tasks["publish:github"],
+        tasks["publish:github:2.x"],
+      ]) {
+        const releaseCommand = task.steps.find((step: any) =>
+          step.exec?.includes("gh release create"),
+        );
+        if (expectedFlag) {
+          expect(releaseCommand.exec).toContain(expectedFlag);
+        } else {
+          expect(releaseCommand.exec).not.toContain("--latest");
+        }
+      }
+      expect(releaseSteps).toMatchSnapshot();
+    },
+  );
+
+  test.each<[boolean | undefined, string | undefined]>([
+    [undefined, undefined],
+    [true, "--latest=true"],
+    [false, "--latest=false"],
+  ])("Publisher latest: %s", (latest, expectedFlag) => {
+    // GIVEN
+    const project = new TestProject();
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "goo.json",
+      branch: "main",
+      githubRelease: false,
+      artifactsDirectory: "dist",
+    });
+
+    // WHEN
+    release.publisher.publishToGitHubReleases({
+      latest,
+      changelogFile: "dist/changelog.md",
+      releaseTagFile: "dist/releasetag.txt",
+      versionFile: "dist/version.txt",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    const releaseStep = workflow.jobs.release_github.steps.find(
+      (step: JobStep) => step.name === "Release",
+    );
+    if (expectedFlag) {
+      expect(releaseStep.run).toContain(expectedFlag);
+    } else {
+      expect(releaseStep.run).not.toContain("--latest");
+    }
+  });
+
+  test("githubReleaseLatest can differ between branches of the same project", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 2,
+      githubReleaseLatest: true,
+      artifactsDirectory: "dist",
+    });
+    release.addBranch("1.x", { majorVersion: 1, githubReleaseLatest: false });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(
+      githubReleaseStepRun(outdir[".github/workflows/release.yml"]),
+    ).toContain("--latest=true");
+    expect(
+      githubReleaseStepRun(outdir[".github/workflows/release-1.x.yml"]),
+    ).toContain("--latest=false");
   });
 
   test("releaseBranches can be use to define additional branches", () => {
@@ -1607,3 +1758,15 @@ describe("nuget", () => {
     });
   });
 });
+
+/**
+ * Returns the `run` command of the "Release" step in the `release_github` job
+ * of the given release workflow YAML.
+ */
+function githubReleaseStepRun(workflowYaml: string): string {
+  const workflow = YAML.parse(workflowYaml);
+  const step = workflow.jobs.release_github.steps.find(
+    (s: any) => s.name === "Release",
+  );
+  return step.run;
+}

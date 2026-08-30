@@ -9184,6 +9184,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -10372,6 +10373,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 
@@ -14181,6 +14198,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.stability">stability</a></code> | <code>string</code> | Package's Stability. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.yarnBerryOptions">yarnBerryOptions</a></code> | <code>projen.javascript.YarnBerryOptions</code> | Options for Yarn Berry. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.bumpPackage">bumpPackage</a></code> | <code>string</code> | The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.githubReleaseLatest">githubReleaseLatest</a></code> | <code>boolean</code> | Whether GitHub should explicitly mark the release from the default branch as the latest release. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.jsiiReleaseVersion">jsiiReleaseVersion</a></code> | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.majorVersion">majorVersion</a></code> | <code>number</code> | Major version to release from the default branch. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.minMajorVersion">minMajorVersion</a></code> | <code>number</code> | Minimal Major version to release. |
@@ -15362,6 +15380,22 @@ public readonly bumpPackage: string;
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
 This can be any compatible package version, including the deprecated `standard-version@9`.
+
+---
+
+##### `githubReleaseLatest`<sup>Optional</sup> <a name="githubReleaseLatest" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.githubReleaseLatest"></a>
+
+```typescript
+public readonly githubReleaseLatest: boolean;
+```
+
+- *Type:* boolean
+- *Default:* GitHub determines the latest release based on date and semantic version.
+
+Whether GitHub should explicitly mark the release from the default branch as the latest release.
+
+Set to `true` to mark the release as latest, or `false` to explicitly not
+mark it as latest.
 
 ---
 
