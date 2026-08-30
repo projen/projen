@@ -170,6 +170,49 @@ test("single bugs field present", () => {
   expect(snps["package.json"].bugs.email).toStrictEqual(_email);
 });
 
+test("package.json config preserves JSON-compatible values", () => {
+  const project = new TestProject();
+  const config = {
+    port: 3000,
+    feature: {
+      enabled: true,
+    },
+    message: "hello world",
+    values: ["one", 2, false],
+    optional: null,
+  };
+
+  new NodePackage(project, { config });
+
+  expect(synthSnapshot(project)["package.json"].config).toStrictEqual(config);
+});
+
+test("package.json config is omitted by default and preserves an empty object", () => {
+  const defaultProject = new TestProject();
+  new NodePackage(defaultProject, {});
+  const defaultManifest = synthSnapshot(defaultProject)["package.json"];
+  expect(defaultManifest).not.toHaveProperty("config");
+
+  const emptyConfigProject = new TestProject();
+  new NodePackage(emptyConfigProject, { config: {} });
+  const { config, ...unchangedManifest } =
+    synthSnapshot(emptyConfigProject)["package.json"];
+  expect(config).toStrictEqual({});
+  expect(unchangedManifest).toStrictEqual(defaultManifest);
+});
+
+test("NodeProject inherits the package.json config option", () => {
+  const project = new NodeProject({
+    name: "test",
+    clobber: false,
+    config: { port: 3000 },
+  });
+
+  expect(synthSnapshot(project)["package.json"].config).toStrictEqual({
+    port: 3000,
+  });
+});
+
 test('lockfile updated (install twice) after "*"s are resolved', () => {
   const taskMock = jest
     .spyOn(Tasks.prototype, "runTask")

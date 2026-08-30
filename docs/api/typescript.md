@@ -4298,6 +4298,7 @@ const typeScriptProjectOptions: typescript.TypeScriptProjectOptions = { ... }
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.bundledDeps">bundledDeps</a></code> | <code>string[]</code> | List of dependencies to bundle into this module. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.bunVersion">bunVersion</a></code> | <code>string</code> | The version of Bun to use if using Bun as a package manager. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.codeArtifactOptions">codeArtifactOptions</a></code> | <code>projen.javascript.CodeArtifactOptions</code> | Options for npm packages using AWS CodeArtifact. |
+| <code><a href="#projen.typescript.TypeScriptProjectOptions.property.config">config</a></code> | <code>{[ key: string ]: any}</code> | Configuration values available to package scripts at runtime. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.dedupeDeps">dedupeDeps</a></code> | <code>boolean</code> | Add a `dedupe` task that deduplicates project dependencies. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.deleteOrphanedLockFiles">deleteOrphanedLockFiles</a></code> | <code>boolean</code> | Automatically delete lockfiles from package managers that are not the active one. |
 | <code><a href="#projen.typescript.TypeScriptProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | Runtime dependencies of this module. |
@@ -4997,6 +4998,23 @@ public readonly codeArtifactOptions: CodeArtifactOptions;
 Options for npm packages using AWS CodeArtifact.
 
 This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
+
+---
+
+##### `config`<sup>Optional</sup> <a name="config" id="projen.typescript.TypeScriptProjectOptions.property.config"></a>
+
+```typescript
+public readonly config: {[ key: string ]: any};
+```
+
+- *Type:* {[ key: string ]: any}
+- *Default:* no package configuration
+
+Configuration values available to package scripts at runtime.
+
+Values should be JSON-serializable.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#config](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#config)
 
 ---
 

@@ -2959,6 +2959,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": "- for CDK 1.x the default is "3.2.27", for CDK 2.x the default is
 "10.5.1".",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
@@ -6092,6 +6114,28 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -10567,6 +10611,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": ""10.1.42"",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
@@ -13543,6 +13609,28 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -16620,6 +16708,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": ""^10.7.2"",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
@@ -19627,6 +19737,28 @@ exports[`inventory 1`] = `
         "switch": "compress-assembly",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -23451,6 +23583,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": "- defaults to the value of authorName or "" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -26391,6 +26545,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": "- defaults to the value of authorName or "" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -28844,6 +29020,28 @@ exports[`inventory 1`] = `
         "switch": "commit-generated",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -31600,6 +31798,28 @@ exports[`inventory 1`] = `
         "switch": "commit-generated",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -35257,6 +35477,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": "- defaults to the value of authorName or "" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -37698,6 +37940,28 @@ exports[`inventory 1`] = `
         "switch": "commit-generated",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -40462,6 +40726,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "default": "- defaults to the value of authorName or "" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -43198,6 +43484,28 @@ exports[`inventory 1`] = `
         "switch": "commit-generated",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- no package configuration",
+        "docs": "Configuration values available to package scripts at runtime.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "config",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "config",
+        ],
+        "simpleType": "unknown",
+        "switch": "config",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
         },
       },
       {
