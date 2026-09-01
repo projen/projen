@@ -18,8 +18,8 @@ export class GitHubActions {
   public static readonly ACTIONS_SETUP_DOTNET = "actions/setup-dotnet@v6.0.0";
   /** actions/setup-go at v7.0.0 (immutable) */
   public static readonly ACTIONS_SETUP_GO = "actions/setup-go@v7.0.0";
-  /** actions/setup-java at v5.7.0 (immutable) */
-  public static readonly ACTIONS_SETUP_JAVA = "actions/setup-java@v5.7.0";
+  /** actions/setup-java at v6.0.0 (immutable) */
+  public static readonly ACTIONS_SETUP_JAVA = "actions/setup-java@v6.0.0";
   /** actions/setup-node at v7.0.0 (immutable) */
   public static readonly ACTIONS_SETUP_NODE = "actions/setup-node@v7.0.0";
   /** actions/setup-python at v7.0.0 (immutable) */
