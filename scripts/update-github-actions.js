@@ -133,9 +133,7 @@ async function openTrackingIssue(action, newMajor, openIssues) {
       body: [
         `A new major version line of \`${action}\` is available: **v${newMajor}**.`,
         "",
-        "Major upgrades are never applied automatically. To adopt it, review the",
-        `[release notes](https://github.com/${action}/releases) and update the`,
-        '"major" field of this action in `resources/github-actions.jsonc`.',
+        `Major upgrades are never applied automatically. To adopt it, review the [release notes](https://github.com/${action}/releases) and update the "major" field of this action in \`resources/github-actions.jsonc\`.`,
         "",
         "---",
         '*Automatically created by the "update-github-actions" task.*',
