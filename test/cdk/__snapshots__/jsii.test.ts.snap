@@ -1901,7 +1901,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v5.7.0",
+      "uses": "actions/setup-java@v6.0.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
@@ -2396,7 +2396,7 @@ exports[`language bindings snapshot java 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v5.7.0",
+      "uses": "actions/setup-java@v6.0.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
