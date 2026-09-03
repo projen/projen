@@ -292,6 +292,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly virtualStoreDirMaxLength?: number;
 
   /**
+   * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#virtualStoreType
+   */
+  readonly virtualStoreType?: PnpmWorkspaceYamlSchemaVirtualStoreType;
+
+  /**
    * Controls the way packages are imported from the store (if you want to disable symlinks inside node_modules, then you need to change the nodeLinker setting, not this one).
    *
    * @schema PnpmWorkspaceYamlSchema#packageImportMethod
@@ -325,6 +332,20 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#verifyStoreIntegrity
    */
   readonly verifyStoreIntegrity?: boolean;
+
+  /**
+   * Deprecated. Only allows installation with a store server. If no store server is running, installation will fail.
+   *
+   * @schema PnpmWorkspaceYamlSchema#useRunningStoreServer
+   */
+  readonly useRunningStoreServer?: boolean;
+
+  /**
+   * Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer). When enabled, pnpm opens the store's SQLite database in immutable mode and never writes to the store. Works best together with --offline and --frozen-lockfile; incompatible with --force. Added in pnpm v11.7.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#frozenStore
+   */
+  readonly frozenStore?: boolean;
 
   /**
    * Some registries allow the exact same content to be published under different package names and/or versions.
@@ -825,6 +846,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly globalBinDir?: string;
 
   /**
+   * Controls which globally installed packages get project-aware shims, which are global commands that run the version specified by the current project instead of the globally installed one. A boolean disables (false) or resets to the defaults (true), while an object maps package names to a policy: "auto" (or true) to switch automatically when publisher-authenticated, "prompt" to confirm on each use, "always" to switch unconditionally, or false to disable. Object entries merge with the built-in defaults ({"node": "auto", "deno": "auto", "bun": "auto"}). Added in pnpm v12.0.0-rc.2.
+   *
+   * @schema PnpmWorkspaceYamlSchema#globalShims
+   */
+  readonly globalShims?: any;
+
+  /**
    * The location where all the packages are saved on the disk.
    *
    * @schema PnpmWorkspaceYamlSchema#stateDir
@@ -851,6 +879,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#updateNotifier
    */
   readonly updateNotifier?: boolean;
+
+  /**
+   * Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection. Added in pnpm v10.12.1.
+   *
+   * @schema PnpmWorkspaceYamlSchema#ci
+   */
+  readonly ci?: boolean;
 
   /**
    * Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work.
@@ -1212,11 +1247,14 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'enableModulesDir': obj.enableModulesDir,
     'virtualStoreDir': obj.virtualStoreDir,
     'virtualStoreDirMaxLength': obj.virtualStoreDirMaxLength,
+    'virtualStoreType': obj.virtualStoreType,
     'packageImportMethod': obj.packageImportMethod,
     'modulesCacheMaxAge': obj.modulesCacheMaxAge,
     'dlxCacheMaxAge': obj.dlxCacheMaxAge,
     'storeDir': obj.storeDir,
     'verifyStoreIntegrity': obj.verifyStoreIntegrity,
+    'useRunningStoreServer': obj.useRunningStoreServer,
+    'frozenStore': obj.frozenStore,
     'strictStorePkgContentCheck': obj.strictStorePkgContentCheck,
     'enableGlobalVirtualStore': obj.enableGlobalVirtualStore,
     'lockfile': obj.lockfile,
@@ -1288,10 +1326,12 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'tag': obj.tag,
     'globalDir': obj.globalDir,
     'globalBinDir': obj.globalBinDir,
+    'globalShims': obj.globalShims,
     'stateDir': obj.stateDir,
     'cacheDir': obj.cacheDir,
     'useStderr': obj.useStderr,
     'updateNotifier': obj.updateNotifier,
+    'ci': obj.ci,
     'preferSymlinkedExecutables': obj.preferSymlinkedExecutables,
     'ignoreCompatibilityDb': obj.ignoreCompatibilityDb,
     'resolutionMode': obj.resolutionMode,
@@ -1494,6 +1534,13 @@ export interface PnpmWorkspaceYamlSchemaAudit {
    * @schema PnpmWorkspaceYamlSchemaAudit#ignore
    */
   readonly ignore?: string[];
+
+  /**
+   * When `true`, `pnpm audit --fix` removes the `audit.ignore` entries whose GHSA no longer appears in the audit report, so a list of tolerated advisories doesn't accumulate entries for dependencies that are long gone. Added in: v11.25.0 and v12.0.0.
+   *
+   * @schema PnpmWorkspaceYamlSchemaAudit#ignorePrune
+   */
+  readonly ignorePrune?: boolean;
 }
 
 /**
@@ -1506,6 +1553,7 @@ export function toJson_PnpmWorkspaceYamlSchemaAudit(obj: PnpmWorkspaceYamlSchema
   const result = {
     'level': obj.level,
     'ignore': obj.ignore?.map(y => y),
+    'ignorePrune': obj.ignorePrune,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1637,6 +1685,18 @@ export enum PnpmWorkspaceYamlSchemaNodePackageMapType {
   STANDARD = "standard",
   /** loose */
   LOOSE = "loose",
+}
+
+/**
+ * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVirtualStoreType
+ */
+export enum PnpmWorkspaceYamlSchemaVirtualStoreType {
+  /** project */
+  PROJECT = "project",
+  /** global */
+  GLOBAL = "global",
 }
 
 /**
@@ -1899,8 +1959,8 @@ export enum PnpmWorkspaceYamlSchemaRuntimeOnFail {
  * @schema PnpmWorkspaceYamlSchemaHoistingLimits
  */
 export enum PnpmWorkspaceYamlSchemaHoistingLimits {
-  /** node */
-  NODE = "node",
+  /** none */
+  NONE = "none",
   /** workspaces */
   WORKSPACES = "workspaces",
   /** dependencies */
