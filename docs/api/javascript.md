@@ -15586,6 +15586,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ci">ci</a></code> | <code>boolean</code> | Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cleanupUnusedCatalogs">cleanupUnusedCatalogs</a></code> | <code>boolean</code> | When set to `true`, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.color">color</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaColor">PnpmWorkspaceYamlSchemaColor</a></code> | Controls colors in the output. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.configDependencies">configDependencies</a></code> | <code>any</code> | Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects. |
@@ -15613,12 +15614,14 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.frozenStore">frozenStore</a></code> | <code>boolean</code> | Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitShallowHosts">gitShallowHosts</a></code> | <code>string[]</code> | When fetching dependencies that are Git repositories, if the host is listed in this setting, pnpm will use shallow cloning to fetch only the needed commit, not all the history. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.globalBinDir">globalBinDir</a></code> | <code>string</code> | Allows to set the target directory for the bin files of globally installed packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.globalDir">globalDir</a></code> | <code>string</code> | Specify a custom directory to store global packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.globalPnpmfile">globalPnpmfile</a></code> | <code>string</code> | The location of a global pnpmfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.globalShims">globalShims</a></code> | <code>any</code> | Controls which globally installed packages get project-aware shims, which are global commands that run the version specified by the current project instead of the globally installed one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoist">hoist</a></code> | <code>boolean</code> | When true, all dependencies are hoisted to node_modules/.pnpm/node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoistingLimits">hoistingLimits</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits">PnpmWorkspaceYamlSchemaHoistingLimits</a></code> | Added a new hoistingLimits setting for `nodeLinker: hoisted` installs, mirroring yarn's `nmHoistingLimits`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.hoistPattern">hoistPattern</a></code> | <code>string[]</code> | Tells pnpm which packages should be hoisted to node_modules/.pnpm/node_modules. |
@@ -15726,6 +15729,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.updateNotifier">updateNotifier</a></code> | <code>boolean</code> | When true, pnpm will check for updates to the installed packages and notify the user. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useBetaCli">useBetaCli</a></code> | <code>boolean</code> | Experimental option that enables beta features of the CLI. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useNodeVersion">useNodeVersion</a></code> | <code>string</code> | Specifies which exact Node.js version should be used for the project's runtime. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useRunningStoreServer">useRunningStoreServer</a></code> | <code>boolean</code> | Deprecated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
@@ -15733,6 +15737,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
 
 ---
@@ -15956,6 +15961,20 @@ public readonly childConcurrency: number;
 - *Type:* number
 
 The maximum number of child processes to allocate simultaneously to build node_modules.
+
+---
+
+##### `ci`<sup>Optional</sup> <a name="ci" id="projen.javascript.PnpmWorkspaceYamlOptions.property.ci"></a>
+
+```typescript
+public readonly ci: boolean;
+```
+
+- *Type:* boolean
+
+Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection.
+
+Added in pnpm v10.12.1.
 
 ---
 
@@ -16291,6 +16310,20 @@ If this setting is set to true, the legacy deploy behavior will be used.
 
 ---
 
+##### `frozenStore`<sup>Optional</sup> <a name="frozenStore" id="projen.javascript.PnpmWorkspaceYamlOptions.property.frozenStore"></a>
+
+```typescript
+public readonly frozenStore: boolean;
+```
+
+- *Type:* boolean
+
+Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer).
+
+When enabled, pnpm opens the store's SQLite database in immutable mode and never writes to the store. Works best together with --offline and --frozen-lockfile; incompatible with --force. Added in pnpm v11.7.0.
+
+---
+
 ##### `gitBranchLockfile`<sup>Optional</sup> <a name="gitBranchLockfile" id="projen.javascript.PnpmWorkspaceYamlOptions.property.gitBranchLockfile"></a>
 
 ```typescript
@@ -16362,6 +16395,20 @@ public readonly globalPnpmfile: string;
 The location of a global pnpmfile.
 
 A global pnpmfile is used by all projects during installation.
+
+---
+
+##### `globalShims`<sup>Optional</sup> <a name="globalShims" id="projen.javascript.PnpmWorkspaceYamlOptions.property.globalShims"></a>
+
+```typescript
+public readonly globalShims: any;
+```
+
+- *Type:* any
+
+Controls which globally installed packages get project-aware shims, which are global commands that run the version specified by the current project instead of the globally installed one.
+
+A boolean disables (false) or resets to the defaults (true), while an object maps package names to a policy: "auto" (or true) to switch automatically when publisher-authenticated, "prompt" to confirm on each use, "always" to switch unconditionally, or false to disable. Object entries merge with the built-in defaults ({"node": "auto", "deno": "auto", "bun": "auto"}). Added in pnpm v12.0.0-rc.2.
 
 ---
 
@@ -17688,6 +17735,20 @@ Specifies which exact Node.js version should be used for the project's runtime.
 
 ---
 
+##### `useRunningStoreServer`<sup>Optional</sup> <a name="useRunningStoreServer" id="projen.javascript.PnpmWorkspaceYamlOptions.property.useRunningStoreServer"></a>
+
+```typescript
+public readonly useRunningStoreServer: boolean;
+```
+
+- *Type:* boolean
+
+Deprecated.
+
+Only allows installation with a store server. If no store server is running, installation will fail.
+
+---
+
 ##### `useStderr`<sup>Optional</sup> <a name="useStderr" id="projen.javascript.PnpmWorkspaceYamlOptions.property.useStderr"></a>
 
 ```typescript
@@ -17774,6 +17835,20 @@ This is useful for pre-populating a store (e.g., in Nix builds) without creating
 
 ---
 
+##### `virtualStoreType`<sup>Optional</sup> <a name="virtualStoreType" id="projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreType"></a>
+
+```typescript
+public readonly virtualStoreType: PnpmWorkspaceYamlSchemaVirtualStoreType;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a>
+
+Determines where the virtual store is located.
+
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+
+---
+
 ##### `workspaceConcurrency`<sup>Optional</sup> <a name="workspaceConcurrency" id="projen.javascript.PnpmWorkspaceYamlOptions.property.workspaceConcurrency"></a>
 
 ```typescript
@@ -17822,6 +17897,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ci">ci</a></code> | <code>boolean</code> | Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cleanupUnusedCatalogs">cleanupUnusedCatalogs</a></code> | <code>boolean</code> | When set to `true`, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.color">color</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaColor">PnpmWorkspaceYamlSchemaColor</a></code> | Controls colors in the output. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.configDependencies">configDependencies</a></code> | <code>any</code> | Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects. |
@@ -17849,12 +17925,14 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.frozenStore">frozenStore</a></code> | <code>boolean</code> | Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitShallowHosts">gitShallowHosts</a></code> | <code>string[]</code> | When fetching dependencies that are Git repositories, if the host is listed in this setting, pnpm will use shallow cloning to fetch only the needed commit, not all the history. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.globalBinDir">globalBinDir</a></code> | <code>string</code> | Allows to set the target directory for the bin files of globally installed packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.globalDir">globalDir</a></code> | <code>string</code> | Specify a custom directory to store global packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.globalPnpmfile">globalPnpmfile</a></code> | <code>string</code> | The location of a global pnpmfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.globalShims">globalShims</a></code> | <code>any</code> | Controls which globally installed packages get project-aware shims, which are global commands that run the version specified by the current project instead of the globally installed one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoist">hoist</a></code> | <code>boolean</code> | When true, all dependencies are hoisted to node_modules/.pnpm/node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoistingLimits">hoistingLimits</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits">PnpmWorkspaceYamlSchemaHoistingLimits</a></code> | Added a new hoistingLimits setting for `nodeLinker: hoisted` installs, mirroring yarn's `nmHoistingLimits`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.hoistPattern">hoistPattern</a></code> | <code>string[]</code> | Tells pnpm which packages should be hoisted to node_modules/.pnpm/node_modules. |
@@ -17962,6 +18040,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.updateNotifier">updateNotifier</a></code> | <code>boolean</code> | When true, pnpm will check for updates to the installed packages and notify the user. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useBetaCli">useBetaCli</a></code> | <code>boolean</code> | Experimental option that enables beta features of the CLI. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useNodeVersion">useNodeVersion</a></code> | <code>string</code> | Specifies which exact Node.js version should be used for the project's runtime. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useRunningStoreServer">useRunningStoreServer</a></code> | <code>boolean</code> | Deprecated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
@@ -17969,6 +18048,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
 
 ---
@@ -18192,6 +18272,20 @@ public readonly childConcurrency: number;
 - *Type:* number
 
 The maximum number of child processes to allocate simultaneously to build node_modules.
+
+---
+
+##### `ci`<sup>Optional</sup> <a name="ci" id="projen.javascript.PnpmWorkspaceYamlSchema.property.ci"></a>
+
+```typescript
+public readonly ci: boolean;
+```
+
+- *Type:* boolean
+
+Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection.
+
+Added in pnpm v10.12.1.
 
 ---
 
@@ -18527,6 +18621,20 @@ If this setting is set to true, the legacy deploy behavior will be used.
 
 ---
 
+##### `frozenStore`<sup>Optional</sup> <a name="frozenStore" id="projen.javascript.PnpmWorkspaceYamlSchema.property.frozenStore"></a>
+
+```typescript
+public readonly frozenStore: boolean;
+```
+
+- *Type:* boolean
+
+Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer).
+
+When enabled, pnpm opens the store's SQLite database in immutable mode and never writes to the store. Works best together with --offline and --frozen-lockfile; incompatible with --force. Added in pnpm v11.7.0.
+
+---
+
 ##### `gitBranchLockfile`<sup>Optional</sup> <a name="gitBranchLockfile" id="projen.javascript.PnpmWorkspaceYamlSchema.property.gitBranchLockfile"></a>
 
 ```typescript
@@ -18598,6 +18706,20 @@ public readonly globalPnpmfile: string;
 The location of a global pnpmfile.
 
 A global pnpmfile is used by all projects during installation.
+
+---
+
+##### `globalShims`<sup>Optional</sup> <a name="globalShims" id="projen.javascript.PnpmWorkspaceYamlSchema.property.globalShims"></a>
+
+```typescript
+public readonly globalShims: any;
+```
+
+- *Type:* any
+
+Controls which globally installed packages get project-aware shims, which are global commands that run the version specified by the current project instead of the globally installed one.
+
+A boolean disables (false) or resets to the defaults (true), while an object maps package names to a policy: "auto" (or true) to switch automatically when publisher-authenticated, "prompt" to confirm on each use, "always" to switch unconditionally, or false to disable. Object entries merge with the built-in defaults ({"node": "auto", "deno": "auto", "bun": "auto"}). Added in pnpm v12.0.0-rc.2.
 
 ---
 
@@ -19924,6 +20046,20 @@ Specifies which exact Node.js version should be used for the project's runtime.
 
 ---
 
+##### `useRunningStoreServer`<sup>Optional</sup> <a name="useRunningStoreServer" id="projen.javascript.PnpmWorkspaceYamlSchema.property.useRunningStoreServer"></a>
+
+```typescript
+public readonly useRunningStoreServer: boolean;
+```
+
+- *Type:* boolean
+
+Deprecated.
+
+Only allows installation with a store server. If no store server is running, installation will fail.
+
+---
+
 ##### `useStderr`<sup>Optional</sup> <a name="useStderr" id="projen.javascript.PnpmWorkspaceYamlSchema.property.useStderr"></a>
 
 ```typescript
@@ -20010,6 +20146,20 @@ This is useful for pre-populating a store (e.g., in Nix builds) without creating
 
 ---
 
+##### `virtualStoreType`<sup>Optional</sup> <a name="virtualStoreType" id="projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreType"></a>
+
+```typescript
+public readonly virtualStoreType: PnpmWorkspaceYamlSchemaVirtualStoreType;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a>
+
+Determines where the virtual store is located.
+
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+
+---
+
 ##### `workspaceConcurrency`<sup>Optional</sup> <a name="workspaceConcurrency" id="projen.javascript.PnpmWorkspaceYamlSchema.property.workspaceConcurrency"></a>
 
 ```typescript
@@ -20039,6 +20189,7 @@ const pnpmWorkspaceYamlSchemaAudit: javascript.PnpmWorkspaceYamlSchemaAudit = { 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.ignore">ignore</a></code> | <code>string[]</code> | A list of GHSA codes that will be ignored by pnpm audit. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.ignorePrune">ignorePrune</a></code> | <code>boolean</code> | When `true`, `pnpm audit --fix` removes the `audit.ignore` entries whose GHSA no longer appears in the audit report, so a list of tolerated advisories doesn't accumulate entries for dependencies that are long gone. Added in: v11.25.0 and v12.0.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.level">level</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Only print advisories with severity greater than or equal to this level. |
 
 ---
@@ -20052,6 +20203,18 @@ public readonly ignore: string[];
 - *Type:* string[]
 
 A list of GHSA codes that will be ignored by pnpm audit.
+
+---
+
+##### `ignorePrune`<sup>Optional</sup> <a name="ignorePrune" id="projen.javascript.PnpmWorkspaceYamlSchemaAudit.property.ignorePrune"></a>
+
+```typescript
+public readonly ignorePrune: boolean;
+```
+
+- *Type:* boolean
+
+When `true`, `pnpm audit --fix` removes the `audit.ignore` entries whose GHSA no longer appears in the audit report, so a list of tolerated advisories doesn't accumulate entries for dependencies that are long gone. Added in: v11.25.0 and v12.0.0.
 
 ---
 
@@ -25580,15 +25743,15 @@ It accepts `none` (the default — hoist as far as possible), workspaces (hoist 
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.NODE">NODE</a></code> | node. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.NONE">NONE</a></code> | none. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.WORKSPACES">WORKSPACES</a></code> | workspaces. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.DEPENDENCIES">DEPENDENCIES</a></code> | dependencies. |
 
 ---
 
-##### `NODE` <a name="NODE" id="projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.NODE"></a>
+##### `NONE` <a name="NONE" id="projen.javascript.PnpmWorkspaceYamlSchemaHoistingLimits.NONE"></a>
 
-node.
+none.
 
 ---
 
@@ -26053,6 +26216,35 @@ minor.
 ##### `MAJOR` <a name="MAJOR" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump.MAJOR"></a>
 
 major.
+
+---
+
+
+### PnpmWorkspaceYamlSchemaVirtualStoreType <a name="PnpmWorkspaceYamlSchemaVirtualStoreType" id="projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType"></a>
+
+Determines where the virtual store is located.
+
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType.PROJECT">PROJECT</a></code> | project. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType.GLOBAL">GLOBAL</a></code> | global. |
+
+---
+
+##### `PROJECT` <a name="PROJECT" id="projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType.PROJECT"></a>
+
+project.
+
+---
+
+
+##### `GLOBAL` <a name="GLOBAL" id="projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType.GLOBAL"></a>
+
+global.
 
 ---
 
