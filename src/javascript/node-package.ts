@@ -141,6 +141,16 @@ export interface NodePackageOptions {
   readonly keywords?: string[];
 
   /**
+   * Configuration values available to package scripts at runtime.
+   *
+   * Values should be JSON-serializable.
+   *
+   * @see https://docs.npmjs.com/cli/v11/configuring-npm/package-json#config
+   * @default - no package configuration
+   */
+  readonly config?: Record<string, any>;
+
+  /**
    * Module entrypoint (`main` in `package.json`)
    *
    * Set to an empty string to not include `main` in your package.json
@@ -848,6 +858,7 @@ export class NodePackage extends Component {
       bundledDependencies: [],
       ...this.renderPackageResolutions(),
       keywords: () => this.renderKeywords(),
+      config: options.config,
       engines: () => this.renderEngines(),
       devEngines: () => this.renderDevEngines(),
       main: this.entrypoint !== "" ? this.entrypoint : undefined,
