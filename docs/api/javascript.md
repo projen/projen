@@ -15743,7 +15743,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.shamefullyHoist">shamefullyHoist</a></code> | <code>boolean</code> | By default, pnpm creates a semistrict node_modules, meaning dependencies have access to undeclared dependencies but modules outside of node_modules do not. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sharedWorkspaceLockfile">sharedWorkspaceLockfile</a></code> | <code>boolean</code> | If this is enabled, pnpm creates a single pnpm-lock.yaml file in the root of the workspace. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.shellEmulator">shellEmulator</a></code> | <code>boolean</code> | When true, pnpm will use a JavaScript implementation of a bash-like shell to execute scripts. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCache">sideEffectsCache</a></code> | <code>boolean</code> | Use and cache the results of (pre/post)install hooks. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCache">sideEffectsCache</a></code> | <code>any</code> | Use and cache the results of (pre/post)install hooks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCacheReadonly">sideEffectsCacheReadonly</a></code> | <code>boolean</code> | Only use the side effects cache if present, do not create it for new packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.stateDir">stateDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.storeDir">storeDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
@@ -15755,6 +15755,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.symlink">symlink</a></code> | <code>boolean</code> | When symlink is set to false, pnpm creates a virtual store directory without any symlinks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.syncInjectedDepsAfterScripts">syncInjectedDepsAfterScripts</a></code> | <code>string[]</code> | Injected workspace dependencies are collections of hardlinks, which don't add or remove the files when their sources change. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.tag">tag</a></code> | <code>string</code> | If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.tasks">tasks</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}</code> | Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustLockfile">trustLockfile</a></code> | <code>boolean</code> | A new trustLockfile setting controls whether pnpm install re-applies the `minimumReleaseAge` / `trustPolicy: 'no-downgrade'` checks to every entry in the loaded lockfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicy">trustPolicy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy">PnpmWorkspaceYamlSchemaTrustPolicy</a></code> | When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
@@ -17504,12 +17505,15 @@ When true, pnpm will use a JavaScript implementation of a bash-like shell to exe
 ##### `sideEffectsCache`<sup>Optional</sup> <a name="sideEffectsCache" id="projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCache"></a>
 
 ```typescript
-public readonly sideEffectsCache: boolean;
+public readonly sideEffectsCache: any;
 ```
 
-- *Type:* boolean
+- *Type:* any
 
 Use and cache the results of (pre/post)install hooks.
+
+When a pre/post install script modify the contents of a package (e.g. build output), pnpm saves the modified package in the global store. On future installs on the same machine, pnpm reuses this cached, prebuilt version.
+An object is the canonical way to declare the remote tier; `sideEffectsCache: true` is the shorthand for reading and writing.
 
 ---
 
@@ -17522,6 +17526,8 @@ public readonly sideEffectsCacheReadonly: boolean;
 - *Type:* boolean
 
 Only use the side effects cache if present, do not create it for new packages.
+
+The older spelling of sideEffectsCache: { read: true, write: false }.
 
 ---
 
@@ -17644,6 +17650,20 @@ public readonly tag: string;
 - *Type:* string
 
 If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
+
+---
+
+##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.javascript.PnpmWorkspaceYamlOptions.property.tasks"></a>
+
+```typescript
+public readonly tasks: {[ key: string ]: PnpmWorkspaceYamlSchemaTasks};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}
+
+Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`).
+
+A task is a script in one workspace project; it becomes ready after every task it depends on completes successfully. A task with no entry under tasks defaults to depending on the same task in its workspace dependencies, but once a task has an entry, an omitted dependsOn is the same as `dependsOn: []`.
 
 ---
 
@@ -18054,7 +18074,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.shamefullyHoist">shamefullyHoist</a></code> | <code>boolean</code> | By default, pnpm creates a semistrict node_modules, meaning dependencies have access to undeclared dependencies but modules outside of node_modules do not. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sharedWorkspaceLockfile">sharedWorkspaceLockfile</a></code> | <code>boolean</code> | If this is enabled, pnpm creates a single pnpm-lock.yaml file in the root of the workspace. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.shellEmulator">shellEmulator</a></code> | <code>boolean</code> | When true, pnpm will use a JavaScript implementation of a bash-like shell to execute scripts. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCache">sideEffectsCache</a></code> | <code>boolean</code> | Use and cache the results of (pre/post)install hooks. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCache">sideEffectsCache</a></code> | <code>any</code> | Use and cache the results of (pre/post)install hooks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCacheReadonly">sideEffectsCacheReadonly</a></code> | <code>boolean</code> | Only use the side effects cache if present, do not create it for new packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.stateDir">stateDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.storeDir">storeDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
@@ -18066,6 +18086,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.symlink">symlink</a></code> | <code>boolean</code> | When symlink is set to false, pnpm creates a virtual store directory without any symlinks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.syncInjectedDepsAfterScripts">syncInjectedDepsAfterScripts</a></code> | <code>string[]</code> | Injected workspace dependencies are collections of hardlinks, which don't add or remove the files when their sources change. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.tag">tag</a></code> | <code>string</code> | If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.tasks">tasks</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}</code> | Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustLockfile">trustLockfile</a></code> | <code>boolean</code> | A new trustLockfile setting controls whether pnpm install re-applies the `minimumReleaseAge` / `trustPolicy: 'no-downgrade'` checks to every entry in the loaded lockfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicy">trustPolicy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy">PnpmWorkspaceYamlSchemaTrustPolicy</a></code> | When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
@@ -19815,12 +19836,15 @@ When true, pnpm will use a JavaScript implementation of a bash-like shell to exe
 ##### `sideEffectsCache`<sup>Optional</sup> <a name="sideEffectsCache" id="projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCache"></a>
 
 ```typescript
-public readonly sideEffectsCache: boolean;
+public readonly sideEffectsCache: any;
 ```
 
-- *Type:* boolean
+- *Type:* any
 
 Use and cache the results of (pre/post)install hooks.
+
+When a pre/post install script modify the contents of a package (e.g. build output), pnpm saves the modified package in the global store. On future installs on the same machine, pnpm reuses this cached, prebuilt version.
+An object is the canonical way to declare the remote tier; `sideEffectsCache: true` is the shorthand for reading and writing.
 
 ---
 
@@ -19833,6 +19857,8 @@ public readonly sideEffectsCacheReadonly: boolean;
 - *Type:* boolean
 
 Only use the side effects cache if present, do not create it for new packages.
+
+The older spelling of sideEffectsCache: { read: true, write: false }.
 
 ---
 
@@ -19955,6 +19981,20 @@ public readonly tag: string;
 - *Type:* string
 
 If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
+
+---
+
+##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.javascript.PnpmWorkspaceYamlSchema.property.tasks"></a>
+
+```typescript
+public readonly tasks: {[ key: string ]: PnpmWorkspaceYamlSchemaTasks};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}
+
+Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`).
+
+A task is a script in one workspace project; it becomes ready after every task it depends on completes successfully. A task with no entry under tasks defaults to depending on the same task in its workspace dependencies, but once a task has an entry, an omitted dependsOn is the same as `dependsOn: []`.
 
 ---
 
@@ -20444,6 +20484,53 @@ public readonly os: string[];
 ```
 
 - *Type:* string[]
+
+---
+
+### PnpmWorkspaceYamlSchemaTasks <a name="PnpmWorkspaceYamlSchemaTasks" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaTasks: javascript.PnpmWorkspaceYamlSchemaTasks = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.concurrency">concurrency</a></code> | <code>number</code> | A positive integer limiting how many instances of this named task may run across workspace projects at once. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.dependsOn">dependsOn</a></code> | <code>string[]</code> | Tasks this task depends on. |
+
+---
+
+##### `concurrency`<sup>Optional</sup> <a name="concurrency" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.concurrency"></a>
+
+```typescript
+public readonly concurrency: number;
+```
+
+- *Type:* number
+
+A positive integer limiting how many instances of this named task may run across workspace projects at once.
+
+This limit is separate from workspaceConcurrency.
+
+---
+
+##### `dependsOn`<sup>Optional</sup> <a name="dependsOn" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.dependsOn"></a>
+
+```typescript
+public readonly dependsOn: string[];
+```
+
+- *Type:* string[]
+
+Tasks this task depends on.
+
+Each entry is either the task in the same project (e.g. `build`) or the task in each selected workspace dependency of the project (e.g. `^build`).
 
 ---
 
