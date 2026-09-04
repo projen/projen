@@ -1,5 +1,6 @@
 export * from "./bundler";
 export * from "./eslint";
+export * from "./javascript-test-runner";
 export * from "./jest";
 export * from "./license-checker";
 export * from "./node-config";
