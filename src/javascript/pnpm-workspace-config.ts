@@ -672,13 +672,15 @@ export interface PnpmWorkspaceYamlSchema {
 
   /**
    * Use and cache the results of (pre/post)install hooks.
+   * When a pre/post install script modify the contents of a package (e.g. build output), pnpm saves the modified package in the global store. On future installs on the same machine, pnpm reuses this cached, prebuilt version.
+   * An object is the canonical way to declare the remote tier; `sideEffectsCache: true` is the shorthand for reading and writing.
    *
    * @schema PnpmWorkspaceYamlSchema#sideEffectsCache
    */
-  readonly sideEffectsCache?: boolean;
+  readonly sideEffectsCache?: any;
 
   /**
-   * Only use the side effects cache if present, do not create it for new packages.
+   * Only use the side effects cache if present, do not create it for new packages. The older spelling of sideEffectsCache: { read: true, write: false }.
    *
    * @schema PnpmWorkspaceYamlSchema#sideEffectsCacheReadonly
    */
@@ -802,6 +804,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#workspaceConcurrency
    */
   readonly workspaceConcurrency?: number;
+
+  /**
+   * Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`). A task is a script in one workspace project; it becomes ready after every task it depends on completes successfully. A task with no entry under tasks defaults to depending on the same task in its workspace dependencies, but once a task has an entry, an omitted dependsOn is the same as `dependsOn: []`.
+   *
+   * @schema PnpmWorkspaceYamlSchema#tasks
+   */
+  readonly tasks?: { [key: string]: PnpmWorkspaceYamlSchemaTasks };
 
   /**
    * If true, pnpm will fail if no packages match the filter
@@ -1320,6 +1329,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'ignoreWorkspaceRootCheck': obj.ignoreWorkspaceRootCheck,
     'disallowWorkspaceCycles': obj.disallowWorkspaceCycles,
     'workspaceConcurrency': obj.workspaceConcurrency,
+    'tasks': ((obj.tasks) === undefined) ? undefined : (Object.entries(obj.tasks).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_PnpmWorkspaceYamlSchemaTasks(i[1]) }), {})),
     'failIfNoMatch': obj.failIfNoMatch,
     'forceLegacyDeploy': obj.forceLegacyDeploy,
     'savePrefix': obj.savePrefix,
@@ -1795,6 +1805,41 @@ export class PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol {
   private constructor(public readonly value: boolean | string) {
   }
 }
+
+/**
+ * @schema PnpmWorkspaceYamlSchemaTasks
+ */
+export interface PnpmWorkspaceYamlSchemaTasks {
+  /**
+   * Tasks this task depends on. Each entry is either the task in the same project (e.g. `build`) or the task in each selected workspace dependency of the project (e.g. `^build`).
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#dependsOn
+   */
+  readonly dependsOn?: string[];
+
+  /**
+   * A positive integer limiting how many instances of this named task may run across workspace projects at once. This limit is separate from workspaceConcurrency.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#concurrency
+   */
+  readonly concurrency?: number;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaTasks' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaTasks(obj: PnpmWorkspaceYamlSchemaTasks | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'dependsOn': obj.dependsOn?.map(y => y),
+    'concurrency': obj.concurrency,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Configure how versions of packages installed to a package.json file get prefixed.
