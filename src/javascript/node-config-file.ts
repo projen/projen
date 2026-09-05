@@ -1,3 +1,4 @@
+import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import type { Project } from "../project";
@@ -52,7 +53,10 @@ export class NodeConfigFile extends Component {
     this.config = config;
 
     this.file = new JsonFile(project, filePath, {
-      obj: () => toJson_NodeConfigSchema(this.config),
+      // resolve first so that any lazily-computed values (e.g. a function
+      // returning the current state of a live collection) in `this.config`
+      // are evaluated before the generated schema mapper reads them.
+      obj: () => toJson_NodeConfigSchema(resolve(this.config)),
       omitEmpty: true,
       marker: false,
     });

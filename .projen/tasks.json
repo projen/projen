@@ -587,7 +587,7 @@
     },
     "test:watch": {
       "name": "test:watch",
-      "description": "Run jest in watch mode",
+      "description": "Run tests in watch mode",
       "steps": [
         {
           "execArgs": [

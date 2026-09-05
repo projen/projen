@@ -10960,6 +10960,303 @@ Sets the default shell used to run all task commands.
 ---
 
 
+### TestRunner <a name="TestRunner" id="projen.TestRunner"></a>
+
+- *Implements:* <a href="#projen.ITestRunner">ITestRunner</a>
+
+A runner that executes a project's tests.
+
+A runner is a {@link FutureComponent}: create it standalone and it is
+attached to a project by whoever consumes it.
+
+#### Initializers <a name="Initializers" id="projen.TestRunner.Initializer"></a>
+
+```typescript
+import { TestRunner } from 'projen'
+
+new TestRunner()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.TestRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.TestRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.TestRunner.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.TestRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.TestRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.TestRunner.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.TestRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.TestRunner.attach">attach</a></code> | Attach the component to a scope. Only now does it become usable. |
+| <code><a href="#projen.TestRunner.tryAttach">tryAttach</a></code> | Attach the component if it isn't already, without caring *where*. |
+| <code><a href="#projen.TestRunner.configFor">configFor</a></code> | Produce the configuration to test the given project. |
+
+---
+
+##### `toString` <a name="toString" id="projen.TestRunner.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.TestRunner.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.TestRunner.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.TestRunner.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TestRunner.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.TestRunner.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.TestRunner.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.TestRunner.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.TestRunner.projectCreation.parameter.initProject"></a>
+
+- *Type:* <a href="#projen.InitProject">InitProject</a>
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.TestRunner.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `attach` <a name="attach" id="projen.TestRunner.attach"></a>
+
+```typescript
+public attach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component to a scope. Only now does it become usable.
+
+Returns the real, unwrapped component (not the proxy). A component may be
+attached exactly once; attaching an already-attached component throws (copy
+it first to attach a variant elsewhere). Use `tryAttach()` if you don't care
+whether it has already been attached.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.TestRunner.attach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.TestRunner.attach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `tryAttach` <a name="tryAttach" id="projen.TestRunner.tryAttach"></a>
+
+```typescript
+public tryAttach(scope: IConstruct, id?: string): FutureComponent
+```
+
+Attach the component if it isn't already, without caring *where*.
+
+Unlike `attach()`, never throws on an already-attached component: if attached
+anywhere at all, the existing instance is returned and `scope` is ignored.
+Use `attach()` when attaching to a specific scope is part of your contract
+and a pre-existing attachment elsewhere would be a bug.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projen.TestRunner.tryAttach.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+###### `id`<sup>Optional</sup> <a name="id" id="projen.TestRunner.tryAttach.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `configFor` <a name="configFor" id="projen.TestRunner.configFor"></a>
+
+```typescript
+public configFor(): RunTestConfig
+```
+
+Produce the configuration to test the given project.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.TestRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.TestRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.TestRunner.isConstruct"></a>
+
+```typescript
+import { TestRunner } from 'projen'
+
+TestRunner.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.TestRunner.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.TestRunner.isComponent"></a>
+
+```typescript
+import { TestRunner } from 'projen'
+
+TestRunner.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.TestRunner.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.TestRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.TestRunner.property.project">project</a></code> | <code><a href="#projen.Project">Project</a></code> | *No description.* |
+| <code><a href="#projen.TestRunner.property.attached">attached</a></code> | <code>boolean</code> | Whether `attach()` has been called. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.TestRunner.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.TestRunner.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* <a href="#projen.Project">Project</a>
+
+---
+
+##### `attached`<sup>Required</sup> <a name="attached" id="projen.TestRunner.property.attached"></a>
+
+```typescript
+public readonly attached: boolean;
+```
+
+- *Type:* boolean
+
+Whether `attach()` has been called.
+
+A convenience for tests/introspection;
+prefer `tryAttach()` over reading this and branching.
+
+---
+
+
 ### TextFile <a name="TextFile" id="projen.TextFile"></a>
 
 A text file.
@@ -17150,6 +17447,51 @@ Github Runner Group selection options.
 
 ---
 
+### RunTestConfig <a name="RunTestConfig" id="projen.RunTestConfig"></a>
+
+The resolved configuration needed to run a project's tests: dependencies, and the steps for each of the testing tasks.
+
+#### Initializer <a name="Initializer" id="projen.RunTestConfig.Initializer"></a>
+
+```typescript
+import { RunTestConfig } from 'projen'
+
+const runTestConfig: RunTestConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.RunTestConfig.property.dependencies">dependencies</a></code> | <code><a href="#projen.DependencyRequest">DependencyRequest</a>[]</code> | Dependencies required to run the tests. |
+| <code><a href="#projen.RunTestConfig.property.steps">steps</a></code> | <code><a href="#projen.TaskStep">TaskStep</a>[]</code> | The task steps to run for each of the "test", "test:update" and "test:watch" tasks. |
+
+---
+
+##### `dependencies`<sup>Required</sup> <a name="dependencies" id="projen.RunTestConfig.property.dependencies"></a>
+
+```typescript
+public readonly dependencies: DependencyRequest[];
+```
+
+- *Type:* <a href="#projen.DependencyRequest">DependencyRequest</a>[]
+
+Dependencies required to run the tests.
+
+---
+
+##### `steps`<sup>Required</sup> <a name="steps" id="projen.RunTestConfig.property.steps"></a>
+
+```typescript
+public readonly steps: TaskStep[];
+```
+
+- *Type:* <a href="#projen.TaskStep">TaskStep</a>[]
+
+The task steps to run for each of the "test", "test:update" and "test:watch" tasks.
+
+---
+
 ### SampleDirOptions <a name="SampleDirOptions" id="projen.SampleDirOptions"></a>
 
 SampleDir options.
@@ -18354,6 +18696,34 @@ public readonly shell: TaskShell;
 The shell used to run this step, overriding the task/project shell.
 
 > [{@link TaskCommonOptions.shell }]({@link TaskCommonOptions.shell })
+
+---
+
+### TestMatchOptions <a name="TestMatchOptions" id="projen.TestMatchOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.TestMatchOptions.Initializer"></a>
+
+```typescript
+import { TestMatchOptions } from 'projen'
+
+const testMatchOptions: TestMatchOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.TestMatchOptions.property.defaultValue">defaultValue</a></code> | <code>string[]</code> | *No description.* |
+
+---
+
+##### `defaultValue`<sup>Required</sup> <a name="defaultValue" id="projen.TestMatchOptions.property.defaultValue"></a>
+
+```typescript
+public readonly defaultValue: string[];
+```
+
+- *Type:* string[]
 
 ---
 
@@ -20688,6 +21058,83 @@ the project to produce a snapshot for.
 
 
 
+### TestMatch <a name="TestMatch" id="projen.TestMatch"></a>
+
+Glob patterns matching the files that contain tests.
+
+#### Initializers <a name="Initializers" id="projen.TestMatch.Initializer"></a>
+
+```typescript
+import { TestMatch } from 'projen'
+
+new TestMatch(options: TestMatchOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.TestMatch.Initializer.parameter.options">options</a></code> | <code><a href="#projen.TestMatchOptions">TestMatchOptions</a></code> | *No description.* |
+
+---
+
+##### `options`<sup>Required</sup> <a name="options" id="projen.TestMatch.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.TestMatchOptions">TestMatchOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.TestMatch.add">add</a></code> | Adds a test match pattern. |
+| <code><a href="#projen.TestMatch.deferred">deferred</a></code> | Lazily resolved, so that `TestMatch` (via `add`/ `remove`) can still be changed after construction and be reflected here. |
+| <code><a href="#projen.TestMatch.remove">remove</a></code> | Removes a test match pattern, if configured. |
+
+---
+
+##### `add` <a name="add" id="projen.TestMatch.add"></a>
+
+```typescript
+public add(pattern: string): void
+```
+
+Adds a test match pattern.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.TestMatch.add.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to match for tests.
+
+---
+
+##### `deferred` <a name="deferred" id="projen.TestMatch.deferred"></a>
+
+```typescript
+public deferred(): string[]
+```
+
+Lazily resolved, so that `TestMatch` (via `add`/ `remove`) can still be changed after construction and be reflected here.
+
+##### `remove` <a name="remove" id="projen.TestMatch.remove"></a>
+
+```typescript
+public remove(pattern: string): void
+```
+
+Removes a test match pattern, if configured.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.TestMatch.remove.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to remove.
+
+---
+
+
+
+
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
 ### ICompareString <a name="ICompareString" id="projen.ICompareString"></a>
@@ -21051,6 +21498,29 @@ Produce the configuration to run the given entrypoint.
 - *Type:* string
 
 ---
+
+
+### ITestRunner <a name="ITestRunner" id="projen.ITestRunner"></a>
+
+- *Implemented By:* projen.javascript.JavaScriptTestRunner, <a href="#projen.TestRunner">TestRunner</a>, <a href="#projen.ITestRunner">ITestRunner</a>
+
+A test runner that can produce the configuration to execute a file of a particular type.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ITestRunner.configFor">configFor</a></code> | Produce the configuration to test the given project. |
+
+---
+
+##### `configFor` <a name="configFor" id="projen.ITestRunner.configFor"></a>
+
+```typescript
+public configFor(): RunTestConfig
+```
+
+Produce the configuration to test the given project.
 
 
 ## Enums <a name="Enums" id="Enums"></a>

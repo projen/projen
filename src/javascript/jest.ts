@@ -1,13 +1,25 @@
-import * as path from "path";
 import type { IConstruct } from "constructs";
 import { Component } from "../component";
-import { NodeProject } from "../javascript";
+import { NodeProject } from "./node-project";
 import { JsonFile } from "../json";
 import type { Project } from "../project";
+import { TestMatch } from "../test-runner";
 import { normalizePersistedPath } from "../util";
+import type {
+  JavaScriptTestRunnerOptions,
+  IJavaScriptTestRunner,
+} from "./javascript-test-runner";
+import {
+  DEFAULT_COVERAGE_DIR,
+  DEFAULT_TEST_REPORTS_DIR,
+  UpdateSnapshot,
+} from "./javascript-test-runner";
 import { closestProjectMustBe } from "../util/constructs";
 
-const DEFAULT_TEST_REPORTS_DIR = "test-reports";
+const DEFAULT_JEST_MATCH = [
+  `**/__tests__/**/*.[jt]s?(x)`,
+  `**/*(*.)@(spec|test).[jt]s?(x)`,
+];
 
 // Pulled from https://jestjs.io/docs/configuration
 export interface JestConfigOptions {
@@ -613,7 +625,7 @@ export class WatchPlugin {
   }
 }
 
-export interface JestOptions {
+export interface JestOptions extends JavaScriptTestRunnerOptions {
   /**
    * Include the `text` coverage reporter, which means that coverage summary is printed
    * at the end of the jest execution.
@@ -637,14 +649,6 @@ export interface JestOptions {
    * @default true
    */
   readonly preserveDefaultReporters?: boolean;
-
-  /**
-   * Whether to update snapshots in task "test" (which is executed in task "build" and build workflows),
-   * or create a separate task "test:update" for updating snapshots.
-   *
-   * @default - ALWAYS
-   */
-  readonly updateSnapshot?: UpdateSnapshot;
 
   /**
    * The version of jest to use.
@@ -696,18 +700,6 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
-}
-
-export enum UpdateSnapshot {
-  /**
-   * Always update snapshots in "test" task.
-   */
-  ALWAYS = "always",
-
-  /**
-   * Never update snapshots in "test" task and create a separate "test:update" task.
-   */
-  NEVER = "never",
 }
 
 export interface HasteConfig {
@@ -849,14 +841,16 @@ export class JestReporter {
 }
 
 /**
- * Installs the following npm scripts:
+ * Configures Jest for a project: its `jest.config.json`/`package.json` config
+ * (test match patterns, coverage, reporters, etc.).
  *
- * - `test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
- * - `test:watch`, intended for automatically rerunning tests when files change.
- * - `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
- *
+ * The "test"/"test:update"/"test:watch" tasks themselves - and the CLI
+ * arguments built from this component's options - are owned by
+ * `JavaScriptTestRunner`, which constructs this component from
+ * `JavaScriptTestRunner.jest()` and is the only supported way to attach it
+ * to a project.
  */
-export class Jest extends Component {
+export class Jest extends Component implements IJavaScriptTestRunner {
   /**
    * Returns the singleton Jest component of a project or undefined if there is none.
    */
@@ -873,6 +867,27 @@ export class Jest extends Component {
   readonly config: any;
 
   /**
+   * Glob patterns matching the files that contain tests.
+   */
+  public readonly testMatch: TestMatch;
+
+  /**
+   * Whether snapshots are updated in task "test", or in a separate
+   * "test:update" task.
+   */
+  public readonly updateSnapshot = UpdateSnapshot.ALWAYS;
+
+  /**
+   * The directory where Jest outputs its coverage files.
+   */
+  public readonly coverageDirectory?: string;
+
+  /**
+   * The directory used for JUnit-compatible test reports.
+   */
+  private readonly testReportsDir: string = DEFAULT_TEST_REPORTS_DIR;
+
+  /**
    * Jest version, including `@` symbol, like `@^29`
    */
   readonly jestVersion: string;
@@ -882,7 +897,6 @@ export class Jest extends Component {
    */
   readonly file?: JsonFile;
 
-  private readonly testMatch = new Array<string>();
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -891,8 +905,6 @@ export class Jest extends Component {
     readonly additionalOptions: undefined;
     [key: string]: unknown;
   };
-  private readonly extraCliOptions: string[];
-  private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
 
   constructor(scope: IConstruct, options: JestOptions = {}) {
@@ -909,7 +921,6 @@ export class Jest extends Component {
     // Jest snapshot files are generated files!
     this.project.root.annotateGenerated("*.snap");
     this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
-    this.project.addDevDeps(`jest${this.jestVersion}`);
 
     // use native v8 coverage collection as default
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
@@ -921,8 +932,6 @@ export class Jest extends Component {
       additionalOptions: undefined,
       ...options.jestConfig?.additionalOptions,
     };
-    this.extraCliOptions = options.extraCliOptions ?? [];
-    this.passWithNoTests = options.passWithNoTests ?? true;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
       "/node_modules/",
@@ -937,13 +946,21 @@ export class Jest extends Component {
       "cobertura",
     ];
 
-    if (this.jestConfig?.testMatch && this.jestConfig.testMatch.length > 0) {
-      this.jestConfig.testMatch.forEach((pattern) =>
-        this.addTestMatch(pattern),
+    this.testMatch = new TestMatch({
+      defaultValue: DEFAULT_JEST_MATCH,
+    });
+
+    if (this.jestConfig?.testMatch && this.jestConfig?.testMatch.length > 0) {
+      this.jestConfig?.testMatch.forEach((pattern) =>
+        this.testMatch.add(pattern),
       );
     }
 
-    const coverageDirectory = this.jestConfig?.coverageDirectory ?? "coverage";
+    const coverageDirectory =
+      options.coverageDirectory ??
+      this.jestConfig?.coverageDirectory ??
+      DEFAULT_COVERAGE_DIR;
+    this.coverageDirectory = coverageDirectory;
 
     this.reporters = [];
 
@@ -954,39 +971,36 @@ export class Jest extends Component {
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
-      collectCoverage: this.jestConfig?.collectCoverage ?? true,
+      collectCoverage: options.jestConfig?.collectCoverage ?? true,
       coverageReporters: this.coverageReporters,
-      coverageDirectory: coverageDirectory,
+      coverageDirectory,
       coveragePathIgnorePatterns:
         this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       watchPathIgnorePatterns: this.watchIgnorePatterns,
-      // @ts-expect-error - lazily loading the testMatch in order to only apply defaults if none are ever added
-      testMatch: () =>
-        this.testMatch.length > 0
-          ? this.testMatch
-          : [`**/__tests__/**/*.[jt]s?(x)`, `**/*(*.)@(spec|test).[jt]s?(x)`], // Jest defaults
+      // lazily loading the testMatch in order to only apply defaults if none are ever added
+      testMatch: (() => this.testMatch.deferred()) as any,
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
     } satisfies JestConfigOptions;
 
     if (options.junitReporting ?? true) {
-      const reportsDir = DEFAULT_TEST_REPORTS_DIR;
-
       this.addReporter(
-        new JestReporter("jest-junit", { outputDirectory: reportsDir }),
+        new JestReporter("jest-junit", {
+          outputDirectory: this.testReportsDir,
+        }),
       );
 
       this.project.addDevDeps("jest-junit@^17");
 
       this.project.gitignore.exclude(
         "# jest-junit artifacts",
-        `/${reportsDir}/`,
+        `/${this.testReportsDir}/`,
         "junit.xml",
       );
       this.project.npmignore?.exclude(
         "# jest-junit artifacts",
-        `/${reportsDir}/`,
+        `/${this.testReportsDir}/`,
         "junit.xml",
       );
     }
@@ -1003,8 +1017,6 @@ export class Jest extends Component {
       };
     }
 
-    this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
-
     if (options.configFilePath) {
       this.file = new JsonFile(this.project, options.configFilePath, {
         obj: this.config,
@@ -1014,10 +1026,6 @@ export class Jest extends Component {
       this.project.addFields({ jest: this.config });
     }
 
-    const coverageDirectoryPath = path.posix.join("/", coverageDirectory, "/");
-    this.project.npmignore?.exclude(coverageDirectoryPath);
-    this.project.gitignore.exclude(coverageDirectoryPath);
-
     if (options.coverageText ?? true) {
       this.coverageReporters.push("text");
     }
@@ -1026,9 +1034,10 @@ export class Jest extends Component {
   /**
    * Adds a test match pattern.
    * @param pattern glob pattern to match for tests
+   * @deprecated use `Jest.testMatch.add` instead
    */
   public addTestMatch(pattern: string) {
-    this.testMatch.push(pattern);
+    this.testMatch.add(pattern);
   }
 
   /**
@@ -1042,7 +1051,7 @@ export class Jest extends Component {
   ): void {
     const testPatterns = this.buildTestMatchPatternsForDirs(dirs, options);
 
-    testPatterns.forEach((pattern) => this.addTestMatch(pattern));
+    testPatterns.forEach((pattern) => this.testMatch.add(pattern));
   }
 
   /**
@@ -1146,48 +1155,5 @@ export class Jest extends Component {
   public addRoots(...roots: string[]): void {
     const existingRoots = this.config.roots ?? [];
     this.config.roots = [...new Set([...existingRoots, ...roots])];
-  }
-
-  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
-    const jestOpts = this.extraCliOptions;
-    const jestConfigOpts: string[] = [];
-    if (this.file && this.file.path != "jest.config.json") {
-      jestConfigOpts.push("-c", this.file.path);
-    }
-
-    if (this.passWithNoTests) {
-      jestOpts.push("--passWithNoTests");
-    }
-    if (updateSnapshot === UpdateSnapshot.ALWAYS) {
-      jestOpts.push("--updateSnapshot");
-    } else {
-      jestOpts.push("--ci"); // to prevent accepting new snapshots
-
-      const testUpdate = this.project.tasks.tryFind("test:update");
-      if (!testUpdate) {
-        this.project.addTask("test:update", {
-          description: "Update jest snapshots",
-          execArgs: [
-            "jest",
-            "--updateSnapshot",
-            ...jestOpts,
-            ...jestConfigOpts,
-          ],
-          receiveArgs: true,
-        });
-      }
-    }
-
-    this.project.testTask.execArgs(["jest", ...jestOpts, ...jestConfigOpts], {
-      receiveArgs: true,
-    });
-
-    const testWatch = this.project.tasks.tryFind("test:watch");
-    if (!testWatch) {
-      this.project.addTask("test:watch", {
-        description: "Run jest in watch mode",
-        execArgs: ["jest", "--watch", ...jestConfigOpts],
-      });
-    }
   }
 }

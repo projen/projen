@@ -105,6 +105,26 @@ test("Node Project Jest With Path Configured", () => {
   expect(jest.notify).toEqual(false);
 });
 
+test("Node Project Jest with a custom config file path passes -c to the CLI", () => {
+  const project = new NodeProject({
+    name: "test-node-project",
+    defaultReleaseBranch: "master",
+    githubOptions: { mergify: false },
+    projenDevDependency: false,
+    jest: true,
+    jestOptions: {
+      configFilePath: "custom-jest-config.json",
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot["custom-jest-config.json"]).toBeDefined();
+
+  const testTask = snapshot[".projen/tasks.json"].tasks.test;
+  expect(testTask.steps[0].execArgs).toContain("-c");
+  expect(testTask.steps[0].execArgs).toContain("custom-jest-config.json");
+});
+
 test("Typescript Project Jest Defaults Configured", () => {
   // WHEN
   const project = new TypeScriptProject({
@@ -241,6 +261,44 @@ test("addTestMatch() can be used to add patterns", () => {
   ]);
 });
 
+test("removeTestMatch() is a no-op if the pattern was never added", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, { jestConfig: { testMatch: ["foo/**"] } });
+
+  // WHEN
+  jest.testMatch.remove("does-not-exist/**");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.testMatch).toStrictEqual([
+    "foo/**",
+  ]);
+});
+
+test("removeTestMatch() removes a previously added pattern", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, { jestConfig: { testMatch: ["foo/**"] } });
+
+  // WHEN
+  jest.testMatch.remove("foo/**");
+
+  // THEN
+  // no explicit patterns left, so Jest's own defaults are used
+  expect(synthSnapshot(project)["package.json"].jest.testMatch).toStrictEqual([
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/*(*.)@(spec|test).[jt]s?(x)",
+  ]);
+});
+
 test("discoverTestMatchPatternsForDirs() can be used to build test match patterns for directories", () => {
   // GIVEN
   const project = new NodeProject({
@@ -361,15 +419,14 @@ test("can set extra CLI options", () => {
     outdir: mkdtemp(),
     defaultReleaseBranch: "master",
     name: "test",
-  });
-
-  // WHEN
-  new Jest(project, {
-    extraCliOptions: ["--json", "--outputFile=jest-report.json"],
+    jestOptions: {
+      extraCliOptions: ["--json", "--outputFile=jest-report.json"],
+    },
   });
 
   // THEN
-  const execArgs = project.testTask.steps.pop()?.execArgs;
+  const testTask = synthSnapshot(project)[".projen/tasks.json"].tasks.test;
+  const execArgs = testTask.steps.find((step: any) => step.execArgs).execArgs;
   expect(execArgs).toContain("--json");
   expect(execArgs).toContain("--outputFile=jest-report.json");
 });
@@ -386,8 +443,9 @@ test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:u
   });
 
   // THEN
-  const testTask = project.testTask;
-  expect(testTask.steps[0].execArgs).toContain("--updateSnapshot");
+  const testTask = synthSnapshot(project)[".projen/tasks.json"].tasks.test;
+  const execArgs = testTask.steps.find((step: any) => step.execArgs).execArgs;
+  expect(execArgs).toContain("--updateSnapshot");
 
   const testUpdateTask = project.tasks.tryFind("test:update");
   expect(testUpdateTask).toBeUndefined();
@@ -405,8 +463,9 @@ test("Jest can be configured to fail without tests", () => {
   });
 
   // THEN
-  const testTask = project.testTask;
-  expect(testTask.steps[0].execArgs).not.toContain("--passWithNoTests");
+  const testTask = synthSnapshot(project)[".projen/tasks.json"].tasks.test;
+  const execArgs = testTask.steps.find((step: any) => step.execArgs).execArgs;
+  expect(execArgs).not.toContain("--passWithNoTests");
 });
 
 describe("UpdateSnapshotOptions.NEVER", () => {
@@ -418,19 +477,25 @@ describe("UpdateSnapshotOptions.NEVER", () => {
       updateSnapshot: UpdateSnapshot.NEVER,
     },
   });
+  const snapshot = synthSnapshot(project);
 
   it("does not add --updateSnapshot", () => {
-    const testTask = project.testTask;
-    expect(testTask.steps[0].execArgs).not.toContain("--updateSnapshot");
+    const testTask = snapshot[".projen/tasks.json"].tasks.test;
+    const execArgs = testTask.steps.find((step: any) => step.execArgs).execArgs;
+    expect(execArgs).not.toContain("--updateSnapshot");
   });
 
   it("adds --ci", () => {
-    const testTask = project.testTask;
-    expect(testTask.steps[0].execArgs).toContain("--ci");
+    const testTask = snapshot[".projen/tasks.json"].tasks.test;
+    const execArgs = testTask.steps.find((step: any) => step.execArgs).execArgs;
+    expect(execArgs).toContain("--ci");
   });
 
   it("creates a separate 'test:update' task", () => {
-    const testUpdateTask = project.tasks.tryFind("test:update");
-    expect(testUpdateTask?.steps[0]?.execArgs).toContain("--updateSnapshot");
+    const testUpdateTask = snapshot[".projen/tasks.json"].tasks["test:update"];
+    const execArgs = testUpdateTask.steps.find(
+      (step: any) => step.execArgs,
+    ).execArgs;
+    expect(execArgs).toContain("--updateSnapshot");
   });
 });

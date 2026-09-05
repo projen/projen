@@ -5,12 +5,12 @@ import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import type {
   EslintOptions,
-  Jest,
   NodeProjectOptions,
   TypeScriptCompilerOptions,
   TypescriptConfigOptions,
 } from "../javascript";
 import {
+  Jest,
   Eslint,
   NodeProject,
   Projenrc as NodeProjectProjenrc,
@@ -542,11 +542,12 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude("/.projenrc.js");
     this.npmignore?.exclude("tsconfig.tsbuildinfo");
 
-    if (this.jest) {
+    const jest = Jest.of(this);
+    if (jest) {
       if (compiledTests) {
-        this.addJestCompiled(this.jest);
+        this.addJestCompiled(jest);
       } else {
-        this.addJestNoCompile(this.jest, options?.tsJestOptions);
+        this.addJestNoCompile(jest, options?.tsJestOptions);
       }
     }
 
@@ -951,7 +952,8 @@ class SampleCode extends Component {
       },
     });
 
-    if (project.jest) {
+    const jest = Jest.of(project);
+    if (jest) {
       new SampleDir(project, project.testdir, {
         files: {
           "hello.test.ts": testCode,
