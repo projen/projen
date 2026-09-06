@@ -774,7 +774,7 @@ export interface LinterConfiguration {
    *
    * @schema LinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: RuleDomainValue };
+  readonly domains?: RuleDomains;
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -807,7 +807,7 @@ export interface LinterConfiguration {
 export function toJson_LinterConfiguration(obj: LinterConfiguration | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'domains': ((obj.domains) === undefined) ? undefined : (Object.entries(obj.domains).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'domains': toJson_RuleDomains(obj.domains),
     'enabled': obj.enabled,
     'includes': obj.includes?.map(y => y),
     'rules': toJson_Rules(obj.rules),
@@ -2374,16 +2374,113 @@ export function toJson_JsonParserConfiguration(obj: JsonParserConfiguration | un
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * @schema RuleDomainValue
+ * @schema RuleDomains
  */
-export enum RuleDomainValue {
-  /** Enables all the rules that belong to this domain (all) */
-  ALL = "all",
-  /** Disables all the rules that belong to this domain (none) */
-  NONE = "none",
-  /** Enables only the recommended rules for this domain (recommended) */
-  RECOMMENDED = "recommended",
+export interface RuleDomains {
+  /**
+   * @schema RuleDomains#astro
+   */
+  readonly astro?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#drizzle
+   */
+  readonly drizzle?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#next
+   */
+  readonly next?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#playwright
+   */
+  readonly playwright?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#project
+   */
+  readonly project?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#qwik
+   */
+  readonly qwik?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#react
+   */
+  readonly react?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#reactNative
+   */
+  readonly reactNative?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#solid
+   */
+  readonly solid?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#svelte
+   */
+  readonly svelte?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#tailwind
+   */
+  readonly tailwind?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#test
+   */
+  readonly test?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#turborepo
+   */
+  readonly turborepo?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#types
+   */
+  readonly types?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#vue
+   */
+  readonly vue?: RuleDomainValue;
 }
+
+/**
+ * Converts an object of type 'RuleDomains' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_RuleDomains(obj: RuleDomains | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'astro': obj.astro,
+    'drizzle': obj.drizzle,
+    'next': obj.next,
+    'playwright': obj.playwright,
+    'project': obj.project,
+    'qwik': obj.qwik,
+    'react': obj.react,
+    'reactNative': obj.reactNative,
+    'solid': obj.solid,
+    'svelte': obj.svelte,
+    'tailwind': obj.tailwind,
+    'test': obj.test,
+    'turborepo': obj.turborepo,
+    'types': obj.types,
+    'vue': obj.vue,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * @schema Rules
@@ -2695,7 +2792,7 @@ export interface OverrideLinterConfiguration {
    *
    * @schema OverrideLinterConfiguration#domains
    */
-  readonly domains?: { [key: string]: RuleDomainValue };
+  readonly domains?: RuleDomains;
 
   /**
    * if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -2720,7 +2817,7 @@ export interface OverrideLinterConfiguration {
 export function toJson_OverrideLinterConfiguration(obj: OverrideLinterConfiguration | undefined): Record<string, any> | undefined {
   if (obj === undefined) { return undefined; }
   const result = {
-    'domains': ((obj.domains) === undefined) ? undefined : (Object.entries(obj.domains).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'domains': toJson_RuleDomains(obj.domains),
     'enabled': obj.enabled,
     'rules': toJson_Rules(obj.rules),
   };
@@ -3013,4 +3110,16 @@ export enum JsonTrailingCommas {
   NONE = "none",
   /** all */
   ALL = "all",
+}
+
+/**
+ * @schema RuleDomainValue
+ */
+export enum RuleDomainValue {
+  /** Enables all the rules that belong to this domain (all) */
+  ALL = "all",
+  /** Disables all the rules that belong to this domain (none) */
+  NONE = "none",
+  /** Enables only the recommended rules for this domain (recommended) */
+  RECOMMENDED = "recommended",
 }

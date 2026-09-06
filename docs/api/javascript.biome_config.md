@@ -2904,7 +2904,7 @@ const linterConfiguration: javascript.biome_config.LinterConfiguration = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.LinterConfiguration.property.domains">domains</a></code> | <code>{[ key: string ]: projen.javascript.biome_config.RuleDomainValue}</code> | An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`. |
+| <code><a href="#projen.javascript.biome_config.LinterConfiguration.property.domains">domains</a></code> | <code>projen.javascript.biome_config.RuleDomains</code> | An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`. |
 | <code><a href="#projen.javascript.biome_config.LinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | if `false`, it disables the feature and the linter won't be executed. |
 | <code><a href="#projen.javascript.biome_config.LinterConfiguration.property.includes">includes</a></code> | <code>string[]</code> | A list of glob patterns. |
 | <code><a href="#projen.javascript.biome_config.LinterConfiguration.property.rules">rules</a></code> | <code>projen.javascript.biome_config.Rules</code> | List of rules. |
@@ -2914,10 +2914,10 @@ const linterConfiguration: javascript.biome_config.LinterConfiguration = { ... }
 ##### `domains`<sup>Optional</sup> <a name="domains" id="projen.javascript.biome_config.LinterConfiguration.property.domains"></a>
 
 ```typescript
-public readonly domains: {[ key: string ]: RuleDomainValue};
+public readonly domains: RuleDomains;
 ```
 
-- *Type:* {[ key: string ]: projen.javascript.biome_config.RuleDomainValue}
+- *Type:* projen.javascript.biome_config.RuleDomains
 
 An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`.
 
@@ -3281,7 +3281,7 @@ const overrideLinterConfiguration: javascript.biome_config.OverrideLinterConfigu
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.biome_config.OverrideLinterConfiguration.property.domains">domains</a></code> | <code>{[ key: string ]: projen.javascript.biome_config.RuleDomainValue}</code> | List of rules. |
+| <code><a href="#projen.javascript.biome_config.OverrideLinterConfiguration.property.domains">domains</a></code> | <code>projen.javascript.biome_config.RuleDomains</code> | List of rules. |
 | <code><a href="#projen.javascript.biome_config.OverrideLinterConfiguration.property.enabled">enabled</a></code> | <code>boolean</code> | if `false`, it disables the feature and the linter won't be executed. |
 | <code><a href="#projen.javascript.biome_config.OverrideLinterConfiguration.property.rules">rules</a></code> | <code>projen.javascript.biome_config.Rules</code> | List of rules. |
 
@@ -3290,10 +3290,10 @@ const overrideLinterConfiguration: javascript.biome_config.OverrideLinterConfigu
 ##### `domains`<sup>Optional</sup> <a name="domains" id="projen.javascript.biome_config.OverrideLinterConfiguration.property.domains"></a>
 
 ```typescript
-public readonly domains: {[ key: string ]: RuleDomainValue};
+public readonly domains: RuleDomains;
 ```
 
-- *Type:* {[ key: string ]: projen.javascript.biome_config.RuleDomainValue}
+- *Type:* projen.javascript.biome_config.RuleDomains
 
 List of rules.
 
@@ -3498,6 +3498,188 @@ public readonly plugins: any[];
 - *Type:* any[]
 
 Specific configuration for additional plugins.
+
+---
+
+### RuleDomains <a name="RuleDomains" id="projen.javascript.biome_config.RuleDomains"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.biome_config.RuleDomains.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const ruleDomains: javascript.biome_config.RuleDomains = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.astro">astro</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.drizzle">drizzle</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.next">next</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.playwright">playwright</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.project">project</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.qwik">qwik</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.react">react</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.reactNative">reactNative</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.solid">solid</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.svelte">svelte</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.tailwind">tailwind</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.test">test</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.turborepo">turborepo</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.types">types</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.vue">vue</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+
+---
+
+##### `astro`<sup>Optional</sup> <a name="astro" id="projen.javascript.biome_config.RuleDomains.property.astro"></a>
+
+```typescript
+public readonly astro: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `drizzle`<sup>Optional</sup> <a name="drizzle" id="projen.javascript.biome_config.RuleDomains.property.drizzle"></a>
+
+```typescript
+public readonly drizzle: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `next`<sup>Optional</sup> <a name="next" id="projen.javascript.biome_config.RuleDomains.property.next"></a>
+
+```typescript
+public readonly next: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `playwright`<sup>Optional</sup> <a name="playwright" id="projen.javascript.biome_config.RuleDomains.property.playwright"></a>
+
+```typescript
+public readonly playwright: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `project`<sup>Optional</sup> <a name="project" id="projen.javascript.biome_config.RuleDomains.property.project"></a>
+
+```typescript
+public readonly project: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `qwik`<sup>Optional</sup> <a name="qwik" id="projen.javascript.biome_config.RuleDomains.property.qwik"></a>
+
+```typescript
+public readonly qwik: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `react`<sup>Optional</sup> <a name="react" id="projen.javascript.biome_config.RuleDomains.property.react"></a>
+
+```typescript
+public readonly react: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `reactNative`<sup>Optional</sup> <a name="reactNative" id="projen.javascript.biome_config.RuleDomains.property.reactNative"></a>
+
+```typescript
+public readonly reactNative: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `solid`<sup>Optional</sup> <a name="solid" id="projen.javascript.biome_config.RuleDomains.property.solid"></a>
+
+```typescript
+public readonly solid: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `svelte`<sup>Optional</sup> <a name="svelte" id="projen.javascript.biome_config.RuleDomains.property.svelte"></a>
+
+```typescript
+public readonly svelte: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `tailwind`<sup>Optional</sup> <a name="tailwind" id="projen.javascript.biome_config.RuleDomains.property.tailwind"></a>
+
+```typescript
+public readonly tailwind: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `test`<sup>Optional</sup> <a name="test" id="projen.javascript.biome_config.RuleDomains.property.test"></a>
+
+```typescript
+public readonly test: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `turborepo`<sup>Optional</sup> <a name="turborepo" id="projen.javascript.biome_config.RuleDomains.property.turborepo"></a>
+
+```typescript
+public readonly turborepo: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `types`<sup>Optional</sup> <a name="types" id="projen.javascript.biome_config.RuleDomains.property.types"></a>
+
+```typescript
+public readonly types: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `vue`<sup>Optional</sup> <a name="vue" id="projen.javascript.biome_config.RuleDomains.property.vue"></a>
+
+```typescript
+public readonly vue: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
 
 ---
 
