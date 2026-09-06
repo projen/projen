@@ -1,5 +1,6 @@
 import * as path from "path";
 import type { IConstruct } from "constructs";
+import { UpdateSnapshot } from "./javascript-test-runner";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
@@ -696,18 +697,6 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
-}
-
-export enum UpdateSnapshot {
-  /**
-   * Always update snapshots in "test" task.
-   */
-  ALWAYS = "always",
-
-  /**
-   * Never update snapshots in "test" task and create a separate "test:update" task.
-   */
-  NEVER = "never",
 }
 
 export interface HasteConfig {

@@ -8263,6 +8263,51 @@ Only present when reason is `DEPS_RESOLVED`.
 
 ---
 
+### JavaScriptTestRunnerOptions <a name="JavaScriptTestRunnerOptions" id="projen.javascript.JavaScriptTestRunnerOptions"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.JavaScriptTestRunnerOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const javaScriptTestRunnerOptions: javascript.JavaScriptTestRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
+| <code><a href="#projen.javascript.JavaScriptTestRunnerOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+
+---
+
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.JavaScriptTestRunnerOptions.property.coverageDirectory"></a>
+
+```typescript
+public readonly coverageDirectory: string;
+```
+
+- *Type:* string
+- *Default:* "coverage"
+
+The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
+
+---
+
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.JavaScriptTestRunnerOptions.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+- *Default:* ALWAYS
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+---
+
 ### JestConfigOptions <a name="JestConfigOptions" id="projen.javascript.JestConfigOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.JestConfigOptions.Initializer"></a>
@@ -24926,6 +24971,76 @@ public readonly os: string[];
 
 ## Classes <a name="Classes" id="Classes"></a>
 
+### JavaScriptTestRunner <a name="JavaScriptTestRunner" id="projen.javascript.JavaScriptTestRunner"></a>
+
+- *Implements:* constructs.IMixin
+
+Wires up a {@link IJavaScriptTestRunner} onto a project: requests its dependencies, registers its coverage output as ignored, and creates the "test", "test:update" and "test:watch" tasks from its {@link RunTestConfig}.
+
+Unlike its runner, this mixin holds no test-kind-specific logic (no Jest
+or Node.js-specific behavior) - it only knows how to apply the generic
+shape of an `IJavaScriptTestRunner` to a project.
+
+#### Initializers <a name="Initializers" id="projen.javascript.JavaScriptTestRunner.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.JavaScriptTestRunner(runner: IJavaScriptTestRunner)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.Initializer.parameter.runner">runner</a></code> | <code><a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a></code> | *No description.* |
+
+---
+
+##### `runner`<sup>Required</sup> <a name="runner" id="projen.javascript.JavaScriptTestRunner.Initializer.parameter.runner"></a>
+
+- *Type:* <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.applyTo">applyTo</a></code> | Applies the mixin functionality to the target construct. |
+| <code><a href="#projen.javascript.JavaScriptTestRunner.supports">supports</a></code> | Determines whether this mixin can be applied to the given construct. |
+
+---
+
+##### `applyTo` <a name="applyTo" id="projen.javascript.JavaScriptTestRunner.applyTo"></a>
+
+```typescript
+public applyTo(construct: IConstruct): void
+```
+
+Applies the mixin functionality to the target construct.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.javascript.JavaScriptTestRunner.applyTo.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `supports` <a name="supports" id="projen.javascript.JavaScriptTestRunner.supports"></a>
+
+```typescript
+public supports(construct: IConstruct): boolean
+```
+
+Determines whether this mixin can be applied to the given construct.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projen.javascript.JavaScriptTestRunner.supports.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+
+
+
 ### JestReporter <a name="JestReporter" id="projen.javascript.JestReporter"></a>
 
 #### Initializers <a name="Initializers" id="projen.javascript.JestReporter.Initializer"></a>
@@ -25331,6 +25446,66 @@ new javascript.WatchPlugin(name: string, options?: any)
 
 
 
+## Protocols <a name="Protocols" id="Protocols"></a>
+
+### IJavaScriptTestRunner <a name="IJavaScriptTestRunner" id="projen.javascript.IJavaScriptTestRunner"></a>
+
+- *Extends:* projen.ITestRunner
+
+- *Implemented By:* <a href="#projen.javascript.IJavaScriptTestRunner">IJavaScriptTestRunner</a>
+
+A runner that can execute the tests for a JavaScript project.
+
+Implementations (e.g. `Jest`, `NodeNativeTest`) are self-contained
+components: they can be used directly, or composed onto a project through
+the {@link JavaScriptTestRunner} mixin.
+
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.testMatch">testMatch</a></code> | <code>projen.TestMatch</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
+| <code><a href="#projen.javascript.IJavaScriptTestRunner.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled for the configured test runner. |
+
+---
+
+##### `testMatch`<sup>Required</sup> <a name="testMatch" id="projen.javascript.IJavaScriptTestRunner.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: TestMatch;
+```
+
+- *Type:* projen.TestMatch
+
+Glob patterns matching the files that contain tests.
+
+---
+
+##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.IJavaScriptTestRunner.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: UpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.UpdateSnapshot">UpdateSnapshot</a>
+
+Whether snapshots are updated in task "test", or in a separate "test:update" task.
+
+---
+
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.IJavaScriptTestRunner.property.coverageDirectory"></a>
+
+```typescript
+public readonly coverageDirectory: string;
+```
+
+- *Type:* string
+
+The directory where coverage files are output, if coverage collection is enabled for the configured test runner.
+
+---
 
 ## Enums <a name="Enums" id="Enums"></a>
 
@@ -26798,6 +26973,11 @@ from TypeScript 5.0 onwards.
 
 
 ### UpdateSnapshot <a name="UpdateSnapshot" id="projen.javascript.UpdateSnapshot"></a>
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+Shared by every `IJavaScriptTestRunner` implementation (`Jest`,
+`NodeNativeTest`), so it lives here rather than in any one of them.
 
 #### Members <a name="Members" id="Members"></a>
 
