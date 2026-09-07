@@ -4,6 +4,7 @@ export * from "./jest";
 export * from "./license-checker";
 export * from "./node-config";
 export * from "./node-config-file";
+export * from "./node-native-test";
 export * from "./node-package";
 export * from "./node-project";
 export * from "./npm-config";
