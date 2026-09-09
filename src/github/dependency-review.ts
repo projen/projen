@@ -112,10 +112,12 @@ export class DependencyReview extends Component {
     workflow.on({
       pullRequest: {},
       workflowDispatch: {},
+      mergeGroup: {},
     });
 
     workflow.addJobs({
       "dependency-review": {
+        if: "(github.event_name == 'pull_request' || github.event_name == 'pull_request_target')",
         ...github.runsOnConfig(options),
         permissions: {
           contents: JobPermission.READ,

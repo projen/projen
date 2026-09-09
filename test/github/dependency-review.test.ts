@@ -34,13 +34,25 @@ describe("DependencyReview", () => {
   test("adds a dependency-review workflow when enabled", () => {
     const project = createProject();
     const wf = dependencyReviewWorkflow(project);
-    expect(wf.on).toEqual({ pull_request: {}, workflow_dispatch: {} });
+    expect(wf.on).toEqual({
+      pull_request: {},
+      workflow_dispatch: {},
+      merge_group: {},
+    });
     const job = wf.jobs["dependency-review"];
     expect(job).toBeDefined();
     const reviewStep = job.steps.find(
       (s: any) => s.name === "Dependency Review",
     );
     expect(reviewStep.uses).toMatch(/^actions\/dependency-review-action@/);
+  });
+
+  test("job is skipped outside of a pull request so it can be a required check", () => {
+    const project = createProject();
+    const wf = dependencyReviewWorkflow(project);
+    expect(wf.jobs["dependency-review"].if).toBe(
+      "(github.event_name == 'pull_request' || github.event_name == 'pull_request_target')",
+    );
   });
 
   test("auto-populates failOnSeverity from auditDepsOptions.level", () => {

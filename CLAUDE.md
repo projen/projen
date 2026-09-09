@@ -68,3 +68,9 @@ This project's configuration is defined in the .projenrc file at the root of the
     - **Actionable error messages**: Error messages must tell the user what to do to resolve the problem, not just what went wrong. Name the exact options or values involved and state the required action.
     - **Mutually exclusive options**: When two options cannot be used together, throw an error at construction time instead of silently picking one. Use the established message pattern: `Only one of 'optionA' or 'optionB' may be specified, not both.`
     - **Deprecating options**: When replacing a deprecated option with a new one, keep the deprecated option working as before, mark it with `@deprecated` pointing to the replacement, and throw if both are set: `Only one of 'newOption' or 'deprecatedOption' may be specified, not both. Remove the deprecated 'deprecatedOption'.`
+
+## Code comments
+
+    - **Keep comments to a minimum**: Prefer self-documenting code. Only comment where the code cannot explain itself.
+    - **Keep comments short**: A comment is a simple sentence explaining what the code does or why, no longer than 120 characters per line.
+    - **No history in comments**: Do not narrate past decisions, alternatives considered, or issue numbers. That belongs in commit messages, PR descriptions or ADRs.
