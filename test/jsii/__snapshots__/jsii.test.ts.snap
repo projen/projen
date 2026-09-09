@@ -1219,7 +1219,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:watch": {
-        "description": "Run jest in watch mode",
+        "description": "Run tests in watch mode",
         "name": "test:watch",
         "steps": [
           {
@@ -2919,7 +2919,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:watch": {
-        "description": "Run jest in watch mode",
+        "description": "Run tests in watch mode",
         "name": "test:watch",
         "steps": [
           {
@@ -4621,7 +4621,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:watch": {
-        "description": "Run jest in watch mode",
+        "description": "Run tests in watch mode",
         "name": "test:watch",
         "steps": [
           {

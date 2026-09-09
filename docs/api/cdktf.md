@@ -653,6 +653,7 @@ When given a project, this it the project itself.
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.npmignore">npmignore</a></code> | <code>projen.IgnoreFile</code> | The .npmignore file. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.prettier">prettier</a></code> | <code>projen.javascript.Prettier</code> | *No description.* |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.release">release</a></code> | <code>projen.release.Release</code> | Release management. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.testRunner">testRunner</a></code> | <code>projen.javascript.IJavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.upgradeWorkflow">upgradeWorkflow</a></code> | <code>projen.javascript.UpgradeDependencies</code> | The upgrade workflow. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.docsDirectory">docsDirectory</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktf.property.libdir">libdir</a></code> | <code>string</code> | The directory in which compiled .js files reside. |
@@ -1276,8 +1277,7 @@ The job ID of the build workflow.
 
 ##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.cdktf.ConstructLibraryCdktf.property.jest"></a>
 
-- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
-CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
+- *Deprecated:* Use `Jest.of(project)` instead.
 
 ```typescript
 public readonly jest: Jest;
@@ -1363,6 +1363,23 @@ public readonly release: Release;
 - *Type:* projen.release.Release
 
 Release management.
+
+---
+
+##### ~~`testRunner`~~<sup>Optional</sup> <a name="testRunner" id="projen.cdktf.ConstructLibraryCdktf.property.testRunner"></a>
+
+- *Deprecated:* CDKTF has been archived by HashiCorp. Use ConstructLibraryCdktn from the cdktn module instead.
+CDKTN is a community-driven fork that continues active development. Learn more at https://cdktn.io/
+
+```typescript
+public readonly testRunner: IJavaScriptTestRunner;
+```
+
+- *Type:* projen.javascript.IJavaScriptTestRunner
+
+The runner used to execute tests.
+
+When available, it is already attached to project.
 
 ---
 
@@ -1722,6 +1739,7 @@ const constructLibraryCdktfOptions: cdktf.ConstructLibraryCdktfOptions = { ... }
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.pullRequestTemplateContents">pullRequestTemplateContents</a></code> | <code>string[]</code> | The contents of the pull request template. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.release">release</a></code> | <code>boolean</code> | Add release management to this project. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.releaseToNpm">releaseToNpm</a></code> | <code>boolean</code> | Automatically release to npm when new versions are introduced. |
+| <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.testRunner">testRunner</a></code> | <code>projen.javascript.JavaScriptTestRunner</code> | The runner used to execute tests. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.workflowBootstrapSteps">workflowBootstrapSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Workflow steps to use in order to bootstrap this repo. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.cdktf.ConstructLibraryCdktfOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
@@ -3515,7 +3533,9 @@ Additional entries to .gitignore.
 
 ---
 
-##### `jest`<sup>Optional</sup> <a name="jest" id="projen.cdktf.ConstructLibraryCdktfOptions.property.jest"></a>
+##### ~~`jest`~~<sup>Optional</sup> <a name="jest" id="projen.cdktf.ConstructLibraryCdktfOptions.property.jest"></a>
+
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest()` instead.
 
 ```typescript
 public readonly jest: boolean;
@@ -3528,7 +3548,9 @@ Setup jest unit tests.
 
 ---
 
-##### `jestOptions`<sup>Optional</sup> <a name="jestOptions" id="projen.cdktf.ConstructLibraryCdktfOptions.property.jestOptions"></a>
+##### ~~`jestOptions`~~<sup>Optional</sup> <a name="jestOptions" id="projen.cdktf.ConstructLibraryCdktfOptions.property.jestOptions"></a>
+
+- *Deprecated:* Use `testRunner: JavaScriptTestRunner.jest(jestOptions)` instead.
 
 ```typescript
 public readonly jestOptions: JestOptions;
@@ -3706,6 +3728,19 @@ public readonly releaseToNpm: boolean;
 - *Default:* false
 
 Automatically release to npm when new versions are introduced.
+
+---
+
+##### `testRunner`<sup>Optional</sup> <a name="testRunner" id="projen.cdktf.ConstructLibraryCdktfOptions.property.testRunner"></a>
+
+```typescript
+public readonly testRunner: JavaScriptTestRunner;
+```
+
+- *Type:* projen.javascript.JavaScriptTestRunner
+- *Default:* `JavaScriptTestRunner.jest()`, unless `jest` is set to `false`, then none
+
+The runner used to execute tests.
 
 ---
 

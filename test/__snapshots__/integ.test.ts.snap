@@ -1393,7 +1393,7 @@ tsconfig.tsbuildinfo
     },
     "test:watch": {
       "name": "test:watch",
-      "description": "Run jest in watch mode",
+      "description": "Run tests in watch mode",
       "steps": [
         {
           "execArgs": [
@@ -2591,7 +2591,7 @@ tsconfig.tsbuildinfo
     },
     "test:watch": {
       "name": "test:watch",
-      "description": "Run jest in watch mode",
+      "description": "Run tests in watch mode",
       "steps": [
         {
           "execArgs": [
@@ -3830,7 +3830,7 @@ tsconfig.tsbuildinfo
     },
     "test:watch": {
       "name": "test:watch",
-      "description": "Run jest in watch mode",
+      "description": "Run tests in watch mode",
       "steps": [
         {
           "execArgs": [
@@ -5070,7 +5070,7 @@ permissions-backup.acl
     },
     "test:watch": {
       "name": "test:watch",
-      "description": "Run jest in watch mode",
+      "description": "Run tests in watch mode",
       "steps": [
         {
           "execArgs": [

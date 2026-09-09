@@ -793,6 +793,17 @@ test("codecov upload not added to github release workflow", () => {
   expect(workflow).not.toContain("uses: codecov/codecov-action@");
 });
 
+test("codecov upload uses token secret when codeCovTokenSecret is provided", () => {
+  const project = new TestNodeProject({
+    codeCov: true,
+    codeCovTokenSecret: "CODECOV_TOKEN",
+  });
+
+  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  expect(workflow).toContain("uses: codecov/codecov-action@");
+  expect(workflow).toContain("token: ${{ secrets.CODECOV_TOKEN }}");
+});
+
 describe("scripts", () => {
   test("addTask and setScript", () => {
     const p = new TestNodeProject();

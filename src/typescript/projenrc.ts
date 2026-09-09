@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, posix, resolve } from "path";
 import type { InventoryProjectType } from "../inventory";
-import { TypescriptConfig, TypescriptConfigExtends } from "../javascript";
+import { Jest, TypescriptConfig, TypescriptConfigExtends } from "../javascript";
 import type { TypeScriptProject } from "./typescript";
 import { TypeScriptRunner } from "./typescript-runner";
 import { renderJavaScriptOptions } from "../javascript/render-options";
@@ -152,14 +152,12 @@ export class Projenrc extends ProjenrcFile {
     this._tsProject.biome?.addFilePattern(this.filePath);
     this._tsProject.biome?.addFilePattern(`${this._projenCodeDir}/**`);
 
-    this._tsProject.jest?.discoverTestMatchPatternsForDirs(
-      [this._projenCodeDir],
-      {
-        fileExtensionPattern: this._tsProject.tsconfig?.compilerOptions?.allowJs
-          ? undefined
-          : "ts?(x)",
-      },
-    );
+    const jest = Jest.of(this._tsProject);
+    jest?.discoverTestMatchPatternsForDirs([this._projenCodeDir], {
+      fileExtensionPattern: this._tsProject.tsconfig?.compilerOptions?.allowJs
+        ? undefined
+        : "ts?(x)",
+    });
   }
 
   private generateProjenrc(bootstrap: InitProject) {
