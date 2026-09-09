@@ -1,6 +1,6 @@
 import type { GitHub } from ".";
 import { PullRequestTemplate } from ".";
-import { GitHubActions } from "./actions.const";
+import { ActionRefs } from "./actions.const";
 import type { Job } from "./workflows-model";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
@@ -139,7 +139,7 @@ export class PullRequestLint extends Component {
         steps: [
           {
             id: "validate-pr-title",
-            uses: GitHubActions.AMANNN_ACTION_SEMANTIC_PULL_REQUEST,
+            uses: ActionRefs.AMANNN_ACTION_SEMANTIC_PULL_REQUEST,
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
@@ -199,7 +199,7 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: GitHubActions.ACTIONS_GITHUB_SCRIPT,
+            uses: ActionRefs.ACTIONS_GITHUB_SCRIPT,
             with: {
               script: scriptBody,
             },

@@ -3,6 +3,7 @@ export * from "./github";
 export * from "./dependabot";
 export * from "./dependency-review";
 export * from "./workflows";
+export * from "./actions.const";
 export * from "./actions-provider";
 export * from "./mergify";
 export * from "./merge-queue";

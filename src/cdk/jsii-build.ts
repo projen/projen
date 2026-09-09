@@ -13,7 +13,7 @@ import {
   PULL_REQUEST_REPOSITORY,
   PULL_REQUEST_SHA,
 } from "../build/private/consts";
-import { GitHubActions } from "../github/actions.const";
+import { ActionRefs } from "../github/actions.const";
 import { WorkflowSteps } from "../github/workflow-steps";
 import type { Job, Step, Tools } from "../github/workflows-model";
 import { JobPermission } from "../github/workflows-model";
@@ -591,13 +591,13 @@ export class JsiiBuild implements IMixin {
     if (project.package.packageManager === NodePackageManager.PNPM) {
       bootstrapSteps.push({
         name: "Setup pnpm",
-        uses: GitHubActions.PNPM_ACTION_SETUP,
+        uses: ActionRefs.PNPM_ACTION_SETUP,
         with: { version: project.package.pnpmVersion },
       });
     } else if (project.package.packageManager === NodePackageManager.BUN) {
       bootstrapSteps.push({
         name: "Setup bun",
-        uses: GitHubActions.OVEN_SH_SETUP_BUN,
+        uses: ActionRefs.OVEN_SH_SETUP_BUN,
         with: { "bun-version": project.package.bunVersion },
       });
     } else if (isYarnBerry(project.package.packageManager)) {
