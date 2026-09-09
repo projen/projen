@@ -1,6 +1,6 @@
 import { javascript } from "../../src";
 import { NodeProject } from "../../src/javascript";
-import { execProjenCLI } from "../util";
+import { execProjenCLI, synthSnapshot } from "../util";
 
 describe("license checker", () => {
   describe("validations", () => {
@@ -50,6 +50,36 @@ describe("license checker", () => {
         });
       }).toThrowErrorMatchingInlineSnapshot(
         `"LicenseChecker: \`allow\` and \`deny\` can not be used at the same time. Choose one or the other."`,
+      );
+    });
+  });
+
+  describe("excludePrivatePackages", () => {
+    const checkLicensesArgs = (project: NodeProject) =>
+      synthSnapshot(project)[".projen/tasks.json"].tasks["check-licenses"]
+        .steps[0].execArgs;
+
+    test("is passed by default", () => {
+      const project = new NodeProject({
+        name: "test",
+        defaultReleaseBranch: "main",
+        packageManager: javascript.NodePackageManager.NPM,
+        checkLicenses: { allow: ["MIT"] },
+      });
+
+      expect(checkLicensesArgs(project)).toContain("--excludePrivatePackages");
+    });
+
+    test("can be disabled explicitly", () => {
+      const project = new NodeProject({
+        name: "test",
+        defaultReleaseBranch: "main",
+        packageManager: javascript.NodePackageManager.NPM,
+        checkLicenses: { allow: ["MIT"], excludePrivatePackages: false },
+      });
+
+      expect(checkLicensesArgs(project)).not.toContain(
+        "--excludePrivatePackages",
       );
     });
   });

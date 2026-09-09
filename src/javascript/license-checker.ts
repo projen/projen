@@ -38,6 +38,17 @@ export interface LicenseCheckerOptions {
   readonly deny?: string[];
 
   /**
+   * Exclude packages marked as private from the check.
+   *
+   * Private packages are local to the repository and not published, so their
+   * licenses typically don't need to be checked. This also applies to the project
+   * itself.
+   *
+   * @default true
+   */
+  readonly excludePrivatePackages?: boolean;
+
+  /**
    * The name of the task that is added to check licenses
    *
    * @default "check-licenses"
@@ -60,6 +71,7 @@ export class LicenseChecker extends Component {
       development = false,
       allow: allowedLicenses = [],
       deny: prohibitedLicenses = [],
+      excludePrivatePackages = true,
     } = options;
 
     if (!production && !development) {
@@ -93,6 +105,9 @@ export class LicenseChecker extends Component {
     if (prohibitedLicenses.length) {
       cmd.push("--failOn");
       cmd.push(prohibitedLicenses.join(";"));
+    }
+    if (excludePrivatePackages) {
+      cmd.push("--excludePrivatePackages");
     }
 
     this.project.deps.addDependency("license-checker", DependencyType.BUILD);
