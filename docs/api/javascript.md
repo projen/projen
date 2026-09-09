@@ -9736,6 +9736,7 @@ const licenseCheckerOptions: javascript.LicenseCheckerOptions = { ... }
 | <code><a href="#projen.javascript.LicenseCheckerOptions.property.allow">allow</a></code> | <code>string[]</code> | List of SPDX license identifiers that are allowed to be used. |
 | <code><a href="#projen.javascript.LicenseCheckerOptions.property.deny">deny</a></code> | <code>string[]</code> | List of SPDX license identifiers that are prohibited to be used. |
 | <code><a href="#projen.javascript.LicenseCheckerOptions.property.development">development</a></code> | <code>boolean</code> | Check development dependencies. |
+| <code><a href="#projen.javascript.LicenseCheckerOptions.property.excludePrivatePackages">excludePrivatePackages</a></code> | <code>boolean</code> | Exclude packages marked as private from the check. |
 | <code><a href="#projen.javascript.LicenseCheckerOptions.property.production">production</a></code> | <code>boolean</code> | Check production dependencies. |
 | <code><a href="#projen.javascript.LicenseCheckerOptions.property.taskName">taskName</a></code> | <code>string</code> | The name of the task that is added to check licenses. |
 
@@ -9783,6 +9784,23 @@ public readonly development: boolean;
 - *Default:* false
 
 Check development dependencies.
+
+---
+
+##### `excludePrivatePackages`<sup>Optional</sup> <a name="excludePrivatePackages" id="projen.javascript.LicenseCheckerOptions.property.excludePrivatePackages"></a>
+
+```typescript
+public readonly excludePrivatePackages: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Exclude packages marked as private from the check.
+
+Private packages are local to the repository and not published, so their
+licenses typically don't need to be checked. This also applies to the project
+itself.
 
 ---
 
