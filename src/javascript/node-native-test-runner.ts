@@ -107,8 +107,37 @@ class TestMatch {
 
 export type ReporterKind = "dot" | "junit" | "lcov" | "spec" | "tap";
 
-export type FilePathDestination = string & {};
-export type Destination = "stdout" | "stderr" | FilePathDestination;
+/**
+ * Where a reporter's output is written.
+ *
+ * @see https://nodejs.org/api/test.html#test-reporters
+ */
+export class Destination {
+  /**
+   * Write to standard output.
+   */
+  public static readonly STDOUT = new Destination("stdout");
+
+  /**
+   * Write to standard error.
+   */
+  public static readonly STDERR = new Destination("stderr");
+
+  /**
+   * Write to a file at the given path.
+   * @param path path of the file to write to
+   */
+  public static file(path: string): Destination {
+    return new Destination(path);
+  }
+
+  private constructor(
+    /**
+     * The underlying value: `"stdout"`, `"stderr"`, or a file path.
+     */
+    public readonly value: string,
+  ) {}
+}
 
 /**
  * A single reporter/destination pair for the Node.js native test runner.
@@ -123,15 +152,14 @@ export interface NodeReporter {
   /**
    * Where the reporter's output is written.
    *
-   * @default "stdout"
+   * @see https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77
+   * @default Destination.STDOUT
    */
-  // As presented here:
-  // https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77
   readonly destination: Destination;
 }
 
 /**
- * Holds the set of reporters configured for a `NodeNativeTest` component,
+ * Holds the set of reporters configured for a `NodeNativeTestRunner` component,
  * backing the `test.testReporter`/`test.testReporterDestination` fields of
  * the generated Node.js configuration file.
  */
@@ -147,12 +175,18 @@ export class NodeReporters extends Component {
    * is already configured.
    * @param name The name/kind of the reporter, e.g. `spec`, `junit`, `lcov`.
    * @param destination Where the reporter's output is written.
-   * @default "stdout"
+   * @default Destination.STDOUT
    */
-  public add(name: ReporterKind, destination: Destination = "stdout"): void {
+  public add(
+    name: ReporterKind,
+    destination: Destination = Destination.STDOUT,
+  ): void {
     this._reporters.set(name, destination);
 
-    if (destination !== "stdout" && destination !== "stderr") {
+    if (
+      destination !== Destination.STDOUT &&
+      destination !== Destination.STDERR
+    ) {
       this.ensureDestinationDirectory(destination);
     }
   }
@@ -181,7 +215,7 @@ export class NodeReporters extends Component {
    * and package (e.g. `.npmignore`) files.
    */
   private ensureDestinationDirectory(destination: Destination): void {
-    const dir = posix.dirname(destination);
+    const dir = posix.dirname(destination.value);
     if (dir === ".") {
       return;
     }
@@ -198,7 +232,7 @@ export class NodeReporters extends Component {
 /**
  * Options for Node.js' built-in test runner (`node --test`).
  */
-export interface NodeNativeTestOptions {
+export interface NodeNativeTestRunnerOptions {
   /**
    * The directory where coverage files are output, if coverage collection
    * is enabled.
@@ -228,18 +262,19 @@ export interface NodeNativeTestOptions {
   readonly extraCliOptions?: string[];
 
   /**
-   * Preserve the default reporter when additional reporters are added.
+   * Preserve the default reporters (`spec`, `lcov`, `junit`) when additional
+   * reporters are added.
    *
    * @default true
    */
   readonly preserveDefaultReporters?: boolean;
 
   /**
-   * Additional reporters to configure, as reporter name to destination
-   * key-value pairs (e.g. `{ dot: "stdout", tap: "test-reports/tap.txt" }`).
+   * Additional reporters to configure (e.g. `{ name: "tap", destination:
+   * Destination.file("test-reports/tap.txt") }`).
    *
    * These are added on top of the default reporters (`spec`, `lcov`, `junit`),
-   * which are controlled via `collectCoverage`. `NodeNativeTest.reporters`
+   * which are controlled via `collectCoverage`. `NodeNativeTestRunner.reporters`
    * give access to add, remove or list reporters after construction.
    *
    * @default - no additional reporters
@@ -317,8 +352,8 @@ export interface NodeNativeTestOptions {
   readonly nodeOptions?: NodeConfigSchemaNodeOptions;
 
   /**
-   * Escape hatch to add or override any value in the `test` section of the
-   * generated configuration file.
+   * Additional entries for the `test` section of the generated
+   * configuration file (e.g. `testConcurrency`, `testTimeout`).
    *
    * @default - no additional options
    */
@@ -326,22 +361,20 @@ export interface NodeNativeTestOptions {
 }
 
 /**
- * Wires up Node's built-in test runner (`node --test`) as a self-contained
- * component: the generated configuration file (coverage, reporters, global
- * setup, etc., written via `--experimental-config-file`), the
- * coverage/report directories' gitignore/npmignore entries, the live
- * `testMatch`/`reporters` collections that feed into it, and the
- * "test"/"test:update"/"test:watch" tasks themselves.
+ * Configures Node's built-in test runner (`node --test`).
+ *
+ * Manages the generated Node.js configuration file, the "test"/"test:update"/
+ * "test:watch" tasks, and the reporters and test match patterns used by them.
  */
-export class NodeNativeTest extends Component {
+export class NodeNativeTestRunner extends Component {
   /**
-   * Returns the singleton NodeNativeTest component of a project or undefined
+   * Returns the singleton NodeNativeTestRunner component of a project or undefined
    * if there is none.
    */
-  public static of(project: Project): NodeNativeTest | undefined {
-    const isNodeNativeTest = (c: Component): c is NodeNativeTest =>
-      c instanceof NodeNativeTest;
-    return project.components.find(isNodeNativeTest);
+  public static of(project: Project): NodeNativeTestRunner | undefined {
+    const isNodeNativeTestRunner = (c: Component): c is NodeNativeTestRunner =>
+      c instanceof NodeNativeTestRunner;
+    return project.components.find(isNodeNativeTestRunner);
   }
 
   public readonly project: NodeProject;
@@ -349,13 +382,13 @@ export class NodeNativeTest extends Component {
   /**
    * The directory where Node outputs its coverage files.
    */
-  public readonly coverageDirectory?: string;
+  private readonly coverageDirectory?: string;
 
   /**
    * Whether snapshots are updated in task "test", or in a separate
    * "test:update" task.
    */
-  public readonly updateSnapshot: NodeTestUpdateSnapshot;
+  private readonly updateSnapshot: NodeTestUpdateSnapshot;
 
   /**
    * The reporters configured for this test runner. Use `add`/`remove`/`list`
@@ -378,7 +411,7 @@ export class NodeNativeTest extends Component {
    */
   private readonly testMatch: TestMatch;
 
-  constructor(scope: IConstruct, options: NodeNativeTestOptions = {}) {
+  constructor(scope: IConstruct, options: NodeNativeTestRunnerOptions = {}) {
     super(scope);
     this.project = closestProjectMustBe(scope, NodeProject, new.target.name);
 
@@ -413,9 +446,15 @@ export class NodeNativeTest extends Component {
     }
 
     if (preserveDefaultReporters && collectCoverage) {
-      this.reporters.add("spec", "stdout");
-      this.reporters.add("lcov", `${coverageDirectory}/lcov.info`);
-      this.reporters.add("junit", `${this.testReportsDir}/junit.xml`);
+      this.reporters.add("spec", Destination.STDOUT);
+      this.reporters.add(
+        "lcov",
+        Destination.file(`${coverageDirectory}/lcov.info`),
+      );
+      this.reporters.add(
+        "junit",
+        Destination.file(`${this.testReportsDir}/junit.xml`),
+      );
     }
 
     for (const { name, destination } of options.reporters ?? []) {
@@ -440,7 +479,7 @@ export class NodeNativeTest extends Component {
       // generated file.
       testReporter: (() => this.reporters.list().map((r) => r.name)) as any,
       testReporterDestination: (() =>
-        this.reporters.list().map((r) => r.destination)) as any,
+        this.reporters.list().map((r) => r.destination.value)) as any,
     };
     const test: NodeConfigSchemaTest = deepMerge(
       [defaultTest, options.testConfig ?? {}],

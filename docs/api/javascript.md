@@ -2112,34 +2112,37 @@ The underlying Node.js configuration file.
 ---
 
 
-### NodeNativeTest <a name="NodeNativeTest" id="projen.javascript.NodeNativeTest"></a>
+### NodeNativeTestRunner <a name="NodeNativeTestRunner" id="projen.javascript.NodeNativeTestRunner"></a>
 
-Wires up Node's built-in test runner (`node --test`) as a self-contained component: the generated configuration file (coverage, reporters, global setup, etc., written via `--experimental-config-file`), the coverage/report directories' gitignore/npmignore entries, the live `testMatch`/`reporters` collections that feed into it, and the "test"/"test:update"/"test:watch" tasks themselves.
+Configures Node's built-in test runner (`node --test`).
 
-#### Initializers <a name="Initializers" id="projen.javascript.NodeNativeTest.Initializer"></a>
+Manages the generated Node.js configuration file, the "test"/"test:update"/
+"test:watch" tasks, and the reporters and test match patterns used by them.
+
+#### Initializers <a name="Initializers" id="projen.javascript.NodeNativeTestRunner.Initializer"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-new javascript.NodeNativeTest(scope: IConstruct, options?: NodeNativeTestOptions)
+new javascript.NodeNativeTestRunner(scope: IConstruct, options?: NodeNativeTestRunnerOptions)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTest.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
-| <code><a href="#projen.javascript.NodeNativeTest.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.NodeNativeTestOptions">NodeNativeTestOptions</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.NodeNativeTestRunnerOptions">NodeNativeTestRunnerOptions</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeNativeTest.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeNativeTestRunner.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.IConstruct
 
 ---
 
-##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.NodeNativeTest.Initializer.parameter.options"></a>
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.NodeNativeTestRunner.Initializer.parameter.options"></a>
 
-- *Type:* <a href="#projen.javascript.NodeNativeTestOptions">NodeNativeTestOptions</a>
+- *Type:* <a href="#projen.javascript.NodeNativeTestRunnerOptions">NodeNativeTestRunnerOptions</a>
 
 ---
 
@@ -2147,19 +2150,19 @@ new javascript.NodeNativeTest(scope: IConstruct, options?: NodeNativeTestOptions
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTest.toString">toString</a></code> | Returns a string representation of this construct. |
-| <code><a href="#projen.javascript.NodeNativeTest.with">with</a></code> | Applies one or more mixins to this construct. |
-| <code><a href="#projen.javascript.NodeNativeTest.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
-| <code><a href="#projen.javascript.NodeNativeTest.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
-| <code><a href="#projen.javascript.NodeNativeTest.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
-| <code><a href="#projen.javascript.NodeNativeTest.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
-| <code><a href="#projen.javascript.NodeNativeTest.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
-| <code><a href="#projen.javascript.NodeNativeTest.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
-| <code><a href="#projen.javascript.NodeNativeTest.removeTestMatch">removeTestMatch</a></code> | Removes a test match pattern, if configured. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.removeTestMatch">removeTestMatch</a></code> | Removes a test match pattern, if configured. |
 
 ---
 
-##### `toString` <a name="toString" id="projen.javascript.NodeNativeTest.toString"></a>
+##### `toString` <a name="toString" id="projen.javascript.NodeNativeTestRunner.toString"></a>
 
 ```typescript
 public toString(): string
@@ -2167,7 +2170,7 @@ public toString(): string
 
 Returns a string representation of this construct.
 
-##### `with` <a name="with" id="projen.javascript.NodeNativeTest.with"></a>
+##### `with` <a name="with" id="projen.javascript.NodeNativeTestRunner.with"></a>
 
 ```typescript
 public with(mixins: ...IMixin[]): IConstruct
@@ -2180,7 +2183,7 @@ start of the call, so constructs added by a mixin will not be visited.
 Use multiple `with()` calls if subsequent mixins should apply to added
 constructs.
 
-###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeNativeTest.with.parameter.mixins"></a>
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeNativeTestRunner.with.parameter.mixins"></a>
 
 - *Type:* ...constructs.IMixin[]
 
@@ -2188,7 +2191,7 @@ The mixins to apply.
 
 ---
 
-##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeNativeTest.postProjectCreation"></a>
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeNativeTestRunner.postProjectCreation"></a>
 
 ```typescript
 public postProjectCreation(initProject: InitProject): void
@@ -2201,7 +2204,7 @@ It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `
 Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
 feedback on their new project. Order across components is not guaranteed.
 
-###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTest.postProjectCreation.parameter.initProject"></a>
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTestRunner.postProjectCreation.parameter.initProject"></a>
 
 - *Type:* projen.InitProject
 
@@ -2209,7 +2212,7 @@ Details about how the project was created, e.g. its type and the original CLI ar
 
 ---
 
-##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeNativeTest.postSynthesize"></a>
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeNativeTestRunner.postSynthesize"></a>
 
 ```typescript
 public postSynthesize(): void
@@ -2219,7 +2222,7 @@ Called after synthesis.
 
 Order is *not* guaranteed.
 
-##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeNativeTest.preSynthesize"></a>
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeNativeTestRunner.preSynthesize"></a>
 
 ```typescript
 public preSynthesize(): void
@@ -2227,7 +2230,7 @@ public preSynthesize(): void
 
 Called before synthesis.
 
-##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeNativeTest.projectCreation"></a>
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeNativeTestRunner.projectCreation"></a>
 
 ```typescript
 public projectCreation(initProject: InitProject): void
@@ -2238,7 +2241,7 @@ Called once, right after `synthesize()`, only when the project is created for th
 It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
 Use it for deterministic, one-off file generation. Order across components is not guaranteed.
 
-###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTest.projectCreation.parameter.initProject"></a>
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTestRunner.projectCreation.parameter.initProject"></a>
 
 - *Type:* projen.InitProject
 
@@ -2246,7 +2249,7 @@ Details about how the project was created, e.g. its type and the original CLI ar
 
 ---
 
-##### `synthesize` <a name="synthesize" id="projen.javascript.NodeNativeTest.synthesize"></a>
+##### `synthesize` <a name="synthesize" id="projen.javascript.NodeNativeTestRunner.synthesize"></a>
 
 ```typescript
 public synthesize(): void
@@ -2254,7 +2257,7 @@ public synthesize(): void
 
 Synthesizes files to the project output directory.
 
-##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.NodeNativeTest.addTestMatch"></a>
+##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.NodeNativeTestRunner.addTestMatch"></a>
 
 ```typescript
 public addTestMatch(pattern: string): void
@@ -2262,7 +2265,7 @@ public addTestMatch(pattern: string): void
 
 Adds a test match pattern.
 
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTest.addTestMatch.parameter.pattern"></a>
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTestRunner.addTestMatch.parameter.pattern"></a>
 
 - *Type:* string
 
@@ -2270,7 +2273,7 @@ glob pattern to match for tests.
 
 ---
 
-##### `removeTestMatch` <a name="removeTestMatch" id="projen.javascript.NodeNativeTest.removeTestMatch"></a>
+##### `removeTestMatch` <a name="removeTestMatch" id="projen.javascript.NodeNativeTestRunner.removeTestMatch"></a>
 
 ```typescript
 public removeTestMatch(pattern: string): void
@@ -2278,7 +2281,7 @@ public removeTestMatch(pattern: string): void
 
 Removes a test match pattern, if configured.
 
-###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTest.removeTestMatch.parameter.pattern"></a>
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTestRunner.removeTestMatch.parameter.pattern"></a>
 
 - *Type:* string
 
@@ -2290,18 +2293,18 @@ glob pattern to remove.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTest.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
-| <code><a href="#projen.javascript.NodeNativeTest.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
-| <code><a href="#projen.javascript.NodeNativeTest.of">of</a></code> | Returns the singleton NodeNativeTest component of a project or undefined if there is none. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.of">of</a></code> | Returns the singleton NodeNativeTestRunner component of a project or undefined if there is none. |
 
 ---
 
-##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeNativeTest.isConstruct"></a>
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeNativeTestRunner.isConstruct"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-javascript.NodeNativeTest.isConstruct(x: any)
+javascript.NodeNativeTestRunner.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
@@ -2320,7 +2323,7 @@ library can be accidentally installed, and `instanceof` will behave
 unpredictably. It is safest to avoid using `instanceof`, and using
 this type-testing method instead.
 
-###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTest.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTestRunner.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -2328,33 +2331,33 @@ Any object.
 
 ---
 
-##### `isComponent` <a name="isComponent" id="projen.javascript.NodeNativeTest.isComponent"></a>
+##### `isComponent` <a name="isComponent" id="projen.javascript.NodeNativeTestRunner.isComponent"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-javascript.NodeNativeTest.isComponent(x: any)
+javascript.NodeNativeTestRunner.isComponent(x: any)
 ```
 
 Test whether the given construct is a component.
 
-###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTest.isComponent.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTestRunner.isComponent.parameter.x"></a>
 
 - *Type:* any
 
 ---
 
-##### `of` <a name="of" id="projen.javascript.NodeNativeTest.of"></a>
+##### `of` <a name="of" id="projen.javascript.NodeNativeTestRunner.of"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-javascript.NodeNativeTest.of(project: Project)
+javascript.NodeNativeTestRunner.of(project: Project)
 ```
 
-Returns the singleton NodeNativeTest component of a project or undefined if there is none.
+Returns the singleton NodeNativeTestRunner component of a project or undefined if there is none.
 
-###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTest.of.parameter.project"></a>
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTestRunner.of.parameter.project"></a>
 
 - *Type:* projen.Project
 
@@ -2364,16 +2367,14 @@ Returns the singleton NodeNativeTest component of a project or undefined if ther
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTest.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#projen.javascript.NodeNativeTest.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
-| <code><a href="#projen.javascript.NodeNativeTest.property.configFile">configFile</a></code> | <code><a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a></code> | The generated Node.js configuration file. |
-| <code><a href="#projen.javascript.NodeNativeTest.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporters">NodeReporters</a></code> | The reporters configured for this test runner. |
-| <code><a href="#projen.javascript.NodeNativeTest.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a></code> | Whether snapshots are updated in task "test", or in a separate "test:update" task. |
-| <code><a href="#projen.javascript.NodeNativeTest.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where Node outputs its coverage files. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.configFile">configFile</a></code> | <code><a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a></code> | The generated Node.js configuration file. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporters">NodeReporters</a></code> | The reporters configured for this test runner. |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeNativeTest.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeNativeTestRunner.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -2385,7 +2386,7 @@ The tree node.
 
 ---
 
-##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTest.property.project"></a>
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTestRunner.property.project"></a>
 
 ```typescript
 public readonly project: NodeProject;
@@ -2395,7 +2396,7 @@ public readonly project: NodeProject;
 
 ---
 
-##### `configFile`<sup>Required</sup> <a name="configFile" id="projen.javascript.NodeNativeTest.property.configFile"></a>
+##### `configFile`<sup>Required</sup> <a name="configFile" id="projen.javascript.NodeNativeTestRunner.property.configFile"></a>
 
 ```typescript
 public readonly configFile: NodeConfigFile;
@@ -2407,7 +2408,7 @@ The generated Node.js configuration file.
 
 ---
 
-##### `reporters`<sup>Required</sup> <a name="reporters" id="projen.javascript.NodeNativeTest.property.reporters"></a>
+##### `reporters`<sup>Required</sup> <a name="reporters" id="projen.javascript.NodeNativeTestRunner.property.reporters"></a>
 
 ```typescript
 public readonly reporters: NodeReporters;
@@ -2419,30 +2420,6 @@ The reporters configured for this test runner.
 
 Use `add`/`remove`/`list`
 to manage reporters after construction.
-
----
-
-##### `updateSnapshot`<sup>Required</sup> <a name="updateSnapshot" id="projen.javascript.NodeNativeTest.property.updateSnapshot"></a>
-
-```typescript
-public readonly updateSnapshot: NodeTestUpdateSnapshot;
-```
-
-- *Type:* <a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a>
-
-Whether snapshots are updated in task "test", or in a separate "test:update" task.
-
----
-
-##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTest.property.coverageDirectory"></a>
-
-```typescript
-public readonly coverageDirectory: string;
-```
-
-- *Type:* string
-
-The directory where Node outputs its coverage files.
 
 ---
 
@@ -4615,7 +4592,7 @@ this task should synthesize the project files.
 
 ### NodeReporters <a name="NodeReporters" id="projen.javascript.NodeReporters"></a>
 
-Holds the set of reporters configured for a `NodeNativeTest` component, backing the `test.testReporter`/`test.testReporterDestination` fields of the generated Node.js configuration file.
+Holds the set of reporters configured for a `NodeNativeTestRunner` component, backing the `test.testReporter`/`test.testReporterDestination` fields of the generated Node.js configuration file.
 
 #### Initializers <a name="Initializers" id="projen.javascript.NodeReporters.Initializer"></a>
 
@@ -4752,7 +4729,7 @@ Synthesizes files to the project output directory.
 ##### `add` <a name="add" id="projen.javascript.NodeReporters.add"></a>
 
 ```typescript
-public add(name: string, destination?: string): void
+public add(name: string, destination?: Destination): void
 ```
 
 Adds a reporter, or updates its destination if one with the same name is already configured.
@@ -4767,7 +4744,7 @@ The name/kind of the reporter, e.g. `spec`, `junit`, `lcov`.
 
 ###### `destination`<sup>Optional</sup> <a name="destination" id="projen.javascript.NodeReporters.add.parameter.destination"></a>
 
-- *Type:* string
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
 
 Where the reporter's output is written.
 
@@ -13178,40 +13155,40 @@ preserve outputs on watch mode restart.
 
 ---
 
-### NodeNativeTestOptions <a name="NodeNativeTestOptions" id="projen.javascript.NodeNativeTestOptions"></a>
+### NodeNativeTestRunnerOptions <a name="NodeNativeTestRunnerOptions" id="projen.javascript.NodeNativeTestRunnerOptions"></a>
 
 Options for Node.js' built-in test runner (`node --test`).
 
-#### Initializer <a name="Initializer" id="projen.javascript.NodeNativeTestOptions.Initializer"></a>
+#### Initializer <a name="Initializer" id="projen.javascript.NodeNativeTestRunnerOptions.Initializer"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-const nodeNativeTestOptions: javascript.NodeNativeTestOptions = { ... }
+const nodeNativeTestRunnerOptions: javascript.NodeNativeTestRunnerOptions = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.collectCoverage">collectCoverage</a></code> | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.coveragePathIgnorePatterns">coveragePathIgnorePatterns</a></code> | <code>string[]</code> | An array of glob patterns that are matched against all file paths before executing coverage collection. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the `node --test` CLI invocation. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.moduleMocks">moduleMocks</a></code> | <code>boolean</code> | Enable module mocking support via `--experimental-test-module-mocks`. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`). |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporter when additional reporters are added. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporter">NodeReporter</a>[]</code> | Additional reporters to configure, as reporter name to destination key-value pairs (e.g. `{ dot: "stdout", tap: "test-reports/tap.txt" }`). |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.testConfig">testConfig</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | Escape hatch to add or override any value in the `test` section of the generated configuration file. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | Glob patterns matching the files that contain tests. |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.transformTypes">transformTypes</a></code> | <code>boolean</code> | Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces). |
-| <code><a href="#projen.javascript.NodeNativeTestOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.collectCoverage">collectCoverage</a></code> | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.coveragePathIgnorePatterns">coveragePathIgnorePatterns</a></code> | <code>string[]</code> | An array of glob patterns that are matched against all file paths before executing coverage collection. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the `node --test` CLI invocation. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.moduleMocks">moduleMocks</a></code> | <code>boolean</code> | Enable module mocking support via `--experimental-test-module-mocks`. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporters (`spec`, `lcov`, `junit`) when additional reporters are added. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporter">NodeReporter</a>[]</code> | Additional reporters to configure (e.g. `{ name: "tap", destination: Destination.file("test-reports/tap.txt") }`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.testConfig">testConfig</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | Additional entries for the `test` section of the generated configuration file (e.g. `testConcurrency`, `testTimeout`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.transformTypes">transformTypes</a></code> | <code>boolean</code> | Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
 
 ---
 
-##### `collectCoverage`<sup>Optional</sup> <a name="collectCoverage" id="projen.javascript.NodeNativeTestOptions.property.collectCoverage"></a>
+##### `collectCoverage`<sup>Optional</sup> <a name="collectCoverage" id="projen.javascript.NodeNativeTestRunnerOptions.property.collectCoverage"></a>
 
 ```typescript
 public readonly collectCoverage: boolean;
@@ -13224,7 +13201,7 @@ Indicates whether the coverage information should be collected while executing t
 
 ---
 
-##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeNativeTestOptions.property.configFilePath"></a>
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeNativeTestRunnerOptions.property.configFilePath"></a>
 
 ```typescript
 public readonly configFilePath: string;
@@ -13237,7 +13214,7 @@ Path to the JSON configuration file for the test runner.
 
 ---
 
-##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTestOptions.property.coverageDirectory"></a>
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTestRunnerOptions.property.coverageDirectory"></a>
 
 ```typescript
 public readonly coverageDirectory: string;
@@ -13250,7 +13227,7 @@ The directory where coverage files are output, if coverage collection is enabled
 
 ---
 
-##### `coveragePathIgnorePatterns`<sup>Optional</sup> <a name="coveragePathIgnorePatterns" id="projen.javascript.NodeNativeTestOptions.property.coveragePathIgnorePatterns"></a>
+##### `coveragePathIgnorePatterns`<sup>Optional</sup> <a name="coveragePathIgnorePatterns" id="projen.javascript.NodeNativeTestRunnerOptions.property.coveragePathIgnorePatterns"></a>
 
 ```typescript
 public readonly coveragePathIgnorePatterns: string[];
@@ -13266,7 +13243,7 @@ patterns, coverage information will be skipped for it.
 
 ---
 
-##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeNativeTestOptions.property.extraCliOptions"></a>
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeNativeTestRunnerOptions.property.extraCliOptions"></a>
 
 ```typescript
 public readonly extraCliOptions: string[];
@@ -13283,7 +13260,7 @@ parses these, so a flag and its value need separate elements
 
 ---
 
-##### `globalSetup`<sup>Optional</sup> <a name="globalSetup" id="projen.javascript.NodeNativeTestOptions.property.globalSetup"></a>
+##### `globalSetup`<sup>Optional</sup> <a name="globalSetup" id="projen.javascript.NodeNativeTestRunnerOptions.property.globalSetup"></a>
 
 ```typescript
 public readonly globalSetup: string;
@@ -13299,7 +13276,7 @@ file.
 
 ---
 
-##### `moduleMocks`<sup>Optional</sup> <a name="moduleMocks" id="projen.javascript.NodeNativeTestOptions.property.moduleMocks"></a>
+##### `moduleMocks`<sup>Optional</sup> <a name="moduleMocks" id="projen.javascript.NodeNativeTestRunnerOptions.property.moduleMocks"></a>
 
 ```typescript
 public readonly moduleMocks: boolean;
@@ -13312,7 +13289,7 @@ Enable module mocking support via `--experimental-test-module-mocks`.
 
 ---
 
-##### `nodeOptions`<sup>Optional</sup> <a name="nodeOptions" id="projen.javascript.NodeNativeTestOptions.property.nodeOptions"></a>
+##### `nodeOptions`<sup>Optional</sup> <a name="nodeOptions" id="projen.javascript.NodeNativeTestRunnerOptions.property.nodeOptions"></a>
 
 ```typescript
 public readonly nodeOptions: NodeConfigSchemaNodeOptions;
@@ -13325,7 +13302,7 @@ Additional entries for the `nodeOptions` section of the generated configuration 
 
 ---
 
-##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeNativeTestOptions.property.preserveDefaultReporters"></a>
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeNativeTestRunnerOptions.property.preserveDefaultReporters"></a>
 
 ```typescript
 public readonly preserveDefaultReporters: boolean;
@@ -13334,11 +13311,11 @@ public readonly preserveDefaultReporters: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Preserve the default reporter when additional reporters are added.
+Preserve the default reporters (`spec`, `lcov`, `junit`) when additional reporters are added.
 
 ---
 
-##### `reporters`<sup>Optional</sup> <a name="reporters" id="projen.javascript.NodeNativeTestOptions.property.reporters"></a>
+##### `reporters`<sup>Optional</sup> <a name="reporters" id="projen.javascript.NodeNativeTestRunnerOptions.property.reporters"></a>
 
 ```typescript
 public readonly reporters: NodeReporter[];
@@ -13347,15 +13324,15 @@ public readonly reporters: NodeReporter[];
 - *Type:* <a href="#projen.javascript.NodeReporter">NodeReporter</a>[]
 - *Default:* no additional reporters
 
-Additional reporters to configure, as reporter name to destination key-value pairs (e.g. `{ dot: "stdout", tap: "test-reports/tap.txt" }`).
+Additional reporters to configure (e.g. `{ name: "tap", destination: Destination.file("test-reports/tap.txt") }`).
 
 These are added on top of the default reporters (`spec`, `lcov`, `junit`),
-which are controlled via `collectCoverage`. `NodeNativeTest.reporters`
+which are controlled via `collectCoverage`. `NodeNativeTestRunner.reporters`
 give access to add, remove or list reporters after construction.
 
 ---
 
-##### `testConfig`<sup>Optional</sup> <a name="testConfig" id="projen.javascript.NodeNativeTestOptions.property.testConfig"></a>
+##### `testConfig`<sup>Optional</sup> <a name="testConfig" id="projen.javascript.NodeNativeTestRunnerOptions.property.testConfig"></a>
 
 ```typescript
 public readonly testConfig: NodeConfigSchemaTest;
@@ -13364,11 +13341,11 @@ public readonly testConfig: NodeConfigSchemaTest;
 - *Type:* <a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a>
 - *Default:* no additional options
 
-Escape hatch to add or override any value in the `test` section of the generated configuration file.
+Additional entries for the `test` section of the generated configuration file (e.g. `testConcurrency`, `testTimeout`).
 
 ---
 
-##### `testMatch`<sup>Optional</sup> <a name="testMatch" id="projen.javascript.NodeNativeTestOptions.property.testMatch"></a>
+##### `testMatch`<sup>Optional</sup> <a name="testMatch" id="projen.javascript.NodeNativeTestRunnerOptions.property.testMatch"></a>
 
 ```typescript
 public readonly testMatch: string[];
@@ -13384,7 +13361,7 @@ combines Node.js' own default test file discovery with Jest conventions.
 
 ---
 
-##### `transformTypes`<sup>Optional</sup> <a name="transformTypes" id="projen.javascript.NodeNativeTestOptions.property.transformTypes"></a>
+##### `transformTypes`<sup>Optional</sup> <a name="transformTypes" id="projen.javascript.NodeNativeTestRunnerOptions.property.transformTypes"></a>
 
 ```typescript
 public readonly transformTypes: boolean;
@@ -13404,7 +13381,7 @@ stack traces.
 
 ---
 
-##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.NodeNativeTestOptions.property.updateSnapshot"></a>
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.NodeNativeTestRunnerOptions.property.updateSnapshot"></a>
 
 ```typescript
 public readonly updateSnapshot: NodeTestUpdateSnapshot;
@@ -16356,7 +16333,7 @@ const nodeReporter: javascript.NodeReporter = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.NodeReporter.property.destination">destination</a></code> | <code>string</code> | Where the reporter's output is written. |
+| <code><a href="#projen.javascript.NodeReporter.property.destination">destination</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Where the reporter's output is written. |
 | <code><a href="#projen.javascript.NodeReporter.property.name">name</a></code> | <code>string</code> | The name/kind of the reporter. |
 
 ---
@@ -16364,13 +16341,15 @@ const nodeReporter: javascript.NodeReporter = { ... }
 ##### `destination`<sup>Required</sup> <a name="destination" id="projen.javascript.NodeReporter.property.destination"></a>
 
 ```typescript
-public readonly destination: string;
+public readonly destination: Destination;
 ```
 
-- *Type:* string
-- *Default:* "stdout"
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+- *Default:* Destination.STDOUT
 
 Where the reporter's output is written.
+
+> [https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77)
 
 ---
 
@@ -25838,6 +25817,92 @@ public readonly os: string[];
 ---
 
 ## Classes <a name="Classes" id="Classes"></a>
+
+### Destination <a name="Destination" id="projen.javascript.Destination"></a>
+
+Where a reporter's output is written.
+
+> [https://nodejs.org/api/test.html#test-reporters](https://nodejs.org/api/test.html#test-reporters)
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Destination.file">file</a></code> | Write to a file at the given path. |
+
+---
+
+##### `file` <a name="file" id="projen.javascript.Destination.file"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Destination.file(path: string)
+```
+
+Write to a file at the given path.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.javascript.Destination.file.parameter.path"></a>
+
+- *Type:* string
+
+path of the file to write to.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Destination.property.value">value</a></code> | <code>string</code> | The underlying value: `"stdout"`, `"stderr"`, or a file path. |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.javascript.Destination.property.value"></a>
+
+```typescript
+public readonly value: string;
+```
+
+- *Type:* string
+
+The underlying value: `"stdout"`, `"stderr"`, or a file path.
+
+---
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Destination.property.STDERR">STDERR</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Write to standard error. |
+| <code><a href="#projen.javascript.Destination.property.STDOUT">STDOUT</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Write to standard output. |
+
+---
+
+##### `STDERR`<sup>Required</sup> <a name="STDERR" id="projen.javascript.Destination.property.STDERR"></a>
+
+```typescript
+public readonly STDERR: Destination;
+```
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+
+Write to standard error.
+
+---
+
+##### `STDOUT`<sup>Required</sup> <a name="STDOUT" id="projen.javascript.Destination.property.STDOUT"></a>
+
+```typescript
+public readonly STDOUT: Destination;
+```
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+
+Write to standard output.
+
+---
 
 ### JestReporter <a name="JestReporter" id="projen.javascript.JestReporter"></a>
 

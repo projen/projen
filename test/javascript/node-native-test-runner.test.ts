@@ -1,7 +1,8 @@
 import {
   NodeProject,
-  NodeNativeTest,
+  NodeNativeTestRunner,
   NodeTestUpdateSnapshot,
+  Destination,
 } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { mkdtemp, synthSnapshot } from "../util";
@@ -21,9 +22,9 @@ function newProject() {
 
 test("defaults configured", () => {
   const project = newProject();
-  new NodeNativeTest(project);
+  new NodeNativeTestRunner(project);
 
-  expect(NodeNativeTest.of(project)).toBeDefined();
+  expect(NodeNativeTestRunner.of(project)).toBeDefined();
 
   const snapshot = synthSnapshot(project);
 
@@ -63,7 +64,7 @@ test("defaults configured", () => {
 
 test("defaults combine Node.js' own test file discovery with Jest conventions, without extglobs", () => {
   const project = newProject();
-  new NodeNativeTest(project);
+  new NodeNativeTestRunner(project);
 
   const snapshot = synthSnapshot(project);
   const testExecStep = snapshot[".projen/tasks.json"].tasks.test.steps.find(
@@ -91,7 +92,7 @@ test("defaults combine Node.js' own test file discovery with Jest conventions, w
 
 test("with options", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     collectCoverage: false,
     testMatch: ["test/**/*.test.ts"],
     updateSnapshot: NodeTestUpdateSnapshot.NEVER,
@@ -120,7 +121,7 @@ test("with options", () => {
 
 test("test match patterns (positional args) come after every flag, in every task", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     updateSnapshot: NodeTestUpdateSnapshot.NEVER,
     testMatch: ["foo/**/*.test.ts"],
   });
@@ -144,9 +145,14 @@ test("test match patterns (positional args) come after every flag, in every task
 
 test("creates the test-reports directory when junit reporting is enabled without coverage", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     collectCoverage: false,
-    reporters: [{ name: "junit", destination: "some-destination/junit.xml" }],
+    reporters: [
+      {
+        name: "junit",
+        destination: Destination.file("some-destination/junit.xml"),
+      },
+    ],
   });
 
   const snapshot = synthSnapshot(project);
@@ -159,9 +165,9 @@ test("creates the test-reports directory when junit reporting is enabled without
 
 test("does not create a directory for a reporter destination with no directory component", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     collectCoverage: false,
-    reporters: [{ name: "junit", destination: "junit.xml" }],
+    reporters: [{ name: "junit", destination: Destination.file("junit.xml") }],
   });
 
   const snapshot = synthSnapshot(project);
@@ -174,20 +180,22 @@ test("does not create a directory for a reporter destination with no directory c
 
 test("NodeReporters.remove() removes a configured reporter", () => {
   const project = newProject();
-  const nodeNativeTest = new NodeNativeTest(project);
+  const nodeNativeTestRunner = new NodeNativeTestRunner(project);
 
-  expect(nodeNativeTest.reporters.list().map((r) => r.name)).toContain("junit");
-
-  nodeNativeTest.reporters.remove("junit");
-
-  expect(nodeNativeTest.reporters.list().map((r) => r.name)).not.toContain(
+  expect(nodeNativeTestRunner.reporters.list().map((r) => r.name)).toContain(
     "junit",
   );
+
+  nodeNativeTestRunner.reporters.remove("junit");
+
+  expect(
+    nodeNativeTestRunner.reporters.list().map((r) => r.name),
+  ).not.toContain("junit");
 });
 
 test("no reporters are configured when coverage, junit and text reporting are all disabled", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     collectCoverage: false,
   });
 
@@ -199,7 +207,7 @@ test("no reporters are configured when coverage, junit and text reporting are al
 
 test("an explicit testConfig.testReporter/testReporterDestination overrides the derived reporters", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     testConfig: {
       testReporter: ["tap"],
       testReporterDestination: ["stdout"],
@@ -212,21 +220,21 @@ test("an explicit testConfig.testReporter/testReporterDestination overrides the 
   expect(configFile.test["test-reporter-destination"]).toEqual(["stdout"]);
 });
 
-test("NodeNativeTest.of() returns the singleton instance or undefined", () => {
+test("NodeNativeTestRunner.of() returns the singleton instance or undefined", () => {
   const project = newProject();
-  expect(NodeNativeTest.of(project)).toBeUndefined();
+  expect(NodeNativeTestRunner.of(project)).toBeUndefined();
 
-  new NodeNativeTest(project);
-  expect(NodeNativeTest.of(project)).toBeDefined();
+  new NodeNativeTestRunner(project);
+  expect(NodeNativeTestRunner.of(project)).toBeDefined();
 });
 
 test("addTestMatch() can be used to add patterns after construction, reflected in the test command", () => {
   const project = newProject();
-  const nodeNativeTest = new NodeNativeTest(project, {
+  const nodeNativeTestRunner = new NodeNativeTestRunner(project, {
     testMatch: ["foo/**/*.test.ts"],
   });
 
-  nodeNativeTest.addTestMatch("bar/**/*.test.ts");
+  nodeNativeTestRunner.addTestMatch("bar/**/*.test.ts");
 
   // configuring the "test" task is deferred to synthesis, so patterns added
   // after construction are still picked up.
@@ -239,12 +247,12 @@ test("addTestMatch() can be used to add patterns after construction, reflected i
 
 test("removeTestMatch() removes a previously added pattern, and is a no-op if not found", () => {
   const project = newProject();
-  const nodeNativeTest = new NodeNativeTest(project, {
+  const nodeNativeTestRunner = new NodeNativeTestRunner(project, {
     testMatch: ["foo/**/*.test.ts"],
   });
 
-  nodeNativeTest.removeTestMatch("does-not-exist/**/*.test.ts");
-  nodeNativeTest.removeTestMatch("foo/**/*.test.ts");
+  nodeNativeTestRunner.removeTestMatch("does-not-exist/**/*.test.ts");
+  nodeNativeTestRunner.removeTestMatch("foo/**/*.test.ts");
 
   // configuring the "test" task is deferred to synthesis, so the removal is
   // reflected in the final CLI args too.
@@ -256,7 +264,7 @@ test("removeTestMatch() removes a previously added pattern, and is a no-op if no
 
 test("transformTypes adds the amaro dependency and configures nodeOptions", () => {
   const project = newProject();
-  new NodeNativeTest(project, {
+  new NodeNativeTestRunner(project, {
     transformTypes: true,
   });
 

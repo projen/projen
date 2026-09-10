@@ -1,5 +1,5 @@
-import { resolve } from "../_resolve";
 import { Component } from "../component";
+import type { IResolver } from "../file";
 import { JsonFile } from "../json";
 import type { Project } from "../project";
 import type { NodeConfigSchema } from "./node-config";
@@ -52,13 +52,26 @@ export class NodeConfigFile extends Component {
     const { filePath = "node.config.json", ...config } = options;
     this.config = config;
 
-    this.file = new JsonFile(project, filePath, {
-      // resolve first so that any lazily-computed values (e.g. a function
-      // returning the current state of a live collection) in `this.config`
-      // are evaluated before the generated schema mapper reads them.
-      obj: () => toJson_NodeConfigSchema(resolve(this.config)),
+    this.file = new NodeConfigJsonFile(project, filePath, {
+      obj: config,
       omitEmpty: true,
       marker: false,
+    });
+  }
+}
+
+/**
+ * A `JsonFile` that maps its `obj` through `toJson_NodeConfigSchema`.
+ *
+ * Resolution of `obj` (e.g. any lazily-computed value, such as a function
+ * returning the current state of a live collection) is composed into the
+ * mapping step itself, so the mapper always receives already-resolved data.
+ */
+class NodeConfigJsonFile extends JsonFile {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
+    return super.synthesizeContent({
+      resolve: (value, options) =>
+        toJson_NodeConfigSchema(resolver.resolve(value, options)),
     });
   }
 }
