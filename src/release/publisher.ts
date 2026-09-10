@@ -2,7 +2,7 @@ import type { BranchOptions } from "./release";
 import { ARTIFACT_ID_OUTPUT } from "../build/private/consts";
 import { Component } from "../component";
 import { WorkflowSteps } from "../github";
-import { GitHubActions } from "../github/actions.const";
+import { ActionRefs } from "../github/actions.const";
 import {
   DEFAULT_GITHUB_ACTIONS_USER,
   PERMISSION_BACKUP_FILE,
@@ -400,7 +400,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
+        uses: ActionRefs.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -623,7 +623,7 @@ export class Publisher extends Component {
         permissions = { ...permissions, idToken: JobPermission.WRITE };
         prePublishSteps.push({
           name: "Configure AWS Credentials via GitHub OIDC Provider",
-          uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
+          uses: ActionRefs.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
           with: {
             "role-to-assume": roleToAssume,
             "aws-region": region,

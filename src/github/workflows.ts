@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { extname } from "node:path";
 import { snake } from "case";
 import type { GitHubActionsProvider } from "./actions-provider";
-import { GitHubActions } from "./actions.const";
+import { ActionRefs } from "./actions.const";
 import type { GitHub } from "./github";
 import type { GithubCredentials } from "./github-credentials";
 import type * as workflows from "./workflows-model";
@@ -783,7 +783,7 @@ function setupTools(tools: workflows.Tools) {
       );
     }
     steps.push({
-      uses: GitHubActions.ACTIONS_SETUP_JAVA,
+      uses: ActionRefs.ACTIONS_SETUP_JAVA,
       with: {
         distribution: tools.java.distribution ?? "corretto",
         "java-version": tools.java.version,
@@ -794,7 +794,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.node) {
     steps.push({
-      uses: GitHubActions.ACTIONS_SETUP_NODE,
+      uses: ActionRefs.ACTIONS_SETUP_NODE,
       with: {
         "node-version": tools.node.version,
         "package-manager-cache": tools.node.cache ?? false,
@@ -809,7 +809,7 @@ function setupTools(tools: workflows.Tools) {
       );
     }
     steps.push({
-      uses: GitHubActions.ACTIONS_SETUP_PYTHON,
+      uses: ActionRefs.ACTIONS_SETUP_PYTHON,
       with: {
         "python-version": tools.python.version,
         ...(tools.python.cache && { cache: tools.python.packageManager }),
@@ -819,7 +819,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.go) {
     steps.push({
-      uses: GitHubActions.ACTIONS_SETUP_GO,
+      uses: ActionRefs.ACTIONS_SETUP_GO,
       with: {
         "go-version": tools.go.version,
         cache: tools.go.cache ?? false,
@@ -829,7 +829,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.dotnet) {
     steps.push({
-      uses: GitHubActions.ACTIONS_SETUP_DOTNET,
+      uses: ActionRefs.ACTIONS_SETUP_DOTNET,
       with: {
         "dotnet-version": tools.dotnet.version,
         cache: tools.dotnet.cache ?? false,

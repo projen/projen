@@ -1,4 +1,4 @@
-import { GitHubActions } from "./actions.const";
+import { ActionRefs } from "./actions.const";
 import type { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
@@ -127,7 +127,7 @@ export class Stale extends Component {
         steps: [
           {
             id: "run-actions-stale",
-            uses: GitHubActions.ACTIONS_STALE,
+            uses: ActionRefs.ACTIONS_STALE,
             with: {
               // disable global
               "days-before-stale": -1,

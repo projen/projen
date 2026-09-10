@@ -121,14 +121,19 @@ export class ActionsConst extends TextFile {
 
     const comment =
       options.comment ??
-      "Fully qualified references for all GitHub Actions used by this project.";
+      [
+        "Fully qualified references (`owner/repo@ref`) for GitHub Actions.",
+        "",
+        "Use these when authoring workflow steps, so that every step references a",
+        "reviewed action version.",
+      ].join("\n");
 
     this.addLine("/**");
     for (const line of comment.split("\n")) {
       this.addLine(` * ${line}`);
     }
     this.addLine(" */");
-    this.addLine("export class GitHubActions {");
+    this.addLine("export class ActionRefs {");
 
     // Guard against two action names collapsing into the same constant name,
     // which would produce a file that does not compile.

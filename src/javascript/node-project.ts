@@ -33,7 +33,7 @@ import {
   isYarnBerry,
   isYarnClassic,
 } from "./util";
-import { GitHubActions } from "../github/actions.const";
+import { ActionRefs } from "../github/actions.const";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/private/util";
 import type {
@@ -969,7 +969,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: GitHubActions.CODECOV_CODECOV_ACTION,
+          uses: ActionRefs.CODECOV_CODECOV_ACTION,
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -1063,7 +1063,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
+          uses: ActionRefs.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -1081,7 +1081,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: GitHubActions.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
+          uses: ActionRefs.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS,
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret,
@@ -1140,13 +1140,13 @@ export class NodeProject extends GitHubProject {
     } else if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: GitHubActions.PNPM_ACTION_SETUP,
+        uses: ActionRefs.PNPM_ACTION_SETUP,
         with: { version: this.package.pnpmVersion },
       });
     } else if (this.package.packageManager === NodePackageManager.BUN) {
       install.push({
         name: "Setup bun",
-        uses: GitHubActions.OVEN_SH_SETUP_BUN,
+        uses: ActionRefs.OVEN_SH_SETUP_BUN,
         with: { "bun-version": this.package.bunVersion },
       });
     }
@@ -1162,7 +1162,7 @@ export class NodeProject extends GitHubProject {
               : "npm";
         install.push({
           name: "Setup Node.js",
-          uses: GitHubActions.ACTIONS_SETUP_NODE,
+          uses: ActionRefs.ACTIONS_SETUP_NODE,
           with: {
             ...(this.nodeVersion && {
               "node-version": this.nodeVersion,
