@@ -2112,6 +2112,318 @@ The underlying Node.js configuration file.
 ---
 
 
+### NodeNativeTestRunner <a name="NodeNativeTestRunner" id="projen.javascript.NodeNativeTestRunner"></a>
+
+Configures Node's built-in test runner (`node --test`).
+
+Manages the generated Node.js configuration file, the "test"/"test:update"/
+"test:watch" tasks, and the reporters and test match patterns used by them.
+
+#### Initializers <a name="Initializers" id="projen.javascript.NodeNativeTestRunner.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.NodeNativeTestRunner(scope: IConstruct, options?: NodeNativeTestRunnerOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.Initializer.parameter.options">options</a></code> | <code><a href="#projen.javascript.NodeNativeTestRunnerOptions">NodeNativeTestRunnerOptions</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeNativeTestRunner.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.javascript.NodeNativeTestRunner.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.javascript.NodeNativeTestRunnerOptions">NodeNativeTestRunnerOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.addTestMatch">addTestMatch</a></code> | Adds a test match pattern. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.removeTestMatch">removeTestMatch</a></code> | Removes a test match pattern, if configured. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.NodeNativeTestRunner.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.javascript.NodeNativeTestRunner.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeNativeTestRunner.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeNativeTestRunner.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTestRunner.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeNativeTestRunner.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeNativeTestRunner.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeNativeTestRunner.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeNativeTestRunner.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.NodeNativeTestRunner.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `addTestMatch` <a name="addTestMatch" id="projen.javascript.NodeNativeTestRunner.addTestMatch"></a>
+
+```typescript
+public addTestMatch(pattern: string): void
+```
+
+Adds a test match pattern.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTestRunner.addTestMatch.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to match for tests.
+
+---
+
+##### `removeTestMatch` <a name="removeTestMatch" id="projen.javascript.NodeNativeTestRunner.removeTestMatch"></a>
+
+```typescript
+public removeTestMatch(pattern: string): void
+```
+
+Removes a test match pattern, if configured.
+
+###### `pattern`<sup>Required</sup> <a name="pattern" id="projen.javascript.NodeNativeTestRunner.removeTestMatch.parameter.pattern"></a>
+
+- *Type:* string
+
+glob pattern to remove.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.of">of</a></code> | Returns the singleton NodeNativeTestRunner component of a project or undefined if there is none. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeNativeTestRunner.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeNativeTestRunner.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTestRunner.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.NodeNativeTestRunner.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeNativeTestRunner.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeNativeTestRunner.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+##### `of` <a name="of" id="projen.javascript.NodeNativeTestRunner.of"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeNativeTestRunner.of(project: Project)
+```
+
+Returns the singleton NodeNativeTestRunner component of a project or undefined if there is none.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTestRunner.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.project">project</a></code> | <code><a href="#projen.javascript.NodeProject">NodeProject</a></code> | *No description.* |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.configFile">configFile</a></code> | <code><a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a></code> | The generated Node.js configuration file. |
+| <code><a href="#projen.javascript.NodeNativeTestRunner.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporters">NodeReporters</a></code> | The reporters configured for this test runner. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeNativeTestRunner.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeNativeTestRunner.property.project"></a>
+
+```typescript
+public readonly project: NodeProject;
+```
+
+- *Type:* <a href="#projen.javascript.NodeProject">NodeProject</a>
+
+---
+
+##### `configFile`<sup>Required</sup> <a name="configFile" id="projen.javascript.NodeNativeTestRunner.property.configFile"></a>
+
+```typescript
+public readonly configFile: NodeConfigFile;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigFile">NodeConfigFile</a>
+
+The generated Node.js configuration file.
+
+---
+
+##### `reporters`<sup>Required</sup> <a name="reporters" id="projen.javascript.NodeNativeTestRunner.property.reporters"></a>
+
+```typescript
+public readonly reporters: NodeReporters;
+```
+
+- *Type:* <a href="#projen.javascript.NodeReporters">NodeReporters</a>
+
+The reporters configured for this test runner.
+
+Use `add`/`remove`/`list`
+to manage reporters after construction.
+
+---
+
+
 ### NodePackage <a name="NodePackage" id="projen.javascript.NodePackage"></a>
 
 Represents the npm `package.json` file.
@@ -4277,6 +4589,279 @@ Normally
 this task should synthesize the project files.
 
 ---
+
+### NodeReporters <a name="NodeReporters" id="projen.javascript.NodeReporters"></a>
+
+Holds the set of reporters configured for a `NodeNativeTestRunner` component, backing the `test.testReporter`/`test.testReporterDestination` fields of the generated Node.js configuration file.
+
+#### Initializers <a name="Initializers" id="projen.javascript.NodeReporters.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+new javascript.NodeReporters(scope: IConstruct)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.Initializer.parameter.scope">scope</a></code> | <code>constructs.IConstruct</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="projen.javascript.NodeReporters.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.IConstruct
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.javascript.NodeReporters.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.javascript.NodeReporters.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeReporters.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.javascript.NodeReporters.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.javascript.NodeReporters.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.javascript.NodeReporters.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.javascript.NodeReporters.add">add</a></code> | Adds a reporter, or updates its destination if one with the same name is already configured. |
+| <code><a href="#projen.javascript.NodeReporters.list">list</a></code> | Lists the configured reporters, in the order they were added. |
+| <code><a href="#projen.javascript.NodeReporters.remove">remove</a></code> | Removes a reporter, if configured. |
+
+---
+
+##### `toString` <a name="toString" id="projen.javascript.NodeReporters.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.javascript.NodeReporters.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.javascript.NodeReporters.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.javascript.NodeReporters.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeReporters.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.javascript.NodeReporters.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.javascript.NodeReporters.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.javascript.NodeReporters.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.javascript.NodeReporters.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.javascript.NodeReporters.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+##### `add` <a name="add" id="projen.javascript.NodeReporters.add"></a>
+
+```typescript
+public add(name: string, destination?: Destination): void
+```
+
+Adds a reporter, or updates its destination if one with the same name is already configured.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporters.add.parameter.name"></a>
+
+- *Type:* string
+
+The name/kind of the reporter, e.g. `spec`, `junit`, `lcov`.
+
+---
+
+###### `destination`<sup>Optional</sup> <a name="destination" id="projen.javascript.NodeReporters.add.parameter.destination"></a>
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+
+Where the reporter's output is written.
+
+---
+
+##### `list` <a name="list" id="projen.javascript.NodeReporters.list"></a>
+
+```typescript
+public list(): NodeReporter[]
+```
+
+Lists the configured reporters, in the order they were added.
+
+##### `remove` <a name="remove" id="projen.javascript.NodeReporters.remove"></a>
+
+```typescript
+public remove(name: string): void
+```
+
+Removes a reporter, if configured.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporters.remove.parameter.name"></a>
+
+- *Type:* string
+
+The name/kind of the reporter to remove.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.javascript.NodeReporters.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.javascript.NodeReporters.isConstruct"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeReporters.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeReporters.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.javascript.NodeReporters.isComponent"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.NodeReporters.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.javascript.NodeReporters.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporters.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.javascript.NodeReporters.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.javascript.NodeReporters.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.javascript.NodeReporters.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
 
 ### NpmConfig <a name="NpmConfig" id="projen.javascript.NpmConfig"></a>
 
@@ -12570,6 +13155,245 @@ preserve outputs on watch mode restart.
 
 ---
 
+### NodeNativeTestRunnerOptions <a name="NodeNativeTestRunnerOptions" id="projen.javascript.NodeNativeTestRunnerOptions"></a>
+
+Options for Node.js' built-in test runner (`node --test`).
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeNativeTestRunnerOptions.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeNativeTestRunnerOptions: javascript.NodeNativeTestRunnerOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.collectCoverage">collectCoverage</a></code> | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to the JSON configuration file for the test runner. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.coverageDirectory">coverageDirectory</a></code> | <code>string</code> | The directory where coverage files are output, if coverage collection is enabled. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.coveragePathIgnorePatterns">coveragePathIgnorePatterns</a></code> | <code>string[]</code> | An array of glob patterns that are matched against all file paths before executing coverage collection. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the `node --test` CLI invocation. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.globalSetup">globalSetup</a></code> | <code>string</code> | This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.moduleMocks">moduleMocks</a></code> | <code>boolean</code> | Enable module mocking support via `--experimental-test-module-mocks`. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.preserveDefaultReporters">preserveDefaultReporters</a></code> | <code>boolean</code> | Preserve the default reporters (`spec`, `lcov`, `junit`) when additional reporters are added. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.reporters">reporters</a></code> | <code><a href="#projen.javascript.NodeReporter">NodeReporter</a>[]</code> | Additional reporters to configure (e.g. `{ name: "tap", destination: Destination.file("test-reports/tap.txt") }`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.testConfig">testConfig</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | Additional entries for the `test` section of the generated configuration file (e.g. `testConcurrency`, `testTimeout`). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.testMatch">testMatch</a></code> | <code>string[]</code> | Glob patterns matching the files that contain tests. |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.transformTypes">transformTypes</a></code> | <code>boolean</code> | Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces). |
+| <code><a href="#projen.javascript.NodeNativeTestRunnerOptions.property.updateSnapshot">updateSnapshot</a></code> | <code><a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a></code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. |
+
+---
+
+##### `collectCoverage`<sup>Optional</sup> <a name="collectCoverage" id="projen.javascript.NodeNativeTestRunnerOptions.property.collectCoverage"></a>
+
+```typescript
+public readonly collectCoverage: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Indicates whether the coverage information should be collected while executing the test, via `--experimental-test-coverage`.
+
+---
+
+##### `configFilePath`<sup>Optional</sup> <a name="configFilePath" id="projen.javascript.NodeNativeTestRunnerOptions.property.configFilePath"></a>
+
+```typescript
+public readonly configFilePath: string;
+```
+
+- *Type:* string
+- *Default:* "node.config.json"
+
+Path to the JSON configuration file for the test runner.
+
+---
+
+##### `coverageDirectory`<sup>Optional</sup> <a name="coverageDirectory" id="projen.javascript.NodeNativeTestRunnerOptions.property.coverageDirectory"></a>
+
+```typescript
+public readonly coverageDirectory: string;
+```
+
+- *Type:* string
+- *Default:* "coverage"
+
+The directory where coverage files are output, if coverage collection is enabled.
+
+---
+
+##### `coveragePathIgnorePatterns`<sup>Optional</sup> <a name="coveragePathIgnorePatterns" id="projen.javascript.NodeNativeTestRunnerOptions.property.coveragePathIgnorePatterns"></a>
+
+```typescript
+public readonly coveragePathIgnorePatterns: string[];
+```
+
+- *Type:* string[]
+- *Default:* ["**\/test/**", "**\/__tests__/**"]
+
+An array of glob patterns that are matched against all file paths before executing coverage collection.
+
+If a file path matches any of the
+patterns, coverage information will be skipped for it.
+
+---
+
+##### `extraCliOptions`<sup>Optional</sup> <a name="extraCliOptions" id="projen.javascript.NodeNativeTestRunnerOptions.property.extraCliOptions"></a>
+
+```typescript
+public readonly extraCliOptions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no extra options
+
+Additional options to pass to the `node --test` CLI invocation.
+
+Each element is passed as a single argument, exactly as given: no shell
+parses these, so a flag and its value need separate elements
+(`["--foo", "bar"]`, not `["--foo bar"]`).
+
+---
+
+##### `globalSetup`<sup>Optional</sup> <a name="globalSetup" id="projen.javascript.NodeNativeTestRunnerOptions.property.globalSetup"></a>
+
+```typescript
+public readonly globalSetup: string;
+```
+
+- *Type:* string
+- *Default:* undefined
+
+This option allows the use of a custom global setup module which exports a function that is triggered once before all test suites.
+
+Written as `test-global-setup` in the generated Node.js configuration
+file.
+
+---
+
+##### `moduleMocks`<sup>Optional</sup> <a name="moduleMocks" id="projen.javascript.NodeNativeTestRunnerOptions.property.moduleMocks"></a>
+
+```typescript
+public readonly moduleMocks: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Enable module mocking support via `--experimental-test-module-mocks`.
+
+---
+
+##### `nodeOptions`<sup>Optional</sup> <a name="nodeOptions" id="projen.javascript.NodeNativeTestRunnerOptions.property.nodeOptions"></a>
+
+```typescript
+public readonly nodeOptions: NodeConfigSchemaNodeOptions;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a>
+- *Default:* no additional node options
+
+Additional entries for the `nodeOptions` section of the generated configuration file (e.g. `enableSourceMaps`, `disableWarning`).
+
+---
+
+##### `preserveDefaultReporters`<sup>Optional</sup> <a name="preserveDefaultReporters" id="projen.javascript.NodeNativeTestRunnerOptions.property.preserveDefaultReporters"></a>
+
+```typescript
+public readonly preserveDefaultReporters: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Preserve the default reporters (`spec`, `lcov`, `junit`) when additional reporters are added.
+
+---
+
+##### `reporters`<sup>Optional</sup> <a name="reporters" id="projen.javascript.NodeNativeTestRunnerOptions.property.reporters"></a>
+
+```typescript
+public readonly reporters: NodeReporter[];
+```
+
+- *Type:* <a href="#projen.javascript.NodeReporter">NodeReporter</a>[]
+- *Default:* no additional reporters
+
+Additional reporters to configure (e.g. `{ name: "tap", destination: Destination.file("test-reports/tap.txt") }`).
+
+These are added on top of the default reporters (`spec`, `lcov`, `junit`),
+which are controlled via `collectCoverage`. `NodeNativeTestRunner.reporters`
+give access to add, remove or list reporters after construction.
+
+---
+
+##### `testConfig`<sup>Optional</sup> <a name="testConfig" id="projen.javascript.NodeNativeTestRunnerOptions.property.testConfig"></a>
+
+```typescript
+public readonly testConfig: NodeConfigSchemaTest;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a>
+- *Default:* no additional options
+
+Additional entries for the `test` section of the generated configuration file (e.g. `testConcurrency`, `testTimeout`).
+
+---
+
+##### `testMatch`<sup>Optional</sup> <a name="testMatch" id="projen.javascript.NodeNativeTestRunnerOptions.property.testMatch"></a>
+
+```typescript
+public readonly testMatch: string[];
+```
+
+- *Type:* string[]
+- *Default:* combines Node.js' own default test file discovery with Jest conventions
+
+Glob patterns matching the files that contain tests.
+
+By default it
+combines Node.js' own default test file discovery with Jest conventions.
+
+---
+
+##### `transformTypes`<sup>Optional</sup> <a name="transformTypes" id="projen.javascript.NodeNativeTestRunnerOptions.property.transformTypes"></a>
+
+```typescript
+public readonly transformTypes: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to enable transformation of TypeScript-only syntax (e.g. enums, namespaces).
+
+Uses `amaro` (the TypeScript transformer used internally by Node.js) as an
+external loader via `--import=amaro/transform`. Adds a dependency on the
+`amaro` package and enables `--enable-source-maps` to preserve accurate
+stack traces.
+
+> [https://github.com/nodejs/amaro](https://github.com/nodejs/amaro)
+
+---
+
+##### `updateSnapshot`<sup>Optional</sup> <a name="updateSnapshot" id="projen.javascript.NodeNativeTestRunnerOptions.property.updateSnapshot"></a>
+
+```typescript
+public readonly updateSnapshot: NodeTestUpdateSnapshot;
+```
+
+- *Type:* <a href="#projen.javascript.NodeTestUpdateSnapshot">NodeTestUpdateSnapshot</a>
+- *Default:* ALWAYS
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+---
+
 ### NodePackageOptions <a name="NodePackageOptions" id="projen.javascript.NodePackageOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.NodePackageOptions.Initializer"></a>
@@ -15488,6 +16312,56 @@ public readonly workflowPackageCache: boolean;
 - *Default:* false
 
 Enable Node.js package cache in GitHub workflows.
+
+---
+
+### NodeReporter <a name="NodeReporter" id="projen.javascript.NodeReporter"></a>
+
+A single reporter/destination pair for the Node.js native test runner.
+
+> [https://nodejs.org/api/test.html#test-reporters](https://nodejs.org/api/test.html#test-reporters)
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeReporter.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeReporter: javascript.NodeReporter = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeReporter.property.destination">destination</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Where the reporter's output is written. |
+| <code><a href="#projen.javascript.NodeReporter.property.name">name</a></code> | <code>string</code> | The name/kind of the reporter. |
+
+---
+
+##### `destination`<sup>Required</sup> <a name="destination" id="projen.javascript.NodeReporter.property.destination"></a>
+
+```typescript
+public readonly destination: Destination;
+```
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+- *Default:* Destination.STDOUT
+
+Where the reporter's output is written.
+
+> [https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/parallel/test-runner-reporters.js#L46-L77)
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodeReporter.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+The name/kind of the reporter.
 
 ---
 
@@ -24944,6 +25818,92 @@ public readonly os: string[];
 
 ## Classes <a name="Classes" id="Classes"></a>
 
+### Destination <a name="Destination" id="projen.javascript.Destination"></a>
+
+Where a reporter's output is written.
+
+> [https://nodejs.org/api/test.html#test-reporters](https://nodejs.org/api/test.html#test-reporters)
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.Destination.file">file</a></code> | Write to a file at the given path. |
+
+---
+
+##### `file` <a name="file" id="projen.javascript.Destination.file"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.Destination.file(path: string)
+```
+
+Write to a file at the given path.
+
+###### `path`<sup>Required</sup> <a name="path" id="projen.javascript.Destination.file.parameter.path"></a>
+
+- *Type:* string
+
+path of the file to write to.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Destination.property.value">value</a></code> | <code>string</code> | The underlying value: `"stdout"`, `"stderr"`, or a file path. |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.javascript.Destination.property.value"></a>
+
+```typescript
+public readonly value: string;
+```
+
+- *Type:* string
+
+The underlying value: `"stdout"`, `"stderr"`, or a file path.
+
+---
+
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.Destination.property.STDERR">STDERR</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Write to standard error. |
+| <code><a href="#projen.javascript.Destination.property.STDOUT">STDOUT</a></code> | <code><a href="#projen.javascript.Destination">Destination</a></code> | Write to standard output. |
+
+---
+
+##### `STDERR`<sup>Required</sup> <a name="STDERR" id="projen.javascript.Destination.property.STDERR"></a>
+
+```typescript
+public readonly STDERR: Destination;
+```
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+
+Write to standard error.
+
+---
+
+##### `STDOUT`<sup>Required</sup> <a name="STDOUT" id="projen.javascript.Destination.property.STDOUT"></a>
+
+```typescript
+public readonly STDOUT: Destination;
+```
+
+- *Type:* <a href="#projen.javascript.Destination">Destination</a>
+
+Write to standard output.
+
+---
+
 ### JestReporter <a name="JestReporter" id="projen.javascript.JestReporter"></a>
 
 #### Initializers <a name="Initializers" id="projen.javascript.JestReporter.Initializer"></a>
@@ -25730,6 +26690,33 @@ Use `pnpm` as the package manager.
 ##### `BUN` <a name="BUN" id="projen.javascript.NodePackageManager.BUN"></a>
 
 Use `bun` as the package manager.
+
+---
+
+
+### NodeTestUpdateSnapshot <a name="NodeTestUpdateSnapshot" id="projen.javascript.NodeTestUpdateSnapshot"></a>
+
+Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.NodeTestUpdateSnapshot.ALWAYS">ALWAYS</a></code> | Always update snapshots in "test" task. |
+| <code><a href="#projen.javascript.NodeTestUpdateSnapshot.NEVER">NEVER</a></code> | Never update snapshots in "test" task and create a separate "test:update" task. |
+
+---
+
+##### `ALWAYS` <a name="ALWAYS" id="projen.javascript.NodeTestUpdateSnapshot.ALWAYS"></a>
+
+Always update snapshots in "test" task.
+
+---
+
+
+##### `NEVER` <a name="NEVER" id="projen.javascript.NodeTestUpdateSnapshot.NEVER"></a>
+
+Never update snapshots in "test" task and create a separate "test:update" task.
 
 ---
 
