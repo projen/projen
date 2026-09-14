@@ -1714,6 +1714,406 @@ The `Mergify` component configured on this repository This is `undefined` if Mer
 ---
 
 
+### GitHubActionsVersions <a name="GitHubActionsVersions" id="projen.github.GitHubActionsVersions"></a>
+
+Manages the versions of the GitHub Actions used in the project's workflows.
+
+Actions are declared in the projenrc (e.g. `actions/checkout@7`) and
+resolved version pins are recorded in an auto-generated, committed JSONC
+manifest. Every resolved action is registered with the project's
+`GitHubActionsProvider`, so all synthesized workflows use the pinned
+references.
+
+The `update-github-actions` task resolves each action's version line to a
+concrete pin (by default a commit SHA or an immutable release tag) using
+the GitHub API, and re-synthesizes the project so workflows pick up the new
+pins. Major version lines declared in the projenrc are never changed by the
+task; majors of actions declared without a version are upgraded only when
+`upgradeMajorVersions` is enabled or when the task is invoked with
+`--upgrade-major=owner/repo`.
+
+#### Initializers <a name="Initializers" id="projen.github.GitHubActionsVersions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.GitHubActionsVersions(github: GitHub, options?: GitHubActionsVersionsOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubActionsVersions.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
+| <code><a href="#projen.github.GitHubActionsVersions.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.GitHubActionsVersionsOptions">GitHubActionsVersionsOptions</a></code> | *No description.* |
+
+---
+
+##### `github`<sup>Required</sup> <a name="github" id="projen.github.GitHubActionsVersions.Initializer.parameter.github"></a>
+
+- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.GitHubActionsVersions.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.GitHubActionsVersionsOptions">GitHubActionsVersionsOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.GitHubActionsVersions.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.GitHubActionsVersions.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.GitHubActionsVersions.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.GitHubActionsVersions.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.GitHubActionsVersions.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.GitHubActionsVersions.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.GitHubActionsVersions.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
+| <code><a href="#projen.github.GitHubActionsVersions.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.github.GitHubActionsVersions.addAction">addAction</a></code> | Add a GitHub Action to be managed, e.g. `actions/checkout@7`. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.GitHubActionsVersions.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.github.GitHubActionsVersions.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.github.GitHubActionsVersions.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.GitHubActionsVersions.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GitHubActionsVersions.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.GitHubActionsVersions.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.GitHubActionsVersions.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.GitHubActionsVersions.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.GitHubActionsVersions.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.github.GitHubActionsVersions.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Writes the file to the project's output directory.
+
+##### `diff` <a name="diff" id="projen.github.GitHubActionsVersions.diff"></a>
+
+```typescript
+public diff(colorize?: boolean, contextLines?: number): string[]
+```
+
+Returns a unified diff of the old and new file contents with context lines and hunk headers.
+
+Only available after synthesis.
+
+This is an expensive operation and should only be used on non time-critical
+code paths, like debug output.
+
+###### `colorize`<sup>Optional</sup> <a name="colorize" id="projen.github.GitHubActionsVersions.diff.parameter.colorize"></a>
+
+- *Type:* boolean
+
+Whether to colorize the diff output.
+
+---
+
+###### `contextLines`<sup>Optional</sup> <a name="contextLines" id="projen.github.GitHubActionsVersions.diff.parameter.contextLines"></a>
+
+- *Type:* number
+
+Number of context lines around changes.
+
+---
+
+##### `addAction` <a name="addAction" id="projen.github.GitHubActionsVersions.addAction"></a>
+
+```typescript
+public addAction(spec: string): void
+```
+
+Add a GitHub Action to be managed, e.g. `actions/checkout@7`.
+
+###### `spec`<sup>Required</sup> <a name="spec" id="projen.github.GitHubActionsVersions.addAction.parameter.spec"></a>
+
+- *Type:* string
+
+The action name, optionally followed by `@<major>` to declare (and lock) the approved major version line.
+
+---
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.GitHubActionsVersions.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.GitHubActionsVersions.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.GitHubActionsVersions.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.GitHubActionsVersions.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.GitHubActionsVersions.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.GitHubActionsVersions.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.GitHubActionsVersions.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.GitHubActionsVersions.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubActionsVersions.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.github.GitHubActionsVersions.property.absolutePath">absolutePath</a></code> | <code>string</code> | The absolute path of this file. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.committed">committed</a></code> | <code>boolean</code> | Indicates if the file will be committed. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.path">path</a></code> | <code>string</code> | The file path, relative to the project's outdir. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.changed">changed</a></code> | <code>boolean</code> | Indicates if the file has been changed during synthesis. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.marker">marker</a></code> | <code>string</code> | The projen marker, used to identify files as projen-generated. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.executable">executable</a></code> | <code>boolean</code> | Indicates if the file should be marked as executable. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.readonly">readonly</a></code> | <code>boolean</code> | Indicates if the file should be read-only or read-write. |
+| <code><a href="#projen.github.GitHubActionsVersions.property.updateTask">updateTask</a></code> | <code>projen.Task</code> | The task that resolves action version lines to concrete pins. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.GitHubActionsVersions.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.GitHubActionsVersions.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
+
+---
+
+##### `absolutePath`<sup>Required</sup> <a name="absolutePath" id="projen.github.GitHubActionsVersions.property.absolutePath"></a>
+
+```typescript
+public readonly absolutePath: string;
+```
+
+- *Type:* string
+
+The absolute path of this file.
+
+---
+
+##### `committed`<sup>Required</sup> <a name="committed" id="projen.github.GitHubActionsVersions.property.committed"></a>
+
+```typescript
+public readonly committed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file will be committed.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.github.GitHubActionsVersions.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+The file path, relative to the project's outdir.
+
+---
+
+##### `changed`<sup>Optional</sup> <a name="changed" id="projen.github.GitHubActionsVersions.property.changed"></a>
+
+```typescript
+public readonly changed: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file has been changed during synthesis.
+
+This property is
+only available in `postSynthesize()` hooks. If this is `undefined`, the
+file has not been synthesized yet.
+
+---
+
+##### `marker`<sup>Optional</sup> <a name="marker" id="projen.github.GitHubActionsVersions.property.marker"></a>
+
+```typescript
+public readonly marker: string;
+```
+
+- *Type:* string
+
+The projen marker, used to identify files as projen-generated.
+
+Value is undefined if the project is being ejected.
+
+---
+
+##### `executable`<sup>Required</sup> <a name="executable" id="projen.github.GitHubActionsVersions.property.executable"></a>
+
+```typescript
+public readonly executable: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be marked as executable.
+
+---
+
+##### `readonly`<sup>Required</sup> <a name="readonly" id="projen.github.GitHubActionsVersions.property.readonly"></a>
+
+```typescript
+public readonly readonly: boolean;
+```
+
+- *Type:* boolean
+
+Indicates if the file should be read-only or read-write.
+
+---
+
+##### `updateTask`<sup>Required</sup> <a name="updateTask" id="projen.github.GitHubActionsVersions.property.updateTask"></a>
+
+```typescript
+public readonly updateTask: Task;
+```
+
+- *Type:* projen.Task
+
+The task that resolves action version lines to concrete pins.
+
+---
+
+
 ### GitHubProject <a name="GitHubProject" id="projen.github.GitHubProject"></a>
 
 GitHub-based project.
@@ -8579,6 +8979,128 @@ public readonly token: string;
 - *Default:* If unspecified, the action will download artifacts from the current repo and the current workflow run
 
 The GitHub token used to authenticate with the GitHub API to download artifacts from a different repository or from a different workflow run.
+
+---
+
+### GitHubActionsVersionsOptions <a name="GitHubActionsVersionsOptions" id="projen.github.GitHubActionsVersionsOptions"></a>
+
+Options for `GitHubActionsVersions`.
+
+#### Initializer <a name="Initializer" id="projen.github.GitHubActionsVersionsOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const gitHubActionsVersionsOptions: github.GitHubActionsVersionsOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.actions">actions</a></code> | <code>string[]</code> | The GitHub Actions to manage, e.g. `actions/checkout@7`. |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.cooldownDays">cooldownDays</a></code> | <code>number</code> | Days a release must be public before the update task adopts it, giving brand-new releases time to be yanked or patched. |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.immutablePins">immutablePins</a></code> | <code>boolean</code> | Require immutable pins: commit SHAs or release tags that GitHub reports as immutable (cannot be repointed). |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.jsonPath">jsonPath</a></code> | <code>string</code> | Path to the JSONC manifest file that records the resolved version pins. |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.reportMajorVersions">reportMajorVersions</a></code> | <code>boolean</code> | Report newly available major version lines that are not adopted automatically. |
+| <code><a href="#projen.github.GitHubActionsVersionsOptions.property.upgradeMajorVersions">upgradeMajorVersions</a></code> | <code>boolean</code> | Allow the update task to upgrade actions to new major version lines. |
+
+---
+
+##### `actions`<sup>Optional</sup> <a name="actions" id="projen.github.GitHubActionsVersionsOptions.property.actions"></a>
+
+```typescript
+public readonly actions: string[];
+```
+
+- *Type:* string[]
+- *Default:* no actions are managed
+
+The GitHub Actions to manage, e.g. `actions/checkout@7`.
+
+Declare the approved major version line by appending `@<major>` (e.g.
+`actions/checkout@7`). Declared majors are locked: the update task only
+refreshes pins within the line and you upgrade by changing the
+declaration. Actions listed without a major (e.g. `actions/checkout`)
+have their major line managed by the update task instead.
+
+---
+
+##### `cooldownDays`<sup>Optional</sup> <a name="cooldownDays" id="projen.github.GitHubActionsVersionsOptions.property.cooldownDays"></a>
+
+```typescript
+public readonly cooldownDays: number;
+```
+
+- *Type:* number
+- *Default:* 7
+
+Days a release must be public before the update task adopts it, giving brand-new releases time to be yanked or patched.
+
+---
+
+##### `immutablePins`<sup>Optional</sup> <a name="immutablePins" id="projen.github.GitHubActionsVersionsOptions.property.immutablePins"></a>
+
+```typescript
+public readonly immutablePins: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Require immutable pins: commit SHAs or release tags that GitHub reports as immutable (cannot be repointed).
+
+When disabled, actions are pinned to
+plain release tags instead.
+
+---
+
+##### `jsonPath`<sup>Optional</sup> <a name="jsonPath" id="projen.github.GitHubActionsVersionsOptions.property.jsonPath"></a>
+
+```typescript
+public readonly jsonPath: string;
+```
+
+- *Type:* string
+- *Default:* ".projen/github-actions.jsonc"
+
+Path to the JSONC manifest file that records the resolved version pins.
+
+The file is auto-generated and should be committed, so that the exact
+pins in use are reviewable and stable across machines.
+
+---
+
+##### `reportMajorVersions`<sup>Optional</sup> <a name="reportMajorVersions" id="projen.github.GitHubActionsVersionsOptions.property.reportMajorVersions"></a>
+
+```typescript
+public readonly reportMajorVersions: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Report newly available major version lines that are not adopted automatically.
+
+Reports are printed by the update task, and tracking
+issues are opened when it is invoked with `--create-issues`.
+
+---
+
+##### `upgradeMajorVersions`<sup>Optional</sup> <a name="upgradeMajorVersions" id="projen.github.GitHubActionsVersionsOptions.property.upgradeMajorVersions"></a>
+
+```typescript
+public readonly upgradeMajorVersions: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Allow the update task to upgrade actions to new major version lines.
+
+Only applies to actions without a major declared in the projenrc.
+Regardless of this setting, a single action can be upgraded explicitly
+with `update-github-actions --upgrade-major=owner/repo`.
 
 ---
 
