@@ -51,7 +51,7 @@
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^13"
       },
       "steps": [
         {
@@ -607,7 +607,7 @@
         "BUMPFILE": "dist/version.txt",
         "RELEASETAG": "dist/releasetag.txt",
         "RELEASE_TAG_PREFIX": "",
-        "BUMP_PACKAGE": "commit-and-tag-version@^12"
+        "BUMP_PACKAGE": "commit-and-tag-version@^13"
       },
       "steps": [
         {

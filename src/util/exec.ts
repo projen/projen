@@ -256,7 +256,7 @@ export interface AsyncTool {
  * `.cmd`/`.bat` shims and escaping every argument (so each value is passed as
  * a single literal argument).
  *
- * @example await npx.run(["commit-and-tag-version@^12"], { cwd });
+ * @example await npx.run(["commit-and-tag-version@^13"], { cwd });
  */
 function shimTool(file: string): AsyncTool {
   const build = (args: string[], options: ExecFileOptions) => {

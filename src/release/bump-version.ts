@@ -101,7 +101,7 @@ export interface BumpOptions {
    *
    * This can be any compatible package version, including the deprecated `standard-version@9`.
    *
-   * @default "commit-and-tag-version@12"
+   * @default "commit-and-tag-version@13"
    */
   readonly bumpPackage?: string;
 

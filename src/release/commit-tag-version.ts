@@ -8,7 +8,7 @@ import * as logging from "../logging";
 import { git, node, npx } from "../util/exec";
 import type { AsyncTool, Tool } from "../util/exec";
 
-const DEFAULT_CATV_SPEC = "commit-and-tag-version@^12";
+const DEFAULT_CATV_SPEC = "commit-and-tag-version@^13";
 
 export interface CommitAndTagOptions {
   readonly tagPrefix?: string;
