@@ -439,7 +439,7 @@ permissions-backup.acl
       {
         "name": "commit-and-tag-version",
         "type": "build",
-        "version": "^12",
+        "version": "^13",
       },
       {
         "name": "constructs",
@@ -523,7 +523,7 @@ permissions-backup.acl
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": {
           "BUMPFILE": "dist/version.txt",
-          "BUMP_PACKAGE": "commit-and-tag-version@^12",
+          "BUMP_PACKAGE": "commit-and-tag-version@^13",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -702,7 +702,7 @@ permissions-backup.acl
         "description": "Restores version to 0.0.0",
         "env": {
           "BUMPFILE": "dist/version.txt",
-          "BUMP_PACKAGE": "commit-and-tag-version@^12",
+          "BUMP_PACKAGE": "commit-and-tag-version@^13",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
@@ -992,7 +992,7 @@ permissions-backup.acl
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
-      "commit-and-tag-version": "^12",
+      "commit-and-tag-version": "^13",
       "constructs": "^10.0.0",
       "projen": "*",
       "react-scripts": "^5",

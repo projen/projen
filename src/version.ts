@@ -39,7 +39,7 @@ export const CHANGES_SINCE_LAST_RELEASE =
 /**
  * The default package to be used for commit-and-tag-version
  */
-const COMMIT_AND_TAG_VERSION_DEFAULT = "commit-and-tag-version@^12";
+const COMMIT_AND_TAG_VERSION_DEFAULT = "commit-and-tag-version@^13";
 
 /**
  * Options for `Version`.
@@ -81,7 +81,7 @@ export interface VersionOptions {
    *
    * This can be any compatible package version, including the deprecated `standard-version@9`.
    *
-   * @default "commit-and-tag-version@12"
+   * @default "commit-and-tag-version@13"
    */
   readonly bumpPackage?: string;
 

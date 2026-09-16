@@ -18748,7 +18748,7 @@ public readonly bumpPackage: string;
 ```
 
 - *Type:* string
-- *Default:* "commit-and-tag-version@12"
+- *Default:* "commit-and-tag-version@13"
 
 The `commit-and-tag-version` compatible package used to bump the package version, as a dependency string.
 
