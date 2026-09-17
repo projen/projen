@@ -64,19 +64,9 @@ export class CommitAndTagVersion {
   public async invoke<A extends InvokeOptions>(
     options: A,
   ): Promise<A extends { capture: true } ? string : void> {
+    const configOptions: CommitAndTagConfig = this.options.configOptions ?? {};
+    const versionFile = { filename: this.options.versionFile, type: "json" };
     const catvConfig: CommitAndTagConfig = {
-      packageFiles: [
-        {
-          filename: this.options.versionFile,
-          type: "json",
-        },
-      ],
-      bumpFiles: [
-        {
-          filename: this.options.versionFile,
-          type: "json",
-        },
-      ],
       commitAll: false,
       infile: this.options.changelogFile,
       prerelease: this.options.prerelease,
@@ -92,7 +82,9 @@ export class CommitAndTagVersion {
         : undefined,
       releaseAs: options.releaseAs,
       dryRun: options.dryRun,
-      ...this.options.configOptions,
+      ...configOptions,
+      packageFiles: this.mergeFiles(versionFile, configOptions.packageFiles),
+      bumpFiles: this.mergeFiles(versionFile, configOptions.bumpFiles),
     };
     logging.debug(`.versionrc.json: ${JSON.stringify(catvConfig)}`);
 
@@ -111,6 +103,25 @@ export class CommitAndTagVersion {
     } finally {
       await fs.unlink(rcfile);
     }
+  }
+
+  /**
+   * Keep the version file first, since CATV reads the current version from the first package file.
+   */
+  private mergeFiles(
+    versionFile: CommitAndTagFile,
+    files: CommitAndTagFile[] = [],
+  ): CommitAndTagFile[] {
+    const merged = [versionFile];
+    const seen = new Set([path.resolve(this.cwd, versionFile.filename)]);
+    for (const file of files) {
+      const resolved = path.resolve(this.cwd, file.filename);
+      if (!seen.has(resolved)) {
+        seen.add(resolved);
+        merged.push(file);
+      }
+    }
+    return merged;
   }
 
   /**
@@ -167,11 +178,20 @@ export class CommitAndTagVersion {
 }
 
 /**
+ * An entry in the CATV `packageFiles` or `bumpFiles` arrays
+ */
+interface CommitAndTagFile {
+  filename: string;
+  type?: string;
+  updater?: string;
+}
+
+/**
  * Modeling the CATV config file
  */
 interface CommitAndTagConfig extends Config {
-  packageFiles?: Array<{ filename: string; type: string }>;
-  bumpFiles?: Array<{ filename: string; type: string }>;
+  packageFiles?: CommitAndTagFile[];
+  bumpFiles?: CommitAndTagFile[];
   commitAll?: boolean;
   infile?: string;
   prerelease?: string;
