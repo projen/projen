@@ -477,6 +477,138 @@ test("default options", () => {
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
 
+test.each([
+  {
+    name: "default",
+    description: undefined,
+    expected: "Upgrades project dependencies.",
+  },
+  {
+    name: "single line",
+    description: "Review the dependency changes",
+    expected: "Review the dependency changes.",
+  },
+  {
+    name: "multiline Markdown, quotes, and Chinese",
+    description: '# 升级说明\n\n- 检查 "兼容性"\n- Run `npm test`',
+    expected: '# 升级说明\n\n- 检查 "兼容性"\n- Run `npm test`.',
+  },
+  {
+    name: "trailing period and whitespace",
+    description: "Review the dependency changes. \n\t",
+    expected: "Review the dependency changes.",
+  },
+  {
+    name: "other trailing punctuation",
+    description: "Review the dependency changes!",
+    expected: "Review the dependency changes!.",
+  },
+  { name: "empty", description: "", expected: "." },
+  { name: "whitespace only", description: " \t\n", expected: "." },
+])("pull request description: $name", ({ description, expected }) => {
+  const depsUpgradeOptions = {
+    pullRequestTitle: "review dependencies",
+    pullRequestDescription: description,
+  };
+  const snapshot = synthSnapshot(createProject({ depsUpgradeOptions }));
+  const upgrade: { jobs: { pr: workflows.Job } } = yaml.parse(
+    snapshot[".github/workflows/upgrade-main.yml"],
+  );
+  const createPr = upgrade.jobs.pr.steps.find(
+    (step) => step.id === "create-pr",
+  );
+  const body = [
+    `${expected} See details in [workflow run].`,
+    "",
+    "[Workflow Run]: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+    "",
+    "------",
+    "",
+    '*Automatically created by projen via the "upgrade-main" workflow*',
+  ].join("\n");
+
+  expect(createPr?.with?.title).toBe("chore(deps): review dependencies");
+  expect(createPr?.with?.body).toBe(body);
+  expect(createPr?.with?.["commit-message"]).toBe(
+    `chore(deps): review dependencies\n\n${body}`,
+  );
+});
+
+test("custom description changes only PR bodies and commit messages for all target branches", () => {
+  const branches = ["main", "maintenance"];
+  const depsUpgradeOptions = {
+    pullRequestTitle: "review dependencies",
+    semanticCommit: "fix",
+    signoff: false,
+    workflowOptions: {
+      branches,
+      schedule: UpgradeDependenciesSchedule.MONTHLY,
+      labels: ["dependencies"],
+      assignees: ["repo-maintainer"],
+      projenCredentials: GithubCredentials.fromApp(),
+    },
+  };
+  const baseline = synthSnapshot(createProject({ depsUpgradeOptions }));
+  const customOptions = {
+    ...depsUpgradeOptions,
+    pullRequestDescription: "Check the migration guide before merging.",
+  };
+  const customized = synthSnapshot(
+    createProject({ depsUpgradeOptions: customOptions }),
+  );
+
+  for (const branch of branches) {
+    const file = `.github/workflows/upgrade-${branch}.yml`;
+    const original: { jobs: { pr: workflows.Job } } = yaml.parse(
+      baseline[file],
+    );
+    const body = [
+      "Check the migration guide before merging. See details in [workflow run].",
+      "",
+      "[Workflow Run]: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+      "",
+      "------",
+      "",
+      `*Automatically created by projen via the "upgrade-${branch}" workflow*`,
+    ].join("\n");
+
+    expect(original.jobs.pr.steps.some((step) => step.id === "create-pr")).toBe(
+      true,
+    );
+    expect(yaml.parse(customized[file])).toEqual({
+      ...original,
+      jobs: {
+        ...original.jobs,
+        pr: {
+          ...original.jobs.pr,
+          steps: original.jobs.pr.steps.map((step) =>
+            step.id === "create-pr"
+              ? {
+                  ...step,
+                  with: {
+                    ...step.with,
+                    body,
+                    "commit-message": `fix(deps): review dependencies\n\n${body}`,
+                  },
+                }
+              : step,
+          ),
+        },
+      },
+    });
+  }
+
+  const workflowFiles = branches.map(
+    (branch) => `.github/workflows/upgrade-${branch}.yml`,
+  );
+  expect(Object.keys(customized)).toEqual(Object.keys(baseline));
+  for (const file of Object.keys(baseline)) {
+    if (!workflowFiles.includes(file)) {
+      expect(customized[file]).toEqual(baseline[file]);
+    }
+  }
+});
+
 test("custom options", () => {
   const project = createProject({
     depsUpgradeOptions: {

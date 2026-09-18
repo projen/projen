@@ -122,6 +122,17 @@ export interface UpgradeDependenciesOptions {
   readonly pullRequestTitle?: string;
 
   /**
+   * Description of dependency upgrade pull requests.
+   *
+   * Also included in the commit message. Trailing whitespace is removed and a
+   * period is appended if there is no final period. Empty or whitespace-only
+   * strings produce a single period before the workflow details.
+   *
+   * @default "Upgrades project dependencies."
+   */
+  readonly pullRequestDescription?: string;
+
+  /**
    * The semantic commit type.
    *
    * @default 'chore'
@@ -656,7 +667,9 @@ export class UpgradeDependencies extends Component {
         credentials,
         ...github.runsOnConfig(this.options.workflowOptions),
         pullRequestTitle: `${semanticCommit}(deps): ${this.pullRequestTitle}`,
-        pullRequestDescription: "Upgrades project dependencies.",
+        pullRequestDescription:
+          this.options.pullRequestDescription ??
+          "Upgrades project dependencies.",
         gitIdentity: this.gitIdentity,
         assignees: this.options.workflowOptions?.assignees,
         labels: this.options.workflowOptions?.labels,

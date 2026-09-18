@@ -22746,6 +22746,7 @@ const upgradeDependenciesOptions: javascript.UpgradeDependenciesOptions = { ... 
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.exclude">exclude</a></code> | <code>string[]</code> | List of package names to exclude during the upgrade. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.include">include</a></code> | <code>string[]</code> | List of package names to include during the upgrade. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.includeDeprecatedVersions">includeDeprecatedVersions</a></code> | <code>boolean</code> | Include deprecated packages. |
+| <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.pullRequestDescription">pullRequestDescription</a></code> | <code>string</code> | Description of dependency upgrade pull requests. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.pullRequestTitle">pullRequestTitle</a></code> | <code>string</code> | Title of the pull request to use (should be all lower-case). |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.satisfyPeerDependencies">satisfyPeerDependencies</a></code> | <code>boolean</code> | Check peer dependencies of installed packages and filter updates to compatible versions. |
 | <code><a href="#projen.javascript.UpgradeDependenciesOptions.property.semanticCommit">semanticCommit</a></code> | <code>string</code> | The semantic commit type. |
@@ -22821,6 +22822,23 @@ Include deprecated packages.
 By default, deprecated versions will be excluded from upgrades.
 
 > [https://github.com/raineorshine/npm-check-updates?tab=readme-ov-file#options](https://github.com/raineorshine/npm-check-updates?tab=readme-ov-file#options)
+
+---
+
+##### `pullRequestDescription`<sup>Optional</sup> <a name="pullRequestDescription" id="projen.javascript.UpgradeDependenciesOptions.property.pullRequestDescription"></a>
+
+```typescript
+public readonly pullRequestDescription: string;
+```
+
+- *Type:* string
+- *Default:* "Upgrades project dependencies."
+
+Description of dependency upgrade pull requests.
+
+Also included in the commit message. Trailing whitespace is removed and a
+period is appended if there is no final period. Empty or whitespace-only
+strings produce a single period before the workflow details.
 
 ---
 
