@@ -320,6 +320,44 @@ test("customization to versionrc reflects to changelog", async () => {
   await expect(result.changelog).toContain("testCompareUrl");
 });
 
+test("custom bumpFiles in versionrc are bumped alongside the version file", async () => {
+  const result = await testBump({
+    options: {
+      versionrcOptions: {
+        bumpFiles: [{ filename: "my-version.txt", type: "plain-text" }],
+      } as any,
+    },
+    commits: [
+      { message: "1.1.0", path: "my-version.txt", tag: "v1.1.0" },
+      { message: "fix: bug" },
+    ],
+  });
+
+  expect(result.version).toStrictEqual("1.1.1");
+  expect(result.bumpfile).toStrictEqual("1.1.1");
+  expect(result.tag).toStrictEqual("v1.1.1");
+  expect(
+    readFileSync(join(result.workdir, "my-version.txt"), "utf-8"),
+  ).toStrictEqual("1.1.1");
+});
+
+test("custom packageFiles in versionrc do not replace the version file as the version source", async () => {
+  const result = await testBump({
+    options: {
+      versionrcOptions: {
+        packageFiles: [{ filename: "other-version.txt", type: "plain-text" }],
+      } as any,
+    },
+    commits: [
+      { message: "5.0.0", path: "other-version.txt", tag: "v1.1.0" },
+      { message: "fix: bug" },
+    ],
+  });
+
+  expect(result.version).toStrictEqual("1.1.1");
+  expect(result.tag).toStrictEqual("v1.1.1");
+});
+
 test("minMajorVersion increases major version if current release is lower", async () => {
   const result = await testBump({
     options: { minMajorVersion: 1 },
