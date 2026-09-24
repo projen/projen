@@ -25,6 +25,7 @@ import {
   ReleasableCommits,
 } from "./src";
 import { JsiiBuild } from "./src/cdk";
+import { GithubCredentials } from "./src/github";
 import { tryResolveDependencyVersion } from "./src/javascript/util";
 import { TypeScriptProject, TypeScriptRunner } from "./src/typescript";
 
@@ -50,6 +51,10 @@ const project = new TypeScriptProject({
   ],
 
   githubOptions: {
+    projenCredentials: GithubCredentials.fromPersonalAccessToken({
+      secret: "PROJEN_GITHUB_TOKEN",
+      environment: "automation",
+    }),
     mergify: false,
     mergeQueue: true,
     pullRequestLintOptions: {

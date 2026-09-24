@@ -52,12 +52,14 @@ jobs:
           name: repo.patch
           path: repo.patch
           overwrite: true
+    environment: automation
   pr:
     name: Create Pull Request
     needs: upgrade
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    environment: automation
     if: ${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout

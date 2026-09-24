@@ -191,17 +191,31 @@ export class ActionsConst extends TextFile {
           (step: any) => step.name === "Upgrade dependencies",
         ) + 1;
 
-      workflow.file.patch(
-        JsonPatch.add(`/jobs/upgrade/steps/${insertAt}`, {
+      // Creating tracking issues for new major versions needs the projen credentials.
+      const credentials = workflow.projenCredentials;
+      const steps = [
+        ...credentials.setupSteps,
+        {
           name: "Update GitHub Actions pins",
           // Only the workflow opens tracking issues, never local runs.
           run: "node ./projen.js update-github-actions --create-issues",
           env: {
-            // Needed to create tracking issues for new major versions.
-            GITHUB_TOKEN: "${{ secrets.PROJEN_GITHUB_TOKEN }}",
+            GITHUB_TOKEN: credentials.tokenRef,
           },
-        }),
+        },
+      ];
+
+      workflow.file.patch(
+        ...steps.map((step, i) =>
+          JsonPatch.add(`/jobs/upgrade/steps/${insertAt + i}`, step),
+        ),
       );
+
+      if (credentials.environment) {
+        workflow.file.patch(
+          JsonPatch.add("/jobs/upgrade/environment", credentials.environment),
+        );
+      }
     }
   }
 }
