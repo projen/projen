@@ -14,6 +14,7 @@ export * from "./auto-queue";
 export * from "./stale";
 export * from "./pull-request-backport";
 export * from "./pull-request-lint";
+export * from "./pull-request-source";
 export * from "./github-credentials";
 export * from "./workflow-actions";
 export * from "./workflow-jobs";

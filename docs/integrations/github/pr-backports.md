@@ -90,8 +90,9 @@ const project = new javascript.NodeProject({
 
 ### Auto-approve backports
 
-By default, backport pull requests will be approved and merged automatically if the 'auto approve' feature is enabled on the project.
-This behavior can be disabled if needed:
+If [auto-approve](./auto-approve.md) is enabled on the project, backport pull requests are eligible for auto-approval.
+Whether a backport pull request is approved depends on the auto-approve configuration.
+To exclude backport pull requests from auto-approval:
 
 ```ts
 const { javascript } = require('projen');

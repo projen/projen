@@ -80,6 +80,43 @@ const project = new javascript.NodeProject({
 });
 ```
 
+### Environments
+
+Both `GithubCredentials.fromPersonalAccessToken()` and `GithubCredentials.fromApp()` accept an `environment`.
+Jobs that use the credentials then run in that
+[GitHub environment](https://docs.github.com/en/actions/concepts/workflows-and-actions/deployment-environments),
+and you can store the secrets as environment secrets instead of repository secrets.
+
+```ts
+const { github, javascript } = require('projen');
+
+const project = new javascript.NodeProject({
+  // ...other options
+  githubOptions: {
+    projenCredentials: github.GithubCredentials.fromPersonalAccessToken({
+      environment: "automation",
+    }),
+  },
+});
+```
+
+This is optional. It lets you limit which branches can read the secrets, using the environment's deployment
+branches. Deployment branches are matched against the ref the workflow runs on, so different workflows need
+different branches:
+
+- **Upgrade and auto-approve workflows** run on the default branch.
+- **The self-mutation job** of the build workflow runs on pull requests, with refs like `refs/pull/123/merge`.
+  If you limit the environment to your default branch, self-mutation can't access the credentials.
+
+### Repository role of the automation user
+
+If you use a personal access token, it belongs to a user account, often a dedicated bot user.
+projen workflows only need the `write` role on the repository for this user. We recommend not to give the bot user
+the `admin` role. This way, the token can't change repository settings, rulesets, or branch protection.
+
+If you use auto-approve, pull requests created with these credentials can be approved automatically.
+[Auto-approving Pull Requests](./auto-approve.md) describes options to limit which pull requests that applies to.
+
 ## Workflows
 
 See the `GitHub`, `GithubWorkflow`, and `Job` types in the [GitHub](./../../api/github.md) and [GitHub Workflow](./../../api/github.workflows.md) API references for currently available APIs.
