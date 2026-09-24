@@ -134,7 +134,7 @@ export class PullRequestLint extends Component {
         if: prCheck,
         ...github.runsOnConfig(options),
         permissions: {
-          pullRequests: JobPermission.WRITE,
+          pullRequests: JobPermission.READ,
         },
         steps: [
           {
