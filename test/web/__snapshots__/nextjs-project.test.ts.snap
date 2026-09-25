@@ -686,6 +686,7 @@ permissions-backup.acl
         "name": "pre-compile",
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
