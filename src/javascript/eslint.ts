@@ -137,7 +137,7 @@ export interface EslintOverride {
 
   /**
    * Pattern(s) to exclude from this override.
-   * If a file matches any of the excluded patterns, the configuration wonΓÇÖt apply.
+   * If a file matches any of the excluded patterns, the configuration won’t apply.
    */
   readonly excludedFiles?: string[];
 
