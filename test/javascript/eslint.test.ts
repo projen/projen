@@ -189,12 +189,16 @@ describe("eslint settings", () => {
 
     // WHEN
     new Eslint(project, {
-      devdirs: ["foo", "bar"],
+      devdirs: ["foo", "bar", "src/**/*.test.ts"],
       dirs: ["mysrc"],
     });
 
     // THEN
-    expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
+    const output = synthSnapshot(project)[".eslintrc.json"];
+    expect(output).toMatchSnapshot();
+    expect(
+      output.rules["import/no-extraneous-dependencies"][1].devDependencies,
+    ).toEqual(["**/foo/**", "**/bar/**", "src/**/*.test.ts"]);
   });
 
   test("tsAlwaysTryTypes", () => {
