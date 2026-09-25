@@ -544,9 +544,7 @@ test("renders services only under the default section", () => {
     default: { services: [{ name: "postgres" }] },
   });
 
-  const config = YAML.parse(
-    synthSnapshot(p)[".gitlab/ci-templates/foo.yml"],
-  );
+  const config = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
   expect(config.default.services).toStrictEqual([{ name: "postgres" }]);
   expect(config).not.toHaveProperty("services");
 });
