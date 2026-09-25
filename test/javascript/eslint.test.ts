@@ -198,7 +198,7 @@ describe("eslint settings", () => {
     expect(output).toMatchSnapshot();
     expect(
       output.rules["import/no-extraneous-dependencies"][1].devDependencies,
-    ).toEqual(["**/foo/**", "**/bar/**", "src/**/*.test.ts"]);
+    ).toEqual(["**/foo/**", "**/bar/**", "src/**/*.test.ts", ".projenrc.js"]);
   });
 
   test("tsAlwaysTryTypes", () => {
