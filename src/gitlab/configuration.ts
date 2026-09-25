@@ -86,7 +86,7 @@ export class CiConfiguration extends Component {
    */
   public readonly defaultBeforeScript: string[] = [];
   /**
-   * A default list of cache definitions (m├íx. 4) with the files and directories to cache between jobs. You can only use paths that are in the local working copy.
+   * A default list of cache definitions (máx. 4) with the files and directories to cache between jobs. You can only use paths that are in the local working copy.
    */
   private _defaultCache?: Cache[];
 
