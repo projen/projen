@@ -238,9 +238,7 @@ export class Eslint extends Component {
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
     this._allowDevDeps = new Set(
-      devdirs.map((dir) =>
-        GLOB_CHARACTERS.test(dir) ? dir : `**/${dir}/**`,
-      ),
+      devdirs.map((dir) => (GLOB_CHARACTERS.test(dir) ? dir : `**/${dir}/**`)),
     );
 
     const commandOptions = options.commandOptions ?? {};
