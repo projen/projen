@@ -85,6 +85,20 @@ GitHub workflows) leads to command execution are therefore not considered
 security vulnerabilities: executing what these files prescribe is their
 purpose.
 
+## Credentials used by automation
+
+*(Your responsibility)* Several projen workflows act on your repository with
+credentials you provide, for example `PROJEN_GITHUB_TOKEN`. Anyone who obtains
+these credentials can do what the automation can do. projen offers optional
+settings to limit where credentials are available, like running jobs in
+environments. Whether you use them is your decision. See
+[GitHub API access](./integrations/github/index.md#github-api-access).
+
+If you use auto-approve, pull requests created with these credentials can be
+approved automatically.
+[Auto-approving Pull Requests](./integrations/github/auto-approve.md) describes
+options to limit which pull requests that applies to.
+
 ## Reporting security issues
 
 If you discover a potential security issue in projen itself — for example,

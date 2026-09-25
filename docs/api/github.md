@@ -44,6 +44,7 @@ new github.AutoApprove(github: GitHub, options?: AutoApproveOptions)
 | <code><a href="#projen.github.AutoApprove.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.github.AutoApprove.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.AutoApprove.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.github.AutoApprove.addSource">addSource</a></code> | Auto-approve pull requests from this source, in addition to the configured sources. |
 
 ---
 
@@ -141,6 +142,22 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addSource` <a name="addSource" id="projen.github.AutoApprove.addSource"></a>
+
+```typescript
+public addSource(source: PullRequestSource): void
+```
+
+Auto-approve pull requests from this source, in addition to the configured sources.
+
+Adding a source replaces the default source.
+
+###### `source`<sup>Required</sup> <a name="source" id="projen.github.AutoApprove.addSource.parameter.source"></a>
+
+- *Type:* <a href="#projen.github.PullRequestSource">PullRequestSource</a>
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -6203,8 +6220,10 @@ const autoApproveOptions: github.AutoApproveOptions = { ... }
 | <code><a href="#projen.github.AutoApproveOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.AutoApproveOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
 | <code><a href="#projen.github.AutoApproveOptions.property.allowedUsernames">allowedUsernames</a></code> | <code>string[]</code> | Only pull requests authored by these Github usernames will be auto-approved. |
+| <code><a href="#projen.github.AutoApproveOptions.property.credentials">credentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | The credentials used to approve pull requests. |
 | <code><a href="#projen.github.AutoApproveOptions.property.label">label</a></code> | <code>string</code> | Only pull requests with this label will be auto-approved. |
 | <code><a href="#projen.github.AutoApproveOptions.property.secret">secret</a></code> | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. |
+| <code><a href="#projen.github.AutoApproveOptions.property.sources">sources</a></code> | <code><a href="#projen.github.PullRequestSource">PullRequestSource</a>[]</code> | Only pull requests from one of these sources will be auto-approved. |
 
 ---
 
@@ -6233,16 +6252,37 @@ Github Runner Group selection options.
 
 ---
 
-##### `allowedUsernames`<sup>Optional</sup> <a name="allowedUsernames" id="projen.github.AutoApproveOptions.property.allowedUsernames"></a>
+##### ~~`allowedUsernames`~~<sup>Optional</sup> <a name="allowedUsernames" id="projen.github.AutoApproveOptions.property.allowedUsernames"></a>
+
+- *Deprecated:* Use `sources` with `PullRequestSource.fromUsers({ logins })` instead.
 
 ```typescript
 public readonly allowedUsernames: string[];
 ```
 
 - *Type:* string[]
-- *Default:* ['github-bot']
+- *Default:* ['github-actions[bot]']
 
 Only pull requests authored by these Github usernames will be auto-approved.
+
+An empty list approves pull requests from any user.
+
+---
+
+##### `credentials`<sup>Optional</sup> <a name="credentials" id="projen.github.AutoApproveOptions.property.credentials"></a>
+
+```typescript
+public readonly credentials: GithubCredentials;
+```
+
+- *Type:* <a href="#projen.github.GithubCredentials">GithubCredentials</a>
+- *Default:* the workflow's `GITHUB_TOKEN`
+
+The credentials used to approve pull requests.
+
+Github forbids an identity to approve its own pull request.
+These credentials must belong to a different identity than the one creating the pull requests.
+Use `environment` on the credentials to restrict which branches can access them.
 
 ---
 
@@ -6257,9 +6297,13 @@ public readonly label: string;
 
 Only pull requests with this label will be auto-approved.
 
+This is required in addition to matching one of the `sources`.
+
 ---
 
-##### `secret`<sup>Optional</sup> <a name="secret" id="projen.github.AutoApproveOptions.property.secret"></a>
+##### ~~`secret`~~<sup>Optional</sup> <a name="secret" id="projen.github.AutoApproveOptions.property.secret"></a>
+
+- *Deprecated:* Use `credentials` with `GithubCredentials.fromPersonalAccessToken({ secret })` instead.
 
 ```typescript
 public readonly secret: string;
@@ -6277,6 +6321,22 @@ If your project produces automated pull requests using the Github default token 
 {@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow `GITHUB_TOKEN` }
 - that you would like auto approved, such as when using the `depsUpgrade` property in
 `NodeProjectOptions`, then you must use a different token here.
+
+---
+
+##### `sources`<sup>Optional</sup> <a name="sources" id="projen.github.AutoApproveOptions.property.sources"></a>
+
+```typescript
+public readonly sources: PullRequestSource[];
+```
+
+- *Type:* <a href="#projen.github.PullRequestSource">PullRequestSource</a>[]
+- *Default:* [PullRequestSource.fromUsers({ logins: ["github-actions[bot]"] })]
+
+Only pull requests from one of these sources will be auto-approved.
+
+Components that create pull requests can add more sources with `AutoApprove.addSource()`.
+Providing sources, either here or with `addSource()`, replaces the default source.
 
 ---
 
@@ -10656,6 +10716,115 @@ The name of the output that indicates if a patch has been created.
 
 ---
 
+### PullRequestSourceBranchOptions <a name="PullRequestSourceBranchOptions" id="projen.github.PullRequestSourceBranchOptions"></a>
+
+Options for `PullRequestSource.fromBranch`.
+
+#### Initializer <a name="Initializer" id="projen.github.PullRequestSourceBranchOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const pullRequestSourceBranchOptions: github.PullRequestSourceBranchOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.PullRequestSourceBranchOptions.property.authors">authors</a></code> | <code>string[]</code> | The GitHub usernames that may author the pull request. |
+| <code><a href="#projen.github.PullRequestSourceBranchOptions.property.branch">branch</a></code> | <code>string</code> | The exact branch the pull request comes from. |
+| <code><a href="#projen.github.PullRequestSourceBranchOptions.property.branchPrefix">branchPrefix</a></code> | <code>string</code> | A prefix the branch the pull request comes from must start with. |
+| <code><a href="#projen.github.PullRequestSourceBranchOptions.property.targetBranches">targetBranches</a></code> | <code>string[]</code> | The branches the pull request may target. |
+
+---
+
+##### `authors`<sup>Optional</sup> <a name="authors" id="projen.github.PullRequestSourceBranchOptions.property.authors"></a>
+
+```typescript
+public readonly authors: string[];
+```
+
+- *Type:* string[]
+- *Default:* any author
+
+The GitHub usernames that may author the pull request.
+
+---
+
+##### `branch`<sup>Optional</sup> <a name="branch" id="projen.github.PullRequestSourceBranchOptions.property.branch"></a>
+
+```typescript
+public readonly branch: string;
+```
+
+- *Type:* string
+- *Default:* use `branchPrefix`
+
+The exact branch the pull request comes from.
+
+---
+
+##### `branchPrefix`<sup>Optional</sup> <a name="branchPrefix" id="projen.github.PullRequestSourceBranchOptions.property.branchPrefix"></a>
+
+```typescript
+public readonly branchPrefix: string;
+```
+
+- *Type:* string
+- *Default:* use `branch`
+
+A prefix the branch the pull request comes from must start with.
+
+Make sure to include a separator at the end like `/` or `-`.
+
+---
+
+##### `targetBranches`<sup>Optional</sup> <a name="targetBranches" id="projen.github.PullRequestSourceBranchOptions.property.targetBranches"></a>
+
+```typescript
+public readonly targetBranches: string[];
+```
+
+- *Type:* string[]
+- *Default:* any target branch
+
+The branches the pull request may target.
+
+---
+
+### PullRequestSourceUsersOptions <a name="PullRequestSourceUsersOptions" id="projen.github.PullRequestSourceUsersOptions"></a>
+
+Options for `PullRequestSource.fromUsers`.
+
+#### Initializer <a name="Initializer" id="projen.github.PullRequestSourceUsersOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const pullRequestSourceUsersOptions: github.PullRequestSourceUsersOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.PullRequestSourceUsersOptions.property.logins">logins</a></code> | <code>string[]</code> | The GitHub usernames that may author the pull request. |
+
+---
+
+##### `logins`<sup>Required</sup> <a name="logins" id="projen.github.PullRequestSourceUsersOptions.property.logins"></a>
+
+```typescript
+public readonly logins: string[];
+```
+
+- *Type:* string[]
+
+The GitHub usernames that may author the pull request.
+
+---
+
 ### PullRequestTemplateOptions <a name="PullRequestTemplateOptions" id="projen.github.PullRequestTemplateOptions"></a>
 
 Options for `PullRequestTemplate`.
@@ -12701,6 +12870,62 @@ public readonly environment: string;
 The GitHub Actions environment the credentials have been added to.
 
 ---
+
+
+### PullRequestSource <a name="PullRequestSource" id="projen.github.PullRequestSource"></a>
+
+Describes where a pull request comes from.
+
+Used to select which pull requests a workflow acts on, e.g. which pull requests are auto-approved.
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.PullRequestSource.fromBranch">fromBranch</a></code> | Pull requests from a head branch in this repository. |
+| <code><a href="#projen.github.PullRequestSource.fromUsers">fromUsers</a></code> | Pull requests authored by any of the given users. |
+
+---
+
+##### `fromBranch` <a name="fromBranch" id="projen.github.PullRequestSource.fromBranch"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.PullRequestSource.fromBranch(options: PullRequestSourceBranchOptions)
+```
+
+Pull requests from a head branch in this repository.
+
+Anyone who can push to the head branch controls the content of the pull request.
+Protect the matching branches with a ruleset that only allows the intended automation
+to create, update and delete them.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.PullRequestSource.fromBranch.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.PullRequestSourceBranchOptions">PullRequestSourceBranchOptions</a>
+
+---
+
+##### `fromUsers` <a name="fromUsers" id="projen.github.PullRequestSource.fromUsers"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.PullRequestSource.fromUsers(options: PullRequestSourceUsersOptions)
+```
+
+Pull requests authored by any of the given users.
+
+Anyone with access to the credentials of these users can author a matching pull request.
+
+###### `options`<sup>Required</sup> <a name="options" id="projen.github.PullRequestSource.fromUsers.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.PullRequestSourceUsersOptions">PullRequestSourceUsersOptions</a>
+
+---
+
 
 
 ### WorkflowActions <a name="WorkflowActions" id="projen.github.WorkflowActions"></a>
