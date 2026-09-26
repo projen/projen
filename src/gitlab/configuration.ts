@@ -371,10 +371,6 @@ export class CiConfiguration extends Component {
       include:
         this.include.length > 0 ? snakeCaseKeys(this.include) : undefined,
       pages: snakeCaseKeys(this.pages),
-      services:
-        this.defaultServices.length > 0
-          ? snakeCaseKeys(this.defaultServices)
-          : undefined,
       variables:
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),

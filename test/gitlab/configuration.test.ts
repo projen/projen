@@ -537,3 +537,14 @@ test("supports trigger with mixed case input keys (no snake case conversion)", (
     },
   });
 });
+
+test("renders services only under the default section", () => {
+  const p = new TestProject({ stale: true });
+  new CiConfiguration(p, "foo", {
+    default: { services: [{ name: "postgres" }] },
+  });
+
+  const config = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
+  expect(config.default.services).toStrictEqual([{ name: "postgres" }]);
+  expect(config).not.toHaveProperty("services");
+});
