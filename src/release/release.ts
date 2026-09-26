@@ -27,7 +27,7 @@ import type { Task } from "../task";
 import { workflowNameForProject } from "../util/name";
 import { ensureNotHiddenPath, ensurePathInsideProject } from "../util/path";
 import type { ReleasableCommits } from "../version";
-import { Version } from "../version";
+import { CHANGES_SINCE_LAST_RELEASE, Version } from "../version";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
@@ -668,6 +668,7 @@ export class Release extends Component {
     const releaseTask = this.project.addTask(releaseTaskName, {
       description: `Prepare a release from "${branchName}" branch`,
       env,
+      condition: CHANGES_SINCE_LAST_RELEASE,
     });
 
     releaseTask.execArgs(["rm", "-fr", this.artifactsDirectory]);
