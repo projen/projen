@@ -175,6 +175,7 @@ exports[`eslint settings devdirs 1`] = `
         "devDependencies": [
           "**/foo/**",
           "**/bar/**",
+          "src/**/*.test.ts",
           ".projenrc.js",
         ],
         "optionalDependencies": false,
