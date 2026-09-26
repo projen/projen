@@ -10,6 +10,7 @@
  * - VERSION_FILE: Current semantic version file
  * - CHANGELOG_FILE: Release changelog
  * - PROJECT_CHANGELOG_FILE: Project-level changelog
+ * - RELEASE_COMMIT_MESSAGE_FORMAT: Custom commit message format (optional)
  *
  */
 import type { UpdateChangelogOptions } from "./update-changelog";
@@ -18,6 +19,7 @@ import { updateChangelog } from "./update-changelog";
 const inputChangelog = process.env.CHANGELOG;
 const outputChangelog = process.env.PROJECT_CHANGELOG_FILE;
 const versionFile = process.env.VERSION_FILE;
+const releaseCommitMessageFormat = process.env.RELEASE_COMMIT_MESSAGE_FORMAT;
 
 if (!versionFile) {
   throw new Error("VERSION_FILE is required");
@@ -35,6 +37,7 @@ const opts: UpdateChangelogOptions = {
   inputChangelog,
   outputChangelog,
   versionFile: versionFile,
+  releaseCommitMessageFormat: releaseCommitMessageFormat || undefined,
 };
 
 updateChangelog(process.cwd(), opts).catch((e: Error) => {
