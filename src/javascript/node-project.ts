@@ -1279,7 +1279,7 @@ export class NodeProject extends GitHubProject {
   private addDefaultGitIgnore() {
     this.gitignore.exclude(
       "# Logs",
-      "logs",
+      "/logs",
       "*.log",
       "npm-debug.log*",
       "yarn-debug.log*",
