@@ -1,5 +1,6 @@
 import * as yaml from "yaml";
 import { javascript } from "../../src";
+import type { JsiiProjectOptions } from "../../src/cdk";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
 
@@ -954,5 +955,96 @@ describe("tsconfig", () => {
     expect(tsconfig.compilerOptions.module).toBe("node16");
     // moduleResolution not set (implied by module "node16")
     expect(tsconfig.compilerOptions.moduleResolution).toBeUndefined();
+  });
+});
+
+describe("entrypoint declaration paths", () => {
+  const baseOptions = {
+    authorAddress: "hello@hello.com",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    author: "My Name",
+    name: "testproject",
+    defaultReleaseBranch: "main",
+  };
+
+  function packageJson(options: Partial<JsiiProjectOptions> = {}) {
+    const project = new JsiiProject({
+      ...baseOptions,
+      ...options,
+    });
+    return synthSnapshot(project)["package.json"];
+  }
+
+  test("default project emits main and types for lib/index", () => {
+    const pkg = packageJson();
+
+    expect(pkg.main).toBe("lib/index.js");
+    expect(pkg.types).toBe("lib/index.d.ts");
+  });
+
+  test("explicit entrypointTypes survives the default entrypoint", () => {
+    const pkg = packageJson({
+      entrypointTypes: "declarations/public.d.ts",
+    });
+
+    expect(pkg.main).toBe("lib/index.js");
+    expect(pkg.types).toBe("declarations/public.d.ts");
+  });
+
+  test("explicit entrypointTypes survives a custom entrypoint", () => {
+    const pkg = packageJson({
+      entrypoint: "lib/custom.js",
+      entrypointTypes: "declarations/public.d.ts",
+    });
+
+    expect(pkg.main).toBe("lib/custom.js");
+    expect(pkg.types).toBe("declarations/public.d.ts");
+  });
+
+  test("custom entrypoint derives the declaration path", () => {
+    const pkg = packageJson({
+      entrypoint: "lib/public.js",
+    });
+
+    expect(pkg.main).toBe("lib/public.js");
+    expect(pkg.types).toBe("lib/public.d.ts");
+  });
+
+  test("custom libdir with an aligned entrypoint derives types from that entrypoint", () => {
+    const pkg = packageJson({
+      libdir: "dist",
+      entrypoint: "dist/public.js",
+    });
+
+    expect(pkg.main).toBe("dist/public.js");
+    expect(pkg.types).toBe("dist/public.d.ts");
+  });
+
+  test("custom libdir alone leaves types derived from the default entrypoint", () => {
+    const pkg = packageJson({
+      libdir: "dist",
+    });
+
+    expect(pkg.main).toBe("lib/index.js");
+    expect(pkg.types).toBe("lib/index.d.ts");
+  });
+
+  test("empty entrypoint with explicit entrypointTypes preserves that types path", () => {
+    const pkg = packageJson({
+      entrypoint: "",
+      entrypointTypes: "declarations/public.d.ts",
+    });
+
+    expect(pkg.main).toBeUndefined();
+    expect(pkg.types).toBe("declarations/public.d.ts");
+  });
+
+  test("omits types when entrypoint is empty and entrypointTypes is unset", () => {
+    const pkg = packageJson({
+      entrypoint: "",
+    });
+
+    expect(pkg.main).toBeUndefined();
+    expect(pkg.types).toBeUndefined();
   });
 });
