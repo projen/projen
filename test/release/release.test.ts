@@ -9,9 +9,24 @@ import {
   ReleaseTrigger,
   CodeArtifactAuthProvider,
 } from "../../src/release";
+import { CHANGES_SINCE_LAST_RELEASE } from "../../src/version";
 import { synthSnapshot, TestProject } from "../util";
 
 describe("Single Project", () => {
+  test("skips release preparation when the latest commit is a release commit", () => {
+    const project = new TestProject();
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      artifactsDirectory: "dist",
+    });
+
+    expect(
+      synthSnapshot(project)[".projen/tasks.json"].tasks.release.condition,
+    ).toBe(CHANGES_SINCE_LAST_RELEASE);
+  });
+
   test("minimal", () => {
     // GIVEN
     const project = new TestProject();
