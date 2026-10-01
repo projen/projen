@@ -264,8 +264,7 @@ export class JsiiBuild implements IMixin {
     const srcdir = project.srcdir;
     const libdir = project.libdir;
 
-    project.addFields({ types: `${libdir}/index.d.ts` });
-
+    // TypeScriptProject selects `types` from `entrypointTypes` or `entrypoint`.
     const compressAssembly = options.compressAssembly ?? false;
 
     // this is an unhelpful warning

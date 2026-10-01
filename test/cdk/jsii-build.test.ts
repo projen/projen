@@ -376,3 +376,65 @@ describe("JsiiBuild fallback behaviors", () => {
     });
   });
 });
+
+describe("JsiiBuild declaration entrypoints", () => {
+  it("preserves an explicitly configured TypeScript declaration path", () => {
+    // NodeProjectOptions cannot express entrypointTypes, so construct directly.
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+      entrypointTypes: "declarations/public.d.ts",
+    });
+    project.with(new JsiiBuild());
+
+    const pkgjson = synthSnapshot(project)["package.json"];
+    expect(pkgjson.main).toBe("lib/index.js");
+    expect(pkgjson.types).toBe("declarations/public.d.ts");
+  });
+
+  it("preserves explicit types when the JavaScript entrypoint is empty", () => {
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+      entrypoint: "",
+      entrypointTypes: "declarations/public.d.ts",
+    });
+    project.with(new JsiiBuild());
+
+    const pkgjson = synthSnapshot(project)["package.json"];
+    expect(pkgjson.main).toBeUndefined();
+    expect(pkgjson.types).toBe("declarations/public.d.ts");
+  });
+
+  it("does not manufacture types when the project omits entrypoint and entrypointTypes", () => {
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+      entrypoint: "",
+    });
+    project.with(new JsiiBuild());
+
+    const pkgjson = synthSnapshot(project)["package.json"];
+    expect(pkgjson.main).toBeUndefined();
+    expect(pkgjson).not.toHaveProperty("types");
+  });
+
+  it("does not let libdir override an entrypoint-derived declaration path", () => {
+    const project = new TypeScriptProject({
+      name: "test-project",
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+      libdir: "dist",
+      entrypoint: "lib/index.js",
+    });
+    project.with(new JsiiBuild());
+
+    const pkgjson = synthSnapshot(project)["package.json"];
+    expect(pkgjson.main).toBe("lib/index.js");
+    expect(pkgjson.types).toBe("lib/index.d.ts");
+    expect(pkgjson.jsii.tsc.outDir).toBe("dist");
+  });
+});
