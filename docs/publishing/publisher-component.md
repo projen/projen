@@ -18,20 +18,25 @@ Supported package managers:
 - NuGet
 - Go (GitHub)
 
-This is how a publisher is initialized:
+You don't usually create a publisher yourself. The `Release` component creates
+one and adds its publishing jobs to the release workflow of every release
+branch. Projects with releases enabled (like `NodeProject` and `JsiiProject`)
+expose it as `project.release.publisher`:
 
 ```ts
-const publisher = new Publisher(project, {
-  workflow: releaseWorkflow,
-  buildJobId: 'my-build-job',
-  artifactName: 'dist',
+const project = new typescript.TypeScriptProject({
+  name: 'my-project',
+  defaultReleaseBranch: 'main',
+  release: true,
 });
+
+const publisher = project.release!.publisher;
 ```
 
-`workflow` is a `GithubWorkflow` with at least one job (in this case named
-`my-build-job`) which is responsible to build the code and upload a GitHub
-workflows artifact (named `dist` in this case) which will then be consumed by
-the publishing jobs.
+The release workflow has a build job (`release`) which builds the code and
+uploads the artifacts directory (`dist` by default, see the
+`artifactsDirectory` option) as a GitHub workflows artifact. This artifact is
+then consumed by the publishing jobs.
 
 This component is opinionated about the subdirectory structure of the artifact:
 
@@ -48,7 +53,7 @@ Then, you should call `publishToXxx` to add publishing jobs to the workflow:
 For example:
 
 ```ts
-publisher.publishToNuGet();
+publisher.publishToNuget();
 publisher.publishToMaven(/* options */);
 // ...
 ```
@@ -65,7 +70,7 @@ publishing job.
 For example:
 
 ```ts
-publisher.publishToNuGet({
+publisher.publishToNuget({
   publishTools: { dotnet: { version: '5.x' } },
   prePublishSteps: [
     { run: 'dotnet ...' }
@@ -173,12 +178,12 @@ publisher.publishToNpm({
 You can instruct the publisher to create GitHub issues for publish failures:
 
 ```ts
-const publisher = new Publisher(project, {
-  workflow: releaseWorkflow,
-  buildJobId: 'my-build-job',
-  artifactName: 'dist',
-  issueOnFailure: true,
-  failureIssueLabel: 'failed-release'
+const project = new typescript.TypeScriptProject({
+  name: 'my-project',
+  defaultReleaseBranch: 'main',
+  release: true,
+  releaseFailureIssue: true,
+  releaseFailureIssueLabel: 'failed-release',
 });
 ```
 
