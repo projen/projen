@@ -1325,7 +1325,7 @@ const workflowJob: circleci.WorkflowJob = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.circleci.WorkflowJob.property.identifier">identifier</a></code> | <code>string</code> | name of dynamic key *. |
 | <code><a href="#projen.circleci.WorkflowJob.property.context">context</a></code> | <code>string[]</code> | The name of the context(s). |
-| <code><a href="#projen.circleci.WorkflowJob.property.filters">filters</a></code> | <code><a href="#projen.circleci.Filter">Filter</a></code> | Job Filters can have the key branches or tags. |
+| <code><a href="#projen.circleci.WorkflowJob.property.filters">filters</a></code> | <code>string \| <a href="#projen.circleci.Filter">Filter</a></code> | Branch/tag filters or an expression string that determines whether this job runs. |
 | <code><a href="#projen.circleci.WorkflowJob.property.matrix">matrix</a></code> | <code><a href="#projen.circleci.Matrix">Matrix</a></code> | *No description.* |
 | <code><a href="#projen.circleci.WorkflowJob.property.name">name</a></code> | <code>string</code> | A replacement for the job name. |
 | <code><a href="#projen.circleci.WorkflowJob.property.orbParameters">orbParameters</a></code> | <code>{[ key: string ]: string \| number \| boolean}</code> | Parameters passed to job when referencing a job from orb. |
@@ -1363,12 +1363,14 @@ The initial default name is org-global. Each context name must be unique.
 ##### `filters`<sup>Optional</sup> <a name="filters" id="projen.circleci.WorkflowJob.property.filters"></a>
 
 ```typescript
-public readonly filters: Filter;
+public readonly filters: string | Filter;
 ```
 
-- *Type:* <a href="#projen.circleci.Filter">Filter</a>
+- *Type:* string | <a href="#projen.circleci.Filter">Filter</a>
 
-Job Filters can have the key branches or tags.
+Branch/tag filters or an expression string that determines whether this job runs.
+
+> [https://circleci.com/docs/reference/configuration-reference/#expression-based-job-filters](https://circleci.com/docs/reference/configuration-reference/#expression-based-job-filters)
 
 ---
 

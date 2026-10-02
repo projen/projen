@@ -111,6 +111,16 @@ test("full spec of api should be provided", () => {
       node_version: 16.13,
     }),
   );
+  expect(wJob).not.toHaveProperty("filters");
+  expect(yaml.workflows.workflow1.jobs[1]).toBe("checkout");
+  expect(yaml.workflows.workflow1.triggers).toEqual([
+    {
+      schedule: {
+        cron: "0 0 * * *",
+        filters: { branches: { only: ["main", "beta"] } },
+      },
+    },
+  ]);
 
   const customJob = yaml.jobs["custom-job-1"];
   expect(customJob.docker[0].image).toEqual("golang:alpine");
@@ -134,6 +144,51 @@ test("full spec of api should be provided", () => {
       },
     }),
   );
+});
+
+test.each([
+  {
+    name: "simple",
+    filters: 'pipeline.git.branch == "main"',
+  },
+  {
+    name: "compound",
+    filters:
+      'pipeline.git.branch == "main" and not (pipeline.trigger_source starts-with "api") or pipeline.git.tag starts-with "release"',
+  },
+  {
+    name: "multiline",
+    filters:
+      'pipeline.parameters.run_integration_tests\nor pipeline.git.branch == "main"\nor pipeline.git.branch starts-with "deploy"',
+  },
+])("workflow job preserves $name expression filter", ({ filters }) => {
+  const p = new TestProject();
+  const job: WorkflowJob = { identifier: "build", filters };
+  new Circleci(p, {
+    workflows: [{ identifier: "workflow", jobs: [job] }],
+  });
+
+  const yaml = YAML.parse(synthSnapshot(p)[".circleci/config.yml"]);
+  expect(yaml.workflows.workflow.jobs).toEqual([{ build: { filters } }]);
+});
+
+test("workflow job branch and tag filters are preserved", () => {
+  const p = new TestProject();
+  const filters = {
+    branches: { only: ["main", "/release-.*/"], ignore: ["/feature-.*/"] },
+    tags: { only: ["/v.*/"], ignore: ["/test-.*/"] },
+  };
+  new Circleci(p, {
+    workflows: [
+      {
+        identifier: "workflow",
+        jobs: [{ identifier: "build", filters }],
+      },
+    ],
+  });
+
+  const yaml = YAML.parse(synthSnapshot(p)[".circleci/config.yml"]);
+  expect(yaml.workflows.workflow.jobs).toEqual([{ build: { filters } }]);
 });
 
 test("test type conversion for workflow jobs with identifier only", () => {
