@@ -89,8 +89,11 @@ export interface WorkflowJob extends INamed {
   readonly context?: string[];
   /** A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed. */
   readonly type?: JobType;
-  /** Job Filters can have the key branches or tags */
-  readonly filters?: Filter;
+  /**
+   * Branch/tag filters or an expression string that determines whether this job runs.
+   * @see https://circleci.com/docs/reference/configuration-reference/#expression-based-job-filters
+   */
+  readonly filters?: Filter | string;
   readonly matrix?: Matrix;
   /** Parameters passed to job when referencing a job from orb */
   readonly orbParameters?: Record<string, string | number | boolean>;
