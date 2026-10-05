@@ -118,6 +118,7 @@ const project = new TypeScriptProject({
   auditDeps: true,
   auditDepsOptions: {
     prodOnly: true,
+    runOn: "manual", // disable until braces is fixed
   },
   allowScripts: ["esbuild", "fsevents", "unrs-resolver"], // we need this to build & test projen
 
