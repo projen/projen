@@ -443,6 +443,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -940,6 +941,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -1442,6 +1444,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -1869,6 +1872,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -2500,6 +2504,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "MAJOR": "1",
@@ -2529,6 +2534,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:10.x": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "10.x" branch",
         "env": {
           "MAJOR": "10",
@@ -2558,6 +2564,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:2.x": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "2.x" branch",
         "env": {
           "MAJOR": "2",
@@ -3197,6 +3204,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "MAJOR": "0",
@@ -3226,6 +3234,7 @@ if (current !== expected) {
         ],
       },
       "release:foo": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "foo" branch",
         "env": {
           "MAJOR": "4",
@@ -3587,6 +3596,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -4318,6 +4328,7 @@ if (current !== expected) {
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -4704,6 +4715,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
       ],
     },
     "release": {
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Prepare a release from "main" branch",
       "env": {
         "MAJOR": "0",
@@ -4890,6 +4902,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
       ],
     },
     "release": {
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Prepare a release from "main" branch",
       "env": {
         "MIN_MAJOR": "1",
@@ -5246,6 +5259,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "RELEASE": "true",
@@ -5676,6 +5690,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
       ],
     },
     "release": {
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Prepare a release from "main" branch",
       "env": {
         "MAJOR": "0",
@@ -5705,6 +5720,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
       ],
     },
     "release:10.x": {
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Prepare a release from "10.x" branch",
       "env": {
         "MAJOR": "10",
@@ -6337,6 +6353,7 @@ if (current !== expected) {
       ],
     },
     "release": {
+      "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
       "description": "Prepare a release from "main" branch",
       "env": {
         "RELEASE": "true",
@@ -6829,6 +6846,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:firefox": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "firefox" branch",
         "env": {
           "MAJOR": "1",
@@ -6859,6 +6877,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:safari": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "safari" branch",
         "env": {
           "MAJOR": "1",
@@ -7492,6 +7511,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "main" branch",
         "env": {
           "MAJOR": "1",
@@ -7521,6 +7541,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:3.x": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "3.x" branch",
         "env": {
           "MAJOR": "3",
@@ -7550,6 +7571,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:next": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "next" branch",
         "env": {
           "MAJOR": "4",
@@ -7909,6 +7931,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:10.x": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "10.x" branch",
         "env": {
           "MAJOR": "10",
@@ -8267,6 +8290,7 @@ gh release create "$tag" -R "$GITHUB_REPOSITORY" -F "$CHANGELOG_FILE" -t "$tag" 
         ],
       },
       "release:10.x": {
+        "condition": "git log --oneline -1 | grep -v "chore(release):" > /dev/null",
         "description": "Prepare a release from "10.x" branch",
         "env": {
           "MAJOR": "10",
