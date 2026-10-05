@@ -36,8 +36,8 @@ export const INTEG_TEST_VERSIONS: LanguageVersions = {
   // 18.18.0/20.9.0 are the oldest patches the generated project's toolchain
   // supports (eslint 9); node 16 can't run the toolchain at all.
   node: ["18.18.0", "20.9.0", "lts/-2", "22.0.0", "lts/-1", "24.0.0", "lts/*"],
-  python: ["3.10", "3.11", "3.12", "3.13", "3.14"],
-  go: ["1.25.x", "1.26.x"],
+  python: ["3.11", "3.12", "3.13", "3.14"],
+  go: ["1.26.x", "1.27.x"],
   java: [
     { version: "8", distribution: "corretto" },
     { version: "11", distribution: "corretto" },
