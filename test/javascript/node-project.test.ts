@@ -43,6 +43,16 @@ test("license file is not added if licensed is false", () => {
   expect(snapshot["package.json"].license).toEqual("UNLICENSED");
 });
 
+test("only the top-level logs directory is ignored by default", () => {
+  // WHEN
+  const project = new TestNodeProject();
+
+  // THEN
+  const lines = synthSnapshot(project)[".gitignore"].split("\n");
+  expect(lines).toContain("/logs");
+  expect(lines).not.toContain("logs");
+});
+
 describe("deps", () => {
   test("runtime deps", () => {
     // GIVEN

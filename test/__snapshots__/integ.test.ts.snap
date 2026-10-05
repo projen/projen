@@ -912,7 +912,7 @@ jobs:
 !/package.json
 !/LICENSE
 !/.npmignore
-logs
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -2203,7 +2203,7 @@ jobs:
 !/package.json
 !/LICENSE
 !/.npmignore
-logs
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -3545,7 +3545,7 @@ jobs:
 !/package.json
 !/LICENSE
 !/.npmignore
-logs
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -4740,7 +4740,7 @@ jobs:
 !/package.json
 !/LICENSE
 !/.npmignore
-logs
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*
