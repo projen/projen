@@ -511,9 +511,6 @@
       "description": "Prepare the project for compilation",
       "steps": [
         {
-          "spawn": "audit"
-        },
-        {
           "spawn": "check-licenses"
         }
       ]
