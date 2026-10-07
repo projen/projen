@@ -300,6 +300,99 @@ it("warns the user if they add CDK v1 dependencies to a CDK v2 project", () => {
   );
 });
 
+describe("sample code", () => {
+  test("generates a sample construct and test", () => {
+    // GIVEN
+    const project = new AwsCdkConstructLibrary({
+      ...defaultOptions,
+      cdkVersion: "2.1.0",
+      jest: true,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["src/index.ts"]).toContain(
+      "export class MyConstruct extends Construct",
+    );
+    expect(snapshot["src/index.ts"]).not.toContain("sayHello");
+    expect(snapshot["test/my-construct.test.ts"]).toContain(
+      "new MyConstruct(stack, 'MyConstruct');",
+    );
+    expect(snapshot["test/hello.test.ts"]).toBeUndefined();
+  });
+
+  test("does not generate a sample test without jest", () => {
+    // GIVEN
+    const project = new TestProject({ cdkVersion: "2.1.0" });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["src/index.ts"]).toContain("class MyConstruct");
+    expect(snapshot["test/my-construct.test.ts"]).toBeUndefined();
+  });
+
+  test("is not generated when sampleCode is disabled", () => {
+    // GIVEN
+    const project = new AwsCdkConstructLibrary({
+      ...defaultOptions,
+      cdkVersion: "2.1.0",
+      jest: true,
+      sampleCode: false,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["src/index.ts"]).toBeUndefined();
+    expect(snapshot["test/my-construct.test.ts"]).toBeUndefined();
+  });
+
+  test("is not generated when the source directory exists", () => {
+    // GIVEN
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "src"));
+    writeFileSync(join(outdir, "src", "index.ts"), "export const x = 1;");
+    const project = new AwsCdkConstructLibrary({
+      ...defaultOptions,
+      cdkVersion: "2.1.0",
+      jest: true,
+      outdir,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["src/index.ts"]).toEqual("export const x = 1;");
+    expect(snapshot["test/my-construct.test.ts"]).toBeUndefined();
+  });
+
+  test("sample test is not generated when the test directory has tests", () => {
+    // GIVEN
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, "test"));
+    writeFileSync(join(outdir, "test", "existing.test.ts"), "// existing");
+    const project = new AwsCdkConstructLibrary({
+      ...defaultOptions,
+      cdkVersion: "2.1.0",
+      jest: true,
+      outdir,
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["src/index.ts"]).toContain("class MyConstruct");
+    expect(snapshot["test/my-construct.test.ts"]).toBeUndefined();
+  });
+});
+
 const defaultOptions = {
   author: "Nobody",
   authorAddress: "nobody@nowhere.com",
