@@ -8914,6 +8914,11 @@ public readonly libdir: string;
 
 Typescript  artifacts output directory.
 
+When `libdir` is changed, set `entrypoint` to match it (for example
+`libdir: "dist"` with `entrypoint: "dist/index.js"`). `types` follows the
+entrypoint rather than `libdir`, and `main` still defaults to
+`lib/index.js`.
+
 ---
 
 ##### `projenrcTs`<sup>Optional</sup> <a name="projenrcTs" id="projen.cdk8s.Cdk8sTypeScriptAppOptions.property.projenrcTs"></a>
@@ -11571,6 +11576,11 @@ public readonly libdir: string;
 - *Default:* "lib"
 
 Typescript  artifacts output directory.
+
+When `libdir` is changed, set `entrypoint` to match it (for example
+`libdir: "dist"` with `entrypoint: "dist/index.js"`). `types` follows the
+entrypoint rather than `libdir`, and `main` still defaults to
+`lib/index.js`.
 
 ---
 
