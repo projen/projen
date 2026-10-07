@@ -1,3 +1,4 @@
+import { relative } from "path";
 import type { ValidateTsconfig } from "./jsii-build";
 import { JsiiBuild } from "./jsii-build";
 import { GitHub } from "../github";
@@ -9,7 +10,7 @@ import type {
 } from "../release";
 import type { TypeScriptProjectOptions } from "../typescript";
 import { TypeScriptProject } from "../typescript";
-import { deepMerge } from "../util";
+import { deepMerge, normalizePersistedPath } from "../util";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+$/;
 const URL_REGEX =
@@ -252,6 +253,9 @@ export class JsiiProject extends TypeScriptProject {
           codeArtifactOptions: options.codeArtifactOptions,
           workflowNodeVersion: this.nodeVersion,
           workflowBootstrapSteps: this.workflowBootstrapSteps,
+          workspaceDirectory: normalizePersistedPath(
+            relative(this.root.outdir, this.outdir),
+          ),
         },
         {
           ...this.getJobRunsOnConfig(options),

@@ -129,7 +129,9 @@ describe("JsiiBuild", () => {
     });
 
     it("uses workspaceDirectory in packaging steps", () => {
-      const project = createTypeScriptProject();
+      const project = createTypeScriptProject({
+        packageManager: javascript.NodePackageManager.NPM,
+      });
       project.with(
         new JsiiBuild({
           workspaceDirectory: "packages/my-lib",
@@ -142,8 +144,24 @@ describe("JsiiBuild", () => {
       );
 
       const output = synthSnapshot(project);
-      const releaseWorkflow = output[".github/workflows/release.yml"];
-      expect(releaseWorkflow).toContain(".repo/packages/my-lib");
+      const releaseWorkflow = YAML.parse(
+        output[".github/workflows/release.yml"],
+      );
+      const steps = releaseWorkflow.jobs.release_npm.steps;
+      const commands = {
+        "Install Dependencies": "cd .repo && npm ci",
+        "Extract build artifact":
+          "tar --strip-components=1 -xzvf dist/js/*.tgz -C .repo/packages/my-lib",
+        "Move build artifact out of the way": "mv dist dist.old",
+        "Create js artifact":
+          "cd .repo/packages/my-lib && npx projen package:js",
+        "Collect js artifact": "mv .repo/packages/my-lib/dist dist",
+      };
+      for (const [name, run] of Object.entries(commands)) {
+        expect(steps.find((step: any) => step.name === name)).toMatchObject({
+          run,
+        });
+      }
     });
 
     it("pins packaging job checkouts to the PR head SHA", () => {
