@@ -1,6 +1,5 @@
 import * as path from "path";
 import { join as pathJoin } from "path";
-import * as semver from "semver";
 import { renderBundleName } from "./util";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -134,9 +133,8 @@ export class Bundler extends Component {
       `--outfile=${outfile}`,
     ];
 
-    // Keep bundling node_modules on every esbuild that accepts the flag.
-    // esbuildArgs["--packages"] remains the override.
-    if (shouldPassPackagesBundle(this.esbuildVersion, options.esbuildArgs)) {
+    // Keep bundling node_modules. esbuildArgs["--packages"] remains the override.
+    if (shouldPassPackagesBundle(options.esbuildArgs)) {
       args.push("--packages=bundle");
     }
 
@@ -669,17 +667,11 @@ export enum BundleLogLevel {
  * Whether `addBundle` should pass `--packages=bundle`.
  *
  * esbuild 0.22.0 stopped including `node_modules` in bundles unless this flag
- * is set. Later releases restored that default, and the flag keeps the
- * contract on every esbuild that accepts it. A requirement that can still
- * resolve below 0.22.0 rejects the unknown option, so the flag stays off.
- *
- * An unset version installs the latest esbuild, which accepts the flag. An
- * unparsable requirement leaves the flag off and does not throw. An
- * `esbuildArgs` key of `--packages` or `--packages=...` is the caller's
- * override, including a `false` value that the argv loop would otherwise drop.
+ * is set. The flag is always passed so that contract holds. An `esbuildArgs`
+ * key of `--packages` or `--packages=...` is the caller's override, including
+ * a `false` value that the argv loop would otherwise drop.
  */
 function shouldPassPackagesBundle(
-  esbuildVersion: string | undefined,
   esbuildArgs: { [key: string]: string | boolean } | undefined,
 ): boolean {
   if (esbuildArgs) {
@@ -690,14 +682,5 @@ function shouldPassPackagesBundle(
     }
   }
 
-  if (esbuildVersion === undefined) {
-    return true;
-  }
-
-  const range = semver.validRange(esbuildVersion);
-  if (!range) {
-    return false;
-  }
-
-  return !semver.intersects(range, "<0.22.0");
+  return true;
 }

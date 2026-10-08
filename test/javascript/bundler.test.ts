@@ -575,22 +575,9 @@ test.each([true, false])(
   },
 );
 
-test.each<[string, boolean]>([
-  ["0.22.0", true],
-  ["^0.22.0", true],
-  ["~0.22.1", true],
-  [">=0.22.0", true],
-  ["^0.28.0", true],
-  ["^3", true],
-  ["0.21.5", false],
-  ["^0.21.0", false],
-  ["^0.13.13", false],
-  [">=0.21.0", false],
-  ["*", false],
-  ["latest", false],
-])(
-  "esbuildVersion %s passes --packages=bundle: %s",
-  (esbuildVersion, passPackagesBundle) => {
+test.each(["0.21.5", "^0.13.13", "*", "latest"])(
+  "esbuildVersion %s passes --packages=bundle",
+  (esbuildVersion) => {
     const p = new NodeProject({
       name: "test",
       defaultReleaseBranch: "main",
@@ -599,23 +586,19 @@ test.each<[string, boolean]>([
       },
     });
 
-    const bundle = p.bundler.addBundle("./src/hello.ts", {
+    p.bundler.addBundle("./src/hello.ts", {
       platform: "node",
       target: "node18",
     });
-    expect(bundle.bundleTask.name).toBe("bundle:hello");
 
     const tasks = Testing.synth(p)[".projen/tasks.json"].tasks;
     for (const taskName of ["bundle:hello", "bundle:hello:watch"]) {
       const execArgs = tasks[taskName].steps[0].execArgs as string[];
-      const packages = execArgs.filter((arg) => arg.startsWith("--packages"));
-      if (passPackagesBundle) {
-        const outfile = execArgs.indexOf("--outfile=assets/hello/index.js");
-        expect(execArgs[outfile + 1]).toBe("--packages=bundle");
-        expect(packages).toStrictEqual(["--packages=bundle"]);
-      } else {
-        expect(packages).toStrictEqual([]);
-      }
+      const outfile = execArgs.indexOf("--outfile=assets/hello/index.js");
+      expect(execArgs[outfile + 1]).toBe("--packages=bundle");
+      expect(
+        execArgs.filter((arg) => arg.startsWith("--packages")),
+      ).toStrictEqual(["--packages=bundle"]);
     }
   },
 );
