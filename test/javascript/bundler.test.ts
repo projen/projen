@@ -82,6 +82,7 @@ test("bundler.addBundle() defines a bundle", () => {
           "--target=node16",
           "--platform=node",
           "--outfile=assets/hello/index.js",
+          "--packages=bundle",
         ],
       },
     ],
@@ -99,6 +100,7 @@ test("bundler.addBundle() defines a bundle", () => {
           "--target=node18",
           "--platform=node",
           "--outfile=assets/foo/world/index.js",
+          "--packages=bundle",
           "--tsconfig=tsconfig.dev.json",
           "--external:aws-sdk",
           "--external:request",
@@ -180,6 +182,7 @@ test("sourcemaps can be disabled", () => {
           "--target=node12",
           "--platform=node",
           "--outfile=assets/hello/index.js",
+          "--packages=bundle",
         ],
       },
     ],
@@ -213,6 +216,7 @@ test("sourcemaps can be set to EXTERNAL", () => {
           "--target=node12",
           "--platform=node",
           "--outfile=assets/hello/index.js",
+          "--packages=bundle",
           "--sourcemap=external",
         ],
       },
@@ -248,6 +252,7 @@ describe("bundle:watch", () => {
             "--target=node12",
             "--platform=node",
             "--outfile=assets/hello/index.js",
+            "--packages=bundle",
             "--watch",
           ],
         },
@@ -569,3 +574,93 @@ test.each([true, false])(
     }
   },
 );
+
+test.each<[string, boolean]>([
+  ["0.22.0", true],
+  ["^0.22.0", true],
+  ["~0.22.1", true],
+  [">=0.22.0", true],
+  ["^0.28.0", true],
+  ["^3", true],
+  ["0.21.5", false],
+  ["^0.21.0", false],
+  ["^0.13.13", false],
+  [">=0.21.0", false],
+  ["*", false],
+  ["latest", false],
+])(
+  "esbuildVersion %s passes --packages=bundle: %s",
+  (esbuildVersion, passPackagesBundle) => {
+    const p = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      bundlerOptions: {
+        esbuildVersion,
+      },
+    });
+
+    const bundle = p.bundler.addBundle("./src/hello.ts", {
+      platform: "node",
+      target: "node18",
+    });
+    expect(bundle.bundleTask.name).toBe("bundle:hello");
+
+    const tasks = Testing.synth(p)[".projen/tasks.json"].tasks;
+    for (const taskName of ["bundle:hello", "bundle:hello:watch"]) {
+      const execArgs = tasks[taskName].steps[0].execArgs as string[];
+      const packages = execArgs.filter((arg) => arg.startsWith("--packages"));
+      if (passPackagesBundle) {
+        const outfile = execArgs.indexOf("--outfile=assets/hello/index.js");
+        expect(execArgs[outfile + 1]).toBe("--packages=bundle");
+        expect(packages).toStrictEqual(["--packages=bundle"]);
+      } else {
+        expect(packages).toStrictEqual([]);
+      }
+    }
+  },
+);
+
+test.each<[{ [key: string]: string | boolean }, string[]]>([
+  [{ "--packages": "external" }, ["--packages=external"]],
+  [{ "--packages": false }, []],
+])(
+  "esbuildArgs %j replaces --packages=bundle with %j",
+  (esbuildArgs, packagesArgs) => {
+    const p = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+    });
+
+    p.bundler.addBundle("./src/hello.ts", {
+      platform: "node",
+      target: "node18",
+      esbuildArgs,
+    });
+
+    const tasks = Testing.synth(p)[".projen/tasks.json"].tasks;
+    for (const taskName of ["bundle:hello", "bundle:hello:watch"]) {
+      const execArgs = tasks[taskName].steps[0].execArgs as string[];
+      expect(
+        execArgs.filter((arg) => arg.startsWith("--packages")),
+      ).toStrictEqual(packagesArgs);
+    }
+  },
+);
+
+test("platform browser includes --packages=bundle", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "browser",
+    target: "es2022",
+  });
+
+  const execArgs = Testing.synth(p)[".projen/tasks.json"].tasks["bundle:hello"]
+    .steps[0].execArgs as string[];
+  const outfile = execArgs.indexOf("--outfile=assets/hello/index.js");
+  expect(execArgs).toContain("--platform=browser");
+  expect(execArgs[outfile + 1]).toBe("--packages=bundle");
+});

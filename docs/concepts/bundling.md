@@ -32,3 +32,6 @@ project.bundler.addBundle('name-of-bundle', {
   }
 });
 ```
+
+Unpinned esbuild and any `esbuildVersion` requirement that excludes `<0.22.0`
+get `--packages=bundle`. A pin below 0.22 keeps the previous command line.
