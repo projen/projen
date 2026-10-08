@@ -1,5 +1,6 @@
+import { join } from "path";
 import * as yaml from "yaml";
-import { javascript } from "../../src";
+import { awscdk, javascript } from "../../src";
 import type { JsiiProjectOptions } from "../../src/cdk";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
@@ -581,6 +582,108 @@ describe("language bindings", () => {
       expect(job).toMatchSnapshot();
     },
   );
+});
+
+describe("packaging workflow directories", () => {
+  const baseOptions = {
+    authorAddress: "hello@hello.com",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    author: "My Name",
+    name: "example",
+    defaultReleaseBranch: "main",
+    packageManager: javascript.NodePackageManager.NPM,
+    release: true,
+    buildWorkflow: false,
+  };
+
+  function createParent(parent?: javascript.NodeProject, outdir?: string) {
+    return new javascript.NodeProject({
+      name: "parent",
+      defaultReleaseBranch: "main",
+      release: false,
+      buildWorkflow: false,
+      parent,
+      outdir,
+    });
+  }
+
+  function expectPackagingJob(workflow: any, jobId: string, workdir: string) {
+    const job = workflow.jobs[jobId];
+    expect(job).toBeDefined();
+    expect(workflow.defaults?.run?.["working-directory"]).toBeUndefined();
+    expect(job.defaults?.run?.["working-directory"]).toBeUndefined();
+    expect(
+      job.steps.find((step: any) => step.name === "Download build artifacts"),
+    ).toMatchObject({ with: { path: "dist" } });
+    expect(
+      job.steps.find((step: any) => step.name === "Checkout"),
+    ).toMatchObject({ with: { path: ".repo" } });
+
+    const commands = {
+      "Install Dependencies": "cd .repo && npm ci",
+      "Extract build artifact": `tar --strip-components=1 -xzvf dist/js/*.tgz -C ${workdir}`,
+      "Move build artifact out of the way": "mv dist dist.old",
+      "Create js artifact": `cd ${workdir} && npx projen package:js`,
+      "Collect js artifact": `mv ${workdir}/dist dist`,
+    };
+    for (const [name, run] of Object.entries(commands)) {
+      const step = job.steps.find((candidate: any) => candidate.name === name);
+      expect(step).toMatchObject({ run });
+      expect(step["working-directory"]).toBeUndefined();
+    }
+  }
+
+  test.each([
+    { name: "root jsii project", outdirs: [], workdir: ".repo", cdk: false },
+    {
+      name: "jsii subproject",
+      outdirs: [join("packages", "example")],
+      workdir: ".repo/packages/example",
+      cdk: false,
+    },
+    {
+      name: "nested jsii subproject",
+      outdirs: [join("groups", "team"), join("packages", "example")],
+      workdir: ".repo/groups/team/packages/example",
+      cdk: false,
+    },
+    {
+      name: "aws cdk construct library subproject",
+      outdirs: [join("packages", "example")],
+      workdir: ".repo/packages/example",
+      cdk: true,
+    },
+  ])("release packaging for $name", ({ outdirs, workdir, cdk }) => {
+    let parent = outdirs.length > 0 ? createParent() : undefined;
+    for (const outdir of outdirs.slice(0, -1)) {
+      parent = createParent(parent, outdir);
+    }
+    const options = { ...baseOptions, parent, outdir: outdirs.at(-1) };
+    const project = cdk
+      ? new awscdk.AwsCdkConstructLibrary({ ...options, cdkVersion: "2.1.0" })
+      : new JsiiProject(options);
+    const output = synthSnapshot(project.root);
+    const workflowName = parent ? "release_example" : "release";
+    const workflow = yaml.parse(
+      output[`.github/workflows/${workflowName}.yml`],
+    );
+
+    expectPackagingJob(workflow, "release_npm", workdir);
+  });
+
+  test("build packaging for a jsii subproject", () => {
+    const parent = createParent();
+    new JsiiProject({
+      ...baseOptions,
+      parent,
+      outdir: join("packages", "example"),
+      buildWorkflow: true,
+    });
+    const output = synthSnapshot(parent);
+    const workflow = yaml.parse(output[".github/workflows/build_example.yml"]);
+
+    expectPackagingJob(workflow, "package-js", ".repo/packages/example");
+  });
 });
 
 describe("workflows use global workflowRunsOn option", () => {
