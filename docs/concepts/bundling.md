@@ -32,3 +32,6 @@ project.bundler.addBundle('name-of-bundle', {
   }
 });
 ```
+
+Bundle commands always include `--packages=bundle` so `node_modules` stays in
+the bundle. Override with `esbuildArgs` (for example `{ "--packages": "external" }`).

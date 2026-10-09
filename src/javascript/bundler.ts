@@ -133,6 +133,11 @@ export class Bundler extends Component {
       `--outfile=${outfile}`,
     ];
 
+    // Keep bundling node_modules. esbuildArgs["--packages"] remains the override.
+    if (shouldPassPackagesBundle(options.esbuildArgs)) {
+      args.push("--packages=bundle");
+    }
+
     if (options.tsconfigPath) {
       args.push(`--tsconfig=${options.tsconfigPath}`);
     }
@@ -656,4 +661,26 @@ export enum BundleLogLevel {
   ERROR = "error",
   /** Show nothing */
   SILENT = "silent",
+}
+
+/**
+ * Whether `addBundle` should pass `--packages=bundle`.
+ *
+ * esbuild 0.22.0 stopped including `node_modules` in bundles unless this flag
+ * is set. The flag is always passed so that contract holds. An `esbuildArgs`
+ * key of `--packages` or `--packages=...` is the caller's override, including
+ * a `false` value that the argv loop would otherwise drop.
+ */
+function shouldPassPackagesBundle(
+  esbuildArgs: { [key: string]: string | boolean } | undefined,
+): boolean {
+  if (esbuildArgs) {
+    for (const key of Object.keys(esbuildArgs)) {
+      if (key === "--packages" || key.startsWith("--packages=")) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }

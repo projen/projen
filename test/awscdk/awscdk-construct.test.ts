@@ -90,6 +90,7 @@ describe("lambda functions", () => {
           "--target=node22",
           "--platform=node",
           "--outfile=resources/my.lambda/index.js",
+          "--packages=bundle",
           "--tsconfig=test/tsconfig.json",
           "--external:foo",
           "--external:bar",
