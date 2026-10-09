@@ -30,6 +30,15 @@ export interface UpdateChangelogOptions {
    * Release version.
    */
   versionFile: string;
+
+  /**
+   * Custom commit message format for the changelog update commit.
+   *
+   * Replaces `{{currentTag}}` with the version.
+   *
+   * @default "chore(release): {{currentTag}}"
+   */
+  releaseCommitMessageFormat?: string;
 }
 
 /**
@@ -86,6 +95,13 @@ export async function updateChangelog(
 
   await fs.writeFile(outputChangelog, newChangelog);
 
+  const commitMessageFormat =
+    options.releaseCommitMessageFormat ?? "chore(release): {{currentTag}}";
+  const commitMessage = commitMessageFormat.replace(
+    /\{\{currentTag\}\}/g,
+    version,
+  );
+
   git.run(["add", outputChangelog], { cwd });
-  git.run(["commit", "-m", `chore(release): ${version}`], { cwd });
+  git.run(["commit", "-m", commitMessage], { cwd });
 }
