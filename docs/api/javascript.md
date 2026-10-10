@@ -22331,6 +22331,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.downlevelIteration">downlevelIteration</a></code> | <code>boolean</code> | Downleveling is TypeScript’s term for transpiling to an older version of JavaScript. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.emitDeclarationOnly">emitDeclarationOnly</a></code> | <code>boolean</code> | Only emit .d.ts files; do not emit .js files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.emitDecoratorMetadata">emitDecoratorMetadata</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.erasableSyntaxOnly">erasableSyntaxOnly</a></code> | <code>boolean</code> | Report errors for most TypeScript-specific syntax that has runtime behavior. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.esModuleInterop">esModuleInterop</a></code> | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.exactOptionalPropertyTypes">exactOptionalPropertyTypes</a></code> | <code>boolean</code> | Specifies that optional property types should be interpreted exactly as written, meaning that `\| undefined` is not added to the type Available with TypeScript 4.4 and newer. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.experimentalDecorators">experimentalDecorators</a></code> | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process. |
@@ -22632,6 +22633,23 @@ This means that the implementation version in TypeScript may differ from the imp
 You can find out more about decorator support in TypeScript in the handbook.
 
 > [https://www.typescriptlang.org/docs/handbook/decorators.html](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+---
+
+##### `erasableSyntaxOnly`<sup>Optional</sup> <a name="erasableSyntaxOnly" id="projen.javascript.TypeScriptCompilerOptions.property.erasableSyntaxOnly"></a>
+
+```typescript
+public readonly erasableSyntaxOnly: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Report errors for most TypeScript-specific syntax that has runtime behavior.
+
+Requires TypeScript 5.8 or later.
+
+> [https://www.typescriptlang.org/tsconfig/erasableSyntaxOnly.html](https://www.typescriptlang.org/tsconfig/erasableSyntaxOnly.html)
 
 ---
 
