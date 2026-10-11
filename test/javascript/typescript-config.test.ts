@@ -2,6 +2,7 @@ import { writeFileSync, mkdirSync } from "fs";
 import * as path from "path";
 import * as semver from "semver";
 import * as ts from "typescript";
+import type { TypeScriptCompilerOptions } from "../../src/javascript";
 import {
   NodeProject,
   TypescriptConfig,
@@ -17,6 +18,30 @@ describe("TypescriptConfig", () => {
   });
   afterAll(() => {
     process.env.PROJEN_DISABLE_POST = ENV_PROJEN_DISABLE_POST;
+  });
+
+  test.each<[TypeScriptCompilerOptions]>([
+    [{ erasableSyntaxOnly: true }],
+    [{ erasableSyntaxOnly: false }],
+    [{}],
+  ])("synthesizes erasableSyntaxOnly from %p", async (compilerOptions) => {
+    await withProjectDir(async (outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const tsConfig = new TypescriptConfig(project, { compilerOptions });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config.compilerOptions).toEqual(compilerOptions);
+    });
   });
 
   test("TypeScript should parse generated config without warnings", async () => {

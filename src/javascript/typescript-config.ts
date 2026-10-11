@@ -287,6 +287,15 @@ export interface TypeScriptCompilerOptions {
   readonly emitDecoratorMetadata?: boolean;
 
   /**
+   * Report errors for most TypeScript-specific syntax that has runtime behavior.
+   * Requires TypeScript 5.8 or later.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/erasableSyntaxOnly.html
+   * @default undefined
+   */
+  readonly erasableSyntaxOnly?: boolean;
+
+  /**
    * Disallow inconsistently-cased references to the same file.
    *
    * @default false
