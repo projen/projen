@@ -22361,6 +22361,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.noUnusedParameters">noUnusedParameters</a></code> | <code>boolean</code> | Report errors on unused parameters in functions. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.outDir">outDir</a></code> | <code>string</code> | Output directory for the compiled files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.paths">paths</a></code> | <code>{[ key: string ]: string[]}</code> | A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.preserveConstEnums">preserveConstEnums</a></code> | <code>boolean</code> | Preserve `const enum` declarations in generated code. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolveJsonModule">resolveJsonModule</a></code> | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolvePackageJsonExports">resolvePackageJsonExports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolvePackageJsonImports">resolvePackageJsonImports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor. |
@@ -23056,6 +23057,21 @@ public readonly paths: {[ key: string ]: string[]};
 A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.
 
 paths lets you declare how TypeScript should resolve an import in your require/imports.
+
+---
+
+##### `preserveConstEnums`<sup>Optional</sup> <a name="preserveConstEnums" id="projen.javascript.TypeScriptCompilerOptions.property.preserveConstEnums"></a>
+
+```typescript
+public readonly preserveConstEnums: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Preserve `const enum` declarations in generated code.
+
+> [https://www.typescriptlang.org/tsconfig/preserveConstEnums.html](https://www.typescriptlang.org/tsconfig/preserveConstEnums.html)
 
 ---
 
