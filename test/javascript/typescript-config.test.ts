@@ -44,6 +44,33 @@ describe("TypescriptConfig", () => {
     });
   });
 
+  test.each<[TypeScriptCompilerOptions]>([
+    [{ preserveConstEnums: true }],
+    [{ preserveConstEnums: false }],
+    [{}],
+  ])("synthesizes preserveConstEnums from %p", async (compilerOptions) => {
+    await withProjectDir(async (outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const options = { outDir: "lib", ...compilerOptions };
+      const tsConfig = new TypescriptConfig(project, {
+        compilerOptions: options,
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config.compilerOptions).toStrictEqual(options);
+    });
+  });
+
   test("TypeScript should parse generated config without warnings", async () => {
     await withProjectDir(async (outdir) => {
       const project = new NodeProject({

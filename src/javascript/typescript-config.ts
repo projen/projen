@@ -497,6 +497,14 @@ export interface TypeScriptCompilerOptions {
   readonly noUnusedParameters?: boolean;
 
   /**
+   * Preserve `const enum` declarations in generated code.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/preserveConstEnums.html
+   * @default undefined
+   */
+  readonly preserveConstEnums?: boolean;
+
+  /**
    * Allows importing modules with a ‘.json’ extension, which is a common practice
    * in node projects. This includes generating a type for the import based on the static JSON shape.
    *
