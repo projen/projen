@@ -1,6 +1,6 @@
 import { Component } from "./component";
 import { DependencyType } from "./dependencies";
-import type { GitHub } from "./github";
+import { GithubWorkflow } from "./github/workflows";
 import type { Job, JobCallingReusableWorkflow } from "./github/workflows-model";
 import { JsonFile } from "./json";
 import type { Project } from "./project";
@@ -195,16 +195,21 @@ export class Renovatebot extends Component {
       ),
     ];
 
-    // Ignore GitHub Action updates in Projen created workspaces
-    const github: GitHub = (this._project as any).github;
-    if (github?.workflowsEnabled) {
-      const actions: string[] = github.workflows
+    // Ignore updates to dependencies in generated GitHub workflows.
+    const workflows = this._project.components
+      .filter(
+        (component): component is GithubWorkflow =>
+          component instanceof GithubWorkflow && component.file !== undefined,
+      )
+      .sort((w1, w2) => w1.name.localeCompare(w2.name));
+    if (workflows.length > 0) {
+      const actions: string[] = workflows
         .flatMap((workflow) => Object.values(workflow.jobs))
         .flatMap((job) => (job as Job).steps)
         .map((step) => step?.uses?.split("@")[0])
         .filter((actionName) => !!actionName) as string[];
 
-      const reusableWorkflows: string[] = github.workflows
+      const reusableWorkflows: string[] = workflows
         .flatMap((workflow) => Object.values(workflow.jobs))
         .flatMap((job) => (job as JobCallingReusableWorkflow).uses)
         .map((reusableWorkflow) => reusableWorkflow?.split("@")[0]);

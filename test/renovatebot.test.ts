@@ -1,6 +1,13 @@
-import { DependencyType, RenovatebotMinimumReleaseAgeBehaviour } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { parse } from "yaml";
+import {
+  DependencyType,
+  Project,
+  RenovatebotMinimumReleaseAgeBehaviour,
+} from "../src";
+import { mkdtemp, synthSnapshot, TestProject } from "./util";
+import { GitHub, GitHubProject, GithubWorkflow } from "../src/github";
 import { TypeScriptProject } from "../src/typescript";
+import { directorySnapshot } from "../src/util/synth";
 
 describe("renovatebot", () => {
   test("renovatebot: true creates renovatebot configuration", () => {
@@ -129,6 +136,190 @@ describe("renovatebot", () => {
       "amannn/action-semantic-pull-request",
       "actions/checkout",
       "actions/cache",
+    ]);
+  });
+
+  test.each([
+    { workflows: true, force: false, standalone: false },
+    { workflows: false, force: true, standalone: false },
+    { workflows: false, force: false, standalone: false },
+    { workflows: true, force: false, standalone: true },
+    { workflows: false, force: true, standalone: true },
+  ])(
+    "renovatebot: discovers emitted workflows ($workflows, $force, $standalone)",
+    ({ workflows, force, standalone }) => {
+      const renovatebotOptions = {
+        ignore: ["custom-ignore", "custom-ignore"],
+        ignoreProjen: false,
+      };
+      const options = {
+        name: "workflow-project",
+        outdir: mkdtemp(),
+        renovatebot: true,
+        renovatebotOptions,
+      };
+      const githubOptions = { workflows, pullRequestLint: false };
+      const p = standalone
+        ? new Project(options)
+        : new GitHubProject({ ...options, githubOptions });
+      const github = standalone ? new GitHub(p, githubOptions) : GitHub.of(p)!;
+      const later = new GithubWorkflow(github, "z-manual", {
+        force,
+        fileName: "manual.yaml",
+      });
+      later.addJob("actions", {
+        permissions: {},
+        steps: [
+          { uses: "actions/checkout@v4" },
+          { uses: "actions/checkout@v3" },
+          { run: "echo hello" },
+          { uses: "./.github/actions/local" },
+          { uses: "docker://alpine:3" },
+        ],
+      });
+      later.addJob("reusable", {
+        permissions: {},
+        uses: "example/workflows/.github/workflows/test.yaml@v1",
+      });
+      const earlier = new GithubWorkflow(github, "a-manual", { force });
+      earlier.addJob("actions", {
+        permissions: {},
+        steps: [{ uses: "actions/setup-node@v4" }],
+      });
+      earlier.addJob("reusable", {
+        permissions: {},
+        uses: "example/workflows/.github/workflows/test.yaml@v2",
+      });
+
+      expect(github.workflows).toEqual([earlier, later]);
+      p.synth();
+      const first = directorySnapshot(p.outdir, { supportJsonComments: true });
+      const emitted = workflows || force;
+      if (emitted) {
+        expect(later.file).toBeDefined();
+        expect(
+          parse(first[".github/workflows/manual.yaml"]).jobs,
+        ).toMatchObject({
+          actions: {
+            steps: [
+              { uses: "actions/checkout@v4" },
+              { uses: "actions/checkout@v3" },
+              { run: "echo hello" },
+              { uses: "./.github/actions/local" },
+              { uses: "docker://alpine:3" },
+            ],
+          },
+          reusable: {
+            uses: "example/workflows/.github/workflows/test.yaml@v1",
+          },
+        });
+        expect(
+          parse(first[".github/workflows/a-manual.yml"]).jobs,
+        ).toHaveProperty("actions.steps.0.uses", "actions/setup-node@v4");
+      } else {
+        expect(later.file).toBeUndefined();
+        expect(earlier.file).toBeUndefined();
+        expect(first).not.toHaveProperty(".github/workflows/manual.yaml");
+        expect(first).not.toHaveProperty(".github/workflows/a-manual.yml");
+      }
+      expect(first["renovate.json5"].ignoreDeps).toEqual([
+        "custom-ignore",
+        ...(emitted
+          ? [
+              "actions/setup-node",
+              "actions/checkout",
+              "./.github/actions/local",
+              "docker://alpine:3",
+              "example/workflows/.github/workflows/test.yaml",
+            ]
+          : []),
+      ]);
+      p.synth();
+      expect(
+        directorySnapshot(p.outdir, { supportJsonComments: true }),
+      ).toEqual(first);
+      expect(renovatebotOptions).toEqual({
+        ignore: ["custom-ignore", "custom-ignore"],
+        ignoreProjen: false,
+      });
+    },
+  );
+
+  test.each([false, true])(
+    "renovatebot: handles no workflows (github: %s)",
+    (github) => {
+      const p = new GitHubProject({
+        name: "no-workflows",
+        github,
+        githubOptions: { pullRequestLint: false },
+        renovatebot: true,
+      });
+      const snapshot = synthSnapshot(p);
+      expect(
+        Object.keys(snapshot).filter((file) =>
+          file.startsWith(".github/workflows/"),
+        ),
+      ).toEqual([]);
+      expect(snapshot["renovate.json5"].ignoreDeps).toEqual(["projen"]);
+    },
+  );
+
+  test.each([{ ignoreDeps: [] }, { ignoreDeps: ["override-ignore"] }])(
+    "renovatebot: explicit ignoreDeps overrides forced workflow ignores (%j)",
+    ({ ignoreDeps }) => {
+      const overrideConfig = { ignoreDeps };
+      const originalConfig = { ignoreDeps: [...ignoreDeps] };
+      const p = new GitHubProject({
+        name: "override-workflows",
+        githubOptions: { workflows: false },
+        renovatebot: true,
+        renovatebotOptions: { overrideConfig },
+      });
+      const workflow = new GithubWorkflow(p.github!, "forced", { force: true });
+      workflow.addJob("actions", {
+        permissions: {},
+        steps: [{ uses: "actions/checkout@v4" }],
+      });
+      const snapshot = synthSnapshot(p);
+      expect(snapshot[".github/workflows/forced.yml"]).toBeDefined();
+      expect(snapshot["renovate.json5"].ignoreDeps).toEqual(
+        originalConfig.ignoreDeps,
+      );
+      expect(overrideConfig).toEqual(originalConfig);
+    },
+  );
+
+  test("renovatebot: collects workflows within the owning project", () => {
+    const parent = new GitHubProject({
+      name: "parent",
+      githubOptions: { pullRequestLint: false },
+      renovatebot: true,
+    });
+    const child = new GitHubProject({
+      name: "child",
+      parent,
+      outdir: "child",
+      github: true,
+      githubOptions: { workflows: false },
+      renovatebot: true,
+    });
+    for (const p of [parent, child]) {
+      const workflow = new GithubWorkflow(p.github!, "manual", { force: true });
+      workflow.addJob("actions", {
+        permissions: {},
+        steps: [{ uses: `${p.name}/action@v1` }],
+      });
+    }
+    const snapshot = synthSnapshot(parent);
+    expect(snapshot[".github/workflows/manual.yml"]).toBeDefined();
+    expect(snapshot["child/.github/workflows/manual.yml"]).toBeDefined();
+    expect(snapshot["renovate.json5"].ignoreDeps).toEqual([
+      "projen",
+      "parent/action",
+    ]);
+    expect(snapshot["child/renovate.json5"].ignoreDeps).toEqual([
+      "projen",
+      "child/action",
     ]);
   });
 
