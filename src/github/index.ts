@@ -5,6 +5,7 @@ export * from "./dependency-review";
 export * from "./workflows";
 export * from "./actions.const";
 export * from "./actions-provider";
+export * from "./actions-versions";
 export * from "./mergify";
 export * from "./merge-queue";
 export * from "./pr-template";
