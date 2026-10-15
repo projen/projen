@@ -45,6 +45,30 @@ describe("TypescriptConfig", () => {
   });
 
   test.each<[TypeScriptCompilerOptions]>([
+    [{ isolatedDeclarations: true }],
+    [{ isolatedDeclarations: false }],
+    [{}],
+  ])("synthesizes isolatedDeclarations from %p", async (compilerOptions) => {
+    await withProjectDir(async (outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const tsConfig = new TypescriptConfig(project, { compilerOptions });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config.compilerOptions).toEqual(compilerOptions);
+    });
+  });
+
+  test.each<[TypeScriptCompilerOptions]>([
     [{ preserveConstEnums: true }],
     [{ preserveConstEnums: false }],
     [{}],

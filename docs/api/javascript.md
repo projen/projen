@@ -22341,6 +22341,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.incremental">incremental</a></code> | <code>boolean</code> | Tells TypeScript to save information about the project graph from the last compilation to files stored on disk. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.inlineSourceMap">inlineSourceMap</a></code> | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.inlineSources">inlineSources</a></code> | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.isolatedDeclarations">isolatedDeclarations</a></code> | <code>boolean</code> | Require sufficient annotation on exports so other tools can trivially generate declaration files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.isolatedModules">isolatedModules</a></code> | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.jsx">jsx</a></code> | <code><a href="#projen.javascript.TypeScriptJsxMode">TypeScriptJsxMode</a></code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.jsxImportSource">jsxImportSource</a></code> | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx. |
@@ -22783,6 +22784,23 @@ public readonly inlineSources: boolean;
 - *Default:* true
 
 When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.
+
+---
+
+##### `isolatedDeclarations`<sup>Optional</sup> <a name="isolatedDeclarations" id="projen.javascript.TypeScriptCompilerOptions.property.isolatedDeclarations"></a>
+
+```typescript
+public readonly isolatedDeclarations: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Require sufficient annotation on exports so other tools can trivially generate declaration files.
+
+Requires TypeScript 5.5 or later.
+
+> [https://www.typescriptlang.org/tsconfig/#isolatedDeclarations](https://www.typescriptlang.org/tsconfig/#isolatedDeclarations)
 
 ---
 

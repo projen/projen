@@ -362,6 +362,16 @@ export interface TypeScriptCompilerOptions {
   readonly isolatedModules?: boolean;
 
   /**
+   * Require sufficient annotation on exports so other tools can trivially
+   * generate declaration files.
+   * Requires TypeScript 5.5 or later.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/#isolatedDeclarations
+   * @default undefined
+   */
+  readonly isolatedDeclarations?: boolean;
+
+  /**
    * Support JSX in .tsx files: "react", "preserve", "react-native" etc.
    *
    * @default undefined
