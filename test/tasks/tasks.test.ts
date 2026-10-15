@@ -1091,4 +1091,9 @@ describe("Tasks line coverage", () => {
       /A task with the name dup already exists/,
     );
   });
+
+  test.each(["", "  "])("addTask throws for empty name %p", (name) => {
+    const p = new TestProject();
+    expect(() => p.addTask(name)).toThrow(/Task name must not be empty/);
+  });
 });
