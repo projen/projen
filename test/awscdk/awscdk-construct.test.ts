@@ -6,6 +6,7 @@ import type { AwsCdkConstructLibraryOptions } from "../../src/awscdk";
 import { AwsCdkConstructLibrary } from "../../src/awscdk";
 import { toDeterministicSingletonUuid } from "../../src/awscdk/internal";
 import { NpmAccess } from "../../src/javascript";
+import { writeFile } from "../../src/util";
 import { mkdtemp, synthSnapshot } from "../util";
 
 describe("constructs dependency selection", () => {
@@ -355,8 +356,7 @@ describe("sample code", () => {
   test("is not generated when the source directory exists", () => {
     // GIVEN
     const outdir = mkdtemp();
-    mkdirSync(join(outdir, "src"));
-    writeFileSync(join(outdir, "src", "index.ts"), "export const x = 1;");
+    writeFile(join(outdir, "src", "index.ts"), "export const x = 1;");
     const project = new AwsCdkConstructLibrary({
       ...defaultOptions,
       cdkVersion: "2.1.0",
@@ -375,8 +375,7 @@ describe("sample code", () => {
   test("sample test is not generated when the test directory has tests", () => {
     // GIVEN
     const outdir = mkdtemp();
-    mkdirSync(join(outdir, "test"));
-    writeFileSync(join(outdir, "test", "existing.test.ts"), "// existing");
+    writeFile(join(outdir, "test", "existing.test.ts"), "// existing");
     const project = new AwsCdkConstructLibrary({
       ...defaultOptions,
       cdkVersion: "2.1.0",
