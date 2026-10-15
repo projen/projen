@@ -47,6 +47,11 @@ export class Tasks extends Component {
    * @param options Task options.
    */
   public addTask(name: string, options: TaskOptions = {}) {
+    if (name.trim() === "") {
+      throw new Error(
+        "Task name must not be empty. Provide a non-empty name when calling addTask.",
+      );
+    }
     const task = new Task(name, options);
     if (this._tasks[name]) {
       throw new Error(
