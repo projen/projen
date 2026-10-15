@@ -31,6 +31,19 @@ test("commits new changelog", async () => {
   expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
 });
 
+test("commits new changelog with custom releaseCommitMessageFormat", async () => {
+  const result = await testUpdateChangelog({
+    updateChangelogOptions: {
+      releaseCommitMessageFormat: "chore(release): @scope/pkg@{{currentTag}}",
+    },
+  });
+
+  expect(result.commits[0]).toMatch(
+    `chore(release): @scope/pkg@${DEFAULT_VERSION}`,
+  );
+  expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
+});
+
 test("adds a new changelog if missing", async () => {
   const result = await testUpdateChangelog({
     testOptions: {
@@ -180,6 +193,7 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     inputChangelog,
     outputChangelog,
     versionFile: versionFile,
+    ...opts.updateChangelogOptions,
   });
 
   const commits = gitTool
