@@ -21,6 +21,38 @@ describe("TypescriptConfig", () => {
   });
 
   test.each<[TypeScriptCompilerOptions]>([
+    [{ composite: true }],
+    [{ composite: false }],
+    [{}],
+  ])("synthesizes composite from %p", async (compilerOptions) => {
+    await withProjectDir(async (outdir) => {
+      const project = new NodeProject({
+        name: "project",
+        defaultReleaseBranch: "main",
+        outdir,
+      });
+      const options = { outDir: "lib", strict: true, ...compilerOptions };
+      const tsConfig = new TypescriptConfig(project, {
+        compilerOptions: options,
+        include: ["src/**/*.ts"],
+      });
+      project.synth();
+
+      const loadedConfig = ts.readConfigFile(
+        tsConfig.file.absolutePath,
+        ts.sys.readFile,
+      );
+
+      expect(loadedConfig.error).toBeUndefined();
+      expect(loadedConfig.config).toStrictEqual({
+        compilerOptions: options,
+        include: ["src/**/*.ts"],
+        exclude: ["node_modules"],
+      });
+    });
+  });
+
+  test.each<[TypeScriptCompilerOptions]>([
     [{ erasableSyntaxOnly: true }],
     [{ erasableSyntaxOnly: false }],
     [{}],
