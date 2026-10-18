@@ -538,6 +538,36 @@ test("supports trigger with mixed case input keys (no snake case conversion)", (
   });
 });
 
+test("supports trigger with forward", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      "trigger-forward-job": {
+        stage: "trigger",
+        trigger: {
+          project: "group/project",
+          forward: {
+            yamlVariables: false,
+            pipelineVariables: true,
+          },
+        },
+      },
+    },
+  });
+  // THEN
+  const parsed = YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]);
+  expect(parsed["trigger-forward-job"].trigger).toStrictEqual({
+    project: "group/project",
+    forward: {
+      yaml_variables: false,
+      pipeline_variables: true,
+    },
+  });
+});
+
 test("renders services only under the default section", () => {
   const p = new TestProject({ stale: true });
   new CiConfiguration(p, "foo", {
