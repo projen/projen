@@ -589,6 +589,25 @@ export interface Trigger {
   readonly include?: TriggerInclude[];
   /** Input parameters for the downstream pipeline when using spec:inputs */
   readonly inputs?: Record<string, any>;
+  /** Specify what to forward to the downstream pipeline. */
+  readonly forward?: TriggerForward;
+}
+
+/**
+ * Specify what to forward to the downstream pipeline.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#triggerforward
+ */
+export interface TriggerForward {
+  /**
+   * Forward the trigger job's variables defined in the YAML to the downstream pipeline.
+   * @default true
+   */
+  readonly yamlVariables?: boolean;
+  /**
+   * Forward pipeline variables, such as manual, scheduled or API variables, to the downstream pipeline.
+   * @default false
+   */
+  readonly pipelineVariables?: boolean;
 }
 
 /**

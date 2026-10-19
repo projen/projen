@@ -4340,6 +4340,7 @@ const trigger: gitlab.Trigger = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.gitlab.Trigger.property.branch">branch</a></code> | <code>string</code> | The branch name that a downstream pipeline will use. |
+| <code><a href="#projen.gitlab.Trigger.property.forward">forward</a></code> | <code><a href="#projen.gitlab.TriggerForward">TriggerForward</a></code> | Specify what to forward to the downstream pipeline. |
 | <code><a href="#projen.gitlab.Trigger.property.include">include</a></code> | <code><a href="#projen.gitlab.TriggerInclude">TriggerInclude</a>[]</code> | A list of local files or artifacts from other jobs to define the pipeline. |
 | <code><a href="#projen.gitlab.Trigger.property.inputs">inputs</a></code> | <code>{[ key: string ]: any}</code> | Input parameters for the downstream pipeline when using spec:inputs. |
 | <code><a href="#projen.gitlab.Trigger.property.project">project</a></code> | <code>string</code> | Path to the project, e.g. `group/project`, or `group/sub-group/project`. |
@@ -4356,6 +4357,18 @@ public readonly branch: string;
 - *Type:* string
 
 The branch name that a downstream pipeline will use.
+
+---
+
+##### `forward`<sup>Optional</sup> <a name="forward" id="projen.gitlab.Trigger.property.forward"></a>
+
+```typescript
+public readonly forward: TriggerForward;
+```
+
+- *Type:* <a href="#projen.gitlab.TriggerForward">TriggerForward</a>
+
+Specify what to forward to the downstream pipeline.
 
 ---
 
@@ -4404,6 +4417,55 @@ public readonly strategy: Strategy;
 - *Type:* <a href="#projen.gitlab.Strategy">Strategy</a>
 
 You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.
+
+---
+
+### TriggerForward <a name="TriggerForward" id="projen.gitlab.TriggerForward"></a>
+
+Specify what to forward to the downstream pipeline.
+
+> [https://docs.gitlab.com/ee/ci/yaml/#triggerforward](https://docs.gitlab.com/ee/ci/yaml/#triggerforward)
+
+#### Initializer <a name="Initializer" id="projen.gitlab.TriggerForward.Initializer"></a>
+
+```typescript
+import { gitlab } from 'projen'
+
+const triggerForward: gitlab.TriggerForward = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.gitlab.TriggerForward.property.pipelineVariables">pipelineVariables</a></code> | <code>boolean</code> | Forward pipeline variables, such as manual, scheduled or API variables, to the downstream pipeline. |
+| <code><a href="#projen.gitlab.TriggerForward.property.yamlVariables">yamlVariables</a></code> | <code>boolean</code> | Forward the trigger job's variables defined in the YAML to the downstream pipeline. |
+
+---
+
+##### `pipelineVariables`<sup>Optional</sup> <a name="pipelineVariables" id="projen.gitlab.TriggerForward.property.pipelineVariables"></a>
+
+```typescript
+public readonly pipelineVariables: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Forward pipeline variables, such as manual, scheduled or API variables, to the downstream pipeline.
+
+---
+
+##### `yamlVariables`<sup>Optional</sup> <a name="yamlVariables" id="projen.gitlab.TriggerForward.property.yamlVariables"></a>
+
+```typescript
+public readonly yamlVariables: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Forward the trigger job's variables defined in the YAML to the downstream pipeline.
 
 ---
 
