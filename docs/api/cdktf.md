@@ -2663,7 +2663,8 @@ public readonly npmRegistryUrl: string;
 
 The base URL of the npm package registry.
 
-Must be a URL (e.g. start with "https://" or "http://")
+Must be a URL (e.g. start with "https://" or "http://").
+A trailing slash is added if missing.
 
 ---
 

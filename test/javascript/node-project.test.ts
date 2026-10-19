@@ -491,6 +491,29 @@ describe("npm publishing options", () => {
     );
   });
 
+  test("registry with path without trailing slash", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo",
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual(
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    );
+    expect(npm.npmRegistryUrl).toStrictEqual(
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    );
+    expect(packageJson(project).publishConfig).toHaveProperty(
+      "registry",
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    );
+  });
+
   test("AWS CodeArtifact registry with default authProvider", () => {
     // GIVEN
     const project = new TestProject();
