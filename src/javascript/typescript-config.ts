@@ -224,6 +224,14 @@ export interface TypeScriptCompilerOptions {
   readonly alwaysStrict?: boolean;
 
   /**
+   * Enable constraints required for a TypeScript project to be referenced by other projects.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/composite.html
+   * @default - not set
+   */
+  readonly composite?: boolean;
+
+  /**
    * Offers a way to configure the root directory for where declaration files are emitted.
    *
    */

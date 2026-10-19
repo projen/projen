@@ -22324,6 +22324,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.alwaysStrict">alwaysStrict</a></code> | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.baseUrl">baseUrl</a></code> | <code>string</code> | Lets you set a base directory to resolve non-absolute module names. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.checkJs">checkJs</a></code> | <code>boolean</code> | Check JS. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.composite">composite</a></code> | <code>boolean</code> | Enable constraints required for a TypeScript project to be referenced by other projects. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.customConditions">customConditions</a></code> | <code>string[]</code> | List of additional conditions that should succeed when TypeScript resolves from an `exports` or `imports` field of a `package.json`. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declaration">declaration</a></code> | <code>boolean</code> | To be specified along with the above. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.declarationDir">declarationDir</a></code> | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted. |
@@ -22533,6 +22534,21 @@ Works in tandem with [allowJs](https://www.typescriptlang.org/tsconfig#allowJs).
 errors are reported in JavaScript files. This is the equivalent of including //
 
 > [https://www.typescriptlang.org/tsconfig#checkJs](https://www.typescriptlang.org/tsconfig#checkJs)
+
+---
+
+##### `composite`<sup>Optional</sup> <a name="composite" id="projen.javascript.TypeScriptCompilerOptions.property.composite"></a>
+
+```typescript
+public readonly composite: boolean;
+```
+
+- *Type:* boolean
+- *Default:* not set
+
+Enable constraints required for a TypeScript project to be referenced by other projects.
+
+> [https://www.typescriptlang.org/tsconfig/composite.html](https://www.typescriptlang.org/tsconfig/composite.html)
 
 ---
 
