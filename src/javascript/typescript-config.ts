@@ -21,6 +21,17 @@ export interface TypescriptConfigOptions {
   readonly extends?: TypescriptConfigExtends;
 
   /**
+   * Explicit TypeScript project references.
+   *
+   * References are not inherited through `extends`. An empty array is preserved.
+   * Referenced projects must enable `composite` in their compiler options.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/project-references.html
+   * @default - no project references
+   */
+  readonly references?: TypescriptConfigReference[];
+
+  /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
    *
    * @default - all .ts files recursively
@@ -41,6 +52,19 @@ export interface TypescriptConfigOptions {
    * Must provide either `extends` or `compilerOptions` (or both).
    */
   readonly compilerOptions?: TypeScriptCompilerOptions;
+}
+
+/**
+ * A reference to another TypeScript project.
+ */
+export interface TypescriptConfigReference {
+  /**
+   * Path to a directory containing `tsconfig.json`, or to a configuration file.
+   *
+   * Relative paths are resolved from the referencing configuration file's directory.
+   * Backslashes are converted to forward slashes. Absolute paths are not rebased.
+   */
+  readonly path: string;
 }
 
 /**
@@ -796,6 +820,9 @@ export class TypescriptConfig extends Component {
       allowComments: true,
       obj: {
         extends: () => this.renderExtends(),
+        references: options.references?.map((reference) => ({
+          path: normalizePersistedPath(reference.path),
+        })),
         compilerOptions: this.compilerOptions,
         include: () => this.include,
         exclude: () => this.exclude,

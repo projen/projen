@@ -23369,6 +23369,7 @@ const typescriptConfigOptions: javascript.TypescriptConfigOptions = { ... }
 | <code><a href="#projen.javascript.TypescriptConfigOptions.property.extends">extends</a></code> | <code><a href="#projen.javascript.TypescriptConfigExtends">TypescriptConfigExtends</a></code> | Base `tsconfig.json` configuration(s) to inherit from. |
 | <code><a href="#projen.javascript.TypescriptConfigOptions.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.TypescriptConfigOptions.property.include">include</a></code> | <code>string[]</code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation. |
+| <code><a href="#projen.javascript.TypescriptConfigOptions.property.references">references</a></code> | <code><a href="#projen.javascript.TypescriptConfigReference">TypescriptConfigReference</a>[]</code> | Explicit TypeScript project references. |
 
 ---
 
@@ -23430,6 +23431,59 @@ public readonly include: string[];
 - *Default:* all .ts files recursively
 
 Specifies a list of glob patterns that match TypeScript files to be included in compilation.
+
+---
+
+##### `references`<sup>Optional</sup> <a name="references" id="projen.javascript.TypescriptConfigOptions.property.references"></a>
+
+```typescript
+public readonly references: TypescriptConfigReference[];
+```
+
+- *Type:* <a href="#projen.javascript.TypescriptConfigReference">TypescriptConfigReference</a>[]
+- *Default:* no project references
+
+Explicit TypeScript project references.
+
+References are not inherited through `extends`. An empty array is preserved.
+Referenced projects must enable `composite` in their compiler options.
+
+> [https://www.typescriptlang.org/docs/handbook/project-references.html](https://www.typescriptlang.org/docs/handbook/project-references.html)
+
+---
+
+### TypescriptConfigReference <a name="TypescriptConfigReference" id="projen.javascript.TypescriptConfigReference"></a>
+
+A reference to another TypeScript project.
+
+#### Initializer <a name="Initializer" id="projen.javascript.TypescriptConfigReference.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const typescriptConfigReference: javascript.TypescriptConfigReference = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.TypescriptConfigReference.property.path">path</a></code> | <code>string</code> | Path to a directory containing `tsconfig.json`, or to a configuration file. |
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.javascript.TypescriptConfigReference.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+Path to a directory containing `tsconfig.json`, or to a configuration file.
+
+Relative paths are resolved from the referencing configuration file's directory.
+Backslashes are converted to forward slashes. Absolute paths are not rebased.
 
 ---
 
