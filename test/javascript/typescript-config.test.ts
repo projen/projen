@@ -1,8 +1,12 @@
-import { writeFileSync, mkdirSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import * as path from "path";
 import * as semver from "semver";
 import * as ts from "typescript";
-import type { TypeScriptCompilerOptions } from "../../src/javascript";
+import { Project } from "../../src";
+import type {
+  TypeScriptCompilerOptions,
+  TypescriptConfigOptions,
+} from "../../src/javascript";
 import {
   NodeProject,
   TypescriptConfig,
@@ -18,6 +22,158 @@ describe("TypescriptConfig", () => {
   });
   afterAll(() => {
     process.env.PROJEN_DISABLE_POST = ENV_PROJEN_DISABLE_POST;
+  });
+
+  test.each<[TypescriptConfigOptions["references"]]>([
+    [undefined],
+    [[]],
+    [
+      [
+        { path: "../lib" },
+        { path: "../other/tsconfig.build.json" },
+        { path: "../lib" },
+      ],
+    ],
+  ])("synthesizes references %p without mutating input", async (references) => {
+    await withProjectDir(async (outdir) => {
+      const originalReferences = references?.map((reference) => ({
+        ...reference,
+      }));
+      references?.forEach(Object.freeze);
+      Object.freeze(references);
+      const project = new Project({ name: "project", outdir });
+      const config = new TypescriptConfig(project, {
+        compilerOptions: { strict: true },
+        references,
+      });
+
+      project.synth();
+      const first = readFileSync(config.file.absolutePath, "utf8");
+      const loaded = ts.readConfigFile(
+        config.file.absolutePath,
+        ts.sys.readFile,
+      );
+      expect(loaded.error).toBeUndefined();
+      expect(loaded.config).toStrictEqual({
+        compilerOptions: { strict: true },
+        include: ["**/*.ts"],
+        exclude: ["node_modules"],
+        ...(references === undefined ? {} : { references: originalReferences }),
+      });
+
+      project.synth();
+      expect(readFileSync(config.file.absolutePath, "utf8")).toBe(first);
+      expect(references).toStrictEqual(originalReferences);
+    });
+  });
+
+  test.each(["directory", "file", "backslashes", "absolute"])(
+    "resolves a %s reference from a nested configuration directory",
+    async (kind) => {
+      await withProjectDir(async (outdir) => {
+        const root = new Project({ name: "root", outdir });
+        const app = new Project({
+          parent: root,
+          name: "app",
+          outdir: "packages/app",
+        });
+        const lib = new Project({
+          parent: root,
+          name: "lib",
+          outdir: "packages/lib",
+        });
+        const target =
+          kind === "directory"
+            ? "tsconfig.json"
+            : "configs/tsconfig.build.json";
+        const relativePath =
+          kind === "directory" ? "../../lib" : `../../lib/${target}`;
+        const referencePath =
+          kind === "absolute"
+            ? path.join(lib.outdir, target)
+            : kind === "backslashes"
+              ? relativePath.replace(/\//g, "\\")
+              : relativePath;
+        const config = new TypescriptConfig(app, {
+          fileName: "configs/tsconfig.app.json",
+          compilerOptions: {},
+          include: ["../src/**/*.ts"],
+          references: [{ path: referencePath }],
+        });
+        mkdirSync(path.join(app.outdir, "src"), { recursive: true });
+        writeFileSync(path.join(app.outdir, "src/index.ts"), "export {};\n");
+
+        expect(existsSync(path.join(lib.outdir, target))).toBe(false);
+        app.synth();
+        const loaded = ts.readConfigFile(
+          config.file.absolutePath,
+          ts.sys.readFile,
+        );
+        expect(loaded.error).toBeUndefined();
+        expect(loaded.config.references).toStrictEqual([
+          { path: referencePath.replace(/\\/g, "/") },
+        ]);
+        const parsed = ts.parseJsonConfigFileContent(
+          loaded.config,
+          ts.sys,
+          path.dirname(config.file.absolutePath),
+        );
+        expect(parsed.errors).toEqual([]);
+        expect(
+          parsed.projectReferences?.map((reference) => reference.path),
+        ).toEqual([
+          (kind === "directory"
+            ? lib.outdir
+            : path.join(lib.outdir, target)
+          ).replace(/\\/g, "/"),
+        ]);
+        expect(existsSync(path.join(lib.outdir, target))).toBe(false);
+      });
+    },
+  );
+
+  test("references coexist with extends without being inherited or merged", async () => {
+    await withProjectDir(async (outdir) => {
+      const project = new Project({ name: "project", outdir });
+      const base = new TypescriptConfig(project, {
+        compilerOptions: { strict: true },
+        references: [{ path: "../base-lib" }],
+      });
+      const inherited = new TypescriptConfig(project, {
+        fileName: "tsconfig.inherited.json",
+        extends: TypescriptConfigExtends.fromTypescriptConfigs([base]),
+      });
+      const explicit = new TypescriptConfig(project, {
+        fileName: "tsconfig.explicit.json",
+        extends: TypescriptConfigExtends.fromTypescriptConfigs([base]),
+        references: [{ path: "../own-lib" }],
+      });
+      writeFileSync(path.join(outdir, "index.ts"), "export {};\n");
+      project.synth();
+
+      const parse = (config: TypescriptConfig) => {
+        const loaded = ts.readConfigFile(
+          config.file.absolutePath,
+          ts.sys.readFile,
+        );
+        expect(loaded.error).toBeUndefined();
+        const parsed = ts.parseJsonConfigFileContent(
+          loaded.config,
+          ts.sys,
+          outdir,
+        );
+        expect(parsed.errors).toEqual([]);
+        expect(parsed.options.strict).toBe(true);
+        return parsed.projectReferences;
+      };
+      expect(parse(inherited)).toBeUndefined();
+      expect(parse(explicit)?.map((reference) => reference.path)).toEqual([
+        path.resolve(outdir, "../own-lib").replace(/\\/g, "/"),
+      ]);
+      expect(parse(base)?.map((reference) => reference.path)).toEqual([
+        path.resolve(outdir, "../base-lib").replace(/\\/g, "/"),
+      ]);
+    });
   });
 
   test.each<[TypeScriptCompilerOptions]>([
