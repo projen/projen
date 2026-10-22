@@ -139,6 +139,46 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
   );
 });
 
+test.each<[javascript.TypescriptConfigOptions["references"]]>([
+  [undefined],
+  [[]],
+  [[{ path: "../../dev-lib/tsconfig.build.json" }]],
+])(
+  "main and dev configurations keep explicit references separate: %p",
+  (references) => {
+    const project = new TypeScriptProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      tsconfig: { references: [{ path: "../lib" }] },
+      tsconfigDev: { references },
+    });
+    const output = synthSnapshot(project);
+
+    expect(output["tsconfig.json"].references).toEqual([{ path: "../lib" }]);
+    expect(output["test/tsconfig.json"].extends).toBe("../tsconfig.json");
+    if (references === undefined) {
+      expect(output["test/tsconfig.json"]).not.toHaveProperty("references");
+    } else {
+      expect(output["test/tsconfig.json"].references).toEqual(references);
+    }
+    expect(output["tsconfig.json"].compilerOptions).not.toHaveProperty(
+      "composite",
+    );
+  },
+);
+
+test("standalone dev configuration can explicitly clear project references", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    disableTsconfig: true,
+    tsconfig: { references: [{ path: "../lib" }] },
+    tsconfigDev: { references: [] },
+  });
+
+  expect(synthSnapshot(project)["tsconfig.dev.json"].references).toEqual([]);
+});
+
 test("sources and compiled output can be collocated", () => {
   const prj = new TypeScriptProject({
     name: "test",
