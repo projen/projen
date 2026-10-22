@@ -4064,6 +4064,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -7251,6 +7285,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -11672,6 +11740,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -14709,6 +14811,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -17754,6 +17890,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -20837,6 +21007,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -24683,6 +24887,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -27468,6 +27706,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -30098,6 +30370,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -32755,6 +33061,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -36451,6 +36791,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -39069,6 +39443,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
@@ -41872,6 +42280,40 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
+        },
+      },
+      {
         "default": ""."",
         "docs": "The root directory of the project.",
         "featured": false,
@@ -44647,6 +45089,40 @@ exports[`inventory 1`] = `
         "switch": "npm-trusted-publishing",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "false",
+        "docs": "Wait until the published package version is available from the npm registry before the publish job completes.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublished",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublished",
+        ],
+        "simpleType": "boolean",
+        "switch": "npm-verify-published",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
+        "default": "3600",
+        "docs": "How long to wait, in seconds, for the published package version to be available.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "npmVerifyPublishedTimeoutSeconds",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "npmVerifyPublishedTimeoutSeconds",
+        ],
+        "simpleType": "number",
+        "switch": "npm-verify-published-timeout-seconds",
+        "type": {
+          "primitive": "number",
         },
       },
       {
