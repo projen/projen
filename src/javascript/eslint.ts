@@ -9,6 +9,8 @@ import type { Task } from "../task";
 import type { TaskStepOptions } from "../task-model";
 import { YamlFile } from "../yaml";
 
+const GLOB_CHARACTERS = /[*?[\]{}()]/;
+
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -235,7 +237,9 @@ export class Eslint extends Component {
     this._lintPatterns = new Set([...options.dirs, ...devdirs]);
     this._fileExtensions = new Set(options.fileExtensions ?? [".ts"]);
 
-    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+    this._allowDevDeps = new Set(
+      devdirs.map((dir) => (GLOB_CHARACTERS.test(dir) ? dir : `**/${dir}/**`)),
+    );
 
     const commandOptions = options.commandOptions ?? {};
     const { fix = true, extraArgs: extraFlagArgs = [] } = commandOptions;
