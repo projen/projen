@@ -149,6 +149,22 @@ export interface NodeProjectOptions
   readonly buildWorkflowOptions?: BuildWorkflowOptions;
 
   /**
+   * Permissions for the main build, release and dependency upgrade jobs.
+   *
+   * Defined scopes override the job defaults and automatically inferred permissions,
+   * including CodeArtifact and Codecov OIDC. Undefined scopes keep their defaults.
+   * Use `JobPermission.NONE` to explicitly remove a permission.
+   *
+   * `buildWorkflowOptions.permissions` replaces this entire set, including automatic
+   * permissions. `depsUpgradeOptions.workflowOptions.permissions` overrides individual
+   * scopes. Applies to all release branches, but not to separate package, publishing,
+   * self-mutation or pull request creation jobs, or unrelated workflows.
+   *
+   * @default - Use the job defaults and automatically inferred permissions.
+   */
+  readonly workflowPermissions?: JobPermissions;
+
+  /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
    *
    * Uses codecov/codecov-action. By default, OIDC auth is used.
@@ -660,9 +676,10 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    const workflowPermissions: JobPermissions = {
-      idToken: this.determineIdTokenPermissions(options),
-    };
+    const workflowPermissions: JobPermissions = deepMerge([
+      { idToken: this.determineIdTokenPermissions(options) },
+      options.workflowPermissions ?? {},
+    ]);
 
     const buildWorkflowOptions: BuildWorkflowOptions =
       options.buildWorkflowOptions ?? {};
