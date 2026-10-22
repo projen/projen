@@ -9173,6 +9173,8 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmVerifyPublished">npmVerifyPublished</a></code> | <code>boolean</code> | Wait until the published package version is available from the npm registry before the publish job completes. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
@@ -10222,6 +10224,36 @@ public readonly npmTrustedPublishing: boolean;
 - *Default:* false
 
 Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
+##### `npmVerifyPublished`<sup>Optional</sup> <a name="npmVerifyPublished" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.npmVerifyPublished"></a>
+
+```typescript
+public readonly npmVerifyPublished: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Wait until the published package version is available from the npm registry before the publish job completes.
+
+Enable this when packages that depend on the published package are released right after.
+
+---
+
+##### `npmVerifyPublishedTimeoutSeconds`<sup>Optional</sup> <a name="npmVerifyPublishedTimeoutSeconds" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.npmVerifyPublishedTimeoutSeconds"></a>
+
+```typescript
+public readonly npmVerifyPublishedTimeoutSeconds: number;
+```
+
+- *Type:* number
+- *Default:* 3600
+
+How long to wait, in seconds, for the published package version to be available.
+
+Requires `npmVerifyPublished` to be enabled.
 
 ---
 
@@ -14211,6 +14243,8 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmVerifyPublished">npmVerifyPublished</a></code> | <code>boolean</code> | Wait until the published package version is available from the npm registry before the publish job completes. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
@@ -15253,6 +15287,36 @@ public readonly npmTrustedPublishing: boolean;
 - *Default:* false
 
 Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
+##### `npmVerifyPublished`<sup>Optional</sup> <a name="npmVerifyPublished" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmVerifyPublished"></a>
+
+```typescript
+public readonly npmVerifyPublished: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Wait until the published package version is available from the npm registry before the publish job completes.
+
+Enable this when packages that depend on the published package are released right after.
+
+---
+
+##### `npmVerifyPublishedTimeoutSeconds`<sup>Optional</sup> <a name="npmVerifyPublishedTimeoutSeconds" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.npmVerifyPublishedTimeoutSeconds"></a>
+
+```typescript
+public readonly npmVerifyPublishedTimeoutSeconds: number;
+```
+
+- *Type:* number
+- *Default:* 3600
+
+How long to wait, in seconds, for the published package version to be available.
+
+Requires `npmVerifyPublished` to be enabled.
 
 ---
 

@@ -372,6 +372,24 @@ export interface NodePackageOptions {
   readonly npmTrustedPublishing?: boolean;
 
   /**
+   * Wait until the published package version is available from the npm registry before the publish job completes.
+   *
+   * Enable this when packages that depend on the published package are released right after.
+   *
+   * @default false
+   */
+  readonly npmVerifyPublished?: boolean;
+
+  /**
+   * How long to wait, in seconds, for the published package version to be available.
+   *
+   * Requires `npmVerifyPublished` to be enabled.
+   *
+   * @default 3600
+   */
+  readonly npmVerifyPublishedTimeoutSeconds?: number;
+
+  /**
    * Options for npm packages using AWS CodeArtifact.
    * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *

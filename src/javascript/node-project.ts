@@ -774,6 +774,9 @@ export class NodeProject extends GitHubProject {
           npmTokenSecret: this.package.npmTokenSecret,
           npmProvenance: this.package.npmProvenance,
           trustedPublishing: options.npmTrustedPublishing ?? false,
+          verifyPublished: options.npmVerifyPublished,
+          verifyPublishedTimeoutSeconds:
+            options.npmVerifyPublishedTimeoutSeconds,
           codeArtifactOptions,
         });
       }
