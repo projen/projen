@@ -14114,6 +14114,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowGitIdentity">workflowGitIdentity</a></code> | <code>projen.github.GitIdentity</code> | The git identity to use in workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowNodeVersion">workflowNodeVersion</a></code> | <code>string</code> | The node version used in GitHub Actions workflows. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.workflowPackageCache">workflowPackageCache</a></code> | <code>boolean</code> | Enable Node.js package cache in GitHub workflows. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.workflowPermissions">workflowPermissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions for the main build, release and dependency upgrade jobs. |
 
 ---
 
@@ -16141,6 +16142,28 @@ public readonly workflowPackageCache: boolean;
 - *Default:* false
 
 Enable Node.js package cache in GitHub workflows.
+
+---
+
+##### `workflowPermissions`<sup>Optional</sup> <a name="workflowPermissions" id="projen.javascript.NodeProjectOptions.property.workflowPermissions"></a>
+
+```typescript
+public readonly workflowPermissions: JobPermissions;
+```
+
+- *Type:* projen.github.workflows.JobPermissions
+- *Default:* Use the job defaults and automatically inferred permissions.
+
+Permissions for the main build, release and dependency upgrade jobs.
+
+Defined scopes override the job defaults and automatically inferred permissions,
+including CodeArtifact and Codecov OIDC. Undefined scopes keep their defaults.
+Use `JobPermission.NONE` to explicitly remove a permission.
+
+`buildWorkflowOptions.permissions` replaces this entire set, including automatic
+permissions. `depsUpgradeOptions.workflowOptions.permissions` overrides individual
+scopes. Applies to all release branches, but not to separate package, publishing,
+self-mutation or pull request creation jobs, or unrelated workflows.
 
 ---
 

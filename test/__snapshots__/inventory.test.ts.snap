@@ -5378,6 +5378,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -8664,6 +8683,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
@@ -12974,6 +13012,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -16176,6 +16233,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -19202,6 +19278,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
@@ -22369,6 +22464,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
@@ -26249,6 +26363,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -28775,6 +28908,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
@@ -31624,6 +31776,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -34082,6 +34253,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
@@ -37868,6 +38058,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -40702,6 +40911,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -43514,6 +43742,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
+        },
+      },
+      {
         "default": "["ubuntu-latest"]",
         "deprecated": true,
         "docs": "Github Runner selection labels.",
@@ -46323,6 +46570,25 @@ exports[`inventory 1`] = `
         "switch": "workflow-package-cache",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- Use the job defaults and automatically inferred permissions.",
+        "docs": "Permissions for the main build, release and dependency upgrade jobs.",
+        "featured": false,
+        "fqn": "projen.github.workflows.JobPermissions",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "workflowPermissions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": [
+          "workflowPermissions",
+        ],
+        "simpleType": "JobPermissions",
+        "switch": "workflow-permissions",
+        "type": {
+          "fqn": "projen.github.workflows.JobPermissions",
         },
       },
       {
