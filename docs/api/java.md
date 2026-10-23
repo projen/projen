@@ -2674,6 +2674,7 @@ const javaProjectCommonOptions: java.JavaProjectCommonOptions = { ... }
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
+| <code><a href="#projen.java.JavaProjectCommonOptions.property.sortPlugins">sortPlugins</a></code> | <code>projen.ICompareString</code> | Sorts the top-level build plugins in the generated POM. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.compileOptions">compileOptions</a></code> | <code><a href="#projen.java.MavenCompileOptions">MavenCompileOptions</a></code> | Compile options. |
 | <code><a href="#projen.java.JavaProjectCommonOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -3168,6 +3169,23 @@ A Parent Pom can be used to have a child project inherit properties/plugins/ect 
 
 ---
 
+##### `sortPlugins`<sup>Optional</sup> <a name="sortPlugins" id="projen.java.JavaProjectCommonOptions.property.sortPlugins"></a>
+
+```typescript
+public readonly sortPlugins: ICompareString;
+```
+
+- *Type:* projen.ICompareString
+- *Default:* preserve the existing dependency order
+
+Sorts the top-level build plugins in the generated POM.
+
+The comparator receives `groupId/artifactId` identifiers without versions.
+Returning zero preserves the existing relative order.
+This does not change Maven lifecycle phase bindings.
+
+---
+
 ##### `url`<sup>Optional</sup> <a name="url" id="projen.java.JavaProjectCommonOptions.property.url"></a>
 
 ```typescript
@@ -3360,6 +3378,7 @@ const javaProjectOptions: java.JavaProjectOptions = { ... }
 | <code><a href="#projen.java.JavaProjectOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.JavaProjectOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
 | <code><a href="#projen.java.JavaProjectOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
+| <code><a href="#projen.java.JavaProjectOptions.property.sortPlugins">sortPlugins</a></code> | <code>projen.ICompareString</code> | Sorts the top-level build plugins in the generated POM. |
 | <code><a href="#projen.java.JavaProjectOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.java.JavaProjectOptions.property.compileOptions">compileOptions</a></code> | <code><a href="#projen.java.MavenCompileOptions">MavenCompileOptions</a></code> | Compile options. |
 | <code><a href="#projen.java.JavaProjectOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -3853,6 +3872,23 @@ public readonly parentPom: ParentPom;
 - *Default:* undefined
 
 A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
+
+---
+
+##### `sortPlugins`<sup>Optional</sup> <a name="sortPlugins" id="projen.java.JavaProjectOptions.property.sortPlugins"></a>
+
+```typescript
+public readonly sortPlugins: ICompareString;
+```
+
+- *Type:* projen.ICompareString
+- *Default:* preserve the existing dependency order
+
+Sorts the top-level build plugins in the generated POM.
+
+The comparator receives `groupId/artifactId` identifiers without versions.
+Returning zero preserves the existing relative order.
+This does not change Maven lifecycle phase bindings.
 
 ---
 
@@ -4624,6 +4660,7 @@ const pomOptions: java.PomOptions = { ... }
 | <code><a href="#projen.java.PomOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.java.PomOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
 | <code><a href="#projen.java.PomOptions.property.parentPom">parentPom</a></code> | <code><a href="#projen.java.ParentPom">ParentPom</a></code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
+| <code><a href="#projen.java.PomOptions.property.sortPlugins">sortPlugins</a></code> | <code>projen.ICompareString</code> | Sorts the top-level build plugins in the generated POM. |
 | <code><a href="#projen.java.PomOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 
 ---
@@ -4738,6 +4775,23 @@ public readonly parentPom: ParentPom;
 - *Default:* undefined
 
 A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
+
+---
+
+##### `sortPlugins`<sup>Optional</sup> <a name="sortPlugins" id="projen.java.PomOptions.property.sortPlugins"></a>
+
+```typescript
+public readonly sortPlugins: ICompareString;
+```
+
+- *Type:* projen.ICompareString
+- *Default:* preserve the existing dependency order
+
+Sorts the top-level build plugins in the generated POM.
+
+The comparator receives `groupId/artifactId` identifiers without versions.
+Returning zero preserves the existing relative order.
+This does not change Maven lifecycle phase bindings.
 
 ---
 
