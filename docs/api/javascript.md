@@ -22456,6 +22456,7 @@ const typeScriptCompilerOptions: javascript.TypeScriptCompilerOptions = { ... }
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolveJsonModule">resolveJsonModule</a></code> | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolvePackageJsonExports">resolvePackageJsonExports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `exports` field of `package.json` files if it ever reads from a package in `node_modules`. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.resolvePackageJsonImports">resolvePackageJsonImports</a></code> | <code>boolean</code> | Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor. |
+| <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.rewriteRelativeImportExtensions">rewriteRelativeImportExtensions</a></code> | <code>boolean</code> | Rewrite `.ts`, `.tsx`, `.mts`, and `.cts` extensions in relative import paths to their JavaScript equivalents in emitted files. Requires TypeScript 5.7 or later. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.rootDir">rootDir</a></code> | <code>string</code> | Specifies the root directory of input files. |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.skipLibCheck">skipLibCheck</a></code> | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts). |
 | <code><a href="#projen.javascript.TypeScriptCompilerOptions.property.sourceMap">sourceMap</a></code> | <code>boolean</code> | Enables the generation of sourcemap files. |
@@ -23234,6 +23235,21 @@ public readonly resolvePackageJsonImports: boolean;
 - *Default:* undefined
 
 Forces TypeScript to consult the `imports` field of `package.json` when performing a lookup that begins with `#` from a file that has a `package.json` as an ancestor.
+
+---
+
+##### `rewriteRelativeImportExtensions`<sup>Optional</sup> <a name="rewriteRelativeImportExtensions" id="projen.javascript.TypeScriptCompilerOptions.property.rewriteRelativeImportExtensions"></a>
+
+```typescript
+public readonly rewriteRelativeImportExtensions: boolean;
+```
+
+- *Type:* boolean
+- *Default:* undefined
+
+Rewrite `.ts`, `.tsx`, `.mts`, and `.cts` extensions in relative import paths to their JavaScript equivalents in emitted files. Requires TypeScript 5.7 or later.
+
+> [https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html](https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html)
 
 ---
 

@@ -555,6 +555,15 @@ export interface TypeScriptCompilerOptions {
   readonly resolveJsonModule?: boolean;
 
   /**
+   * Rewrite `.ts`, `.tsx`, `.mts`, and `.cts` extensions in relative import paths
+   * to their JavaScript equivalents in emitted files. Requires TypeScript 5.7 or later.
+   *
+   * @see https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html
+   * @default undefined
+   */
+  readonly rewriteRelativeImportExtensions?: boolean;
+
+  /**
    * Skip type checking of all declaration files (*.d.ts).
    *
    * @default false
