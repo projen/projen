@@ -1565,6 +1565,25 @@ test("node project can be ejected", () => {
   expect(outdir[".projen/files.json"]).toBeUndefined();
 });
 
+test("npmVerifyPublished is passed to the npm publish job", () => {
+  const project = new TestNodeProject({
+    releaseToNpm: true,
+    npmVerifyPublished: true,
+    npmVerifyPublishedTimeoutSeconds: 600,
+  });
+
+  const workflow = yaml.parse(
+    synthSnapshot(project)[".github/workflows/release.yml"],
+  );
+  const publishStep = workflow.jobs.release_npm.steps.find(
+    (step: any) => step.env?.NPM_DIST_TAG,
+  );
+  expect(publishStep.env).toMatchObject({
+    VERIFY_PUBLISHED: "true",
+    VERIFY_PUBLISHED_TIMEOUT_SECONDS: "600",
+  });
+});
+
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({

@@ -1983,6 +1983,8 @@ const npmPublishOptions: release.NpmPublishOptions = { ... }
 | <code><a href="#projen.release.NpmPublishOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use for publishing packages. |
 | <code><a href="#projen.release.NpmPublishOptions.property.registry">registry</a></code> | <code>string</code> | The domain name of the npm package registry. |
 | <code><a href="#projen.release.NpmPublishOptions.property.trustedPublishing">trustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
+| <code><a href="#projen.release.NpmPublishOptions.property.verifyPublished">verifyPublished</a></code> | <code>boolean</code> | Wait until the published package version is available from the registry before the publish job completes. |
+| <code><a href="#projen.release.NpmPublishOptions.property.verifyPublishedTimeoutSeconds">verifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 
 ---
 
@@ -2139,6 +2141,39 @@ Requires npm CLI version 11.5.1 or later, this is NOT ensured automatically.
 When used, `npmTokenSecret` will be ignored.
 
 > [https://docs.npmjs.com/trusted-publishers](https://docs.npmjs.com/trusted-publishers)
+
+---
+
+##### `verifyPublished`<sup>Optional</sup> <a name="verifyPublished" id="projen.release.NpmPublishOptions.property.verifyPublished"></a>
+
+```typescript
+public readonly verifyPublished: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Wait until the published package version is available from the registry before the publish job completes.
+
+The registry may not serve a version right after it was published (e.g. npmjs scans packages first).
+Enable this when packages that depend on the published package are released right after.
+
+---
+
+##### `verifyPublishedTimeoutSeconds`<sup>Optional</sup> <a name="verifyPublishedTimeoutSeconds" id="projen.release.NpmPublishOptions.property.verifyPublishedTimeoutSeconds"></a>
+
+```typescript
+public readonly verifyPublishedTimeoutSeconds: number;
+```
+
+- *Type:* number
+- *Default:* 3600
+
+How long to wait, in seconds, for the published package version to be available.
+
+The publish job fails if it is not available in time.
+
+Requires `verifyPublished` to be enabled.
 
 ---
 

@@ -250,6 +250,9 @@ export class JsiiProject extends TypeScriptProject {
           docgen: options.docgen,
           releaseToNpm: options.releaseToNpm,
           npmTrustedPublishing: options.npmTrustedPublishing,
+          npmVerifyPublished: options.npmVerifyPublished,
+          npmVerifyPublishedTimeoutSeconds:
+            options.npmVerifyPublishedTimeoutSeconds,
           codeArtifactOptions: options.codeArtifactOptions,
           workflowNodeVersion: this.nodeVersion,
           workflowBootstrapSteps: this.workflowBootstrapSteps,

@@ -165,6 +165,22 @@ export interface JsiiBuildOptions {
   readonly npmTrustedPublishing?: boolean;
 
   /**
+   * Wait until the published package version is available from the npm registry before the publish job completes.
+   *
+   * @default false
+   */
+  readonly npmVerifyPublished?: boolean;
+
+  /**
+   * How long to wait, in seconds, for the published package version to be available.
+   *
+   * Requires `npmVerifyPublished` to be enabled.
+   *
+   * @default 3600
+   */
+  readonly npmVerifyPublishedTimeoutSeconds?: number;
+
+  /**
    * Options for publishing npm package to AWS CodeArtifact.
    *
    * @default - undefined
@@ -371,6 +387,8 @@ export class JsiiBuild implements IMixin {
           //@ts-ignore
           project.options.npmTrustedPublishing ??
           false,
+        verifyPublished: options.npmVerifyPublished,
+        verifyPublishedTimeoutSeconds: options.npmVerifyPublishedTimeoutSeconds,
       };
       this.addTargetToBuild(project, packageJsTask, "js", extraJobOptions);
       this.addTargetToRelease(project, packageJsTask, "js", npmjs);

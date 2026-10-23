@@ -4242,6 +4242,8 @@ const cdktnTypeScriptAppOptions: cdktn.CdktnTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmVerifyPublished">npmVerifyPublished</a></code> | <code>boolean</code> | Wait until the published package version is available from the npm registry before the publish job completes. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
@@ -5276,6 +5278,36 @@ public readonly npmTrustedPublishing: boolean;
 - *Default:* false
 
 Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
+##### `npmVerifyPublished`<sup>Optional</sup> <a name="npmVerifyPublished" id="projen.cdktn.CdktnTypeScriptAppOptions.property.npmVerifyPublished"></a>
+
+```typescript
+public readonly npmVerifyPublished: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Wait until the published package version is available from the npm registry before the publish job completes.
+
+Enable this when packages that depend on the published package are released right after.
+
+---
+
+##### `npmVerifyPublishedTimeoutSeconds`<sup>Optional</sup> <a name="npmVerifyPublishedTimeoutSeconds" id="projen.cdktn.CdktnTypeScriptAppOptions.property.npmVerifyPublishedTimeoutSeconds"></a>
+
+```typescript
+public readonly npmVerifyPublishedTimeoutSeconds: number;
+```
+
+- *Type:* number
+- *Default:* 3600
+
+How long to wait, in seconds, for the published package version to be available.
+
+Requires `npmVerifyPublished` to be enabled.
 
 ---
 
@@ -6866,6 +6898,8 @@ const constructLibraryCdktnOptions: cdktn.ConstructLibraryCdktnOptions = { ... }
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmRegistryUrl">npmRegistryUrl</a></code> | <code>string</code> | The base URL of the npm package registry. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmTokenSecret">npmTokenSecret</a></code> | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmTrustedPublishing">npmTrustedPublishing</a></code> | <code>boolean</code> | Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmVerifyPublished">npmVerifyPublished</a></code> | <code>boolean</code> | Wait until the published package version is available from the npm registry before the publish job completes. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
@@ -7908,6 +7942,36 @@ public readonly npmTrustedPublishing: boolean;
 - *Default:* false
 
 Use trusted publishing for publishing to npmjs.com Needs to be pre-configured on npm.js to work.
+
+---
+
+##### `npmVerifyPublished`<sup>Optional</sup> <a name="npmVerifyPublished" id="projen.cdktn.ConstructLibraryCdktnOptions.property.npmVerifyPublished"></a>
+
+```typescript
+public readonly npmVerifyPublished: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Wait until the published package version is available from the npm registry before the publish job completes.
+
+Enable this when packages that depend on the published package are released right after.
+
+---
+
+##### `npmVerifyPublishedTimeoutSeconds`<sup>Optional</sup> <a name="npmVerifyPublishedTimeoutSeconds" id="projen.cdktn.ConstructLibraryCdktnOptions.property.npmVerifyPublishedTimeoutSeconds"></a>
+
+```typescript
+public readonly npmVerifyPublishedTimeoutSeconds: number;
+```
+
+- *Type:* number
+- *Default:* 3600
+
+How long to wait, in seconds, for the published package version to be available.
+
+Requires `npmVerifyPublished` to be enabled.
 
 ---
 

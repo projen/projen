@@ -1400,6 +1400,75 @@ describe("Single Project", () => {
     });
   });
 
+  test("if verifyPublished is enabled, environment variables are set", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      artifactsDirectory: "dist",
+    });
+
+    release.publisher.publishToNpm({
+      verifyPublished: true,
+      verifyPublishedTimeoutSeconds: 600,
+    });
+
+    // THEN
+    const files = synthSnapshot(project);
+    const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+
+    expect(releaseWorkflow.jobs.release_npm.steps[3].env).toStrictEqual({
+      NPM_DIST_TAG: "latest",
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+      PUBLIB_DRYRUN: "${{ inputs.dry_run }}",
+      VERIFY_PUBLISHED: "true",
+      VERIFY_PUBLISHED_TIMEOUT_SECONDS: "600",
+    });
+  });
+
+  test("verifyPublishedTimeoutSeconds requires verifyPublished", () => {
+    const project = new TestProject();
+    const release = new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      majorVersion: 1,
+      artifactsDirectory: "dist",
+    });
+
+    expect(() =>
+      release.publisher.publishToNpm({ verifyPublishedTimeoutSeconds: 600 }),
+    ).toThrow(
+      "'verifyPublishedTimeoutSeconds' requires 'verifyPublished' to be enabled.",
+    );
+  });
+
+  test.each([-1, 1.5])(
+    "verifyPublishedTimeoutSeconds must be a non-negative integer (%p)",
+    (timeout) => {
+      const project = new TestProject();
+      const release = new Release(project, {
+        tasks: [project.buildTask],
+        versionFile: "version.json",
+        branch: "main",
+        majorVersion: 1,
+        artifactsDirectory: "dist",
+      });
+
+      expect(() =>
+        release.publisher.publishToNpm({
+          verifyPublished: true,
+          verifyPublishedTimeoutSeconds: timeout,
+        }),
+      ).toThrow(`Invalid 'verifyPublishedTimeoutSeconds': ${timeout}.`);
+    },
+  );
+
   test("if npmTrustedPublishing is enabled, no token is set and id-token write permission is granted", () => {
     // GIVEN
     const project = new TestProject();

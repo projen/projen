@@ -363,6 +363,28 @@ export class Publisher extends Component {
       );
     }
 
+    if (
+      options.verifyPublishedTimeoutSeconds !== undefined &&
+      !options.verifyPublished
+    ) {
+      throw new Error(
+        "'verifyPublishedTimeoutSeconds' requires 'verifyPublished' to be enabled. " +
+          "Set 'verifyPublished: true' or remove 'verifyPublishedTimeoutSeconds'.",
+      );
+    }
+    if (
+      options.verifyPublishedTimeoutSeconds !== undefined &&
+      !(
+        Number.isInteger(options.verifyPublishedTimeoutSeconds) &&
+        options.verifyPublishedTimeoutSeconds >= 0
+      )
+    ) {
+      throw new Error(
+        `Invalid 'verifyPublishedTimeoutSeconds': ${options.verifyPublishedTimeoutSeconds}. ` +
+          "Set it to a non-negative whole number of seconds.",
+      );
+    }
+
     const trustedPublisher = options.trustedPublishing ? "true" : undefined;
     const npmProvenance = options.npmProvenance ? "true" : undefined;
 
@@ -421,6 +443,9 @@ export class Publisher extends Component {
           NPM_REGISTRY: options.registry,
           NPM_CONFIG_PROVENANCE: npmProvenance,
           NPM_TRUSTED_PUBLISHER: trustedPublisher,
+          VERIFY_PUBLISHED: options.verifyPublished ? "true" : undefined,
+          VERIFY_PUBLISHED_TIMEOUT_SECONDS:
+            options.verifyPublishedTimeoutSeconds?.toString(),
         },
         permissions: {
           idToken: needsIdTokenWrite ? JobPermission.WRITE : undefined,
@@ -1141,6 +1166,26 @@ export interface NpmPublishOptions extends CommonPublishOptions {
    * @default - enabled for for public packages using trusted publishing, disabled otherwise
    */
   readonly npmProvenance?: boolean;
+
+  /**
+   * Wait until the published package version is available from the registry before the publish job completes.
+   *
+   * The registry may not serve a version right after it was published (e.g. npmjs scans packages first).
+   * Enable this when packages that depend on the published package are released right after.
+   *
+   * @default false
+   */
+  readonly verifyPublished?: boolean;
+
+  /**
+   * How long to wait, in seconds, for the published package version to be available.
+   * The publish job fails if it is not available in time.
+   *
+   * Requires `verifyPublished` to be enabled.
+   *
+   * @default 3600
+   */
+  readonly verifyPublishedTimeoutSeconds?: number;
 
   /**
    * Options for publishing npm package to AWS CodeArtifact.

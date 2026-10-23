@@ -290,6 +290,30 @@ describe("publish to go", () => {
     expect(output[".github/workflows/release.yml"]).toContain("release_npm");
   });
 
+  test("release to npm with npmVerifyPublished", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+      releaseToNpm: true,
+      npmVerifyPublished: true,
+      npmVerifyPublishedTimeoutSeconds: 600,
+    });
+
+    const output = synthSnapshot(project);
+    const workflow = yaml.parse(output[".github/workflows/release.yml"]);
+    const publishStep = workflow.jobs.release_npm.steps.find(
+      (step: any) => step.env?.NPM_DIST_TAG,
+    );
+    expect(publishStep.env).toMatchObject({
+      VERIFY_PUBLISHED: "true",
+      VERIFY_PUBLISHED_TIMEOUT_SECONDS: "600",
+    });
+  });
+
   test("release to npm false", () => {
     const project = new JsiiProject({
       authorAddress: "https://foo.bar",
