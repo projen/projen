@@ -1,6 +1,102 @@
-import { CdkConfig, CdkFeatureFlags } from "../../src/awscdk/cdk-config";
+import { readFileSync } from "fs";
+import type { CdkConfigCommonOptions } from "../../src/awscdk";
+import {
+  ApprovalLevel,
+  AwsCdkJavaApp,
+  AwsCdkPythonApp,
+  AwsCdkTypeScriptApp,
+  CdkConfig,
+  CdkFeatureFlags,
+} from "../../src/awscdk";
 import { FEATURE_FLAGS_V2 } from "../../src/awscdk/internal";
-import { TestProject } from "../util";
+import { synthSnapshot, TestProject } from "../util";
+
+describe("version reporting", () => {
+  test.each<[CdkConfigCommonOptions, boolean | undefined]>([
+    [{ versionReporting: true }, true],
+    [{ versionReporting: false }, false],
+    [{}, undefined],
+    [{ versionReporting: undefined }, undefined],
+  ])("synthesizes %p without changing other CDK settings", (options, value) => {
+    const project = new TestProject();
+    const config = new CdkConfig(project, {
+      app: "node lib/main.js",
+      context: { environment: "test" },
+      requireApproval: ApprovalLevel.ANY_CHANGE,
+      cdkout: "custom.out",
+      buildCommand: "node build.js",
+      watchIncludes: ["src/**/*.ts"],
+      watchExcludes: ["test/**"],
+      ...options,
+    });
+
+    project.synth();
+    const first = readFileSync(config.json.absolutePath, "utf8");
+    const second = synthSnapshot(project, { parseJson: false })["cdk.json"];
+
+    expect(second).toBe(first);
+    expect(JSON.parse(second)).toStrictEqual({
+      "//": expect.any(String),
+      app: "node lib/main.js",
+      context: { environment: "test" },
+      requireApproval: ApprovalLevel.ANY_CHANGE,
+      output: "custom.out",
+      build: "node build.js",
+      watch: { include: ["src/**/*.ts"], exclude: ["test/**"] },
+      ...(value === undefined ? {} : { versionReporting: value }),
+    });
+  });
+
+  test.each([
+    {
+      language: "TypeScript",
+      createApp: (options: CdkConfigCommonOptions) =>
+        new AwsCdkTypeScriptApp({
+          name: "test-app",
+          defaultReleaseBranch: "main",
+          cdkVersion: "2.189.1",
+          ...options,
+        }),
+    },
+    {
+      language: "Python",
+      createApp: (options: CdkConfigCommonOptions) =>
+        new AwsCdkPythonApp({
+          name: "test-app",
+          moduleName: "test_app",
+          authorName: "Test Author",
+          authorEmail: "test@example.com",
+          version: "0.1.0",
+          cdkVersion: "2.189.1",
+          ...options,
+        }),
+    },
+    {
+      language: "Java",
+      createApp: (options: CdkConfigCommonOptions) =>
+        new AwsCdkJavaApp({
+          name: "test-app",
+          artifactId: "test-app",
+          groupId: "org.acme",
+          mainClass: "org.acme.MyApp",
+          version: "0.1.0",
+          cdkVersion: "2.189.1",
+          ...options,
+        }),
+    },
+  ])("forwards the option from the $language app", ({ createApp }) => {
+    const defaults = synthSnapshot(createApp({}))["cdk.json"];
+    expect(defaults).not.toHaveProperty("versionReporting");
+
+    for (const versionReporting of [true, false]) {
+      const output = synthSnapshot(createApp({ versionReporting }));
+      expect(output["cdk.json"]).toStrictEqual({
+        ...defaults,
+        versionReporting,
+      });
+    }
+  });
+});
 
 describe("context values", () => {
   test("issue #1349", () => {

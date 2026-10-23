@@ -12257,6 +12257,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.versionReporting">versionReporting</a></code> | <code>boolean</code> | Enable AWS CDK library version reporting. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | Minimum version of the AWS CDK to depend on. |
@@ -12995,6 +12996,21 @@ To protect you against unintended changes that affect your security posture, the
 
 ---
 
+##### `versionReporting`<sup>Optional</sup> <a name="versionReporting" id="projen.awscdk.AwsCdkJavaAppOptions.property.versionReporting"></a>
+
+```typescript
+public readonly versionReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* use the AWS CDK default
+
+Enable AWS CDK library version reporting.
+
+> [https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html](https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html)
+
+---
+
 ##### `watchExcludes`<sup>Optional</sup> <a name="watchExcludes" id="projen.awscdk.AwsCdkJavaAppOptions.property.watchExcludes"></a>
 
 ```typescript
@@ -13219,6 +13235,7 @@ const awsCdkPythonAppOptions: awscdk.AwsCdkPythonAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
+| <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.versionReporting">versionReporting</a></code> | <code>boolean</code> | Enable AWS CDK library version reporting. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkPythonAppOptions.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | Minimum version of the AWS CDK to depend on. |
@@ -14095,6 +14112,21 @@ To protect you against unintended changes that affect your security posture, the
 
 ---
 
+##### `versionReporting`<sup>Optional</sup> <a name="versionReporting" id="projen.awscdk.AwsCdkPythonAppOptions.property.versionReporting"></a>
+
+```typescript
+public readonly versionReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* use the AWS CDK default
+
+Enable AWS CDK library version reporting.
+
+> [https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html](https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html)
+
+---
+
 ##### `watchExcludes`<sup>Optional</sup> <a name="watchExcludes" id="projen.awscdk.AwsCdkPythonAppOptions.property.watchExcludes"></a>
 
 ```typescript
@@ -14369,6 +14401,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.versionReporting">versionReporting</a></code> | <code>boolean</code> | Enable AWS CDK library version reporting. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.cdkVersion">cdkVersion</a></code> | <code>string</code> | Minimum version of the AWS CDK to depend on. |
@@ -16793,6 +16826,21 @@ To protect you against unintended changes that affect your security posture, the
 
 ---
 
+##### `versionReporting`<sup>Optional</sup> <a name="versionReporting" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.versionReporting"></a>
+
+```typescript
+public readonly versionReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* use the AWS CDK default
+
+Enable AWS CDK library version reporting.
+
+> [https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html](https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html)
+
+---
+
 ##### `watchExcludes`<sup>Optional</sup> <a name="watchExcludes" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.watchExcludes"></a>
 
 ```typescript
@@ -17015,6 +17063,7 @@ const cdkConfigCommonOptions: awscdk.CdkConfigCommonOptions = { ... }
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
+| <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.versionReporting">versionReporting</a></code> | <code>boolean</code> | Enable AWS CDK library version reporting. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigCommonOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
 
@@ -17097,6 +17146,21 @@ To protect you against unintended changes that affect your security posture, the
 
 ---
 
+##### `versionReporting`<sup>Optional</sup> <a name="versionReporting" id="projen.awscdk.CdkConfigCommonOptions.property.versionReporting"></a>
+
+```typescript
+public readonly versionReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* use the AWS CDK default
+
+Enable AWS CDK library version reporting.
+
+> [https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html](https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html)
+
+---
+
 ##### `watchExcludes`<sup>Optional</sup> <a name="watchExcludes" id="projen.awscdk.CdkConfigCommonOptions.property.watchExcludes"></a>
 
 ```typescript
@@ -17144,6 +17208,7 @@ const cdkConfigOptions: awscdk.CdkConfigOptions = { ... }
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.context">context</a></code> | <code>{[ key: string ]: any}</code> | Additional context to include in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.featureFlags">featureFlags</a></code> | <code><a href="#projen.awscdk.ICdkFeatureFlags">ICdkFeatureFlags</a></code> | Feature flags that should be enabled in `cdk.json`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.requireApproval">requireApproval</a></code> | <code><a href="#projen.awscdk.ApprovalLevel">ApprovalLevel</a></code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. |
+| <code><a href="#projen.awscdk.CdkConfigOptions.property.versionReporting">versionReporting</a></code> | <code>boolean</code> | Enable AWS CDK library version reporting. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchExcludes">watchExcludes</a></code> | <code>string[]</code> | Glob patterns to exclude from `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.watchIncludes">watchIncludes</a></code> | <code>string[]</code> | Glob patterns to include in `cdk watch`. |
 | <code><a href="#projen.awscdk.CdkConfigOptions.property.app">app</a></code> | <code>string</code> | The command line to execute in order to synthesize the CDK application (language specific). |
@@ -17224,6 +17289,21 @@ public readonly requireApproval: ApprovalLevel;
 - *Default:* ApprovalLevel.BROADENING
 
 To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
+
+---
+
+##### `versionReporting`<sup>Optional</sup> <a name="versionReporting" id="projen.awscdk.CdkConfigOptions.property.versionReporting"></a>
+
+```typescript
+public readonly versionReporting: boolean;
+```
+
+- *Type:* boolean
+- *Default:* use the AWS CDK default
+
+Enable AWS CDK library version reporting.
+
+> [https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html](https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html)
 
 ---
 
