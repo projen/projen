@@ -1,8 +1,11 @@
+import * as fs from "fs";
+import * as path from "path";
 import * as YAML from "yaml";
 import { javascript, Project } from "../../src";
-import { JsiiBuild, ValidateTsconfig } from "../../src/cdk";
+import { JsiiBuild, JsiiProject, ValidateTsconfig } from "../../src/cdk";
 import { TypeScriptProject } from "../../src/typescript";
-import { synthSnapshot } from "../util";
+import { git } from "../../src/util/exec";
+import { mkdtemp, synthSnapshot } from "../util";
 
 function createTypeScriptProject(
   options: Partial<javascript.NodeProjectOptions> = {},
@@ -393,6 +396,210 @@ describe("JsiiBuild fallback behaviors", () => {
       expect(buildWorkflow).toContain("node-version: lts/*");
     });
   });
+});
+
+describe("JsiiBuild Go tarball gitignore", () => {
+  const repository = "https://github.com/example/source.git";
+  const moduleName = "github.com/example/source";
+  const goTarget = { moduleName, packageName: "fixturego" };
+  const exception = "!/fixturego/jsii/*.tgz";
+
+  test.each([
+    repository,
+    "https://github.com/example/source",
+    "https://github.com/example/source.git/",
+    "git+https://github.com/example/source.git",
+    "ssh://git@github.com/example/source.git",
+    "git+ssh://git@github.com/example/source.git",
+    "git@github.com:example/source.git",
+    "https://GITHUB.COM/Example/Source.git",
+  ])("recognizes repository URL %s", (url) => {
+    const project = createTypeScriptProject({ repository: url });
+    project.with(new JsiiBuild({ publishToGo: goTarget }));
+    expect(synthSnapshot(project)[".gitignore"]).toContain(exception);
+  });
+
+  test.each([
+    [undefined, moduleName],
+    [repository, "github.com/example/separate"],
+    [repository, "github.com/another/source"],
+    [repository, "github.com/example/source-extra"],
+    [repository, "github.com/example/source/sdk"],
+    [repository, "github.com/example/source/v2"],
+    [repository, "example.com/example/source"],
+    ["https://github.com.evil.example/example/source.git", moduleName],
+    ["https://gitlab.com/example/source.git", moduleName],
+    ["https://github.com/example/source/tree/main", moduleName],
+    ["https://github.com/example/source.git?ref=main", moduleName],
+    ["https://github.com/example/source.git#main", moduleName],
+    ["https://github.com/example/source-extra.git", moduleName],
+    ["https://github.com/example/..", "github.com/example/.."],
+    ["github:example/source", moduleName],
+    ["not a repository URL", moduleName],
+  ])(
+    "leaves unrelated or unsupported repositories alone: %s -> %s",
+    (url, target) => {
+      const project = createTypeScriptProject({ repository: url });
+      project.with(
+        new JsiiBuild({ publishToGo: { ...goTarget, moduleName: target } }),
+      );
+      expect(synthSnapshot(project)[".gitignore"]).not.toContain(exception);
+    },
+  );
+
+  test("uses the package's repository metadata", () => {
+    const project = createTypeScriptProject();
+    project.package.addField("repository", repository);
+    project.with(new JsiiBuild({ publishToGo: goTarget }));
+    expect(synthSnapshot(project)[".gitignore"]).toContain(exception);
+  });
+
+  test.each(["../other", "*", "nested/package"])(
+    "does not expand the exception for an unsupported package name: %s",
+    (packageName) => {
+      const project = createTypeScriptProject({ repository });
+      project.with(new JsiiBuild({ publishToGo: { moduleName, packageName } }));
+      expect(synthSnapshot(project)[".gitignore"]).not.toMatch(/!.*\.tgz/);
+    },
+  );
+
+  test("does not change npm or other language targets without Go", () => {
+    const project = createTypeScriptProject({ repository });
+    project.with(
+      new JsiiBuild({
+        publishToPypi: { distName: "example", module: "example" },
+        publishToMaven: {
+          javaPackage: "com.example",
+          mavenGroupId: "com.example",
+          mavenArtifactId: "example",
+        },
+        publishToNuget: { dotNetNamespace: "Example", packageId: "Example" },
+      }),
+    );
+    const ignore = synthSnapshot(project)[".gitignore"];
+    expect(ignore).not.toMatch(/!.*\.tgz/);
+    expect(ignore).toContain("*.tgz");
+    expect(ignore).toContain("/dist/");
+  });
+
+  test.each<[string, boolean, string, string | undefined, string, string]>([
+    ["jsii", false, "npm-name", "fixturego", "fixturego", "1.2.3"],
+    ["mixin", false, "npm-name", "fixturego", "fixturego", "1.2.3"],
+    ["jsii", true, "npm-name", "fixturego", "fixturego", "1.2.3"],
+    ["mixin", true, "npm-name", "fixturego", "fixturego", "1.2.3"],
+    ["mixin", false, "hello-world", undefined, "helloworld", "1.2.3"],
+    ["jsii", false, "@acme/hello-world", undefined, "acmehelloworld", "2.3.4"],
+    ["mixin", false, "hello.world", undefined, "hello.world", "1.2.3"],
+  ])(
+    "Git selects the embedded tarball: %s nested=%s npm=%s Go=%s directory=%s version=%s",
+    (entrypoint, nested, npmName, goName, directory, version) => {
+      const outdir = mkdtemp();
+      const parent = nested
+        ? new javascript.NodeProject({
+            name: "source-root",
+            outdir,
+            repository,
+            defaultReleaseBranch: "main",
+          })
+        : undefined;
+      const options = {
+        name: "display-name",
+        packageName: npmName,
+        parent,
+        outdir: nested ? "packages/library" : outdir,
+        defaultReleaseBranch: "main",
+        repositoryDirectory: nested ? "packages/library" : undefined,
+      };
+      const publishToGo = { moduleName, packageName: goName };
+      const project =
+        entrypoint === "jsii"
+          ? new JsiiProject({
+              ...options,
+              repositoryUrl: repository,
+              author: "Test Author",
+              authorAddress: "test@example.com",
+              publishToGo,
+              docgen: false,
+            })
+          : new TypeScriptProject({
+              ...options,
+              repository,
+              disableTsconfig: true,
+            });
+      if (entrypoint === "mixin") {
+        project.with(new JsiiBuild({ publishToGo, docgen: false }));
+      }
+      project.package.addField("version", version);
+      const root = parent ?? project;
+      const previous = process.env.PROJEN_DISABLE_POST;
+      try {
+        process.env.PROJEN_DISABLE_POST = "true";
+        root.synth();
+        const first = fs.readFileSync(path.join(outdir, ".gitignore"), "utf8");
+        root.synth();
+        expect(fs.readFileSync(path.join(outdir, ".gitignore"), "utf8")).toBe(
+          first,
+        );
+      } finally {
+        if (previous === undefined) {
+          delete process.env.PROJEN_DISABLE_POST;
+        } else {
+          process.env.PROJEN_DISABLE_POST = previous;
+        }
+      }
+      const runGit = (...args: string[]) =>
+        git.capture(["-c", "core.excludesFile=", ...args], {
+          cwd: outdir,
+        });
+      const isIgnored = (file: string) => {
+        try {
+          runGit("check-ignore", "-q", "--", file);
+          return true;
+        } catch (error) {
+          expect(error).toMatchObject({ status: 1 });
+          return false;
+        }
+      };
+      runGit("init");
+      expect(runGit("remote")).toBe("");
+      const tarball = `${directory}/jsii/package-${version}.tgz`;
+      const ignored = [
+        "npm-package.tgz",
+        "unrelated/temporary.tgz",
+        `${directory}/temporary.tgz`,
+        `unrelated/${tarball}`,
+        `dist/go/${tarball}`,
+        "dist/js/npm-package.tgz",
+      ];
+      for (const file of [tarball, ...ignored]) {
+        fs.mkdirSync(path.dirname(path.join(outdir, file)), {
+          recursive: true,
+        });
+        fs.writeFileSync(path.join(outdir, file), "Git selection fixture");
+      }
+      expect(isIgnored(tarball)).toBe(false);
+      expect(runGit("check-ignore", "-v", "--", tarball)).toContain(
+        `!/${directory}/jsii/*.tgz`,
+      );
+      expect(runGit("add", "--dry-run", "--", tarball)).toContain(tarball);
+      expect(runGit("ls-files", "--stage")).toBe("");
+      for (const file of ignored) {
+        expect(isIgnored(file)).toBe(true);
+      }
+      if (parent) {
+        expect(
+          fs.readFileSync(path.join(project.outdir, ".gitignore"), "utf8"),
+        ).not.toContain(`!/${directory}/jsii/*.tgz`);
+      }
+      root.gitignore.exclude(`/${directory}/`);
+      root.gitignore.synthesize();
+      expect(isIgnored(tarball)).toBe(true);
+      root.gitignore.removePatterns(`/${directory}/`);
+      root.gitignore.exclude("*.tgz");
+      root.gitignore.synthesize();
+      expect(isIgnored(tarball)).toBe(true);
+    },
+  );
 });
 
 describe("JsiiBuild declaration entrypoints", () => {
