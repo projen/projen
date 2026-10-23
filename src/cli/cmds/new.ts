@@ -1,3 +1,5 @@
+import * as fs from "node:fs";
+import * as path from "node:path";
 import * as semver from "semver";
 import * as yargs from "yargs";
 import * as inventory from "../../inventory";
@@ -281,6 +283,50 @@ function commandLineToProps(
 }
 
 /**
+ * Installs the projen version the external module depends on when the installed one does not satisfy it.
+ *
+ * Otherwise npm nests a second projen under the module. The project code runs from that nested copy,
+ * and a later install by another package manager (e.g. pnpm) can delete it mid-run.
+ */
+async function alignProjenWithModule(baseDir: string, moduleDir: string) {
+  const manifest = JSON.parse(
+    fs.readFileSync(path.join(moduleDir, "package.json"), "utf-8"),
+  );
+  // npm only nests regular dependencies; a peer-only projen already resolves to the root copy.
+  const range = manifest.dependencies?.projen;
+  const installedManifest = path.join(
+    baseDir,
+    "node_modules",
+    "projen",
+    "package.json",
+  );
+  // npm would install a valid range like `1.0.0-x.tgz` from a local file, so only accept registry ranges.
+  const isRegistryRange =
+    semver.validRange(range) && !/\.(tgz|tar|tar\.gz)$/.test(range);
+  if (!isRegistryRange || !fs.existsSync(installedManifest)) {
+    return;
+  }
+
+  const installed = JSON.parse(
+    fs.readFileSync(installedManifest, "utf-8"),
+  ).version;
+  if (semver.satisfies(installed, range)) {
+    return;
+  }
+
+  logging.info(`installing projen@${range} as required by ${manifest.name}...`);
+  try {
+    await npm.run(renderInstallArgs(baseDir, `projen@${range}`), {
+      cwd: baseDir,
+    });
+  } catch (e: any) {
+    logging.warn(
+      `Could not install projen@${range} (${e.message}). If later tasks fail with MODULE_NOT_FOUND, re-run with --projen-version="${range}".`,
+    );
+  }
+}
+
+/**
  * Generates a new project from an external module.
  *
  * @param spec The name of the external module to load
@@ -289,6 +335,7 @@ function commandLineToProps(
 async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   const projenVersion = args.projenVersion ?? "latest";
   const installArgs = renderInstallArgs(baseDir, `projen@${projenVersion}`);
+  let installedLatestProjen = false;
   if (args.projenVersion) {
     await npm.run(installArgs, { cwd: baseDir });
   } else {
@@ -300,6 +347,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       );
     } catch {
       await npm.run(installArgs, { cwd: baseDir });
+      installedLatestProjen = true;
     }
   }
 
@@ -334,6 +382,10 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     throw new CliError(
       `Module '${moduleName}' does not look like it is compatible with projen. Reason: Cannot find '${moduleName}/.jsii'. All projen modules must be jsii modules!`,
     );
+  }
+
+  if (installedLatestProjen) {
+    await alignProjenWithModule(baseDir, moduleDir);
   }
 
   // Only leave projects from the main (requested) package

@@ -690,6 +690,42 @@ describe("regressions", () => {
     });
   });
 
+  test("projen new --from installs the projen version the module depends on", async () => {
+    await withProjectDir(async (projectdir) => {
+      // projen-python-project@0.0.2 has projen 0.65.13 in its dependencies, which npm would nest
+      await execProjenCLI(
+        projectdir,
+        [
+          "new",
+          "--from",
+          "projen-python-project@0.0.2",
+          "--no-post",
+          "--no-git",
+        ],
+        { preInstallProjen: false },
+      );
+
+      const installed = JSON.parse(
+        readFileSync(
+          join(projectdir, "node_modules", "projen", "package.json"),
+          "utf-8",
+        ),
+      ).version;
+      expect(installed).toBe("0.65.13");
+      expect(
+        existsSync(
+          join(
+            projectdir,
+            "node_modules",
+            "projen-python-project",
+            "node_modules",
+            "projen",
+          ),
+        ),
+      ).toBe(false);
+    });
+  }, 60_000);
+
   // https://github.com/projen/projen/issues/2649
   test("projen new without any arguments displays full help", async () => {
     await withProjectDir(async (projectdir) => {
