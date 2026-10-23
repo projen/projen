@@ -866,6 +866,25 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- preserve the existing dependency order",
+        "docs": "Sorts the top-level build plugins in the generated POM.",
+        "featured": false,
+        "fqn": "projen.ICompareString",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "sortPlugins",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "sortPlugins",
+        ],
+        "simpleType": "ICompareString",
+        "switch": "sort-plugins",
+        "type": {
+          "fqn": "projen.ICompareString",
+        },
+      },
+      {
         "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
@@ -23232,6 +23251,25 @@ exports[`inventory 1`] = `
         "switch": "sample-java-package",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- preserve the existing dependency order",
+        "docs": "Sorts the top-level build plugins in the generated POM.",
+        "featured": false,
+        "fqn": "projen.ICompareString",
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "sortPlugins",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": [
+          "sortPlugins",
+        ],
+        "simpleType": "ICompareString",
+        "switch": "sort-plugins",
+        "type": {
+          "fqn": "projen.ICompareString",
         },
       },
       {
