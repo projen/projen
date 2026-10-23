@@ -2291,6 +2291,7 @@ Synthesizes files to the project output directory.
 | --- | --- |
 | <code><a href="#projen.cdk.JsiiDocgen.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 | <code><a href="#projen.cdk.JsiiDocgen.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+| <code><a href="#projen.cdk.JsiiDocgen.of">of</a></code> | Returns the JsiiDocgen component of a project or undefined if there is none. |
 
 ---
 
@@ -2342,12 +2343,29 @@ Test whether the given construct is a component.
 
 ---
 
+##### `of` <a name="of" id="projen.cdk.JsiiDocgen.of"></a>
+
+```typescript
+import { cdk } from 'projen'
+
+cdk.JsiiDocgen.of(project: Project)
+```
+
+Returns the JsiiDocgen component of a project or undefined if there is none.
+
+###### `project`<sup>Required</sup> <a name="project" id="projen.cdk.JsiiDocgen.of.parameter.project"></a>
+
+- *Type:* projen.Project
+
+---
+
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.cdk.JsiiDocgen.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projen.cdk.JsiiDocgen.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+| <code><a href="#projen.cdk.JsiiDocgen.property.task">task</a></code> | <code>projen.Task</code> | The task that generates API documentation. |
 
 ---
 
@@ -2370,6 +2388,18 @@ public readonly project: Project;
 ```
 
 - *Type:* projen.Project
+
+---
+
+##### `task`<sup>Required</sup> <a name="task" id="projen.cdk.JsiiDocgen.property.task"></a>
+
+```typescript
+public readonly task: Task;
+```
+
+- *Type:* projen.Task
+
+The task that generates API documentation.
 
 ---
 

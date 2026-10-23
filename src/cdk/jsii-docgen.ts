@@ -1,6 +1,8 @@
 import type { IConstruct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import type { Project } from "../project";
+import type { Task } from "../task";
 
 /**
  * Options for `JsiiDocgen`
@@ -27,6 +29,20 @@ export interface JsiiDocgenOptions {
  * - Enforces that markdown file is checked in
  */
 export class JsiiDocgen extends Component {
+  /**
+   * Returns the JsiiDocgen component of a project or undefined if there is none.
+   */
+  public static of(project: Project): JsiiDocgen | undefined {
+    const isJsiiDocgen = (c: Component): c is JsiiDocgen =>
+      c instanceof JsiiDocgen;
+    return project.components.find(isJsiiDocgen);
+  }
+
+  /**
+   * The task that generates API documentation.
+   */
+  public readonly task: Task;
+
   constructor(scope: IConstruct, options: JsiiDocgenOptions = {}) {
     super(scope);
 
@@ -39,13 +55,13 @@ export class JsiiDocgen extends Component {
 
     const filePath = options.filePath ?? "API.md";
 
-    const docgen = this.project.addTask("docgen", {
+    this.task = this.project.addTask("docgen", {
       description: "Generate API.md from .jsii manifest",
       execArgs: ["jsii-docgen", "-o", filePath],
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
-    this.project.postCompileTask.spawn(docgen);
+    this.project.postCompileTask.spawn(this.task);
     this.project.gitignore.include(`/${filePath}`);
     this.project.annotateGenerated(`/${filePath}`);
   }
