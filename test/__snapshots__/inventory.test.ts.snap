@@ -957,6 +957,23 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- use the AWS CDK default",
+        "docs": "Enable AWS CDK library version reporting.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "versionReporting",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "versionReporting",
+        ],
+        "simpleType": "boolean",
+        "switch": "version-reporting",
+        "type": {
+          "primitive": "boolean",
+        },
+      },
+      {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -2203,6 +2220,23 @@ exports[`inventory 1`] = `
         "switch": "version",
         "type": {
           "primitive": "string",
+        },
+      },
+      {
+        "default": "- use the AWS CDK default",
+        "docs": "Enable AWS CDK library version reporting.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "versionReporting",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "versionReporting",
+        ],
+        "simpleType": "boolean",
+        "switch": "version-reporting",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
@@ -5222,6 +5256,23 @@ exports[`inventory 1`] = `
             },
             "kind": "map",
           },
+        },
+      },
+      {
+        "default": "- use the AWS CDK default",
+        "docs": "Enable AWS CDK library version reporting.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "versionReporting",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": [
+          "versionReporting",
+        ],
+        "simpleType": "boolean",
+        "switch": "version-reporting",
+        "type": {
+          "primitive": "boolean",
         },
       },
       {
