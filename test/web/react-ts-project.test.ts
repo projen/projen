@@ -56,6 +56,16 @@ test("CommonJS not ESnext", () => {
   expect(out["tsconfig.json"].compilerOptions.module).toEqual("commonjs");
 });
 
+test("sample code mounts the app with createRoot", () => {
+  const p = new TestReactTypeScriptProject();
+  const index = synthSnapshot(p)["src/index.tsx"];
+  expect(index).toContain("import ReactDOM from 'react-dom/client';");
+  expect(index).toContain(
+    "const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);",
+  );
+  expect(index).not.toContain("ReactDOM.render(");
+});
+
 class TestReactTypeScriptProject extends ReactTypeScriptProject {
   constructor(options: Partial<ReactTypeScriptProjectOptions> = {}) {
     super({

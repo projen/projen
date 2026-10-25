@@ -49,6 +49,16 @@ test("rewire add a dependency on react-app-rewired", () => {
   expect(p.deps.getDependency("react-app-rewired")).toBeDefined();
 });
 
+test("sample code mounts the app with createRoot", () => {
+  const p = new TestReactProject();
+  const index = synthSnapshot(p)["src/index.jsx"];
+  expect(index).toContain("import ReactDOM from 'react-dom/client';");
+  expect(index).toContain(
+    "const root = ReactDOM.createRoot(document.getElementById('root'));",
+  );
+  expect(index).not.toContain("ReactDOM.render(");
+});
+
 class TestReactProject extends ReactProject {
   constructor(options: Partial<ReactProjectOptions> = {}) {
     super({
