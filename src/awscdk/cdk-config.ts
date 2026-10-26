@@ -107,6 +107,14 @@ export interface CdkConfigCommonOptions {
   readonly requireApproval?: ApprovalLevel;
 
   /**
+   * Enable AWS CDK library version reporting.
+   *
+   * @see https://docs.aws.amazon.com/cdk/v2/guide/usage-data.html
+   * @default - use the AWS CDK default
+   */
+  readonly versionReporting?: boolean;
+
+  /**
    * cdk.out directory.
    *
    * @default "cdk.out"
@@ -201,6 +209,7 @@ export class CdkConfig extends Component {
         app: options.app,
         context: this._context,
         requireApproval: options.requireApproval,
+        versionReporting: options.versionReporting,
         output: this.cdkout,
         build: options.buildCommand,
         watch: {
