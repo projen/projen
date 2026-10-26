@@ -12240,6 +12240,7 @@ const awsCdkJavaAppOptions: awscdk.AwsCdkJavaAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.description">description</a></code> | <code>string</code> | Description of a project is always good. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.packaging">packaging</a></code> | <code>string</code> | Project packaging format. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.parentPom">parentPom</a></code> | <code>projen.java.ParentPom</code> | A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos. |
+| <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.sortPlugins">sortPlugins</a></code> | <code>projen.ICompareString</code> | Sorts the top-level build plugins in the generated POM. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.url">url</a></code> | <code>string</code> | The URL, like the name, is not required. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.compileOptions">compileOptions</a></code> | <code>projen.java.MavenCompileOptions</code> | Compile options. |
 | <code><a href="#projen.awscdk.AwsCdkJavaAppOptions.property.deps">deps</a></code> | <code>string[]</code> | List of runtime dependencies for this project. |
@@ -12746,6 +12747,23 @@ public readonly parentPom: ParentPom;
 - *Default:* undefined
 
 A Parent Pom can be used to have a child project inherit properties/plugins/ect in order to reduce duplication and keep standards across a large amount of repos.
+
+---
+
+##### `sortPlugins`<sup>Optional</sup> <a name="sortPlugins" id="projen.awscdk.AwsCdkJavaAppOptions.property.sortPlugins"></a>
+
+```typescript
+public readonly sortPlugins: ICompareString;
+```
+
+- *Type:* projen.ICompareString
+- *Default:* preserve the existing dependency order
+
+Sorts the top-level build plugins in the generated POM.
+
+The comparator receives `groupId/artifactId` identifiers without versions.
+Returning zero preserves the existing relative order.
+This does not change Maven lifecycle phase bindings.
 
 ---
 

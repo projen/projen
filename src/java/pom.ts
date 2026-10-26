@@ -1,4 +1,5 @@
 import { resolve } from "../_resolve";
+import type { ICompareString } from "../compare";
 import { Component } from "../component";
 import type { DependencyCoordinates } from "../dependencies";
 import { Dependencies, DependencyType } from "../dependencies";
@@ -98,6 +99,17 @@ export interface PomOptions {
    * @featured
    */
   readonly parentPom?: ParentPom;
+
+  /**
+   * Sorts the top-level build plugins in the generated POM.
+   *
+   * The comparator receives `groupId/artifactId` identifiers without versions.
+   * Returning zero preserves the existing relative order.
+   * This does not change Maven lifecycle phase bindings.
+   *
+   * @default - preserve the existing dependency order
+   */
+  readonly sortPlugins?: ICompareString;
 }
 
 /*
@@ -256,6 +268,8 @@ export class Pom extends Component {
 
   private readonly pluginRepositories: MavenRepository[] = [];
 
+  private readonly sortPlugins?: ICompareString;
+
   constructor(project: Project, options: PomOptions) {
     super(project);
 
@@ -268,6 +282,7 @@ export class Pom extends Component {
     this.description = options.description;
     this.url = options.url;
     this.parentPom = options.parentPom;
+    this.sortPlugins = options.sortPlugins;
 
     new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
   }
@@ -388,6 +403,16 @@ export class Pom extends Component {
         default:
           throw new Error(`unsupported dependency type: ${dep.type}`);
       }
+    }
+
+    const sortPlugins = this.sortPlugins;
+    if (sortPlugins) {
+      plugins.sort((a, b) =>
+        sortPlugins.compare(
+          `${a.groupId}/${a.artifactId}`,
+          `${b.groupId}/${b.artifactId}`,
+        ),
+      );
     }
 
     return {
