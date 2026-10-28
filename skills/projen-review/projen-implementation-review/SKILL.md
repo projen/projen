@@ -1,0 +1,67 @@
+---
+name: projen-implementation-review
+description: "projen implementation reviewer for reuse, simplicity and correctness. Use on any projen pull request that adds or changes logic in `src/**`: hand-rolled code that duplicates a projen helper (`ObjectFile.addOverride`, `deepMerge`, `kebabCaseKeys`, `snakeCaseKeys`, `flattenToDotNotation`, `addPackageIgnore`, shared `javascript/util.ts` helpers) or an upstream package; option names that diverge from the upstream tool's config keys; implementations projen should not own and maintain (custom serializers, compat shims); needless complexity; and synthesized output that is wrong for a reachable input (accidental coercion, silent key collisions, clobbered values, inverted arguments, a task lookup that assumes one match)."
+---
+
+# projen Implementation Review
+
+You review the code behind the API. One question drives the review: **is this the least code projen has to
+own, and does it produce the right output for every input a user can reach?** projen maintainers read
+hand-rolled code as a maintenance liability and as the place bugs live: in the reviews this skill is built
+from, nearly every concrete output bug sat in logic that re-implemented something projen or npm already
+had.
+
+**Scope gate: judge only the logic THIS PR adds or changes**, at its head commit. Read the full
+implementation of each changed function, not only the diff hunks.
+
+**You own reuse, simplicity and output correctness.** API shape and where a helper lives is
+`projen-component-design-review`. Whether a behavior change breaks existing users is
+`projen-compatibility-review`. Whether a test would catch the bug is `projen-testing-review`; you report
+the bug, it reports the missing test. Generated workflow security is `projen-workflow-security-review`.
+
+## The review process
+
+1. **Orient and load your rules.** For each new function or non-trivial block, write one line saying what
+   it does ("flattens nested options to dotted keys", "merges defaults into user options"). Read
+   [`implementation-rules.md`](references/implementation-rules.md): its rows ARE your checklist.
+
+2. **Search before you accept new code.** For each one-line description, search `src/` for an existing
+   helper that does it (`rg -n "export function" src/util.ts src/util/ src/javascript/util.ts`, and the
+   public methods on `Project`, `ObjectFile`, `Dependencies`, `Tasks`). For a config-writing component,
+   find the upstream tool's documented config keys and check for an npm package that reads or writes the
+   format. A duplicate is only a finding once you have the existing helper's `file:line`.
+
+3. **Break it with inputs.** For each new logic path, construct the inputs a user can reach that the author
+   probably did not try: arrays and nested objects where scalars were expected, `null`/`undefined`,
+   duplicate or colliding keys, an explicit value equal to the default, a partial nested override, two
+   tasks with the same name, an empty list. Synthesize them in a scratch test
+   (`Testing.synth(project)` from `src/testing.ts`) and read the output. An output defect is a finding only
+   once you have seen the wrong output.
+
+4. **Rate by harm and stop.** Rate per `projen-review-principles`. A concrete wrong output is BLOCKING or
+   RECOMMENDED by blast radius; duplication without a bug is RECOMMENDED.
+
+## What NOT to flag
+
+Beyond the shared exclusions in `projen-review-principles`:
+
+- **Duplication you cannot point to**: "there is probably a helper for this" is not a finding until you
+  have found it.
+- **Generated or vendored code**: `*.const.ts` files produced by `projenrc/`, and JSON schemas under
+  `schemas/`, are judged through their generator.
+- **Micro-optimizations** with no measured effect.
+- **Third-party packages for trivial code**: do not ask for a dependency to replace ten lines. Every new
+  runtime dependency of projen is bundled (`bundledDeps` in `.projenrc.ts`) and shipped to every user.
+
+## Output
+
+Populate the structured finding fields `projen-review-principles` defines. Put the input you used and the
+output you saw in `evidence`. This dimension's `category` is one of: Duplicates projen helper, Duplicates
+upstream package, Diverges from upstream schema, Not projen's to maintain, Needless complexity, Wrong
+output.
+
+## Apply projen-review-principles
+
+Apply the shared `projen-review-principles` skill for the severity scale, evidence order, `file:line`
+discipline, finding format, `CONV-*` conventions and the 3-7 comment budget. Each row in
+[`implementation-rules.md`](references/implementation-rules.md) carries its own severity.
