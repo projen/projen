@@ -504,7 +504,15 @@
     },
     "post-upgrade": {
       "name": "post-upgrade",
-      "description": "Runs after upgrading dependencies"
+      "description": "Runs after upgrading dependencies",
+      "steps": [
+        {
+          "spawn": "compile"
+        },
+        {
+          "spawn": "docgen"
+        }
+      ]
     },
     "pre-compile": {
       "name": "pre-compile",

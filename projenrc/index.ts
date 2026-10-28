@@ -204,6 +204,11 @@ export function setupUpgradeDependencies(project: NodeProject) {
       labels: ["auto-approve"],
     },
   });
+
+  // Minimize self mutations
+  const postUpgrade = project.tasks.tryFind("post-upgrade")!;
+  postUpgrade.spawn(project.tasks.tryFind("compile")!);
+  postUpgrade.spawn(project.tasks.tryFind("docgen")!);
 }
 
 /**

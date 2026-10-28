@@ -4080,6 +4080,7 @@ const ruleDomains: javascript.biome_config.RuleDomains = { ... }
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.solid">solid</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.svelte">svelte</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.tailwind">tailwind</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.tanstackQuery">tanstackQuery</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.test">test</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.turborepo">turborepo</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.types">types</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
@@ -4191,6 +4192,16 @@ public readonly svelte: RuleDomainValue;
 
 ```typescript
 public readonly tailwind: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `tanstackQuery`<sup>Optional</sup> <a name="tanstackQuery" id="projen.javascript.biome_config.RuleDomains.property.tanstackQuery"></a>
+
+```typescript
+public readonly tanstackQuery: RuleDomainValue;
 ```
 
 - *Type:* projen.javascript.biome_config.RuleDomainValue

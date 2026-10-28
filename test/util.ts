@@ -122,9 +122,11 @@ export async function execProjenCLI(
     preInstallProjen = true,
   }: ProjenCLIExecOptions = {},
 ) {
+  // jest workers set FORCE_COLOR, which would leak ANSI codes into captured CLI output
+  env = { FORCE_COLOR: "0", ...env };
+
   // enable debug mode
   if (debug) {
-    env ??= {};
     env.DEBUG = "true";
   }
 
