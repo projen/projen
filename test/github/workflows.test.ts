@@ -41,6 +41,23 @@ test("setting runName", () => {
   expect(workflows[".github/workflows/run-name.yml"]).toMatchSnapshot();
 });
 
+test("schedule trigger with timezone", () => {
+  // GIVEN
+  const p = new TestProject();
+  const wf = p.github!.addWorkflow("schedule-timezone");
+
+  // WHEN
+  wf.on({
+    schedule: [{ cron: "0 1 * * 1", timezone: "Asia/Seoul" }],
+  });
+
+  // THEN
+  const workflows = synthWorkflows(p);
+  expect(workflows[".github/workflows/schedule-timezone.yml"]).toContain(
+    "    - cron: 0 1 * * 1\n      timezone: Asia/Seoul\n",
+  );
+});
+
 test("workflow triggers", () => {
   // GIVEN
   const p = new TestProject();

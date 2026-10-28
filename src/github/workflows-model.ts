@@ -706,10 +706,10 @@ export interface ContainerCredentials {
 export interface Triggers {
   //#region Scheduled events
   /**
-   * You can schedule a workflow to run at specific UTC times using POSIX cron
-   * syntax. Scheduled workflows run on the latest commit on the default or
-   * base branch. The shortest interval you can run scheduled workflows is
-   * once every 5 minutes.
+   * You can schedule a workflow to run at specific times using POSIX cron
+   * syntax. Times are in UTC unless a `timezone` is set. Scheduled workflows
+   * run on the latest commit on the default or base branch. The shortest
+   * interval you can run scheduled workflows is once every 5 minutes.
    *
    * @see https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
    */
@@ -944,6 +944,14 @@ export interface CronScheduleOptions {
    * @see https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
    */
   readonly cron: string;
+
+  /**
+   * IANA time zone name used to evaluate the cron expression, e.g. `America/New_York`.
+   *
+   * @default - UTC
+   * @see https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+   */
+  readonly timezone?: string;
 }
 
 /**

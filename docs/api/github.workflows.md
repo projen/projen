@@ -968,6 +968,7 @@ const cronScheduleOptions: github.workflows.CronScheduleOptions = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.workflows.CronScheduleOptions.property.cron">cron</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.github.workflows.CronScheduleOptions.property.timezone">timezone</a></code> | <code>string</code> | IANA time zone name used to evaluate the cron expression, e.g. `America/New_York`. |
 
 ---
 
@@ -980,6 +981,21 @@ public readonly cron: string;
 - *Type:* string
 
 > [https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
+
+---
+
+##### `timezone`<sup>Optional</sup> <a name="timezone" id="projen.github.workflows.CronScheduleOptions.property.timezone"></a>
+
+```typescript
+public readonly timezone: string;
+```
+
+- *Type:* string
+- *Default:* UTC
+
+IANA time zone name used to evaluate the cron expression, e.g. `America/New_York`.
+
+> [https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
 
 ---
 
@@ -3913,7 +3929,7 @@ const triggers: github.workflows.Triggers = { ... }
 | <code><a href="#projen.github.workflows.Triggers.property.registryPackage">registryPackage</a></code> | <code>projen.github.workflows.RegistryPackageOptions</code> | Runs your workflow anytime a package is published or updated. |
 | <code><a href="#projen.github.workflows.Triggers.property.release">release</a></code> | <code>projen.github.workflows.ReleaseOptions</code> | Runs your workflow anytime the release event occurs. |
 | <code><a href="#projen.github.workflows.Triggers.property.repositoryDispatch">repositoryDispatch</a></code> | <code>projen.github.workflows.RepositoryDispatchOptions</code> | You can use the GitHub API to trigger a webhook event called repository_dispatch when you want to trigger a workflow for activity that happens outside of GitHub. |
-| <code><a href="#projen.github.workflows.Triggers.property.schedule">schedule</a></code> | <code>projen.github.workflows.CronScheduleOptions[]</code> | You can schedule a workflow to run at specific UTC times using POSIX cron syntax. |
+| <code><a href="#projen.github.workflows.Triggers.property.schedule">schedule</a></code> | <code>projen.github.workflows.CronScheduleOptions[]</code> | You can schedule a workflow to run at specific times using POSIX cron syntax. |
 | <code><a href="#projen.github.workflows.Triggers.property.status">status</a></code> | <code>projen.github.workflows.StatusOptions</code> | Runs your workflow anytime the status of a Git commit changes, which triggers the status event. |
 | <code><a href="#projen.github.workflows.Triggers.property.watch">watch</a></code> | <code>projen.github.workflows.WatchOptions</code> | Runs your workflow anytime the watch event occurs. |
 | <code><a href="#projen.github.workflows.Triggers.property.workflowCall">workflowCall</a></code> | <code>projen.github.workflows.WorkflowCallOptions</code> | Can be called from another workflow. |
@@ -4309,11 +4325,11 @@ public readonly schedule: CronScheduleOptions[];
 
 - *Type:* projen.github.workflows.CronScheduleOptions[]
 
-You can schedule a workflow to run at specific UTC times using POSIX cron syntax.
+You can schedule a workflow to run at specific times using POSIX cron syntax.
 
-Scheduled workflows run on the latest commit on the default or
-base branch. The shortest interval you can run scheduled workflows is
-once every 5 minutes.
+Times are in UTC unless a `timezone` is set. Scheduled workflows
+run on the latest commit on the default or base branch. The shortest
+interval you can run scheduled workflows is once every 5 minutes.
 
 > [https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
 
