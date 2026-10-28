@@ -5,12 +5,14 @@ shared lookup convention. Inline code comment density is `CONV-COMMENT-DENSITY` 
 
 ## Claims
 
-**[DOC-UNSOURCED-CLAIM] (BLOCKING)**: A docblock, docs page, PR body or code path states an upstream fact
-(an option, reporter, default, CLI flag, file format rule) that the upstream documentation does not
-support. Users will configure something that does not exist, and code built on the claim is wrong.
+**[DOC-UNSOURCED-CLAIM] (BLOCKING)**: A docblock, docs page, PR body or code path states a fact that its
+source does not support. For an upstream fact (an option, reporter, default, CLI flag, file format rule),
+the source is the upstream documentation; for a claim about projen's own behavior ("this does not change
+lifecycle bindings", "synthesis already passes the field through"), it is the projen source at the PR
+head. Users will configure something that does not exist, and code built on the claim is wrong.
 Confident, specific claims with no source are a common failure of AI-assisted PRs (a test reporter the
-tool does not document, a behavior other tools "will" adopt). Read the upstream page and ask for the
-source; down-tier RECOMMENDED when the claim is only in the PR body.
+tool does not document, a behavior other tools "will" adopt). Read the source and ask for it when the PR
+gives none; down-tier RECOMMENDED when the claim is only in the PR body.
 
 **[DOC-PROSE-INACCURATE] (RECOMMENDED)**: A `docs/**` sentence that misstates what projen does: which file
 is generated, when a workflow runs, which command to use for the project's package manager. Check it

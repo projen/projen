@@ -51,6 +51,10 @@ Beyond the shared exclusions in `projen-review-principles`:
   it in the summary if the PR body does not say so.
 - **Output changes inside an opt-in feature**: a new option that defaults off changes nothing for existing
   users.
+- **One-time sample files**: files generated only on project creation (a sample `src/index.ts`, files
+  written in `projectCreation()` or by `SampleFile` / `SampleDir`, which skip files that already exist)
+  never reach existing projects. A change there affects new projects only; check it for correctness, not
+  compatibility.
 - **Breaking a hidden or `@internal` member, or anything under `private/`.**
 
 ## Output

@@ -20,9 +20,10 @@ the output is correct, is `projen-implementation-review`. Whether a change break
 
 ## The review process
 
-1. **Orient and load your rules.** List every exported symbol the diff adds or changes (`git diff` on
-   `src/**/index.ts` and every `export`) and every new `extends Component` / `FutureComponent`. For each,
-   name what it is: option struct, component, enum, enum-like class, helper. Read
+1. **Orient and load your rules.** List every symbol the diff adds or changes that is exported: check the
+   `export` keyword in each changed module, not only re-exports in `src/**/index.ts`, and every new
+   `extends Component` / `FutureComponent`. A changed class or interface without `export` is not API. For
+   each, name what it is: option struct, component, enum, enum-like class, helper. Read
    [`design-rules.md`](references/design-rules.md): its rows ARE your checklist.
 
 2. **Find the precedent.** For each new concept, find the closest existing projen component that solves the

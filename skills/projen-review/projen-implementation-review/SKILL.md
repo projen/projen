@@ -31,14 +31,21 @@ the bug, it reports the missing test. Generated workflow security is `projen-wor
    find the upstream tool's documented config keys and check for an npm package that reads or writes the
    format. A duplicate is only a finding once you have the existing helper's `file:line`.
 
-3. **Break it with inputs.** For each new logic path, construct the inputs a user can reach that the author
+3. **Verify claims about existing behavior.** When a change relies on existing code instead of adding its
+   own (a new option with no renderer change because "synthesis already passes it through", an option a
+   project type inherits through `extends`), read that path at the PR head and confirm it really reads or
+   emits the new value: the generic serializer has no allowlist that drops it, the project actually passes
+   its options to the component's constructor. When the PR claims parity with an upstream template or
+   file, fetch the current upstream file and diff it.
+
+4. **Break it with inputs.** For each new logic path, construct the inputs a user can reach that the author
    probably did not try: arrays and nested objects where scalars were expected, `null`/`undefined`,
    duplicate or colliding keys, an explicit value equal to the default, a partial nested override, two
    tasks with the same name, an empty list. Synthesize them in a scratch test
    (`Testing.synth(project)` from `src/testing.ts`) and read the output. An output defect is a finding only
    once you have seen the wrong output.
 
-4. **Rate by harm and stop.** Rate per `projen-review-principles`. A concrete wrong output is BLOCKING or
+5. **Rate by harm and stop.** Rate per `projen-review-principles`. A concrete wrong output is BLOCKING or
    RECOMMENDED by blast radius; duplication without a bug is RECOMMENDED.
 
 ## What NOT to flag

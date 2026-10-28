@@ -69,6 +69,9 @@ Every finding carries three things:
   stay green; a helper "already exists" only once you have found it by `file:line`. When a finding turns
   on an upstream tool's option, default or reporter name, read the upstream page and cite it in
   `reference`.
+  **When you cannot verify, say so.** If the build or test runner will not run after a reasonable attempt
+  to fix the environment, do not keep retrying. State in the summary which checks did not run, rate any
+  finding that depended on them from reading alone, and never describe it as verified.
 - **A concrete fix**: a code example, or a question framing a specific alternative ("Could `UpgradeDependencies`
   take an explicit option that defaults from `NodePackage`?"). Always offer a way out.
 
