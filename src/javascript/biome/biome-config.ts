@@ -2802,6 +2802,11 @@ export interface RuleDomains {
   readonly tailwind?: RuleDomainValue;
 
   /**
+   * @schema RuleDomains#tanstackQuery
+   */
+  readonly tanstackQuery?: RuleDomainValue;
+
+  /**
    * @schema RuleDomains#test
    */
   readonly test?: RuleDomainValue;
@@ -2841,6 +2846,7 @@ export function toJson_RuleDomains(obj: RuleDomains | undefined): Record<string,
     'solid': obj.solid,
     'svelte': obj.svelte,
     'tailwind': obj.tailwind,
+    'tanstackQuery': obj.tanstackQuery,
     'test': obj.test,
     'turborepo': obj.turborepo,
     'types': obj.types,
