@@ -80,6 +80,12 @@ multi-pass normalization where removing disallowed characters suffices, a new ob
 can be used, a variable carried that the callee already guarantees, an object rendered lazily when nothing
 mutates it after construction. Name the simpler version.
 
+- **Question the condition before fixing it (doc-absent detail):** when a new conditional (a version
+  check, a feature detection, a heuristic deciding between two behaviors) is wrong for some inputs, first
+  ask whether it needs to exist. A compatibility gate for tool versions old enough to stop supporting is
+  better removed, applying the new behavior unconditionally, than corrected. Finding a helper that would
+  make the condition more accurate is not a reason to keep it.
+
 **[IMPL-SIMPLE-GROWING-SCRIPT] (RECOMMENDED)**: Further growth of an inline shell or JavaScript script
 embedded in a generated workflow or task that is already hard to read and not portable across shells.
 Prefer restructuring into simpler steps over adding branches.
