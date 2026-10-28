@@ -283,6 +283,36 @@ describe("TypescriptConfig", () => {
     });
   });
 
+  test.each<[TypeScriptCompilerOptions]>([
+    [{ rewriteRelativeImportExtensions: true }],
+    [{ rewriteRelativeImportExtensions: false }],
+    [{}],
+  ])(
+    "synthesizes rewriteRelativeImportExtensions from %p",
+    async (compilerOptions) => {
+      await withProjectDir(async (outdir) => {
+        const project = new Project({ name: "project", outdir });
+        const options = { outDir: "lib", strict: true, ...compilerOptions };
+        const config = new TypescriptConfig(project, {
+          compilerOptions: options,
+          include: ["src/**/*.ts"],
+        });
+        project.synth();
+
+        const loaded = ts.readConfigFile(
+          config.file.absolutePath,
+          ts.sys.readFile,
+        );
+        expect(loaded.error).toBeUndefined();
+        expect(loaded.config).toStrictEqual({
+          compilerOptions: options,
+          include: ["src/**/*.ts"],
+          exclude: ["node_modules"],
+        });
+      });
+    },
+  );
+
   test("TypeScript should parse generated config without warnings", async () => {
     await withProjectDir(async (outdir) => {
       const project = new NodeProject({
