@@ -42,8 +42,9 @@ each.
 ## Defaults and output
 
 **[COMPAT-DEFAULT-CHANGED] (BLOCKING)**: The default of an existing option changes, or new behavior is
-enabled by default, so existing projects synthesize different output on upgrade. Fine when it is the
-intent and declared; BLOCKING when undeclared. Read the base branch's `@default` and code.
+enabled by default, so existing projects synthesize different output on upgrade, and you can name a
+project that breaks because of it (step 3 of the skill). Different output that still works is not a break,
+and neither is a new default the PR description announces. Read the base branch's `@default` and code.
 
 **[COMPAT-FILE-OWNERSHIP] (BLOCKING)**: A file changes ownership between projen and the user. A file projen
 starts generating overwrites the user's own copy; a file projen stops generating is deleted by cleanup

@@ -30,6 +30,9 @@ badly?** That answer sets the tier, not the wording and not how confident you ar
   - *Wrong fix.* A PR makes a failing synth pass by skipping the input that triggers the error, instead of
     fixing the code that mishandles it, or fixes it in a way the linked issue's discussion already rejected
     → BLOCKING.
+  - *Not damage.* Output that differs but still works is not BLOCKING. Neither is an inconsistency where
+    each value works on its own, such as one script calling `pnpm exec projen` while the others call bare
+    `projen`. Without a broken command, a failed build or lost state, it is at most RECOMMENDED.
 - **RECOMMENDED**: the harm is **decay**. Nothing breaks today, but the change leaves a maintenance cost,
   an API projen will have to support forever, or a latent trap. Should be fixed before merge.
   - *Surface projen must carry.* A public mutable field that should be a getter over a private property;
@@ -155,7 +158,10 @@ rule; cite it by that id.
   PR does not test.
 - **[CONV-SOLVE-GENERALLY] (RECOMMENDED)**: A special case added for one component when the same problem
   affects its siblings. Only once you have shown that sibling components have the same problem, ask for
-  one general fix instead of the special case.
+  one general fix instead of the special case. The same applies when a PR fixes a problem only in
+  projen's own `.projenrc.ts`, and its own rationale says every project of that type has the problem
+  (a tool default, a framework behavior). Ask whether it should be an option on the project type
+  instead. Leave projen-only setup alone, such as its release, license checks or docs generation.
 - **[CONV-SPLIT-PR] (RECOMMENDED)**: An independently useful part (a new config component, a new file
   type) is bundled into a large feature PR. Suggest landing it first in its own PR.
 - **[CONV-COMMENT-DENSITY] (RECOMMENDED)**: `AGENTS.md` § Code comments: "Keep comments to a minimum ...
