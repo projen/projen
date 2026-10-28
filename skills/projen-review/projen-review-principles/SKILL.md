@@ -158,10 +158,12 @@ rule; cite it by that id.
   PR does not test.
 - **[CONV-SOLVE-GENERALLY] (RECOMMENDED)**: A special case added for one component when the same problem
   affects its siblings. Only once you have shown that sibling components have the same problem, ask for
-  one general fix instead of the special case. The same applies when a PR fixes a problem only in
-  projen's own `.projenrc.ts`, and its own rationale says every project of that type has the problem
-  (a tool default, a framework behavior). Ask whether it should be an option on the project type
-  instead. Leave projen-only setup alone, such as its release, license checks or docs generation.
+  one general fix instead of the special case. The same applies to a change made only in projen's own
+  `.projenrc.ts`. What decides it is the PR's stated reason, not where the change lives. If the reason is
+  a tool or framework behavior that every project of that type inherits (a test runner that skips type
+  checks, a compiler default), ask whether it should be an option on the project type. Leave setup alone
+  when its reason is specific to the projen repository, such as its release, license checks or docs
+  generation.
 - **[CONV-SPLIT-PR] (RECOMMENDED)**: An independently useful part (a new config component, a new file
   type) is bundled into a large feature PR. Suggest landing it first in its own PR.
 - **[CONV-COMMENT-DENSITY] (RECOMMENDED)**: `AGENTS.md` § Code comments: "Keep comments to a minimum ...

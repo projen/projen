@@ -15,7 +15,10 @@ current state and merge, or every CLI change is lost on the next synth.
 **[IMPL-OUT-WRONG-VALUE] (BLOCKING)**: The synthesized file, task or workflow is wrong for a reachable
 input: arguments passed in the wrong order, a mapping inverted, a key emitted under the wrong name, a
 lookup that returns the first match when several can exist (one `post-upgrade` task assumed where there
-can be several). Prove it by synthesizing the input and quoting the output.
+can be several). Prove it by synthesizing the input and quoting the output. A value that differs from a
+nearby switch or helper is not wrong for that reason alone. Find every existing place that does the same
+operation (running a script and executing a binary are different operations) and compare against those.
+If they agree with the PR, it is not a finding.
 
 **[IMPL-OUT-ACCIDENTAL-COERCION] (RECOMMENDED)**: A value the option's type allows falls through to
 `String(value)` or a template literal and happens to work for one case. Example: an option typed to accept
