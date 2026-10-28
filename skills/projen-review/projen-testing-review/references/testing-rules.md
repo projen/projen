@@ -1,35 +1,29 @@
 # Testing rules: the lookup
 
 Rows are grouped by family: coverage, test layer, test construction. See the `projen-review-principles`
-skill for the shared lookup convention.
+skill for the shared lookup convention. The testing skill's "What NOT to flag" lists what does not owe a
+test; it overrides every row here.
 
 ## Coverage
 
-**[TEST-MISSING] (BLOCKING)**: A bug fix or feature with no test that turns red when the production change
-is reverted. For a fix, the test reproduces the reported input. Down-tier RECOMMENDED for a change whose
-only effect is cosmetic output (comment text in a generated file).
+**[TEST-MISSING] (RECOMMENDED)**: A behavior this PR adds for its users ships with no test that would fail
+if it regressed: the feature's main effect on the synthesized project (the file or key it writes, the task
+it adds, the workflow job it creates), a bug fix's reported case, or a non-obvious computation it performs
+(a generic helper that merges, flattens or converts). Judge at the level of the feature, not of each `if`
+arm. A missing test is decay, not damage. Before reporting it, search the test files for it.
 
-**[TEST-HOLLOW] (BLOCKING)**: A test added by the PR that stays green when you revert or mutate the
+**[TEST-HOLLOW] (RECOMMENDED)**: A test added by the PR that stays green when you revert or mutate the
 production line it claims to cover. Typical causes: asserting on the option object rather than the
 synthesized file; a snapshot of a project that never enables the feature; `toBeDefined()` on a value that
-is always defined. Prove it with the mutation.
-
-**[TEST-ERROR-PATH] (RECOMMENDED)**: A new `throw` (mutual exclusivity, validation, deprecation conflict)
-with no test asserting it throws with the expected message. These guard user configuration and regress
-silently.
-
-**[TEST-HELPER-EDGE-CASES] (RECOMMENDED)**: A new generic helper (key flattening, case conversion, merging,
-id generation) tested only through one component's snapshot. Extract it so it can be unit tested directly
-with edge cases: arrays, `null`/`undefined`, nested and dotted keys, collisions, empty input.
+is always defined. Prove it with the mutation; read what the assertion compares before calling it vacuous.
 
 ## Test layer
 
-**[TEST-INTEG-LAYER] (BLOCKING)**: A Jest test that rebuilds projen, bundles its own artifact, or shells out
-to a locally built CLI to test packaged behavior. `AGENTS.md` § Integration tests: "End-to-end behavior that
-depends on the published artifacts (e.g. `projen new`, `projen eject`, cross-language synthesis) must be
-tested via the `scripts/integ-*.sh` scripts ... Wire them through the `IntegrationTests` component in
+**[TEST-INTEG-LAYER] (RECOMMENDED)**: A Jest test that rebuilds projen, bundles its own artifact, or shells
+out to a locally built CLI to test packaged behavior. `AGENTS.md` § Integration tests: "End-to-end behavior
+that depends on the published artifacts (e.g. `projen new`, `projen eject`, cross-language synthesis) must
+be tested via the `scripts/integ-*.sh` scripts ... Wire them through the `IntegrationTests` component in
 `projenrc/integ-test.ts` ... Do NOT write Jest tests that rebuild projen or bundle their own artifacts."
-The same rule makes a missing integ script for such behavior a `TEST-MISSING` finding.
 
 ## Test construction
 
@@ -38,9 +32,7 @@ The same rule makes a missing integ script for such behavior a `TEST-MISSING` fi
 (`synthSnapshot`, `Testing.synth`), a minimal GitHub-enabled test project, temporary project directories,
 `projen new` simulation, directory snapshots and CLI execution, and helpers are added over time.
 
-**[TEST-MISLEADING-SNAPSHOT] (RECOMMENDED)**: A test whose name or file claims more than it checks: a
-"full output" test that snapshots one file, a `backward-compat.test.ts` that covers one component. Ask for
-the name to match, or the coverage to match the name; a generic file name belongs in a named subdirectory.
-
-**[TEST-WRONG-FILE] (OPTIONAL)**: A test for `src/<module>/<file>.ts` placed somewhere other than
-`test/<module>/<file>.test.ts` without reason. It makes coverage hard to find.
+**[TEST-MISLEADING-SNAPSHOT] (RECOMMENDED)**: A test whose name or file claims more coverage than it has:
+a "full output" test that snapshots one file, a `backward-compat.test.ts` that covers one component.
+Readers will trust coverage that does not exist. Rename it, or move a generically named file into a named
+subdirectory.

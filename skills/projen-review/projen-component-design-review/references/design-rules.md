@@ -26,6 +26,8 @@ one member per state. Re-check after each push: this is easy to fix in one place
 options, modeled as an interface of booleans or a discriminator string. Use an enum-like class: a
 `private constructor` plus one `public static` factory per choice, each taking that choice's options.
 Precedent: `TypeScriptRunner.tsNode()` / `.tsx()` / `.nodejs()` in `src/typescript/typescript-runner.ts`.
+Where the choices carry no options, an enum and an enum-like class are both fine; do not flag the choice
+between them.
 
 **[DES-JSII-ENUM-SENTINEL] (RECOMMENDED)**: An enum member with an empty-string value used as a "do not
 emit" sentinel, with code comparing against it. It renders oddly in some jsii languages and every new
@@ -37,26 +39,27 @@ member means touching the comparison. Give every member a real value and treat "
 no file, no task, no synthesis hook. It should be a plain struct, or more often an `add*` method on the
 component that owns the data (`addReporter`, not a `Reporter` component).
 
-**[DES-COMP-COLLECTION-METHODS] (RECOMMENDED)**: A component exposes a list-valued setting (reporters,
-patterns, paths) only as a constructor option. Users composing projects need to change it later. Owe
-`add*` and usually `remove*` methods on the component, named after the closest precedent: Jest's
-`addTestMatch` / `addIgnorePattern` for test tooling. A set of booleans each enabling one item of an open
-set (`reporterSpec: true`, `reporterDot: true`) is the same finding: it wants a list.
+**[DES-COMP-COLLECTION-METHODS] (RECOMMENDED)**: A component the PR adds models an open list (reporters,
+patterns, paths) as a set of booleans, one per item (`reporterSpec: true`, `reporterDot: true`). Users
+cannot add an item projen does not know. Model it as a list option with an `add*` method on the
+component, named after the closest precedent: Jest's `addTestMatch` / `addIgnorePattern` for test
+tooling.
 
 **[DES-COMP-UNNEEDED-SPLIT] (RECOMMENDED)**: A feature split into several components or classes when one
 would do, or a concern placed in a different component from its siblings (dependency setup outside the
-component that owns dependencies). Ask what the split gives the user. Also flag scaffolding copied from an
-older sibling project type whose only reason to exist there was legacy.
+component that owns dependencies). Name the merge. Also flag scaffolding copied from an older sibling
+project type whose only reason to exist there was legacy.
 
 **[DES-COMP-SCOPE] (RECOMMENDED)**: A new component's constructor takes `project: Project` (or a concrete
 project type). Components take `scope: IConstruct` and reach the project via `this.project`, so they can be
 nested under any construct. Precedent: the `Component` constructor in `src/component.ts`.
 
-**[DES-COMP-PLUGGABLE-IMPL] (RECOMMENDED)**: A choice between interchangeable implementations (test runner,
-script runner) wired as a boolean per implementation or as one bespoke option. Model it as a
-`FutureComponent` with static factories named after the implementation (`jest()`, not `useJest()`),
-consumed by a single option typed as the interface, so further implementations slot in without new
-options. Precedent: `ScriptRunner` in `src/script-runner.ts`, `FutureComponent` in `src/component.ts`.
+**[DES-COMP-PLUGGABLE-IMPL] (RECOMMENDED)**: A choice between interchangeable implementations that projen
+already ships or the PR adds (test runners, script runners) wired as a boolean per implementation or as
+one bespoke option. Model it as a `FutureComponent` with static factories named after the implementation
+(`jest()`, not `useJest()`), consumed by a single option typed as the interface. Precedent: `ScriptRunner`
+in `src/script-runner.ts`, `FutureComponent` in `src/component.ts`. Do not ask for this shape for a
+single implementation.
 
 - **Interface vs concrete (doc-absent detail):** the interface holds only what every implementation
   shares; implementation-specific members belong on the class, which implements the interface as needed.
@@ -79,13 +82,6 @@ preference:
 **[DES-COMP-WORKFLOW-ANCHOR] (RECOMMENDED)**: A GitHub workflow created or owned by a component that is not
 the project or the `GitHub` component. Workflows are anchored to the project, not to components.
 
-**[DES-COMP-LAZY-RENDER] (OPTIONAL)**: An object rendered lazily (a function or getter passed to the file)
-when nothing mutates it after construction. Pass the object directly. Up-tier RECOMMENDED when the lazy
-path hides state from `add*` methods or overrides.
-
-**[DES-COMP-HARDCODED] (OPTIONAL)**: A value a user plausibly needs to change (a file name, an output
-directory) hardcoded with no option. Ask; do not demand.
-
 ## Public surface and placement
 
 **[DES-SURF-PRIVATE-HELPERS] (RECOMMENDED)**: An implementation helper exported from the module (and
@@ -99,8 +95,9 @@ conversion) goes in a shared private util with its own tests. Precedent: `src/gi
 value and keep the fields private. A public field that should not be reassigned is a getter over a private
 property.
 
-**[DES-SURF-MINIMAL] (RECOMMENDED)**: New public members with no stated consumer. Making something public
-later is not breaking; making it private later is. Ask whether it needs to be public.
+**[DES-SURF-MINIMAL] (RECOMMENDED)**: A new public member the PR's own code only uses internally. Making
+something public later is not breaking; making it private later is. Ask for it to be private (or
+`@internal`) until a caller needs it.
 
 **[DES-SURF-SUBMODULE] (RECOMMENDED)**: A new third-party tool integration added as a single file in `src/`
 root, or as one large file holding several presets. New integrations get their own submodule directory
@@ -108,7 +105,7 @@ with one file per concept.
 
 **[DES-SURF-MISLEADING-NAME] (RECOMMENDED)**: A member name that says something the type does not do, or a
 member that belongs to a sub-part rather than the type it is on (an `enableGithub` option on a GitHub
-repository type). Ask what it means.
+repository type). Propose a name that says what it does, or the type it belongs on.
 
 ## Project model direction
 
@@ -140,15 +137,13 @@ TypeScript 7.
 
 ## Options and errors
 
-**[DES-OPT-MUTEX] (RECOMMENDED)**: Two options that cannot be used together, with code that silently
-prefers one. `AGENTS.md` § Design guidelines: "throw an error at construction time instead of silently
-picking one. Use the established message pattern: `Only one of 'optionA' or 'optionB' may be specified,
-not both.`" Up-tier BLOCKING when the ignored option is an authentication or security setting (a token
-secret and SSH set together).
-
-- **Owed-but-missing scan (doc-absent detail):** for each new option, list the existing options it overlaps
-  (auth methods, alternative formats, a deprecated predecessor) and check a throw exists for each
-  incompatible pair, plus a test for it.
+**[DES-OPT-MUTEX] (RECOMMENDED)**: The PR adds an option that cannot be used together with another option
+(an alternative auth method, an alternative format, the deprecated option it replaces), and the code
+silently prefers one when both are set. `AGENTS.md` § Design guidelines: "throw an error at construction
+time instead of silently picking one. Use the established message pattern: `Only one of 'optionA' or
+'optionB' may be specified, not both.`" Up-tier BLOCKING when the ignored option is an authentication or
+security setting (a token secret and SSH set together). Only flag a pair you have shown conflicts by
+reading the code that consumes both.
 
 **[DES-OPT-ACTIONABLE-ERROR] (RECOMMENDED)**: A new error that says what went wrong but not what to do.
 `AGENTS.md` § Design guidelines: "Error messages must tell the user what to do to resolve the problem ...

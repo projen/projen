@@ -36,14 +36,6 @@ not how it works, and avoid mechanism words like "Wires up".
 to be. `AGENTS.md` § Code comments: "No history in comments". The one exception is `@deprecated`, which
 names the replacement.
 
-**[DOC-DOCBLOCK-COMMENT-BETWEEN] (OPTIONAL)**: A `//` line comment placed between a docblock and the
-declaration it documents. Fold it into the docblock or drop it.
-
-**[DOC-DOCBLOCK-LINKS] (OPTIONAL)**: An upstream URL pasted into docblock prose. Use `@see <URL>`.
-
-**[DOC-DOCBLOCK-SIBLING-STYLE] (OPTIONAL)**: A new option documented in a different style from its siblings
-in the same interface, e.g. an "Additional config" option whose docblock does not follow the one beside it.
-
 ## Docs site
 
 **[DOC-SUBMODULE-README] (RECOMMENDED)**: A new `README.md` under `src/`. projen has no submodule READMEs;

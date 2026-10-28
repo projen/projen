@@ -23,7 +23,7 @@ the bug, it reports the missing test. Generated workflow security is `projen-wor
 
 1. **Orient and load your rules.** For each new function or non-trivial block, write one line saying what
    it does ("flattens nested options to dotted keys", "merges defaults into user options"). Read
-   [`implementation-rules.md`](references/implementation-rules.md): its rows ARE your checklist.
+   [`implementation-rules.md`](references/implementation-rules.md): its rows describe what is worth flagging when you meet it, not a checklist to fill.
 
 2. **Search before you accept new code.** For each one-line description, search `src/` for an existing
    helper that does it (`rg -n "export function" src/util.ts src/util/ src/javascript/util.ts`, and the
@@ -38,12 +38,12 @@ the bug, it reports the missing test. Generated workflow security is `projen-wor
    its options to the component's constructor. When the PR claims parity with an upstream template or
    file, fetch the current upstream file and diff it.
 
-4. **Break it with inputs.** For each new logic path, construct the inputs a user can reach that the author
-   probably did not try: arrays and nested objects where scalars were expected, `null`/`undefined`,
-   duplicate or colliding keys, an explicit value equal to the default, a partial nested override, two
-   tasks with the same name, an empty list. Synthesize them in a scratch test
-   (`Testing.synth(project)` from `src/testing.ts`) and read the output. An output defect is a finding only
-   once you have seen the wrong output.
+4. **Try the inputs users will pass.** For each new logic path, take the inputs its type and docblock
+   allow and a user would realistically write in a `.projenrc` (a list where a list is documented, a
+   partial nested override of a documented default, an explicit value equal to the default), synthesize
+   them in a scratch test (`Testing.synth(project)` from `src/testing.ts`) and read the output. An output
+   defect is a finding only once you have seen the wrong output. Inputs the type system or the docs rule
+   out are not findings.
 
 5. **Rate by harm and stop.** Rate per `projen-review-principles`. A concrete wrong output is BLOCKING or
    RECOMMENDED by blast radius; duplication without a bug is RECOMMENDED.
@@ -54,6 +54,8 @@ Beyond the shared exclusions in `projen-review-principles`:
 
 - **Duplication you cannot point to**: "there is probably a helper for this" is not a finding until you
   have found it.
+- **Hardening against inputs nobody passes**: extra validation, type checks or error handling for values
+  the option's type and docs exclude. Never propose swallowing an error or a silent fallback.
 - **Generated or vendored code**: `*.const.ts` files produced by `projenrc/`, and JSON schemas under
   `schemas/`, are judged through their generator.
 - **Micro-optimizations** with no measured effect.
@@ -70,5 +72,5 @@ output.
 ## Apply projen-review-principles
 
 Apply the shared `projen-review-principles` skill for the severity scale, evidence order, `file:line`
-discipline, finding format, `CONV-*` conventions and the 3-7 comment budget. Each row in
+discipline, finding format, `CONV-*` conventions and the 7-comment cap. Each row in
 [`implementation-rules.md`](references/implementation-rules.md) carries its own severity.

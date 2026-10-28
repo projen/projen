@@ -25,7 +25,7 @@ behavior, owned by `projen-compatibility-review`. Option design for credentials 
 
 1. **Orient and load your rules.** Name each workflow, job and step the diff adds or changes, its trigger,
    its `permissions`, the secrets it reads and the actions it uses. Read
-   [`workflow-security-rules.md`](references/workflow-security-rules.md): its rows ARE your checklist.
+   [`workflow-security-rules.md`](references/workflow-security-rules.md): its rows describe what is worth flagging when you meet it, not a checklist to fill.
 
 2. **Read the generated YAML.** Snapshot files under `test/**/__snapshots__/` show the YAML for each test
    project; projen's own `.github/workflows/*.yml` show it for projen. For a change no snapshot covers,
@@ -33,18 +33,18 @@ behavior, owned by `projen-compatibility-review`. Option design for credentials 
    `.github/workflows/<name>.yml`. For each `run:` and each `script:` input, list every `${{ }}`
    expression and where its value comes from.
 
-3. **Check both directions**, family by family: **Injection**, **Triggers**, **Permissions**,
-   **Credentials**, **Supply chain**. Check what is present and unsafe, and what control is owed and
-   missing (an `if:` guard on a privileged job, a throw for mixed credentials).
+3. **Check the diff against the rules**, family by family: **Injection**, **Triggers**, **Permissions**,
+   **Credentials**, **Supply chain**, judging the YAML the change produces.
 
-4. **Rate by harm and stop.** Rate per `projen-review-principles` ("Confidence is not severity"). Stop once
-   you can name the exposure, one realistic way to reach it, and the rule.
+4. **Rate by harm and stop.** Rate per `projen-review-principles`. Stop once you can name the exposure, one
+   realistic way to reach it, and the rule. No realistic reach path, no finding.
 
 ## What NOT to flag
 
 Beyond the shared exclusions in `projen-review-principles`:
 
-- **General hardening advice not tied to a changed line.**
+- **General hardening advice not tied to a changed line**, and extra defense-in-depth (a narrower
+  permission, an extra `if:` guard) on a job that already only does what its permissions allow.
 - **`pull_request_target` itself**: projen uses it deliberately for workflows that act on the event payload
   only. The finding is checking out or running PR code under it.
 - **Expressions of GitHub-controlled numeric or identifier values** in `run:` (see the lower-risk note on
@@ -65,5 +65,5 @@ chain.
 ## Apply projen-review-principles
 
 Apply the shared `projen-review-principles` skill for the severity scale, evidence order, `file:line`
-discipline, finding format, `CONV-*` conventions and the 3-7 comment budget. Each row in
+discipline, finding format, `CONV-*` conventions and the 7-comment cap. Each row in
 [`workflow-security-rules.md`](references/workflow-security-rules.md) carries its own severity.

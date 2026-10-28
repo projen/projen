@@ -24,7 +24,7 @@ the output is correct, is `projen-implementation-review`. Whether a change break
    `export` keyword in each changed module, not only re-exports in `src/**/index.ts`, and every new
    `extends Component` / `FutureComponent`. A changed class or interface without `export` is not API. For
    each, name what it is: option struct, component, enum, enum-like class, helper. Read
-   [`design-rules.md`](references/design-rules.md): its rows ARE your checklist.
+   [`design-rules.md`](references/design-rules.md): its rows describe what is worth flagging when you meet it, not a checklist to fill.
 
 2. **Find the precedent.** For each new concept, find the closest existing projen component that solves the
    same shape (Jest for a test tool, `ScriptRunner` / `TypeScriptRunner` for a pluggable runner, `Eslint` /
@@ -34,11 +34,11 @@ the output is correct, is `projen-implementation-review`. Whether a change break
 
 3. **Check the diff against the rules**, family by family: **jsii types**, **Component model**,
    **Public surface and placement**, **Project model direction**, **Dependencies and lifecycle**,
-   **Options and errors**. Check both directions: what is present and wrong, and what is owed and missing
-   (an `add*` method a collection option needs, a mutual-exclusivity check two new options need).
+   **Options and errors**. Judge the shape the diff introduces; do not go looking for affordances it
+   could additionally have.
 
-4. **Rate by harm and stop.** Rate per `projen-review-principles`. When the right design is open, ask the
-   question instead of prescribing ("`FooTest` or `FooTestRunner`? What do you think?").
+4. **Rate by harm and stop.** Rate per `projen-review-principles` and the row's tier. When several defects
+   share one cause, give one finding.
 
 ## What NOT to flag
 
@@ -53,6 +53,14 @@ Beyond the shared exclusions in `projen-review-principles`:
   the convention (`addTestMatch` on Jest) or the name says something the type does not do (`enableGithub`
   on a `GitHubRepository`).
 - **Breaking-change consequences of a design**: that belongs to `projen-compatibility-review`.
+- **Future-proofing**: "when a second variant is added", "if the tool adds a field", "so the next option
+  lands additively". Design for what the tool offers today.
+- **A shape the change cannot adopt without breaking users**, for example narrowing the type of an
+  existing public option. If the better shape is a breaking change, the current one is the right call.
+- **Extra options or methods the PR does not need**: do not ask for configurability, an `add*`/`remove*`
+  pair, or a public accessor that no current caller needs.
+- **A design point the author has already answered** with a reason, precedent in the module, or a
+  maintainer's agreement.
 
 ## Output
 
@@ -63,5 +71,5 @@ Dependencies and lifecycle, Options and errors.
 ## Apply projen-review-principles
 
 Apply the shared `projen-review-principles` skill for the severity scale, evidence order, `file:line`
-discipline, finding format, `CONV-*` conventions and the 3-7 comment budget. Each row in
+discipline, finding format, `CONV-*` conventions and the 7-comment cap. Each row in
 [`design-rules.md`](references/design-rules.md) carries its own severity.

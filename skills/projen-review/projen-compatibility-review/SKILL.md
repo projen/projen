@@ -26,29 +26,33 @@ input is `projen-implementation-review`; a security regression in a generated wo
 
 1. **Orient and load your rules.** List every public member the diff removes, renames, retypes or
    deprecates, every changed default, and every changed snapshot file. Read
-   [`compatibility-rules.md`](references/compatibility-rules.md): its rows ARE your checklist.
+   [`compatibility-rules.md`](references/compatibility-rules.md): its rows describe what is worth flagging when you meet it, not a checklist to fill.
 
 2. **Read the snapshots as the user's diff.** Snapshot changes in `test/**/__snapshots__/` are what
    existing users will see on upgrade. For each changed snapshot of a test that does not opt into the new
-   feature, name why the line changed. An unexplained line is a finding. For options, check the base
+   feature, trace the line to the code change that causes it. A line that is not a consequence of the PR's
+   stated change is a candidate; read the code to confirm it is unintended. For options, check the base
    branch's docblock and code, not only the diff.
 
-3. **Check both directions.** What is present and breaking, and what is owed and missing: a deprecation
-   for a replaced option, a "both set" check, a `!` in the title, a `BREAKING CHANGE:` footer naming the
-   migration.
+3. **Name the program that breaks.** For each candidate, write down one concrete `.projenrc` that works
+   today and fails to compile, fails to synthesize, or produces a project that breaks after this PR. If
+   you cannot write that program down, there is no compatibility finding.
 
 4. **Rate by harm and stop.** Rate per `projen-review-principles`. An undeclared break is BLOCKING; a
-   declared break with a cheaper non-breaking alternative is RECOMMENDED (ask for the alternative).
+   declared break with a cheaper non-breaking alternative is RECOMMENDED (name the alternative).
 
 ## What NOT to flag
 
 Beyond the shared exclusions in `projen-review-principles`:
 
+- **A changed output that cannot break a project**: a reordered key, an added comment, a new file only
+  the feature uses. A changed snapshot alone is not a break.
+- **Hypothetical future breakage**: "if a later refactor…", "if the tool changes its default…". Only a
+  break of a project that exists today counts.
 - **Declared breaking changes that are the point of the PR**: a `!` PR that removes deprecated APIs is
   doing its job. Check only that the footer explains the migration.
 - **Dropping support for very old tool versions**: maintainers are willing to remove version-conditional
-  code for long-unsupported releases and set the behavior unconditionally; users should upgrade. Mention
-  it in the summary if the PR body does not say so.
+  code for long-unsupported releases and set the behavior unconditionally; users should upgrade.
 - **Output changes inside an opt-in feature**: a new option that defaults off changes nothing for existing
   users.
 - **One-time sample files**: files generated only on project creation (a sample `src/index.ts`, files
@@ -66,5 +70,5 @@ behavior, Undeclared breaking change.
 ## Apply projen-review-principles
 
 Apply the shared `projen-review-principles` skill for the severity scale, evidence order, `file:line`
-discipline, finding format, `CONV-*` conventions and the 3-7 comment budget. Each row in
+discipline, finding format, `CONV-*` conventions and the 7-comment cap. Each row in
 [`compatibility-rules.md`](references/compatibility-rules.md) carries its own severity.

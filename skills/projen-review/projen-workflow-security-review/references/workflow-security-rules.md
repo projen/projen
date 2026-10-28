@@ -22,7 +22,7 @@ value executes as code. Pass the value through `env:` and reference it as a shel
   Check every `run:` the PR changes in the regenerated `.github/workflows/*.yml` and in the snapshot.
 - **Lower-risk values (doc-absent detail):** numeric or GitHub-controlled values
   (`github.event.pull_request.number`, `github.repository`, `github.run_id`) cannot carry a payload. Moving
-  them to `env:` is good hygiene; their presence in `run:` is OPTIONAL at most.
+  them to `env:` is good hygiene, not a finding.
 
 **[SEC-INJECT-TASK-SHELL] (RECOMMENDED)**: A new task step builds a shell command string from a
 user-supplied option (`exec: \`tool ${options.arg}\``) where `execArgs` would pass it verbatim.

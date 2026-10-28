@@ -48,8 +48,7 @@ intent and declared; BLOCKING when undeclared. Read the base branch's `@default`
 **[COMPAT-FILE-OWNERSHIP] (BLOCKING)**: A file changes ownership between projen and the user. A file projen
 starts generating overwrites the user's own copy; a file projen stops generating is deleted by cleanup
 because it carries the marker (`ARCHITECTURE.md` § Synthesizing actual files: projen "looks for files with
-the _magic string_ ... and removes them"). Up-tier when the file holds user content. Check the PR names the
-migration.
+the _magic string_ ... and removes them"). Up-tier when the file holds user content.
 
 **[COMPAT-TASK-CONTRACT] (BLOCKING)**: An existing task is renamed, removed, or its steps reordered so
 something that depends on it breaks: `npx projen <task>` in user scripts, `spawn` from user tasks,
@@ -57,9 +56,9 @@ generated workflows that run it, `projen eject` output. Task names and the `buil
 (`default` → `pre-compile` → `compile` → `post-compile` → `test` → `package`) are user-facing contract.
 
 **[COMPAT-OUTPUT-CHURN] (RECOMMENDED)**: A changed snapshot in a test that does not opt into the PR's
-feature, with no explanation. Every changed line in an existing user's output must be intended and named
-in the PR body. Up-tier BLOCKING when the change breaks a build (a removed dependency, a changed path, a
-changed script). (doc-absent detail)
+feature, where the change is not a consequence of the PR's stated purpose: an accidental side effect on
+every existing project. Show the code path that causes it. Up-tier BLOCKING when the change breaks a build
+(a removed dependency, a changed path, a changed script). (doc-absent detail)
 
 ## Workflow behavior
 
@@ -68,10 +67,9 @@ action: re-queuing a PR a person dequeued, re-approving after a dismissal, re-op
 example, adding a `synchronize` trigger to auto-queue force-queues every updated PR, including ones a human
 deliberately dequeued. Ask for state that records the human decision (a label) or a narrower trigger.
 
-**[COMPAT-WORKFLOW-TRIGGER-CHANGED] (RECOMMENDED)**: An existing generated workflow gains or loses a
-trigger, a job, a required check name or a `runs-on` value. Required status checks in users' branch
-protection are matched by job name; renaming a job blocks their merges. Up-tier BLOCKING for a renamed
-required check.
+**[COMPAT-WORKFLOW-CHECK-RENAMED] (BLOCKING)**: An existing generated workflow or job is renamed or removed.
+Required status checks in users' branch protection are matched by job name, so their PRs can no longer
+merge until they update branch protection.
 
 ## Declaration
 
