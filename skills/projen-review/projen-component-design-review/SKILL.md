@@ -12,9 +12,7 @@ API in TypeScript, Python, Java, .NET and Go, and removing it later is a breakin
 
 **Scope gate: judge only the surface THIS PR adds or changes.** An awkward pre-existing API the PR merely
 calls is not its debt. A new project type is the place to apply current patterns instead of copying legacy
-ones from an older sibling (review of #4868: "I just want to take the opportunity of a new project ... to do
-better"), but do not ask the PR to refactor the older sibling ("Let's not change the existing AWS CDK
-project").
+ones from an older sibling, but do not ask the PR to refactor the older sibling.
 
 **You own design.** Whether an existing helper or upstream package should have been reused, and whether
 the output is correct, is `projen-implementation-review`. Whether a change breaks existing users, including deprecations, is
@@ -39,7 +37,7 @@ the output is correct, is `projen-implementation-review`. Whether a change break
    (an `add*` method a collection option needs, a mutual-exclusivity check two new options need).
 
 4. **Rate by harm and stop.** Rate per `projen-review-principles`. When the right design is open, ask the
-   question instead of prescribing ("NodeNativeTest or NodeNativeTestRunner? WDYT?").
+   question instead of prescribing ("`FooTest` or `FooTestRunner`? What do you think?").
 
 ## What NOT to flag
 

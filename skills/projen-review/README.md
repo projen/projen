@@ -13,8 +13,8 @@ Skills for reviewing changes to projen, locally or on a pull request, with any a
 | [`projen-workflow-security-review`](./projen-workflow-security-review/SKILL.md) | Security of the GitHub Actions workflows projen generates: injection, permissions, credentials, triggers |
 
 The skills follow the projen [`AGENTS.md`](../../AGENTS.md), [`CONTRIBUTING.md`](../../CONTRIBUTING.md),
-[`ARCHITECTURE.md`](../../ARCHITECTURE.md) and the [RFCs](../../rfcs/). Where those are silent, a rule cites
-the maintainer review that established it.
+[`ARCHITECTURE.md`](../../ARCHITECTURE.md) and the [RFCs](../../rfcs/). Where those are silent, the rules
+record the conventions projen maintainers apply in review.
 
 ## Install
 

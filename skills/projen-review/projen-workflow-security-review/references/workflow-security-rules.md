@@ -4,7 +4,7 @@ Rows are grouped by family: injection, triggers, permissions, credentials, suppl
 `projen-review-principles` skill for the shared lookup convention. Read
 [GitHub's secure use reference](https://docs.github.com/en/actions/reference/security/secure-use) before
 rating a finding that turns on GitHub Actions behavior. Unlike the other dimensions, most rows here rest on
-that upstream guidance rather than on a projen maintainer review; the rows that do cite one say so.
+that upstream guidance.
 
 ## Injection
 
@@ -17,10 +17,9 @@ value executes as code. Pass the value through `env:` and reference it as a shel
 
 - **The env-var half (doc-absent detail):** in the script, reference the variable with shell syntax
   (`"$PR_NUMBER"`), never with expression syntax: `${{ PR_NUMBER }}` names no context, so GitHub rejects
-  the workflow ("Unrecognized named-value"). Review of #4640 caught exactly this ("these are the wrong way
-  around"): the values moved into `env:` correctly, but the script still read `"${{ PR_NUMBER }}"`; the
-  merged `src/github/auto-approve.ts` reads `"$PR_NUMBER"`. Check every `run:` the PR changes in the
-  regenerated `.github/workflows/*.yml` and in the snapshot.
+  the workflow ("Unrecognized named-value"). A common half-fix moves the values into `env:` correctly but
+  leaves the script reading `"${{ PR_NUMBER }}"`; `src/github/auto-approve.ts` shows the correct form.
+  Check every `run:` the PR changes in the regenerated `.github/workflows/*.yml` and in the snapshot.
 - **Lower-risk values (doc-absent detail):** numeric or GitHub-controlled values
   (`github.event.pull_request.number`, `github.repository`, `github.run_id`) cannot carry a payload. Moving
   them to `env:` is good hygiene; their presence in `run:` is OPTIONAL at most.
@@ -44,8 +43,8 @@ pull request with this event." projen's own `pull_request_target` workflows (`Au
 **[SEC-TRIGGER-WIDENED] (RECOMMENDED)**: A change that makes an existing privileged workflow (approve,
 queue, merge, release, publish) run in more situations: a new event type, a dropped `if:` condition on the
 author or label, a `synchronize` trigger on a workflow that acts with write access. Name who can now cause
-the privileged action. Review of #4687 rejected adding `synchronize` to auto-queue on behavior grounds;
-check the same change for privilege.
+the privileged action. A trigger change can also be a behavior break, which
+`projen-compatibility-review` owns; check it here for privilege.
 
 ## Permissions
 
@@ -63,8 +62,8 @@ back.
 
 **[SEC-CRED-MIXED-AUTH] (BLOCKING)**: Two authentication options (a token secret, SSH, a deploy key, GitHub
 App credentials) that can be set together with one silently winning, so the workflow authenticates with a
-credential the user did not intend, or with a broader one. Throw when both are set (review of #4856:
-"githubTokenSecret is also incompatible with githubUseSsh"; see `DES-OPT-MUTEX`).
+credential the user did not intend, or with a broader one (a token secret and SSH). Throw when both are
+set; see `DES-OPT-MUTEX`.
 
 **[SEC-CRED-EXPOSED] (BLOCKING)**: A secret or token written where it outlives or escapes its step: echoed
 to the log, written to `$GITHUB_ENV` / `$GITHUB_OUTPUT` for later steps that do not need it, uploaded in

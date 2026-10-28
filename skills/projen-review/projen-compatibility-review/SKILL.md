@@ -13,8 +13,7 @@ every run, so a change to a default is a change to every downstream repository a
 projen releases from `main` and allows breaking changes, but they must be declared: a `!` in the
 conventional-commit title (`fix(tasks)!: ...`, `feat!: remove deprecated APIs`) and a `BREAKING CHANGE:`
 footer (`CONTRIBUTING.md` § Making a pull request). Maintainers still prefer the non-breaking route when
-one exists (review of #4874: "could we keep this and deprecate to minimize impact and make it non
-breaking?").
+one exists: keep the old API and deprecate it.
 
 **Scope gate: review only breaks THIS PR introduces.** Judge the implementation, not the intent: a
 well-meant fix can still change output for users who never hit the bug.
@@ -48,8 +47,8 @@ Beyond the shared exclusions in `projen-review-principles`:
 - **Declared breaking changes that are the point of the PR**: a `!` PR that removes deprecated APIs is
   doing its job. Check only that the footer explains the migration.
 - **Dropping support for very old tool versions**: maintainers are willing to remove version-conditional
-  code for long-unsupported releases (review of #4979: "<0.22.0 is now so old, we can just set it
-  unconditionally. Users should upgrade."). Mention it in the summary if the PR body does not say so.
+  code for long-unsupported releases and set the behavior unconditionally; users should upgrade. Mention
+  it in the summary if the PR body does not say so.
 - **Output changes inside an opt-in feature**: a new option that defaults off changes nothing for existing
   users.
 - **Breaking a hidden or `@internal` member, or anything under `private/`.**

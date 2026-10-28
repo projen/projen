@@ -17,7 +17,7 @@ Produce each finding as a structured object with these fields:
   the dimension's rules lookup, or a `CONV-*` id from the principles. The debug/trace key.
 - `message`: the human-visible comment text (see the next section).
 - `reference`: the authoritative source the finding cites (an `AGENTS.md` section, an RFC, projen source
-  by file + line, a jsii or GitHub Actions doc URL, a maintainer review comment), or null.
+  by file + line, a jsii or GitHub Actions doc URL), or null.
 - `evidence`: what you ran or read that supports the finding (the synthesized output, the test that stayed
   green, the existing helper's location).
 - `suggestedFix`: a concrete fix, or null.
@@ -42,7 +42,7 @@ Short is fine. Many good projen review comments are one line plus a suggestion b
 Should take any scope. Use `this.project` to access the project.
 
 ```suggestion
-  constructor(scope: IConstruct, options: CdktnConfigOptions) {
+  constructor(scope: IConstruct, options: FooConfigOptions) {
 ```
 ````
 
