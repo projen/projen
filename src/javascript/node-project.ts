@@ -554,7 +554,7 @@ export class NodeProject extends GitHubProject {
   protected readonly workflowPackageCache: boolean;
   public readonly prettier?: Prettier;
   public readonly biome?: Biome;
-  private readonly options: NodePackageOptions;
+  private readonly options: NodeProjectOptions;
 
   constructor(options: NodeProjectOptions) {
     super({
@@ -1346,6 +1346,16 @@ export class NodeProject extends GitHubProject {
 
       "# parcel-bundler cache (https://parceljs.org/)",
       ".cache",
+    );
+  }
+
+  public override get projenCommand(): string {
+    if (this.ejected || !this.package) {
+      return super.projenCommand;
+    }
+    return (
+      this.options.projenCommand ??
+      execCommand(this.package.packageManager, "projen")
     );
   }
 
