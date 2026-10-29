@@ -346,13 +346,13 @@ test("Singleton function", () => {
   expect(generatedSource).toMatchSnapshot();
 
   expect(generatedSource).toContain(
-    "export interface HelloFunctionProps extends lambda.SingletonFunctionProps {",
+    "export interface HelloFunctionProps extends lambda.FunctionOptions {",
   );
   expect(generatedSource).toContain(
     "export class HelloFunction extends lambda.SingletonFunction {",
   );
   expect(generatedSource).toContain(
-    "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",
+    "constructor(scope: Construct, id: string, props: HelloFunctionProps) {",
   );
   expect(generatedSource).toContain(
     "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
@@ -395,7 +395,7 @@ test("Singleton function accepts singletonUuid", () => {
   expect(generatedSource).toMatchSnapshot();
 
   expect(generatedSource).toContain(
-    "export interface HelloFunctionProps extends lambda.SingletonFunctionProps {",
+    "export interface HelloFunctionProps extends lambda.FunctionOptions {",
   );
   expect(generatedSource).toContain(
     "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",

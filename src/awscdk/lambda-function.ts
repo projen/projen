@@ -256,14 +256,18 @@ export class LambdaFunction extends Component {
       src.open(
         `export interface ${propsType} extends cloudfront.experimental.EdgeFunctionProps {`,
       );
-    } else if (options.singleton) {
-      src.open(
-        `export interface ${propsType} extends lambda.SingletonFunctionProps {`,
-      );
     } else {
       src.open(
         `export interface ${propsType} extends lambda.FunctionOptions {`,
       );
+    }
+    if (options.singleton) {
+      if (!options.singletonUuid) {
+        src.line("/** A unique identifier for this singleton Lambda. */");
+        src.line("readonly uuid: string;");
+      }
+      src.line("/** A descriptive name for the purpose of this Lambda. */");
+      src.line("readonly lambdaPurpose?: string;");
     }
     // Add runtime prop to interface only when runtime is not explicitly set
     // This allows consumers to override the default NODEJS_REGIONAL_LATEST
@@ -296,8 +300,9 @@ export class LambdaFunction extends Component {
     } else {
       src.open(`export class ${constructName} extends lambda.Function {`);
     }
+    const propsOptional = !options.singleton || !!options.singletonUuid;
     src.open(
-      `constructor(scope: Construct, id: string, props?: ${propsType}) {`,
+      `constructor(scope: Construct, id: string, props${propsOptional ? "?" : ""}: ${propsType}) {`,
     );
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);

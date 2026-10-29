@@ -110,7 +110,11 @@ import { Construct } from 'constructs';
 /**
  * Props for HelloFunction
  */
-export interface HelloFunctionProps extends lambda.SingletonFunctionProps {
+export interface HelloFunctionProps extends lambda.FunctionOptions {
+  /** A unique identifier for this singleton Lambda. */
+  readonly uuid: string;
+  /** A descriptive name for the purpose of this Lambda. */
+  readonly lambdaPurpose?: string;
   /**
    * The Lambda runtime to use.
    * @default - Latest Node.js runtime available in the deployment region
@@ -122,7 +126,7 @@ export interface HelloFunctionProps extends lambda.SingletonFunctionProps {
  * An AWS Lambda function which executes src/hello.
  */
 export class HelloFunction extends lambda.SingletonFunction {
-  constructor(scope: Construct, id: string, props?: HelloFunctionProps) {
+  constructor(scope: Construct, id: string, props: HelloFunctionProps) {
     super(scope, id, {
       description: 'src/hello.lambda.ts',
       ...props,
@@ -145,7 +149,9 @@ import { Construct } from 'constructs';
 /**
  * Props for HelloFunction
  */
-export interface HelloFunctionProps extends lambda.SingletonFunctionProps {
+export interface HelloFunctionProps extends lambda.FunctionOptions {
+  /** A descriptive name for the purpose of this Lambda. */
+  readonly lambdaPurpose?: string;
   /**
    * The Lambda runtime to use.
    * @default - Latest Node.js runtime available in the deployment region
