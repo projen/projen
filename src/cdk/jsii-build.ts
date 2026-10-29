@@ -74,6 +74,10 @@ export interface JsiiBuildOptions {
 
   /**
    * Publish Go bindings to a git repository.
+   *
+   * A separate repository is recommended. If `moduleName` refers to the source
+   * repository, set `publishToSourceRepository` to `true`.
+   *
    * @default - no publishing
    */
   readonly publishToGo?: JsiiGoTarget;
@@ -441,6 +445,10 @@ export class JsiiBuild implements IMixin {
         packageName: golang.packageName,
         versionSuffix: golang.versionSuffix,
       };
+
+      if (golang.publishToSourceRepository) {
+        project.root.gitignore.include("**/jsii/*.tgz");
+      }
 
       const task = this.addPackagingTask(project, packageAllTask, "go");
       this.addTargetToBuild(project, task, "go", extraJobOptions);

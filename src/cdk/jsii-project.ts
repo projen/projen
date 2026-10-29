@@ -54,6 +54,10 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
 
   /**
    * Publish Go bindings to a git repository.
+   *
+   * A separate repository is recommended. If `moduleName` refers to the source
+   * repository, set `publishToSourceRepository` to `true`.
+   *
    * @default - no publishing
    */
   readonly publishToGo?: JsiiGoTarget;
@@ -159,12 +163,26 @@ export interface JsiiGoTarget extends GoPublishOptions {
   /**
    * The name of the target repository in which this module will be published (e.g. github.com/owner/repo).
    *
+   * A repository separate from the source repository is recommended. To publish
+   * to the source repository, set `publishToSourceRepository` to `true`.
+   *
    * The module itself will always be published under a subdirectory named according
    * to the `packageName` of the module (e.g. github.com/foo/bar/pkg).
    *
    * @example github.com/owner/repo
    */
   readonly moduleName: string;
+
+  /**
+   * Set when `moduleName` is the repository this project lives in.
+   *
+   * A separate target repository for Go is recommended. If the source repository
+   * is used instead, set this to `true` to adjust gitignore so Git can select the
+   * embedded jsii tarballs.
+   *
+   * @default false
+   */
+  readonly publishToSourceRepository?: boolean;
 
   /**
    * The name of the Go package name.

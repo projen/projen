@@ -4242,6 +4242,9 @@ public readonly publishToGo: JsiiGoTarget;
 
 Publish Go bindings to a git repository.
 
+A separate repository is recommended. If `moduleName` refers to the source
+repository, set `publishToSourceRepository` to `true`.
+
 ---
 
 ##### `publishToMaven`<sup>Optional</sup> <a name="publishToMaven" id="projen.cdktf.ConstructLibraryCdktfOptions.property.publishToMaven"></a>

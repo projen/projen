@@ -6564,6 +6564,9 @@ public readonly publishToGo: JsiiGoTarget;
 
 Publish Go bindings to a git repository.
 
+A separate repository is recommended. If `moduleName` refers to the source
+repository, set `publishToSourceRepository` to `true`.
+
 ---
 
 ##### `publishToMaven`<sup>Optional</sup> <a name="publishToMaven" id="projen.cdk.ConstructLibraryOptions.property.publishToMaven"></a>
@@ -6970,6 +6973,9 @@ public readonly publishToGo: JsiiGoTarget;
 
 Publish Go bindings to a git repository.
 
+A separate repository is recommended. If `moduleName` refers to the source
+repository, set `publishToSourceRepository` to `true`.
+
 ---
 
 ##### `publishToMaven`<sup>Optional</sup> <a name="publishToMaven" id="projen.cdk.JsiiBuildOptions.property.publishToMaven"></a>
@@ -7372,6 +7378,7 @@ const jsiiGoTarget: cdk.JsiiGoTarget = { ... }
 | <code><a href="#projen.cdk.JsiiGoTarget.property.gitUserName">gitUserName</a></code> | <code>string</code> | The user name to use for the release git commit. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.moduleName">moduleName</a></code> | <code>string</code> | The name of the target repository in which this module will be published (e.g. github.com/owner/repo). |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.packageName">packageName</a></code> | <code>string</code> | The name of the Go package name. |
+| <code><a href="#projen.cdk.JsiiGoTarget.property.publishToSourceRepository">publishToSourceRepository</a></code> | <code>boolean</code> | Set when `moduleName` is the repository this project lives in. |
 | <code><a href="#projen.cdk.JsiiGoTarget.property.versionSuffix">versionSuffix</a></code> | <code>string</code> | A suffix appended at the end of the module version (e.g `"-devprefix"`). |
 
 ---
@@ -7566,6 +7573,9 @@ public readonly moduleName: string;
 
 The name of the target repository in which this module will be published (e.g. github.com/owner/repo).
 
+A repository separate from the source repository is recommended. To publish
+to the source repository, set `publishToSourceRepository` to `true`.
+
 The module itself will always be published under a subdirectory named according
 to the `packageName` of the module (e.g. github.com/foo/bar/pkg).
 
@@ -7591,6 +7601,23 @@ The name of the Go package name.
 
 If not specified, package name will be derived from the JavaScript module name
 by removing non-alphanumeric characters (e.g.
+
+---
+
+##### `publishToSourceRepository`<sup>Optional</sup> <a name="publishToSourceRepository" id="projen.cdk.JsiiGoTarget.property.publishToSourceRepository"></a>
+
+```typescript
+public readonly publishToSourceRepository: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Set when `moduleName` is the repository this project lives in.
+
+A separate target repository for Go is recommended. If the source repository
+is used instead, set this to `true` to adjust gitignore so Git can select the
+embedded jsii tarballs.
 
 ---
 
@@ -10522,6 +10549,9 @@ public readonly publishToGo: JsiiGoTarget;
 - *Default:* no publishing
 
 Publish Go bindings to a git repository.
+
+A separate repository is recommended. If `moduleName` refers to the source
+repository, set `publishToSourceRepository` to `true`.
 
 ---
 

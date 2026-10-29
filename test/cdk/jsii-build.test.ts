@@ -1,8 +1,12 @@
+import * as fs from "fs";
+import * as path from "path";
 import * as YAML from "yaml";
 import { javascript, Project } from "../../src";
-import { JsiiBuild, ValidateTsconfig } from "../../src/cdk";
+import type { JsiiGoTarget } from "../../src/cdk";
+import { JsiiBuild, JsiiProject, ValidateTsconfig } from "../../src/cdk";
 import { TypeScriptProject } from "../../src/typescript";
-import { synthSnapshot } from "../util";
+import { git } from "../../src/util/exec";
+import { directorySnapshot, mkdtemp, synthSnapshot } from "../util";
 
 function createTypeScriptProject(
   options: Partial<javascript.NodeProjectOptions> = {},
@@ -393,6 +397,198 @@ describe("JsiiBuild fallback behaviors", () => {
       expect(buildWorkflow).toContain("node-version: lts/*");
     });
   });
+});
+
+describe.each(["jsii", "mixin"])("Go tarball gitignore: %s", (entrypoint) => {
+  const repository = "https://github.com/example/source.git";
+  const goTarget = {
+    moduleName: "github.com/example/source",
+    packageName: "fixturego",
+    versionSuffix: "-beta",
+  };
+  const exception = "!**/jsii/*.tgz";
+
+  function createProject(
+    publishToGo?: JsiiGoTarget,
+    parent?: javascript.NodeProject,
+  ) {
+    const options = {
+      name: "test-project",
+      parent,
+      outdir: parent ? "packages/library" : mkdtemp(),
+      defaultReleaseBranch: "main",
+    };
+    if (entrypoint === "jsii") {
+      return new JsiiProject({
+        ...options,
+        repositoryUrl: repository,
+        author: "Test Author",
+        authorAddress: "test@example.com",
+        publishToGo,
+        docgen: false,
+      });
+    }
+    const project = new TypeScriptProject({
+      ...options,
+      repository,
+      disableTsconfig: true,
+    });
+    project.with(new JsiiBuild({ publishToGo, docgen: false }));
+    return project;
+  }
+
+  test("does not add an exception without Go publishing", () => {
+    const output = synthSnapshot(createProject());
+    expect(output[".gitignore"]).not.toMatch(/!.*\.tgz/);
+    expect(output[".gitignore"]).toContain("*.tgz");
+    expect(output[".gitignore"]).toContain("/dist/");
+    expect(output["package.json"].jsii.targets.go).toBeUndefined();
+  });
+
+  test.each<[string, boolean | undefined]>([
+    [goTarget.moduleName, undefined],
+    [goTarget.moduleName, false],
+    ["github.com/example/separate", undefined],
+  ])(
+    "does not opt in implicitly: module=%s option=%s",
+    (moduleName, option) => {
+      const output = synthSnapshot(
+        createProject({
+          ...goTarget,
+          moduleName,
+          publishToSourceRepository: option,
+        }),
+      );
+      expect(output[".gitignore"]).not.toMatch(/!.*\.tgz/);
+      expect(output[".gitignore"]).toContain("*.tgz");
+      expect(output[".gitignore"]).toContain("/dist/");
+    },
+  );
+
+  test.each([goTarget.moduleName, "github.com/example/separate"])(
+    "explicit opt-in changes only gitignore: module=%s",
+    (moduleName) => {
+      const target = { ...goTarget, moduleName };
+      const original = synthSnapshot(createProject(target));
+      const enabled = synthSnapshot(
+        createProject({ ...target, publishToSourceRepository: true }),
+      );
+      expect(enabled[".gitignore"].split("\n")).toContain(exception);
+      expect(enabled["package.json"].jsii.targets.go).toEqual(target);
+      expect(enabled[".github/workflows/release.yml"]).toBeDefined();
+      expect({
+        ...enabled,
+        ".gitignore": original[".gitignore"],
+      }).toEqual(original);
+    },
+  );
+
+  test.each([false, true])(
+    "Git selects matching tarballs and respects overrides: subproject=%s",
+    (nested) => {
+      const parent = nested
+        ? new javascript.NodeProject({
+            name: "source-root",
+            outdir: mkdtemp(),
+            defaultReleaseBranch: "main",
+          })
+        : undefined;
+      const project = createProject(
+        { ...goTarget, publishToSourceRepository: true },
+        parent,
+      );
+      const root = parent ?? project;
+      const outdir = root.outdir;
+      const previous = process.env.PROJEN_DISABLE_POST;
+      try {
+        process.env.PROJEN_DISABLE_POST = "true";
+        root.synth();
+        const first = directorySnapshot(outdir);
+        expect(
+          first[".gitignore"]
+            .split("\n")
+            .filter((line: string) => line === exception),
+        ).toHaveLength(1);
+        root.synth();
+        const second = directorySnapshot(outdir);
+        for (const file of Object.keys(first).filter(
+          (name) =>
+            name.endsWith(".gitignore") ||
+            name.endsWith("package.json") ||
+            name.endsWith(".projen/tasks.json") ||
+            name.includes(".github/workflows/"),
+        )) {
+          expect(second[file]).toEqual(first[file]);
+        }
+      } finally {
+        if (previous === undefined) {
+          delete process.env.PROJEN_DISABLE_POST;
+        } else {
+          process.env.PROJEN_DISABLE_POST = previous;
+        }
+      }
+      const runGit = (...args: string[]) =>
+        git.capture(["-c", "core.excludesFile=", ...args], { cwd: outdir });
+      const isIgnored = (file: string) => {
+        try {
+          runGit("check-ignore", "-q", "--", file);
+          return true;
+        } catch (error) {
+          expect(error).toMatchObject({ status: 1 });
+          return false;
+        }
+      };
+      runGit("init");
+      expect(runGit("remote")).toBe("");
+      const selectable = [
+        "jsii/package.tgz",
+        "fixturego/jsii/package.tgz",
+        "unrelated/fixturego/jsii/package.tgz",
+      ];
+      const dist = nested ? "packages/library/dist" : "dist";
+      const ignored = [
+        "npm-package.tgz",
+        "unrelated/temporary.tgz",
+        "fixturego/temporary.tgz",
+        `${dist}/go/fixturego/jsii/package.tgz`,
+        `${dist}/js/npm-package.tgz`,
+      ];
+      for (const file of [...selectable, ...ignored]) {
+        fs.mkdirSync(path.dirname(path.join(outdir, file)), {
+          recursive: true,
+        });
+        fs.writeFileSync(path.join(outdir, file), "Git selection fixture");
+      }
+      expect(runGit("ls-files", "--stage")).toBe("");
+      for (const file of selectable) {
+        expect(isIgnored(file)).toBe(false);
+        expect(runGit("check-ignore", "-v", "--", file)).toContain(exception);
+        expect(runGit("add", "--dry-run", "--", file)).toContain(file);
+      }
+      for (const file of ignored) {
+        expect([file, isIgnored(file)]).toEqual([file, true]);
+      }
+      if (parent) {
+        expect(
+          fs.readFileSync(path.join(project.outdir, ".gitignore"), "utf8"),
+        ).not.toContain(exception);
+      }
+      root.gitignore.exclude("/fixturego/");
+      root.gitignore.synthesize();
+      expect(isIgnored(selectable[1])).toBe(true);
+      expect(runGit("check-ignore", "-v", "--", selectable[1])).toContain(
+        "/fixturego/",
+      );
+      root.gitignore.removePatterns("/fixturego/");
+      root.gitignore.exclude("*.tgz");
+      root.gitignore.synthesize();
+      for (const file of selectable) {
+        expect(isIgnored(file)).toBe(true);
+        expect(runGit("check-ignore", "-v", "--", file)).toContain("*.tgz");
+      }
+      expect(runGit("ls-files", "--stage")).toBe("");
+    },
+  );
 });
 
 describe("JsiiBuild declaration entrypoints", () => {
