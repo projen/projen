@@ -26,6 +26,8 @@ import type { ProjenrcJsonOptions } from "./projenrc-json";
 import { ProjenrcJson } from "./projenrc-json";
 import type { RenovatebotOptions } from "./renovatebot";
 import { Renovatebot } from "./renovatebot";
+import type { SynthesisPlanOptions } from "./synthesis-plan";
+import { SynthesisPlan } from "./synthesis-plan";
 import type { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy, normalizePersistedPath } from "./util";
@@ -696,6 +698,14 @@ export class Project extends Construct {
    */
   public get ejected(): boolean {
     return this._ejected;
+  }
+
+  /** Review selected generated files without running synthesis lifecycle hooks. */
+  public planSynthesis(
+    files: FileBase[],
+    options: SynthesisPlanOptions = {},
+  ): SynthesisPlan {
+    return SynthesisPlan._capture(this, files, options);
   }
 
   /**

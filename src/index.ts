@@ -29,6 +29,7 @@ export * from "./renovatebot";
 export * from "./sample-file";
 export type * from "./script-runner";
 export * from "./source-code";
+export * from "./synthesis-plan";
 export * from "./task";
 export * from "./tasks";
 export type * from "./task-model";

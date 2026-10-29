@@ -800,6 +800,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.cdk8s.Cdk8sPythonApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.cdk8s.Cdk8sPythonApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -942,6 +943,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.cdk8s.Cdk8sPythonApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.cdk8s.Cdk8sPythonApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.cdk8s.Cdk8sPythonApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -1756,6 +1777,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.cdk8s.Cdk8sTypeScriptApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -1904,6 +1926,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.cdk8s.Cdk8sTypeScriptApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.cdk8s.Cdk8sTypeScriptApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.cdk8s.Cdk8sTypeScriptApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -3177,6 +3219,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.cdk8s.ConstructLibraryCdk8s.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -3325,6 +3368,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.cdk8s.ConstructLibraryCdk8s.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.cdk8s.ConstructLibraryCdk8s.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.cdk8s.ConstructLibraryCdk8s.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 

@@ -156,16 +156,20 @@ export abstract class FileBase extends Component {
    */
   protected abstract synthesizeContent(resolver: IResolver): string | undefined;
 
+  /** Render the final contents without writing or changing synthesis status. */
+  public renderContent(): string | undefined {
+    return this.synthesizeContent({
+      resolve: (obj, options) => resolve(obj, options),
+    });
+  }
+
   /**
    * Writes the file to the project's output directory
    */
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = {
-      resolve: (obj, options) => resolve(obj, options),
-    };
-    const content = this.synthesizeContent(resolver);
+    const content = this.renderContent();
     if (content === undefined) {
       // remove file (if exists) and skip rest of synthesis
       rmSync(filePath, { force: true, recursive: true });

@@ -270,6 +270,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibrary.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibrary.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -418,6 +419,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.awscdk.AwsCdkConstructLibrary.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.awscdk.AwsCdkConstructLibrary.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.awscdk.AwsCdkConstructLibrary.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -2819,6 +2840,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.awscdk.AwsCdkJavaApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkJavaApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -2962,6 +2984,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.awscdk.AwsCdkJavaApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.awscdk.AwsCdkJavaApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.awscdk.AwsCdkJavaApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -3840,6 +3882,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.awscdk.AwsCdkPythonApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkPythonApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -3982,6 +4025,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.awscdk.AwsCdkPythonApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.awscdk.AwsCdkPythonApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.awscdk.AwsCdkPythonApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -4834,6 +4897,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -4982,6 +5046,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.awscdk.AwsCdkTypeScriptApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.awscdk.AwsCdkTypeScriptApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.awscdk.AwsCdkTypeScriptApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 

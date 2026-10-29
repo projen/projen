@@ -926,6 +926,7 @@ new cdktn.CdktnTypeScriptApp(options: CdktnTypeScriptAppOptions)
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptApp.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptApp.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -1074,6 +1075,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.cdktn.CdktnTypeScriptApp.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.cdktn.CdktnTypeScriptApp.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.cdktn.CdktnTypeScriptApp.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -2375,6 +2396,7 @@ new cdktn.ConstructLibraryCdktn(options: ConstructLibraryCdktnOptions)
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktn.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktn.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -2523,6 +2545,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.cdktn.ConstructLibraryCdktn.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.cdktn.ConstructLibraryCdktn.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.cdktn.ConstructLibraryCdktn.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 

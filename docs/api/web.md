@@ -264,6 +264,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
 | <code><a href="#projen.web.NextJsProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.NextJsProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.NextJsProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.web.NextJsProject.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.web.NextJsProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.web.NextJsProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.web.NextJsProject.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -412,6 +413,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.web.NextJsProject.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.web.NextJsProject.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.web.NextJsProject.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -1554,6 +1575,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 | <code><a href="#projen.web.NextJsTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.web.NextJsTypeScriptProject.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.web.NextJsTypeScriptProject.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -1702,6 +1724,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.web.NextJsTypeScriptProject.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.web.NextJsTypeScriptProject.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.web.NextJsTypeScriptProject.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -3202,6 +3244,7 @@ new web.ReactProject(options: ReactProjectOptions)
 | <code><a href="#projen.web.ReactProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.ReactProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.ReactProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.web.ReactProject.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.web.ReactProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.web.ReactProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.web.ReactProject.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -3350,6 +3393,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.web.ReactProject.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.web.ReactProject.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.web.ReactProject.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -4465,6 +4528,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 | <code><a href="#projen.web.ReactTypeScriptProject.addPackageIgnore">addPackageIgnore</a></code> | Adds patterns to be ignored by npm. |
 | <code><a href="#projen.web.ReactTypeScriptProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.web.ReactTypeScriptProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.web.ReactTypeScriptProject.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.web.ReactTypeScriptProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.web.ReactTypeScriptProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.web.ReactTypeScriptProject.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -4613,6 +4677,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.web.ReactTypeScriptProject.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.web.ReactTypeScriptProject.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.web.ReactTypeScriptProject.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 

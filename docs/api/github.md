@@ -1766,6 +1766,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 | <code><a href="#projen.github.GitHubProject.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.github.GitHubProject.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.github.GitHubProject.annotateGenerated">annotateGenerated</a></code> | Marks the provided file(s) as being generated. |
+| <code><a href="#projen.github.GitHubProject.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.github.GitHubProject.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.github.GitHubProject.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.github.GitHubProject.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -1906,6 +1907,26 @@ repository statistics and language breakdown.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### ~~`planSynthesis`~~ <a name="planSynthesis" id="projen.github.GitHubProject.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.github.GitHubProject.planSynthesis.parameter.files"></a>
+
+- *Type:* projen.FileBase[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.github.GitHubProject.planSynthesis.parameter.options"></a>
+
+- *Type:* projen.SynthesisPlanOptions
 
 ---
 
@@ -4444,6 +4465,7 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 | <code><a href="#projen.github.PullRequestTemplate.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestTemplate.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.github.PullRequestTemplate.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.github.PullRequestTemplate.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.github.PullRequestTemplate.addLine">addLine</a></code> | Adds a line to the text file. |
 
 ---
@@ -4571,6 +4593,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.github.PullRequestTemplate.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addLine` <a name="addLine" id="projen.github.PullRequestTemplate.addLine"></a>
 

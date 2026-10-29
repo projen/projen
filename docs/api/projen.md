@@ -427,6 +427,7 @@ new AiInstructionsFile(scope: IConstruct, filePath: string, options?: FileBaseOp
 | <code><a href="#projen.AiInstructionsFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.AiInstructionsFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.AiInstructionsFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.AiInstructionsFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.AiInstructionsFile.addInstructions">addInstructions</a></code> | Adds instructions to the instruction file. |
 
 ---
@@ -554,6 +555,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.AiInstructionsFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addInstructions` <a name="addInstructions" id="projen.AiInstructionsFile.addInstructions"></a>
 
@@ -1908,6 +1917,7 @@ new FileBase(scope: IConstruct, filePath: string, options?: FileBaseOptions)
 | <code><a href="#projen.FileBase.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.FileBase.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.FileBase.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.FileBase.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 
 ---
 
@@ -2034,6 +2044,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.FileBase.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -2582,6 +2600,7 @@ new GitAttributesFile(scope: IConstruct, options?: GitAttributesFileOptions)
 | <code><a href="#projen.GitAttributesFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.GitAttributesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.GitAttributesFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.GitAttributesFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.GitAttributesFile.addAttributes">addAttributes</a></code> | Maps a set of attributes to a set of files. |
 | <code><a href="#projen.GitAttributesFile.addLfsPattern">addLfsPattern</a></code> | Add attributes necessary to mark these files as stored in LFS. |
 | <code><a href="#projen.GitAttributesFile.removeAttributes">removeAttributes</a></code> | Removes attributes from a set of files. |
@@ -2711,6 +2730,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.GitAttributesFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addAttributes` <a name="addAttributes" id="projen.GitAttributesFile.addAttributes"></a>
 
@@ -3403,6 +3430,7 @@ the relative path in the project to put the file.
 | <code><a href="#projen.IgnoreFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IgnoreFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.IgnoreFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.IgnoreFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.IgnoreFile.addPatterns">addPatterns</a></code> | Add ignore patterns. |
 | <code><a href="#projen.IgnoreFile.exclude">exclude</a></code> | Ignore the files that match these patterns. |
 | <code><a href="#projen.IgnoreFile.include">include</a></code> | Always include the specified file patterns. |
@@ -3533,6 +3561,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.IgnoreFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addPatterns` <a name="addPatterns" id="projen.IgnoreFile.addPatterns"></a>
 
@@ -3865,6 +3901,7 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 | <code><a href="#projen.IniFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.IniFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.IniFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.IniFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.IniFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.IniFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.IniFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -3995,6 +4032,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.IniFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.IniFile.addDeletionOverride"></a>
 
@@ -4416,6 +4461,7 @@ new JsonFile(scope: IConstruct, filePath: string, options: JsonFileOptions)
 | <code><a href="#projen.JsonFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.JsonFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.JsonFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.JsonFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.JsonFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.JsonFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.JsonFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -4546,6 +4592,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.JsonFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.JsonFile.addDeletionOverride"></a>
 
@@ -4971,6 +5025,7 @@ new License(project: Project, options: LicenseOptions)
 | <code><a href="#projen.License.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.License.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.License.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.License.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 
 ---
 
@@ -5097,6 +5152,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.License.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -5676,6 +5739,7 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 | <code><a href="#projen.Makefile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.Makefile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.Makefile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.Makefile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.Makefile.addAll">addAll</a></code> | Add a target to all. |
 | <code><a href="#projen.Makefile.addAlls">addAlls</a></code> | Add multiple targets to all. |
 | <code><a href="#projen.Makefile.addRule">addRule</a></code> | Add a rule to the Makefile. |
@@ -5806,6 +5870,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.Makefile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addAll` <a name="addAll" id="projen.Makefile.addAll"></a>
 
@@ -6112,6 +6184,7 @@ new ObjectFile(scope: IConstruct, filePath: string, options: ObjectFileOptions)
 | <code><a href="#projen.ObjectFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.ObjectFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.ObjectFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.ObjectFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.ObjectFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.ObjectFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.ObjectFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -6242,6 +6315,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.ObjectFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.ObjectFile.addDeletionOverride"></a>
 
@@ -6648,6 +6729,7 @@ new Project(options: ProjectOptions)
 | <code><a href="#projen.Project.addPackageIgnore">addPackageIgnore</a></code> | Exclude these files from the bundled package. |
 | <code><a href="#projen.Project.addTask">addTask</a></code> | Adds a new task to this project. |
 | <code><a href="#projen.Project.annotateGenerated">annotateGenerated</a></code> | Consider a set of files as "generated". |
+| <code><a href="#projen.Project.planSynthesis">planSynthesis</a></code> | Review selected generated files without running synthesis lifecycle hooks. |
 | <code><a href="#projen.Project.postSynthesize">postSynthesize</a></code> | Called after all components are synthesized. |
 | <code><a href="#projen.Project.preSynthesize">preSynthesize</a></code> | Called before all components are synthesized. |
 | <code><a href="#projen.Project.removeTask">removeTask</a></code> | Removes a task from a project. |
@@ -6786,6 +6868,26 @@ that certain files are generated.
 - *Type:* string
 
 the glob pattern to match (could be a file path).
+
+---
+
+##### `planSynthesis` <a name="planSynthesis" id="projen.Project.planSynthesis"></a>
+
+```typescript
+public planSynthesis(files: FileBase[], options?: SynthesisPlanOptions): SynthesisPlan
+```
+
+Review selected generated files without running synthesis lifecycle hooks.
+
+###### `files`<sup>Required</sup> <a name="files" id="projen.Project.planSynthesis.parameter.files"></a>
+
+- *Type:* <a href="#projen.FileBase">FileBase</a>[]
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projen.Project.planSynthesis.parameter.options"></a>
+
+- *Type:* <a href="#projen.SynthesisPlanOptions">SynthesisPlanOptions</a>
 
 ---
 
@@ -8490,6 +8592,7 @@ new PropertiesFile(scope: IConstruct, filePath: string, options: PropertiesFileO
 | <code><a href="#projen.PropertiesFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.PropertiesFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.PropertiesFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.PropertiesFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.PropertiesFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.PropertiesFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.PropertiesFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -8620,6 +8723,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.PropertiesFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.PropertiesFile.addDeletionOverride"></a>
 
@@ -11014,6 +11125,7 @@ Options.
 | <code><a href="#projen.TextFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TextFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.TextFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.TextFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.TextFile.addLine">addLine</a></code> | Adds a line to the text file. |
 
 ---
@@ -11141,6 +11253,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.TextFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addLine` <a name="addLine" id="projen.TextFile.addLine"></a>
 
@@ -11394,6 +11514,7 @@ new TomlFile(scope: IConstruct, filePath: string, options: TomlFileOptions)
 | <code><a href="#projen.TomlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.TomlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.TomlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.TomlFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.TomlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.TomlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.TomlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -11524,6 +11645,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.TomlFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.TomlFile.addDeletionOverride"></a>
 
@@ -12305,6 +12434,7 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 | <code><a href="#projen.XmlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.XmlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.XmlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.XmlFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.XmlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.XmlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.XmlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -12435,6 +12565,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.XmlFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.XmlFile.addDeletionOverride"></a>
 
@@ -12856,6 +12994,7 @@ new YamlFile(scope: IConstruct, filePath: string, options: YamlFileOptions)
 | <code><a href="#projen.YamlFile.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.YamlFile.synthesize">synthesize</a></code> | Writes the file to the project's output directory. |
 | <code><a href="#projen.YamlFile.diff">diff</a></code> | Returns a unified diff of the old and new file contents with context lines and hunk headers. |
+| <code><a href="#projen.YamlFile.renderContent">renderContent</a></code> | Render the final contents without writing or changing synthesis status. |
 | <code><a href="#projen.YamlFile.addDeletionOverride">addDeletionOverride</a></code> | Syntactic sugar for `addOverride(path, undefined)`. |
 | <code><a href="#projen.YamlFile.addOverride">addOverride</a></code> | Adds an override to the synthesized object file. |
 | <code><a href="#projen.YamlFile.addToArray">addToArray</a></code> | Adds to an array in the synthesized object file. |
@@ -12986,6 +13125,14 @@ Whether to colorize the diff output.
 Number of context lines around changes.
 
 ---
+
+##### `renderContent` <a name="renderContent" id="projen.YamlFile.renderContent"></a>
+
+```typescript
+public renderContent(): string
+```
+
+Render the final contents without writing or changing synthesis status.
 
 ##### `addDeletionOverride` <a name="addDeletionOverride" id="projen.YamlFile.addDeletionOverride"></a>
 
@@ -17406,6 +17553,209 @@ Whether the generated file should be readonly.
 
 ---
 
+### SynthesisEntry <a name="SynthesisEntry" id="projen.SynthesisEntry"></a>
+
+One destination in a synthesis review.
+
+#### Initializer <a name="Initializer" id="projen.SynthesisEntry.Initializer"></a>
+
+```typescript
+import { SynthesisEntry } from 'projen'
+
+const synthesisEntry: SynthesisEntry = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.SynthesisEntry.property.action">action</a></code> | <code>string</code> | One of create, update, delete, or unchanged. |
+| <code><a href="#projen.SynthesisEntry.property.path">path</a></code> | <code>string</code> | Path relative to the plan's output directory. |
+| <code><a href="#projen.SynthesisEntry.property.writeBytes">writeBytes</a></code> | <code>number</code> | Resulting byte length for a create or update, otherwise zero. |
+| <code><a href="#projen.SynthesisEntry.property.afterHash">afterHash</a></code> | <code>string</code> | SHA-256 of the resulting bytes. |
+| <code><a href="#projen.SynthesisEntry.property.beforeHash">beforeHash</a></code> | <code>string</code> | SHA-256 of the previous bytes. |
+
+---
+
+##### `action`<sup>Required</sup> <a name="action" id="projen.SynthesisEntry.property.action"></a>
+
+```typescript
+public readonly action: string;
+```
+
+- *Type:* string
+
+One of create, update, delete, or unchanged.
+
+---
+
+##### `path`<sup>Required</sup> <a name="path" id="projen.SynthesisEntry.property.path"></a>
+
+```typescript
+public readonly path: string;
+```
+
+- *Type:* string
+
+Path relative to the plan's output directory.
+
+---
+
+##### `writeBytes`<sup>Required</sup> <a name="writeBytes" id="projen.SynthesisEntry.property.writeBytes"></a>
+
+```typescript
+public readonly writeBytes: number;
+```
+
+- *Type:* number
+
+Resulting byte length for a create or update, otherwise zero.
+
+---
+
+##### `afterHash`<sup>Optional</sup> <a name="afterHash" id="projen.SynthesisEntry.property.afterHash"></a>
+
+```typescript
+public readonly afterHash: string;
+```
+
+- *Type:* string
+- *Default:* absent file
+
+SHA-256 of the resulting bytes.
+
+---
+
+##### `beforeHash`<sup>Optional</sup> <a name="beforeHash" id="projen.SynthesisEntry.property.beforeHash"></a>
+
+```typescript
+public readonly beforeHash: string;
+```
+
+- *Type:* string
+- *Default:* absent file
+
+SHA-256 of the previous bytes.
+
+---
+
+### SynthesisPlanOptions <a name="SynthesisPlanOptions" id="projen.SynthesisPlanOptions"></a>
+
+Options for reviewing selected generated files.
+
+#### Initializer <a name="Initializer" id="projen.SynthesisPlanOptions.Initializer"></a>
+
+```typescript
+import { SynthesisPlanOptions } from 'projen'
+
+const synthesisPlanOptions: SynthesisPlanOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.SynthesisPlanOptions.property.maxWriteBytes">maxWriteBytes</a></code> | <code>number</code> | Maximum total bytes written by the plan, inclusive. |
+
+---
+
+##### `maxWriteBytes`<sup>Optional</sup> <a name="maxWriteBytes" id="projen.SynthesisPlanOptions.property.maxWriteBytes"></a>
+
+```typescript
+public readonly maxWriteBytes: number;
+```
+
+- *Type:* number
+- *Default:* unlimited
+
+Maximum total bytes written by the plan, inclusive.
+
+---
+
+### SynthesisSummary <a name="SynthesisSummary" id="projen.SynthesisSummary"></a>
+
+Counts for a synthesis review or application.
+
+#### Initializer <a name="Initializer" id="projen.SynthesisSummary.Initializer"></a>
+
+```typescript
+import { SynthesisSummary } from 'projen'
+
+const synthesisSummary: SynthesisSummary = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.SynthesisSummary.property.created">created</a></code> | <code>number</code> | Number of new files. |
+| <code><a href="#projen.SynthesisSummary.property.deleted">deleted</a></code> | <code>number</code> | Number of removed files. |
+| <code><a href="#projen.SynthesisSummary.property.unchanged">unchanged</a></code> | <code>number</code> | Number of unchanged destinations. |
+| <code><a href="#projen.SynthesisSummary.property.updated">updated</a></code> | <code>number</code> | Number of replaced files. |
+| <code><a href="#projen.SynthesisSummary.property.writtenBytes">writtenBytes</a></code> | <code>number</code> | Total bytes written. |
+
+---
+
+##### `created`<sup>Required</sup> <a name="created" id="projen.SynthesisSummary.property.created"></a>
+
+```typescript
+public readonly created: number;
+```
+
+- *Type:* number
+
+Number of new files.
+
+---
+
+##### `deleted`<sup>Required</sup> <a name="deleted" id="projen.SynthesisSummary.property.deleted"></a>
+
+```typescript
+public readonly deleted: number;
+```
+
+- *Type:* number
+
+Number of removed files.
+
+---
+
+##### `unchanged`<sup>Required</sup> <a name="unchanged" id="projen.SynthesisSummary.property.unchanged"></a>
+
+```typescript
+public readonly unchanged: number;
+```
+
+- *Type:* number
+
+Number of unchanged destinations.
+
+---
+
+##### `updated`<sup>Required</sup> <a name="updated" id="projen.SynthesisSummary.property.updated"></a>
+
+```typescript
+public readonly updated: number;
+```
+
+- *Type:* number
+
+Number of replaced files.
+
+---
+
+##### `writtenBytes`<sup>Required</sup> <a name="writtenBytes" id="projen.SynthesisSummary.property.writtenBytes"></a>
+
+```typescript
+public readonly writtenBytes: number;
+```
+
+- *Type:* number
+
+Total bytes written.
+
+---
+
 ### TaskCommonOptions <a name="TaskCommonOptions" id="projen.TaskCommonOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.TaskCommonOptions.Initializer"></a>
@@ -19991,6 +20341,120 @@ public readonly cmd: string;
 ---
 
 
+### SynthesisPlan <a name="SynthesisPlan" id="projen.SynthesisPlan"></a>
+
+A portable snapshot of selected file changes.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.SynthesisPlan.apply">apply</a></code> | Apply or replay this review, restoring touched destinations on failure. |
+| <code><a href="#projen.SynthesisPlan.serialize">serialize</a></code> | Save a review for later application; |
+
+---
+
+##### `apply` <a name="apply" id="projen.SynthesisPlan.apply"></a>
+
+```typescript
+public apply(observer?: ISynthesisObserver): SynthesisSummary
+```
+
+Apply or replay this review, restoring touched destinations on failure.
+
+###### `observer`<sup>Optional</sup> <a name="observer" id="projen.SynthesisPlan.apply.parameter.observer"></a>
+
+- *Type:* <a href="#projen.ISynthesisObserver">ISynthesisObserver</a>
+
+---
+
+##### `serialize` <a name="serialize" id="projen.SynthesisPlan.serialize"></a>
+
+```typescript
+public serialize(): string
+```
+
+Save a review for later application;
+
+the encoding is opaque.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.SynthesisPlan.deserialize">deserialize</a></code> | Restore a review for an existing output directory. |
+
+---
+
+##### `deserialize` <a name="deserialize" id="projen.SynthesisPlan.deserialize"></a>
+
+```typescript
+import { SynthesisPlan } from 'projen'
+
+SynthesisPlan.deserialize(outdir: string, serialized: string)
+```
+
+Restore a review for an existing output directory.
+
+###### `outdir`<sup>Required</sup> <a name="outdir" id="projen.SynthesisPlan.deserialize.parameter.outdir"></a>
+
+- *Type:* string
+
+---
+
+###### `serialized`<sup>Required</sup> <a name="serialized" id="projen.SynthesisPlan.deserialize.parameter.serialized"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.SynthesisPlan.property.entries">entries</a></code> | <code><a href="#projen.SynthesisEntry">SynthesisEntry</a>[]</code> | The reviewed destinations, in ordinal path order. |
+| <code><a href="#projen.SynthesisPlan.property.fingerprint">fingerprint</a></code> | <code>string</code> | A content identity independent of the output directory. |
+| <code><a href="#projen.SynthesisPlan.property.summary">summary</a></code> | <code><a href="#projen.SynthesisSummary">SynthesisSummary</a></code> | Counts for the captured review. |
+
+---
+
+##### `entries`<sup>Required</sup> <a name="entries" id="projen.SynthesisPlan.property.entries"></a>
+
+```typescript
+public readonly entries: SynthesisEntry[];
+```
+
+- *Type:* <a href="#projen.SynthesisEntry">SynthesisEntry</a>[]
+
+The reviewed destinations, in ordinal path order.
+
+---
+
+##### `fingerprint`<sup>Required</sup> <a name="fingerprint" id="projen.SynthesisPlan.property.fingerprint"></a>
+
+```typescript
+public readonly fingerprint: string;
+```
+
+- *Type:* string
+
+A content identity independent of the output directory.
+
+---
+
+##### `summary`<sup>Required</sup> <a name="summary" id="projen.SynthesisPlan.property.summary"></a>
+
+```typescript
+public readonly summary: SynthesisSummary;
+```
+
+- *Type:* <a href="#projen.SynthesisSummary">SynthesisSummary</a>
+
+Counts for the captured review.
+
+---
+
+
 ### Task <a name="Task" id="projen.Task"></a>
 
 A task that can be performed on the project.
@@ -21051,6 +21515,44 @@ Produce the configuration to run the given entrypoint.
 - *Type:* string
 
 ---
+
+
+### ISynthesisObserver <a name="ISynthesisObserver" id="projen.ISynthesisObserver"></a>
+
+- *Implemented By:* <a href="#projen.ISynthesisObserver">ISynthesisObserver</a>
+
+Progress and contention notifications for a cooperating transaction.
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.ISynthesisObserver.afterWrite">afterWrite</a></code> | Called after each changed destination takes its planned value. |
+| <code><a href="#projen.ISynthesisObserver.onBusy">onBusy</a></code> | Called once if application encounters an active transaction. |
+
+---
+
+##### `afterWrite` <a name="afterWrite" id="projen.ISynthesisObserver.afterWrite"></a>
+
+```typescript
+public afterWrite(filePath: string): void
+```
+
+Called after each changed destination takes its planned value.
+
+###### `filePath`<sup>Required</sup> <a name="filePath" id="projen.ISynthesisObserver.afterWrite.parameter.filePath"></a>
+
+- *Type:* string
+
+---
+
+##### `onBusy` <a name="onBusy" id="projen.ISynthesisObserver.onBusy"></a>
+
+```typescript
+public onBusy(): void
+```
+
+Called once if application encounters an active transaction.
 
 
 ## Enums <a name="Enums" id="Enums"></a>
