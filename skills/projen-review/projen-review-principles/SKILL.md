@@ -78,7 +78,7 @@ Never suggest:
 - **More validation, warnings or tests "for safety"** without a realistic failure they prevent.
 
 When the finding is that the change violates a rule in projen's own guides (`AGENTS.md`,
-`CONTRIBUTING.md`, `ARCHITECTURE.md`, an accepted RFC in `rfcs/`), let the rule's stated harm set the tier
+`DESIGN_GUIDELINES.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md`, an accepted RFC in `rfcs/`), let the rule's stated harm set the tier
 and quote it, so the author sees the authority. Where the guides are silent, the rule in this skill set is
 the authority: cite it by its id.
 
@@ -90,7 +90,7 @@ Every finding carries three things:
   stays in the summary as an observation.
 - **Evidence**, strongest authority first: reproduced behavior (a synth, a test you ran, a mutation that
   leaves a test green, a jsii compile) → projen source at the PR head and at the base (precedent, linked by
-  file + line) → `AGENTS.md`, `ARCHITECTURE.md`, `CONTRIBUTING.md`, `rfcs/` → upstream documentation (jsii
+  file + line) → `DESIGN_GUIDELINES.md`, `AGENTS.md`, `ARCHITECTURE.md`, `CONTRIBUTING.md`, `rfcs/` → upstream documentation (jsii
   TypeScript restrictions, GitHub Actions, the tool whose config the component writes) → the linked issue
   and PR discussion → existing tests. Prefer reproduced behavior when sources disagree.
   **Verify before you cite.** Never post from memory or from the diff alone when the claim can be checked.
@@ -208,13 +208,15 @@ looking for an absence. All projen/projen links reference `main`.
 
 ## Sources
 
+- [`DESIGN_GUIDELINES.md`](https://github.com/projen/projen/blob/main/DESIGN_GUIDELINES.md): the component
+  model, jsii-compatible types, options and errors, the public surface, the project model direction,
+  helpers to reuse, correct output and simplicity.
 - [`AGENTS.md`](https://github.com/projen/projen/blob/main/AGENTS.md): task execution, generated files,
-  design guidelines (actionable errors, mutually exclusive options, deprecation), code comments,
-  integration tests.
+  code comments, integration tests.
 - [`ARCHITECTURE.md`](https://github.com/projen/projen/blob/main/ARCHITECTURE.md): synthesis lifecycle,
   the projen marker and cleanup, jsii.
-- [`CONTRIBUTING.md`](https://github.com/projen/projen/blob/main/CONTRIBUTING.md): conventional commits
-  and the breaking-change footer.
+- [`CONTRIBUTING.md`](https://github.com/projen/projen/blob/main/CONTRIBUTING.md): compatibility (what is
+  breaking, deprecation), conventional commits and the breaking-change footer.
 - [`rfcs/`](https://github.com/projen/projen/tree/main/rfcs): accepted design direction, in particular
   [`repository-tree-root.md`](https://github.com/projen/projen/blob/main/rfcs/repository-tree-root.md).
 - [`.github/pull_request_template.md`](https://github.com/projen/projen/blob/main/.github/pull_request_template.md).

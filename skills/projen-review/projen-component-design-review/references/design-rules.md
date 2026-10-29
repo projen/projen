@@ -2,7 +2,9 @@
 
 Rows are grouped by family: jsii types, component model, public surface and placement, project model
 direction, dependencies and lifecycle, options and errors. See the `projen-review-principles` skill for the
-shared lookup convention.
+shared lookup convention. Most rows apply a section of
+[`DESIGN_GUIDELINES.md`](https://github.com/projen/projen/blob/main/DESIGN_GUIDELINES.md); when a finding
+matches one, cite that section in `reference` so the author can read the reasoning.
 
 ## jsii types
 
@@ -61,7 +63,7 @@ one bespoke option. Model it as a `FutureComponent` with static factories named 
 in `src/script-runner.ts`, `FutureComponent` in `src/component.ts`. Do not ask for this shape for a
 single implementation.
 
-- **Interface vs concrete (doc-absent detail):** the interface holds only what every implementation
+- **Interface vs concrete:** the interface holds only what every implementation
   shares; implementation-specific members belong on the class, which implements the interface as needed.
   The project's public property is typed as the interface; inside the implementing class, work with the
   concrete component.
@@ -140,9 +142,9 @@ TypeScript 7.
 
 **[DES-OPT-MUTEX] (RECOMMENDED)**: The PR adds an option that cannot be used together with another option
 (an alternative auth method, an alternative format, the deprecated option it replaces), and the code
-silently prefers one when both are set. `AGENTS.md` § Design guidelines: "throw an error at construction
-time instead of silently picking one. Use the established message pattern: `Only one of 'optionA' or
-'optionB' may be specified, not both.`" Up-tier BLOCKING when the ignored option is an authentication or
+silently prefers one when both are set. `DESIGN_GUIDELINES.md` § Errors and conflicting options: "throw
+at construction time instead of silently picking one. Use the established message: `Only one of 'optionA'
+or 'optionB' may be specified, not both.`" Up-tier BLOCKING when the ignored option is an authentication or
 security setting (a token secret and SSH set together). Only flag a pair you have shown conflicts by
 reading the code that consumes both.
 
@@ -154,5 +156,5 @@ an enum-like static such as `LambdaRuntime.NODEJS_REGIONAL_LATEST`), make the de
 branch on it.
 
 **[DES-OPT-ACTIONABLE-ERROR] (RECOMMENDED)**: A new error that says what went wrong but not what to do.
-`AGENTS.md` § Design guidelines: "Error messages must tell the user what to do to resolve the problem ...
-Name the exact options or values involved and state the required action."
+`DESIGN_GUIDELINES.md` § Errors and conflicting options: "Error messages tell the user what to do, not only
+what went wrong. Name the exact options or values involved and state the required action."

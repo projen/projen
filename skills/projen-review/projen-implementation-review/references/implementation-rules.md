@@ -1,7 +1,10 @@
 # Implementation rules: the lookup
 
 Rows are grouped by family: output correctness, reuse of projen, reuse of upstream, ownership, simplicity.
-See the `projen-review-principles` skill for the shared lookup convention.
+See the `projen-review-principles` skill for the shared lookup convention. The "Reuse what projen already
+has", "Correct output" and "Keep it simple" sections of
+[`DESIGN_GUIDELINES.md`](https://github.com/projen/projen/blob/main/DESIGN_GUIDELINES.md) state these rules
+for contributors; cite the section in `reference` when a finding matches one.
 
 ## Output correctness
 
@@ -83,12 +86,12 @@ multi-pass normalization where removing disallowed characters suffices, a new ob
 can be used, a variable carried that the callee already guarantees, an object rendered lazily when nothing
 mutates it after construction. Name the simpler version.
 
-- **Question the condition before fixing it (doc-absent detail):** when a new conditional (a version
+- **Question the condition before fixing it :** when a new conditional (a version
   check, a feature detection, a heuristic deciding between two behaviors) is wrong for some inputs, first
   ask whether it needs to exist. A compatibility gate for tool versions old enough to stop supporting is
   better removed, applying the new behavior unconditionally, than corrected. Finding a helper that would
   make the condition more accurate is not a reason to keep it.
-- **Question hand-rolled algorithms (doc-absent detail):** when the PR implements a standard algorithm
+- **Question hand-rolled algorithms:** when the PR implements a standard algorithm
   by hand (UUID version and variant bits, a hashing or encoding scheme), read what the consumer of the
   value actually requires. If it only needs an opaque, stable string, ask for the simplest value that
   meets that, such as a plain hash slice. If it does need the standard, ask for the maintained package.

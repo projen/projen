@@ -2,6 +2,8 @@
 
 Rows are grouped by family: API surface, deprecation, defaults and output, workflow behavior,
 declaration. See the `projen-review-principles` skill for the shared lookup convention.
+[`CONTRIBUTING.md` § Compatibility](https://github.com/projen/projen/blob/main/CONTRIBUTING.md#compatibility)
+defines what is and is not breaking for contributors; cite it in `reference` when a finding matches.
 
 ## API surface
 
@@ -10,11 +12,11 @@ renamed, a type narrowed, or an optional option made required. Every `.projenrc`
 in every jsii language. Keep the old name working and deprecate it (see `COMPAT-DEPRECATION-PATTERN`).
 Down-tier RECOMMENDED when the PR declares the break (`!` + footer) and no non-breaking route exists.
 
-- **jsii signature check (doc-absent detail):** adding a required parameter, reordering parameters,
+- **jsii signature check:** adding a required parameter, reordering parameters,
   changing a struct parameter to a class, or changing a return type breaks Python/Java/.NET/Go callers even
   when TypeScript callers still compile. Compare the before and after signature, not only the TypeScript
   call sites.
-- **`projen new` flags (doc-absent detail):** project option names also surface as `projen new` CLI flags
+- **`projen new` flags:** project option names also surface as `projen new` CLI flags
   and in `.projenrc.json`. Renaming an option breaks those users even when no `.projenrc.ts` uses it.
 
 ## Deprecation
@@ -25,9 +27,10 @@ global setting takes over. Users get no compile error and silently lose the beha
 deprecated option from the interface to where it is read at the head commit.
 
 **[COMPAT-DEPRECATION-PATTERN] (RECOMMENDED)**: A replaced option handled any other way than the pattern in
-`AGENTS.md` § Design guidelines: "keep the deprecated option working as before, mark it with
-`@deprecated` pointing to the replacement, and throw if both are set: `Only one of 'newOption' or
-'deprecatedOption' may be specified, not both. Remove the deprecated 'deprecatedOption'.`" In three
+`CONTRIBUTING.md` § Deprecating instead of breaking: keep the deprecated option working as before, on the
+same interface as the new one; mark it `@deprecated`, pointing to the replacement; throw if both are set:
+`Only one of 'newOption' or 'deprecatedOption' may be specified, not both. Remove the deprecated
+'deprecatedOption'.` In three
 stages: at authoring time the old option is clearly deprecated; at compile time both are accepted; at
 runtime projen throws if both are provided. Both options live on the same interface; do not split them
 across a union or a separate type. Precedent: `commitMessageTemplate` / `commitMessageFormat` in

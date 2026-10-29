@@ -12,7 +12,8 @@ Skills for reviewing changes to projen, locally or on a pull request, with any a
 | [`projen-documentation-review`](./projen-documentation-review/SKILL.md) | Docblocks, code comments, `docs/` placement and unsourced claims |
 | [`projen-workflow-security-review`](./projen-workflow-security-review/SKILL.md) | Security of the GitHub Actions workflows projen generates: injection, permissions, credentials, triggers |
 
-The skills follow the projen [`AGENTS.md`](../../AGENTS.md), [`CONTRIBUTING.md`](../../CONTRIBUTING.md),
+The skills follow the projen [`DESIGN_GUIDELINES.md`](../../DESIGN_GUIDELINES.md),
+[`AGENTS.md`](../../AGENTS.md), [`CONTRIBUTING.md`](../../CONTRIBUTING.md),
 [`ARCHITECTURE.md`](../../ARCHITECTURE.md) and the [RFCs](../../rfcs/). Where those are silent, the rules
 record the conventions projen maintainers apply in review.
 
