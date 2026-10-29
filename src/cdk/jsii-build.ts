@@ -1,4 +1,3 @@
-import { join } from "path";
 import type { IConstruct, IMixin } from "constructs";
 import type { Task } from "..";
 import type { JsiiPacmakTarget } from "./consts";
@@ -28,7 +27,6 @@ import type {
 } from "../release";
 import { filteredRunsOnOptions } from "../runner-options";
 import { TypeScriptProject } from "../typescript";
-import { normalizePersistedPath } from "../util";
 
 const REPO_TEMP_DIRECTORY = ".repo";
 const BUILD_ARTIFACT_OLD_DIR = "dist.old";
@@ -76,6 +74,10 @@ export interface JsiiBuildOptions {
 
   /**
    * Publish Go bindings to a git repository.
+   *
+   * A separate repository is recommended. If `moduleName` refers to the source
+   * repository, set `publishToSourceRepository` to `true`.
+   *
    * @default - no publishing
    */
   readonly publishToGo?: JsiiGoTarget;
@@ -426,20 +428,8 @@ export class JsiiBuild implements IMixin {
         versionSuffix: golang.versionSuffix,
       };
 
-      const repository = project.package.manifest.repository;
-      const sourceRepository = githubRepository(
-        typeof repository === "string" ? repository : repository?.url,
-      );
-      if (sourceRepository === golang.moduleName.toLowerCase()) {
-        const packageName =
-          golang.packageName ||
-          project.package.packageName.replace(/[^a-z0-9.]/gi, "").toLowerCase();
-        if (/^[a-z0-9_][a-z0-9_.]*$/i.test(packageName)) {
-          // Go publishing copies the package to the repository root, including its embedded jsii tarball.
-          project.root.gitignore.include(
-            normalizePersistedPath(join("/", packageName, "jsii", "*.tgz")),
-          );
-        }
+      if (golang.publishToSourceRepository) {
+        project.root.gitignore.include("**/jsii/*.tgz");
       }
 
       const task = this.addPackagingTask(project, packageAllTask, "go");
@@ -658,20 +648,6 @@ export class JsiiBuild implements IMixin {
       packagingSteps,
     };
   }
-}
-
-function githubRepository(url: unknown): string | undefined {
-  if (typeof url !== "string") {
-    return undefined;
-  }
-  const match =
-    /^(?:(?:git\+)?https:\/\/github\.com\/|(?:git\+)?ssh:\/\/git@github\.com\/|git@github\.com:)([a-z0-9-]+)\/([a-z0-9_.-]+?)(?:\.git)?\/?$/i.exec(
-      url,
-    );
-  if (!match || /^\.\.?$/.test(match[2])) {
-    return undefined;
-  }
-  return `github.com/${match[1]}/${match[2]}`.toLowerCase();
 }
 
 type PublishTo = keyof Publisher &
