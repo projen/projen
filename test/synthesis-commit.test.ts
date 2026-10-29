@@ -1,4 +1,3 @@
-import { spawnSync } from "child_process";
 import { createHash } from "crypto";
 import * as fs from "fs";
 import * as path from "path";
@@ -15,6 +14,7 @@ import {
   restore,
 } from "./synthesis-fixture";
 import { worker } from "./synthesis-process";
+import { node } from "../src/util/exec";
 
 afterEach(clean);
 
@@ -768,15 +768,13 @@ test("a dead writer reports recovery steps instead of waiting forever", async ()
     parent,
     `.projen-synthesis-${createHash("sha256").update(identity).digest("hex")}.lock`,
   );
-  const child = spawnSync(
-    process.execPath,
+  const childPID = node.capture(
     ["-e", "process.stdout.write(String(process.pid))"],
-    { encoding: "utf8" },
+    { cwd: p.outdir },
   );
-  expect(child.status).toBe(0);
   fs.writeFileSync(
     lock,
-    JSON.stringify({ root: identity, pid: Number(child.stdout) }),
+    JSON.stringify({ root: identity, pid: Number(childPID) }),
   );
   try {
     const review = plan(p, [new RenderedFile(p, "selected", "result")]);
