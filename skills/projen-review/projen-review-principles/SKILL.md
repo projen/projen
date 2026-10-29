@@ -30,6 +30,9 @@ badly?** That answer sets the tier, not the wording and not how confident you ar
   - *Wrong fix.* A PR makes a failing synth pass by skipping the input that triggers the error, instead of
     fixing the code that mishandles it, or fixes it in a way the linked issue's discussion already rejected
     → BLOCKING.
+  - *Claimed but not delivered.* The PR title or body says the change supports an input (a type, a
+    format, a tool version), and a realistic case of that input still fails or produces wrong output →
+    BLOCKING. Users will rely on what the PR announced.
   - *Not damage.* Output that differs but still works is not BLOCKING. Neither is an inconsistency where
     each value works on its own, such as one script calling `pnpm exec projen` while the others call bare
     `projen`. Without a broken command, a failed build or lost state, it is at most RECOMMENDED.

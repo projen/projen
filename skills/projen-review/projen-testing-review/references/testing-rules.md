@@ -12,6 +12,11 @@ it adds, the workflow job it creates), a bug fix's reported case, or a non-obvio
 (a generic helper that merges, flattens or converts). Judge at the level of the feature, not of each `if`
 arm. A missing test is decay, not damage. Before reporting it, search the test files for it.
 
+- **Snapshot generated files (doc-absent detail):** when the feature generates a file (source code, a
+  config file) and the existing tests in the same test file snapshot that file, the new tests should
+  snapshot it too, next to their targeted assertions. Fragment assertions miss accidental changes
+  elsewhere in the file, and the snapshot shows reviewers the full output.
+
 **[TEST-HOLLOW] (RECOMMENDED)**: A test added by the PR that stays green when you revert or mutate the
 production line it claims to cover. Typical causes: asserting on the option object rather than the
 synthesized file; a snapshot of a project that never enables the feature; `toBeDefined()` on a value that

@@ -88,6 +88,10 @@ mutates it after construction. Name the simpler version.
   ask whether it needs to exist. A compatibility gate for tool versions old enough to stop supporting is
   better removed, applying the new behavior unconditionally, than corrected. Finding a helper that would
   make the condition more accurate is not a reason to keep it.
+- **Question hand-rolled algorithms (doc-absent detail):** when the PR implements a standard algorithm
+  by hand (UUID version and variant bits, a hashing or encoding scheme), read what the consumer of the
+  value actually requires. If it only needs an opaque, stable string, ask for the simplest value that
+  meets that, such as a plain hash slice. If it does need the standard, ask for the maintained package.
 
 **[IMPL-SIMPLE-GROWING-SCRIPT] (RECOMMENDED)**: Further growth of an inline shell or JavaScript script
 embedded in a generated workflow or task that is already hard to read and not portable across shells.

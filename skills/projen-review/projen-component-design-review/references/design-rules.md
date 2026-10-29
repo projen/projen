@@ -93,7 +93,8 @@ conversion) goes in a shared private util with its own tests. Precedent: `src/gi
 **[DES-SURF-INTERNAL-STATE] (RECOMMENDED)**: State other components need is exposed as public or
 `@internal` fields and every caller reassembles it. Expose one public method that returns the resolved
 value and keep the fields private. A public field that should not be reassigned is a getter over a private
-property.
+property. A new method that only returns a private field (`fetchJobs()`) should be a getter
+(`get jobs()`); if jsii rejects the name, read the error before accepting a method as the workaround.
 
 **[DES-SURF-MINIMAL] (RECOMMENDED)**: A new public member the PR's own code only uses internally. Making
 something public later is not breaking; making it private later is. Ask for it to be private (or
@@ -144,6 +145,13 @@ time instead of silently picking one. Use the established message pattern: `Only
 'optionB' may be specified, not both.`" Up-tier BLOCKING when the ignored option is an authentication or
 security setting (a token secret and SSH set together). Only flag a pair you have shown conflicts by
 reading the code that consumes both.
+
+**[DES-OPT-UNNAMED-DEFAULT] (RECOMMENDED)**: Leaving an option unset selects a behavior that no value of
+the option can request explicitly. For example, when `runtime` is not set the generated code picks the
+latest runtime at deploy time, but no `LambdaRuntime` value asks for that. Users cannot choose the default
+on purpose, and the code branches on absence instead of on a value. Add a named value (an enum member or
+an enum-like static such as `LambdaRuntime.NODEJS_REGIONAL_LATEST`), make the default that value, and
+branch on it.
 
 **[DES-OPT-ACTIONABLE-ERROR] (RECOMMENDED)**: A new error that says what went wrong but not what to do.
 `AGENTS.md` § Design guidelines: "Error messages must tell the user what to do to resolve the problem ...

@@ -52,3 +52,9 @@ Types".
 their project (a new option family, a new project type, new generated behavior) with no update to the
 relevant `docs/` guide. The API reference is generated from docblocks; a guide explains when and why to use
 the feature. Down-tier OPTIONAL for a single new option whose docblock is self-explanatory.
+
+**[DOC-LINK-TARGET] (OPTIONAL)**: A new link in `docs/**` to another docs page written as a site URL
+(`/docs/api/github`, `https://projen.io/docs/...`) instead of a relative path to the `.md` file
+(`../../api/github.md`). The docs build converts `.md` links to site URLs, so both work on the site, but
+only the `.md` form works for readers browsing the markdown in the repository, and it survives a docs
+tooling change. Existing site-URL links elsewhere are pre-existing; flag only the PR's own links.
