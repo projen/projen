@@ -38,6 +38,7 @@ tsconfig.tsbuildinfo
 /ARCHITECTURE.md
 /CODE_OF_CONDUCT.md
 /CONTRIBUTING.md
+/DESIGN_GUIDELINES.md
 /VISION.md
 /SECURITY.md
 /.gitpod.yml

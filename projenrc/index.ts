@@ -306,6 +306,7 @@ export function setupNpmignore(project: NodeProject) {
   project.npmignore?.exclude("/ARCHITECTURE.md");
   project.npmignore?.exclude("/CODE_OF_CONDUCT.md");
   project.npmignore?.exclude("/CONTRIBUTING.md");
+  project.npmignore?.exclude("/DESIGN_GUIDELINES.md");
   project.npmignore?.exclude("/VISION.md");
   project.npmignore?.exclude("/SECURITY.md");
   project.npmignore?.exclude("/.gitpod.yml");

@@ -65,9 +65,8 @@ This project's configuration is defined in the .projenrc file at the root of the
 
 ## Design guidelines
 
-    - **Actionable error messages**: Error messages must tell the user what to do to resolve the problem, not just what went wrong. Name the exact options or values involved and state the required action.
-    - **Mutually exclusive options**: When two options cannot be used together, throw an error at construction time instead of silently picking one. Use the established message pattern: `Only one of 'optionA' or 'optionB' may be specified, not both.`
-    - **Deprecating options**: When replacing a deprecated option with a new one, keep the deprecated option working as before, mark it with `@deprecated` pointing to the replacement, and throw if both are set: `Only one of 'newOption' or 'deprecatedOption' may be specified, not both. Remove the deprecated 'deprecatedOption'.`
+    - **Read the design guide before designing**: When adding or changing a component, project type or option, read `DESIGN_GUIDELINES.md` and follow it. It covers the component model, jsii-compatible types, options and error messages, the public surface, and which existing helpers to reuse.
+    - **Check compatibility before changing behavior**: Read the "Compatibility" section of `CONTRIBUTING.md`. It defines what counts as a breaking change in projen (including changes to synthesized output, tasks and generated workflows) and how to deprecate an option instead of removing it.
 
 ## Code comments
 
