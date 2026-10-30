@@ -1,6 +1,7 @@
+import { NodePackageManager } from "../../src/javascript";
 import type { ReactProjectOptions } from "../../src/web";
 import { ReactProject } from "../../src/web";
-import { synthSnapshot } from "../util";
+import { execProjenCLI, synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestReactProject();
@@ -47,6 +48,25 @@ test("rewire add a dependency on react-app-rewired", () => {
   });
 
   expect(p.deps.getDependency("react-app-rewired")).toBeDefined();
+});
+
+test("sample code mounts the app with createRoot", () => {
+  const p = new TestReactProject();
+  const index = synthSnapshot(p)["src/index.jsx"];
+  expect(index).toContain("import ReactDOM from 'react-dom/client';");
+  expect(index).toContain(
+    "const root = ReactDOM.createRoot(document.getElementById('root'));",
+  );
+  expect(index).not.toContain("ReactDOM.render(");
+});
+
+test("compiles", async () => {
+  const p = new TestReactProject({
+    packageManager: NodePackageManager.NPM,
+  });
+  p.synth();
+
+  await execProjenCLI(p.outdir, ["compile"]);
 });
 
 class TestReactProject extends ReactProject {

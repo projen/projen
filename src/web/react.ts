@@ -299,6 +299,7 @@ class ReactSampleCode extends Component {
 
     this.fileExt = options.fileExt ?? "jsx";
     this.srcdir = options.srcdir;
+    const isTs = this.fileExt === "tsx";
 
     const logoSvg = [
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">',
@@ -313,11 +314,11 @@ class ReactSampleCode extends Component {
 
     const appJsx = [
       "import logo from './logo.svg';",
-      "import './App.css'",
+      "import './App.css';",
       "",
       "function App() {",
       "  return (",
-      '   <div className="App">',
+      '    <div className="App">',
       '      <header className="App-header">',
       '        <img src={logo} className="App-logo" alt="logo" />',
       "        <p>",
@@ -395,16 +396,16 @@ class ReactSampleCode extends Component {
 
     const indexJsx = [
       "import React from 'react';",
-      "import ReactDOM from 'react-dom';",
+      "import ReactDOM from 'react-dom/client';",
       "import './index.css';",
       "import App from './App';",
       "import reportWebVitals from './reportWebVitals';",
       "",
-      "ReactDOM.render(",
+      `const root = ReactDOM.createRoot(document.getElementById('root')${isTs ? " as HTMLElement" : ""});`,
+      "root.render(",
       "  <React.StrictMode>",
       "    <App />",
       "  </React.StrictMode>,",
-      "  document.getElementById('root')",
       ");",
       "",
       "// If you want to start measuring performance in your app, pass a function",
@@ -432,19 +433,18 @@ class ReactSampleCode extends Component {
     ];
 
     const reportWebVitalsJs = [
-      "import { ReportHandler } from 'web-vitals';",
-      "",
-      "const reportWebVitals = (onPerfEntry?: ReportHandler) => {",
+      ...(isTs ? ["import type { MetricType } from 'web-vitals';", ""] : []),
+      `const reportWebVitals = (onPerfEntry${isTs ? "?: (metric: MetricType) => void" : ""}) => {`,
       "  if (onPerfEntry && onPerfEntry instanceof Function) {",
       "    import('web-vitals').then(",
-      "      ({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {",
-      "        getCLS(onPerfEntry);",
-      "        getFID(onPerfEntry);",
-      "        getFCP(onPerfEntry);",
-      "        getLCP(onPerfEntry);",
-      "        getTTFB(onPerfEntry);",
+      "      ({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {",
+      "        onCLS(onPerfEntry);",
+      "        onINP(onPerfEntry);",
+      "        onFCP(onPerfEntry);",
+      "        onLCP(onPerfEntry);",
+      "        onTTFB(onPerfEntry);",
       "      },",
-      "      () => {}",
+      "      () => {},",
       "    );",
       "  }",
       "};",

@@ -1,6 +1,7 @@
+import { NodePackageManager } from "../../src/javascript";
 import type { ReactTypeScriptProjectOptions } from "../../src/web";
 import { ReactTypeScriptProject } from "../../src/web";
-import { synthSnapshot } from "../util";
+import { execProjenCLI, synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestReactTypeScriptProject();
@@ -54,6 +55,25 @@ test("CommonJS not ESnext", () => {
   expect(out["tsconfig.json"]).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions.module).toEqual("commonjs");
+});
+
+test("sample code mounts the app with createRoot", () => {
+  const p = new TestReactTypeScriptProject();
+  const index = synthSnapshot(p)["src/index.tsx"];
+  expect(index).toContain("import ReactDOM from 'react-dom/client';");
+  expect(index).toContain(
+    "const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);",
+  );
+  expect(index).not.toContain("ReactDOM.render(");
+});
+
+test("compiles", async () => {
+  const p = new TestReactTypeScriptProject({
+    packageManager: NodePackageManager.NPM,
+  });
+  p.synth();
+
+  await execProjenCLI(p.outdir, ["compile"]);
 });
 
 class TestReactTypeScriptProject extends ReactTypeScriptProject {
