@@ -1143,11 +1143,11 @@ Disallow:
 }
 ",
   "src/App.jsx": "import logo from './logo.svg';
-import './App.css'
+import './App.css';
 
 function App() {
   return (
-   <div className="App">
+    <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -1200,7 +1200,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -1217,19 +1217,17 @@ reportWebVitals();
 </svg>
 ",
   "src/react-app-env.d.ts": "/// <reference types="react-scripts" />",
-  "src/reportWebVitals.js": "import { ReportHandler } from 'web-vitals';
-
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+  "src/reportWebVitals.js": "const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals').then(
-      ({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-        getCLS(onPerfEntry);
-        getFID(onPerfEntry);
-        getFCP(onPerfEntry);
-        getLCP(onPerfEntry);
-        getTTFB(onPerfEntry);
+      ({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
+        onCLS(onPerfEntry);
+        onINP(onPerfEntry);
+        onFCP(onPerfEntry);
+        onLCP(onPerfEntry);
+        onTTFB(onPerfEntry);
       },
-      () => {}
+      () => {},
     );
   }
 };
