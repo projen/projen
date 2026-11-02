@@ -10,8 +10,11 @@ test("defaults", () => {
 test("tailwind enabled", () => {
   const p = new TestNextJsProject();
   const pkg = synthSnapshot(p);
-  expect(pkg["tailwind.config.json"]).toBeDefined();
-  expect(pkg["postcss.config.json"]).toBeDefined();
+  expect(pkg["postcss.config.json"].plugins).toStrictEqual({
+    "@tailwindcss/postcss": {},
+  });
+  // Tailwind v4 uses CSS-first configuration, so no tailwind.config.json is generated
+  expect(pkg["tailwind.config.json"]).toBeUndefined();
 });
 
 class TestNextJsProject extends NextJsProject {

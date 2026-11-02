@@ -521,7 +521,7 @@ class NextSampleCode extends Component {
     ];
 
     if (this.tailwind) {
-      indexJs.unshift('import "tailwindcss/tailwind.css"');
+      indexJs.unshift('import "tailwindcss/index.css"');
     }
 
     const vercelSvg = [
