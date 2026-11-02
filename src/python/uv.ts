@@ -1,3 +1,5 @@
+import * as fs from "fs";
+import * as path from "path";
 import type { IConstruct } from "constructs";
 import type { BuildSystem, PyprojectTomlProject } from "./pyproject-toml";
 import { PyprojectTomlFile } from "./pyproject-toml-file";
@@ -201,5 +203,12 @@ export class Uv
     } else {
       this.project.tasks.runTask(this.installCiTask.name);
     }
+  }
+
+  /**
+   * Indicates if the uv environment has already been created.
+   */
+  public environmentExists(): boolean {
+    return fs.existsSync(path.join(this.project.outdir, ".venv"));
   }
 }

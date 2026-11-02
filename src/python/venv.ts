@@ -73,4 +73,12 @@ export class Venv extends Component implements IPythonEnv {
       );
     }
   }
+
+  /**
+   * Indicates if the virtual environment has already been created.
+   */
+  public environmentExists() {
+    const absoluteEnvdir = path.join(this.project.outdir, this.envdir);
+    return fs.existsSync(absoluteEnvdir);
+  }
 }

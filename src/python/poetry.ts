@@ -247,6 +247,15 @@ export class Poetry
   }
 
   /**
+   * Indicates if a poetry environment has already been created.
+   */
+  public environmentExists() {
+    return !!poetry.tryCapture(["env", "info", "-p"], {
+      cwd: this.project.outdir,
+    });
+  }
+
+  /**
    * Installs dependencies (called during post-synthesis).
    */
   public installDependencies() {
