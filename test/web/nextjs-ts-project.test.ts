@@ -10,8 +10,11 @@ test("defaults", () => {
 test("tailwind enabled", () => {
   const p = new TestNextJsTypeScriptProject();
   const out = synthSnapshot(p);
-  expect(out["tailwind.config.json"]).toBeDefined();
-  expect(out["postcss.config.json"]).toBeDefined();
+  expect(out["postcss.config.json"].plugins).toStrictEqual({
+    "@tailwindcss/postcss": {},
+  });
+  // Tailwind v4 uses CSS-first configuration, so no tailwind.config.json is generated
+  expect(out["tailwind.config.json"]).toBeUndefined();
 });
 
 test("CommonJS not ESnext", () => {
