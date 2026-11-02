@@ -772,7 +772,9 @@ export class Release extends Component {
         push:
           this.releaseTrigger.isContinuous || this.releaseTrigger.tags
             ? {
-                branches: [branchName],
+                branches: this.releaseTrigger.isContinuous
+                  ? [branchName]
+                  : undefined,
                 tags: this.releaseTrigger.tags,
                 paths: this.releaseTrigger.paths,
               }

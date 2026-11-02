@@ -360,6 +360,8 @@ describe("Single Project", () => {
         schedule: expect.arrayContaining([{ cron: schedule }]),
       },
     });
+    expect(wf1.on).not.toHaveProperty("push");
+    expect(wf1.on).toHaveProperty("workflow_dispatch.inputs.dry_run");
   });
 
   test("continuous release on every push", () => {
@@ -379,14 +381,9 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
-    expect(workflow).toMatchObject({
-      on: {
-        push: {
-          branches: ["main"],
-        },
-      },
+    expect(workflow.on.push).toEqual({
+      branches: ["main"],
     });
-    expect(workflow.on.push.paths).toBeUndefined();
   });
 
   test("continuous release on pushes to certain paths", () => {
@@ -406,41 +403,60 @@ describe("Single Project", () => {
     // THEN
     const outdir = synthSnapshot(project);
     const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
-    expect(workflow).toMatchObject({
-      on: {
-        push: {
-          branches: ["main"],
-          paths: ["sub/**"],
+    expect(workflow.on.push).toEqual({
+      branches: ["main"],
+      paths: ["sub/**"],
+    });
+  });
+
+  test.each([
+    { tags: ["v*.*.*"] },
+    { tags: ["v*", "!v*-alpha*", "release/**", "v1.0.0-alpha1"] },
+  ])("release on push of matching tags $tags only", ({ tags }) => {
+    const project = new TestProject();
+
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.tagged({ tags: [...tags] }),
+      publishTasks: true,
+      artifactsDirectory: "dist",
+    });
+
+    const outdir = synthSnapshot(project);
+    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+    expect(workflow.on).toEqual({
+      push: { tags },
+      workflow_dispatch: {
+        inputs: {
+          dry_run: {
+            description: "Dry run (skip actual publishing)",
+            required: false,
+            type: "boolean",
+          },
         },
       },
     });
   });
 
-  test("release on push of new tag", () => {
-    // GIVEN
+  test("tagged releases omit branch filters in every release workflow", () => {
     const project = new TestProject();
-
-    // WHEN
-    new Release(project, {
+    const release = new Release(project, {
       tasks: [project.buildTask],
       versionFile: "version.json",
       branch: "main",
-      releaseTrigger: ReleaseTrigger.tagged({ tags: ["v*.*.*"] }),
-      publishTasks: true, // to increase coverage
+      majorVersion: 1,
+      releaseTrigger: ReleaseTrigger.tagged({ tags: ["v*"] }),
       artifactsDirectory: "dist",
     });
+    release.addBranch("2.x", { majorVersion: 2 });
 
-    // THEN
     const outdir = synthSnapshot(project);
-    const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
-    expect(workflow).toMatchObject({
-      on: {
-        push: {
-          tags: ["v*.*.*"],
-        },
-      },
-    });
-    expect(workflow.on.push.paths).toBeUndefined();
+    for (const file of ["release.yml", "release-2.x.yml"]) {
+      const workflow = YAML.parse(outdir[`.github/workflows/${file}`]);
+      expect(workflow.on.push).toEqual({ tags: ["v*"] });
+    }
   });
 
   test("workflowDispatch only leads to workflow dispatch trigger", () => {
@@ -465,6 +481,8 @@ describe("Single Project", () => {
         workflow_dispatch: {},
       },
     });
+    expect(Object.keys(workflow.on)).toEqual(["workflow_dispatch"]);
+    expect(workflow.on).toHaveProperty("workflow_dispatch.inputs.dry_run");
   });
 
   test("manual release publish happens after anti-tamper check", () => {
