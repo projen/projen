@@ -273,6 +273,20 @@ describe("integ-runner", () => {
       expect.arrayContaining([{ spawn: "integ" }]),
     );
   });
+
+  test("ignores integ test files in jest runs", () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      jest: true,
+      experimentalIntegRunner: true,
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot["package.json"].jest.testPathIgnorePatterns).toContain(
+      "/integ\\.[^/]*\\.ts$",
+    );
+  });
 });
 
 it("warns the user if they add CDK v1 dependencies to a CDK v2 project", () => {
