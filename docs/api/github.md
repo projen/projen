@@ -4174,7 +4174,7 @@ public readonly workflow: GithubWorkflow;
 
 Configure validations to run on GitHub pull requests.
 
-Only generates a file if at least one linter is configured.
+Only generates a file if at least one check is configured.
 
 #### Initializers <a name="Initializers" id="projen.github.PullRequestLint.Initializer"></a>
 
@@ -4214,6 +4214,7 @@ new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
 | <code><a href="#projen.github.PullRequestLint.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
 | <code><a href="#projen.github.PullRequestLint.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
 | <code><a href="#projen.github.PullRequestLint.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+| <code><a href="#projen.github.PullRequestLint.addCheck">addCheck</a></code> | Adds a job to the pull request lint workflow that is part of the consolidated status check. |
 
 ---
 
@@ -4311,6 +4312,32 @@ public synthesize(): void
 ```
 
 Synthesizes files to the project output directory.
+
+##### `addCheck` <a name="addCheck" id="projen.github.PullRequestLint.addCheck"></a>
+
+```typescript
+public addCheck(id: string, job: Job): void
+```
+
+Adds a job to the pull request lint workflow that is part of the consolidated status check.
+
+The job also runs for merge groups. Skip it there with a job condition, a skipped job counts as passing.
+
+###### `id`<sup>Required</sup> <a name="id" id="projen.github.PullRequestLint.addCheck.parameter.id"></a>
+
+- *Type:* string
+
+The job ID, unique within the workflow.
+
+---
+
+###### `job`<sup>Required</sup> <a name="job" id="projen.github.PullRequestLint.addCheck.parameter.job"></a>
+
+- *Type:* <a href="#projen.github.workflows.Job">Job</a>
+
+The job definition.
+
+---
 
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
@@ -10466,10 +10493,12 @@ const pullRequestLintOptions: github.PullRequestLintOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.github.PullRequestLintOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
+| <code><a href="#projen.github.PullRequestLintOptions.property.consolidatedStatusCheck">consolidatedStatusCheck</a></code> | <code>boolean</code> | Add a job that combines the results of all checks into a single status check. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatement">contributorStatement</a></code> | <code>string</code> | Require a contributor statement to be included in the PR description. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.contributorStatementOptions">contributorStatementOptions</a></code> | <code><a href="#projen.github.ContributorStatementOptions">ContributorStatementOptions</a></code> | Options for requiring a contributor statement on Pull Requests. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.semanticTitle">semanticTitle</a></code> | <code>boolean</code> | Validate that pull request titles follow Conventional Commits. |
 | <code><a href="#projen.github.PullRequestLintOptions.property.semanticTitleOptions">semanticTitleOptions</a></code> | <code><a href="#projen.github.SemanticTitleOptions">SemanticTitleOptions</a></code> | Options for validating the conventional commit title linter. |
+| <code><a href="#projen.github.PullRequestLintOptions.property.trigger">trigger</a></code> | <code><a href="#projen.github.PullRequestLintTrigger">PullRequestLintTrigger</a></code> | The pull request event that triggers the workflow. |
 
 ---
 
@@ -10495,6 +10524,21 @@ public readonly runsOnGroup: GroupRunnerOptions;
 - *Type:* projen.GroupRunnerOptions
 
 Github Runner Group selection options.
+
+---
+
+##### `consolidatedStatusCheck`<sup>Optional</sup> <a name="consolidatedStatusCheck" id="projen.github.PullRequestLintOptions.property.consolidatedStatusCheck"></a>
+
+```typescript
+public readonly consolidatedStatusCheck: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Add a job that combines the results of all checks into a single status check.
+
+Use this job as the required status check, so it does not need updating when checks are added or removed.
 
 ---
 
@@ -10553,6 +10597,19 @@ public readonly semanticTitleOptions: SemanticTitleOptions;
 - *Default:* title must start with "feat", "fix", or "chore"
 
 Options for validating the conventional commit title linter.
+
+---
+
+##### `trigger`<sup>Optional</sup> <a name="trigger" id="projen.github.PullRequestLintOptions.property.trigger"></a>
+
+```typescript
+public readonly trigger: PullRequestLintTrigger;
+```
+
+- *Type:* <a href="#projen.github.PullRequestLintTrigger">PullRequestLintTrigger</a>
+- *Default:* PullRequestLintTrigger.PULL_REQUEST_TARGET
+
+The pull request event that triggers the workflow.
 
 ---
 
@@ -13525,6 +13582,33 @@ Behavior can be further configured in repository settings.
 
 
 ##### `REBASE` <a name="REBASE" id="projen.github.MergeMethod.REBASE"></a>
+
+---
+
+
+### PullRequestLintTrigger <a name="PullRequestLintTrigger" id="projen.github.PullRequestLintTrigger"></a>
+
+The pull request event that triggers the pull request lint workflow.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.PullRequestLintTrigger.PULL_REQUEST_TARGET">PULL_REQUEST_TARGET</a></code> | Run in the context of the base branch, with access to secrets and a read/write token. |
+| <code><a href="#projen.github.PullRequestLintTrigger.PULL_REQUEST">PULL_REQUEST</a></code> | Run in the context of the merge commit, with a read-only token for pull requests from forks. |
+
+---
+
+##### `PULL_REQUEST_TARGET` <a name="PULL_REQUEST_TARGET" id="projen.github.PullRequestLintTrigger.PULL_REQUEST_TARGET"></a>
+
+Run in the context of the base branch, with access to secrets and a read/write token.
+
+---
+
+
+##### `PULL_REQUEST` <a name="PULL_REQUEST" id="projen.github.PullRequestLintTrigger.PULL_REQUEST"></a>
+
+Run in the context of the merge commit, with a read-only token for pull requests from forks.
 
 ---
 

@@ -1,5 +1,8 @@
 import * as yaml from "yaml";
-import { PullRequestLint } from "../../src/github/pull-request-lint";
+import {
+  PullRequestLint,
+  PullRequestLintTrigger,
+} from "../../src/github/pull-request-lint";
 import type { NodeProjectOptions } from "../../src/javascript";
 import { NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -164,6 +167,157 @@ describe("contributor statement", () => {
     expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
       "contains(github.event.pull_request.labels.*.name, 'automation')",
     );
+  });
+});
+
+describe("consolidated status check", () => {
+  test("combines all checks by default", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      contributorStatement: "Lorem ipsum dolor sit amet",
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(workflow.jobs["pull-request-lint"]).toMatchSnapshot();
+    expect(workflow.jobs["pull-request-lint"].needs).toEqual([
+      "validate",
+      "contributorStatement",
+    ]);
+  });
+
+  test("can be disabled", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      consolidatedStatusCheck: false,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(Object.keys(workflow.jobs)).toEqual(["validate"]);
+  });
+});
+
+describe("addCheck", () => {
+  test("includes the check in the consolidated status check", () => {
+    // GIVEN
+    const project = createProject();
+    const lint = new PullRequestLint(project.github!);
+
+    // WHEN
+    lint.addCheck("custom", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo ok" }],
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(workflow.jobs).toHaveProperty("custom.steps.0.run", "echo ok");
+    expect(workflow.jobs["pull-request-lint"].needs).toEqual([
+      "validate",
+      "custom",
+    ]);
+  });
+
+  test("creates the workflow when no built-in checks are enabled", () => {
+    // GIVEN
+    const project = createProject();
+    const lint = new PullRequestLint(project.github!, { semanticTitle: false });
+
+    // WHEN
+    lint.addCheck("custom", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo ok" }],
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(Object.keys(workflow.jobs)).toEqual(["custom", "pull-request-lint"]);
+    expect(workflow.on).toHaveProperty("pull_request_target");
+  });
+
+  test("does not create a workflow without checks", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, { semanticTitle: false });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".github/workflows/pull-request-lint.yml"]).toBeUndefined();
+  });
+
+  test("rejects the consolidated job ID", () => {
+    // GIVEN
+    const project = createProject();
+    const lint = new PullRequestLint(project.github!);
+
+    // THEN
+    expect(() =>
+      lint.addCheck("pull-request-lint", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [],
+      }),
+    ).toThrow(/reserved for the consolidated status check/);
+  });
+});
+
+describe("trigger", () => {
+  test("defaults to pull_request_target", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!);
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(workflow.on).toHaveProperty("pull_request_target");
+    expect(workflow.on).not.toHaveProperty("pull_request");
+  });
+
+  test("can use pull_request", () => {
+    // GIVEN
+    const project = createProject();
+
+    // WHEN
+    new PullRequestLint(project.github!, {
+      trigger: PullRequestLintTrigger.PULL_REQUEST,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    const workflow = yaml.parse(
+      snapshot[".github/workflows/pull-request-lint.yml"],
+    );
+    expect(workflow.on).toHaveProperty("pull_request.types");
+    expect(workflow.on).not.toHaveProperty("pull_request_target");
+    expect(workflow.on).toHaveProperty("merge_group");
   });
 });
 
