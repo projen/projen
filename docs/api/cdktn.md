@@ -4246,6 +4246,7 @@ const cdktnTypeScriptAppOptions: cdktn.CdktnTypeScriptAppOptions = { ... }
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.cdktn.CdktnTypeScriptAppOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -5337,6 +5338,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.cdktn.CdktnTypeScriptAppOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.cdktn.CdktnTypeScriptAppOptions.property.peerDependencyOptions"></a>
 
@@ -6925,6 +6950,7 @@ const constructLibraryCdktnOptions: cdktn.ConstructLibraryCdktnOptions = { ... }
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.cdktn.ConstructLibraryCdktnOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -8024,6 +8050,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.cdktn.ConstructLibraryCdktnOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.cdktn.ConstructLibraryCdktnOptions.property.peerDependencyOptions"></a>
 

@@ -127,6 +127,19 @@ export interface NodePackageOptions {
   readonly peerDependencyOptions?: PeerDependencyOptions;
 
   /**
+   * Additional information about how peer dependencies are used, rendered as
+   * `peerDependenciesMeta` in `package.json`. For example, this can mark peer
+   * dependencies as optional.
+   *
+   * Each key must also be declared as a peer dependency.
+   *
+   * @see https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta
+   * @example { "aws-cdk-lib": { optional: true } }
+   * @default - no `peerDependenciesMeta`
+   */
+  readonly peerDependenciesMeta?: Record<string, PeerDependencyMeta>;
+
+  /**
    * Allow the project to include `peerDependencies` and `bundledDependencies`.
    * This is normally only allowed for libraries. For apps, there's no meaning
    * for specifying these.
@@ -790,6 +803,8 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly peerDependenciesMeta: Record<string, PeerDependencyMeta> =
+    {};
   private readonly _prev?: Record<string, any>;
   private _renderedDeps?: NpmDependencies;
   private readonly _packageManagerExplicit: boolean;
@@ -873,6 +888,7 @@ export class NodePackage extends Component {
       author: this.renderAuthor(options),
       devDependencies: {},
       peerDependencies: {},
+      peerDependenciesMeta: () => this.renderPeerDependenciesMeta(),
       dependencies: {},
       bundledDependencies: [],
       ...this.renderPackageResolutions(),
@@ -1068,6 +1084,22 @@ export class NodePackage extends Component {
     for (const dep of deps) {
       this.project.deps.addDependency(dep, DependencyType.PEER);
     }
+  }
+
+  /**
+   * Adds `peerDependenciesMeta` information for a peer dependency, e.g. to
+   * mark it as optional.
+   *
+   * The dependency must also be declared as a peer dependency.
+   *
+   * @param name The name of the peer dependency.
+   * @param meta The metadata for the peer dependency.
+   */
+  public addPeerDependencyMeta(name: string, meta: PeerDependencyMeta) {
+    this.peerDependenciesMeta[name] = {
+      ...this.peerDependenciesMeta[name],
+      ...meta,
+    };
   }
 
   /**
@@ -1600,6 +1632,11 @@ export class NodePackage extends Component {
     this.addDeps(...(options.deps ?? []));
     this.addDevDeps(...(options.devDeps ?? []));
     this.addPeerDeps(...(options.peerDeps ?? []));
+    for (const [name, meta] of Object.entries(
+      options.peerDependenciesMeta ?? {},
+    )) {
+      this.addPeerDependencyMeta(name, meta);
+    }
     this.addBundledDeps(...(options.bundledDeps ?? []));
   }
 
@@ -1936,6 +1973,27 @@ export class NodePackage extends Component {
    * @see https://yarnpkg.com/configuration/manifest#dependenciesMeta.built
    * @see https://yarnpkg.com/features/security#postinstalls
    */
+  private renderPeerDependenciesMeta() {
+    const names = Object.keys(this.peerDependenciesMeta);
+    if (names.length === 0) {
+      return undefined;
+    }
+
+    const missing = names.filter(
+      (name) => !this.project.deps.tryGetDependency(name, DependencyType.PEER),
+    );
+    if (missing.length > 0) {
+      throw new Error(
+        `"peerDependenciesMeta" contains packages that are not peer dependencies: ${missing.join(", ")}. ` +
+          "Add them with `peerDeps` or `addPeerDeps()`, or remove them from `peerDependenciesMeta`.",
+      );
+    }
+
+    return Object.fromEntries(
+      names.sort().map((name) => [name, this.peerDependenciesMeta[name]]),
+    );
+  }
+
   private renderYarnBerryDependenciesMeta() {
     if (this.allowedScripts.size === 0) {
       return undefined;
@@ -2319,6 +2377,21 @@ export class NodePackage extends Component {
       gitignore.exclude(".pnp.*");
     }
   }
+}
+
+/**
+ * Additional information about how a peer dependency is used.
+ *
+ * @see https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta
+ */
+export interface PeerDependencyMeta {
+  /**
+   * Marks the peer dependency as optional. Package managers will not
+   * install it or warn if it is missing.
+   *
+   * @default false
+   */
+  readonly optional?: boolean;
 }
 
 export interface PeerDependencyOptions {

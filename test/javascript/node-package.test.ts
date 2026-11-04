@@ -626,6 +626,43 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
   expect(pkgFile.devDependencies).toBeUndefined();
 });
 
+describe("peerDependenciesMeta", () => {
+  test("is not rendered by default", () => {
+    const project = new Project({ name: "test" });
+    new NodePackage(project, { peerDeps: ["ms@^1"] });
+
+    const pkgFile = synthSnapshot(project)["package.json"];
+    expect(pkgFile.peerDependenciesMeta).toBeUndefined();
+  });
+
+  test("is rendered from options and addPeerDependencyMeta()", () => {
+    const project = new Project({ name: "test" });
+    const pkg = new NodePackage(project, {
+      peerDeps: ["ms@^1", "constructs@^10", "semver@^7"],
+      peerDependenciesMeta: { semver: { optional: true } },
+    });
+    pkg.addPeerDependencyMeta("ms", { optional: true });
+
+    const pkgFile = synthSnapshot(project)["package.json"];
+    expect(pkgFile.peerDependenciesMeta).toStrictEqual({
+      ms: { optional: true },
+      semver: { optional: true },
+    });
+  });
+
+  test("fails if a package is not a peer dependency", () => {
+    const project = new Project({ name: "test" });
+    new NodePackage(project, {
+      deps: ["ms@^1"],
+      peerDependenciesMeta: { ms: { optional: true } },
+    });
+
+    expect(() => synthSnapshot(project)).toThrow(
+      /"peerDependenciesMeta" contains packages that are not peer dependencies: ms/,
+    );
+  });
+});
+
 test("bundled dependencies may not occur as peerDependencies", () => {
   const project = new Project({ name: "test" });
   new NodePackage(project, {
