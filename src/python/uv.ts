@@ -207,6 +207,7 @@ export class Uv
 
   /**
    * Indicates if the uv environment has already been created.
+   * `@internal`
    */
   public environmentExists(): boolean {
     return fs.existsSync(path.join(this.project.outdir, ".venv"));

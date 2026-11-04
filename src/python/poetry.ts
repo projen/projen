@@ -248,6 +248,7 @@ export class Poetry
 
   /**
    * Indicates if a poetry environment has already been created.
+   * `@internal`
    */
   public environmentExists() {
     return !!poetry.tryCapture(["env", "info", "-p"], {
