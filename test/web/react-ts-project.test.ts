@@ -49,6 +49,23 @@ test("eslint configured to support test cases", () => {
   });
 });
 
+test("eslint.allowDevDeps() adds to the react test patterns", () => {
+  const p = new TestReactTypeScriptProject();
+  p.eslint?.allowDevDeps("**/src/**/*.stories.tsx");
+
+  const rule =
+    synthSnapshot(p)[".eslintrc.json"].rules[
+      "import/no-extraneous-dependencies"
+    ];
+  expect(rule[1].devDependencies).toEqual(
+    expect.arrayContaining([
+      "**/src/**/*.test.tsx",
+      "**/src/setupTests.ts",
+      "**/src/**/*.stories.tsx",
+    ]),
+  );
+});
+
 test("CommonJS not ESnext", () => {
   const p = new TestReactTypeScriptProject();
   const out = synthSnapshot(p);

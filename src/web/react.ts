@@ -151,16 +151,8 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
 
     this.srcdir = options.srcdir ?? "src";
 
-    this.eslint?.addRules({
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          devDependencies: ["**/src/**/*.test.tsx", "**/src/setupTests.ts"],
-          optionalDependencies: false,
-          peerDependencies: true,
-        },
-      ],
-    });
+    this.eslint?.allowDevDeps("**/src/**/*.test.tsx");
+    this.eslint?.allowDevDeps("**/src/setupTests.ts");
 
     new ReactComponent(this, { typescript: true, rewire: options.rewire });
 
