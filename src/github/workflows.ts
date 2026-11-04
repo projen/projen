@@ -522,21 +522,27 @@ export class GithubWorkflow extends Component {
   }
 }
 
-function snakeCaseKeys<T = unknown>(obj: T): T {
+/**
+ * Keys of these event fields are user-defined names (e.g. workflow inputs)
+ * and are rendered as-is.
+ */
+const USER_DEFINED_NAME_FIELDS = new Set(["inputs", "outputs", "secrets"]);
+
+function snakeCaseKeys<T = unknown>(obj: T, preserveKeys = false): T {
   if (typeof obj !== "object" || obj == null) {
     return obj;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(snakeCaseKeys) as any;
+    return obj.map((item) => snakeCaseKeys(item)) as any;
   }
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
     if (typeof v === "object" && v != null) {
-      v = snakeCaseKeys(v);
+      v = snakeCaseKeys(v, !preserveKeys && USER_DEFINED_NAME_FIELDS.has(k));
     }
-    result[snake(k)] = v;
+    result[preserveKeys ? k : snake(k)] = v;
   }
   return result as any;
 }
