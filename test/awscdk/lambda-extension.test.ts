@@ -174,6 +174,25 @@ test("changing construct name and path", () => {
   expect(generatedSource).toContain("export class Custom");
 });
 
+test("eslint ignores the generated construct file", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  // WHEN
+  new LambdaExtension(project, {
+    cdkDeps: cdkDepsForProject(project),
+    entrypoint: "src/example.lambda-extension.ts",
+  });
+
+  // THEN
+  const snapshot = Testing.synth(project);
+  expect(snapshot[".eslintrc.json"].ignorePatterns).toContain(
+    "src/example-layer-version.ts",
+  );
+});
+
 function cdkDepsForProject(
   project: TypeScriptProject,
   cdkVersion = "2.189.1",

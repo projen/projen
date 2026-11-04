@@ -11,6 +11,7 @@ import type { BundlingOptions } from "../javascript";
 import { Bundler, Eslint } from "../javascript";
 import type { Project } from "../project";
 import { SourceCode } from "../source-code";
+import { normalizePersistedPath } from "../util";
 
 /**
  * Common options for creating lambda extensions.
@@ -133,6 +134,9 @@ export class LambdaExtension extends Component {
 
     const constructFile =
       options.constructFile ?? `${basePath}-layer-version.ts`;
+
+    // the generated construct file is read-only, so keep it out of eslint --fix
+    eslint?.addIgnorePattern(normalizePersistedPath(constructFile));
 
     new LambdaLayerConstruct(project, {
       constructFile: constructFile,

@@ -457,6 +457,28 @@ test("eslint allows handlers to import dev dependencies", () => {
   ]);
 });
 
+test("eslint ignores the generated construct files", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+  });
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "world.lambda.ts"),
+    constructFile: "src/custom-world.ts",
+    cdkDeps: cdkDepsForProject(project),
+  });
+
+  const snapshot = Testing.synth(project);
+  const ignorePatterns = snapshot[".eslintrc.json"].ignorePatterns;
+  expect(ignorePatterns).toContain("src/hello-function.ts");
+  expect(ignorePatterns).toContain("src/custom-world.ts");
+  expect(ignorePatterns).not.toContain("src/hello.lambda.ts");
+});
+
 test("esbuild dependency is added", () => {
   const project = new TypeScriptProject({
     name: "hello",
