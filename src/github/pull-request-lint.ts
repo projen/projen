@@ -1,15 +1,50 @@
-import type { GitHub } from ".";
+import type { GitHub, GithubWorkflow } from ".";
 import { PullRequestTemplate } from ".";
 import { ActionRefs } from "./actions.const";
-import type { Job } from "./workflows-model";
+import type {
+  Job,
+  PullRequestOptions,
+  PullRequestTargetOptions,
+} from "./workflows-model";
 import { JobPermission } from "./workflows-model";
 import { Component } from "../component";
 import type { RunsOnOptions } from "../runner-options";
 
 /**
+ * The pull request event that triggers the pull request lint workflow.
+ */
+export enum PullRequestLintTrigger {
+  /**
+   * Run in the context of the base branch, with access to secrets and a read/write token.
+   */
+  PULL_REQUEST_TARGET = "pull_request_target",
+
+  /**
+   * Run in the context of the merge commit, with a read-only token for pull requests from forks.
+   */
+  PULL_REQUEST = "pull_request",
+}
+
+/**
  * Options for PullRequestLint
  */
 export interface PullRequestLintOptions extends RunsOnOptions {
+  /**
+   * The pull request event that triggers the workflow.
+   *
+   * @default PullRequestLintTrigger.PULL_REQUEST_TARGET
+   */
+  readonly trigger?: PullRequestLintTrigger;
+
+  /**
+   * Add a job that combines the results of all checks into a single status check.
+   *
+   * Use this job as the required status check, so it does not need updating when checks are added or removed.
+   *
+   * @default true
+   */
+  readonly consolidatedStatusCheck?: boolean;
+
   /**
    * Validate that pull request titles follow Conventional Commits.
    *
@@ -84,54 +119,34 @@ export interface ContributorStatementOptions {
   readonly exemptLabels?: string[];
 }
 
+const CONSOLIDATED_JOB_ID = "pull-request-lint";
+
+// Checks can only be evaluated in a pull request context.
+// Skipping them in merge groups lets them be required status checks.
+const PR_CHECK =
+  "(github.event_name == 'pull_request' || github.event_name == 'pull_request_target')";
+
 /**
  * Configure validations to run on GitHub pull requests.
- * Only generates a file if at least one linter is configured.
+ * Only generates a file if at least one check is configured.
  */
 export class PullRequestLint extends Component {
+  private workflow?: GithubWorkflow;
+  private readonly checkIds: string[] = [];
+
   constructor(
     private readonly github: GitHub,
     private readonly options: PullRequestLintOptions = {},
   ) {
     super(github.project);
 
-    const checkSemanticTitle = options.semanticTitle ?? true;
-    const checkContributorStatement = Boolean(options.contributorStatement);
-
-    // should only create a workflow if one or more linters are enabled
-    if (!checkSemanticTitle && !checkContributorStatement) {
-      return;
-    }
-
-    const workflow = github.addWorkflow("pull-request-lint");
-    workflow.on({
-      pullRequestTarget: {
-        types: [
-          "labeled",
-          "opened",
-          "synchronize",
-          "reopened",
-          "ready_for_review",
-          "edited",
-        ],
-      },
-      // run on merge group, but use a condition later to always succeed
-      // needed so the workflow can be a required status check
-      mergeGroup: {},
-    });
-
-    // All checks are run against the PR and can only be evaluated within a PR context
-    // Needed so jobs can be set as required and will run successfully on merge group checks.
-    const prCheck =
-      "(github.event_name == 'pull_request' || github.event_name == 'pull_request_target')";
-
-    if (checkSemanticTitle) {
+    if (options.semanticTitle ?? true) {
       const opts = options.semanticTitleOptions ?? {};
       const types = opts.types ?? ["feat", "fix", "chore"];
 
-      const validateJob: Job = {
+      this.addCheck("validate", {
         name: "Validate PR title",
-        if: prCheck,
+        if: PR_CHECK,
         ...github.runsOnConfig(options),
         permissions: {
           pullRequests: JobPermission.READ,
@@ -150,9 +165,7 @@ export class PullRequestLint extends Component {
             },
           },
         ],
-      };
-
-      workflow.addJobs({ validate: validateJob });
+      });
     }
 
     if (options.contributorStatement) {
@@ -160,7 +173,7 @@ export class PullRequestLint extends Component {
       const users = opts.exemptUsers ?? [];
       const labels = opts.exemptLabels ?? [];
 
-      const conditions = [prCheck];
+      const conditions = [PR_CHECK];
 
       const exclusions: string[] = [
         ...labels.map(
@@ -185,7 +198,8 @@ export class PullRequestLint extends Component {
 
       const helpMessage =
         "Contributor statement missing from PR description. Please include the following text in the PR description";
-      const contributorStatement: Job = {
+
+      this.addCheck("contributorStatement", {
         name: "Require Contributor Statement",
         ...github.runsOnConfig(options),
         permissions: {
@@ -205,13 +219,35 @@ export class PullRequestLint extends Component {
             },
           },
         ],
-      };
-
-      workflow.addJobs({ contributorStatement });
+      });
     }
   }
 
+  /**
+   * Adds a job to the pull request lint workflow that is part of the consolidated status check.
+   *
+   * The job also runs for merge groups. Skip it there with a job condition, a skipped job counts as passing.
+   *
+   * @param id The job ID, unique within the workflow
+   * @param job The job definition
+   */
+  public addCheck(id: string, job: Job): void {
+    if (id === CONSOLIDATED_JOB_ID) {
+      throw new Error(
+        `The check ID '${CONSOLIDATED_JOB_ID}' is reserved for the consolidated status check. Choose a different ID.`,
+      );
+    }
+    this.ensureWorkflow().addJobs({ [id]: job });
+    this.checkIds.push(id);
+  }
+
   public preSynthesize(): void {
+    if (this.workflow && (this.options.consolidatedStatusCheck ?? true)) {
+      this.workflow.addJobs({
+        [CONSOLIDATED_JOB_ID]: this.renderConsolidatedJob(),
+      });
+    }
+
     if (this.options.contributorStatement) {
       // Append to PR template in preSynthesize so it's always at the end of the file
       const prTemplate =
@@ -222,5 +258,63 @@ export class PullRequestLint extends Component {
       prTemplate?.addLine(this.options.contributorStatement);
       prTemplate?.addLine("");
     }
+  }
+
+  private ensureWorkflow(): GithubWorkflow {
+    if (this.workflow) {
+      return this.workflow;
+    }
+
+    const pullRequestTypes: PullRequestOptions & PullRequestTargetOptions = {
+      types: [
+        "labeled",
+        "opened",
+        "synchronize",
+        "reopened",
+        "ready_for_review",
+        "edited",
+      ],
+    };
+    const trigger =
+      this.options.trigger ?? PullRequestLintTrigger.PULL_REQUEST_TARGET;
+
+    this.workflow = this.github.addWorkflow("pull-request-lint");
+    this.workflow.on({
+      ...(trigger === PullRequestLintTrigger.PULL_REQUEST
+        ? { pullRequest: pullRequestTypes }
+        : { pullRequestTarget: pullRequestTypes }),
+      // run on merge group, but use a condition later to always succeed
+      // needed so the workflow can be a required status check
+      mergeGroup: {},
+    });
+
+    return this.workflow;
+  }
+
+  private renderConsolidatedJob(): Job {
+    const ids = this.checkIds;
+    return {
+      ...this.github.runsOnConfig(this.options),
+      permissions: {},
+      needs: ids,
+      if: "always()",
+      steps: [
+        ...ids.map((id) => ({
+          name: `${id} result`,
+          run: `echo \${{ needs.${id}.result }}`,
+        })),
+        {
+          // Checks are skipped in merge groups and for exempt pull requests, which counts as passing.
+          if: `\${{ ${ids
+            .map(
+              (id) =>
+                `(needs.${id}.result != 'success' && needs.${id}.result != 'skipped')`,
+            )
+            .join(" || ")} }}`,
+          name: "Set status based on pull request checks",
+          run: "exit 1",
+        },
+      ],
+    };
   }
 }
