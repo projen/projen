@@ -648,6 +648,7 @@ describe("peerDependenciesMeta", () => {
       ms: { optional: true },
       semver: { optional: true },
     });
+    expect(Object.keys(pkgFile.peerDependenciesMeta)).toEqual(["ms", "semver"]);
   });
 
   test("fails if a package is not a peer dependency", () => {

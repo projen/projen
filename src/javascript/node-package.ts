@@ -1964,15 +1964,6 @@ export class NodePackage extends Component {
     return [...this.allowedScripts].sort();
   }
 
-  /**
-   * Renders the native yarn berry per-package script allowlist via
-   * `dependenciesMeta.<pkg>.built = true`. Combined with the global
-   * `enableScripts: false` yarnrc setting (set in `configureYarnBerry`),
-   * this allows install scripts to run only for the listed packages.
-   *
-   * @see https://yarnpkg.com/configuration/manifest#dependenciesMeta.built
-   * @see https://yarnpkg.com/features/security#postinstalls
-   */
   private renderPeerDependenciesMeta() {
     const names = Object.keys(this.peerDependenciesMeta);
     if (names.length === 0) {
@@ -1994,6 +1985,15 @@ export class NodePackage extends Component {
     );
   }
 
+  /**
+   * Renders the native yarn berry per-package script allowlist via
+   * `dependenciesMeta.<pkg>.built = true`. Combined with the global
+   * `enableScripts: false` yarnrc setting (set in `configureYarnBerry`),
+   * this allows install scripts to run only for the listed packages.
+   *
+   * @see https://yarnpkg.com/configuration/manifest#dependenciesMeta.built
+   * @see https://yarnpkg.com/features/security#postinstalls
+   */
   private renderYarnBerryDependenciesMeta() {
     if (this.allowedScripts.size === 0) {
       return undefined;
