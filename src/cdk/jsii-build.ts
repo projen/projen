@@ -111,6 +111,8 @@ export interface JsiiBuildOptions {
    * By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
    * This can be problematic for example when the package's build or test procedure generates .ts files
    * that cannot be compiled with jsii's compiler settings.
+   *
+   * When ESLint is enabled, these patterns are also added to its ignore patterns.
    */
   readonly excludeTypescript?: string[];
 
@@ -374,6 +376,11 @@ export class JsiiBuild implements IMixin {
       if (options.excludeTypescript) {
         jsii.excludeTypescript = options.excludeTypescript;
       }
+    }
+
+    // Excluded files are not in any project the eslint project service knows about
+    for (const pattern of options.excludeTypescript ?? []) {
+      project.eslint?.addIgnorePattern(pattern);
     }
 
     project.addFields({ jsii });
