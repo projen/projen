@@ -275,7 +275,8 @@ describe("integ-runner", () => {
   });
 
   test("ignores integ test files in jest runs", () => {
-    const project = new TestProject({
+    const project = new AwsCdkConstructLibrary({
+      ...defaultOptions,
       cdkVersion: "2.12.0",
       jest: true,
       experimentalIntegRunner: true,
