@@ -10,11 +10,15 @@ export class Clobber extends Component {
       condition: "git diff --exit-code > /dev/null",
       env: {
         BRANCH: "$(git branch --show-current)",
+        HEAD_COMMIT: "$(git rev-parse --short HEAD)",
       },
     });
 
-    task.execArgs(["git", "checkout", "-b", "scratch"], {
-      name: 'save current HEAD in "scratch" branch',
+    // The commit in the name keeps an existing "scratch" branch (or one left by
+    // a previous run) from blocking the task. `-B` is safe here: a branch with
+    // this name already points at the same commit.
+    task.exec('git checkout -B "scratch-$HEAD_COMMIT"', {
+      name: 'save current HEAD in a "scratch-<commit>" branch',
     });
     // `$BRANCH` needs a shell to expand
     task.exec('git checkout "$BRANCH"');
@@ -28,7 +32,7 @@ export class Clobber extends Component {
       name: "clean all untracked files",
     });
     task.say(
-      'ready to rock! (unpushed commits are under the "scratch" branch)',
+      'ready to rock! (unpushed commits are under a "scratch-<commit>" branch)',
     );
   }
 }
