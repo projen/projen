@@ -47,13 +47,13 @@ test("simplest LambdaExtension cdk v2", () => {
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
   expect(generatedSource).toMatchSnapshot();
 });
@@ -89,13 +89,13 @@ test("changing compatible runtimes", () => {
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)",
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true })",
   );
 });
 

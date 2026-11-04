@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 import { DependencyType } from "../../src";
 import * as awscdk from "../../src/awscdk";
 import { AwsCdkDepsJs } from "../../src/awscdk/awscdk-deps-js";
@@ -128,7 +129,7 @@ test("runtime can be used to customize the lambda runtime Node 14.x and esbuild 
   const generatedSource = snapshot["src/hello-function.ts"];
   const tasks = snapshot[".projen/tasks.json"].tasks;
   expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),",
+    "runtime: new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),",
   );
   expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -168,7 +169,7 @@ test("runtime can be used to customize the lambda runtime Node 16.x and esbuild 
   const generatedSource = snapshot["src/hello-function.ts"];
   const tasks = snapshot[".projen/tasks.json"].tasks;
   expect(generatedSource).toContain(
-    "runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),",
+    "runtime: new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),",
   );
   expect(generatedSource).not.toContain("props?.runtime");
   expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -214,7 +215,7 @@ test.each([
     const generatedSource = snapshot["src/hello-function.ts"];
     const tasks = snapshot[".projen/tasks.json"].tasks;
     expect(generatedSource).toContain(
-      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
+      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),`,
     );
     expect(generatedSource).not.toContain("props?.runtime");
     expect(tasks["bundle:hello.lambda"]).toEqual({
@@ -700,9 +701,32 @@ describe("runtime override support", () => {
     expect(generatedSource).not.toContain("readonly runtime?: lambda.Runtime;");
     expect(generatedSource).not.toContain("props?.runtime");
     expect(generatedSource).toContain(
-      "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS),",
+      "runtime: new lambda.Runtime('nodejs20.x', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),",
     );
     expect(generatedSource).toMatchSnapshot();
+  });
+
+  test("explicit runtime equals the matching lambda.Runtime constant", () => {
+    const project = new TypeScriptProject({
+      name: "hello",
+      defaultReleaseBranch: "main",
+    });
+
+    new awscdk.LambdaFunction(project, {
+      entrypoint: join("src", "hello.lambda.ts"),
+      runtime: awscdk.LambdaRuntime.NODEJS_20_X,
+      cdkDeps: cdkDepsForProject(project),
+    });
+
+    const snapshot = Testing.synth(project);
+    const generatedSource: string = snapshot["src/hello-function.ts"];
+    const expr = /runtime: (new lambda\.Runtime\(.*\)),/.exec(
+      generatedSource,
+    )?.[1];
+    expect(expr).toBeDefined();
+
+    const runtime = new Function("lambda", `return ${expr};`)(lambda);
+    expect(runtime.runtimeEquals(lambda.Runtime.NODEJS_20_X)).toBe(true);
   });
 });
 
