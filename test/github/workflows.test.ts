@@ -783,6 +783,51 @@ describe("reusable workflows", () => {
     });
   });
 
+  test("keeps user-defined input, secret and output names as written", () => {
+    const p = new TestProject();
+    const wf = p.github!.addWorkflow("input-names");
+    wf.on({
+      workflowDispatch: {
+        inputs: {
+          logLevel: { description: "Log level", type: "string" },
+        },
+      },
+      workflowCall: {
+        inputs: {
+          "config-path": { description: "Config path", type: "string" },
+        },
+        secrets: {
+          npmToken: { description: "npm token", required: true },
+        },
+        outputs: {
+          buildId: {
+            description: "The build identifier",
+            value: "${{ jobs.build.outputs.id }}",
+          },
+        },
+      },
+    });
+    wf.addJob("build", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ run: "echo hello" }],
+    });
+
+    const workflows = synthWorkflows(p);
+    const content = YAML.parse(workflows[".github/workflows/input-names.yml"]);
+    expect(Object.keys(content.on.workflow_dispatch.inputs)).toEqual([
+      "logLevel",
+    ]);
+    expect(Object.keys(content.on.workflow_call.inputs)).toEqual([
+      "config-path",
+    ]);
+    expect(Object.keys(content.on.workflow_call.secrets)).toEqual(["npmToken"]);
+    expect(content.on.workflow_call.outputs.buildId).toEqual({
+      description: "The build identifier",
+      value: "${{ jobs.build.outputs.id }}",
+    });
+  });
+
   test("reusable workflow job with strategy matrix", () => {
     const p = new TestProject();
     const wf = p.github!.addWorkflow("matrix-reusable");
