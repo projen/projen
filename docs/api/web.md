@@ -5998,6 +5998,7 @@ const nextJsProjectOptions: web.NextJsProjectOptions = { ... }
 | <code><a href="#projen.web.NextJsProjectOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.NextJsProjectOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.NextJsProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -7087,6 +7088,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.web.NextJsProjectOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.web.NextJsProjectOptions.property.peerDependencyOptions"></a>
 
@@ -8259,6 +8284,7 @@ const nextJsTypeScriptProjectOptions: web.NextJsTypeScriptProjectOptions = { ...
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.NextJsTypeScriptProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -9366,6 +9392,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.web.NextJsTypeScriptProjectOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.web.NextJsTypeScriptProjectOptions.property.peerDependencyOptions"></a>
 
@@ -10917,6 +10967,7 @@ const reactProjectOptions: web.ReactProjectOptions = { ... }
 | <code><a href="#projen.web.ReactProjectOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.web.ReactProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.ReactProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.ReactProjectOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.ReactProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -11979,6 +12030,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.web.ReactProjectOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.web.ReactProjectOptions.property.peerDependencyOptions"></a>
 
@@ -13245,6 +13320,7 @@ const reactTypeScriptProjectOptions: web.ReactTypeScriptProjectOptions = { ... }
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageManager">packageManager</a></code> | <code>projen.javascript.NodePackageManager</code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: projen.javascript.PeerDependencyMeta}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code>projen.javascript.PeerDependencyOptions</code> | Options for `peerDeps`. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.web.ReactTypeScriptProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code>projen.javascript.PnpmOptions</code> | Options for pnpm. |
@@ -14325,6 +14401,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.web.ReactTypeScriptProjectOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: projen.javascript.PeerDependencyMeta}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.web.ReactTypeScriptProjectOptions.property.peerDependencyOptions"></a>
 

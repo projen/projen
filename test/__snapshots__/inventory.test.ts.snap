@@ -4240,6 +4240,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -7497,6 +7519,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -11971,6 +12015,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -15061,6 +15127,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -18159,6 +18247,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -21295,6 +21405,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -25213,6 +25345,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -28051,6 +28205,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -30734,6 +30910,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -33444,6 +33642,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -37193,6 +37413,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -39864,6 +40106,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {
@@ -42720,6 +42984,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
+        },
+      },
+      {
         "docs": "Options for \`peerDeps\`.",
         "featured": false,
         "fqn": "projen.javascript.PeerDependencyOptions",
@@ -45548,6 +45834,28 @@ exports[`inventory 1`] = `
         "switch": "parent",
         "type": {
           "fqn": "projen.Project",
+        },
+      },
+      {
+        "default": "- no \`peerDependenciesMeta\`",
+        "docs": "Additional information about how peer dependencies are used, rendered as \`peerDependenciesMeta\` in \`package.json\`. For example, this can mark peer dependencies as optional.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "peerDependenciesMeta",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": [
+          "peerDependenciesMeta",
+        ],
+        "simpleType": "unknown",
+        "switch": "peer-dependencies-meta",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "fqn": "projen.javascript.PeerDependencyMeta",
+            },
+            "kind": "map",
+          },
         },
       },
       {

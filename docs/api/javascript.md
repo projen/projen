@@ -2510,6 +2510,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
 | <code><a href="#projen.javascript.NodePackage.addField">addField</a></code> | Directly set fields in `package.json`. |
 | <code><a href="#projen.javascript.NodePackage.addKeywords">addKeywords</a></code> | Adds keywords to package.json (deduplicated). |
 | <code><a href="#projen.javascript.NodePackage.addPackageResolutions">addPackageResolutions</a></code> | Defines resolutions for dependencies to change the normally resolved version of a dependency to something else. |
+| <code><a href="#projen.javascript.NodePackage.addPeerDependencyMeta">addPeerDependencyMeta</a></code> | Adds `peerDependenciesMeta` information for a peer dependency, e.g. to mark it as optional. |
 | <code><a href="#projen.javascript.NodePackage.addPeerDeps">addPeerDeps</a></code> | Defines peer dependencies. |
 | <code><a href="#projen.javascript.NodePackage.addVersion">addVersion</a></code> | Sets the package version. |
 | <code><a href="#projen.javascript.NodePackage.removeAllowedScripts">removeAllowedScripts</a></code> | Removes the given dependency (package) names from the `allowScripts` allowlist, whether they were added via the `allowScripts` option, a project type default, or a previous call to `addAllowedScripts`. |
@@ -2797,6 +2798,32 @@ Names resolutions to be added.
 Specify a version or
 range with this syntax:
 `module@^7`
+
+---
+
+##### `addPeerDependencyMeta` <a name="addPeerDependencyMeta" id="projen.javascript.NodePackage.addPeerDependencyMeta"></a>
+
+```typescript
+public addPeerDependencyMeta(name: string, meta: PeerDependencyMeta): void
+```
+
+Adds `peerDependenciesMeta` information for a peer dependency, e.g. to mark it as optional.
+
+The dependency must also be declared as a peer dependency.
+
+###### `name`<sup>Required</sup> <a name="name" id="projen.javascript.NodePackage.addPeerDependencyMeta.parameter.name"></a>
+
+- *Type:* string
+
+The name of the peer dependency.
+
+---
+
+###### `meta`<sup>Required</sup> <a name="meta" id="projen.javascript.NodePackage.addPeerDependencyMeta.parameter.meta"></a>
+
+- *Type:* <a href="#projen.javascript.PeerDependencyMeta">PeerDependencyMeta</a>
+
+The metadata for the peer dependency.
 
 ---
 
@@ -13208,6 +13235,7 @@ const nodePackageOptions: javascript.NodePackageOptions = { ... }
 | <code><a href="#projen.javascript.NodePackageOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.javascript.NodePackageOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PeerDependencyMeta">PeerDependencyMeta</a>}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodePackageOptions.property.pnpmOptions">pnpmOptions</a></code> | <code><a href="#projen.javascript.PnpmOptions">PnpmOptions</a></code> | Options for pnpm. |
@@ -13835,6 +13863,30 @@ The "name" in package.json.
 
 ---
 
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.javascript.NodePackageOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.javascript.PeerDependencyMeta">PeerDependencyMeta</a>}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
+
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.javascript.NodePackageOptions.property.peerDependencyOptions"></a>
 
 ```typescript
@@ -14041,6 +14093,7 @@ const nodeProjectOptions: javascript.NodeProjectOptions = { ... }
 | <code><a href="#projen.javascript.NodeProjectOptions.property.npmVerifyPublishedTimeoutSeconds">npmVerifyPublishedTimeoutSeconds</a></code> | <code>number</code> | How long to wait, in seconds, for the published package version to be available. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageManager">packageManager</a></code> | <code><a href="#projen.javascript.NodePackageManager">NodePackageManager</a></code> | The Node Package Manager used to execute scripts. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.packageName">packageName</a></code> | <code>string</code> | The "name" in package.json. |
+| <code><a href="#projen.javascript.NodeProjectOptions.property.peerDependenciesMeta">peerDependenciesMeta</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PeerDependencyMeta">PeerDependencyMeta</a>}</code> | Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDependencyOptions">peerDependencyOptions</a></code> | <code><a href="#projen.javascript.PeerDependencyOptions">PeerDependencyOptions</a></code> | Options for `peerDeps`. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.peerDeps">peerDeps</a></code> | <code>string[]</code> | Peer dependencies for this module. |
 | <code><a href="#projen.javascript.NodeProjectOptions.property.pnpmOptions">pnpmOptions</a></code> | <code><a href="#projen.javascript.PnpmOptions">PnpmOptions</a></code> | Options for pnpm. |
@@ -15100,6 +15153,30 @@ public readonly packageName: string;
 The "name" in package.json.
 
 ---
+
+##### `peerDependenciesMeta`<sup>Optional</sup> <a name="peerDependenciesMeta" id="projen.javascript.NodeProjectOptions.property.peerDependenciesMeta"></a>
+
+```typescript
+public readonly peerDependenciesMeta: {[ key: string ]: PeerDependencyMeta};
+```
+
+- *Type:* {[ key: string ]: <a href="#projen.javascript.PeerDependencyMeta">PeerDependencyMeta</a>}
+- *Default:* no `peerDependenciesMeta`
+
+Additional information about how peer dependencies are used, rendered as `peerDependenciesMeta` in `package.json`. For example, this can mark peer dependencies as optional.
+
+Each key must also be declared as a peer dependency.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+---
+
+*Example*
+
+```typescript
+{ "aws-cdk-lib": { optional: true } }
+```
+
 
 ##### `peerDependencyOptions`<sup>Optional</sup> <a name="peerDependencyOptions" id="projen.javascript.NodeProjectOptions.property.peerDependencyOptions"></a>
 
@@ -16263,6 +16340,44 @@ public readonly registry: string;
 URL of the registry mirror to use.
 
 You can change this or add scoped registries using the addRegistry method
+
+---
+
+### PeerDependencyMeta <a name="PeerDependencyMeta" id="projen.javascript.PeerDependencyMeta"></a>
+
+Additional information about how a peer dependency is used.
+
+> [https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#peerdependenciesmeta)
+
+#### Initializer <a name="Initializer" id="projen.javascript.PeerDependencyMeta.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const peerDependencyMeta: javascript.PeerDependencyMeta = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PeerDependencyMeta.property.optional">optional</a></code> | <code>boolean</code> | Marks the peer dependency as optional. |
+
+---
+
+##### `optional`<sup>Optional</sup> <a name="optional" id="projen.javascript.PeerDependencyMeta.property.optional"></a>
+
+```typescript
+public readonly optional: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Marks the peer dependency as optional.
+
+Package managers will not
+install it or warn if it is missing.
 
 ---
 
