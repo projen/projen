@@ -394,6 +394,22 @@ describe("publish to go", () => {
     expect(output["tsconfig.json"].exclude).toContain("src/**/__tests__/*.ts");
   });
 
+  test("excludeTypescript patterns are ignored by eslint", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "master",
+      excludeTypescript: ["src/lambda"],
+    });
+
+    const output = synthSnapshot(project);
+    expect(output["tsconfig.json"].exclude).toContain("src/lambda");
+    expect(output[".eslintrc.json"].ignorePatterns).toContain("src/lambda");
+  });
+
   test("excludeTypescript is set in jsii config when tsconfig is disabled", () => {
     const project = new JsiiProject({
       authorAddress: "https://foo.bar",

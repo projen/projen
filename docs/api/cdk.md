@@ -6556,6 +6556,8 @@ By default, jsii will include all *.ts files (except .d.ts files) in the TypeScr
 This can be problematic for example when the package's build or test procedure generates .ts files
 that cannot be compiled with jsii's compiler settings.
 
+When ESLint is enabled, these patterns are also added to its ignore patterns.
+
 ---
 
 ##### `jsiiVersion`<sup>Optional</sup> <a name="jsiiVersion" id="projen.cdk.ConstructLibraryOptions.property.jsiiVersion"></a>
@@ -6923,6 +6925,8 @@ Files matching any of those patterns will be excluded from the TypeScript compil
 By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
 This can be problematic for example when the package's build or test procedure generates .ts files
 that cannot be compiled with jsii's compiler settings.
+
+When ESLint is enabled, these patterns are also added to its ignore patterns.
 
 ---
 
@@ -10566,6 +10570,8 @@ Files matching any of those patterns will be excluded from the TypeScript compil
 By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
 This can be problematic for example when the package's build or test procedure generates .ts files
 that cannot be compiled with jsii's compiler settings.
+
+When ESLint is enabled, these patterns are also added to its ignore patterns.
 
 ---
 

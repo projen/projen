@@ -12027,6 +12027,8 @@ By default, jsii will include all *.ts files (except .d.ts files) in the TypeScr
 This can be problematic for example when the package's build or test procedure generates .ts files
 that cannot be compiled with jsii's compiler settings.
 
+When ESLint is enabled, these patterns are also added to its ignore patterns.
+
 ---
 
 ##### `jsiiVersion`<sup>Optional</sup> <a name="jsiiVersion" id="projen.cdk8s.ConstructLibraryCdk8sOptions.property.jsiiVersion"></a>
