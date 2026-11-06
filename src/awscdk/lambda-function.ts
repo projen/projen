@@ -323,8 +323,9 @@ export class LambdaFunction extends Component {
       }
     } else {
       // Explicit runtime - hardcoded, no override
+      // supportsInlineCode matches the lambda.Runtime constants, so runtimeEquals() holds
       src.line(
-        `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
+        `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),`,
       );
     }
 

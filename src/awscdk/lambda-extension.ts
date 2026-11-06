@@ -204,9 +204,10 @@ class LambdaLayerConstruct extends SourceCode {
     src.line("...props,");
 
     src.open("compatibleRuntimes: [");
+    // supportsInlineCode matches the lambda.Runtime constants, so runtimeEquals() holds
     for (const runtime of options.compatibleRuntimes) {
       src.line(
-        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`,
+        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS, { supportsInlineCode: true }),`,
       );
     }
     src.close("],");
