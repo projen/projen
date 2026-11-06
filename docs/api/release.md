@@ -1352,6 +1352,7 @@ const gitPublishOptions: release.GitPublishOptions = { ... }
 | <code><a href="#projen.release.GitPublishOptions.property.gitBranch">gitBranch</a></code> | <code>string</code> | Branch to push to. |
 | <code><a href="#projen.release.GitPublishOptions.property.gitPushCommand">gitPushCommand</a></code> | <code>string</code> | Override git-push command. |
 | <code><a href="#projen.release.GitPublishOptions.property.projectChangelogFile">projectChangelogFile</a></code> | <code>string</code> | The location of an .md file that includes the project-level changelog. |
+| <code><a href="#projen.release.GitPublishOptions.property.releaseCommitMessageFormat">releaseCommitMessageFormat</a></code> | <code>string</code> | Format of the commit message used when updating the project-level changelog. |
 
 ---
 
@@ -1453,6 +1454,21 @@ public readonly projectChangelogFile: string;
 - *Type:* string
 
 The location of an .md file that includes the project-level changelog.
+
+---
+
+##### `releaseCommitMessageFormat`<sup>Optional</sup> <a name="releaseCommitMessageFormat" id="projen.release.GitPublishOptions.property.releaseCommitMessageFormat"></a>
+
+```typescript
+public readonly releaseCommitMessageFormat: string;
+```
+
+- *Type:* string
+- *Default:* "chore(release): {{currentTag}}"
+
+Format of the commit message used when updating the project-level changelog.
+
+`{{currentTag}}` is replaced with the release version.
 
 ---
 
