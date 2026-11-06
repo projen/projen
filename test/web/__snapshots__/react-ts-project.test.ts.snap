@@ -179,8 +179,11 @@ exports[`defaults 1`] = `
         "error",
         {
           "devDependencies": [
+            "**/test/**",
+            "**/build-tools/**",
             "**/src/**/*.test.tsx",
             "**/src/setupTests.ts",
+            ".projenrc.js",
           ],
           "optionalDependencies": false,
           "peerDependencies": true,
