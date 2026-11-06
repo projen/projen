@@ -230,6 +230,9 @@ export class LambdaFunction extends Component {
       path.dirname(outfileAbs),
     );
 
+    // the generated construct file is read-only, so keep it out of eslint --fix
+    eslint?.addIgnorePattern(normalizePersistedPath(constructFile));
+
     const src = new SourceCode(project, constructFile);
     if (src.marker) {
       src.line(`// ${src.marker}`);
