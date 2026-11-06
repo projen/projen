@@ -119,7 +119,7 @@ exports[`happy flow 2`] = `
             <version>[10.5.1,11.0.0)</version>
         </dependency>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>99.99.99</version>
             <scope>test</scope>
