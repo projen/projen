@@ -19,6 +19,12 @@ export class IntegRunner extends Component {
       DependencyType.DEVENV,
     );
 
+    // Integration test files (named `integ.*.ts` according to the
+    // https://github.com/aws/aws-cdk/blob/main/INTEGRATION_TESTS.md naming
+    // convention) are discovered and executed by the `integ` task and should
+    // not be picked up by jest runs.
+    project.jest?.addIgnorePattern("/integ\\.[^/]*\\.ts$");
+
     const integSnapshotTask = project.addTask("integ", {
       description: "Run integration snapshot tests",
       receiveArgs: true,
