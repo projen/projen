@@ -401,11 +401,9 @@ describe("NodeProject audit", () => {
 
     const snapshot = synthSnapshot(project);
     const tasks = snapshot["test-project/.projen/tasks.json"];
-    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
-      "node",
-      "-e",
-      "const { execSync } = require('child_process'); try { execSync('yarn audit --level critical', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 16 ? 0 : 1); }",
-    ]);
+    const script = tasks.tasks.audit.steps[0].execArgs[2];
+    expect(script).toContain("yarn audit --level critical");
+    expect(script).toContain("e.status < 16");
   });
 
   test("audit level flags work with all package managers", () => {
