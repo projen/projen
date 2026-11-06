@@ -371,6 +371,43 @@ describe("NodeProject audit", () => {
     }
   });
 
+  test("audit rejects an invalid level for yarn classic", () => {
+    const project = new TestProject();
+    expect(
+      () =>
+        new NodeProject({
+          parent: project,
+          outdir: "test-project",
+          name: "test",
+          defaultReleaseBranch: "main",
+          auditDeps: true,
+          auditDepsOptions: { level: "high; echo pwned #" as any },
+          packageManager: NodePackageManager.YARN_CLASSIC,
+        }),
+    ).toThrow(/Invalid auditDepsOptions\.level "high; echo pwned #"/);
+  });
+
+  test("audit level can be configured for yarn classic", () => {
+    const project = new TestProject();
+    new NodeProject({
+      parent: project,
+      outdir: "test-project",
+      name: "test",
+      defaultReleaseBranch: "main",
+      auditDeps: true,
+      auditDepsOptions: { level: "critical" },
+      packageManager: NodePackageManager.YARN_CLASSIC,
+    });
+
+    const snapshot = synthSnapshot(project);
+    const tasks = snapshot["test-project/.projen/tasks.json"];
+    expect(tasks.tasks.audit.steps[0].execArgs).toEqual([
+      "node",
+      "-e",
+      "const { execSync } = require('child_process'); try { execSync('yarn audit --level critical', {stdio: 'inherit'}); } catch(e) { process.exit(e.status < 16 ? 0 : 1); }",
+    ]);
+  });
+
   test("audit level flags work with all package managers", () => {
     const levels = ["low", "moderate", "critical"];
 

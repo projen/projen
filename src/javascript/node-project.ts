@@ -1381,6 +1381,12 @@ export class NodeProject extends GitHubProject {
    */
   private addAuditTask(options: NodeProjectOptions): Task {
     const auditLevel = options.auditDepsOptions?.level ?? "high";
+    const allowedLevels = ["low", "moderate", "high", "critical"];
+    if (!allowedLevels.includes(auditLevel)) {
+      throw new Error(
+        `Invalid auditDepsOptions.level "${auditLevel}". Set it to one of: ${allowedLevels.join(", ")}.`,
+      );
+    }
     const auditProdOnly = options.auditDepsOptions?.prodOnly ?? false;
 
     // Create audit task
