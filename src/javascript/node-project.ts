@@ -68,6 +68,19 @@ import {
 
 const PROJEN_SCRIPT = "projen";
 
+const AUDIT_LEVELS = ["low", "moderate", "high", "critical"];
+
+function validateAuditLevel(
+  level: AuditOptions["level"],
+): AuditOptions["level"] {
+  if (level !== undefined && !AUDIT_LEVELS.includes(level)) {
+    throw new Error(
+      `Invalid auditDepsOptions.level "${level}". Set it to one of: ${AUDIT_LEVELS.join(", ")}.`,
+    );
+  }
+  return level;
+}
+
 /**
  * Options for security audit configuration.
  */
@@ -564,7 +577,9 @@ export class NodeProject extends GitHubProject {
         ...(options.githubOptions?.dependencyReview
           ? {
               dependencyReviewOptions: {
-                failOnSeverity: options.auditDepsOptions?.level,
+                failOnSeverity: validateAuditLevel(
+                  options.auditDepsOptions?.level,
+                ),
                 allowLicenses: options.checkLicenses?.allow,
                 ...options.githubOptions?.dependencyReviewOptions,
               },
@@ -1380,7 +1395,8 @@ export class NodeProject extends GitHubProject {
    * Adds a security audit task.
    */
   private addAuditTask(options: NodeProjectOptions): Task {
-    const auditLevel = options.auditDepsOptions?.level ?? "high";
+    const auditLevel =
+      validateAuditLevel(options.auditDepsOptions?.level) ?? "high";
     const auditProdOnly = options.auditDepsOptions?.prodOnly ?? false;
 
     // Create audit task
