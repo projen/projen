@@ -381,10 +381,10 @@ describe("NodeProject audit", () => {
           name: "test",
           defaultReleaseBranch: "main",
           auditDeps: true,
-          auditDepsOptions: { level: "high; echo pwned #" as any },
+          auditDepsOptions: { level: "severe" as any },
           packageManager: NodePackageManager.YARN_CLASSIC,
         }),
-    ).toThrow(/Invalid auditDepsOptions\.level "high; echo pwned #"/);
+    ).toThrow(/Invalid auditDepsOptions\.level "severe"/);
   });
 
   test("audit level can be configured for yarn classic", () => {
