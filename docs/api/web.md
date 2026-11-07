@@ -10729,7 +10729,6 @@ const postCssOptions: web.PostCssOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.web.PostCssOptions.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.web.PostCssOptions.property.tailwind">tailwind</a></code> | <code>boolean</code> | Install Tailwind CSS as a PostCSS plugin. |
-| <code><a href="#projen.web.PostCssOptions.property.tailwindOptions">tailwindOptions</a></code> | <code><a href="#projen.web.TailwindConfigOptions">TailwindConfigOptions</a></code> | Tailwind CSS options. |
 
 ---
 
@@ -10754,18 +10753,6 @@ public readonly tailwind: boolean;
 - *Default:* true
 
 Install Tailwind CSS as a PostCSS plugin.
-
----
-
-##### `tailwindOptions`<sup>Optional</sup> <a name="tailwindOptions" id="projen.web.PostCssOptions.property.tailwindOptions"></a>
-
-```typescript
-public readonly tailwindOptions: TailwindConfigOptions;
-```
-
-- *Type:* <a href="#projen.web.TailwindConfigOptions">TailwindConfigOptions</a>
-
-Tailwind CSS options.
 
 ---
 
@@ -15781,7 +15768,6 @@ new web.PostCss(project: NodeProject, options?: PostCssOptions)
 | --- | --- | --- |
 | <code><a href="#projen.web.PostCss.property.file">file</a></code> | <code>projen.JsonFile</code> | *No description.* |
 | <code><a href="#projen.web.PostCss.property.fileName">fileName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#projen.web.PostCss.property.tailwind">tailwind</a></code> | <code><a href="#projen.web.TailwindConfig">TailwindConfig</a></code> | *No description.* |
 
 ---
 
@@ -15802,16 +15788,6 @@ public readonly fileName: string;
 ```
 
 - *Type:* string
-
----
-
-##### `tailwind`<sup>Optional</sup> <a name="tailwind" id="projen.web.PostCss.property.tailwind"></a>
-
-```typescript
-public readonly tailwind: TailwindConfig;
-```
-
-- *Type:* <a href="#projen.web.TailwindConfig">TailwindConfig</a>
 
 ---
 
