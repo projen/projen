@@ -1,5 +1,3 @@
-import type { TailwindConfigOptions } from "./tailwind";
-import { TailwindConfig } from "./tailwind";
 import type { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 
@@ -15,11 +13,6 @@ export interface PostCssOptions {
    * @default true
    */
   readonly tailwind?: boolean;
-
-  /**
-   * Tailwind CSS options.
-   */
-  readonly tailwindOptions?: TailwindConfigOptions;
 }
 
 /**
@@ -28,7 +21,6 @@ export interface PostCssOptions {
 export class PostCss {
   public readonly fileName: string;
   public readonly file: JsonFile;
-  public readonly tailwind?: TailwindConfig;
 
   constructor(project: NodeProject, options?: PostCssOptions) {
     this.fileName = options?.fileName ?? "postcss.config.json";
@@ -38,11 +30,8 @@ export class PostCss {
     const config: { [key: string]: any } = { plugins: {} };
 
     if (options?.tailwind ?? true) {
-      config.plugins.tailwindcss = {};
-      config.plugins.autoprefixer = {};
-      this.tailwind = new TailwindConfig(project, options?.tailwindOptions);
-      config.plugins.tailwindcss.config = this.tailwind.fileName;
-      project.addDeps("tailwindcss", "autoprefixer");
+      config.plugins["@tailwindcss/postcss"] = {};
+      project.addDeps("tailwindcss", "@tailwindcss/postcss");
     }
 
     this.file = new JsonFile(project, this.fileName, {

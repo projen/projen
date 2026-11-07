@@ -153,8 +153,10 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           noEmit: true,
           lib: ["dom", "dom.iterable", "esnext"],
           strict: true,
-          target: "es5",
+          target: "ES2017",
           incremental: true,
+          // Next.js type-checks the generated .next/types files
+          rootDir: ".",
           plugins: [
             {
               name: "next",
@@ -521,7 +523,7 @@ class NextSampleCode extends Component {
     ];
 
     if (this.tailwind) {
-      indexJs.unshift('import "tailwindcss/tailwind.css"');
+      indexJs.unshift('import "tailwindcss/index.css"');
     }
 
     const vercelSvg = [
