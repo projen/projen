@@ -1,6 +1,7 @@
+import { NodePackageManager } from "../../src/javascript";
 import type { NextJsTypeScriptProjectOptions } from "../../src/web";
 import { NextJsTypeScriptProject } from "../../src/web";
-import { synthSnapshot } from "../util";
+import { execProjenCLI, synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestNextJsTypeScriptProject();
@@ -23,6 +24,15 @@ test("CommonJS not ESnext", () => {
   expect(out["tsconfig.json"]).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions.module).toEqual("esnext");
+});
+
+test("compiles", async () => {
+  const p = new TestNextJsTypeScriptProject({
+    packageManager: NodePackageManager.NPM,
+  });
+  p.synth();
+
+  await execProjenCLI(p.outdir, ["compile"]);
 });
 
 class TestNextJsTypeScriptProject extends NextJsTypeScriptProject {
