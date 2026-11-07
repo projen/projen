@@ -217,6 +217,40 @@ describe("install trigger", () => {
     expect(taskMock).toHaveBeenCalledWith("install");
   });
 
+  test("poetry: installs dependencies when the environment cannot be detected", () => {
+    const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
+    jest.spyOn(Poetry.prototype, "setupEnvironment").mockReturnValue();
+    jest.spyOn(util.poetry, "tryCapture").mockReturnValue(undefined);
+    const outdir = mkdtemp();
+
+    synthWithoutPost(new TestPythonProject({ outdir, poetry: true }));
+
+    const installSpy = jest.spyOn(Poetry.prototype, "installDependencies");
+
+    new TestPythonProject({ outdir, poetry: true }).synth();
+
+    expect(installSpy).toHaveBeenCalledTimes(1);
+    expect(taskMock).toHaveBeenCalledWith("install:ci");
+  });
+
+  test("installs dependencies for a manager that cannot report its state", () => {
+    const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
+    const outdir = mkdtemp();
+
+    synthWithoutPost(new TestPythonProject({ outdir }));
+
+    const project = new TestPythonProject({ outdir });
+    Object.defineProperty(project, "envManager", {
+      value: { setupEnvironment: jest.fn() },
+    });
+    const installSpy = jest.spyOn(Pip.prototype, "installDependencies");
+
+    project.synth();
+
+    expect(installSpy).toHaveBeenCalledTimes(1);
+    expect(taskMock).toHaveBeenCalledWith("install");
+  });
+
   test("uv: does not clear the environment when pyproject.toml is unchanged", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
     const uvRun = jest.spyOn(util.uv, "run").mockReturnValue(undefined);
