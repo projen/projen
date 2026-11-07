@@ -153,8 +153,10 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           noEmit: true,
           lib: ["dom", "dom.iterable", "esnext"],
           strict: true,
-          target: "es5",
+          target: "ES2017",
           incremental: true,
+          // Next.js type-checks the generated .next/types files
+          rootDir: ".",
           plugins: [
             {
               name: "next",
