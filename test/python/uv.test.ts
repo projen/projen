@@ -243,7 +243,7 @@ test("generates correct pyproject.toml content", () => {
   expect(actualContentObject).toEqual(expectedContentObject);
 });
 
-test("uv setupEnvironment creates venv with --clear", () => {
+test("uv setupEnvironment creates venv when missing", () => {
   const whichUv = jest.spyOn(util.uv, "tryCapture").mockReturnValue("uv 0.1.0");
   const execSpy = jest.spyOn(util.uv, "run").mockImplementation(() => {});
 
@@ -259,7 +259,7 @@ test("uv setupEnvironment creates venv with --clear", () => {
 
   expect(whichUv).toHaveBeenCalledWith(["--version"], { cwd: project.outdir });
   expect(execSpy).toHaveBeenCalledWith(
-    ["venv", "--python", ">=3.12,<4.0", "--clear", ".venv"],
+    ["venv", "--python", ">=3.12,<4.0", ".venv"],
     { cwd: project.outdir },
   );
 });

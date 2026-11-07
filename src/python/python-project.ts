@@ -633,7 +633,58 @@ export class PythonProject extends GitHubProject {
   public postSynthesize() {
     super.postSynthesize();
 
+    // only run "install" if a dependency manifest has changed or if there is
+    // no environment yet (mirrors NodeProject). This must be evaluated before
+    // `setupEnvironment()` creates the environment.
+    const initialTrigger = this.determineInitialInstallTrigger();
+
     this.envManager.setupEnvironment();
-    this.depsManager.installDependencies();
+
+    if (initialTrigger) {
+      this.depsManager.installDependencies();
+    } else {
+      this.logger.debug(
+        "Skipping dependency installation: dependency manifests are unchanged and the environment exists.",
+      );
+    }
+  }
+
+  /**
+   * Checks whether dependencies need to be installed after synthesis.
+   *
+   * An install is needed when one of the dependency manifests has changed
+   * during synthesis, or when the environment does not exist yet (e.g. on a
+   * fresh clone). On the first synthesis the manifests do not exist yet, so
+   * dependencies are always installed.
+   *
+   * Must be called before `setupEnvironment()` as creating the environment
+   * would make it look like dependencies are already installed.
+   *
+   * @returns whether `installDependencies` should be run.
+   */
+  private determineInitialInstallTrigger(): boolean {
+    // pip manifests are requirements.txt and requirements-dev.txt, poetry and
+    // uv manifests are pyproject.toml.
+    const manifests = [
+      "requirements.txt",
+      "requirements-dev.txt",
+      "pyproject.toml",
+    ];
+
+    if (manifests.some((manifest) => this.tryFindFile(manifest)?.changed)) {
+      return true;
+    }
+
+    const envManager = this.envManager;
+    if (
+      envManager instanceof Venv ||
+      envManager instanceof Poetry ||
+      envManager instanceof Uv
+    ) {
+      return !envManager._environmentExists();
+    }
+
+    // environment managers that cannot report their state always install
+    return true;
   }
 }
