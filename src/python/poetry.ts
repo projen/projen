@@ -248,9 +248,10 @@ export class Poetry
 
   /**
    * Indicates if a poetry environment has already been created.
-   * `@internal`
+   *
+   * @internal
    */
-  public environmentExists() {
+  public _environmentExists() {
     return !!poetry.tryCapture(["env", "info", "-p"], {
       cwd: this.project.outdir,
     });

@@ -1,8 +1,9 @@
-import { mkdirSync, rmSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import { join } from "path";
 import { TestPythonProject } from "./util";
-import { Pip, Poetry, Venv } from "../../src/python";
+import { Pip, Poetry, Uv, Venv } from "../../src/python";
 import { Tasks } from "../../src/tasks";
+import * as util from "../../src/util/exec";
 import { mkdtemp, synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -122,7 +123,7 @@ describe("install trigger", () => {
 
   test("does not install dependencies when the manifests are unchanged and the environment exists", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
-    const outdir = mkdtemp({ cleanup: false });
+    const outdir = mkdtemp();
 
     // initial synth to lay down the dependency manifests
     synthWithoutPost(new TestPythonProject({ outdir }));
@@ -135,13 +136,11 @@ describe("install trigger", () => {
 
     expect(installSpy).not.toHaveBeenCalled();
     expect(taskMock).not.toHaveBeenCalled();
-
-    rmSync(outdir, { recursive: true, force: true });
   });
 
   test("installs dependencies when a manifest has changed", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
-    const outdir = mkdtemp({ cleanup: false });
+    const outdir = mkdtemp();
 
     synthWithoutPost(new TestPythonProject({ outdir }));
     mkdirSync(join(outdir, ".env"));
@@ -155,8 +154,6 @@ describe("install trigger", () => {
 
     expect(installSpy).toHaveBeenCalledTimes(1);
     expect(taskMock).toHaveBeenCalledWith("install");
-
-    rmSync(outdir, { recursive: true, force: true });
   });
 
   test("installs dependencies when the environment is missing", () => {
@@ -164,7 +161,7 @@ describe("install trigger", () => {
     const venvSpy = jest
       .spyOn(Venv.prototype, "setupEnvironment")
       .mockReturnValue(); // avoid creating a real venv
-    const outdir = mkdtemp({ cleanup: false });
+    const outdir = mkdtemp();
 
     // manifests are unchanged, but there is no .env directory (e.g. fresh clone)
     synthWithoutPost(new TestPythonProject({ outdir }));
@@ -176,14 +173,12 @@ describe("install trigger", () => {
     expect(venvSpy).toHaveBeenCalled();
     expect(installSpy).toHaveBeenCalledTimes(1);
     expect(taskMock).toHaveBeenCalledWith("install");
-
-    rmSync(outdir, { recursive: true, force: true });
   });
 
   test("installs dependencies on the first synthesis", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
     jest.spyOn(Venv.prototype, "setupEnvironment").mockReturnValue(); // avoid creating a real venv
-    const outdir = mkdtemp({ cleanup: false }); // no manifests and no environment yet
+    const outdir = mkdtemp(); // no manifests and no environment yet
 
     const installSpy = jest.spyOn(Pip.prototype, "installDependencies");
 
@@ -191,15 +186,13 @@ describe("install trigger", () => {
 
     expect(installSpy).toHaveBeenCalledTimes(1);
     expect(taskMock).toHaveBeenCalledWith("install");
-
-    rmSync(outdir, { recursive: true, force: true });
   });
 
   test("poetry: does not install dependencies when pyproject.toml is unchanged and an environment exists", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
     jest.spyOn(Poetry.prototype, "setupEnvironment").mockReturnValue();
-    jest.spyOn(Poetry.prototype, "environmentExists").mockReturnValue(true);
-    const outdir = mkdtemp({ cleanup: false });
+    jest.spyOn(Poetry.prototype, "_environmentExists").mockReturnValue(true);
+    const outdir = mkdtemp();
 
     synthWithoutPost(new TestPythonProject({ outdir, poetry: true }));
 
@@ -209,14 +202,12 @@ describe("install trigger", () => {
 
     expect(installSpy).not.toHaveBeenCalled();
     expect(taskMock).not.toHaveBeenCalled();
-
-    rmSync(outdir, { recursive: true, force: true });
   });
 
   test("poetry: installs dependencies on the first synthesis", () => {
     const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
     jest.spyOn(Poetry.prototype, "setupEnvironment").mockReturnValue();
-    const outdir = mkdtemp({ cleanup: false });
+    const outdir = mkdtemp();
 
     const installSpy = jest.spyOn(Poetry.prototype, "installDependencies");
 
@@ -224,7 +215,25 @@ describe("install trigger", () => {
 
     expect(installSpy).toHaveBeenCalledTimes(1);
     expect(taskMock).toHaveBeenCalledWith("install");
+  });
 
-    rmSync(outdir, { recursive: true, force: true });
+  test("uv: does not clear the environment when pyproject.toml is unchanged", () => {
+    const taskMock = jest.spyOn(Tasks.prototype, "runTask").mockReturnValue();
+    const uvRun = jest.spyOn(util.uv, "run").mockReturnValue(undefined);
+    const outdir = mkdtemp();
+
+    synthWithoutPost(new TestPythonProject({ outdir, uv: true }));
+    mkdirSync(join(outdir, ".venv"));
+    writeFileSync(join(outdir, ".venv", "marker"), "kept");
+
+    const installSpy = jest.spyOn(Uv.prototype, "installDependencies");
+
+    new TestPythonProject({ outdir, uv: true }).synth();
+
+    expect(installSpy).not.toHaveBeenCalled();
+    expect(taskMock).not.toHaveBeenCalled();
+    // an existing environment must not be recreated or cleared
+    expect(uvRun).not.toHaveBeenCalled();
+    expect(existsSync(join(outdir, ".venv", "marker"))).toBe(true);
   });
 });

@@ -176,6 +176,10 @@ export class Uv
   }
 
   public setupEnvironment(): void {
+    if (this._environmentExists()) {
+      return;
+    }
+
     const result = uv.tryCapture(["--version"], {
       cwd: this.project.outdir,
     });
@@ -188,7 +192,7 @@ export class Uv
 
     // Create venv with the specific Python version
     // this will install the requested python version if needed
-    uv.run(["venv", "--python", this.venvPython, "--clear", ".venv"], {
+    uv.run(["venv", "--python", this.venvPython, ".venv"], {
       cwd: this.project.outdir,
     });
     this.project.logger.info(
@@ -207,9 +211,10 @@ export class Uv
 
   /**
    * Indicates if the uv environment has already been created.
-   * `@internal`
+   *
+   * @internal
    */
-  public environmentExists(): boolean {
+  public _environmentExists(): boolean {
     return fs.existsSync(path.join(this.project.outdir, ".venv"));
   }
 }

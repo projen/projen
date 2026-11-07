@@ -681,7 +681,7 @@ export class PythonProject extends GitHubProject {
       envManager instanceof Poetry ||
       envManager instanceof Uv
     ) {
-      return !envManager.environmentExists();
+      return !envManager._environmentExists();
     }
 
     // environment managers that cannot report their state always install
