@@ -199,6 +199,10 @@ The command used for pushing can be customized by specifying
 If working completely local, setting `gitPushCommand` to an empty string ( `''` )
 results in the local git repository getting appropriate tags added.
 
+The commit that updates the project changelog uses the message `chore(release): {{currentTag}}` by default.
+You can change it with `versionrcOptions.releaseCommitMessageFormat`, where `{{currentTag}}` is replaced
+with the release version, for example `chore(release): {{currentTag}} [skip ci]`.
+
 Note that setting `releaseTrigger` to `ReleaseTrigger.manual()` also has the side-effect of **removing**
 the GitHub action workflow related to release processing. There is no `.github/workflows/release.yml` file
 created for the repository.
