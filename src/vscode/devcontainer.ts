@@ -1,3 +1,4 @@
+import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import type {
   DevEnvironmentDockerImage,
@@ -161,11 +162,13 @@ export class DevContainer
 
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
-      // npx stops on "Ok to proceed? (y)" outside CI.
-      const command = withNpxYes(this.project.projenCommand);
-      return this.postCreateTasks
-        .map((task) => `( ${command} ${task.name} )`)
-        .join(" && ");
+      // Install projen globally first so the tasks never stop on npx's
+      // "Ok to proceed? (y)" install prompt.
+      const install = `npm install -g projen@${PROJEN_VERSION}`;
+      const tasks = this.postCreateTasks.map(
+        (task) => `( projen ${task.name} )`,
+      );
+      return [install, ...tasks].join(" && ");
     } else {
       return undefined;
     }
@@ -185,36 +188,4 @@ export class DevContainer
       return pv;
     }, {});
   }
-}
-
-const NPX_OPTIONS_WITH_VALUE = [
-  "-p",
-  "--package",
-  "-c",
-  "--call",
-  "-w",
-  "--workspace",
-];
-
-function withNpxYes(projenCommand: string): string {
-  const tokens = projenCommand.trim().split(/\s+/);
-  if (tokens[0] !== "npx") {
-    return projenCommand;
-  }
-
-  // Only options before the executable belong to npx.
-  for (let i = 1; i < tokens.length; i++) {
-    const token = tokens[i];
-    if (token === "--" || !token.startsWith("-")) {
-      break;
-    }
-    if (token === "--yes" || token === "-y" || token.startsWith("--yes=")) {
-      return projenCommand;
-    }
-    if (NPX_OPTIONS_WITH_VALUE.includes(token)) {
-      i++;
-    }
-  }
-
-  return projenCommand.replace(/^(\s*)npx(?=\s|$)/, "$1npx --yes");
 }

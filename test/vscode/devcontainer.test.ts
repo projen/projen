@@ -93,21 +93,15 @@ test("add postCreateCommands", () => {
   expect(devcontainer).toStrictEqual({
     "//": expect.anything(),
     postCreateCommand:
-      "( npx --yes projen testCwd1 ) && ( npx --yes projen testCwd2 )",
+      "npm install -g projen@99.99.99 && ( projen testCwd1 ) && ( projen testCwd2 )",
   });
 });
 
-test.each([
-  "npx --yes projen",
-  "npx -y projen",
-  "node ./projen.js",
-  "",
-  "echo npx",
-])("postCreateCommand renders %j unchanged", (projenCommand) => {
+test("postCreateCommand runs plain projen after a global install", () => {
   // GIVEN
   const project = new TestProject({
     devContainer: true,
-    projenCommand,
+    projenCommand: "npx -p projen projen",
   });
 
   // WHEN
@@ -115,30 +109,10 @@ test.each([
 
   // THEN
   const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
-  expect(devcontainer.postCreateCommand).toBe(`( ${projenCommand} task )`);
+  expect(devcontainer.postCreateCommand).toBe(
+    "npm install -g projen@99.99.99 && ( projen task )",
+  );
 });
-
-test.each([
-  ["npx projen --yes", "npx --yes projen --yes"],
-  ["npx projen -y", "npx --yes projen -y"],
-  ["npx -p projen projen", "npx --yes -p projen projen"],
-])(
-  "postCreateCommand adds --yes before the executable for %j",
-  (projenCommand, expected) => {
-    // GIVEN
-    const project = new TestProject({
-      devContainer: true,
-      projenCommand,
-    });
-
-    // WHEN
-    project.devContainer?.addTasks(project.addTask("task"));
-
-    // THEN
-    const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
-    expect(devcontainer.postCreateCommand).toBe(`( ${expected} task )`);
-  },
-);
 
 test("add features", () => {
   // GIVEN
