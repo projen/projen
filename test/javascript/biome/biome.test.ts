@@ -1,7 +1,11 @@
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
 import type { Project } from "../../../src";
 import type { biome_config } from "../../../src/javascript";
 import { Biome } from "../../../src/javascript";
 import { NodeProject } from "../../../src/javascript/node-project";
+import * as javascriptUtil from "../../../src/javascript/util";
 import {
   TypeScriptProject,
   type TypeScriptProjectOptions,
@@ -398,6 +402,124 @@ describe("postProjectCreation", () => {
 
     // THEN
     expect(runTask).not.toHaveBeenCalledWith(biome.task.name);
+  });
+
+  describe("$schema resolution", () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    test("uses direct node_modules path when local symlink exists inside outdir", () => {
+      const tmpdir = fs.realpathSync(
+        fs.mkdtempSync(path.join(os.tmpdir(), "projen-biome-schema-")),
+      );
+      try {
+        const pnpmTarget = path.join(
+          tmpdir,
+          "node_modules",
+          ".pnpm",
+          "@biomejs+biome@2.6.3",
+          "node_modules",
+          "@biomejs",
+          "biome",
+        );
+        fs.mkdirSync(pnpmTarget, { recursive: true });
+        fs.writeFileSync(
+          path.join(pnpmTarget, "configuration_schema.json"),
+          "{}",
+        );
+        fs.mkdirSync(path.join(tmpdir, "node_modules", "@biomejs"), {
+          recursive: true,
+        });
+        fs.symlinkSync(
+          pnpmTarget,
+          path.join(tmpdir, "node_modules", "@biomejs", "biome"),
+          "junction",
+        );
+
+        const project = new NodeProject({
+          name: "test",
+          defaultReleaseBranch: "main",
+          outdir: tmpdir,
+        });
+        new Biome(project);
+
+        const config = snapshotBiomeConfig(project);
+        expect(config.$schema).toBe(
+          "node_modules/@biomejs/biome/configuration_schema.json",
+        );
+      } finally {
+        fs.rmSync(tmpdir, { recursive: true, force: true });
+      }
+    });
+
+    test("strips pnpm virtual store prefix from tryResolveModule path within outdir", () => {
+      const tmpdir = fs.realpathSync(
+        fs.mkdtempSync(path.join(os.tmpdir(), "projen-biome-pnpm-")),
+      );
+      try {
+        const project = new NodeProject({
+          name: "test",
+          defaultReleaseBranch: "main",
+          outdir: tmpdir,
+        });
+        const resolvedPnpmPath = path.join(
+          project.outdir,
+          "node_modules",
+          ".pnpm",
+          "@biomejs+biome@2.6.3",
+          "node_modules",
+          "@biomejs",
+          "biome",
+          "configuration_schema.json",
+        );
+        jest
+          .spyOn(javascriptUtil, "tryResolveModule")
+          .mockReturnValue(resolvedPnpmPath);
+        new Biome(project);
+
+        const config = snapshotBiomeConfig(project);
+        expect(config.$schema).toBe(
+          "node_modules/@biomejs/biome/configuration_schema.json",
+        );
+      } finally {
+        fs.rmSync(tmpdir, { recursive: true, force: true });
+      }
+    });
+
+    test("falls back to latest remote schema when module is not within outdir", () => {
+      const tmpdir = fs.realpathSync(
+        fs.mkdtempSync(path.join(os.tmpdir(), "projen-biome-outside-")),
+      );
+      try {
+        const project = new NodeProject({
+          name: "test",
+          defaultReleaseBranch: "main",
+          outdir: tmpdir,
+        });
+        jest
+          .spyOn(javascriptUtil, "tryResolveModule")
+          .mockReturnValue(
+            path.resolve(
+              tmpdir,
+              "..",
+              "other",
+              "node_modules",
+              "@biomejs",
+              "biome",
+              "configuration_schema.json",
+            ),
+          );
+        new Biome(project);
+
+        const config = snapshotBiomeConfig(project);
+        expect(config.$schema).toBe(
+          "https://biomejs.dev/schemas/latest/schema.json",
+        );
+      } finally {
+        fs.rmSync(tmpdir, { recursive: true, force: true });
+      }
+    });
   });
 });
 
