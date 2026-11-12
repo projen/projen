@@ -20,8 +20,10 @@ test("with a GitHub app for authentication with limited permissions", () => {
   });
 
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].steps[1]).toMatchObject({
     name: "Generate token",
     with: {
       "app-id": `\${{ secrets.PROJEN_APP_ID }}`,
@@ -47,8 +49,10 @@ test("with environment for PAT credentials", () => {
   });
 
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].environment).toBe("protected-env");
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].environment).toBe("protected-env");
 });
 
 test("with environment for GitHub App credentials", () => {
@@ -63,8 +67,10 @@ test("with environment for GitHub App credentials", () => {
   });
 
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].environment).toBe("app-env");
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].environment).toBe("app-env");
 });
 
 test("no environment by default", () => {
@@ -74,6 +80,8 @@ test("no environment by default", () => {
   });
 
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].environment).toBeUndefined();
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].environment).toBeUndefined();
 });

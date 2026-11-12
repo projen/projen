@@ -638,7 +638,8 @@ const buildWorkflowOptions: build.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.build.BuildWorkflowOptions.property.buildRunsOn">buildRunsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.containerImage">containerImage</a></code> | <code>string</code> | The container image to use for builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.gitIdentity">gitIdentity</a></code> | <code>projen.github.GitIdentity</code> | Git identity to use for the workflow. |
-| <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically push files modified during builds to pull request branches. |
+| <code><a href="#projen.build.BuildWorkflowOptions.property.mutableBuildOptions">mutableBuildOptions</a></code> | <code><a href="#projen.build.MutableBuildOptions">MutableBuildOptions</a></code> | Options for pushing files modified during builds back to pull request branches. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.postBuildSteps">postBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute after build. |
 | <code><a href="#projen.build.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
@@ -784,16 +785,29 @@ public readonly mutableBuild: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically update files modified during builds to pull-request branches.
+Automatically push files modified during builds to pull request branches.
 
 This means that any files synthesized by projen or e.g. test snapshots will
 always be up-to-date before a PR is merged.
 
-Implies that PR builds do not have anti-tamper checks.
+A build that modifies files still fails. A separate `self-mutation`
+workflow then pushes the changes to the pull request branch using the
+projen credentials, which starts a new build.
 
-This is enabled by default only if `githubTokenSecret` is set. Otherwise it
-is disabled, which implies that file changes that happen during build will
-not be pushed back to the branch.
+---
+
+##### `mutableBuildOptions`<sup>Optional</sup> <a name="mutableBuildOptions" id="projen.build.BuildWorkflowOptions.property.mutableBuildOptions"></a>
+
+```typescript
+public readonly mutableBuildOptions: MutableBuildOptions;
+```
+
+- *Type:* <a href="#projen.build.MutableBuildOptions">MutableBuildOptions</a>
+- *Default:* default options
+
+Options for pushing files modified during builds back to pull request branches.
+
+Only used if `mutableBuild` is enabled.
 
 ---
 
@@ -850,6 +864,48 @@ public readonly runsOnGroup: GroupRunnerOptions;
 - *Type:* projen.GroupRunnerOptions
 
 Github Runner Group selection options.
+
+---
+
+### MutableBuildOptions <a name="MutableBuildOptions" id="projen.build.MutableBuildOptions"></a>
+
+Options for pushing files modified during builds back to pull request branches.
+
+#### Initializer <a name="Initializer" id="projen.build.MutableBuildOptions.Initializer"></a>
+
+```typescript
+import { build } from 'projen'
+
+const mutableBuildOptions: build.MutableBuildOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.build.MutableBuildOptions.property.allowFromForks">allowFromForks</a></code> | <code>boolean</code> | Also push changes back to pull requests from forks. |
+
+---
+
+##### `allowFromForks`<sup>Optional</sup> <a name="allowFromForks" id="projen.build.MutableBuildOptions.property.allowFromForks"></a>
+
+```typescript
+public readonly allowFromForks: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Also push changes back to pull requests from forks.
+
+The changes are produced by the fork's build and pushed to the fork's
+branch using the projen credentials. This requires the pull request to
+allow edits from maintainers and credentials that can push to the fork.
+
+The fork author controls the content of these commits, which can change
+any file. Review them like the rest of the pull request, even though they
+are authored by the automation user. Their builds also run without the
+approval GitHub requires for workflow runs from first-time contributors.
 
 ---
 

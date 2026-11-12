@@ -586,7 +586,6 @@ describe("language bindings", () => {
   test("build workflow includes packaging jobs", () => {
     expect(Object.keys(build.jobs)).toStrictEqual([
       "build",
-      "self-mutation",
       "package-js",
       "package-java",
       "package-python",
@@ -751,12 +750,18 @@ describe("workflows use global workflowRunsOn option", () => {
 
   const output = synthSnapshot(project);
   const build = yaml.parse(output[".github/workflows/build.yml"]);
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
   const release = yaml.parse(output[".github/workflows/release.yml"]);
 
   const EXPECTED_RUNS_ON = ["self-hosted", "linux", "x64"];
 
   expect(build).toHaveProperty("jobs.build.runs-on", EXPECTED_RUNS_ON);
-  expect(build).toHaveProperty("jobs.self-mutation.runs-on", EXPECTED_RUNS_ON);
+  expect(selfMutation).toHaveProperty(
+    "jobs.self-mutation.runs-on",
+    EXPECTED_RUNS_ON,
+  );
 
   test.each(["js", "java", "python", "dotnet", "go"])(
     "snapshot %s",
@@ -821,6 +826,9 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
 
   const output = synthSnapshot(project);
   const build = yaml.parse(output[".github/workflows/build.yml"]);
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
   const release = yaml.parse(output[".github/workflows/release.yml"]);
   const upgrade = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
   const prLint = yaml.parse(output[".github/workflows/pull-request-lint.yml"]);
@@ -835,8 +843,11 @@ describe("workflows use global workflowRunsOn option - runner group extended", (
     "linux",
     "x64",
   ]);
-  expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
-  expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+  expect(selfMutation).toHaveProperty(
+    "jobs.self-mutation.runs-on.group",
+    "Default",
+  );
+  expect(selfMutation).toHaveProperty("jobs.self-mutation.runs-on.labels", [
     "self-hosted",
     "linux",
     "x64",

@@ -72,6 +72,10 @@ const project = new TypeScriptProject({
 
   typescriptVersion: "6.0.x",
 
+  buildWorkflowOptions: {
+    mutableBuildOptions: { allowFromForks: true },
+  },
+
   packageManager: javascript.NodePackageManager.NPM,
 
   deps: ["constructs@^10.5.0"],

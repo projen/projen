@@ -12,6 +12,7 @@
     ".github/workflows/integ.yml",
     ".github/workflows/pull-request-lint.yml",
     ".github/workflows/release.yml",
+    ".github/workflows/self-mutation.yml",
     ".github/workflows/upgrade-bundled-main.yml",
     ".github/workflows/upgrade-main.yml",
     ".gitignore",

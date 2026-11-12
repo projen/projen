@@ -277,6 +277,19 @@
           "path": ".github/workflows/build.yml"
         }
       },
+      "GithubWorkflow#self-mutation": {
+        "metadata": {
+          "type": "component",
+          "construct": "GithubWorkflow"
+        }
+      },
+      "YamlFile@.github--workflows--self-mutation.yml": {
+        "metadata": {
+          "type": "file",
+          "construct": "YamlFile",
+          "path": ".github/workflows/self-mutation.yml"
+        }
+      },
       "Release#AutoId16": {
         "metadata": {
           "type": "component",

@@ -868,11 +868,13 @@ test("mutableBuild will push changes to PR branches", () => {
   });
 
   // THEN
-  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
-  const workflow = yaml.parse(workflowYaml);
+  const output = synthSnapshot(project);
+  const workflow = yaml.parse(output[".github/workflows/build.yml"]);
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
   expect(workflow.jobs.build.steps).toMatchSnapshot();
-  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
-  expect(workflow.jobs["self-mutation"].steps).toMatchSnapshot();
+  expect(selfMutation.jobs["self-mutation"].steps).toMatchSnapshot();
 });
 
 test("disabling mutableBuild will skip pushing changes to PR branches", () => {
@@ -882,10 +884,10 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   });
 
   // THEN
-  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
-  const workflow = yaml.parse(workflowYaml);
+  const output = synthSnapshot(project);
+  const workflow = yaml.parse(output[".github/workflows/build.yml"]);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
-  expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
+  expect(output[".github/workflows/self-mutation.yml"]).toBeUndefined();
 });
 
 test("mutableInstall defaults to mutableBuild value", () => {
@@ -906,16 +908,15 @@ test("mutableInstall can be disabled independently of mutableBuild", () => {
     buildWorkflowOptions: { mutableBuild: true, mutableInstall: false },
   });
 
-  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
-  const workflow = yaml.parse(workflowYaml);
+  const output = synthSnapshot(project);
+  const workflow = yaml.parse(output[".github/workflows/build.yml"]);
   const installStep = workflow.jobs.build.steps.find(
     (s: any) => s.name === "Install dependencies",
   );
   expect(installStep.run).toEqual(
     "yarn install --check-files --frozen-lockfile",
   );
-  // self-mutation job should still exist
-  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
+  expect(output[".github/workflows/self-mutation.yml"]).toBeDefined();
 });
 
 test("provided preBuildSteps for build workflow get combined with setup steps", () => {
@@ -1018,10 +1019,10 @@ test("enabling renovatebot does not overturn mergify: false", () => {
     "constructs",
     "jest-junit",
     "projen",
-    "actions/checkout",
-    "actions/download-artifact",
     "amannn/action-semantic-pull-request",
+    "actions/checkout",
     "actions/upload-artifact",
+    "actions/download-artifact",
     "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
@@ -1051,10 +1052,10 @@ test("renovatebot ignored dependency overrides", () => {
     "axios",
     "some-overriden-package",
     "projen",
-    "actions/checkout",
-    "actions/download-artifact",
     "amannn/action-semantic-pull-request",
+    "actions/checkout",
     "actions/upload-artifact",
+    "actions/download-artifact",
     "peter-evans/create-pull-request",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
@@ -1120,15 +1121,17 @@ test("buildWorkflow can use GitHub App for API access", () => {
 
   // THEN
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].steps[1]).toMatchObject({
     name: "Generate token",
     with: {
       "app-id": `\${{ secrets.${appId} }}`,
       "private-key": `\${{ secrets.${privateKey} }}`,
     },
   });
-  expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
+  expect(selfMutation.jobs["self-mutation"].steps[2]).toMatchObject({
     name: "Checkout",
     with: {
       token: "${{ steps.generate_token.outputs.token }}",
@@ -1147,8 +1150,10 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
 
   // THEN
   const output = synthSnapshot(project);
-  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-  expect(buildWorkflow.jobs["self-mutation"].steps[3]).toStrictEqual({
+  const selfMutation = yaml.parse(
+    output[".github/workflows/self-mutation.yml"],
+  );
+  expect(selfMutation.jobs["self-mutation"].steps[3]).toStrictEqual({
     id: "set_git_identity",
     name: "Set git identity",
     run: [
@@ -1392,7 +1397,10 @@ describe("workflowRunsOn", () => {
     const output = synthSnapshot(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
-    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+    const selfMutation = yaml.parse(
+      output[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation.jobs["self-mutation"]["runs-on"]).toEqual(
       "ubuntu-latest",
     );
   });
@@ -1409,7 +1417,10 @@ describe("workflowRunsOn", () => {
     const output = synthSnapshot(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
-    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+    const selfMutation = yaml.parse(
+      output[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation.jobs["self-mutation"]["runs-on"]).toEqual(
       "self-hosted",
     );
   });
@@ -1435,8 +1446,14 @@ describe("workflowRunsOn", () => {
       "linux",
       "x64",
     ]);
-    expect(build).toHaveProperty("jobs.self-mutation.runs-on.group", "Default");
-    expect(build).toHaveProperty("jobs.self-mutation.runs-on.labels", [
+    const selfMutation = yaml.parse(
+      output[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation).toHaveProperty(
+      "jobs.self-mutation.runs-on.group",
+      "Default",
+    );
+    expect(selfMutation).toHaveProperty("jobs.self-mutation.runs-on.labels", [
       "self-hosted",
       "linux",
       "x64",
