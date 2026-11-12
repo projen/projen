@@ -1,3 +1,5 @@
+import * as fs from "fs";
+import * as path from "path";
 import { javascript } from "../../src";
 import { NodeProject } from "../../src/javascript";
 import { execProjenCLI, synthSnapshot } from "../util";
@@ -128,4 +130,54 @@ describe("license checker", () => {
     // THEN
     await execProjenCLI(project.outdir, ["check-licenses"]);
   });
+
+  test.each([
+    ["scp-style ssh url", "git+ssh://git@github.com:org/repo.git"],
+    ["malformed url", "http://[bad host/repo"],
+  ])("checks dependencies with a %s as repository", async (_, repository) => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      packageManager: javascript.NodePackageManager.NPM,
+      deps: ["unusual-repo-url@1.0.0"],
+      checkLicenses: { deny: ["GPL-3.0"] },
+    });
+    withoutPostSynth(() => project.synth());
+
+    const depDir = path.join(
+      project.outdir,
+      "node_modules",
+      "unusual-repo-url",
+    );
+    fs.mkdirSync(depDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(depDir, "package.json"),
+      JSON.stringify({
+        name: "unusual-repo-url",
+        version: "1.0.0",
+        license: "GPL-3.0",
+        repository,
+      }),
+    );
+
+    // THEN
+    await expect(
+      execProjenCLI(project.outdir, ["check-licenses"]),
+    ).rejects.toThrow(`Found license defined by the --failOn flag: "GPL-3.0"`);
+  });
 });
+
+function withoutPostSynth(fn: () => void) {
+  const previous = process.env.PROJEN_DISABLE_POST;
+  try {
+    process.env.PROJEN_DISABLE_POST = "true";
+    fn();
+  } finally {
+    if (previous === undefined) {
+      delete process.env.PROJEN_DISABLE_POST;
+    } else {
+      process.env.PROJEN_DISABLE_POST = previous;
+    }
+  }
+}

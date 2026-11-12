@@ -119,7 +119,8 @@
       "type": "build"
     },
     {
-      "name": "license-checker",
+      "name": "license-checker-rseidelsohn",
+      "version": "^4",
       "type": "build"
     },
     {

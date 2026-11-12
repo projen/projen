@@ -96,7 +96,7 @@
       "steps": [
         {
           "execArgs": [
-            "license-checker",
+            "license-checker-rseidelsohn",
             "--summary",
             "--production",
             "--onlyAllow",
@@ -677,7 +677,7 @@
             "--peer",
             "--no-deprecated",
             "--dep=dev,prod,peer,optional",
-            "--filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,license-checker,markmac,prettier,ts-jest,tsx"
+            "--filter=@jsii/check-node,@types/conventional-changelog-config-spec,@types/ini,@types/jest,@types/parse-conflict-json,@types/semver,@types/yargs,aws-cdk-lib,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,json2jsii,markmac,prettier,ts-jest,tsx"
           ]
         },
         {
@@ -714,7 +714,7 @@
             "jsii-rosetta",
             "jsii",
             "json2jsii",
-            "license-checker",
+            "license-checker-rseidelsohn",
             "markmac",
             "prettier",
             "ts-jest",
