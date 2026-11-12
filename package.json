@@ -85,7 +85,7 @@
     "jsii-pacmak": "^1.142.0",
     "jsii-rosetta": "6.0.x",
     "json2jsii": "^0.5.20",
-    "license-checker": "^25.0.1",
+    "license-checker-rseidelsohn": "^4",
     "markmac": "^0.1.659",
     "prettier": "^3",
     "ts-jest": "^29",

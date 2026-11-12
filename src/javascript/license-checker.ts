@@ -90,7 +90,7 @@ export class LicenseChecker extends Component {
       );
     }
 
-    const cmd = ["license-checker", "--summary"];
+    const cmd = ["license-checker-rseidelsohn", "--summary"];
 
     if (production && !development) {
       cmd.push("--production");
@@ -110,7 +110,11 @@ export class LicenseChecker extends Component {
       cmd.push("--excludePrivatePackages");
     }
 
-    this.project.deps.addDependency("license-checker", DependencyType.BUILD);
+    // v5+ requires node >=24
+    this.project.deps.addDependency(
+      "license-checker-rseidelsohn@^4",
+      DependencyType.BUILD,
+    );
     this.task = this.project.addTask(taskName, {
       execArgs: cmd,
       receiveArgs: true,
