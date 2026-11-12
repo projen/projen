@@ -101,12 +101,13 @@ const project = new javascript.NodeProject({
 ```
 
 This is optional. It lets you limit which branches can read the secrets, using the environment's deployment
-branches. Deployment branches are matched against the ref the workflow runs on, so different workflows need
-different branches:
+branches. Deployment branches are matched against the ref the workflow runs on:
 
 - **Upgrade and auto-approve workflows** run on the default branch.
-- **The self-mutation job** of the build workflow runs on pull requests, with refs like `refs/pull/123/merge`.
-  If you limit the environment to your default branch, self-mutation can't access the credentials.
+- **The self-mutation workflow** also runs on the default branch, even though it pushes to pull request branches.
+  It is started by the build workflow through `workflow_run`, which always runs in the context of the default branch.
+
+If you limit the environment to your default branch, these workflows still have access to the credentials.
 
 ### Repository role of the automation user
 

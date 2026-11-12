@@ -131,10 +131,10 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
     "constructs",
     "jest-junit",
     "projen",
-    "actions/checkout",
-    "actions/download-artifact",
     "amannn/action-semantic-pull-request",
+    "actions/checkout",
     "actions/upload-artifact",
+    "actions/download-artifact",
     "peter-evans/create-pull-request",
   ],
   "packageRules": [
@@ -204,28 +204,30 @@ exit 1",
 exports[`mutableBuild will push changes to PR branches 2`] = `
 [
   {
-    "id": "checkout",
-    "name": "Checkout",
-    "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-    "with": {
-      "ref": "\${{ github.event.pull_request.head.ref }}",
-      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-      "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
-    },
-  },
-  {
     "id": "download_patch",
     "name": "Download patch",
     "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
     "with": {
+      "github-token": "\${{ github.token }}",
       "name": "repo.patch",
       "path": "\${{ runner.temp }}",
+      "run-id": "\${{ github.event.workflow_run.id }}",
+    },
+  },
+  {
+    "id": "checkout",
+    "name": "Checkout",
+    "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "with": {
+      "ref": "\${{ github.event.workflow_run.head_sha }}",
+      "repository": "\${{ github.event.workflow_run.head_repository.full_name }}",
+      "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
     },
   },
   {
     "id": "apply_patch",
     "name": "Apply patch",
-    "run": "[ -s \${{ runner.temp }}/repo.patch ] && git apply \${{ runner.temp }}/repo.patch || echo "Empty patch. Skipping."",
+    "run": "git apply \${{ runner.temp }}/repo.patch",
   },
   {
     "id": "set_git_identity",
@@ -235,13 +237,14 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"",
   },
   {
     "env": {
-      "PULL_REQUEST_REF": "\${{ github.event.pull_request.head.ref }}",
+      "HEAD_BRANCH": "\${{ github.event.workflow_run.head_branch }}",
+      "HEAD_SHA": "\${{ github.event.workflow_run.head_sha }}",
     },
     "id": "push_changes",
     "name": "Push changes",
     "run": "git add .
 git commit -s -m "chore: self mutation"
-git push origin "HEAD:$PULL_REQUEST_REF"",
+git push --force-with-lease="refs/heads/$HEAD_BRANCH:$HEAD_SHA" origin "HEAD:refs/heads/$HEAD_BRANCH"",
   },
 ]
 `;
@@ -582,10 +585,10 @@ exports[`renovatebot ignored dependency overrides 1`] = `
     "axios",
     "some-overriden-package",
     "projen",
-    "actions/checkout",
-    "actions/download-artifact",
     "amannn/action-semantic-pull-request",
+    "actions/checkout",
     "actions/upload-artifact",
+    "actions/download-artifact",
     "peter-evans/create-pull-request",
   ],
   "packageRules": [

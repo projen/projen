@@ -14,7 +14,7 @@ import {
 } from "./node-package";
 import type { ProjenrcOptions } from "./projenrc";
 import { Projenrc } from "./projenrc";
-import type { BuildWorkflowCommonOptions } from "../build";
+import type { BuildWorkflowCommonOptions, MutableBuildOptions } from "../build";
 import { BuildWorkflow } from "../build";
 import { DEFAULT_ARTIFACTS_DIRECTORY } from "../build/private/consts";
 import { PROJEN_DIR } from "../common";
@@ -420,15 +420,25 @@ export interface NodeProjectOptions
  */
 export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   /**
-   * Automatically update files modified during builds to pull-request branches.
+   * Automatically push files modified during builds to pull request branches.
    * This means that any files synthesized by projen or e.g. test snapshots will
    * always be up-to-date before a PR is merged.
    *
-   * Implies that PR builds do not have anti-tamper checks.
+   * A build that modifies files still fails. A separate `self-mutation`
+   * workflow then pushes the changes to the pull request branch using the
+   * projen credentials, which starts a new build.
    *
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Options for pushing files modified during builds back to pull request
+   * branches. Only used if `mutableBuild` is enabled.
+   *
+   * @default - default options
+   */
+  readonly mutableBuildOptions?: MutableBuildOptions;
 
   /**
    * Perform a mutable (non-frozen) install during builds. This will update the

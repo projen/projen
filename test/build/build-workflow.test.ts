@@ -165,8 +165,10 @@ describe("checkout ref", () => {
       "${{ github.event.pull_request.head.repo.full_name }}",
     );
   });
+});
 
-  test("self-mutation checkout uses the PR head ref to push back to the branch", () => {
+describe("self-mutation", () => {
+  test("runs in a separate workflow when the build fails", () => {
     const p = new TestProject();
     new BuildWorkflow(p, {
       buildTask: p.buildTask,
@@ -176,11 +178,136 @@ describe("checkout ref", () => {
 
     const workflows = synthWorkflows(p);
     const build = yaml.parse(workflows[".github/workflows/build.yml"]);
-    const checkoutStep = build.jobs["self-mutation"].steps.find((s: any) =>
+    const selfMutation = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    expect(build.jobs["self-mutation"]).toBeUndefined();
+    expect(selfMutation.on.workflow_run.workflows).toEqual([build.name]);
+    expect(selfMutation.jobs.check.if).toContain(
+      "github.event.workflow_run.conclusion == 'failure'",
+    );
+  });
+
+  test("only pushes when the build uploaded a patch", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const selfMutation = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    const job = selfMutation.jobs["self-mutation"];
+    expect(job.needs).toEqual("check");
+    expect(job.if).toBe("needs.check.outputs.has_patch == 'true'");
+    expect(job.steps.some((s: any) => s["continue-on-error"])).toBe(false);
+  });
+
+  test("only updates the branch if it still points at the built commit", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const push = yaml
+      .parse(workflows[".github/workflows/self-mutation.yml"])
+      .jobs["self-mutation"].steps.find((s: any) => s.name === "Push changes");
+    expect(push.env.HEAD_SHA).toBe("${{ github.event.workflow_run.head_sha }}");
+    expect(push.run).toContain(
+      '--force-with-lease="refs/heads/$HEAD_BRANCH:$HEAD_SHA"',
+    );
+  });
+
+  test("is not added without mutableBuild", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: false,
+    });
+
+    const workflows = synthWorkflows(p);
+    expect(workflows[".github/workflows/self-mutation.yml"]).toBeUndefined();
+  });
+
+  test("skips pull requests from forks by default", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const selfMutation = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation.jobs.check.if).toContain(
+      "github.event.workflow_run.head_repository.full_name == github.repository",
+    );
+  });
+
+  test("never pushes to the default branch", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const selfMutation = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation.jobs.check.if).toContain(
+      "github.event.workflow_run.head_branch != github.event.repository.default_branch",
+    );
+  });
+
+  test("does not push again after a self-mutation commit", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const workflows = synthWorkflows(p);
+    const selfMutation = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    expect(selfMutation.jobs.check.if).toContain(
+      "!startsWith(github.event.workflow_run.head_commit.message, 'chore: self mutation')",
+    );
+  });
+
+  test("allowFromForks pushes to pull requests from forks", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+      mutableBuildOptions: { allowFromForks: true },
+    });
+
+    const workflows = synthWorkflows(p);
+    const { jobs } = yaml.parse(
+      workflows[".github/workflows/self-mutation.yml"],
+    );
+    const checkoutStep = jobs["self-mutation"].steps.find((s: any) =>
       s.uses?.startsWith("actions/checkout"),
     );
-    expect(checkoutStep.with.ref).toBe(
-      "${{ github.event.pull_request.head.ref }}",
+    expect(jobs.check.if).toContain(
+      "!(github.event.workflow_run.head_repository.full_name == github.repository) ||",
+    );
+    expect(checkoutStep.with.repository).toBe(
+      "${{ github.event.workflow_run.head_repository.full_name }}",
     );
   });
 });

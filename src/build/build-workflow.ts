@@ -31,12 +31,12 @@ import {
   ARTIFACT_ID_OUTPUT,
   BUILD_JOBID,
   DEFAULT_ARTIFACTS_DIRECTORY,
-  NOT_FORK,
   PULL_REQUEST_REF,
   PULL_REQUEST_REPOSITORY,
   PULL_REQUEST_SHA,
   SELF_MUTATION_CONDITION,
   SELF_MUTATION_HAPPENED_OUTPUT,
+  SELF_MUTATION_PATCH_FILE,
   SELF_MUTATION_STEP,
   UPLOAD_ARTIFACT_STEP,
 } from "./private/consts";
@@ -96,19 +96,25 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
   readonly containerImage?: string;
 
   /**
-   * Automatically update files modified during builds to pull-request branches.
+   * Automatically push files modified during builds to pull request branches.
    * This means that any files synthesized by projen or e.g. test snapshots will
    * always be up-to-date before a PR is merged.
    *
-   * Implies that PR builds do not have anti-tamper checks.
-   *
-   * This is enabled by default only if `githubTokenSecret` is set. Otherwise it
-   * is disabled, which implies that file changes that happen during build will
-   * not be pushed back to the branch.
+   * A build that modifies files still fails. A separate `self-mutation`
+   * workflow then pushes the changes to the pull request branch using the
+   * projen credentials, which starts a new build.
    *
    * @default true
    */
   readonly mutableBuild?: boolean;
+
+  /**
+   * Options for pushing files modified during builds back to pull request
+   * branches. Only used if `mutableBuild` is enabled.
+   *
+   * @default - default options
+   */
+  readonly mutableBuildOptions?: MutableBuildOptions;
 
   /**
    * Perform a mutable (non-frozen) install during builds. This will update the
@@ -154,6 +160,27 @@ export interface BuildWorkflowOptions extends BuildWorkflowCommonOptions {
    * @throws {Error} if both `runsOn` and `runsOnGroup` are specified
    */
   readonly runsOnGroup?: GroupRunnerOptions;
+}
+
+/**
+ * Options for pushing files modified during builds back to pull request branches.
+ */
+export interface MutableBuildOptions {
+  /**
+   * Also push changes back to pull requests from forks.
+   *
+   * The changes are produced by the fork's build and pushed to the fork's
+   * branch using the projen credentials. This requires the pull request to
+   * allow edits from maintainers and credentials that can push to the fork.
+   *
+   * The fork author controls the content of these commits, which can change
+   * any file. Review them like the rest of the pull request, even though they
+   * are authored by the automation user. Their builds also run without the
+   * approval GitHub requires for workflow runs from first-time contributors.
+   *
+   * @default false
+   */
+  readonly allowFromForks?: boolean;
 }
 
 export class BuildWorkflow extends Component {
@@ -208,7 +235,7 @@ export class BuildWorkflow extends Component {
     this.addBuildJob(options);
 
     if (mutableBuilds) {
-      this.addSelfMutationJob(options);
+      this.addSelfMutationWorkflow(options);
     }
 
     if (project instanceof NodeProject) {
@@ -410,35 +437,109 @@ export class BuildWorkflow extends Component {
     });
   }
 
-  private addSelfMutationJob(options: BuildWorkflowOptions) {
-    const credentials = this.workflow.projenCredentials;
-    this.workflow.addJob("self-mutation", {
+  private addSelfMutationWorkflow(options: BuildWorkflowOptions) {
+    const workflow = this.github.addWorkflow(
+      workflowNameForProject("self-mutation", this.project),
+    );
+    workflow.on({
+      workflowRun: {
+        workflows: [this.workflow.name],
+        types: ["completed"],
+      },
+    });
+
+    const run = "github.event.workflow_run";
+    const commitMessage = "chore: self mutation";
+    const sameRepo = `${run}.head_repository.full_name == github.repository`;
+    const notDefaultBranch = `${run}.head_branch != github.event.repository.default_branch`;
+    const conditions = [
+      `${run}.conclusion == 'failure'`,
+      `${run}.event == 'pull_request'`,
+      // skip builds of a self-mutation commit to prevent push loops
+      `!startsWith(${run}.head_commit.message, '${commitMessage}')`,
+    ];
+    // never push to the default branch of this repository
+    if (options.mutableBuildOptions?.allowFromForks) {
+      conditions.push(`(!(${sameRepo}) || ${notDefaultBranch})`);
+    } else {
+      conditions.push(sameRepo, notDefaultBranch);
+    }
+
+    const checkJobId = "check";
+    const findPatchStepId = "find_patch";
+    const hasPatchOutput = "has_patch";
+
+    // the build only uploads a patch if files were changed
+    workflow.addJob(checkJobId, {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
-        contents: JobPermission.WRITE,
+        actions: JobPermission.READ,
       },
-      needs: [BUILD_JOBID],
-      if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
+      if: conditions.join(" && "),
+      outputs: {
+        [hasPatchOutput]: {
+          stepId: findPatchStepId,
+          outputName: hasPatchOutput,
+        },
+      },
+      steps: [
+        {
+          id: findPatchStepId,
+          name: "Find patch",
+          env: {
+            GH_TOKEN: "${{ github.token }}",
+            RUN_ID: `\${{ ${run}.id }}`,
+          },
+          run: `echo "${hasPatchOutput}=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID/artifacts?name=${SELF_MUTATION_PATCH_FILE}" --jq '.total_count > 0')" >> $GITHUB_OUTPUT`,
+        },
+      ],
+    });
+
+    const credentials = workflow.projenCredentials;
+    workflow.addJob("self-mutation", {
+      ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
+      permissions: {
+        actions: JobPermission.READ,
+      },
+      needs: [checkJobId],
+      if: `needs.${checkJobId}.outputs.${hasPatchOutput} == 'true'`,
       environment: credentials.environment,
       steps: [
-        ...credentials.setupSteps,
-        ...WorkflowActions.checkoutWithPatch({
-          // we need to use a PAT so that our push will trigger the build workflow
-          token: credentials.tokenRef,
-          ref: PULL_REQUEST_REF,
-          repository: PULL_REQUEST_REPOSITORY,
-          lfs: this.github.downloadLfs,
+        WorkflowSteps.downloadArtifact({
+          name: "Download patch",
+          with: {
+            name: SELF_MUTATION_PATCH_FILE,
+            path: "${{ runner.temp }}",
+            runId: `\${{ ${run}.id }}`,
+            token: "${{ github.token }}",
+          },
         }),
+        ...credentials.setupSteps,
+        WorkflowSteps.checkout({
+          with: {
+            // we need to use a PAT so that our push will trigger the build workflow
+            token: credentials.tokenRef,
+            ref: `\${{ ${run}.head_sha }}`,
+            repository: `\${{ ${run}.head_repository.full_name }}`,
+            lfs: this.github.downloadLfs,
+          },
+        }),
+        {
+          name: "Apply patch",
+          run: `git apply \${{ runner.temp }}/${SELF_MUTATION_PATCH_FILE}`,
+        },
         WorkflowSteps.setupGitIdentity({ gitIdentity: this.gitIdentity }),
         {
           name: "Push changes",
           env: {
-            PULL_REQUEST_REF,
+            HEAD_BRANCH: `\${{ ${run}.head_branch }}`,
+            HEAD_SHA: `\${{ ${run}.head_sha }}`,
           },
+          // the lease rejects the push if the branch was deleted or has moved since the build
           run: [
             "git add .",
-            'git commit -s -m "chore: self mutation"',
-            `git push origin "HEAD:$PULL_REQUEST_REF"`,
+            `git commit -s -m "${commitMessage}"`,
+            'git push --force-with-lease="refs/heads/$HEAD_BRANCH:$HEAD_SHA" origin "HEAD:refs/heads/$HEAD_BRANCH"',
           ].join("\n"),
         },
       ],
@@ -474,6 +575,7 @@ export class BuildWorkflow extends Component {
       ...WorkflowActions.uploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
+        patchFile: SELF_MUTATION_PATCH_FILE,
         mutationError:
           "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.",
       }),

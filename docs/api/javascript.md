@@ -7383,7 +7383,8 @@ const buildWorkflowOptions: javascript.BuildWorkflowOptions = { ... }
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.permissions">permissions</a></code> | <code>projen.github.workflows.JobPermissions</code> | Permissions granted to the build job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.preBuildSteps">preBuildSteps</a></code> | <code>projen.github.workflows.JobStep[]</code> | Steps to execute before the build. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.workflowTriggers">workflowTriggers</a></code> | <code>projen.github.workflows.Triggers</code> | Build workflow triggers. |
-| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically update files modified during builds to pull-request branches. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuild">mutableBuild</a></code> | <code>boolean</code> | Automatically push files modified during builds to pull request branches. |
+| <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableBuildOptions">mutableBuildOptions</a></code> | <code>projen.build.MutableBuildOptions</code> | Options for pushing files modified during builds back to pull request branches. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.mutableInstall">mutableInstall</a></code> | <code>boolean</code> | Perform a mutable (non-frozen) install during builds. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.runsOn">runsOn</a></code> | <code>string[]</code> | Github Runner selection labels. |
 | <code><a href="#projen.javascript.BuildWorkflowOptions.property.runsOnGroup">runsOnGroup</a></code> | <code>projen.GroupRunnerOptions</code> | Github Runner Group selection options. |
@@ -7464,12 +7465,29 @@ public readonly mutableBuild: boolean;
 - *Type:* boolean
 - *Default:* true
 
-Automatically update files modified during builds to pull-request branches.
+Automatically push files modified during builds to pull request branches.
 
 This means that any files synthesized by projen or e.g. test snapshots will
 always be up-to-date before a PR is merged.
 
-Implies that PR builds do not have anti-tamper checks.
+A build that modifies files still fails. A separate `self-mutation`
+workflow then pushes the changes to the pull request branch using the
+projen credentials, which starts a new build.
+
+---
+
+##### `mutableBuildOptions`<sup>Optional</sup> <a name="mutableBuildOptions" id="projen.javascript.BuildWorkflowOptions.property.mutableBuildOptions"></a>
+
+```typescript
+public readonly mutableBuildOptions: MutableBuildOptions;
+```
+
+- *Type:* projen.build.MutableBuildOptions
+- *Default:* default options
+
+Options for pushing files modified during builds back to pull request branches.
+
+Only used if `mutableBuild` is enabled.
 
 ---
 

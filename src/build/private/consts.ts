@@ -8,6 +8,7 @@ export const SELF_MUTATION_HAPPENED_OUTPUT = "self_mutation_happened";
 export const IS_FORK =
   "github.event.pull_request.head.repo.full_name != github.repository";
 export const NOT_FORK = `!(${IS_FORK})`;
+export const SELF_MUTATION_PATCH_FILE = "repo.patch";
 export const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 export const UPLOAD_ARTIFACT_STEP = "upload_artifact";
 export const ARTIFACT_ID_OUTPUT = "artifact_id";
