@@ -6,6 +6,7 @@ export * from "./workflows";
 export * from "./actions.const";
 export * from "./actions-provider";
 export * from "./mergify";
+export * from "./kodiak";
 export * from "./merge-queue";
 export * from "./pr-template";
 export * from "./auto-approve";
