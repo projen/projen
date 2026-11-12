@@ -12,6 +12,21 @@ export interface TextFileOptions extends FileBaseOptions {
    * @default [] empty file
    */
   readonly lines?: string[];
+
+  /**
+   * Single-line comment prefix to use when prepending the projen marker.
+   *
+   * Supply a prefix appropriate for the target file format, such as `#`.
+   * Omitting the prefix leaves the file contents unchanged. Setting
+   * `marker: true` alone does not add a marker or infer a comment prefix.
+   *
+   * The marker is omitted when `marker` is `false` or the project is ejected,
+   * even if a prefix is supplied.
+   *
+   * @example "#"
+   * @default - no marker line is written
+   */
+  readonly markerCommentPrefix?: string;
 }
 
 /**
@@ -19,6 +34,7 @@ export interface TextFileOptions extends FileBaseOptions {
  */
 export class TextFile extends FileBase {
   private readonly lines: string[];
+  private readonly markerCommentPrefix?: string;
 
   /**
    * Defines a text file.
@@ -35,6 +51,7 @@ export class TextFile extends FileBase {
     super(scope, filePath, options);
 
     this.lines = options.lines ?? [];
+    this.markerCommentPrefix = options.markerCommentPrefix;
   }
 
   /**
@@ -46,6 +63,12 @@ export class TextFile extends FileBase {
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
+    const marker = this.marker;
+    if (this.markerCommentPrefix !== undefined && marker) {
+      return [`${this.markerCommentPrefix} ${marker}`, ...this.lines].join(
+        "\n",
+      );
+    }
     return this.lines.join("\n");
   }
 }
