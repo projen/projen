@@ -32,8 +32,9 @@ export interface UpdateChangelogOptions {
   versionFile: string;
 
   /**
-   * Format of the release commit message. `{{currentTag}}` is replaced with
-   * the release version.
+   * Format of the release commit message.
+   *
+   * `{{currentTag}}` is replaced with the release version.
    *
    * @default "chore(release): {{currentTag}}"
    */

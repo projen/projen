@@ -1600,14 +1600,14 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    *
    * Set to an empty string to disable pushing.
    */
+  readonly gitPushCommand?: string;
+
   /**
    * Format of the commit message used when updating the project-level changelog.
    *
    * `{{currentTag}}` is replaced with the release version.
    *
    * @default "chore(release): {{currentTag}}"
-   */
-  readonly releaseCommitMessageFormat?: string;
    */
   readonly releaseCommitMessageFormat?: string;
 }
