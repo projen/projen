@@ -161,8 +161,10 @@ export class DevContainer
 
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
+      // npx stops on "Ok to proceed? (y)" outside CI.
+      const command = withNpxYes(this.project.projenCommand);
       return this.postCreateTasks
-        .map((task) => `( ${this.project.projenCommand} ${task.name} )`)
+        .map((task) => `( ${command} ${task.name} )`)
         .join(" && ");
     } else {
       return undefined;
@@ -183,4 +185,17 @@ export class DevContainer
       return pv;
     }, {});
   }
+}
+
+function withNpxYes(projenCommand: string): string {
+  const tokens = projenCommand.trim().split(/\s+/);
+  if (
+    tokens[0] !== "npx" ||
+    tokens.includes("--yes") ||
+    tokens.includes("-y")
+  ) {
+    return projenCommand;
+  }
+
+  return projenCommand.replace(/^(\s*)npx(?=\s|$)/, "$1npx --yes");
 }

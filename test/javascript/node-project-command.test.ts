@@ -30,39 +30,59 @@ function createProject(
 
 describe("projenCommand with an inferred package manager", () => {
   test.each([
-    ["npm@11.17.0", NodePackageManager.NPM, "npx projen"],
-    ["pnpm@10.28.2", NodePackageManager.PNPM, "pnpm exec projen"],
-    ["yarn@1.22.22", NodePackageManager.YARN_CLASSIC, "npx projen"],
-    ["yarn@4.13.0", NodePackageManager.YARN_BERRY, "yarn projen"],
-    ["bun@1.3.0", NodePackageManager.BUN, "bunx projen"],
-  ])("uses %s for generated commands", (spec, packageManager, command) => {
-    const project = createProject({ packageManager: spec });
+    ["npm@11.17.0", NodePackageManager.NPM, "npx projen", "npx --yes projen"],
+    [
+      "pnpm@10.28.2",
+      NodePackageManager.PNPM,
+      "pnpm exec projen",
+      "pnpm exec projen",
+    ],
+    [
+      "yarn@1.22.22",
+      NodePackageManager.YARN_CLASSIC,
+      "npx projen",
+      "npx --yes projen",
+    ],
+    [
+      "yarn@4.13.0",
+      NodePackageManager.YARN_BERRY,
+      "yarn projen",
+      "yarn projen",
+    ],
+    ["bun@1.3.0", NodePackageManager.BUN, "bunx projen", "bunx projen"],
+  ])(
+    "uses %s for generated commands",
+    (spec, packageManager, command, postCreateCommand) => {
+      const project = createProject({ packageManager: spec });
 
-    expect(project.package.packageManager).toBe(packageManager);
-    expect(project.projenCommand).toBe(command);
-    expect(project.runTaskCommand(project.buildTask)).toBe(`${command} build`);
+      expect(project.package.packageManager).toBe(packageManager);
+      expect(project.projenCommand).toBe(command);
+      expect(project.runTaskCommand(project.buildTask)).toBe(
+        `${command} build`,
+      );
 
-    const output = synthSnapshot(project);
-    const workflow = yaml.parse(output[".github/workflows/build.yml"]);
-    expect(workflow.jobs.build.steps).toContainEqual(
-      expect.objectContaining({ run: `${command} build` }),
-    );
-    expect(yaml.parse(output[".gitpod.yml"]).tasks).toContainEqual(
-      expect.objectContaining({ command: `${command} build` }),
-    );
-    expect(output[".devcontainer.json"].postCreateCommand).toBe(
-      `( ${command} build )`,
-    );
-    expect(output[".gitignore"]).toContain(`run "${command}"`);
-    expect(output["package.json"].scripts.build).toBe("projen build");
-    expect(output["package.json"].scripts.projen).toBe("projen");
+      const output = synthSnapshot(project);
+      const workflow = yaml.parse(output[".github/workflows/build.yml"]);
+      expect(workflow.jobs.build.steps).toContainEqual(
+        expect.objectContaining({ run: `${command} build` }),
+      );
+      expect(yaml.parse(output[".gitpod.yml"]).tasks).toContainEqual(
+        expect.objectContaining({ command: `${command} build` }),
+      );
+      expect(output[".devcontainer.json"].postCreateCommand).toBe(
+        `( ${postCreateCommand} build )`,
+      );
+      expect(output[".gitignore"]).toContain(`run "${command}"`);
+      expect(output["package.json"].scripts.build).toBe("projen build");
+      expect(output["package.json"].scripts.projen).toBe("projen");
 
-    const explicit = createProject(
-      { packageManager: spec },
-      { packageManager },
-    );
-    expect(output).toEqual(synthSnapshot(explicit));
-  });
+      const explicit = createProject(
+        { packageManager: spec },
+        { packageManager },
+      );
+      expect(output).toEqual(synthSnapshot(explicit));
+    },
+  );
 
   test.each([
     ["npm", "11.17.0", "npx projen"],

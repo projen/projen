@@ -92,8 +92,30 @@ test("add postCreateCommands", () => {
 
   expect(devcontainer).toStrictEqual({
     "//": expect.anything(),
-    postCreateCommand: "( npx projen testCwd1 ) && ( npx projen testCwd2 )",
+    postCreateCommand:
+      "( npx --yes projen testCwd1 ) && ( npx --yes projen testCwd2 )",
   });
+});
+
+test.each([
+  "npx --yes projen",
+  "npx -y projen",
+  "node ./projen.js",
+  "",
+  "echo npx",
+])("postCreateCommand renders %j unchanged", (projenCommand) => {
+  // GIVEN
+  const project = new TestProject({
+    devContainer: true,
+    projenCommand,
+  });
+
+  // WHEN
+  project.devContainer?.addTasks(project.addTask("task"));
+
+  // THEN
+  const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
+  expect(devcontainer.postCreateCommand).toBe(`( ${projenCommand} task )`);
 });
 
 test("add features", () => {
