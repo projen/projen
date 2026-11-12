@@ -581,6 +581,47 @@ describe("Single Project", () => {
     );
   });
 
+  test("manual release passes releaseCommitMessageFormat from versionrcOptions", () => {
+    // GIVEN
+    const project = new TestProject();
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.manual(),
+      artifactsDirectory: "dist",
+      versionrcOptions: {
+        releaseCommitMessageFormat: "chore(release): {{currentTag}} [skip ci]",
+      },
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const task =
+      outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME];
+    expect(task.env.RELEASE_COMMIT_MESSAGE_FORMAT).toEqual(
+      "chore(release): {{currentTag}} [skip ci]",
+    );
+  });
+
+  test("manual release does not set a release commit message format by default", () => {
+    // GIVEN
+    const project = new TestProject();
+    new Release(project, {
+      tasks: [project.buildTask],
+      versionFile: "version.json",
+      branch: "main",
+      releaseTrigger: ReleaseTrigger.manual(),
+      artifactsDirectory: "dist",
+    });
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    const task =
+      outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME];
+    expect(task.env).not.toHaveProperty("RELEASE_COMMIT_MESSAGE_FORMAT");
+  });
+
   test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
     // GIVEN
     const project = new TestProject();

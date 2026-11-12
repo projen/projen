@@ -290,6 +290,11 @@ export class Publisher extends Component {
         RELEASE_TAG_FILE: releaseTagFile,
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? "",
         VERSION_FILE: versionFile,
+        ...(options.releaseCommitMessageFormat
+          ? {
+              RELEASE_COMMIT_MESSAGE_FORMAT: options.releaseCommitMessageFormat,
+            }
+          : {}),
       },
       condition: CHANGES_SINCE_LAST_RELEASE,
     });
@@ -1596,6 +1601,15 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    * Set to an empty string to disable pushing.
    */
   readonly gitPushCommand?: string;
+
+  /**
+   * Format of the commit message used when updating the project-level changelog.
+   *
+   * `{{currentTag}}` is replaced with the release version.
+   *
+   * @default "chore(release): {{currentTag}}"
+   */
+  readonly releaseCommitMessageFormat?: string;
 }
 
 type PublishJobFactory = (

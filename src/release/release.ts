@@ -406,6 +406,7 @@ export class Release extends Component {
   private readonly releaseWorkflowEnv?: { [key: string]: string };
   private readonly releaseTagFilePath: string;
   private readonly _branchHooks: BranchHook[];
+  private readonly releaseCommitMessageFormat?: string;
 
   /**
    * @param scope should be part of the project the Release belongs to.
@@ -454,6 +455,8 @@ export class Release extends Component {
     };
     this.releaseWorkflowEnv = options.releaseWorkflowEnv;
     this._branchHooks = [];
+    this.releaseCommitMessageFormat =
+      options.versionrcOptions?.releaseCommitMessageFormat;
 
     this.version = new Version(this.project, {
       versionInputFile: this.versionFile,
@@ -702,6 +705,7 @@ export class Release extends Component {
         projectChangelogFile: this.releaseTrigger.changelogPath,
         gitBranch: branchName,
         gitPushCommand: this.releaseTrigger.gitPushCommand,
+        releaseCommitMessageFormat: this.releaseCommitMessageFormat,
       });
 
       releaseTask.spawn(publishTask);
