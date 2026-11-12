@@ -99,6 +99,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     this.cdkDeps = new AwsCdkDepsJs(this, {
       // since this we are a library, dependencies should be added a peers
       dependencyType: DependencyType.PEER,
+      watchIncludes: ["src/**/*.ts", "test/**/*.integ.ts", "assets/**"],
       ...options,
     });
 
