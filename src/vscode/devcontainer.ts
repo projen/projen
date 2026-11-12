@@ -14,6 +14,16 @@ import type { Task } from "../task";
 const DEVCONTAINER_FILE = ".devcontainer.json";
 
 /**
+ * Adds `--yes` to `npx` commands so that installing a package does not prompt
+ * for confirmation in non-interactive environments such as Dev Containers.
+ */
+function withNpxYes(command: string): string {
+  return command.startsWith("npx ")
+    ? command.replace("npx ", "npx --yes ")
+    : command;
+}
+
+/**
  * devcontainer features options
  * @see https://containers.dev/implementors/features/#devcontainer-json-properties
  */
@@ -162,7 +172,7 @@ export class DevContainer
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
       return this.postCreateTasks
-        .map((task) => `( ${this.project.projenCommand} ${task.name} )`)
+        .map((task) => `( ${withNpxYes(this.project.projenCommand)} ${task.name} )`)
         .join(" && ");
     } else {
       return undefined;
