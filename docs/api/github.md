@@ -1607,6 +1607,7 @@ Returns the `GitHub` component of a project or `undefined` if the project does n
 | <code><a href="#projen.github.GitHub.property.projenCredentials">projenCredentials</a></code> | <code><a href="#projen.github.GithubCredentials">GithubCredentials</a></code> | GitHub API authentication method used by projen workflows. |
 | <code><a href="#projen.github.GitHub.property.workflows">workflows</a></code> | <code><a href="#projen.github.GithubWorkflow">GithubWorkflow</a>[]</code> | All workflows. |
 | <code><a href="#projen.github.GitHub.property.workflowsEnabled">workflowsEnabled</a></code> | <code>boolean</code> | Are workflows enabled? |
+| <code><a href="#projen.github.GitHub.property.kodiak">kodiak</a></code> | <code><a href="#projen.github.Kodiak">Kodiak</a></code> | The `Kodiak` component configured on this repository This is `undefined` if Kodiak is not enabled for this repository. |
 | <code><a href="#projen.github.GitHub.property.mergeQueue">mergeQueue</a></code> | <code><a href="#projen.github.MergeQueue">MergeQueue</a></code> | The `MergeQueue` component configured on this repository This is `undefined` if merge queues are not enabled for this repository. |
 | <code><a href="#projen.github.GitHub.property.mergify">mergify</a></code> | <code><a href="#projen.github.Mergify">Mergify</a></code> | The `Mergify` component configured on this repository This is `undefined` if Mergify is not enabled for this repository. |
 
@@ -1703,6 +1704,18 @@ public readonly workflowsEnabled: boolean;
 - *Type:* boolean
 
 Are workflows enabled?
+
+---
+
+##### `kodiak`<sup>Optional</sup> <a name="kodiak" id="projen.github.GitHub.property.kodiak"></a>
+
+```typescript
+public readonly kodiak: Kodiak;
+```
+
+- *Type:* <a href="#projen.github.Kodiak">Kodiak</a>
+
+The `Kodiak` component configured on this repository This is `undefined` if Kodiak is not enabled for this repository.
 
 ---
 
@@ -3435,6 +3448,237 @@ is set as the commit message.
 
 This value can include expressions and can reference `github` and `inputs`
 contexts.
+
+---
+
+
+### Kodiak <a name="Kodiak" id="projen.github.Kodiak"></a>
+
+Configure pull request merging via Kodiak (`.kodiak.toml`).
+
+> [https://kodiakhq.com/](https://kodiakhq.com/)
+
+#### Initializers <a name="Initializers" id="projen.github.Kodiak.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+new github.Kodiak(github: GitHub, options?: KodiakOptions)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.Kodiak.Initializer.parameter.github">github</a></code> | <code><a href="#projen.github.GitHub">GitHub</a></code> | *No description.* |
+| <code><a href="#projen.github.Kodiak.Initializer.parameter.options">options</a></code> | <code><a href="#projen.github.KodiakOptions">KodiakOptions</a></code> | *No description.* |
+
+---
+
+##### `github`<sup>Required</sup> <a name="github" id="projen.github.Kodiak.Initializer.parameter.github"></a>
+
+- *Type:* <a href="#projen.github.GitHub">GitHub</a>
+
+---
+
+##### `options`<sup>Optional</sup> <a name="options" id="projen.github.Kodiak.Initializer.parameter.options"></a>
+
+- *Type:* <a href="#projen.github.KodiakOptions">KodiakOptions</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.Kodiak.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#projen.github.Kodiak.with">with</a></code> | Applies one or more mixins to this construct. |
+| <code><a href="#projen.github.Kodiak.postProjectCreation">postProjectCreation</a></code> | Called once, right after `postSynthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.Kodiak.postSynthesize">postSynthesize</a></code> | Called after synthesis. |
+| <code><a href="#projen.github.Kodiak.preSynthesize">preSynthesize</a></code> | Called before synthesis. |
+| <code><a href="#projen.github.Kodiak.projectCreation">projectCreation</a></code> | Called once, right after `synthesize()`, only when the project is created for the first time. |
+| <code><a href="#projen.github.Kodiak.synthesize">synthesize</a></code> | Synthesizes files to the project output directory. |
+
+---
+
+##### `toString` <a name="toString" id="projen.github.Kodiak.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+##### `with` <a name="with" id="projen.github.Kodiak.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="projen.github.Kodiak.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+The mixins to apply.
+
+---
+
+##### `postProjectCreation` <a name="postProjectCreation" id="projen.github.Kodiak.postProjectCreation"></a>
+
+```typescript
+public postProjectCreation(initProject: InitProject): void
+```
+
+Called once, right after `postSynthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+It is also skipped when post-synthesis steps are disabled, e.g. `--no-post` or `PROJEN_DISABLE_POST`.
+Use it for one-off setup that can be turned off by the user, like running a task to give the user immediate
+feedback on their new project. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Kodiak.postProjectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `postSynthesize` <a name="postSynthesize" id="projen.github.Kodiak.postSynthesize"></a>
+
+```typescript
+public postSynthesize(): void
+```
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+##### `preSynthesize` <a name="preSynthesize" id="projen.github.Kodiak.preSynthesize"></a>
+
+```typescript
+public preSynthesize(): void
+```
+
+Called before synthesis.
+
+##### `projectCreation` <a name="projectCreation" id="projen.github.Kodiak.projectCreation"></a>
+
+```typescript
+public projectCreation(initProject: InitProject): void
+```
+
+Called once, right after `synthesize()`, only when the project is created for the first time.
+
+It does not run on later `projen` invocations. It only fires for `projen new` (or `Projects.createProject`).
+Use it for deterministic, one-off file generation. Order across components is not guaranteed.
+
+###### `initProject`<sup>Required</sup> <a name="initProject" id="projen.github.Kodiak.projectCreation.parameter.initProject"></a>
+
+- *Type:* projen.InitProject
+
+Details about how the project was created, e.g. its type and the original CLI args.
+
+---
+
+##### `synthesize` <a name="synthesize" id="projen.github.Kodiak.synthesize"></a>
+
+```typescript
+public synthesize(): void
+```
+
+Synthesizes files to the project output directory.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.Kodiak.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projen.github.Kodiak.isComponent">isComponent</a></code> | Test whether the given construct is a component. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="projen.github.Kodiak.isConstruct"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.Kodiak.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.Kodiak.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+##### `isComponent` <a name="isComponent" id="projen.github.Kodiak.isComponent"></a>
+
+```typescript
+import { github } from 'projen'
+
+github.Kodiak.isComponent(x: any)
+```
+
+Test whether the given construct is a component.
+
+###### `x`<sup>Required</sup> <a name="x" id="projen.github.Kodiak.isComponent.parameter.x"></a>
+
+- *Type:* any
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.Kodiak.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#projen.github.Kodiak.property.project">project</a></code> | <code>projen.Project</code> | *No description.* |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="projen.github.Kodiak.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+##### `project`<sup>Required</sup> <a name="project" id="projen.github.Kodiak.property.project"></a>
+
+```typescript
+public readonly project: Project;
+```
+
+- *Type:* projen.Project
 
 ---
 
@@ -8844,6 +9088,8 @@ const gitHubOptions: github.GitHubOptions = { ... }
 | <code><a href="#projen.github.GitHubOptions.property.dependencyReview">dependencyReview</a></code> | <code>boolean</code> | Enable the dependency-review-action workflow on pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.dependencyReviewOptions">dependencyReviewOptions</a></code> | <code><a href="#projen.github.DependencyReviewOptions">DependencyReviewOptions</a></code> | Options for the dependency review workflow. |
 | <code><a href="#projen.github.GitHubOptions.property.downloadLfs">downloadLfs</a></code> | <code>boolean</code> | Download files in LFS in workflows. |
+| <code><a href="#projen.github.GitHubOptions.property.kodiak">kodiak</a></code> | <code>boolean</code> | Whether Kodiak (`.kodiak.toml`) should be enabled on this repository. |
+| <code><a href="#projen.github.GitHubOptions.property.kodiakOptions">kodiakOptions</a></code> | <code><a href="#projen.github.KodiakOptions">KodiakOptions</a></code> | Options for Kodiak. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueue">mergeQueue</a></code> | <code>boolean</code> | Whether a merge queue should be used on this repository to merge pull requests. |
 | <code><a href="#projen.github.GitHubOptions.property.mergeQueueOptions">mergeQueueOptions</a></code> | <code><a href="#projen.github.MergeQueueOptions">MergeQueueOptions</a></code> | Options for MergeQueue. |
 | <code><a href="#projen.github.GitHubOptions.property.mergify">mergify</a></code> | <code>boolean</code> | Whether mergify should be enabled on this repository or not. |
@@ -8914,6 +9160,32 @@ public readonly downloadLfs: boolean;
 - *Default:* true if the associated project has `lfsPatterns`, `false` otherwise
 
 Download files in LFS in workflows.
+
+---
+
+##### `kodiak`<sup>Optional</sup> <a name="kodiak" id="projen.github.GitHubOptions.property.kodiak"></a>
+
+```typescript
+public readonly kodiak: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether Kodiak (`.kodiak.toml`) should be enabled on this repository.
+
+---
+
+##### `kodiakOptions`<sup>Optional</sup> <a name="kodiakOptions" id="projen.github.GitHubOptions.property.kodiakOptions"></a>
+
+```typescript
+public readonly kodiakOptions: KodiakOptions;
+```
+
+- *Type:* <a href="#projen.github.KodiakOptions">KodiakOptions</a>
+- *Default:* default options
+
+Options for Kodiak.
 
 ---
 
@@ -9640,6 +9912,341 @@ public readonly name: string;
 - *Type:* string
 
 The name of the user.
+
+---
+
+### KodiakApproveOptions <a name="KodiakApproveOptions" id="projen.github.KodiakApproveOptions"></a>
+
+Options for Kodiak `[approve]`.
+
+#### Initializer <a name="Initializer" id="projen.github.KodiakApproveOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const kodiakApproveOptions: github.KodiakApproveOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.KodiakApproveOptions.property.autoApproveUsernames">autoApproveUsernames</a></code> | <code>string[]</code> | Automatically approve pull requests opened by these usernames. |
+
+---
+
+##### `autoApproveUsernames`<sup>Optional</sup> <a name="autoApproveUsernames" id="projen.github.KodiakApproveOptions.property.autoApproveUsernames"></a>
+
+```typescript
+public readonly autoApproveUsernames: string[];
+```
+
+- *Type:* string[]
+- *Default:* no usernames auto-approved
+
+Automatically approve pull requests opened by these usernames.
+
+---
+
+### KodiakAutomergeDependencies <a name="KodiakAutomergeDependencies" id="projen.github.KodiakAutomergeDependencies"></a>
+
+Options for Kodiak `[merge.automerge_dependencies]`.
+
+#### Initializer <a name="Initializer" id="projen.github.KodiakAutomergeDependencies.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const kodiakAutomergeDependencies: github.KodiakAutomergeDependencies = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.KodiakAutomergeDependencies.property.usernames">usernames</a></code> | <code>string[]</code> | Restrict dependency auto-merging to specific bot or user logins. |
+| <code><a href="#projen.github.KodiakAutomergeDependencies.property.versions">versions</a></code> | <code><a href="#projen.github.KodiakDependencyVersion">KodiakDependencyVersion</a>[]</code> | Restrict auto-merging to specific semver upgrade levels. |
+
+---
+
+##### `usernames`<sup>Optional</sup> <a name="usernames" id="projen.github.KodiakAutomergeDependencies.property.usernames"></a>
+
+```typescript
+public readonly usernames: string[];
+```
+
+- *Type:* string[]
+- *Default:* no username filter
+
+Restrict dependency auto-merging to specific bot or user logins.
+
+---
+
+##### `versions`<sup>Optional</sup> <a name="versions" id="projen.github.KodiakAutomergeDependencies.property.versions"></a>
+
+```typescript
+public readonly versions: KodiakDependencyVersion[];
+```
+
+- *Type:* <a href="#projen.github.KodiakDependencyVersion">KodiakDependencyVersion</a>[]
+- *Default:* all semver update levels
+
+Restrict auto-merging to specific semver upgrade levels.
+
+---
+
+### KodiakMergeOptions <a name="KodiakMergeOptions" id="projen.github.KodiakMergeOptions"></a>
+
+Options for Kodiak `[merge]`.
+
+#### Initializer <a name="Initializer" id="projen.github.KodiakMergeOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const kodiakMergeOptions: github.KodiakMergeOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.KodiakMergeOptions.property.automergeDependencies">automergeDependencies</a></code> | <code><a href="#projen.github.KodiakAutomergeDependencies">KodiakAutomergeDependencies</a></code> | Configure automatic merging for dependency update bots such as Dependabot or Renovate. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.automergeLabel">automergeLabel</a></code> | <code>string</code> | Label required on a pull request to trigger auto-merge. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.deleteBranchOnMerge">deleteBranchOnMerge</a></code> | <code>boolean</code> | Automatically delete the head branch after merging. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.doNotMerge">doNotMerge</a></code> | <code>boolean</code> | Prevent Kodiak from merging pull requests while still allowing updates. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.method">method</a></code> | <code><a href="#projen.github.MergeMethod">MergeMethod</a></code> | Merge strategy used when merging pull requests. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.prioritizeReadyToMerge">prioritizeReadyToMerge</a></code> | <code>boolean</code> | Prioritize pull requests that are already up-to-date and passing checks. |
+| <code><a href="#projen.github.KodiakMergeOptions.property.requireAutomergeLabel">requireAutomergeLabel</a></code> | <code>boolean</code> | Whether pull requests must have `automergeLabel` to be merged by Kodiak. |
+
+---
+
+##### `automergeDependencies`<sup>Optional</sup> <a name="automergeDependencies" id="projen.github.KodiakMergeOptions.property.automergeDependencies"></a>
+
+```typescript
+public readonly automergeDependencies: KodiakAutomergeDependencies;
+```
+
+- *Type:* <a href="#projen.github.KodiakAutomergeDependencies">KodiakAutomergeDependencies</a>
+- *Default:* dependency auto-merge is not configured
+
+Configure automatic merging for dependency update bots such as Dependabot or Renovate.
+
+---
+
+##### `automergeLabel`<sup>Optional</sup> <a name="automergeLabel" id="projen.github.KodiakMergeOptions.property.automergeLabel"></a>
+
+```typescript
+public readonly automergeLabel: string;
+```
+
+- *Type:* string
+- *Default:* "automerge"
+
+Label required on a pull request to trigger auto-merge.
+
+---
+
+##### `deleteBranchOnMerge`<sup>Optional</sup> <a name="deleteBranchOnMerge" id="projen.github.KodiakMergeOptions.property.deleteBranchOnMerge"></a>
+
+```typescript
+public readonly deleteBranchOnMerge: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Automatically delete the head branch after merging.
+
+---
+
+##### `doNotMerge`<sup>Optional</sup> <a name="doNotMerge" id="projen.github.KodiakMergeOptions.property.doNotMerge"></a>
+
+```typescript
+public readonly doNotMerge: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Prevent Kodiak from merging pull requests while still allowing updates.
+
+---
+
+##### `method`<sup>Optional</sup> <a name="method" id="projen.github.KodiakMergeOptions.property.method"></a>
+
+```typescript
+public readonly method: MergeMethod;
+```
+
+- *Type:* <a href="#projen.github.MergeMethod">MergeMethod</a>
+- *Default:* MergeMethod.MERGE
+
+Merge strategy used when merging pull requests.
+
+---
+
+##### `prioritizeReadyToMerge`<sup>Optional</sup> <a name="prioritizeReadyToMerge" id="projen.github.KodiakMergeOptions.property.prioritizeReadyToMerge"></a>
+
+```typescript
+public readonly prioritizeReadyToMerge: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Prioritize pull requests that are already up-to-date and passing checks.
+
+---
+
+##### `requireAutomergeLabel`<sup>Optional</sup> <a name="requireAutomergeLabel" id="projen.github.KodiakMergeOptions.property.requireAutomergeLabel"></a>
+
+```typescript
+public readonly requireAutomergeLabel: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+Whether pull requests must have `automergeLabel` to be merged by Kodiak.
+
+---
+
+### KodiakOptions <a name="KodiakOptions" id="projen.github.KodiakOptions"></a>
+
+Configure Kodiak (`.kodiak.toml`).
+
+> [https://kodiakhq.com/docs/config-reference](https://kodiakhq.com/docs/config-reference)
+
+#### Initializer <a name="Initializer" id="projen.github.KodiakOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const kodiakOptions: github.KodiakOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.KodiakOptions.property.approve">approve</a></code> | <code><a href="#projen.github.KodiakApproveOptions">KodiakApproveOptions</a></code> | Auto-approval settings (`[approve]`). |
+| <code><a href="#projen.github.KodiakOptions.property.merge">merge</a></code> | <code><a href="#projen.github.KodiakMergeOptions">KodiakMergeOptions</a></code> | Merge settings (`[merge]`). |
+| <code><a href="#projen.github.KodiakOptions.property.update">update</a></code> | <code><a href="#projen.github.KodiakUpdateOptions">KodiakUpdateOptions</a></code> | Branch update settings (`[update]`). |
+| <code><a href="#projen.github.KodiakOptions.property.version">version</a></code> | <code>number</code> | Kodiak configuration format version. |
+
+---
+
+##### `approve`<sup>Optional</sup> <a name="approve" id="projen.github.KodiakOptions.property.approve"></a>
+
+```typescript
+public readonly approve: KodiakApproveOptions;
+```
+
+- *Type:* <a href="#projen.github.KodiakApproveOptions">KodiakApproveOptions</a>
+- *Default:* no auto-approval rules configured
+
+Auto-approval settings (`[approve]`).
+
+---
+
+##### `merge`<sup>Optional</sup> <a name="merge" id="projen.github.KodiakOptions.property.merge"></a>
+
+```typescript
+public readonly merge: KodiakMergeOptions;
+```
+
+- *Type:* <a href="#projen.github.KodiakMergeOptions">KodiakMergeOptions</a>
+- *Default:* default Kodiak merge behavior
+
+Merge settings (`[merge]`).
+
+---
+
+##### `update`<sup>Optional</sup> <a name="update" id="projen.github.KodiakOptions.property.update"></a>
+
+```typescript
+public readonly update: KodiakUpdateOptions;
+```
+
+- *Type:* <a href="#projen.github.KodiakUpdateOptions">KodiakUpdateOptions</a>
+- *Default:* default Kodiak update behavior
+
+Branch update settings (`[update]`).
+
+---
+
+##### `version`<sup>Optional</sup> <a name="version" id="projen.github.KodiakOptions.property.version"></a>
+
+```typescript
+public readonly version: number;
+```
+
+- *Type:* number
+- *Default:* 1
+
+Kodiak configuration format version.
+
+---
+
+### KodiakUpdateOptions <a name="KodiakUpdateOptions" id="projen.github.KodiakUpdateOptions"></a>
+
+Options for Kodiak `[update]`.
+
+#### Initializer <a name="Initializer" id="projen.github.KodiakUpdateOptions.Initializer"></a>
+
+```typescript
+import { github } from 'projen'
+
+const kodiakUpdateOptions: github.KodiakUpdateOptions = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.github.KodiakUpdateOptions.property.always">always</a></code> | <code>boolean</code> | Automatically update out-of-date pull requests rather than waiting until queued for merge. |
+| <code><a href="#projen.github.KodiakUpdateOptions.property.autoupdateLabel">autoupdateLabel</a></code> | <code>string</code> | Only update pull requests carrying this label. |
+| <code><a href="#projen.github.KodiakUpdateOptions.property.ignoredUsernames">ignoredUsernames</a></code> | <code>string[]</code> | Usernames whose pull requests should not be automatically updated. |
+
+---
+
+##### `always`<sup>Optional</sup> <a name="always" id="projen.github.KodiakUpdateOptions.property.always"></a>
+
+```typescript
+public readonly always: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Automatically update out-of-date pull requests rather than waiting until queued for merge.
+
+---
+
+##### `autoupdateLabel`<sup>Optional</sup> <a name="autoupdateLabel" id="projen.github.KodiakUpdateOptions.property.autoupdateLabel"></a>
+
+```typescript
+public readonly autoupdateLabel: string;
+```
+
+- *Type:* string
+- *Default:* all eligible pull requests are updated
+
+Only update pull requests carrying this label.
+
+---
+
+##### `ignoredUsernames`<sup>Optional</sup> <a name="ignoredUsernames" id="projen.github.KodiakUpdateOptions.property.ignoredUsernames"></a>
+
+```typescript
+public readonly ignoredUsernames: string[];
+```
+
+- *Type:* string[]
+- *Default:* no usernames ignored
+
+Usernames whose pull requests should not be automatically updated.
 
 ---
 
@@ -13552,6 +14159,41 @@ By default, this is on Monday.
 Runs once each month.
 
 This is on the first day of the month.
+
+---
+
+
+### KodiakDependencyVersion <a name="KodiakDependencyVersion" id="projen.github.KodiakDependencyVersion"></a>
+
+Dependency version bump levels eligible for Kodiak auto-merge.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.github.KodiakDependencyVersion.MAJOR">MAJOR</a></code> | Major semver updates. |
+| <code><a href="#projen.github.KodiakDependencyVersion.MINOR">MINOR</a></code> | Minor semver updates. |
+| <code><a href="#projen.github.KodiakDependencyVersion.PATCH">PATCH</a></code> | Patch semver updates. |
+
+---
+
+##### `MAJOR` <a name="MAJOR" id="projen.github.KodiakDependencyVersion.MAJOR"></a>
+
+Major semver updates.
+
+---
+
+
+##### `MINOR` <a name="MINOR" id="projen.github.KodiakDependencyVersion.MINOR"></a>
+
+Minor semver updates.
+
+---
+
+
+##### `PATCH` <a name="PATCH" id="projen.github.KodiakDependencyVersion.PATCH"></a>
+
+Patch semver updates.
 
 ---
 
