@@ -7,6 +7,7 @@ export * from "./actions.const";
 export * from "./actions-provider";
 export * from "./mergify";
 export * from "./merge-queue";
+export * from "./kodiak";
 export * from "./pr-template";
 export * from "./auto-approve";
 export * from "./auto-merge";

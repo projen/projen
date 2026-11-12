@@ -4,6 +4,8 @@ import { Dependabot } from "./dependabot";
 import type { DependencyReviewOptions } from "./dependency-review";
 import { DependencyReview } from "./dependency-review";
 import { GithubCredentials } from "./github-credentials";
+import type { KodiakOptions } from "./kodiak";
+import { Kodiak } from "./kodiak";
 import type { MergeQueueOptions } from "./merge-queue";
 import { MergeQueue } from "./merge-queue";
 import type { MergifyOptions } from "./mergify";
@@ -53,6 +55,20 @@ export interface GitHubOptions {
    * @default - default options
    */
   readonly mergeQueueOptions?: MergeQueueOptions;
+
+  /**
+   * Whether Kodiak (`.kodiak.toml`) should be enabled on this repository.
+   *
+   * @default false
+   */
+  readonly kodiak?: boolean;
+
+  /**
+   * Options for Kodiak.
+   *
+   * @default - default options
+   */
+  readonly kodiakOptions?: KodiakOptions;
 
   /**
    * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
@@ -176,6 +192,12 @@ export class GitHub extends Component {
   public readonly mergeQueue?: MergeQueue;
 
   /**
+   * The `Kodiak` component configured on this repository
+   * This is `undefined` if Kodiak is not enabled for this repository.
+   */
+  public readonly kodiak?: Kodiak;
+
+  /**
    * Are workflows enabled?
    */
   public readonly workflowsEnabled: boolean;
@@ -222,6 +244,10 @@ export class GitHub extends Component {
 
     if (options.mergeQueue ?? false) {
       this.mergeQueue = new MergeQueue(this, options.mergeQueueOptions);
+    }
+
+    if (options.kodiak ?? false) {
+      this.kodiak = new Kodiak(this, options.kodiakOptions);
     }
 
     if (options.pullRequestLint ?? true) {
