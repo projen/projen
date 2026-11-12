@@ -14,6 +14,28 @@ const POM_XML_ATTRS = {
   "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 };
 
+export interface MavenDependencyOptions {
+  /**
+   * The type of the dependency.
+   * @default - no type
+   */
+  readonly type?: string;
+
+  /**
+   * The scope of the dependency.
+   * @default - no scope
+   */
+  readonly scope?: string;
+}
+
+function parseMavenDependency(spec: string) {
+  const at = spec.lastIndexOf("@");
+  if (at === -1) {
+    return { name: spec, version: "0.0.0" };
+  }
+  return { name: spec.substring(0, at), version: spec.substring(at + 1) };
+}
+
 /**
  * Options for `Pom`.
  */
@@ -301,8 +323,8 @@ export class Pom extends Component {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+  public addDependency(spec: string, options: MavenDependencyOptions = {}) {
+    return this.addDependencyWithType(spec, DependencyType.RUNTIME, options);
   }
 
   /**
@@ -310,8 +332,25 @@ export class Pom extends Component {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addTestDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.TEST);
+  public addTestDependency(spec: string, options: MavenDependencyOptions = {}) {
+    return this.addDependencyWithType(spec, DependencyType.TEST, options);
+  }
+
+  private addDependencyWithType(
+    spec: string,
+    type: DependencyType,
+    options: MavenDependencyOptions,
+  ) {
+    const { name, version } = parseMavenDependency(spec);
+    try {
+      toMavenVersionRange(version);
+      return this.project.deps.addDependency(spec, type, options);
+    } catch {
+      return this.project.deps.addDependency(`${name}@0.0.0`, type, {
+        ...options,
+        version,
+      });
+    }
   }
 
   /**
@@ -382,13 +421,14 @@ export class Pom extends Component {
       switch (dep.type) {
         case DependencyType.PEER:
         case DependencyType.RUNTIME:
-          dependencies.push(mavenCoords(dep));
+          dependencies.push({ ...mavenCoords(dep), ...dep.metadata });
           break;
 
         case DependencyType.TEST:
           dependencies.push({
             ...mavenCoords(dep),
             scope: "test",
+            ...dep.metadata,
           });
           break;
 
