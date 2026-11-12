@@ -224,13 +224,8 @@ export class Biome extends Component {
               return "https://biomejs.dev/schemas/latest/schema.json";
             }
 
-            const relativeSchema = normalizePersistedPath(
+            return normalizePersistedPath(
               path.relative(this.project.outdir, resolvedSchema),
-            );
-            // Strip pnpm virtual store prefix so $schema remains version-independent
-            return relativeSchema.replace(
-              /(^|\/)node_modules\/\.pnpm\/[^/]+\/node_modules\//,
-              "$1node_modules/",
             );
           },
           files: {
