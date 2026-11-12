@@ -51,7 +51,9 @@ describe("projenCommand with an inferred package manager", () => {
       expect.objectContaining({ command: `${command} build` }),
     );
     expect(output[".devcontainer.json"].postCreateCommand).toBe(
-      "npm install -g projen@99.99.99 && ( projen build )",
+      command === "npx projen"
+        ? "npm install -g projen@99.99.99 && ( projen build )"
+        : `( ${command} build )`,
     );
     expect(output[".gitignore"]).toContain(`run "${command}"`);
     expect(output["package.json"].scripts.build).toBe("projen build");

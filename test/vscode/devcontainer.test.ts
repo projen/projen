@@ -97,20 +97,29 @@ test("add postCreateCommands", () => {
   });
 });
 
-test("postCreateCommand runs plain projen after a global install", () => {
+test.each([
+  "npx -p projen projen",
+  "node ./projen.js",
+  "node scripts/run-task.cjs",
+  "pnpm exec projen",
+  "bunx projen",
+])("postCreateCommand keeps a custom projenCommand %j", (projenCommand) => {
   // GIVEN
   const project = new TestProject({
     devContainer: true,
-    projenCommand: "npx -p projen projen",
+    projenCommand,
   });
 
   // WHEN
-  project.devContainer?.addTasks(project.addTask("task"));
+  project.devContainer?.addTasks(
+    project.addTask("task1"),
+    project.addTask("task2"),
+  );
 
   // THEN
   const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
   expect(devcontainer.postCreateCommand).toBe(
-    "npm install -g projen@99.99.99 && ( projen task )",
+    `( ${projenCommand} task1 ) && ( ${projenCommand} task2 )`,
   );
 });
 
