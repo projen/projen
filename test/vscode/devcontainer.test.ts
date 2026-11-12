@@ -118,6 +118,28 @@ test.each([
   expect(devcontainer.postCreateCommand).toBe(`( ${projenCommand} task )`);
 });
 
+test.each([
+  ["npx projen --yes", "npx --yes projen --yes"],
+  ["npx projen -y", "npx --yes projen -y"],
+  ["npx -p projen projen", "npx --yes -p projen projen"],
+])(
+  "postCreateCommand adds --yes before the executable for %j",
+  (projenCommand, expected) => {
+    // GIVEN
+    const project = new TestProject({
+      devContainer: true,
+      projenCommand,
+    });
+
+    // WHEN
+    project.devContainer?.addTasks(project.addTask("task"));
+
+    // THEN
+    const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
+    expect(devcontainer.postCreateCommand).toBe(`( ${expected} task )`);
+  },
+);
+
 test("add features", () => {
   // GIVEN
   const project = new TestProject({

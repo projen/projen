@@ -187,14 +187,33 @@ export class DevContainer
   }
 }
 
+const NPX_OPTIONS_WITH_VALUE = [
+  "-p",
+  "--package",
+  "-c",
+  "--call",
+  "-w",
+  "--workspace",
+];
+
 function withNpxYes(projenCommand: string): string {
   const tokens = projenCommand.trim().split(/\s+/);
-  if (
-    tokens[0] !== "npx" ||
-    tokens.includes("--yes") ||
-    tokens.includes("-y")
-  ) {
+  if (tokens[0] !== "npx") {
     return projenCommand;
+  }
+
+  // Only options before the executable belong to npx.
+  for (let i = 1; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (token === "--" || !token.startsWith("-")) {
+      break;
+    }
+    if (token === "--yes" || token === "-y" || token.startsWith("--yes=")) {
+      return projenCommand;
+    }
+    if (NPX_OPTIONS_WITH_VALUE.includes(token)) {
+      i++;
+    }
   }
 
   return projenCommand.replace(/^(\s*)npx(?=\s|$)/, "$1npx --yes");
