@@ -18379,6 +18379,7 @@ const textFileOptions: TextFileOptions = { ... }
 | <code><a href="#projen.TextFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Adds the projen marker to the file. |
 | <code><a href="#projen.TextFileOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
 | <code><a href="#projen.TextFileOptions.property.lines">lines</a></code> | <code>string[]</code> | The contents of the text file. |
+| <code><a href="#projen.TextFileOptions.property.markerCommentPrefix">markerCommentPrefix</a></code> | <code>string</code> | Single-line comment prefix to use when prepending the projen marker. |
 
 ---
 
@@ -18465,6 +18466,33 @@ The contents of the text file.
 You can use `addLine()` to append lines.
 
 ---
+
+##### `markerCommentPrefix`<sup>Optional</sup> <a name="markerCommentPrefix" id="projen.TextFileOptions.property.markerCommentPrefix"></a>
+
+```typescript
+public readonly markerCommentPrefix: string;
+```
+
+- *Type:* string
+- *Default:* no marker line is written
+
+Single-line comment prefix to use when prepending the projen marker.
+
+Supply a prefix appropriate for the target file format, such as `#`.
+Omitting the prefix leaves the file contents unchanged. Setting
+`marker: true` alone does not add a marker or infer a comment prefix.
+
+The marker is omitted when `marker` is `false` or the project is ejected,
+even if a prefix is supplied.
+
+---
+
+*Example*
+
+```typescript
+"#"
+```
+
 
 ### TomlFileOptions <a name="TomlFileOptions" id="projen.TomlFileOptions"></a>
 
