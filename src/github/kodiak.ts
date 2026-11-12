@@ -31,7 +31,7 @@ export interface KodiakAutomergeDependencies {
   /**
    * Restrict auto-merging to specific semver upgrade levels.
    *
-   * @default - all semver update levels
+   * @default - no dependency upgrade levels are auto-merged
    */
   readonly versions?: KodiakDependencyVersion[];
 
@@ -64,7 +64,7 @@ export interface KodiakMergeOptions {
   /**
    * Merge strategy used when merging pull requests.
    *
-   * @default MergeMethod.MERGE
+   * @default - the first merge method enabled on the repository (merge, then squash, then rebase)
    */
   readonly method?: MergeMethod;
 
@@ -111,7 +111,7 @@ export interface KodiakUpdateOptions {
   /**
    * Only update pull requests carrying this label.
    *
-   * @default - all eligible pull requests are updated
+   * @default - no label-based auto-update (see `update.always`)
    */
   readonly autoupdateLabel?: string;
 

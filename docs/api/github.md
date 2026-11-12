@@ -9989,7 +9989,7 @@ public readonly versions: KodiakDependencyVersion[];
 ```
 
 - *Type:* <a href="#projen.github.KodiakDependencyVersion">KodiakDependencyVersion</a>[]
-- *Default:* all semver update levels
+- *Default:* no dependency upgrade levels are auto-merged
 
 Restrict auto-merging to specific semver upgrade levels.
 
@@ -10080,7 +10080,7 @@ public readonly method: MergeMethod;
 ```
 
 - *Type:* <a href="#projen.github.MergeMethod">MergeMethod</a>
-- *Default:* MergeMethod.MERGE
+- *Default:* the first merge method enabled on the repository (merge, then squash, then rebase)
 
 Merge strategy used when merging pull requests.
 
@@ -10231,7 +10231,7 @@ public readonly autoupdateLabel: string;
 ```
 
 - *Type:* string
-- *Default:* all eligible pull requests are updated
+- *Default:* no label-based auto-update (see `update.always`)
 
 Only update pull requests carrying this label.
 
