@@ -1,3 +1,4 @@
+import * as fs from "node:fs";
 import * as path from "node:path";
 import { deepClone } from "fast-json-patch";
 import { Component } from "../../component";
@@ -196,6 +197,18 @@ export class Biome extends Component {
         toJson_BiomeConfiguration(deepClone(options.biomeConfig ?? {})),
         {
           $schema: () => {
+            const localSchema = path.join(
+              this.project.outdir,
+              "node_modules",
+              biomejs,
+              "configuration_schema.json",
+            );
+            if (fs.existsSync(localSchema)) {
+              return normalizePersistedPath(
+                path.relative(this.project.outdir, localSchema),
+              );
+            }
+
             const resolvedSchema = tryResolveModule(
               `${biomejs}/configuration_schema.json`,
               { paths: [this.project.outdir] },
