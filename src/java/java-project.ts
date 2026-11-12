@@ -5,7 +5,11 @@ import { MavenCompile } from "./maven-compile";
 import type { MavenPackagingOptions } from "./maven-packaging";
 import { MavenPackaging } from "./maven-packaging";
 import { MavenSample } from "./maven-sample";
-import type { PluginOptions, PomOptions } from "./pom";
+import type {
+  MavenDependencyOptions,
+  PluginOptions,
+  PomOptions,
+} from "./pom";
 import { Pom } from "./pom";
 import type { ProjenrcOptions } from "./projenrc";
 import { Projenrc as ProjenrcJava } from "./projenrc";
@@ -222,8 +226,8 @@ export class JavaProject extends GitHubProject {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addDependency(spec: string) {
-    return this.pom.addDependency(spec);
+  public addDependency(spec: string, options?: MavenDependencyOptions) {
+    return this.pom.addDependency(spec, options);
   }
 
   /**
@@ -231,8 +235,8 @@ export class JavaProject extends GitHubProject {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addTestDependency(spec: string) {
-    return this.pom.addTestDependency(spec);
+  public addTestDependency(spec: string, options?: MavenDependencyOptions) {
+    return this.pom.addTestDependency(spec, options);
   }
 
   /**
