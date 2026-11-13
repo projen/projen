@@ -39,6 +39,16 @@ be made optional. Confused? See the
 [components concepts](/docs/concepts/components) documentation.
 :::
 
+Forward the full constructor options object to `super(options)`. When a user
+runs `projen new --from`, the CLI includes initialization metadata that the
+base project uses to write the initial projenrc file. It also includes the
+custom project package in `devDeps` for Node-based projects.
+
+When [setting defaults](#setting-default-values), spread `...options` into the
+object you pass to `super`. Copying individual fields can drop the initialization
+metadata or the package dependency. If you add development dependencies in the
+constructor, retain the entries from `options.devDeps`.
+
 ## Creating unmanaged files
 
 Most projects will have need of files that are not managed by projen. For
