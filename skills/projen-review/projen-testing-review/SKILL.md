@@ -1,6 +1,6 @@
 ---
 name: projen-testing-review
-description: "projen testing reviewer. Use on any projen pull request that changes behavior in `src/**`, `projenrc/**` or `scripts/integ-*.sh`, or adds or changes tests in `test/**`: a feature or fix whose main effect no test would catch breaking, tests that run the code but assert nothing that would catch it, hand-rolled test setup where `synthSnapshot` / `Testing.synth` / `TestProject` / `withProjectDir` / `mkdtemp` already exist, packaged-artifact behavior tested in Jest instead of `scripts/integ-*.sh`, and snapshot tests whose name or file does not match what they snapshot."
+description: "projen testing reviewer. Use on any projen pull request that changes behavior in `src/**`, `projenrc/**` or `scripts/integ-*.sh`, or adds or changes tests in `test/**`: a feature or fix whose main effect no test would catch breaking, tests that run the code but assert nothing that would catch it, hand-rolled test setup where `synthSnapshot` / `Testing.synth` / `TestProject` / `withProjectDir` / `mkdtemp` / `execProjenCLI` already exist, tests that write files into the repository, packaged-artifact behavior tested in Jest instead of `scripts/integ-*.sh`, and snapshot tests whose name or file does not match what they snapshot."
 ---
 
 # projen Testing Review
@@ -36,7 +36,7 @@ would catch it. Whether a snapshot change is acceptable for users is `projen-com
 
 3. **Check the layer and the helpers.** Behavior of the published package (`projen new`, `projen eject`,
    other-language synthesis) belongs in `scripts/integ-*.sh`. Everything else is a Jest test using the
-   existing helpers.
+   existing helpers, in a temporary directory, never inside the repository.
 
 4. **Rate by harm and stop.** Rate per `projen-review-principles`. One finding per gap, on the production
    line it should cover. When the change is adequately covered, raise nothing.
@@ -68,7 +68,7 @@ Beyond the shared exclusions in `projen-review-principles`:
 
 Populate the structured finding fields `projen-review-principles` defines. Put the mutation you made and
 the result in `evidence`. This dimension's `category` is one of: Missing test, Hollow test, Wrong test
-layer, Hand-rolled test setup, Misleading snapshot test.
+layer, Hand-rolled test setup, Test writes to repository, Misleading snapshot test.
 
 ## Apply projen-review-principles
 
