@@ -581,7 +581,10 @@
             "--passWithNoTests",
             "--updateSnapshot"
           ],
-          "receiveArgs": true
+          "receiveArgs": true,
+          "env": {
+            "NODE_OPTIONS": "--experimental-vm-modules"
+          }
         },
         {
           "spawn": "eslint"
@@ -596,7 +599,10 @@
           "execArgs": [
             "jest",
             "--watch"
-          ]
+          ],
+          "env": {
+            "NODE_OPTIONS": "--experimental-vm-modules"
+          }
         }
       ]
     },

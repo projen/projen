@@ -9963,6 +9963,7 @@ const jestOptions: javascript.JestOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.javascript.JestOptions.property.configFilePath">configFilePath</a></code> | <code>string</code> | Path to JSON config file for Jest. |
 | <code><a href="#projen.javascript.JestOptions.property.coverageText">coverageText</a></code> | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. |
+| <code><a href="#projen.javascript.JestOptions.property.experimentalVmModules">experimentalVmModules</a></code> | <code>boolean</code> | Run Jest with Node's `--experimental-vm-modules` flag, set through the `NODE_OPTIONS` environment variable of the Jest task steps. |
 | <code><a href="#projen.javascript.JestOptions.property.extraCliOptions">extraCliOptions</a></code> | <code>string[]</code> | Additional options to pass to the Jest CLI invocation. |
 | <code><a href="#projen.javascript.JestOptions.property.jestConfig">jestConfig</a></code> | <code><a href="#projen.javascript.JestConfigOptions">JestConfigOptions</a></code> | Jest configuration. |
 | <code><a href="#projen.javascript.JestOptions.property.jestVersion">jestVersion</a></code> | <code>string</code> | The version of jest to use. |
@@ -9996,6 +9997,24 @@ public readonly coverageText: boolean;
 - *Default:* true
 
 Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.
+
+---
+
+##### `experimentalVmModules`<sup>Optional</sup> <a name="experimentalVmModules" id="projen.javascript.JestOptions.property.experimentalVmModules"></a>
+
+```typescript
+public readonly experimentalVmModules: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Run Jest with Node's `--experimental-vm-modules` flag, set through the `NODE_OPTIONS` environment variable of the Jest task steps.
+
+Jest needs it to load ES modules, including ESM-only dependencies required
+from CommonJS code. The flag replaces any `NODE_OPTIONS` set outside the task.
+
+> [https://jestjs.io/docs/ecmascript-modules](https://jestjs.io/docs/ecmascript-modules)
 
 ---
 

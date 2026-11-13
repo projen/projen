@@ -685,6 +685,18 @@ export interface JestOptions {
   readonly extraCliOptions?: string[];
 
   /**
+   * Run Jest with Node's `--experimental-vm-modules` flag, set through the
+   * `NODE_OPTIONS` environment variable of the Jest task steps.
+   *
+   * Jest needs it to load ES modules, including ESM-only dependencies required
+   * from CommonJS code. The flag replaces any `NODE_OPTIONS` set outside the task.
+   *
+   * @see https://jestjs.io/docs/ecmascript-modules
+   * @default false
+   */
+  readonly experimentalVmModules?: boolean;
+
+  /**
    * Pass with no tests
    * @default - true
    */
@@ -892,6 +904,7 @@ export class Jest extends Component {
     [key: string]: unknown;
   };
   private readonly extraCliOptions: string[];
+  private readonly experimentalVmModules: boolean;
   private readonly passWithNoTests: boolean;
   private _snapshotResolver: string | undefined;
 
@@ -922,6 +935,7 @@ export class Jest extends Component {
       ...options.jestConfig?.additionalOptions,
     };
     this.extraCliOptions = options.extraCliOptions ?? [];
+    this.experimentalVmModules = options.experimentalVmModules ?? false;
     this.passWithNoTests = options.passWithNoTests ?? true;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
@@ -1154,6 +1168,9 @@ export class Jest extends Component {
     if (this.file && this.file.path != "jest.config.json") {
       jestConfigOpts.push("-c", this.file.path);
     }
+    const env = this.experimentalVmModules
+      ? { NODE_OPTIONS: "--experimental-vm-modules" }
+      : undefined;
 
     if (this.passWithNoTests) {
       jestOpts.push("--passWithNoTests");
@@ -1167,26 +1184,32 @@ export class Jest extends Component {
       if (!testUpdate) {
         this.project.addTask("test:update", {
           description: "Update jest snapshots",
-          execArgs: [
-            "jest",
-            "--updateSnapshot",
-            ...jestOpts,
-            ...jestConfigOpts,
+          steps: [
+            {
+              execArgs: [
+                "jest",
+                "--updateSnapshot",
+                ...jestOpts,
+                ...jestConfigOpts,
+              ],
+              receiveArgs: true,
+              env,
+            },
           ],
-          receiveArgs: true,
         });
       }
     }
 
     this.project.testTask.execArgs(["jest", ...jestOpts, ...jestConfigOpts], {
       receiveArgs: true,
+      env,
     });
 
     const testWatch = this.project.tasks.tryFind("test:watch");
     if (!testWatch) {
       this.project.addTask("test:watch", {
         description: "Run jest in watch mode",
-        execArgs: ["jest", "--watch", ...jestConfigOpts],
+        steps: [{ execArgs: ["jest", "--watch", ...jestConfigOpts], env }],
       });
     }
   }

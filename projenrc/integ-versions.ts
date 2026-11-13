@@ -30,13 +30,12 @@ export interface LanguageVersions {
  * to modify the version matrix for CI workflows.
  */
 export const INTEG_TEST_VERSIONS: LanguageVersions = {
-  // Latest patch of each LTS line (`lts/-N`) plus the oldest viable patch as
-  // canaries for APIs added in later patches, e.g. `process.getBuiltinModule`
-  // (20.16 / 22.3, never in 18.x) whose absence broke all task commands (#4846).
-  // 18.18.0/20.9.0 are the oldest patches the generated project's toolchain
-  // supports (eslint 9); node 16 can't run the toolchain at all.
-  node: ["18.18.0", "20.9.0", "lts/-2", "22.0.0", "lts/-1", "24.0.0", "lts/*"],
-  python: ["3.11", "3.12", "3.13", "3.14"],
+  // Latest patch of each LTS line (`lts/-N`) plus the minimum supported
+  // version as a canary for APIs added in later patches. 22.13.0 is the first
+  // 22.x that can `require()` ESM-only dependencies without an experimental
+  // warning.
+  node: ["22.13.0", "lts/-2", "lts/-1", "lts/*"],
+  python: ["3.11", "3.12", "3.13", "3.14", "3.15"],
   go: ["1.26.x", "1.27.x"],
   java: [
     { version: "8", distribution: "corretto" },

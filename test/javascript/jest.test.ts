@@ -434,3 +434,16 @@ describe("UpdateSnapshotOptions.NEVER", () => {
     expect(testUpdateTask?.steps[0]?.execArgs).toContain("--updateSnapshot");
   });
 });
+
+test("experimentalVmModules runs Jest with the VM modules flag", () => {
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "main",
+    name: "test",
+    jestOptions: { experimentalVmModules: true },
+  });
+
+  expect(project.testTask.steps[0].env).toEqual({
+    NODE_OPTIONS: "--experimental-vm-modules",
+  });
+});
