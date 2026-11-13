@@ -185,6 +185,27 @@ It needs to read the current file and merge.
 Before claiming a change is correct, synthesize it (`Testing.synth(project)` in a test) and read the
 file it produces.
 
+## Tests
+
+Tests run against projects in a temporary directory, never inside the repository. A project created in a
+test gets a temporary `outdir` by default; for other files use `mkdtemp()` or `withProjectDir()` from
+`test/util.ts`. Files a test writes next to itself are left behind in the repository whenever a run is
+interrupted.
+
+To check that a project or the code projen generates for it compiles or builds, synthesize the project and
+run its own task: `project.synth()` followed by `execProjenCLI(project.outdir, ["compile"])` (or
+`["build"]`, after `project.defaultTask?.reset()` so the build does not try to re-synthesize from a
+`.projenrc.js` the test never wrote), as the `compiles` tests in `test/typescript/typescript.test.ts` and `test/web/react-ts-project.test.ts` do. This installs the
+project's real dependencies and uses its real configuration, and for project types whose `compile` task
+runs the framework build (`next build`, `react-scripts build`) it also covers that build. A hand-built
+TypeScript program, or a link from the test directory to the repository's `node_modules`, checks the code
+against settings and package versions no user has.
+
+Behavior that needs the published package belongs in the `scripts/integ-*.sh` scripts, which run against
+the packaged build output. This is rare: it covers `projen new`, `projen eject` and synthesis from other
+languages, and most changes are tested with Jest. Linking the repository into a test project's
+`node_modules/projen` tests code that is not what ships.
+
 ## Keep it simple
 
 Prefer the simplest code that solves the problem: remove disallowed characters instead of a multi-pass

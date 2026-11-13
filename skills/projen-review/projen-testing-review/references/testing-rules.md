@@ -24,11 +24,14 @@ is always defined. Prove it with the mutation; read what the assertion compares 
 
 ## Test layer
 
-**[TEST-INTEG-LAYER] (RECOMMENDED)**: A Jest test that rebuilds projen, bundles its own artifact, or shells
-out to a locally built CLI to test packaged behavior. `AGENTS.md` § Integration tests: "End-to-end behavior
-that depends on the published artifacts (e.g. `projen new`, `projen eject`, cross-language synthesis) must
-be tested via the `scripts/integ-*.sh` scripts ... Wire them through the `IntegrationTests` component in
-`projenrc/integ-test.ts` ... Do NOT write Jest tests that rebuild projen or bundle their own artifacts."
+**[TEST-INTEG-LAYER] (RECOMMENDED)**: A Jest test that rebuilds projen, bundles its own artifact, shells
+out to a locally built CLI, or links the repository into a test project's `node_modules/projen` to test
+packaged behavior. To check that a project builds, run its `compile` task with `execProjenCLI` instead,
+like the `compiles` test in `test/web/react-ts-project.test.ts`. `AGENTS.md`
+§ Integration tests: "End-to-end behavior that depends on the published artifacts (e.g. `projen new`,
+`projen eject`, cross-language synthesis) must be tested via the `scripts/integ-*.sh` scripts ... Wire
+them through the `IntegrationTests` component in `projenrc/integ-test.ts` ... Do NOT write Jest tests that
+rebuild projen or bundle their own artifacts."
 
 ## Test construction
 
@@ -36,6 +39,17 @@ be tested via the `scripts/integ-*.sh` scripts ... Wire them through the `Integr
 `test/util.ts` and `src/testing.ts` at the PR head before flagging: they provide project synthesis
 (`synthSnapshot`, `Testing.synth`), a minimal GitHub-enabled test project, temporary project directories,
 `projen new` simulation, directory snapshots and CLI execution, and helpers are added over time.
+
+- **Compiling generated code:** a test that checks generated code compiles by building its own TypeScript
+  program, or by writing files next to the test so imports resolve from the repository's `node_modules`.
+  Synthesize a project and run `execProjenCLI(project.outdir, ["compile"])` instead, like the `compiles`
+  tests in `test/typescript/typescript.test.ts`. That uses the project's own dependencies and
+  `tsconfig.json`, which is what users compile with.
+
+**[TEST-WRITES-TO-REPO] (RECOMMENDED)**: A test that writes files into the repository, for example
+`mkdtemp({ dir: __dirname })` or an `outdir` under `test/`. An interrupted run leaves the files behind, and
+they show up as untracked changes or get committed. Use the project's default temporary `outdir`,
+`mkdtemp()` or `withProjectDir()`.
 
 **[TEST-MISLEADING-SNAPSHOT] (RECOMMENDED)**: A test whose name or file claims more coverage than it has:
 a "full output" test that snapshots one file, a `backward-compat.test.ts` that covers one component.

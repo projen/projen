@@ -1,13 +1,14 @@
-import { writeFileSync } from "fs";
-import { join } from "path";
-import * as ts from "typescript";
-import { DependencyType } from "../../src";
+import { DependencyType, TextFile } from "../../src";
 import type { LambdaFunctionCommonOptions } from "../../src/awscdk";
 import { LambdaFunction, LambdaRuntime } from "../../src/awscdk";
 import { AwsCdkDepsJs } from "../../src/awscdk/awscdk-deps-js";
+import { NodePackageManager } from "../../src/javascript";
 import { Testing } from "../../src/testing";
 import { TypeScriptProject } from "../../src/typescript";
-import { mkdtemp } from "../util";
+import { execProjenCLI } from "../util";
+
+// installs aws-cdk-lib from the npm registry
+jest.setTimeout(1000 * 60 * 5); // 5min
 
 const cases: Array<{
   name: string;
@@ -33,68 +34,82 @@ const cases: Array<{
   { name: "ordinary function", options: {} },
 ];
 
-test.each(cases)("generated construct type checks: $name", ({ options }) => {
+function newProject() {
   const project = new TypeScriptProject({
     name: "hello",
     defaultReleaseBranch: "main",
+    packageManager: NodePackageManager.NPM,
   });
-  new LambdaFunction(project, {
-    entrypoint: "src/hello.lambda.ts",
-    cdkDeps: new AwsCdkDepsJs(project, {
-      cdkVersion: "2.275.0",
-      dependencyType: DependencyType.RUNTIME,
-    }),
-    ...options,
+  const cdkDeps = new AwsCdkDepsJs(project, {
+    cdkVersion: "2.275.0",
+    dependencyType: DependencyType.RUNTIME,
   });
-  const generatedSource: string =
-    Testing.synth(project)["src/hello-function.ts"];
+  return { project, cdkDeps };
+}
+
+/**
+ * Code that uses the generated construct the way callers are allowed to, and
+ * the ways they are not (marked with `@ts-expect-error`).
+ */
+function consumer(construct: string, options: LambdaFunctionCommonOptions) {
   const requiresUuid = options.singleton && !options.singletonUuid;
   const props = requiresUuid ? 'uuid: "caller-uuid",' : "";
   const optionalProps = options.singleton ? 'lambdaPurpose: "provider",' : "";
   const runtime = options.runtime ? "" : "runtime: Runtime.NODEJS_22_X,";
-  const consumer = `
+  return `
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
-import { HelloFunction } from "./hello-function";
+import { ${construct} } from "./${construct}";
 declare const scope: Construct;
-new HelloFunction(scope, "minimal", { ${props} });
-new HelloFunction(scope, "options", { ${props} ${optionalProps} ${runtime} memorySize: 256 });
+new ${construct}(scope, "minimal", { ${props} });
+new ${construct}(scope, "options", { ${props} ${optionalProps} ${runtime} memorySize: 256 });
 ${requiresUuid ? "// @ts-expect-error props must supply a UUID" : ""}
-new HelloFunction(scope, "no-props");
+new ${construct}(scope, "no-props");
 ${requiresUuid ? "// @ts-expect-error UUID is required" : ""}
-new HelloFunction(scope, "no-uuid", { memorySize: 256 });
+new ${construct}(scope, "no-uuid", { memorySize: 256 });
 ${
   options.runtime
     ? `// @ts-expect-error the generator fixes the runtime
-new HelloFunction(scope, "runtime-override", { ${props} runtime: Runtime.NODEJS_20_X });`
+new ${construct}(scope, "runtime-override", { ${props} runtime: Runtime.NODEJS_20_X });`
     : ""
 }
-`;
+`.split("\n");
+}
 
-  const outdir = mkdtemp({ dir: __dirname });
-  const constructFile = join(outdir, "hello-function.ts");
-  const consumerFile = join(outdir, "consumer.ts");
-  writeFileSync(constructFile, generatedSource);
-  writeFileSync(consumerFile, consumer);
-  const program = ts.createProgram([constructFile, consumerFile], {
-    strict: true,
-    noEmit: true,
-    target: ts.ScriptTarget.ES2022,
-    module: ts.ModuleKind.Node16,
-    lib: ["lib.es2022.d.ts", "lib.esnext.disposable.d.ts"],
-    types: ["node"],
+test("generated constructs compile", async () => {
+  const { project, cdkDeps } = newProject();
+  cases.forEach(({ options }, index) => {
+    const construct = `Case${index}Function`;
+    const entrypoint = `src/case${index}.lambda.ts`;
+    new TextFile(project, entrypoint, {
+      lines: ["export async function handler() {}"],
+    });
+    new LambdaFunction(project, {
+      entrypoint,
+      constructFile: `src/${construct}.ts`,
+      constructName: construct,
+      cdkDeps,
+      ...options,
+    });
+    new TextFile(project, `src/case${index}.consumer.ts`, {
+      lines: consumer(construct, options),
+    });
   });
-  const diagnostics = ts.getPreEmitDiagnostics(program).map((diagnostic) => ({
-    code: diagnostic.code,
-    file: diagnostic.file?.fileName,
-    line:
-      diagnostic.file && diagnostic.start !== undefined
-        ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start).line +
-          1
-        : undefined,
-    message: ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
-  }));
-  expect(diagnostics).toEqual([]);
+
+  project.synth();
+
+  await execProjenCLI(project.outdir, ["compile"]);
+});
+
+test.each(cases)("generated construct source: $name", ({ options }) => {
+  const { project, cdkDeps } = newProject();
+  new LambdaFunction(project, {
+    entrypoint: "src/hello.lambda.ts",
+    cdkDeps,
+    ...options,
+  });
+  const generatedSource: string =
+    Testing.synth(project)["src/hello-function.ts"];
 
   if (options.singletonUuid) {
     expect(generatedSource).toContain("...props,");
