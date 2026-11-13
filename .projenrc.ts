@@ -207,7 +207,7 @@ project.with(
     jsiiVersion: "6.0.x",
     publishToMaven: {
       javaPackage: "io.github.cdklabs.projen",
-      mavenGroupId: "io.github.cdklabs",
+      mavenGroupId: "io.projen",
       mavenArtifactId: "projen",
     },
     publishToPypi: {

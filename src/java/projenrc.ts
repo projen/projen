@@ -43,7 +43,7 @@ export interface ProjenrcOptions {
 /**
  * Allows writing projenrc files in java.
  *
- * This will install `org.projen/projen` as a Maven dependency and will add a
+ * This will install `io.projen/projen` as a Maven dependency and will add a
  * `synth` task which will compile & execute `main()` from
  * `src/main/java/projenrc.java`.
  */
@@ -78,10 +78,7 @@ export class Projenrc extends ProjenrcFile {
       ? "compiler:testCompile"
       : "compiler:compile";
 
-    project.deps.addDependency(
-      `io.github.cdklabs/projen@${projenVersion}`,
-      depType,
-    );
+    project.deps.addDependency(`io.projen/projen@${projenVersion}`, depType);
     pom.addPlugin("org.codehaus.mojo/exec-maven-plugin@3.0.0");
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
