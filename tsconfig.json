@@ -11,7 +11,7 @@
     "lib": [
       "es2022"
     ],
-    "module": "node16",
+    "module": "node20",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,

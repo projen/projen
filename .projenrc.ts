@@ -128,7 +128,7 @@ const project = new TypeScriptProject({
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
-  minNodeVersion: "16.0.0", // Do not change this before a version has been EOL for a while
+  minNodeVersion: "22.13.0", // Do not change this before a version has been EOL for a while
   workflowNodeVersion: "lts/-1", // use the previous lts for builds
 
   codeCov: true,
@@ -146,7 +146,7 @@ const project = new TypeScriptProject({
       isolatedModules: true,
       target: "ES2022",
       lib: ["es2022"],
-      module: "node16",
+      module: "node20",
       esModuleInterop: true,
       skipLibCheck: true,
       noEmitOnError: true,
@@ -221,15 +221,6 @@ project.with(
   }),
 );
 
-// Import of "dax" is only allowed through the src/util/dax.ts wrapper, which
-// installs a required Node compat shim before dax runs (see projen#4846).
-const restrictedDaxImport = {
-  name: "dax",
-  message:
-    "Do not import 'dax' directly. Import from src/util/dax.ts instead, which installs required Node compat shims (see projen#4846).",
-  allowTypeImports: true,
-};
-
 project.eslint?.addRules({
   "@typescript-eslint/consistent-type-imports": "error",
   "@typescript-eslint/consistent-type-exports": "error",
@@ -253,12 +244,11 @@ project.eslint?.addRules({
             "Do not import 'node:child_process' directly. Use the helpers in src/util/exec.ts (e.g. `git.run`).",
           allowTypeImports: true,
         },
-        restrictedDaxImport,
       ],
     },
   ],
 });
-// Files that need direct child_process access (dax stays restricted)
+// Files that need direct child_process access
 project.eslint?.addOverride({
   files: [
     "src/util/exec.ts", // the single home for command execution
@@ -267,10 +257,7 @@ project.eslint?.addOverride({
     "test/tasks/tasks.test.ts", // spies on the task runner's process execution
   ],
   rules: {
-    "@typescript-eslint/no-restricted-imports": [
-      "error",
-      { paths: [restrictedDaxImport] },
-    ],
+    "@typescript-eslint/no-restricted-imports": "off",
   },
 });
 
