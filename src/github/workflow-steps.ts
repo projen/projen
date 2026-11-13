@@ -40,6 +40,9 @@ export class WorkflowSteps {
       ref: options?.with?.ref,
       repository: options?.with?.repository,
       path: options?.with?.path,
+      ...(options?.with?.allowUnsafePrCheckout
+        ? { "allow-unsafe-pr-checkout": true }
+        : {}),
       ...(options?.with?.lfs ? { lfs: true } : {}),
       ...(options?.with?.submodules &&
       options.with.submodules !== CheckoutSubmodules.DISABLED
@@ -249,6 +252,15 @@ export interface CheckoutWith {
    * @default - $GITHUB_WORKSPACE
    */
   readonly path?: string;
+
+  /**
+   * Allow checking out code from a fork pull request in a `workflow_run` workflow.
+   *
+   * Only enable this if the workflow never executes the checked out code.
+   *
+   * @default false
+   */
+  readonly allowUnsafePrCheckout?: boolean;
 }
 
 export interface SetupGitIdentityOptions extends JobStepConfiguration {

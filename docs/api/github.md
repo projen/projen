@@ -7107,6 +7107,7 @@ const checkoutWith: github.CheckoutWith = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.CheckoutWith.property.allowUnsafePrCheckout">allowUnsafePrCheckout</a></code> | <code>boolean</code> | Allow checking out code from a fork pull request in a `workflow_run` workflow. |
 | <code><a href="#projen.github.CheckoutWith.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWith.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
 | <code><a href="#projen.github.CheckoutWith.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
@@ -7114,6 +7115,21 @@ const checkoutWith: github.CheckoutWith = { ... }
 | <code><a href="#projen.github.CheckoutWith.property.repository">repository</a></code> | <code>string</code> | The repository (owner/repo) to use. |
 | <code><a href="#projen.github.CheckoutWith.property.submodules">submodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWith.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
+
+---
+
+##### `allowUnsafePrCheckout`<sup>Optional</sup> <a name="allowUnsafePrCheckout" id="projen.github.CheckoutWith.property.allowUnsafePrCheckout"></a>
+
+```typescript
+public readonly allowUnsafePrCheckout: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Allow checking out code from a fork pull request in a `workflow_run` workflow.
+
+Only enable this if the workflow never executes the checked out code.
 
 ---
 
@@ -7229,6 +7245,7 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.CheckoutWithPatchOptions.property.allowUnsafePrCheckout">allowUnsafePrCheckout</a></code> | <code>boolean</code> | Allow checking out code from a fork pull request in a `workflow_run` workflow. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
@@ -7237,6 +7254,21 @@ const checkoutWithPatchOptions: github.CheckoutWithPatchOptions = { ... }
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.submodules">submodules</a></code> | <code><a href="#projen.github.CheckoutSubmodules">CheckoutSubmodules</a></code> | Whether to checkout Git submodules. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.token">token</a></code> | <code>string</code> | A GitHub token to use when checking out the repository. |
 | <code><a href="#projen.github.CheckoutWithPatchOptions.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
+
+---
+
+##### `allowUnsafePrCheckout`<sup>Optional</sup> <a name="allowUnsafePrCheckout" id="projen.github.CheckoutWithPatchOptions.property.allowUnsafePrCheckout"></a>
+
+```typescript
+public readonly allowUnsafePrCheckout: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Allow checking out code from a fork pull request in a `workflow_run` workflow.
+
+Only enable this if the workflow never executes the checked out code.
 
 ---
 
@@ -11235,6 +11267,7 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.github.PullRequestPatchSource.property.allowUnsafePrCheckout">allowUnsafePrCheckout</a></code> | <code>boolean</code> | Allow checking out code from a fork pull request in a `workflow_run` workflow. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.fetchDepth">fetchDepth</a></code> | <code>number</code> | Number of commits to fetch. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.lfs">lfs</a></code> | <code>boolean</code> | Whether LFS is enabled for the GitHub repository. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.path">path</a></code> | <code>string</code> | Relative path under $GITHUB_WORKSPACE to place the repository. |
@@ -11245,6 +11278,21 @@ const pullRequestPatchSource: github.PullRequestPatchSource = { ... }
 | <code><a href="#projen.github.PullRequestPatchSource.property.patchFile">patchFile</a></code> | <code>string</code> | The name of the artifact the patch is stored as. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.jobId">jobId</a></code> | <code>string</code> | The id of the job that created the patch file. |
 | <code><a href="#projen.github.PullRequestPatchSource.property.outputName">outputName</a></code> | <code>string</code> | The name of the output that indicates if a patch has been created. |
+
+---
+
+##### `allowUnsafePrCheckout`<sup>Optional</sup> <a name="allowUnsafePrCheckout" id="projen.github.PullRequestPatchSource.property.allowUnsafePrCheckout"></a>
+
+```typescript
+public readonly allowUnsafePrCheckout: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Allow checking out code from a fork pull request in a `workflow_run` workflow.
+
+Only enable this if the workflow never executes the checked out code.
 
 ---
 
