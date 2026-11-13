@@ -45,6 +45,7 @@ jobs:
           token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: ${{ github.event.workflow_run.head_sha }}
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          allow-unsafe-pr-checkout: true
       - name: Apply patch
         id: apply_patch
         run: git apply ${{ runner.temp }}/repo.patch

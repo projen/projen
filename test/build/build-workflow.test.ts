@@ -309,6 +309,24 @@ describe("self-mutation", () => {
     expect(checkoutStep.with.repository).toBe(
       "${{ github.event.workflow_run.head_repository.full_name }}",
     );
+    expect(checkoutStep.with["allow-unsafe-pr-checkout"]).toBe(true);
+  });
+
+  test("fork checkout is not allowed unless allowFromForks is set", () => {
+    const p = new TestProject();
+    new BuildWorkflow(p, {
+      buildTask: p.buildTask,
+      artifactsDirectory: "dist",
+      mutableBuild: true,
+    });
+
+    const { jobs } = yaml.parse(
+      synthWorkflows(p)[".github/workflows/self-mutation.yml"],
+    );
+    const checkoutStep = jobs["self-mutation"].steps.find((s: any) =>
+      s.uses?.startsWith("actions/checkout"),
+    );
+    expect(checkoutStep.with).not.toHaveProperty("allow-unsafe-pr-checkout");
   });
 });
 

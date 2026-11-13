@@ -496,6 +496,22 @@ export class BuildWorkflow extends Component {
     });
 
     const credentials = workflow.projenCredentials;
+    const baseCheckout = WorkflowSteps.checkout({
+      with: {
+        // we need to use a PAT so that our push will trigger the build workflow
+        token: credentials.tokenRef,
+        ref: `\${{ ${run}.head_sha }}`,
+        repository: `\${{ ${run}.head_repository.full_name }}`,
+        lfs: this.github.downloadLfs,
+      },
+    });
+    // actions/checkout refuses fork code in workflow_run. Only the patch is applied, nothing from the fork runs.
+    const checkout: JobStep = options.mutableBuildOptions?.allowFromForks
+      ? {
+          ...baseCheckout,
+          with: { ...baseCheckout.with, "allow-unsafe-pr-checkout": true },
+        }
+      : baseCheckout;
     workflow.addJob("self-mutation", {
       ...filteredRunsOnOptions(options.runsOn, options.runsOnGroup),
       permissions: {
@@ -515,15 +531,7 @@ export class BuildWorkflow extends Component {
           },
         }),
         ...credentials.setupSteps,
-        WorkflowSteps.checkout({
-          with: {
-            // we need to use a PAT so that our push will trigger the build workflow
-            token: credentials.tokenRef,
-            ref: `\${{ ${run}.head_sha }}`,
-            repository: `\${{ ${run}.head_repository.full_name }}`,
-            lfs: this.github.downloadLfs,
-          },
-        }),
+        checkout,
         {
           name: "Apply patch",
           run: `git apply \${{ runner.temp }}/${SELF_MUTATION_PATCH_FILE}`,
