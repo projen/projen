@@ -522,6 +522,8 @@ export class BuildWorkflow extends Component {
             ref: `\${{ ${run}.head_sha }}`,
             repository: `\${{ ${run}.head_repository.full_name }}`,
             lfs: this.github.downloadLfs,
+            // the job only applies the patch, nothing from the fork is executed
+            allowUnsafePrCheckout: options.mutableBuildOptions?.allowFromForks,
           },
         }),
         {
