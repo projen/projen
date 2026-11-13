@@ -25,6 +25,7 @@
     ".projen/tasks.json",
     ".projen/tree.json",
     ".vscode/launch.json",
+    ".vscode/settings.json",
     "AGENTS.md",
     "CLAUDE.md",
     "LICENSE",

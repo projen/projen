@@ -462,6 +462,19 @@
           "construct": "JsiiDocgen"
         }
       },
+      "VsCodeSettings#AutoId32": {
+        "metadata": {
+          "type": "component",
+          "construct": "VsCodeSettings"
+        }
+      },
+      "JsonFile@.vscode--settings.json": {
+        "metadata": {
+          "type": "file",
+          "construct": "JsonFile",
+          "path": ".vscode/settings.json"
+        }
+      },
       "TaskWorkflow#check-licenses": {
         "metadata": {
           "type": "component",
@@ -483,7 +496,7 @@
           "path": ".github/workflows/check-licenses.yml"
         }
       },
-      "UpgradeDependencies#AutoId32": {
+      "UpgradeDependencies#AutoId33": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -502,7 +515,7 @@
           "path": ".github/workflows/upgrade-bundled-main.yml"
         }
       },
-      "UpgradeDependencies#AutoId33": {
+      "UpgradeDependencies#AutoId34": {
         "metadata": {
           "type": "component",
           "construct": "UpgradeDependencies"
@@ -535,7 +548,7 @@
           "path": ".markdownlint.json"
         }
       },
-      "VsCodeLaunchConfig#AutoId34": {
+      "VsCodeLaunchConfig#AutoId35": {
         "metadata": {
           "type": "component",
           "construct": "VsCodeLaunchConfig"
@@ -548,7 +561,7 @@
           "path": ".vscode/launch.json"
         }
       },
-      "IntegrationTests#AutoId35": {
+      "IntegrationTests#AutoId36": {
         "metadata": {
           "type": "component",
           "construct": "IntegrationTests"
@@ -635,7 +648,7 @@
           "construct": "WindowsBuild"
         }
       },
-      "AiInstructions#AutoId36": {
+      "AiInstructions#AutoId37": {
         "metadata": {
           "type": "component",
           "construct": "AiInstructions"

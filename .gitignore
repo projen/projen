@@ -59,6 +59,7 @@ codecov.*
 !/projenrc/tsconfig.json
 .jsii
 !/API.md
+!/.vscode/settings.json
 !/.github/workflows/check-licenses.yml
 !/.github/workflows/upgrade-bundled-main.yml
 !/.github/workflows/upgrade-main.yml

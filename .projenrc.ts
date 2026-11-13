@@ -287,6 +287,11 @@ javascript.Eslint.of(project)?.addOverride({
   },
 });
 
+// The VS Code Jest extension runs jest directly, not through the test task
+project.vscode?.settings.addSetting("jest.nodeEnv", {
+  NODE_OPTIONS: "--experimental-vm-modules",
+});
+
 // Trusted Publishing requires npm 11 which is available by default in node 24
 project.github
   ?.tryFindWorkflow("release")
