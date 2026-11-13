@@ -33,8 +33,11 @@ export function synthSnapshot(
   options: SnapshotOptions = {},
 ): SynthOutput {
   // defensive: verify that "outdir" is actually in a temporary directory
+  // (tmpdir may be a symlink, e.g. /var -> /private/var on macOS)
+  const outdir = path.resolve(project.outdir);
+  const tmpdirs = [os.tmpdir(), fs.realpathSync(os.tmpdir())];
   if (
-    !path.resolve(project.outdir).startsWith(os.tmpdir()) &&
+    !tmpdirs.some((tmp) => outdir.startsWith(tmp)) &&
     !project.outdir.includes("project-temp-dir")
   ) {
     throw new Error(
