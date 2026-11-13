@@ -27,7 +27,7 @@
     },
     "actions/create-github-app-token": {
       "major": "v3",
-      "pin": "v3.2.0",
+      "pin": "v3.3.0",
       "isImmutable": true
     },
     "actions/dependency-review-action": {
@@ -37,8 +37,8 @@
     },
     "actions/download-artifact": {
       "major": "v8",
-      "pin": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
-      "version": "v8.0.1"
+      "pin": "9000827ccba6bdab643e8b6fd33ac0654aef8333",
+      "version": "v8.0.2"
     },
     "actions/github-script": {
       "major": "v9",
@@ -47,7 +47,7 @@
     },
     "actions/setup-dotnet": {
       "major": "v6",
-      "pin": "v6.0.0",
+      "pin": "v6.1.0",
       "isImmutable": true
     },
     "actions/setup-go": {
@@ -57,17 +57,17 @@
     },
     "actions/setup-java": {
       "major": "v6",
-      "pin": "v6.0.0",
+      "pin": "v6.2.0",
       "isImmutable": true
     },
     "actions/setup-node": {
       "major": "v7",
-      "pin": "v7.0.0",
+      "pin": "v7.1.0",
       "isImmutable": true
     },
     "actions/setup-python": {
       "major": "v7",
-      "pin": "v7.0.0",
+      "pin": "v7.1.0",
       "isImmutable": true
     },
     "actions/stale": {
@@ -77,22 +77,22 @@
     },
     "actions/upload-artifact": {
       "major": "v7",
-      "pin": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
-      "version": "v7.0.1"
+      "pin": "cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+      "version": "v7.0.2"
     },
     "amannn/action-semantic-pull-request": {
       "major": "v6",
-      "pin": "48f256284bd46cdaab1048c3721360e808335d50",
-      "version": "v6.1.1"
+      "pin": "v6.1.2",
+      "isImmutable": true
     },
     "aws-actions/configure-aws-credentials": {
       "major": "v6",
-      "pin": "v6.2.3",
+      "pin": "v6.3.0",
       "isImmutable": true
     },
     "codecov/codecov-action": {
       "major": "v7",
-      "pin": "v7.0.0",
+      "pin": "v7.1.1",
       "isImmutable": true
     },
     "oven-sh/setup-bun": {
@@ -107,7 +107,7 @@
     },
     "pnpm/action-setup": {
       "major": "v6",
-      "pin": "v6.0.10",
+      "pin": "v6.1.1",
       "isImmutable": true
     },
     "sqren/backport-github-action": {
