@@ -51,11 +51,26 @@ export interface UvConfiguration {
   readonly buildBackend?: BuildBackendSettings;
 
   /**
-   * PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`.
+   * Constraints to apply when solving build dependencies.
+   *
+   * Build constraints are used to restrict the versions of build dependencies that are selected
+   * when building a package during resolution or installation.
+   *
+   * Including a package as a constraint will _not_ trigger installation of the package during
+   * a build; instead, the package must be requested elsewhere in the project's build dependency
+   * graph.
+   *
+   * !!! note
+   * In `uv lock`, `uv sync`, and `uv run`, uv will only read `build-constraint-dependencies` from
+   * the `pyproject.toml` at the workspace root, and will ignore any declarations in other
+   * workspace members or `uv.toml` files.
+   *
+   * Hashes can be included to verify downloaded build dependency archives. To provide hashes,
+   * use a table with `requirement` and `hashes`. uv records these hashes in `uv.lock`.
    *
    * @schema UvConfiguration#build-constraint-dependencies
    */
-  readonly buildConstraintDependencies?: string[];
+  readonly buildConstraintDependencies?: any[];
 
   /**
    * Path to the cache directory.
@@ -393,6 +408,19 @@ export interface UvConfiguration {
   readonly forkStrategy?: ForkStrategy;
 
   /**
+   * Mirror URL to use for downloading managed GraalPy installations.
+   *
+   * By default, managed GraalPy installations are downloaded from [GitHub](https://github.com/oracle/graalpython/releases).
+   * This variable can be set to a mirror URL to use a different source for GraalPy installations.
+   * The provided URL will replace `https://github.com/oracle/graalpython/releases/download` in, e.g., `https://github.com/oracle/graalpython/releases/download/graal-24.2.2/graalpy-24.2.2-macos-aarch64.tar.gz`.
+   *
+   * Distributions can be read from a local directory by using the `file://` URL scheme.
+   *
+   * @schema UvConfiguration#graalpy-install-mirror
+   */
+  readonly graalpyInstallMirror?: string;
+
+  /**
    * The URL of the HTTP proxy to use.
    *
    * @schema UvConfiguration#http-proxy
@@ -501,6 +529,29 @@ export interface UvConfiguration {
   readonly managed?: boolean;
 
   /**
+   * The minimum libc versions to support when resolving for Linux.
+   *
+   * During universal resolution, wheels must support the configured libc versions to satisfy
+   * `required-environments`. For example, `{ glibc = "2.31" }` accepts `manylinux_2_17` wheels
+   * as coverage, but not `manylinux_2_34` wheels. Both are retained in the lockfile so installation
+   * can select the best wheel for the current machine. An omitted libc is not required.
+   *
+   * Use `required-environments` to specify the Linux architectures to support. Each configured
+   * libc version needs compatible wheels for those environments. Generic Linux wheels do not
+   * constrain libc and can satisfy either implementation. Packages with a usable source
+   * distribution can still be selected.
+   *
+   * This setting is respected by `uv lock` and `uv pip compile --universal`.
+   *
+   * This option is in preview and may change in any future release. Use
+   * `--preview-features minimum-libc-version` or configure
+   * `preview-features = ["minimum-libc-version"]` to disable the warning.
+   *
+   * @schema UvConfiguration#minimum-libc-version
+   */
+  readonly minimumLibcVersion?: MinimumLibcVersion;
+
+  /**
    * Whether to load TLS certificates from the platform's native certificate store.
    *
    * By default, uv uses bundled Mozilla root certificates. When enabled, this loads
@@ -533,8 +584,9 @@ export interface UvConfiguration {
    * Don't build source distributions.
    *
    * When enabled, uv will reuse cached wheels from previously built source distributions, but
-   * operations that require building a source distribution will exit with an error. uv may
-   * still build editable requirements, and their build backends may run arbitrary Python code.
+   * operations that require building a source distribution will exit with an error. First-party
+   * packages, such as projects in the workspace, will still be built. uv will also still build
+   * editable requirements, and their build backends may run arbitrary Python code.
    *
    * @schema UvConfiguration#no-build
    */
@@ -562,6 +614,8 @@ export interface UvConfiguration {
 
   /**
    * Don't build source distributions for a specific package.
+   *
+   * First-party packages, such as projects in the workspace, will still be built.
    *
    * @schema UvConfiguration#no-build-package
    */
@@ -671,13 +725,23 @@ export interface UvConfiguration {
   /**
    * The strategy to use when considering pre-release versions.
    *
-   * By default, uv will accept pre-releases for packages that _only_ publish pre-releases,
-   * along with first-party requirements that contain an explicit pre-release marker in the
-   * declared specifiers (`if-necessary-or-explicit`).
+   * By default, uv will prefer stable candidates, falling back to pre-releases only after every
+   * stable candidate that satisfies the active constraints is rejected
+   * (`if-necessary`).
    *
    * @schema UvConfiguration#prerelease
    */
   readonly prerelease?: PrereleaseMode;
+
+  /**
+   * The strategy to use when considering pre-release versions for specific packages.
+   *
+   * Package-specific modes take precedence over the global [`prerelease`](#prerelease) mode.
+   * Accepts a dictionary mapping package names to any supported pre-release mode.
+   *
+   * @schema UvConfiguration#prerelease-package
+   */
+  readonly prereleasePackage?: { [key: string]: PrereleaseMode };
 
   /**
    * Whether to enable all experimental, preview features.
@@ -704,6 +768,19 @@ export interface UvConfiguration {
    * @schema UvConfiguration#publish-url
    */
   readonly publishUrl?: string;
+
+  /**
+   * Mirror URL to use for downloading managed Pyodide installations.
+   *
+   * By default, managed Pyodide installations are downloaded from [GitHub](https://github.com/pyodide/pyodide/releases).
+   * This variable can be set to a mirror URL to use a different source for Pyodide installations.
+   * The provided URL will replace `https://github.com/pyodide/pyodide/releases/download` in, e.g., `https://github.com/pyodide/pyodide/releases/download/0.29.5/xbuildenv-0.29.5.tar.gz`.
+   *
+   * Distributions can be read from a local directory by using the `file://` URL scheme.
+   *
+   * @schema UvConfiguration#pyodide-install-mirror
+   */
+  readonly pyodideInstallMirror?: string;
 
   /**
    * Mirror URL to use for downloading managed PyPy installations.
@@ -768,6 +845,24 @@ export interface UvConfiguration {
    * @schema UvConfiguration#reinstall-package
    */
   readonly reinstallPackage?: string[];
+
+  /**
+   * Require hashes for all build dependencies.
+   *
+   * uv checks hashes provided in `build-constraint-dependencies` when downloading build
+   * dependencies. Enable this setting to require a hash for every build dependency, including
+   * transitive dependencies. You can also provide hashes as URL fragments in
+   * `build-system.requires`. Hashes returned by a build backend do not count.
+   *
+   * Hashes are not required for the `uv_build` backend bundled in uv. When build isolation is
+   * disabled, build dependencies must already be installed and their hashes are not checked.
+   * Already-installed packages and previously built wheels are not checked.
+   *
+   * This setting also applies to `uv pip` commands, where it can be overridden in `[tool.uv.pip]`.
+   *
+   * @schema UvConfiguration#require-build-hashes
+   */
+  readonly requireBuildHashes?: boolean;
 
   /**
    * A list of environment markers, e.g., `sys_platform == 'darwin'.
@@ -915,6 +1010,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'extra-index-url': obj.extraIndexUrl?.map(y => y),
     'find-links': obj.findLinks?.map(y => y),
     'fork-strategy': obj.forkStrategy,
+    'graalpy-install-mirror': obj.graalpyInstallMirror,
     'http-proxy': obj.httpProxy,
     'https-proxy': obj.httpsProxy,
     'index': obj.index?.map(y => toJson_Index(y)),
@@ -923,6 +1019,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'keyring-provider': obj.keyringProvider,
     'link-mode': obj.linkMode,
     'managed': obj.managed,
+    'minimum-libc-version': toJson_MinimumLibcVersion(obj.minimumLibcVersion),
     'native-tls': obj.nativeTls,
     'no-binary': obj.noBinary,
     'no-binary-package': obj.noBinaryPackage?.map(y => y),
@@ -940,9 +1037,11 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'package': obj.package,
     'pip': toJson_PipOptions(obj.pip),
     'prerelease': obj.prerelease,
+    'prerelease-package': ((obj.prereleasePackage) === undefined) ? undefined : (Object.entries(obj.prereleasePackage).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'preview': obj.preview,
     'preview-features': obj.previewFeatures,
     'publish-url': obj.publishUrl,
+    'pyodide-install-mirror': obj.pyodideInstallMirror,
     'pypy-install-mirror': obj.pypyInstallMirror,
     'python-downloads': obj.pythonDownloads,
     'python-downloads-json-url': obj.pythonDownloadsJsonUrl,
@@ -950,6 +1049,7 @@ export function toJson_UvConfiguration(obj: UvConfiguration | undefined): Record
     'python-preference': obj.pythonPreference,
     'reinstall': obj.reinstall,
     'reinstall-package': obj.reinstallPackage?.map(y => y),
+    'require-build-hashes': obj.requireBuildHashes,
     'required-environments': obj.requiredEnvironments?.map(y => y),
     'required-version': obj.requiredVersion,
     'resolution': obj.resolution,
@@ -1012,6 +1112,20 @@ export interface AuditOptions {
    * @schema AuditOptions#ignore-until-fixed
    */
   readonly ignoreUntilFixed?: string[];
+
+  /**
+   * Whether to run the automatic malware check during sync operations.
+   *
+   * @schema AuditOptions#malware-check
+   */
+  readonly malwareCheck?: boolean;
+
+  /**
+   * The vulnerability service URL to use for automatic malware checks.
+   *
+   * @schema AuditOptions#malware-check-url
+   */
+  readonly malwareCheckUrl?: string;
 }
 
 /**
@@ -1024,6 +1138,8 @@ export function toJson_AuditOptions(obj: AuditOptions | undefined): Record<strin
   const result = {
     'ignore': obj.ignore?.map(y => y),
     'ignore-until-fixed': obj.ignoreUntilFixed?.map(y => y),
+    'malware-check': obj.malwareCheck,
+    'malware-check-url': obj.malwareCheckUrl,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1470,6 +1586,25 @@ export interface Index {
   readonly format?: IndexFormat;
 
   /**
+   * The hash algorithm that must be used for distributions resolved from this index.
+   *
+   * If a distribution does not advertise a hash using this algorithm, lockfile generation
+   * will fail.
+   *
+   * This option is in preview and may change in any future release.
+   *
+   * ```toml
+   * [[tool.uv.index]]
+   * name = "my-index"
+   * url = "https://<omitted>/simple"
+   * hash-algorithm = "sha256"
+   * ```
+   *
+   * @schema Index#hash-algorithm
+   */
+  readonly hashAlgorithm?: IndexHashAlgorithm;
+
+  /**
    * Status codes that uv should ignore when deciding whether to continue resolution after a
    * request to this index fails.
    *
@@ -1545,6 +1680,7 @@ export function toJson_Index(obj: Index | undefined): Record<string, any> | unde
     'exclude-newer': obj.excludeNewer?.value,
     'explicit': obj.explicit,
     'format': obj.format,
+    'hash-algorithm': obj.hashAlgorithm,
     'ignore-error-codes': obj.ignoreErrorCodes?.map(y => y),
     'name': obj.name,
     'publish-url': obj.publishUrl,
@@ -1624,6 +1760,39 @@ export enum LinkMode {
   /** Symbolically link packages from the source into the destination. (symlink) */
   SYMLINK = "symlink",
 }
+
+/**
+ * The oldest required release of each Linux libc.
+ *
+ * @schema MinimumLibcVersion
+ */
+export interface MinimumLibcVersion {
+  /**
+   * @schema MinimumLibcVersion#glibc
+   */
+  readonly glibc?: string;
+
+  /**
+   * @schema MinimumLibcVersion#musl
+   */
+  readonly musl?: string;
+}
+
+/**
+ * Converts an object of type 'MinimumLibcVersion' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_MinimumLibcVersion(obj: MinimumLibcVersion | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'glibc': obj.glibc,
+    'musl': obj.musl,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Settings that are specific to the `uv pip` command-line interface.
@@ -2121,9 +2290,9 @@ export interface PipOptions {
   /**
    * The strategy to use when considering pre-release versions.
    *
-   * By default, uv will accept pre-releases for packages that _only_ publish pre-releases,
-   * along with first-party requirements that contain an explicit pre-release marker in the
-   * declared specifiers (`if-necessary-or-explicit`).
+   * By default, uv will prefer stable candidates, falling back to pre-releases only after every
+   * stable candidate that satisfies the active constraints is rejected
+   * (`if-necessary`).
    *
    * @schema PipOptions#prerelease
    */
@@ -2183,6 +2352,16 @@ export interface PipOptions {
    * @schema PipOptions#reinstall-package
    */
   readonly reinstallPackage?: string[];
+
+  /**
+   * Require hashes for all build dependencies in `uv pip` commands.
+   *
+   * Overrides `require-build-hashes` in `[tool.uv]`. This does not require hashes for runtime
+   * dependencies; use `require-hashes` for those.
+   *
+   * @schema PipOptions#require-build-hashes
+   */
+  readonly requireBuildHashes?: boolean;
 
   /**
    * Require a matching hash for each requirement.
@@ -2363,6 +2542,7 @@ export function toJson_PipOptions(obj: PipOptions | undefined): Record<string, a
     'python-version': obj.pythonVersion,
     'reinstall': obj.reinstall,
     'reinstall-package': obj.reinstallPackage?.map(y => y),
+    'require-build-hashes': obj.requireBuildHashes,
     'require-hashes': obj.requireHashes,
     'resolution': obj.resolution,
     'strict': obj.strict,
@@ -2387,13 +2567,13 @@ export enum PrereleaseMode {
   DISALLOW = "disallow",
   /** Allow all pre-release versions. (allow) */
   ALLOW = "allow",
-  /** Allow pre-release versions if all versions of a package are pre-release. (if-necessary) */
+  /** Prefer stable versions, falling back to pre-release versions when necessary. (if-necessary) */
   IF_HYPHEN_NECESSARY = "if-necessary",
-  /** Allow pre-release versions for first-party packages with explicit pre-release markers in
-their version requirements. (explicit) */
+  /** Prefer stable versions for first-party packages with explicit pre-release specifiers,
+falling back to pre-release versions when necessary. Disallow pre-release versions for all
+other packages. (explicit) */
   EXPLICIT = "explicit",
-  /** Allow pre-release versions if all versions of a package are pre-release, or if the package
-has an explicit pre-release marker in its version requirements. (if-necessary-or-explicit) */
+  /** Deprecated alias for `if-necessary`. (if-necessary-or-explicit) */
   IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT = "if-necessary-or-explicit",
 }
 
@@ -2731,6 +2911,24 @@ export enum IndexFormat {
 }
 
 /**
+ * A hash algorithm that can be required for distributions resolved from an index.
+ *
+ * @schema IndexHashAlgorithm
+ */
+export enum IndexHashAlgorithm {
+  /** md5 */
+  MD5 = "md5",
+  /** sha256 */
+  SHA256 = "sha256",
+  /** sha384 */
+  SHA384 = "sha384",
+  /** sha512 */
+  SHA512 = "sha512",
+  /** blake2b */
+  BLAKE2B = "blake2b",
+}
+
+/**
  * Indicate the style of annotation comments, used to indicate the dependencies that requested each
  * package.
  *
@@ -2818,6 +3016,12 @@ the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (x86_64-apple-darwin
   AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL = "aarch64-unknown-linux-musl",
   /** An `x86_64` Linux target. (x86_64-unknown-linux-musl) */
   X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL = "x86_64-unknown-linux-musl",
+  /** An s390x Linux target. Equivalent to `s390x-manylinux_2_28`. (s390x-unknown-linux-gnu) */
+  S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU = "s390x-unknown-linux-gnu",
+  /** A little-endian `PowerPC64` Linux target. Equivalent to `ppc64le-manylinux_2_28`. (powerpc64le-unknown-linux-gnu) */
+  POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU = "powerpc64le-unknown-linux-gnu",
+  /** A `LoongArch64` Linux target. Equivalent to `loongarch64-manylinux_2_36`. (loongarch64-unknown-linux-gnu) */
+  LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU = "loongarch64-unknown-linux-gnu",
   /** A RISCV64 Linux target. (riscv64-unknown-linux) */
   RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX = "riscv64-unknown-linux",
   /** An `x86_64` target for the `manylinux2014` platform. Equivalent to `x86_64-manylinux_2_17`. (x86_64-manylinux2014) */
@@ -2872,6 +3076,68 @@ the `MACOSX_DEPLOYMENT_TARGET` environment variable if set. (x86_64-apple-darwin
   AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "aarch64-manylinux_2_39",
   /** An ARM64 target for the `manylinux_2_40` platform. (aarch64-manylinux_2_40) */
   AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "aarch64-manylinux_2_40",
+  /** An s390x target for the `manylinux2014` platform. Equivalent to `s390x-manylinux_2_17`. (s390x-manylinux2014) */
+  S390X_HYPHEN_MANYLINUX2014 = "s390x-manylinux2014",
+  /** An s390x target for the `manylinux_2_17` platform. (s390x-manylinux_2_17) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17 = "s390x-manylinux_2_17",
+  /** An s390x target for the `manylinux_2_28` platform. (s390x-manylinux_2_28) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28 = "s390x-manylinux_2_28",
+  /** An s390x target for the `manylinux_2_31` platform. (s390x-manylinux_2_31) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31 = "s390x-manylinux_2_31",
+  /** An s390x target for the `manylinux_2_32` platform. (s390x-manylinux_2_32) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32 = "s390x-manylinux_2_32",
+  /** An s390x target for the `manylinux_2_33` platform. (s390x-manylinux_2_33) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33 = "s390x-manylinux_2_33",
+  /** An s390x target for the `manylinux_2_34` platform. (s390x-manylinux_2_34) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34 = "s390x-manylinux_2_34",
+  /** An s390x target for the `manylinux_2_35` platform. (s390x-manylinux_2_35) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35 = "s390x-manylinux_2_35",
+  /** An s390x target for the `manylinux_2_36` platform. (s390x-manylinux_2_36) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36 = "s390x-manylinux_2_36",
+  /** An s390x target for the `manylinux_2_37` platform. (s390x-manylinux_2_37) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37 = "s390x-manylinux_2_37",
+  /** An s390x target for the `manylinux_2_38` platform. (s390x-manylinux_2_38) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38 = "s390x-manylinux_2_38",
+  /** An s390x target for the `manylinux_2_39` platform. (s390x-manylinux_2_39) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "s390x-manylinux_2_39",
+  /** An s390x target for the `manylinux_2_40` platform. (s390x-manylinux_2_40) */
+  S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "s390x-manylinux_2_40",
+  /** A little-endian `PowerPC64` target for the `manylinux2014` platform. Equivalent to `ppc64le-manylinux_2_17`. (ppc64le-manylinux2014) */
+  PPC64LE_HYPHEN_MANYLINUX2014 = "ppc64le-manylinux2014",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_17` platform. (ppc64le-manylinux_2_17) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17 = "ppc64le-manylinux_2_17",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_28` platform. (ppc64le-manylinux_2_28) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28 = "ppc64le-manylinux_2_28",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_31` platform. (ppc64le-manylinux_2_31) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31 = "ppc64le-manylinux_2_31",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_32` platform. (ppc64le-manylinux_2_32) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32 = "ppc64le-manylinux_2_32",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_33` platform. (ppc64le-manylinux_2_33) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33 = "ppc64le-manylinux_2_33",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_34` platform. (ppc64le-manylinux_2_34) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34 = "ppc64le-manylinux_2_34",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_35` platform. (ppc64le-manylinux_2_35) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35 = "ppc64le-manylinux_2_35",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_36` platform. (ppc64le-manylinux_2_36) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36 = "ppc64le-manylinux_2_36",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_37` platform. (ppc64le-manylinux_2_37) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37 = "ppc64le-manylinux_2_37",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_38` platform. (ppc64le-manylinux_2_38) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38 = "ppc64le-manylinux_2_38",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_39` platform. (ppc64le-manylinux_2_39) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "ppc64le-manylinux_2_39",
+  /** A little-endian `PowerPC64` target for the `manylinux_2_40` platform. (ppc64le-manylinux_2_40) */
+  PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "ppc64le-manylinux_2_40",
+  /** A `LoongArch64` target for the `manylinux_2_36` platform. (loongarch64-manylinux_2_36) */
+  LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36 = "loongarch64-manylinux_2_36",
+  /** A `LoongArch64` target for the `manylinux_2_37` platform. (loongarch64-manylinux_2_37) */
+  LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37 = "loongarch64-manylinux_2_37",
+  /** A `LoongArch64` target for the `manylinux_2_38` platform. (loongarch64-manylinux_2_38) */
+  LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38 = "loongarch64-manylinux_2_38",
+  /** A `LoongArch64` target for the `manylinux_2_39` platform. (loongarch64-manylinux_2_39) */
+  LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39 = "loongarch64-manylinux_2_39",
+  /** A `LoongArch64` target for the `manylinux_2_40` platform. (loongarch64-manylinux_2_40) */
+  LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40 = "loongarch64-manylinux_2_40",
   /** An ARM64 Android target.
 
 By default uses Android API level 24, but respects

@@ -19,6 +19,8 @@ const auditOptions: python.uvConfig.AuditOptions = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.uvConfig.AuditOptions.property.ignore">ignore</a></code> | <code>string[]</code> | A list of vulnerability IDs to ignore during auditing. |
 | <code><a href="#projen.python.uvConfig.AuditOptions.property.ignoreUntilFixed">ignoreUntilFixed</a></code> | <code>string[]</code> | A list of vulnerability IDs to ignore during auditing, but only while no fix is available. |
+| <code><a href="#projen.python.uvConfig.AuditOptions.property.malwareCheck">malwareCheck</a></code> | <code>boolean</code> | Whether to run the automatic malware check during sync operations. |
+| <code><a href="#projen.python.uvConfig.AuditOptions.property.malwareCheckUrl">malwareCheckUrl</a></code> | <code>string</code> | The vulnerability service URL to use for automatic malware checks. |
 
 ---
 
@@ -50,6 +52,30 @@ A list of vulnerability IDs to ignore during auditing, but only while no fix is 
 Vulnerabilities matching any of the provided IDs (including aliases) will be excluded from
 the audit results as long as they have no known fix versions. Once a fix version becomes
 available, the vulnerability will be reported again.
+
+---
+
+##### `malwareCheck`<sup>Optional</sup> <a name="malwareCheck" id="projen.python.uvConfig.AuditOptions.property.malwareCheck"></a>
+
+```typescript
+public readonly malwareCheck: boolean;
+```
+
+- *Type:* boolean
+
+Whether to run the automatic malware check during sync operations.
+
+---
+
+##### `malwareCheckUrl`<sup>Optional</sup> <a name="malwareCheckUrl" id="projen.python.uvConfig.AuditOptions.property.malwareCheckUrl"></a>
+
+```typescript
+public readonly malwareCheckUrl: string;
+```
+
+- *Type:* string
+
+The vulnerability service URL to use for automatic malware checks.
 
 ---
 
@@ -321,6 +347,7 @@ const index: python.uvConfig.Index = { ... }
 | <code><a href="#projen.python.uvConfig.Index.property.excludeNewer">excludeNewer</a></code> | <code>projen.python.uvConfig.ExcludeNewerOverride</code> | An index-specific `exclude-newer` cutoff. |
 | <code><a href="#projen.python.uvConfig.Index.property.explicit">explicit</a></code> | <code>boolean</code> | Mark the index as explicit. |
 | <code><a href="#projen.python.uvConfig.Index.property.format">format</a></code> | <code>projen.python.uvConfig.IndexFormat</code> | The format used by the index. |
+| <code><a href="#projen.python.uvConfig.Index.property.hashAlgorithm">hashAlgorithm</a></code> | <code>projen.python.uvConfig.IndexHashAlgorithm</code> | The hash algorithm that must be used for distributions resolved from this index. |
 | <code><a href="#projen.python.uvConfig.Index.property.ignoreErrorCodes">ignoreErrorCodes</a></code> | <code>number[]</code> | Status codes that uv should ignore when deciding whether to continue resolution after a request to this index fails. |
 | <code><a href="#projen.python.uvConfig.Index.property.name">name</a></code> | <code>string</code> | The name of the index. |
 | <code><a href="#projen.python.uvConfig.Index.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL of the upload endpoint. |
@@ -474,6 +501,30 @@ indexes can point to either local or remote resources.
 
 ---
 
+##### `hashAlgorithm`<sup>Optional</sup> <a name="hashAlgorithm" id="projen.python.uvConfig.Index.property.hashAlgorithm"></a>
+
+```typescript
+public readonly hashAlgorithm: IndexHashAlgorithm;
+```
+
+- *Type:* projen.python.uvConfig.IndexHashAlgorithm
+
+The hash algorithm that must be used for distributions resolved from this index.
+
+If a distribution does not advertise a hash using this algorithm, lockfile generation
+will fail.
+
+This option is in preview and may change in any future release.
+
+```toml
+[[tool.uv.index]]
+name = "my-index"
+url = "https://<omitted>/simple"
+hash-algorithm = "sha256"
+```
+
+---
+
 ##### `ignoreErrorCodes`<sup>Optional</sup> <a name="ignoreErrorCodes" id="projen.python.uvConfig.Index.property.ignoreErrorCodes"></a>
 
 ```typescript
@@ -582,6 +633,47 @@ public readonly files: string;
 - *Type:* string
 
 Cache control header for file downloads.
+
+---
+
+### MinimumLibcVersion <a name="MinimumLibcVersion" id="projen.python.uvConfig.MinimumLibcVersion"></a>
+
+The oldest required release of each Linux libc.
+
+#### Initializer <a name="Initializer" id="projen.python.uvConfig.MinimumLibcVersion.Initializer"></a>
+
+```typescript
+import { python } from 'projen'
+
+const minimumLibcVersion: python.uvConfig.MinimumLibcVersion = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.python.uvConfig.MinimumLibcVersion.property.glibc">glibc</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#projen.python.uvConfig.MinimumLibcVersion.property.musl">musl</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `glibc`<sup>Optional</sup> <a name="glibc" id="projen.python.uvConfig.MinimumLibcVersion.property.glibc"></a>
+
+```typescript
+public readonly glibc: string;
+```
+
+- *Type:* string
+
+---
+
+##### `musl`<sup>Optional</sup> <a name="musl" id="projen.python.uvConfig.MinimumLibcVersion.property.musl"></a>
+
+```typescript
+public readonly musl: string;
+```
+
+- *Type:* string
 
 ---
 
@@ -699,6 +791,7 @@ const pipOptions: python.uvConfig.PipOptions = { ... }
 | <code><a href="#projen.python.uvConfig.PipOptions.property.pythonVersion">pythonVersion</a></code> | <code>string</code> | The minimum Python version that should be supported by the resolved requirements (e.g., `3.8` or `3.8.17`). |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
+| <code><a href="#projen.python.uvConfig.PipOptions.property.requireBuildHashes">requireBuildHashes</a></code> | <code>boolean</code> | Require hashes for all build dependencies in `uv pip` commands. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.requireHashes">requireHashes</a></code> | <code>boolean</code> | Require a matching hash for each requirement. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.resolution">resolution</a></code> | <code>projen.python.uvConfig.ResolutionMode</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
 | <code><a href="#projen.python.uvConfig.PipOptions.property.strict">strict</a></code> | <code>boolean</code> | Validate the Python environment, to detect packages with missing dependencies and other issues. |
@@ -1421,9 +1514,9 @@ public readonly prerelease: PrereleaseMode;
 
 The strategy to use when considering pre-release versions.
 
-By default, uv will accept pre-releases for packages that _only_ publish pre-releases,
-along with first-party requirements that contain an explicit pre-release marker in the
-declared specifiers (`if-necessary-or-explicit`).
+By default, uv will prefer stable candidates, falling back to pre-releases only after every
+stable candidate that satisfies the active constraints is rejected
+(`if-necessary`).
 
 ---
 
@@ -1507,6 +1600,21 @@ Reinstall a specific package, regardless of whether it's already installed.
 
 Implies
 `refresh-package`.
+
+---
+
+##### `requireBuildHashes`<sup>Optional</sup> <a name="requireBuildHashes" id="projen.python.uvConfig.PipOptions.property.requireBuildHashes"></a>
+
+```typescript
+public readonly requireBuildHashes: boolean;
+```
+
+- *Type:* boolean
+
+Require hashes for all build dependencies in `uv pip` commands.
+
+Overrides `require-build-hashes` in `[tool.uv]`. This does not require hashes for runtime
+dependencies; use `require-hashes` for those.
 
 ---
 
@@ -1879,7 +1987,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.allowInsecureHost">allowInsecureHost</a></code> | <code>string[]</code> | Allow insecure connections to host. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.audit">audit</a></code> | <code>projen.python.uvConfig.AuditOptions</code> | *No description.* |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildBackend">buildBackend</a></code> | <code>projen.python.uvConfig.BuildBackendSettings</code> | Configuration for the uv build backend. |
-| <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>string[]</code> | PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.buildConstraintDependencies">buildConstraintDependencies</a></code> | <code>any[]</code> | Constraints to apply when solving build dependencies. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.cacheDir">cacheDir</a></code> | <code>string</code> | Path to the cache directory. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.cacheKeys">cacheKeys</a></code> | <code>any[]</code> | The keys to consider when caching builds for the project. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.checkUrl">checkUrl</a></code> | <code>string</code> | Check an index URL for existing files to skip duplicate uploads. |
@@ -1904,6 +2012,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.extraIndexUrl">extraIndexUrl</a></code> | <code>string[]</code> | Extra URLs of package indexes to use, in addition to `--index-url`. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.findLinks">findLinks</a></code> | <code>string[]</code> | Locations to search for candidate distributions, in addition to those found in the registry indexes. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.forkStrategy">forkStrategy</a></code> | <code>projen.python.uvConfig.ForkStrategy</code> | The strategy to use when selecting multiple versions of a given package across Python versions and platforms. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.graalpyInstallMirror">graalpyInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed GraalPy installations. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.httpProxy">httpProxy</a></code> | <code>string</code> | The URL of the HTTP proxy to use. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.httpsProxy">httpsProxy</a></code> | <code>string</code> | The URL of the HTTPS proxy to use. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.index">index</a></code> | <code>projen.python.uvConfig.Index[]</code> | The indexes to use when resolving dependencies. |
@@ -1912,6 +2021,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.keyringProvider">keyringProvider</a></code> | <code>projen.python.uvConfig.KeyringProviderType</code> | Attempt to use `keyring` for authentication for index URLs. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.linkMode">linkMode</a></code> | <code>projen.python.uvConfig.LinkMode</code> | The method to use when installing packages from the global cache. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.managed">managed</a></code> | <code>boolean</code> | Whether the project is managed by uv. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.minimumLibcVersion">minimumLibcVersion</a></code> | <code>projen.python.uvConfig.MinimumLibcVersion</code> | The minimum libc versions to support when resolving for Linux. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.nativeTls">nativeTls</a></code> | <code>boolean</code> | Whether to load TLS certificates from the platform's native certificate store. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noBinary">noBinary</a></code> | <code>boolean</code> | Don't install pre-built wheels. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.noBinaryPackage">noBinaryPackage</a></code> | <code>string[]</code> | Don't install pre-built wheels for a specific package. |
@@ -1929,9 +2039,11 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.package">package</a></code> | <code>boolean</code> | Whether the project should be considered a Python package, or a non-package ("virtual") project. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pip">pip</a></code> | <code>projen.python.uvConfig.PipOptions</code> | *No description.* |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.prerelease">prerelease</a></code> | <code>projen.python.uvConfig.PrereleaseMode</code> | The strategy to use when considering pre-release versions. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.prereleasePackage">prereleasePackage</a></code> | <code>{[ key: string ]: projen.python.uvConfig.PrereleaseMode}</code> | The strategy to use when considering pre-release versions for specific packages. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.preview">preview</a></code> | <code>boolean</code> | Whether to enable all experimental, preview features. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.previewFeatures">previewFeatures</a></code> | <code>any</code> | Whether to enable specific or all experimental preview features. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.publishUrl">publishUrl</a></code> | <code>string</code> | The URL for publishing packages to the Python package index (by default: <https://upload.pypi.org/legacy/>). |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.pyodideInstallMirror">pyodideInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed Pyodide installations. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pypyInstallMirror">pypyInstallMirror</a></code> | <code>string</code> | Mirror URL to use for downloading managed PyPy installations. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonDownloads">pythonDownloads</a></code> | <code>projen.python.uvConfig.PythonDownloads</code> | Whether to allow Python downloads. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonDownloadsJsonUrl">pythonDownloadsJsonUrl</a></code> | <code>string</code> | URL pointing to JSON of custom Python installations. |
@@ -1939,6 +2051,7 @@ const uvConfiguration: python.uvConfig.UvConfiguration = { ... }
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.pythonPreference">pythonPreference</a></code> | <code>projen.python.uvConfig.PythonPreference</code> | Whether to prefer using Python installations that are already present on the system, or those that are downloaded and installed by uv. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.reinstall">reinstall</a></code> | <code>boolean</code> | Reinstall all packages, regardless of whether they're already installed. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.reinstallPackage">reinstallPackage</a></code> | <code>string[]</code> | Reinstall a specific package, regardless of whether it's already installed. |
+| <code><a href="#projen.python.uvConfig.UvConfiguration.property.requireBuildHashes">requireBuildHashes</a></code> | <code>boolean</code> | Require hashes for all build dependencies. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.requiredEnvironments">requiredEnvironments</a></code> | <code>string[]</code> | A list of environment markers, e.g., `sys_platform == 'darwin'. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.requiredVersion">requiredVersion</a></code> | <code>string</code> | Enforce a requirement on the version of uv. |
 | <code><a href="#projen.python.uvConfig.UvConfiguration.property.resolution">resolution</a></code> | <code>projen.python.uvConfig.ResolutionMode</code> | The strategy to use when selecting between the different compatible versions for a given package requirement. |
@@ -2020,12 +2133,27 @@ Note that those settings only apply when using the `uv_build` backend, other bui
 ##### `buildConstraintDependencies`<sup>Optional</sup> <a name="buildConstraintDependencies" id="projen.python.uvConfig.UvConfiguration.property.buildConstraintDependencies"></a>
 
 ```typescript
-public readonly buildConstraintDependencies: string[];
+public readonly buildConstraintDependencies: any[];
 ```
 
-- *Type:* string[]
+- *Type:* any[]
 
-PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`.
+Constraints to apply when solving build dependencies.
+
+Build constraints are used to restrict the versions of build dependencies that are selected
+when building a package during resolution or installation.
+
+Including a package as a constraint will _not_ trigger installation of the package during
+a build; instead, the package must be requested elsewhere in the project's build dependency
+graph.
+
+!!! note
+In `uv lock`, `uv sync`, and `uv run`, uv will only read `build-constraint-dependencies` from
+the `pyproject.toml` at the workspace root, and will ignore any declarations in other
+workspace members or `uv.toml` files.
+
+Hashes can be included to verify downloaded build dependency archives. To provide hashes,
+use a table with `requirement` and `hashes`. uv records these hashes in `uv.lock`.
 
 ---
 
@@ -2479,6 +2607,24 @@ versions or platforms.
 
 ---
 
+##### `graalpyInstallMirror`<sup>Optional</sup> <a name="graalpyInstallMirror" id="projen.python.uvConfig.UvConfiguration.property.graalpyInstallMirror"></a>
+
+```typescript
+public readonly graalpyInstallMirror: string;
+```
+
+- *Type:* string
+
+Mirror URL to use for downloading managed GraalPy installations.
+
+By default, managed GraalPy installations are downloaded from [GitHub](https://github.com/oracle/graalpython/releases).
+This variable can be set to a mirror URL to use a different source for GraalPy installations.
+The provided URL will replace `https://github.com/oracle/graalpython/releases/download` in, e.g., `https://github.com/oracle/graalpython/releases/download/graal-24.2.2/graalpy-24.2.2-macos-aarch64.tar.gz`.
+
+Distributions can be read from a local directory by using the `file://` URL scheme.
+
+---
+
 ##### `httpProxy`<sup>Optional</sup> <a name="httpProxy" id="projen.python.uvConfig.UvConfiguration.property.httpProxy"></a>
 
 ```typescript
@@ -2629,6 +2775,34 @@ If `false`, uv will ignore the project when
 
 ---
 
+##### `minimumLibcVersion`<sup>Optional</sup> <a name="minimumLibcVersion" id="projen.python.uvConfig.UvConfiguration.property.minimumLibcVersion"></a>
+
+```typescript
+public readonly minimumLibcVersion: MinimumLibcVersion;
+```
+
+- *Type:* projen.python.uvConfig.MinimumLibcVersion
+
+The minimum libc versions to support when resolving for Linux.
+
+During universal resolution, wheels must support the configured libc versions to satisfy
+`required-environments`. For example, `{ glibc = "2.31" }` accepts `manylinux_2_17` wheels
+as coverage, but not `manylinux_2_34` wheels. Both are retained in the lockfile so installation
+can select the best wheel for the current machine. An omitted libc is not required.
+
+Use `required-environments` to specify the Linux architectures to support. Each configured
+libc version needs compatible wheels for those environments. Generic Linux wheels do not
+constrain libc and can satisfy either implementation. Packages with a usable source
+distribution can still be selected.
+
+This setting is respected by `uv lock` and `uv pip compile --universal`.
+
+This option is in preview and may change in any future release. Use
+`--preview-features minimum-libc-version` or configure
+`preview-features = ["minimum-libc-version"]` to disable the warning.
+
+---
+
 ##### `nativeTls`<sup>Optional</sup> <a name="nativeTls" id="projen.python.uvConfig.UvConfiguration.property.nativeTls"></a>
 
 ```typescript
@@ -2684,8 +2858,9 @@ public readonly noBuild: boolean;
 Don't build source distributions.
 
 When enabled, uv will reuse cached wheels from previously built source distributions, but
-operations that require building a source distribution will exit with an error. uv may
-still build editable requirements, and their build backends may run arbitrary Python code.
+operations that require building a source distribution will exit with an error. First-party
+packages, such as projects in the workspace, will still be built. uv will also still build
+editable requirements, and their build backends may run arbitrary Python code.
 
 ---
 
@@ -2728,6 +2903,8 @@ public readonly noBuildPackage: string[];
 - *Type:* string[]
 
 Don't build source distributions for a specific package.
+
+First-party packages, such as projects in the workspace, will still be built.
 
 ---
 
@@ -2882,9 +3059,24 @@ public readonly prerelease: PrereleaseMode;
 
 The strategy to use when considering pre-release versions.
 
-By default, uv will accept pre-releases for packages that _only_ publish pre-releases,
-along with first-party requirements that contain an explicit pre-release marker in the
-declared specifiers (`if-necessary-or-explicit`).
+By default, uv will prefer stable candidates, falling back to pre-releases only after every
+stable candidate that satisfies the active constraints is rejected
+(`if-necessary`).
+
+---
+
+##### `prereleasePackage`<sup>Optional</sup> <a name="prereleasePackage" id="projen.python.uvConfig.UvConfiguration.property.prereleasePackage"></a>
+
+```typescript
+public readonly prereleasePackage: {[ key: string ]: PrereleaseMode};
+```
+
+- *Type:* {[ key: string ]: projen.python.uvConfig.PrereleaseMode}
+
+The strategy to use when considering pre-release versions for specific packages.
+
+Package-specific modes take precedence over the global [`prerelease`](#prerelease) mode.
+Accepts a dictionary mapping package names to any supported pre-release mode.
 
 ---
 
@@ -2925,6 +3117,24 @@ public readonly publishUrl: string;
 - *Type:* string
 
 The URL for publishing packages to the Python package index (by default: <https://upload.pypi.org/legacy/>).
+
+---
+
+##### `pyodideInstallMirror`<sup>Optional</sup> <a name="pyodideInstallMirror" id="projen.python.uvConfig.UvConfiguration.property.pyodideInstallMirror"></a>
+
+```typescript
+public readonly pyodideInstallMirror: string;
+```
+
+- *Type:* string
+
+Mirror URL to use for downloading managed Pyodide installations.
+
+By default, managed Pyodide installations are downloaded from [GitHub](https://github.com/pyodide/pyodide/releases).
+This variable can be set to a mirror URL to use a different source for Pyodide installations.
+The provided URL will replace `https://github.com/pyodide/pyodide/releases/download` in, e.g., `https://github.com/pyodide/pyodide/releases/download/0.29.5/xbuildenv-0.29.5.tar.gz`.
+
+Distributions can be read from a local directory by using the `file://` URL scheme.
 
 ---
 
@@ -3027,6 +3237,29 @@ Reinstall a specific package, regardless of whether it's already installed.
 
 Implies
 `refresh-package`.
+
+---
+
+##### `requireBuildHashes`<sup>Optional</sup> <a name="requireBuildHashes" id="projen.python.uvConfig.UvConfiguration.property.requireBuildHashes"></a>
+
+```typescript
+public readonly requireBuildHashes: boolean;
+```
+
+- *Type:* boolean
+
+Require hashes for all build dependencies.
+
+uv checks hashes provided in `build-constraint-dependencies` when downloading build
+dependencies. Enable this setting to require a hash for every build dependency, including
+transitive dependencies. You can also provide hashes as URL fragments in
+`build-system.requires`. Hashes returned by a build backend do not count.
+
+Hashes are not required for the `uv_build` backend bundled in uv. When build isolation is
+disabled, build dependencies must already be installed and their hashes are not checked.
+Already-installed packages and previously built wheels are not checked.
+
+This setting also applies to `uv pip` commands, where it can be overridden in `[tool.uv.pip]`.
 
 ---
 
@@ -3510,6 +3743,57 @@ A `--find-links`-style index containing a flat list of wheels and source distrib
 ---
 
 
+### IndexHashAlgorithm <a name="IndexHashAlgorithm" id="projen.python.uvConfig.IndexHashAlgorithm"></a>
+
+A hash algorithm that can be required for distributions resolved from an index.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.python.uvConfig.IndexHashAlgorithm.MD5">MD5</a></code> | md5. |
+| <code><a href="#projen.python.uvConfig.IndexHashAlgorithm.SHA256">SHA256</a></code> | sha256. |
+| <code><a href="#projen.python.uvConfig.IndexHashAlgorithm.SHA384">SHA384</a></code> | sha384. |
+| <code><a href="#projen.python.uvConfig.IndexHashAlgorithm.SHA512">SHA512</a></code> | sha512. |
+| <code><a href="#projen.python.uvConfig.IndexHashAlgorithm.BLAKE2B">BLAKE2B</a></code> | blake2b. |
+
+---
+
+##### `MD5` <a name="MD5" id="projen.python.uvConfig.IndexHashAlgorithm.MD5"></a>
+
+md5.
+
+---
+
+
+##### `SHA256` <a name="SHA256" id="projen.python.uvConfig.IndexHashAlgorithm.SHA256"></a>
+
+sha256.
+
+---
+
+
+##### `SHA384` <a name="SHA384" id="projen.python.uvConfig.IndexHashAlgorithm.SHA384"></a>
+
+sha384.
+
+---
+
+
+##### `SHA512` <a name="SHA512" id="projen.python.uvConfig.IndexHashAlgorithm.SHA512"></a>
+
+sha512.
+
+---
+
+
+##### `BLAKE2B` <a name="BLAKE2B" id="projen.python.uvConfig.IndexHashAlgorithm.BLAKE2B"></a>
+
+blake2b.
+
+---
+
+
 ### IndexStrategy <a name="IndexStrategy" id="projen.python.uvConfig.IndexStrategy"></a>
 
 #### Members <a name="Members" id="Members"></a>
@@ -3661,9 +3945,9 @@ Symbolically link packages from the source into the destination.
 | --- | --- |
 | <code><a href="#projen.python.uvConfig.PrereleaseMode.DISALLOW">DISALLOW</a></code> | Disallow all pre-release versions. |
 | <code><a href="#projen.python.uvConfig.PrereleaseMode.ALLOW">ALLOW</a></code> | Allow all pre-release versions. |
-| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY">IF_HYPHEN_NECESSARY</a></code> | Allow pre-release versions if all versions of a package are pre-release. |
-| <code><a href="#projen.python.uvConfig.PrereleaseMode.EXPLICIT">EXPLICIT</a></code> | Allow pre-release versions for first-party packages with explicit pre-release markers in their version requirements. |
-| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT">IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT</a></code> | Allow pre-release versions if all versions of a package are pre-release, or if the package has an explicit pre-release marker in its version requirements. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY">IF_HYPHEN_NECESSARY</a></code> | Prefer stable versions, falling back to pre-release versions when necessary. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.EXPLICIT">EXPLICIT</a></code> | Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary. |
+| <code><a href="#projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT">IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT</a></code> | Deprecated alias for `if-necessary`. |
 
 ---
 
@@ -3687,7 +3971,7 @@ Allow all pre-release versions.
 
 ##### `IF_HYPHEN_NECESSARY` <a name="IF_HYPHEN_NECESSARY" id="projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY"></a>
 
-Allow pre-release versions if all versions of a package are pre-release.
+Prefer stable versions, falling back to pre-release versions when necessary.
 
 (if-necessary)
 
@@ -3696,16 +3980,17 @@ Allow pre-release versions if all versions of a package are pre-release.
 
 ##### `EXPLICIT` <a name="EXPLICIT" id="projen.python.uvConfig.PrereleaseMode.EXPLICIT"></a>
 
-Allow pre-release versions for first-party packages with explicit pre-release markers in their version requirements.
+Prefer stable versions for first-party packages with explicit pre-release specifiers, falling back to pre-release versions when necessary.
 
-(explicit)
+Disallow pre-release versions for all
+other packages. (explicit)
 
 ---
 
 
 ##### `IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT` <a name="IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT" id="projen.python.uvConfig.PrereleaseMode.IF_HYPHEN_NECESSARY_HYPHEN_OR_HYPHEN_EXPLICIT"></a>
 
-Allow pre-release versions if all versions of a package are pre-release, or if the package has an explicit pre-release marker in its version requirements.
+Deprecated alias for `if-necessary`.
 
 (if-necessary-or-explicit)
 
@@ -3862,6 +4147,9 @@ See: <https://doc.rust-lang.org/nightly/rustc/platform-support.html>
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | An ARM64 Linux target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL">AARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL</a></code> | An ARM64 Linux target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL">X86_UNDERSCORE_64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_MUSL</a></code> | An `x86_64` Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | An s390x Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | A little-endian `PowerPC64` Linux target. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU">LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU</a></code> | A `LoongArch64` Linux target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX">RISCV64_HYPHEN_UNKNOWN_HYPHEN_LINUX</a></code> | A RISCV64 Linux target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014">X86_UNDERSCORE_64_HYPHEN_MANYLINUX2014</a></code> | An `x86_64` target for the `manylinux2014` platform. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17">X86_UNDERSCORE_64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17</a></code> | An `x86_64` target for the `manylinux_2_17` platform. |
@@ -3889,6 +4177,37 @@ See: <https://doc.rust-lang.org/nightly/rustc/platform-support.html>
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | An ARM64 target for the `manylinux_2_38` platform. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | An ARM64 target for the `manylinux_2_39` platform. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">AARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | An ARM64 target for the `manylinux_2_40` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX2014">S390X_HYPHEN_MANYLINUX2014</a></code> | An s390x target for the `manylinux2014` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17</a></code> | An s390x target for the `manylinux_2_17` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28</a></code> | An s390x target for the `manylinux_2_28` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31</a></code> | An s390x target for the `manylinux_2_31` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32</a></code> | An s390x target for the `manylinux_2_32` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33</a></code> | An s390x target for the `manylinux_2_33` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34</a></code> | An s390x target for the `manylinux_2_34` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35</a></code> | An s390x target for the `manylinux_2_35` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36</a></code> | An s390x target for the `manylinux_2_36` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37</a></code> | An s390x target for the `manylinux_2_37` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | An s390x target for the `manylinux_2_38` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | An s390x target for the `manylinux_2_39` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | An s390x target for the `manylinux_2_40` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX2014">PPC64LE_HYPHEN_MANYLINUX2014</a></code> | A little-endian `PowerPC64` target for the `manylinux2014` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_17` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_28` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_31` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_32` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_33` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_34` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_35` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_36` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_37` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_38` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_39` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | A little-endian `PowerPC64` target for the `manylinux_2_40` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36">LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36</a></code> | A `LoongArch64` target for the `manylinux_2_36` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37">LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37</a></code> | A `LoongArch64` target for the `manylinux_2_37` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38">LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38</a></code> | A `LoongArch64` target for the `manylinux_2_38` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39">LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39</a></code> | A `LoongArch64` target for the `manylinux_2_39` platform. |
+| <code><a href="#projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40">LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40</a></code> | A `LoongArch64` target for the `manylinux_2_40` platform. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID">AARCH64_HYPHEN_LINUX_HYPHEN_ANDROID</a></code> | An ARM64 Android target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID">X86_UNDERSCORE_64_HYPHEN_LINUX_HYPHEN_ANDROID</a></code> | An `x86_64` Android target. |
 | <code><a href="#projen.python.uvConfig.TargetTriple.WASM32_HYPHEN_PYODIDE2024">WASM32_HYPHEN_PYODIDE2024</a></code> | A wasm32 target using the Pyodide 2024 platform. |
@@ -4005,6 +4324,33 @@ An ARM64 Linux target.
 An `x86_64` Linux target.
 
 (x86_64-unknown-linux-musl)
+
+---
+
+
+##### `S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU` <a name="S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU"></a>
+
+An s390x Linux target.
+
+Equivalent to `s390x-manylinux_2_28`. (s390x-unknown-linux-gnu)
+
+---
+
+
+##### `POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU` <a name="POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU" id="projen.python.uvConfig.TargetTriple.POWERPC64LE_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU"></a>
+
+A little-endian `PowerPC64` Linux target.
+
+Equivalent to `ppc64le-manylinux_2_28`. (powerpc64le-unknown-linux-gnu)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU` <a name="LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_UNKNOWN_HYPHEN_LINUX_HYPHEN_GNU"></a>
+
+A `LoongArch64` Linux target.
+
+Equivalent to `loongarch64-manylinux_2_36`. (loongarch64-unknown-linux-gnu)
 
 ---
 
@@ -4248,6 +4594,285 @@ An ARM64 target for the `manylinux_2_39` platform.
 An ARM64 target for the `manylinux_2_40` platform.
 
 (aarch64-manylinux_2_40)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX2014` <a name="S390X_HYPHEN_MANYLINUX2014" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX2014"></a>
+
+An s390x target for the `manylinux2014` platform.
+
+Equivalent to `s390x-manylinux_2_17`. (s390x-manylinux2014)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17"></a>
+
+An s390x target for the `manylinux_2_17` platform.
+
+(s390x-manylinux_2_17)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28"></a>
+
+An s390x target for the `manylinux_2_28` platform.
+
+(s390x-manylinux_2_28)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31"></a>
+
+An s390x target for the `manylinux_2_31` platform.
+
+(s390x-manylinux_2_31)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32"></a>
+
+An s390x target for the `manylinux_2_32` platform.
+
+(s390x-manylinux_2_32)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33"></a>
+
+An s390x target for the `manylinux_2_33` platform.
+
+(s390x-manylinux_2_33)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34"></a>
+
+An s390x target for the `manylinux_2_34` platform.
+
+(s390x-manylinux_2_34)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35"></a>
+
+An s390x target for the `manylinux_2_35` platform.
+
+(s390x-manylinux_2_35)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36"></a>
+
+An s390x target for the `manylinux_2_36` platform.
+
+(s390x-manylinux_2_36)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37"></a>
+
+An s390x target for the `manylinux_2_37` platform.
+
+(s390x-manylinux_2_37)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38"></a>
+
+An s390x target for the `manylinux_2_38` platform.
+
+(s390x-manylinux_2_38)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39"></a>
+
+An s390x target for the `manylinux_2_39` platform.
+
+(s390x-manylinux_2_39)
+
+---
+
+
+##### `S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40` <a name="S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40" id="projen.python.uvConfig.TargetTriple.S390X_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40"></a>
+
+An s390x target for the `manylinux_2_40` platform.
+
+(s390x-manylinux_2_40)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX2014` <a name="PPC64LE_HYPHEN_MANYLINUX2014" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX2014"></a>
+
+A little-endian `PowerPC64` target for the `manylinux2014` platform.
+
+Equivalent to `ppc64le-manylinux_2_17`. (ppc64le-manylinux2014)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_17"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_17` platform.
+
+(ppc64le-manylinux_2_17)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_28"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_28` platform.
+
+(ppc64le-manylinux_2_28)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_31"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_31` platform.
+
+(ppc64le-manylinux_2_31)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_32"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_32` platform.
+
+(ppc64le-manylinux_2_32)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_33"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_33` platform.
+
+(ppc64le-manylinux_2_33)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_34"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_34` platform.
+
+(ppc64le-manylinux_2_34)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_35"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_35` platform.
+
+(ppc64le-manylinux_2_35)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_36` platform.
+
+(ppc64le-manylinux_2_36)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_37` platform.
+
+(ppc64le-manylinux_2_37)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_38` platform.
+
+(ppc64le-manylinux_2_38)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_39` platform.
+
+(ppc64le-manylinux_2_39)
+
+---
+
+
+##### `PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40` <a name="PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40" id="projen.python.uvConfig.TargetTriple.PPC64LE_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40"></a>
+
+A little-endian `PowerPC64` target for the `manylinux_2_40` platform.
+
+(ppc64le-manylinux_2_40)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36` <a name="LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_36"></a>
+
+A `LoongArch64` target for the `manylinux_2_36` platform.
+
+(loongarch64-manylinux_2_36)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37` <a name="LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_37"></a>
+
+A `LoongArch64` target for the `manylinux_2_37` platform.
+
+(loongarch64-manylinux_2_37)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38` <a name="LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_38"></a>
+
+A `LoongArch64` target for the `manylinux_2_38` platform.
+
+(loongarch64-manylinux_2_38)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39` <a name="LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_39"></a>
+
+A `LoongArch64` target for the `manylinux_2_39` platform.
+
+(loongarch64-manylinux_2_39)
+
+---
+
+
+##### `LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40` <a name="LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40" id="projen.python.uvConfig.TargetTriple.LOONGARCH64_HYPHEN_MANYLINUX_UNDERSCORE_2_UNDERSCORE_40"></a>
+
+A `LoongArch64` target for the `manylinux_2_40` platform.
+
+(loongarch64-manylinux_2_40)
 
 ---
 

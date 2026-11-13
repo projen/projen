@@ -290,7 +290,7 @@ jobs:
         working-directory: ./
       - name: Upload patch
         if: steps.self_mutation.outputs.self_mutation_happened
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: repo.patch
           path: repo.patch
@@ -306,7 +306,7 @@ jobs:
         continue-on-error: true
       - name: Upload artifact
         id: upload_artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -318,13 +318,13 @@ jobs:
       contents: read
     if: \${{ !needs.build.outputs.self_mutation_happened }}
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.build.outputs.artifact_id }}
           path: dist
@@ -377,7 +377,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
+        uses: amannn/action-semantic-pull-request@v6.1.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -467,7 +467,7 @@ jobs:
       - name: Upload artifact
         id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -482,13 +482,13 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -516,13 +516,13 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -593,7 +593,7 @@ jobs:
     steps:
       - name: Download patch
         id: download_patch
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -661,7 +661,7 @@ jobs:
       - name: Upload patch
         id: upload_patch
         if: steps.create_patch.outputs.patch_created
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: repo.patch
           path: repo.patch
@@ -681,7 +681,7 @@ jobs:
           ref: main
       - name: Download patch
         id: download_patch
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: repo.patch
           path: \${{ runner.temp }}
@@ -1855,7 +1855,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -1871,7 +1871,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
@@ -1942,14 +1942,14 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v6.0.0",
+      "uses": "actions/setup-java@v6.2.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
       },
     },
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -1958,7 +1958,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
@@ -2033,7 +2033,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2042,7 +2042,7 @@ exports[`language bindings release workflow includes release_npm job 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
@@ -2114,14 +2114,14 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-dotnet@v6.0.0",
+      "uses": "actions/setup-dotnet@v6.1.0",
       "with": {
         "cache": false,
         "dotnet-version": "6.x",
@@ -2130,7 +2130,7 @@ exports[`language bindings release workflow includes release_nuget job 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
@@ -2199,14 +2199,14 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-python@v7.0.0",
+      "uses": "actions/setup-python@v7.1.0",
       "with": {
         "python-version": "3.x",
       },
@@ -2214,7 +2214,7 @@ exports[`language bindings release workflow includes release_pypi job 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.release.outputs.artifact_id }}",
         "path": "dist",
@@ -2283,14 +2283,14 @@ exports[`language bindings snapshot dotnet 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-dotnet@v6.0.0",
+      "uses": "actions/setup-dotnet@v6.1.0",
       "with": {
         "cache": false,
         "dotnet-version": "6.x",
@@ -2299,7 +2299,7 @@ exports[`language bindings snapshot dotnet 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
@@ -2360,7 +2360,7 @@ exports[`language bindings snapshot go 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2376,7 +2376,7 @@ exports[`language bindings snapshot go 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
@@ -2437,14 +2437,14 @@ exports[`language bindings snapshot java 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v6.0.0",
+      "uses": "actions/setup-java@v6.2.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
       },
     },
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2453,7 +2453,7 @@ exports[`language bindings snapshot java 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
@@ -2514,7 +2514,7 @@ exports[`language bindings snapshot js 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
@@ -2523,7 +2523,7 @@ exports[`language bindings snapshot js 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
@@ -2584,14 +2584,14 @@ exports[`language bindings snapshot python 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-node@v7.0.0",
+      "uses": "actions/setup-node@v7.1.0",
       "with": {
         "node-version": "lts/*",
         "package-manager-cache": false,
       },
     },
     {
-      "uses": "actions/setup-python@v7.0.0",
+      "uses": "actions/setup-python@v7.1.0",
       "with": {
         "python-version": "3.x",
       },
@@ -2599,7 +2599,7 @@ exports[`language bindings snapshot python 1`] = `
     {
       "id": "download_build_artifacts",
       "name": "Download build artifacts",
-      "uses": "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "with": {
         "artifact-ids": "\${{ needs.build.outputs.artifact_id }}",
         "path": "dist",
@@ -2718,7 +2718,7 @@ jobs:
       - name: Upload artifact
         id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -2734,13 +2734,13 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -2768,13 +2768,13 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -2819,7 +2819,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -2829,7 +2829,7 @@ jobs:
           cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -2938,7 +2938,7 @@ jobs:
       - name: Upload artifact
         id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -2954,13 +2954,13 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -2988,13 +2988,13 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3039,7 +3039,7 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
@@ -3049,7 +3049,7 @@ jobs:
           cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3156,7 +3156,7 @@ jobs:
       - name: Upload artifact
         id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -3172,13 +3172,13 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3206,13 +3206,13 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3257,17 +3257,17 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-dotnet@v6.0.0
+      - uses: actions/setup-dotnet@v6.1.0
         with:
           dotnet-version: 6.x
           cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3372,7 +3372,7 @@ jobs:
       - name: Upload artifact
         id: upload_artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: build-artifact
           path: dist
@@ -3388,13 +3388,13 @@ jobs:
       contents: write
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3422,13 +3422,13 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist
@@ -3473,17 +3473,17 @@ jobs:
       contents: read
     if: needs.release.outputs.tag_exists != 'true' && needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v7.0.0
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-dotnet@v6.0.0
+      - uses: actions/setup-dotnet@v6.1.0
         with:
           dotnet-version: 6.x
           cache: false
       - name: Download build artifacts
         id: download_build_artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           artifact-ids: \${{ needs.release.outputs.artifact_id }}
           path: dist

@@ -13,6 +13,20 @@ export interface PnpmWorkspaceYamlSchema {
   readonly packages?: string[];
 
   /**
+   * Delegates settings to other YAML files and to config dependencies. Added in pnpm v12.15.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#include
+   */
+  readonly include?: { [key: string]: string[] };
+
+  /**
+   * Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. Added in pnpm v12.15.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#bootConfig
+   */
+  readonly bootConfig?: PnpmWorkspaceYamlSchemaBootConfig;
+
+  /**
    * Define dependency version ranges as reusable constants,
    * for later reference in package.json files.
    * This (singular) field creates a catalog named default.
@@ -182,11 +196,11 @@ export interface PnpmWorkspaceYamlSchema {
   readonly requiredScripts?: string[];
 
   /**
-   * Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install.
+   * Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install. Either a mapping of os, cpu, and libc lists, or a list of exact platform tags to prepare.
    *
    * @schema PnpmWorkspaceYamlSchema#supportedArchitectures
    */
-  readonly supportedArchitectures?: PnpmWorkspaceYamlSchemaSupportedArchitectures;
+  readonly supportedArchitectures?: any;
 
   /**
    * A list of optional dependencies that the install should be skipped.
@@ -194,6 +208,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#ignoredOptionalDependencies
    */
   readonly ignoredOptionalDependencies?: string[];
+
+  /**
+   * When true, pnpm install --force also installs optional dependencies whose os, cpu, or libc do not match the host. When false, --force refetches every package but still skips optional dependencies built for other platforms. pnpm v11 behaved as if this setting were true; prefer supportedArchitectures to install optional dependencies for other platforms on purpose. Added in pnpm v12.7.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#forceIgnoresPlatform
+   */
+  readonly forceIgnoresPlatform?: boolean;
 
   /**
    * @schema PnpmWorkspaceYamlSchema#executionEnv
@@ -243,25 +264,32 @@ export interface PnpmWorkspaceYamlSchema {
   readonly modulesDir?: string;
 
   /**
-   * Defines what linker should be used for installing Node packages.
+   * Defines what linker should be used for installing Node packages. loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
    *
    * @schema PnpmWorkspaceYamlSchema#nodeLinker
    */
-  readonly nodeLinker?: PnpmWorkspaceYamlSchemaNodeLinker;
+  readonly nodeLinker?: any;
 
   /**
-   * When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap
+   * When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. Deprecated since pnpm v12.13.0: use nodePackageMap.mode instead. true is the same as mode: load and false the same as mode: off; nodePackageMap wins when both are set in the same place.
    *
    * @schema PnpmWorkspaceYamlSchema#nodeExperimentalPackageMap
    */
   readonly nodeExperimentalPackageMap?: boolean;
 
   /**
-   * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+   * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place.
    *
    * @schema PnpmWorkspaceYamlSchema#nodePackageMapType
    */
   readonly nodePackageMapType?: PnpmWorkspaceYamlSchemaNodePackageMapType;
+
+  /**
+   * Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#nodePackageMap
+   */
+  readonly nodePackageMap?: PnpmWorkspaceYamlSchemaNodePackageMap;
 
   /**
    * When symlink is set to false, pnpm creates a virtual store directory without any symlinks. It is a useful setting together with nodeLinker=pnp.
@@ -278,6 +306,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly enableModulesDir?: boolean;
 
   /**
+   * Controls whether pnpm asks for confirmation before removing and reinstalling a modules directory that is incompatible with the current install settings. Confirmation is disabled in CI. Supported by pnpm v11.
+   *
+   * @schema PnpmWorkspaceYamlSchema#confirmModulesPurge
+   */
+  readonly confirmModulesPurge?: boolean;
+
+  /**
    * The directory with links to the store.
    *
    * @schema PnpmWorkspaceYamlSchema#virtualStoreDir
@@ -292,7 +327,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly virtualStoreDirMaxLength?: number;
 
   /**
-   * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+   * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
    *
    * @schema PnpmWorkspaceYamlSchema#virtualStoreType
    */
@@ -348,6 +383,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly frozenStore?: boolean;
 
   /**
+   * How the store records which files each package has. sqlite - one index.db database; SQLite's locking only works between processes on one machine, so this format is for a store on a local disk. files - one file per package in the store's index directory, for a store on a network filesystem that several machines use at once, such as a store shared by CI jobs; each entry is written to a temporary file and renamed into place, so concurrent jobs need no locks. The format belongs to the store: once the index directory exists, every pnpm process uses it whatever its own setting says, and the packages recorded in an existing index.db are not carried over when switching. pnpm v11 reads only index.db. Added in pnpm v12.13.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#storeIndexFormat
+   */
+  readonly storeIndexFormat?: PnpmWorkspaceYamlSchemaStoreIndexFormat;
+
+  /**
    * Some registries allow the exact same content to be published under different package names and/or versions.
    *
    * @schema PnpmWorkspaceYamlSchema#strictStorePkgContentCheck
@@ -366,7 +408,14 @@ export interface PnpmWorkspaceYamlSchema {
    *
    * @schema PnpmWorkspaceYamlSchema#lockfile
    */
-  readonly lockfile?: boolean;
+  readonly lockfile?: any;
+
+  /**
+   * When true, installation fails if the lockfile is missing or needs to be updated.
+   *
+   * @schema PnpmWorkspaceYamlSchema#frozenLockfile
+   */
+  readonly frozenLockfile?: boolean;
 
   /**
    * When set to true and the available pnpm-lock.yaml satisfies the package.json dependencies directive, a headless installation is performed.
@@ -381,6 +430,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#lockfileIncludeTarballUrl
    */
   readonly lockfileIncludeTarballUrl?: boolean;
+
+  /**
+   * Caps the total number of bytes the files of one package may unpack to. Added in pnpm v12.15.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#maxTarballUnpackedSize
+   */
+  readonly maxTarballUnpackedSize?: number;
 
   /**
    * When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts.
@@ -565,6 +621,20 @@ export interface PnpmWorkspaceYamlSchema {
   readonly dedupePeerDependents?: boolean;
 
   /**
+   * When true, a project gets a missing optional peer dependency only if the project's own dependencies already install a version of it. The workspace root's dependencies also count if resolvePeersFromWorkspaceRoot is true; a version that only another workspace project's dependencies install does not. dedupePeerDependents keeps deduplicating everything else, and this setting has no effect when dedupePeerDependents is false, because optional peers are already resolved only from the project's own dependencies then. Changing this setting changes the lockfile. Added in pnpm v12.19.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#projectScopedOptionalPeers
+   */
+  readonly projectScopedOptionalPeers?: boolean;
+
+  /**
+   * When true, every peer dependency of a dependency also makes the matching @types package an optional peer of it: pnpm links the project's @types package (e.g. @types/react for a peer dependency on react) next to every package that peer-depends on the library, as with any optional peer dependency. This lets TypeScript find the types of a peer dependency when the global virtual store is on. A package that already declares the @types package keeps its own declaration, and no @types package nothing in the workspace depends on is installed. Changing this setting changes the lockfile. Added in pnpm v12.12.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#addMissingPeerTypes
+   */
+  readonly addMissingPeerTypes?: boolean;
+
+  /**
    * If this is enabled, commands will fail if there is a missing or invalid peer dependency in the tree.
    *
    * @schema PnpmWorkspaceYamlSchema#strictPeerDependencies
@@ -584,6 +654,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#color
    */
   readonly color?: PnpmWorkspaceYamlSchemaColor;
+
+  /**
+   * Controls whether dependency and download progress lines are printed during installation. When set to false (or --no-progress is passed), progress output is suppressed. Warnings, lifecycle script output, and the dependency summary are still printed. Added in pnpm v12.6.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#progress
+   */
+  readonly progress?: boolean;
 
   /**
    * Any logs at or higher than the given level will be shown.
@@ -687,6 +764,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly sideEffectsCacheReadonly?: boolean;
 
   /**
+   * The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with. Read by both sideEffectsCache.remote and the task cache of pnpm pipeline. Only org may be set in pnpm-workspace.yaml; the fields naming the server and its trust material (url, team, trustedKeys, publish, privateKey, keyId, builderId, imageDigest, architectureBaseline, buildEnv) are read from the global configuration file or the PNPM_REMOTE_CACHE_* environment variables instead, and setting them here fails with ERR_PNPM_WORKSPACE_REMOTE_CACHE_TRUST. Added in pnpm v12.12.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#remoteCache
+   */
+  readonly remoteCache?: PnpmWorkspaceYamlSchemaRemoteCache;
+
+  /**
    * Set to true to enable UID/GID switching when running package scripts. If set explicitly to false, then installing as a non-root user will fail.
    *
    * @schema PnpmWorkspaceYamlSchema#unsafePerm
@@ -705,7 +789,7 @@ export interface PnpmWorkspaceYamlSchema {
    *
    * @schema PnpmWorkspaceYamlSchema#verifyDepsBeforeRun
    */
-  readonly verifyDepsBeforeRun?: any;
+  readonly verifyDepsBeforeRun?: PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun;
 
   /**
    * When strictDepBuilds is enabled, the installation will exit with a non-zero exit code if any dependencies have unreviewed build scripts (aka postinstall scripts).
@@ -813,11 +897,60 @@ export interface PnpmWorkspaceYamlSchema {
   readonly tasks?: { [key: string]: PnpmWorkspaceYamlSchemaTasks };
 
   /**
+   * Machine-wide concurrency limits for named groups of tasks (assigned via `tasks.<name>.concurrencyGroup`). At most the given number of tasks in a group run at once across pnpm processes sharing the same stateDir, including pnpm pipeline. A missing or zero group limit does not restrict execution. Added in pnpm v12.5.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#concurrencyGroups
+   */
+  readonly concurrencyGroups?: { [key: string]: number };
+
+  /**
+   * Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`. A pipeline is a set, not a sequence: the order in which its tasks run comes from `tasks.<name>.dependsOn`. The pipeline named `default` runs when no name is given. Added in pnpm v12.4.0 (experimental, pnpm v12 only).
+   *
+   * @schema PnpmWorkspaceYamlSchema#pipelines
+   */
+  readonly pipelines?: { [key: string]: string[] };
+
+  /**
+   * The git ref the affected selection of `pnpm pipeline` resolves its merge base against. Overridden by the `--base <ref>` option.
+   *
+   * @schema PnpmWorkspaceYamlSchema#pipelineBase
+   */
+  readonly pipelineBase?: string;
+
+  /**
+   * Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages. Multi-ecosystem support is experimental. Added in: v12.4.0 (pnpm v12 only).
+   *
+   * @schema PnpmWorkspaceYamlSchema#cargo
+   */
+  readonly cargo?: PnpmWorkspaceYamlSchemaCargo;
+
+  /**
    * If true, pnpm will fail if no packages match the filter
    *
    * @schema PnpmWorkspaceYamlSchema#failIfNoMatch
    */
   readonly failIfNoMatch?: boolean;
+
+  /**
+   * Glob patterns of changed files to ignore when filtering for the projects changed since a commit or branch.
+   *
+   * @schema PnpmWorkspaceYamlSchema#changedFilesIgnorePattern
+   */
+  readonly changedFilesIgnorePattern?: string[];
+
+  /**
+   * Glob patterns of test files. When the changed files of a project all match them, the "changed since" filter leaves out the projects that depend on it.
+   *
+   * @schema PnpmWorkspaceYamlSchema#testPattern
+   */
+  readonly testPattern?: string[];
+
+  /**
+   * When true, `{<dir>}` filter selectors use the legacy behavior: the selector names a directory and matches every project in the subtree below it. By default `{<dir>}` is matched as a glob pattern, so `{packages/*}` selects the projects one level below packages/ and a `**` reaches deeper. Only applies to user-written selectors; the workspace-root selectors pnpm generates are always matched as globs.
+   *
+   * @schema PnpmWorkspaceYamlSchema#legacyDirFiltering
+   */
+  readonly legacyDirFiltering?: boolean;
 
   /**
    * By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. If this setting is set to true, the legacy deploy behavior will be used.
@@ -832,6 +965,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#savePrefix
    */
   readonly savePrefix?: PnpmWorkspaceYamlSchemaSavePrefix;
+
+  /**
+   * When set to true, pnpm add saves available @types/* packages in devDependencies alongside registry dependencies. Packages that declare bundled TypeScript types are skipped. Added in pnpm v12.6.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#saveTypes
+   */
+  readonly saveTypes?: boolean;
 
   /**
    * If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
@@ -897,6 +1037,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly ci?: boolean;
 
   /**
+   * On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#macosBackup
+   */
+  readonly macosBackup?: PnpmWorkspaceYamlSchemaMacosBackup;
+
+  /**
    * Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work.
    *
    * @schema PnpmWorkspaceYamlSchema#preferSymlinkedExecutables
@@ -939,6 +1086,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly deployAllFiles?: boolean;
 
   /**
+   * When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation. If a dependency appears at multiple versions and one version satisfies every range in the workspace, pnpm picks that version for all of them. Frozen installs (--frozen-lockfile) leave the lockfile unchanged; deduplication only runs when the lockfile is being written. Added in pnpm v12.6.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#autoDedupe
+   */
+  readonly autoDedupe?: boolean;
+
+  /**
    * When set to true, dependencies that are already symlinked to the root node_modules directory of the workspace will not be symlinked to subproject node_modules directories.
    *
    * @schema PnpmWorkspaceYamlSchema#dedupeDirectDeps
@@ -979,6 +1133,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#publishBranch
    */
   readonly publishBranch?: string;
+
+  /**
+   * After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry. If they are not available in time, the command fails. 0 disables the check. When publishing recursively, pnpm confirms that a package is available before it publishes the packages that depend on it. Added in pnpm v12.7.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#publishWaitTimeout
+   */
+  readonly publishWaitTimeout?: number;
 
   /**
    * Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
@@ -1101,6 +1262,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly trustPolicyExclude?: string[];
 
   /**
+   * When set to `true`, `pnpm add`, `pnpm update`, and `pnpm remove` prune the entries of [`trustPolicyExclude`](#trustpolicyexclude) in `pnpm-workspace.yaml` that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (`@myorg/*`) are always kept.
+   *
+   * @schema PnpmWorkspaceYamlSchema#trustPolicyExcludePrune
+   */
+  readonly trustPolicyExcludePrune?: boolean;
+
+  /**
    * A map of package matchers to explicitly allow (`true`) or disallow (`false`) script execution. This field replaces `onlyBuiltDependencies` and `ignoredBuiltDependencies` (which are also deprecated by this new setting), providing a single source of truth.
    *
    * @schema PnpmWorkspaceYamlSchema#allowBuilds
@@ -1150,11 +1318,12 @@ export interface PnpmWorkspaceYamlSchema {
   readonly minimumReleaseAgeIgnoreMissingTime?: boolean;
 
   /**
-   * Configure registries for scoped packages in `pnpm-workspace.yaml`. The `default` key sets the main registry (equivalent to the `registry` `.npmrc` setting). Scoped keys configure registries for specific package scopes.
+   * Configures the registries packages resolve from, in one of two shapes. The declaration shape keys each registry by its URL and states everything about it in one place: which scopes and bare-specifier prefix are routed to it, how it lays out tarball URLs, and whether its abbreviated metadata carries the `time` field. The older shape maps the `default` registry and `@`-prefixed scopes straight to registry URLs. The two shapes cannot be mixed.
+   * https://pnpm.io/settings#registries
    *
    * @schema PnpmWorkspaceYamlSchema#registries
    */
-  readonly registries?: { [key: string]: string };
+  readonly registries?: any;
 
   /**
    * Defines named registry aliases that can be used as a prefix when installing packages, e.g. `pnpm add work:@corp/lib@^2.0.0` resolves `@corp/lib@^2.0.0` against the configured URL. Built-in aliases `gh:` (https://npm.pkg.github.com/) and `npmjs:` (https://registry.npmjs.org/) work without any configuration and can be overridden. An alias must start with a letter and contain only letters, digits, `.`, `_`, and `-`. Added in pnpm 11.1.0.
@@ -1176,6 +1345,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#pmOnFail
    */
   readonly pmOnFail?: PnpmWorkspaceYamlSchemaPmOnFail;
+
+  /**
+   * Controls whether pnpm installs runtime entries declared in `devEngines.runtime`. Set to false when the runtime is provisioned separately, such as in a CI matrix.
+   *
+   * @schema PnpmWorkspaceYamlSchema#runtime
+   */
+  readonly runtime?: boolean;
 
   /**
    * Overrides the `onFail` field of `devEngines.runtime` (and `engines.runtime`) in the root project's `package.json`. This is useful when you want a different local behavior than what is written in the manifest — for instance, forcing pnpm to download the declared runtime even when the manifest sets `onFail: "warn"`.
@@ -1204,6 +1380,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#hoistingLimits
    */
   readonly hoistingLimits?: PnpmWorkspaceYamlSchemaHoistingLimits;
+
+  /**
+   * Agent skills that approved dependencies ship. Added in pnpm v12.11.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#skills
+   */
+  readonly skills?: PnpmWorkspaceYamlSchemaSkills;
 }
 
 /**
@@ -1215,6 +1398,8 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
   if (obj === undefined) { return undefined; }
   const result = {
     'packages': obj.packages?.map(y => y),
+    'include': ((obj.include) === undefined) ? undefined : (Object.entries(obj.include).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
+    'bootConfig': toJson_PnpmWorkspaceYamlSchemaBootConfig(obj.bootConfig),
     'catalog': ((obj.catalog) === undefined) ? undefined : (Object.entries(obj.catalog).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'catalogs': ((obj.catalogs) === undefined) ? undefined : (Object.entries(obj.catalogs).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: ((i[1]) === undefined) ? undefined : (Object.entries(i[1]).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})) }), {})),
     'catalogMode': obj.catalogMode,
@@ -1240,8 +1425,9 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'audit': toJson_PnpmWorkspaceYamlSchemaAudit(obj.audit),
     'auditConfig': toJson_PnpmWorkspaceYamlSchemaAuditConfig(obj.auditConfig),
     'requiredScripts': obj.requiredScripts?.map(y => y),
-    'supportedArchitectures': toJson_PnpmWorkspaceYamlSchemaSupportedArchitectures(obj.supportedArchitectures),
+    'supportedArchitectures': obj.supportedArchitectures,
     'ignoredOptionalDependencies': obj.ignoredOptionalDependencies?.map(y => y),
+    'forceIgnoresPlatform': obj.forceIgnoresPlatform,
     'executionEnv': toJson_PnpmWorkspaceYamlSchemaExecutionEnv(obj.executionEnv),
     'hoist': obj.hoist,
     'hoistWorkspacePackages': obj.hoistWorkspacePackages,
@@ -1252,8 +1438,10 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'nodeLinker': obj.nodeLinker,
     'nodeExperimentalPackageMap': obj.nodeExperimentalPackageMap,
     'nodePackageMapType': obj.nodePackageMapType,
+    'nodePackageMap': toJson_PnpmWorkspaceYamlSchemaNodePackageMap(obj.nodePackageMap),
     'symlink': obj.symlink,
     'enableModulesDir': obj.enableModulesDir,
+    'confirmModulesPurge': obj.confirmModulesPurge,
     'virtualStoreDir': obj.virtualStoreDir,
     'virtualStoreDirMaxLength': obj.virtualStoreDirMaxLength,
     'virtualStoreType': obj.virtualStoreType,
@@ -1264,11 +1452,14 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'verifyStoreIntegrity': obj.verifyStoreIntegrity,
     'useRunningStoreServer': obj.useRunningStoreServer,
     'frozenStore': obj.frozenStore,
+    'storeIndexFormat': obj.storeIndexFormat,
     'strictStorePkgContentCheck': obj.strictStorePkgContentCheck,
     'enableGlobalVirtualStore': obj.enableGlobalVirtualStore,
     'lockfile': obj.lockfile,
+    'frozenLockfile': obj.frozenLockfile,
     'preferFrozenLockfile': obj.preferFrozenLockfile,
     'lockfileIncludeTarballUrl': obj.lockfileIncludeTarballUrl,
+    'maxTarballUnpackedSize': obj.maxTarballUnpackedSize,
     'gitBranchLockfile': obj.gitBranchLockfile,
     'mergeGitBranchLockfilesBranchPattern': obj.mergeGitBranchLockfilesBranchPattern?.map(y => y),
     'peersSuffixMaxLength': obj.peersSuffixMaxLength,
@@ -1295,9 +1486,12 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'fetchMinSpeedKiBps': obj.fetchMinSpeedKiBps,
     'autoInstallPeers': obj.autoInstallPeers,
     'dedupePeerDependents': obj.dedupePeerDependents,
+    'projectScopedOptionalPeers': obj.projectScopedOptionalPeers,
+    'addMissingPeerTypes': obj.addMissingPeerTypes,
     'strictPeerDependencies': obj.strictPeerDependencies,
     'resolvePeersFromWorkspaceRoot': obj.resolvePeersFromWorkspaceRoot,
     'color': obj.color,
+    'progress': obj.progress,
     'loglevel': obj.loglevel,
     'reporter': obj.reporter,
     'useBetaCli': obj.useBetaCli,
@@ -1312,9 +1506,10 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'childConcurrency': obj.childConcurrency,
     'sideEffectsCache': obj.sideEffectsCache,
     'sideEffectsCacheReadonly': obj.sideEffectsCacheReadonly,
+    'remoteCache': toJson_PnpmWorkspaceYamlSchemaRemoteCache(obj.remoteCache),
     'unsafePerm': obj.unsafePerm,
     'nodeOptions': obj.nodeOptions,
-    'verifyDepsBeforeRun': obj.verifyDepsBeforeRun,
+    'verifyDepsBeforeRun': obj.verifyDepsBeforeRun?.value,
     'strictDepBuilds': obj.strictDepBuilds,
     'useNodeVersion': obj.useNodeVersion,
     'nodeVersion': obj.nodeVersion,
@@ -1330,9 +1525,17 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'disallowWorkspaceCycles': obj.disallowWorkspaceCycles,
     'workspaceConcurrency': obj.workspaceConcurrency,
     'tasks': ((obj.tasks) === undefined) ? undefined : (Object.entries(obj.tasks).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: toJson_PnpmWorkspaceYamlSchemaTasks(i[1]) }), {})),
+    'concurrencyGroups': ((obj.concurrencyGroups) === undefined) ? undefined : (Object.entries(obj.concurrencyGroups).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'pipelines': ((obj.pipelines) === undefined) ? undefined : (Object.entries(obj.pipelines).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1]?.map(y => y) }), {})),
+    'pipelineBase': obj.pipelineBase,
+    'cargo': toJson_PnpmWorkspaceYamlSchemaCargo(obj.cargo),
     'failIfNoMatch': obj.failIfNoMatch,
+    'changedFilesIgnorePattern': obj.changedFilesIgnorePattern?.map(y => y),
+    'testPattern': obj.testPattern?.map(y => y),
+    'legacyDirFiltering': obj.legacyDirFiltering,
     'forceLegacyDeploy': obj.forceLegacyDeploy,
     'savePrefix': obj.savePrefix,
+    'saveTypes': obj.saveTypes,
     'tag': obj.tag,
     'globalDir': obj.globalDir,
     'globalBinDir': obj.globalBinDir,
@@ -1342,18 +1545,21 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'useStderr': obj.useStderr,
     'updateNotifier': obj.updateNotifier,
     'ci': obj.ci,
+    'macosBackup': toJson_PnpmWorkspaceYamlSchemaMacosBackup(obj.macosBackup),
     'preferSymlinkedExecutables': obj.preferSymlinkedExecutables,
     'ignoreCompatibilityDb': obj.ignoreCompatibilityDb,
     'resolutionMode': obj.resolutionMode,
     'registrySupportsTimeField': obj.registrySupportsTimeField,
     'extendNodePath': obj.extendNodePath,
     'deployAllFiles': obj.deployAllFiles,
+    'autoDedupe': obj.autoDedupe,
     'dedupeDirectDeps': obj.dedupeDirectDeps,
     'dedupeInjectedDeps': obj.dedupeInjectedDeps,
     'optimisticRepeatInstall': obj.optimisticRepeatInstall,
     'gitChecks': obj.gitChecks,
     'embedReadme': obj.embedReadme,
     'publishBranch': obj.publishBranch,
+    'publishWaitTimeout': obj.publishWaitTimeout,
     'versioning': toJson_PnpmWorkspaceYamlSchemaVersioning(obj.versioning),
     'provenance': obj.provenance,
     'pnpmfile': obj.pnpmfile,
@@ -1371,6 +1577,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'preferOffline': obj.preferOffline,
     'trustPolicy': obj.trustPolicy,
     'trustPolicyExclude': obj.trustPolicyExclude?.map(y => y),
+    'trustPolicyExcludePrune': obj.trustPolicyExcludePrune,
     'allowBuilds': obj.allowBuilds,
     'blockExoticSubdeps': obj.blockExoticSubdeps,
     'trustPolicyIgnoreAfter': obj.trustPolicyIgnoreAfter,
@@ -1378,14 +1585,69 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'dedupePeers': obj.dedupePeers,
     'npmrcAuthFile': obj.npmrcAuthFile,
     'minimumReleaseAgeIgnoreMissingTime': obj.minimumReleaseAgeIgnoreMissingTime,
-    'registries': ((obj.registries) === undefined) ? undefined : (Object.entries(obj.registries).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'registries': obj.registries,
     'namedRegistries': ((obj.namedRegistries) === undefined) ? undefined : (Object.entries(obj.namedRegistries).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'virtualStoreOnly': obj.virtualStoreOnly,
     'pmOnFail': obj.pmOnFail,
+    'runtime': obj.runtime,
     'runtimeOnFail': obj.runtimeOnFail,
     'nodeDownloadMirrors': ((obj.nodeDownloadMirrors) === undefined) ? undefined : (Object.entries(obj.nodeDownloadMirrors).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'trustLockfile': obj.trustLockfile,
     'hoistingLimits': obj.hoistingLimits,
+    'skills': toJson_PnpmWorkspaceYamlSchemaSkills(obj.skills),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. Added in pnpm v12.15.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaBootConfig
+ */
+export interface PnpmWorkspaceYamlSchemaBootConfig {
+  /**
+   * The minimum number of minutes that must pass after a version is published before pnpm will install it.
+   *
+   * @schema PnpmWorkspaceYamlSchemaBootConfig#minimumReleaseAge
+   */
+  readonly minimumReleaseAge?: number;
+
+  /**
+   * Packages that are exempt from the minimumReleaseAge check.
+   *
+   * @schema PnpmWorkspaceYamlSchemaBootConfig#minimumReleaseAgeExclude
+   */
+  readonly minimumReleaseAgeExclude?: string[];
+
+  /**
+   * When set to no-downgrade, installation fails if a package's trust level has decreased compared to previous releases.
+   *
+   * @schema PnpmWorkspaceYamlSchemaBootConfig#trustPolicy
+   */
+  readonly trustPolicy?: PnpmWorkspaceYamlSchemaBootConfigTrustPolicy;
+
+  /**
+   * Packages or versions that are allowed to install even if they don't satisfy the trust policy requirement.
+   *
+   * @schema PnpmWorkspaceYamlSchemaBootConfig#trustPolicyExclude
+   */
+  readonly trustPolicyExclude?: string[];
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaBootConfig' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaBootConfig(obj: PnpmWorkspaceYamlSchemaBootConfig | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'minimumReleaseAge': obj.minimumReleaseAge,
+    'minimumReleaseAgeExclude': obj.minimumReleaseAgeExclude?.map(y => y),
+    'trustPolicy': obj.trustPolicy,
+    'trustPolicyExclude': obj.trustPolicyExclude?.map(y => y),
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1606,45 +1868,6 @@ export function toJson_PnpmWorkspaceYamlSchemaAuditConfig(obj: PnpmWorkspaceYaml
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install.
- *
- * @schema PnpmWorkspaceYamlSchemaSupportedArchitectures
- */
-export interface PnpmWorkspaceYamlSchemaSupportedArchitectures {
-  /**
-   * @schema PnpmWorkspaceYamlSchemaSupportedArchitectures#os
-   */
-  readonly os?: string[];
-
-  /**
-   * @schema PnpmWorkspaceYamlSchemaSupportedArchitectures#cpu
-   */
-  readonly cpu?: string[];
-
-  /**
-   * @schema PnpmWorkspaceYamlSchemaSupportedArchitectures#libc
-   */
-  readonly libc?: string[];
-}
-
-/**
- * Converts an object of type 'PnpmWorkspaceYamlSchemaSupportedArchitectures' to JSON representation.
- * @internal
- */
-/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-export function toJson_PnpmWorkspaceYamlSchemaSupportedArchitectures(obj: PnpmWorkspaceYamlSchemaSupportedArchitectures | undefined): Record<string, any> | undefined {
-  if (obj === undefined) { return undefined; }
-  const result = {
-    'os': obj.os?.map(y => y),
-    'cpu': obj.cpu?.map(y => y),
-    'libc': obj.libc?.map(y => y),
-  };
-  // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
-}
-/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-
-/**
  * @schema PnpmWorkspaceYamlSchemaExecutionEnv
  */
 export interface PnpmWorkspaceYamlSchemaExecutionEnv {
@@ -1672,21 +1895,7 @@ export function toJson_PnpmWorkspaceYamlSchemaExecutionEnv(obj: PnpmWorkspaceYam
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * Defines what linker should be used for installing Node packages.
- *
- * @schema PnpmWorkspaceYamlSchemaNodeLinker
- */
-export enum PnpmWorkspaceYamlSchemaNodeLinker {
-  /** isolated */
-  ISOLATED = "isolated",
-  /** hoisted */
-  HOISTED = "hoisted",
-  /** pnp */
-  PNP = "pnp",
-}
-
-/**
- * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+ * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place.
  *
  * @schema PnpmWorkspaceYamlSchemaNodePackageMapType
  */
@@ -1698,7 +1907,44 @@ export enum PnpmWorkspaceYamlSchemaNodePackageMapType {
 }
 
 /**
- * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+ * Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaNodePackageMap
+ */
+export interface PnpmWorkspaceYamlSchemaNodePackageMap {
+  /**
+   * off - pnpm writes no package map, and an install removes a map that an earlier install left. write-only - pnpm writes the package map for other tools to read; Node.js does not load it. load - pnpm also adds Node's --experimental-package-map option to NODE_OPTIONS in pnpm-managed Node.js script environments.
+   *
+   * @schema PnpmWorkspaceYamlSchemaNodePackageMap#mode
+   */
+  readonly mode?: PnpmWorkspaceYamlSchemaNodePackageMapMode;
+
+  /**
+   * Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+   *
+   * @schema PnpmWorkspaceYamlSchemaNodePackageMap#type
+   */
+  readonly type?: PnpmWorkspaceYamlSchemaNodePackageMapType;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaNodePackageMap' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaNodePackageMap(obj: PnpmWorkspaceYamlSchemaNodePackageMap | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'mode': obj.mode,
+    'type': obj.type,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Determines where the virtual store is located. When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
  *
  * @schema PnpmWorkspaceYamlSchemaVirtualStoreType
  */
@@ -1725,6 +1971,18 @@ export enum PnpmWorkspaceYamlSchemaPackageImportMethod {
   CLONE = "clone",
   /** clone-or-copy */
   CLONE_HYPHEN_OR_HYPHEN_COPY = "clone-or-copy",
+}
+
+/**
+ * How the store records which files each package has. sqlite - one index.db database; SQLite's locking only works between processes on one machine, so this format is for a store on a local disk. files - one file per package in the store's index directory, for a store on a network filesystem that several machines use at once, such as a store shared by CI jobs; each entry is written to a temporary file and renamed into place, so concurrent jobs need no locks. The format belongs to the store: once the index directory exists, every pnpm process uses it whatever its own setting says, and the packages recorded in an existing index.db are not carried over when switching. pnpm v11 reads only index.db. Added in pnpm v12.13.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaStoreIndexFormat
+ */
+export enum PnpmWorkspaceYamlSchemaStoreIndexFormat {
+  /** sqlite */
+  SQLITE = "sqlite",
+  /** files */
+  FILES = "files",
 }
 
 /**
@@ -1772,6 +2030,51 @@ export enum PnpmWorkspaceYamlSchemaReporter {
   APPEND_HYPHEN_ONLY = "append-only",
   /** ndjson */
   NDJSON = "ndjson",
+}
+
+/**
+ * The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with. Read by both sideEffectsCache.remote and the task cache of pnpm pipeline. Only org may be set in pnpm-workspace.yaml; the fields naming the server and its trust material (url, team, trustedKeys, publish, privateKey, keyId, builderId, imageDigest, architectureBaseline, buildEnv) are read from the global configuration file or the PNPM_REMOTE_CACHE_* environment variables instead, and setting them here fails with ERR_PNPM_WORKSPACE_REMOTE_CACHE_TRUST. Added in pnpm v12.12.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaRemoteCache
+ */
+export interface PnpmWorkspaceYamlSchemaRemoteCache {
+  /**
+   * The organization that owns the artifacts. On a pnpr server, one of the organizations it declares under artifacts.orgs. It also names the organization pnpm pipeline --report records a run under.
+   *
+   * @schema PnpmWorkspaceYamlSchemaRemoteCache#org
+   */
+  readonly org?: string;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaRemoteCache' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaRemoteCache(obj: PnpmWorkspaceYamlSchemaRemoteCache | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'org': obj.org,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * This setting allows the checking of the state of dependencies before running scripts.
+ *
+ * @schema PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun
+ */
+export class PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun {
+  public static fromString(value: string): PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun {
+    return new PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun(value);
+  }
+  public static fromBoolean(value: boolean): PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun {
+    return new PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun(value);
+  }
+  private constructor(public readonly value: string | boolean) {
+  }
 }
 
 /**
@@ -1823,6 +2126,55 @@ export interface PnpmWorkspaceYamlSchemaTasks {
    * @schema PnpmWorkspaceYamlSchemaTasks#concurrency
    */
   readonly concurrency?: number;
+
+  /**
+   * Assigns this task to a named concurrency group whose machine-wide limit is configured under concurrencyGroups. Added in pnpm v12.5.0.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#concurrencyGroup
+   */
+  readonly concurrencyGroup?: string;
+
+  /**
+   * Waiting tasks take available slots in order of descending priority, with higher values running first. Ties are broken by arrival order. Added in pnpm v12.6.0.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#priority
+   */
+  readonly priority?: number;
+
+  /**
+   * Globs, relative to the project directory, naming the files the task produces. Their presence makes the task cacheable by `pnpm pipeline`; declaring `outputs: []` states the task produces no files. Read by pnpm pipeline only.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#outputs
+   */
+  readonly outputs?: string[];
+
+  /**
+   * Globs narrowing what goes into the task's cache key. Without it, every tracked file of the project counts. An entry prefixed with `+` adds to that default instead of replacing it. Read by pnpm pipeline only.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#inputs
+   */
+  readonly inputs?: string[];
+
+  /**
+   * Environment variable names whose values take part in the task's cache key. The values are hashed, never stored. Read by pnpm pipeline only.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#env
+   */
+  readonly env?: string[];
+
+  /**
+   * Set to false to opt a task with declared outputs back out of the `pnpm pipeline` cache. Read by pnpm pipeline only.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#cache
+   */
+  readonly cache?: boolean;
+
+  /**
+   * Points Cargo's target and build directories at this path so a Cargo task keeps its local build state between runs and between git worktrees. The directory must be relative to the project and ignored by git. Read by pnpm pipeline only.
+   *
+   * @schema PnpmWorkspaceYamlSchemaTasks#cargoTargetDir
+   */
+  readonly cargoTargetDir?: string;
 }
 
 /**
@@ -1835,6 +2187,42 @@ export function toJson_PnpmWorkspaceYamlSchemaTasks(obj: PnpmWorkspaceYamlSchema
   const result = {
     'dependsOn': obj.dependsOn?.map(y => y),
     'concurrency': obj.concurrency,
+    'concurrencyGroup': obj.concurrencyGroup,
+    'priority': obj.priority,
+    'outputs': obj.outputs?.map(y => y),
+    'inputs': obj.inputs?.map(y => y),
+    'env': obj.env?.map(y => y),
+    'cache': obj.cache,
+    'cargoTargetDir': obj.cargoTargetDir,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages. Multi-ecosystem support is experimental. Added in: v12.4.0 (pnpm v12 only).
+ *
+ * @schema PnpmWorkspaceYamlSchemaCargo
+ */
+export interface PnpmWorkspaceYamlSchemaCargo {
+  /**
+   * Whether pnpm install resolves and installs the workspace's Cargo dependencies.
+   *
+   * @schema PnpmWorkspaceYamlSchemaCargo#enabled
+   */
+  readonly enabled?: boolean;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaCargo' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaCargo(obj: PnpmWorkspaceYamlSchemaCargo | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'enabled': obj.enabled,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -1854,6 +2242,43 @@ export enum PnpmWorkspaceYamlSchemaSavePrefix {
   /** = */
   VALUE_EQUALS = "=",
 }
+
+/**
+ * On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaMacosBackup
+ */
+export interface PnpmWorkspaceYamlSchemaMacosBackup {
+  /**
+   * When true on macOS, newly created node_modules, virtual-store, and similar directories are marked so Time Machine skips them.
+   *
+   * @schema PnpmWorkspaceYamlSchemaMacosBackup#excludeModulesDir
+   */
+  readonly excludeModulesDir?: boolean;
+
+  /**
+   * When true on macOS, newly created package-store directories are marked so Time Machine skips them.
+   *
+   * @schema PnpmWorkspaceYamlSchemaMacosBackup#excludeStoreDir
+   */
+  readonly excludeStoreDir?: boolean;
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaMacosBackup' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaMacosBackup(obj: PnpmWorkspaceYamlSchemaMacosBackup | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'excludeModulesDir': obj.excludeModulesDir,
+    'excludeStoreDir': obj.excludeStoreDir,
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
  * Determines how pnpm resolves dependencies, See https://pnpm.io/settings#resolutionmode
@@ -2010,6 +2435,61 @@ export enum PnpmWorkspaceYamlSchemaHoistingLimits {
   WORKSPACES = "workspaces",
   /** dependencies */
   DEPENDENCIES = "dependencies",
+}
+
+/**
+ * Agent skills that approved dependencies ship. Added in pnpm v12.11.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaSkills
+ */
+export interface PnpmWorkspaceYamlSchemaSkills {
+  /**
+   * The directories, relative to the workspace root, that pnpm links approved agent skills into. When set, it replaces the detected directories, and pnpm creates the ones that are missing. An empty list turns agent skills off.
+   *
+   * @schema PnpmWorkspaceYamlSchemaSkills#dirs
+   */
+  readonly dirs?: string[];
+}
+
+/**
+ * Converts an object of type 'PnpmWorkspaceYamlSchemaSkills' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_PnpmWorkspaceYamlSchemaSkills(obj: PnpmWorkspaceYamlSchemaSkills | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'dirs': obj.dirs?.map(y => y),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * When set to no-downgrade, installation fails if a package's trust level has decreased compared to previous releases.
+ *
+ * @schema PnpmWorkspaceYamlSchemaBootConfigTrustPolicy
+ */
+export enum PnpmWorkspaceYamlSchemaBootConfigTrustPolicy {
+  /** off */
+  OFF = "off",
+  /** no-downgrade */
+  NO_HYPHEN_DOWNGRADE = "no-downgrade",
+}
+
+/**
+ * off - pnpm writes no package map, and an install removes a map that an earlier install left. write-only - pnpm writes the package map for other tools to read; Node.js does not load it. load - pnpm also adds Node's --experimental-package-map option to NODE_OPTIONS in pnpm-managed Node.js script environments.
+ *
+ * @schema PnpmWorkspaceYamlSchemaNodePackageMapMode
+ */
+export enum PnpmWorkspaceYamlSchemaNodePackageMapMode {
+  /** off */
+  OFF = "off",
+  /** write-only */
+  WRITE_HYPHEN_ONLY = "write-only",
+  /** load */
+  LOAD = "load",
 }
 
 /**

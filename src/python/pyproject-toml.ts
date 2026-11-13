@@ -18,7 +18,7 @@ export interface PyprojectToml {
    *
    * @schema PyprojectToml#dependency-groups
    */
-  readonly dependencyGroups?: PyprojectTomlDependencyGroups;
+  readonly dependencyGroups?: any;
 
   /**
    * @schema PyprojectToml#build-system
@@ -42,7 +42,7 @@ export function toJson_PyprojectToml(obj: PyprojectToml | undefined): Record<str
   if (obj === undefined) { return undefined; }
   const result = {
     'project': toJson_PyprojectTomlProject(obj.project),
-    'dependency-groups': toJson_PyprojectTomlDependencyGroups(obj.dependencyGroups),
+    'dependency-groups': obj.dependencyGroups,
     'build-system': toJson_BuildSystem(obj.buildSystem),
     'tool': toJson_PyprojectTomlTool(obj.tool),
   };
@@ -241,33 +241,6 @@ export function toJson_PyprojectTomlProject(obj: PyprojectTomlProject | undefine
 /* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
 
 /**
- * Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
- *
- * @schema PyprojectTomlDependencyGroups
- */
-export interface PyprojectTomlDependencyGroups {
-  /**
-   * @schema PyprojectTomlDependencyGroups#dev
-   */
-  readonly dev?: any[];
-}
-
-/**
- * Converts an object of type 'PyprojectTomlDependencyGroups' to JSON representation.
- * @internal
- */
-/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-export function toJson_PyprojectTomlDependencyGroups(obj: PyprojectTomlDependencyGroups | undefined): Record<string, any> | undefined {
-  if (obj === undefined) { return undefined; }
-  const result = {
-    'dev': obj.dev?.map(y => y),
-  };
-  // filter undefined values
-  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
-}
-/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
-
-/**
  * Declares any Python level dependencies that must be installed in order to run the project’s build system successfully.
  *
  * @schema BuildSystem
@@ -368,6 +341,44 @@ export interface PyprojectTomlTool {
   readonly scheduled?: any;
 
   /**
+   * Workers in Python's `pyproject.toml`.
+   *
+   * This is a specification for declaring background workers in Python projects, in `pyproject.toml`.
+   *
+   * It defines how workers are declared and how providers would run them.
+   *
+   * For example, a file at `app/worker.py` could define:
+   *
+   * ```python
+   * from time import sleep
+   *
+   *
+   * def run():
+   * while True:
+   * print("Doing background work", flush=True)
+   * sleep(1)
+   * ```
+   *
+   * You could define a worker to run that function with:
+   *
+   * ```toml
+   * [tool.workers.background]
+   * entrypoint = "app.worker:run"
+   * ```
+   *
+   * @schema PyprojectTomlTool#workers
+   */
+  readonly workers?: any;
+
+  /**
+   * Architecture linter for Python: layers, bounded contexts and package shapes.
+   * https://sircypkowskyy.github.io/inwards/guides/configuration/
+   *
+   * @schema PyprojectTomlTool#inwards
+   */
+  readonly inwards?: any;
+
+  /**
    * Optional static typing for Python.
    *
    * @schema PyprojectTomlTool#mypy
@@ -387,6 +398,13 @@ export interface PyprojectTomlTool {
    * @schema PyprojectTomlTool#ty
    */
   readonly ty?: any;
+
+  /**
+   * Measures how hard Python code is for humans to understand.
+   *
+   * @schema PyprojectTomlTool#complexipy
+   */
+  readonly complexipy?: any;
 
   /**
    * Modern, extensible Python project management.
@@ -473,6 +491,13 @@ export interface PyprojectTomlTool {
   readonly repoReview?: any;
 
   /**
+   * Ruff companion linter with extra checks that make Python easier to read and review.
+   *
+   * @schema PyprojectTomlTool#simplint
+   */
+  readonly simplint?: any;
+
+  /**
    * The complementary task runner for python.
    *
    * @schema PyprojectTomlTool#taskipy
@@ -534,9 +559,12 @@ export function toJson_PyprojectTomlTool(obj: PyprojectTomlTool | undefined): Re
     'cibuildwheel': obj.cibuildwheel,
     'fastapi': obj.fastapi,
     'scheduled': obj.scheduled,
+    'workers': obj.workers,
+    'inwards': obj.inwards,
     'mypy': obj.mypy,
     'ruff': obj.ruff,
     'ty': obj.ty,
+    'complexipy': obj.complexipy,
     'hatch': obj.hatch,
     'maturin': obj.maturin,
     'scikit-build': obj.scikitBuild,
@@ -549,6 +577,7 @@ export function toJson_PyprojectTomlTool(obj: PyprojectTomlTool | undefined): Re
     'pyright': obj.pyright,
     'pytest': obj.pytest,
     'repo-review': obj.repoReview,
+    'simplint': obj.simplint,
     'taskipy': obj.taskipy,
     'tombi': obj.tombi,
     'tox': obj.tox,
