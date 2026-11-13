@@ -10259,6 +10259,7 @@ const nodeConfigFileOptions: javascript.NodeConfigFileOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigFileOptions.property.bench">bench</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaBench">NodeConfigSchemaBench</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.nodeVersion">nodeVersion</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.permission">permission</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a></code> | *No description.* |
@@ -10266,6 +10267,16 @@ const nodeConfigFileOptions: javascript.NodeConfigFileOptions = { ... }
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.test">test</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.watch">watch</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaWatch">NodeConfigSchemaWatch</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigFileOptions.property.filePath">filePath</a></code> | <code>string</code> | The path of the generated Node.js configuration file. |
+
+---
+
+##### `bench`<sup>Optional</sup> <a name="bench" id="projen.javascript.NodeConfigFileOptions.property.bench"></a>
+
+```typescript
+public readonly bench: NodeConfigSchemaBench;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaBench">NodeConfigSchemaBench</a>
 
 ---
 
@@ -10356,12 +10367,23 @@ const nodeConfigSchema: javascript.NodeConfigSchema = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchema.property.bench">bench</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaBench">NodeConfigSchemaBench</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.nodeOptions">nodeOptions</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions">NodeConfigSchemaNodeOptions</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.nodeVersion">nodeVersion</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.permission">permission</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaPermission">NodeConfigSchemaPermission</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.schema">schema</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.test">test</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaTest">NodeConfigSchemaTest</a></code> | *No description.* |
 | <code><a href="#projen.javascript.NodeConfigSchema.property.watch">watch</a></code> | <code><a href="#projen.javascript.NodeConfigSchemaWatch">NodeConfigSchemaWatch</a></code> | *No description.* |
+
+---
+
+##### `bench`<sup>Optional</sup> <a name="bench" id="projen.javascript.NodeConfigSchema.property.bench"></a>
+
+```typescript
+public readonly bench: NodeConfigSchemaBench;
+```
+
+- *Type:* <a href="#projen.javascript.NodeConfigSchemaBench">NodeConfigSchemaBench</a>
 
 ---
 
@@ -10425,6 +10447,114 @@ public readonly watch: NodeConfigSchemaWatch;
 
 ---
 
+### NodeConfigSchemaBench <a name="NodeConfigSchemaBench" id="projen.javascript.NodeConfigSchemaBench"></a>
+
+#### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaBench.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const nodeConfigSchemaBench: javascript.NodeConfigSchemaBench = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.bench">bench</a></code> | <code>boolean</code> | launch benchmark runner on startup. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchIsolation">benchIsolation</a></code> | <code>string</code> | configures the type of benchmark isolation used in the benchmark runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchNamePattern">benchNamePattern</a></code> | <code>string</code> | run benchmarks whose name matches this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchReporter">benchReporter</a></code> | <code>string[]</code> | report benchmark output using the given reporter. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchReporterDestination">benchReporterDestination</a></code> | <code>string[]</code> | report the given benchmark reporter to the given destination. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchSamples">benchSamples</a></code> | <code>number</code> | specify the number of measured benchmark samples. |
+| <code><a href="#projen.javascript.NodeConfigSchemaBench.property.benchWarmup">benchWarmup</a></code> | <code>number</code> | specify the number of unreported benchmark warmup samples. |
+
+---
+
+##### `bench`<sup>Optional</sup> <a name="bench" id="projen.javascript.NodeConfigSchemaBench.property.bench"></a>
+
+```typescript
+public readonly bench: boolean;
+```
+
+- *Type:* boolean
+
+launch benchmark runner on startup.
+
+---
+
+##### `benchIsolation`<sup>Optional</sup> <a name="benchIsolation" id="projen.javascript.NodeConfigSchemaBench.property.benchIsolation"></a>
+
+```typescript
+public readonly benchIsolation: string;
+```
+
+- *Type:* string
+
+configures the type of benchmark isolation used in the benchmark runner.
+
+---
+
+##### `benchNamePattern`<sup>Optional</sup> <a name="benchNamePattern" id="projen.javascript.NodeConfigSchemaBench.property.benchNamePattern"></a>
+
+```typescript
+public readonly benchNamePattern: string;
+```
+
+- *Type:* string
+
+run benchmarks whose name matches this regular expression.
+
+---
+
+##### `benchReporter`<sup>Optional</sup> <a name="benchReporter" id="projen.javascript.NodeConfigSchemaBench.property.benchReporter"></a>
+
+```typescript
+public readonly benchReporter: string[];
+```
+
+- *Type:* string[]
+
+report benchmark output using the given reporter.
+
+---
+
+##### `benchReporterDestination`<sup>Optional</sup> <a name="benchReporterDestination" id="projen.javascript.NodeConfigSchemaBench.property.benchReporterDestination"></a>
+
+```typescript
+public readonly benchReporterDestination: string[];
+```
+
+- *Type:* string[]
+
+report the given benchmark reporter to the given destination.
+
+---
+
+##### `benchSamples`<sup>Optional</sup> <a name="benchSamples" id="projen.javascript.NodeConfigSchemaBench.property.benchSamples"></a>
+
+```typescript
+public readonly benchSamples: number;
+```
+
+- *Type:* number
+
+specify the number of measured benchmark samples.
+
+---
+
+##### `benchWarmup`<sup>Optional</sup> <a name="benchWarmup" id="projen.javascript.NodeConfigSchemaBench.property.benchWarmup"></a>
+
+```typescript
+public readonly benchWarmup: number;
+```
+
+- *Type:* number
+
+specify the number of unreported benchmark warmup samples.
+
+---
+
 ### NodeConfigSchemaNodeOptions <a name="NodeConfigSchemaNodeOptions" id="projen.javascript.NodeConfigSchemaNodeOptions"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.NodeConfigSchemaNodeOptions.Initializer"></a>
@@ -10451,6 +10581,12 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWasi">allowWasi</a></code> | <code>boolean</code> | allow wasi when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.allowWorker">allowWorker</a></code> | <code>boolean</code> | allow worker threads when any permissions are set. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.asyncContextFrame">asyncContextFrame</a></code> | <code>boolean</code> | Improve AsyncLocalStorage performance with AsyncContextFrame. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchIsolation">benchIsolation</a></code> | <code>string</code> | configures the type of benchmark isolation used in the benchmark runner. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchNamePattern">benchNamePattern</a></code> | <code>string</code> | run benchmarks whose name matches this regular expression. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchReporter">benchReporter</a></code> | <code>string[]</code> | report benchmark output using the given reporter. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchReporterDestination">benchReporterDestination</a></code> | <code>string[]</code> | report the given benchmark reporter to the given destination. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchSamples">benchSamples</a></code> | <code>number</code> | specify the number of measured benchmark samples. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.benchWarmup">benchWarmup</a></code> | <code>number</code> | specify the number of unreported benchmark warmup samples. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.conditions">conditions</a></code> | <code>string[]</code> | additional user conditions for conditional exports and imports. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProf">cpuProf</a></code> | <code>boolean</code> | Start the V8 CPU profiler on start up, and write the CPU profile to disk before exit. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.cpuProfDir">cpuProfDir</a></code> | <code>string</code> | Directory where the V8 profiles generated by --cpu-prof will be placed. |
@@ -10468,6 +10604,7 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.enableSourceMaps">enableSourceMaps</a></code> | <code>boolean</code> | Source Map V3 support for stack traces. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.entryUrl">entryUrl</a></code> | <code>boolean</code> | Treat the entrypoint as a URL. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalAddonModules">experimentalAddonModules</a></code> | <code>boolean</code> | experimental import support for addons. |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalBench">experimentalBench</a></code> | <code>boolean</code> | experimental node:bench module and benchmark runner. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalDetectModule">experimentalDetectModule</a></code> | <code>boolean</code> | when ambiguous modules fail to evaluate because they contain ES module syntax, try again to evaluate them as ES modules. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalEventsource">experimentalEventsource</a></code> | <code>boolean</code> | experimental EventSource API. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalFfi">experimentalFfi</a></code> | <code>boolean</code> | experimental node:ffi module. |
@@ -10580,7 +10717,7 @@ const nodeConfigSchemaNodeOptions: javascript.NodeConfigSchemaNodeOptions = { ..
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.unhandledRejections">unhandledRejections</a></code> | <code>string</code> | define unhandled rejections behavior. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useBundledCa">useBundledCa</a></code> | <code>boolean</code> | use bundled CA store (default). |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useEnvProxy">useEnvProxy</a></code> | <code>boolean</code> | parse proxy settings from HTTP_PROXY/HTTPS_PROXY/NO_PROXYenvironment variables and apply the setting in global HTTP/HTTPS clients. |
-| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useLargepages">useLargepages</a></code> | <code>string</code> | Map the Node.js static code to large pages. Options are 'off' (the default value, meaning do not map), 'on' (map and ignore failure, reporting it to stderr), or 'silent' (map and silently ignore failure). |
+| <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useLargepages">useLargepages</a></code> | <code>string</code> | This option is no longer supported and a no-op. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useOpensslCa">useOpensslCa</a></code> | <code>boolean</code> | use OpenSSL's default CA store. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.useSystemCa">useSystemCa</a></code> | <code>boolean</code> | use system's CA store. |
 | <code><a href="#projen.javascript.NodeConfigSchemaNodeOptions.property.v8PoolSize">v8PoolSize</a></code> | <code>number</code> | set V8's thread pool size. |
@@ -10735,6 +10872,78 @@ public readonly asyncContextFrame: boolean;
 - *Type:* boolean
 
 Improve AsyncLocalStorage performance with AsyncContextFrame.
+
+---
+
+##### `benchIsolation`<sup>Optional</sup> <a name="benchIsolation" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchIsolation"></a>
+
+```typescript
+public readonly benchIsolation: string;
+```
+
+- *Type:* string
+
+configures the type of benchmark isolation used in the benchmark runner.
+
+---
+
+##### `benchNamePattern`<sup>Optional</sup> <a name="benchNamePattern" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchNamePattern"></a>
+
+```typescript
+public readonly benchNamePattern: string;
+```
+
+- *Type:* string
+
+run benchmarks whose name matches this regular expression.
+
+---
+
+##### `benchReporter`<sup>Optional</sup> <a name="benchReporter" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchReporter"></a>
+
+```typescript
+public readonly benchReporter: string[];
+```
+
+- *Type:* string[]
+
+report benchmark output using the given reporter.
+
+---
+
+##### `benchReporterDestination`<sup>Optional</sup> <a name="benchReporterDestination" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchReporterDestination"></a>
+
+```typescript
+public readonly benchReporterDestination: string[];
+```
+
+- *Type:* string[]
+
+report the given benchmark reporter to the given destination.
+
+---
+
+##### `benchSamples`<sup>Optional</sup> <a name="benchSamples" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchSamples"></a>
+
+```typescript
+public readonly benchSamples: number;
+```
+
+- *Type:* number
+
+specify the number of measured benchmark samples.
+
+---
+
+##### `benchWarmup`<sup>Optional</sup> <a name="benchWarmup" id="projen.javascript.NodeConfigSchemaNodeOptions.property.benchWarmup"></a>
+
+```typescript
+public readonly benchWarmup: number;
+```
+
+- *Type:* number
+
+specify the number of unreported benchmark warmup samples.
 
 ---
 
@@ -10945,6 +11154,18 @@ public readonly experimentalAddonModules: boolean;
 - *Type:* boolean
 
 experimental import support for addons.
+
+---
+
+##### `experimentalBench`<sup>Optional</sup> <a name="experimentalBench" id="projen.javascript.NodeConfigSchemaNodeOptions.property.experimentalBench"></a>
+
+```typescript
+public readonly experimentalBench: boolean;
+```
+
+- *Type:* boolean
+
+experimental node:bench module and benchmark runner.
 
 ---
 
@@ -12314,7 +12535,9 @@ public readonly useLargepages: string;
 
 - *Type:* string
 
-Map the Node.js static code to large pages. Options are 'off' (the default value, meaning do not map), 'on' (map and ignore failure, reporting it to stderr), or 'silent' (map and silently ignore failure).
+This option is no longer supported and a no-op.
+
+Options are 'off' (default), 'on' (report a warning to stderr), or 'silent' (same as 'off').
 
 ---
 
@@ -16500,6 +16723,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.addMissingPeerTypes">addMissingPeerTypes</a></code> | <code>boolean</code> | When true, every peer dependency of a dependency also makes the matching. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowBuilds">allowBuilds</a></code> | <code>any</code> | A map of package matchers to explicitly allow (`true`) or disallow (`false`) script execution. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowNonAppliedPatches">allowNonAppliedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
@@ -16507,21 +16731,27 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.audit">audit</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.auditConfig">auditConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditConfig">PnpmWorkspaceYamlSchemaAuditConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoDedupe">autoDedupe</a></code> | <code>boolean</code> | When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.blockExoticSubdeps">blockExoticSubdeps</a></code> | <code>boolean</code> | When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.bootConfig">bootConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a></code> | Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ca">ca</a></code> | <code>string</code> | The Certificate Authority signing certificate that is trusted for SSL connections to the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cacheDir">cacheDir</a></code> | <code>string</code> | The location of the cache (package metadata and dlx). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cafile">cafile</a></code> | <code>string</code> | A path to a file containing one or multiple Certificate Authority signing certificates. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cargo">cargo</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCargo">PnpmWorkspaceYamlSchemaCargo</a></code> | Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalog">catalog</a></code> | <code>{[ key: string ]: string}</code> | Define dependency version ranges as reusable constants, for later reference in package.json files. This (singular) field creates a catalog named default. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogMode">catalogMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a></code> | Controlling if and how dependencies are added to the default catalog. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogPrune">catalogPrune</a></code> | <code>boolean</code> | When set to true, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.changedFilesIgnorePattern">changedFilesIgnorePattern</a></code> | <code>string[]</code> | Glob patterns of changed files to ignore when filtering for the projects changed since a commit or branch. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ci">ci</a></code> | <code>boolean</code> | Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.cleanupUnusedCatalogs">cleanupUnusedCatalogs</a></code> | <code>boolean</code> | When set to `true`, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.color">color</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaColor">PnpmWorkspaceYamlSchemaColor</a></code> | Controls colors in the output. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.concurrencyGroups">concurrencyGroups</a></code> | <code>{[ key: string ]: number}</code> | Machine-wide concurrency limits for named groups of tasks (assigned via `tasks.<name>.concurrencyGroup`). At most the given number of tasks in a group run at once across pnpm processes sharing the same stateDir, including pnpm pipeline. A missing or zero group limit does not restrict execution. Added in pnpm v12.5.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.configDependencies">configDependencies</a></code> | <code>any</code> | Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.confirmModulesPurge">confirmModulesPurge</a></code> | <code>boolean</code> | Controls whether pnpm asks for confirmation before removing and reinstalling a modules directory that is incompatible with the current install settings. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.dangerouslyAllowAllBuilds">dangerouslyAllowAllBuilds</a></code> | <code>boolean</code> | If set to true, all build scripts (e.g. preinstall, install, postinstall) from dependencies will run automatically, without requiring approval. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.dedupeDirectDeps">dedupeDirectDeps</a></code> | <code>boolean</code> | When set to true, dependencies that are already symlinked to the root node_modules directory of the workspace will not be symlinked to subproject node_modules directories. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.dedupeInjectedDeps">dedupeInjectedDeps</a></code> | <code>boolean</code> | When this setting is enabled, dependencies that are injected will be symlinked from the workspace whenever possible. |
@@ -16545,7 +16775,9 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchRetryMintimeout">fetchRetryMintimeout</a></code> | <code>number</code> | The minimum (base) timeout for retrying requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.forceIgnoresPlatform">forceIgnoresPlatform</a></code> | <code>boolean</code> | When true, pnpm install --force also installs optional dependencies whose os, cpu, or libc do not match the host. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.frozenLockfile">frozenLockfile</a></code> | <code>boolean</code> | When true, installation fails if the lockfile is missing or needs to be updated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.frozenStore">frozenStore</a></code> | <code>boolean</code> | Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
@@ -16569,16 +16801,20 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ignoreScripts">ignoreScripts</a></code> | <code>boolean</code> | Do not execute any scripts defined in the project package.json and its dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ignoreWorkspaceCycles">ignoreWorkspaceCycles</a></code> | <code>boolean</code> | When set to true, no workspace cycle warnings will be printed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ignoreWorkspaceRootCheck">ignoreWorkspaceRootCheck</a></code> | <code>boolean</code> | Adding a new dependency to the root workspace package fails, unless the --ignore-workspace-root-check or -w flag is used. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.include">include</a></code> | <code>{[ key: string ]: string[]}</code> | Delegates settings to other YAML files and to config dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.includeWorkspaceRoot">includeWorkspaceRoot</a></code> | <code>boolean</code> | When executing commands recursively in a workspace, execute them on the root workspace project as well. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.injectWorkspacePackages">injectWorkspacePackages</a></code> | <code>boolean</code> | Enables hard-linking of all local workspace dependencies instead of symlinking them. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.key">key</a></code> | <code>string</code> | A client key to pass when accessing the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.legacyDirFiltering">legacyDirFiltering</a></code> | <code>boolean</code> | When true, `{<dir>}` filter selectors use the legacy behavior: the selector names a directory and matches every project in the subtree below it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.linkWorkspacePackages">linkWorkspacePackages</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLinkWorkspacePackages">PnpmWorkspaceYamlSchemaLinkWorkspacePackages</a></code> | If this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.localAddress">localAddress</a></code> | <code>string</code> | The IP address of the local interface to use when making connections to the npm registry. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfile">lockfile</a></code> | <code>boolean</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfile">lockfile</a></code> | <code>any</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfileIncludeTarballUrl">lockfileIncludeTarballUrl</a></code> | <code>boolean</code> | Add the full URL to the package's tarball to every entry in pnpm-lock.yaml. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.loglevel">loglevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLoglevel">PnpmWorkspaceYamlSchemaLoglevel</a></code> | Any logs at or higher than the given level will be shown. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.macosBackup">macosBackup</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a></code> | On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.managePackageManagerVersions">managePackageManagerVersions</a></code> | <code>boolean</code> | When enabled, pnpm will automatically download and run the version of pnpm specified in the packageManager field of package.json. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.maxsockets">maxsockets</a></code> | <code>number</code> | The maximum number of connections to use per origin (protocol/host/port combination). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.maxTarballUnpackedSize">maxTarballUnpackedSize</a></code> | <code>number</code> | Caps the total number of bytes the files of one package may unpack to. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.mergeGitBranchLockfilesBranchPattern">mergeGitBranchLockfilesBranchPattern</a></code> | <code>any[]</code> | This configuration matches the current branch name to determine whether to merge all git branch lockfile files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>number</code> | minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.minimumReleaseAgeExclude">minimumReleaseAgeExclude</a></code> | <code>string[]</code> | If you set `minimumReleaseAge` but need certain dependencies to always install the newest version immediately, you can list them under `minimumReleaseAgeExclude`. |
@@ -16591,10 +16827,11 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. Deprecated since pnpm v12.13.0: use nodePackageMap.mode instead. true is the same as mode: load and false the same as mode: off; nodePackageMap wins when both are set in the same place. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker">nodeLinker</a></code> | <code>any</code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMap">nodePackageMap</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a></code> | Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
@@ -16613,27 +16850,35 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.patchesDir">patchesDir</a></code> | <code>string</code> | The generated patch file will be saved to this directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.peerDependencyRules">peerDependencyRules</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPeerDependencyRules">PnpmWorkspaceYamlSchemaPeerDependencyRules</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.peersSuffixMaxLength">peersSuffixMaxLength</a></code> | <code>number</code> | Max length of the peer IDs suffix added to dependency keys in the lockfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pipelineBase">pipelineBase</a></code> | <code>string</code> | The git ref the affected selection of `pnpm pipeline` resolves its merge base against. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pipelines">pipelines</a></code> | <code>{[ key: string ]: string[]}</code> | Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pmOnFail">pmOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPmOnFail">PnpmWorkspaceYamlSchemaPmOnFail</a></code> | Overrides the `onFail` behavior of both the `packageManager` field and `devEngines.packageManager` when the running pnpm version does not match the declared one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pnpmfile">pnpmfile</a></code> | <code>string</code> | The location of the local pnpmfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferFrozenLockfile">preferFrozenLockfile</a></code> | <code>boolean</code> | When set to true and the available pnpm-lock.yaml satisfies the package.json dependencies directive, a headless installation is performed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferOffline">preferOffline</a></code> | <code>boolean</code> | Bypass staleness checks for cached data. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferWorkspacePackages">preferWorkspacePackages</a></code> | <code>boolean</code> | If this is enabled, local packages from the workspace are preferred over packages from the registry, even if there is a newer version of the package in the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.progress">progress</a></code> | <code>boolean</code> | Controls whether dependency and download progress lines are printed during installation. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.projectScopedOptionalPeers">projectScopedOptionalPeers</a></code> | <code>boolean</code> | When true, a project gets a missing optional peer dependency only if the project's own dependencies already install a version of it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.provenance">provenance</a></code> | <code>boolean</code> | When publishing from a supported cloud CI/CD system, the package will be publicly linked to where it was built and published from. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.proxy">proxy</a></code> | <code>string</code> | npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publicHoistPattern">publicHoistPattern</a></code> | <code>string[]</code> | Unlike hoistPattern, which hoists dependencies to a hidden modules directory inside the virtual store, publicHoistPattern hoists dependencies matching the pattern to the root modules directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publishWaitTimeout">publishWaitTimeout</a></code> | <code>number</code> | After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registries">registries</a></code> | <code>{[ key: string ]: string}</code> | Configure registries for scoped packages in `pnpm-workspace.yaml`. The `default` key sets the main registry (equivalent to the `registry` `.npmrc` setting). Scoped keys configure registries for specific package scopes. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registries">registries</a></code> | <code>any</code> | Configures the registries packages resolve from, in one of two shapes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registry">registry</a></code> | <code>string</code> | The base URL of the npm package registry (trailing slash included). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registrySupportsTimeField">registrySupportsTimeField</a></code> | <code>boolean</code> | Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.remoteCache">remoteCache</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache">PnpmWorkspaceYamlSchemaRemoteCache</a></code> | The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.reporter">reporter</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaReporter">PnpmWorkspaceYamlSchemaReporter</a></code> | Allows you to customize the output style of the logs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.requiredScripts">requiredScripts</a></code> | <code>string[]</code> | A list of scripts that must exist in each project. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.resolutionMode">resolutionMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaResolutionMode">PnpmWorkspaceYamlSchemaResolutionMode</a></code> | Determines how pnpm resolves dependencies, See https://pnpm.io/settings#resolutionmode. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.resolvePeersFromWorkspaceRoot">resolvePeersFromWorkspaceRoot</a></code> | <code>boolean</code> | When enabled, dependencies of the root workspace project are used to resolve peer dependencies of any projects in the workspace. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.runtime">runtime</a></code> | <code>boolean</code> | Controls whether pnpm installs runtime entries declared in `devEngines.runtime`. Set to false when the runtime is provisioned separately, such as in a CI matrix. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.runtimeOnFail">runtimeOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaRuntimeOnFail">PnpmWorkspaceYamlSchemaRuntimeOnFail</a></code> | Overrides the `onFail` field of `devEngines.runtime` (and `engines.runtime`) in the root project's `package.json`. This is useful when you want a different local behavior than what is written in the manifest — for instance, forcing pnpm to download the declared runtime even when the manifest sets `onFail: "warn"`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.saveExact">saveExact</a></code> | <code>boolean</code> | Saved dependencies will be configured with an exact version rather than using pnpm's default semver range operator. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.savePrefix">savePrefix</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix">PnpmWorkspaceYamlSchemaSavePrefix</a></code> | Configure how versions of packages installed to a package.json file get prefixed. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.saveTypes">saveTypes</a></code> | <code>boolean</code> | When set to true, pnpm add saves available. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.saveWorkspaceProtocol">saveWorkspaceProtocol</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol">PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol</a></code> | This setting controls how dependencies that are linked from the workspace are added to package.json. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.scriptShell">scriptShell</a></code> | <code>string</code> | The shell to use for scripts run with the pnpm run command. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.shamefullyHoist">shamefullyHoist</a></code> | <code>boolean</code> | By default, pnpm creates a semistrict node_modules, meaning dependencies have access to undeclared dependencies but modules outside of node_modules do not. |
@@ -16641,20 +16886,24 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.shellEmulator">shellEmulator</a></code> | <code>boolean</code> | When true, pnpm will use a JavaScript implementation of a bash-like shell to execute scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCache">sideEffectsCache</a></code> | <code>any</code> | Use and cache the results of (pre/post)install hooks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.sideEffectsCacheReadonly">sideEffectsCacheReadonly</a></code> | <code>boolean</code> | Only use the side effects cache if present, do not create it for new packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.skills">skills</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSkills">PnpmWorkspaceYamlSchemaSkills</a></code> | Agent skills that approved dependencies ship. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.stateDir">stateDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.storeDir">storeDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.storeIndexFormat">storeIndexFormat</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat">PnpmWorkspaceYamlSchemaStoreIndexFormat</a></code> | How the store records which files each package has. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.strictDepBuilds">strictDepBuilds</a></code> | <code>boolean</code> | When strictDepBuilds is enabled, the installation will exit with a non-zero exit code if any dependencies have unreviewed build scripts (aka postinstall scripts). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.strictPeerDependencies">strictPeerDependencies</a></code> | <code>boolean</code> | If this is enabled, commands will fail if there is a missing or invalid peer dependency in the tree. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.strictSsl">strictSsl</a></code> | <code>boolean</code> | Whether or not to do SSL key validation when making requests to the registry via HTTPS. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.strictStorePkgContentCheck">strictStorePkgContentCheck</a></code> | <code>boolean</code> | Some registries allow the exact same content to be published under different package names and/or versions. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.supportedArchitectures">supportedArchitectures</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures">PnpmWorkspaceYamlSchemaSupportedArchitectures</a></code> | Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.supportedArchitectures">supportedArchitectures</a></code> | <code>any</code> | Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.symlink">symlink</a></code> | <code>boolean</code> | When symlink is set to false, pnpm creates a virtual store directory without any symlinks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.syncInjectedDepsAfterScripts">syncInjectedDepsAfterScripts</a></code> | <code>string[]</code> | Injected workspace dependencies are collections of hardlinks, which don't add or remove the files when their sources change. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.tag">tag</a></code> | <code>string</code> | If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.tasks">tasks</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}</code> | Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.testPattern">testPattern</a></code> | <code>string[]</code> | Glob patterns of test files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustLockfile">trustLockfile</a></code> | <code>boolean</code> | A new trustLockfile setting controls whether pnpm install re-applies the `minimumReleaseAge` / `trustPolicy: 'no-downgrade'` checks to every entry in the loaded lockfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicy">trustPolicy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy">PnpmWorkspaceYamlSchemaTrustPolicy</a></code> | When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyExcludePrune">trustPolicyExcludePrune</a></code> | <code>boolean</code> | When set to `true`, `pnpm add`, `pnpm update`, and `pnpm remove` prune the entries of [`trustPolicyExclude`](#trustpolicyexclude) in `pnpm-workspace.yaml` that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (`@myorg/*`) are always kept. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyIgnoreAfter">trustPolicyIgnoreAfter</a></code> | <code>number</code> | Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.unsafePerm">unsafePerm</a></code> | <code>boolean</code> | Set to true to enable UID/GID switching when running package scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.update">update</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a></code> | *No description.* |
@@ -16664,7 +16913,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useNodeVersion">useNodeVersion</a></code> | <code>string</code> | Specifies which exact Node.js version should be used for the project's runtime. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useRunningStoreServer">useRunningStoreServer</a></code> | <code>boolean</code> | Deprecated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun">PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun</a></code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.versioning">versioning</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a></code> | Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
@@ -16672,6 +16921,18 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
+
+---
+
+##### `addMissingPeerTypes`<sup>Optional</sup> <a name="addMissingPeerTypes" id="projen.javascript.PnpmWorkspaceYamlOptions.property.addMissingPeerTypes"></a>
+
+```typescript
+public readonly addMissingPeerTypes: boolean;
+```
+
+- *Type:* boolean
+
+When true, every peer dependency of a dependency also makes the matching.
 
 ---
 
@@ -16761,6 +17022,20 @@ When set to 'low', all vulnerabilities are reported. When set to 'moderate', 'hi
 
 ---
 
+##### `autoDedupe`<sup>Optional</sup> <a name="autoDedupe" id="projen.javascript.PnpmWorkspaceYamlOptions.property.autoDedupe"></a>
+
+```typescript
+public readonly autoDedupe: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation.
+
+If a dependency appears at multiple versions and one version satisfies every range in the workspace, pnpm picks that version for all of them. Frozen installs (--frozen-lockfile) leave the lockfile unchanged; deduplication only runs when the lockfile is being written. Added in pnpm v12.6.0.
+
+---
+
 ##### `autoInstallPeers`<sup>Optional</sup> <a name="autoInstallPeers" id="projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeers"></a>
 
 ```typescript
@@ -16784,6 +17059,20 @@ public readonly blockExoticSubdeps: boolean;
 When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies.
 
 Only direct dependencies are allowed to use exotic sources.
+
+---
+
+##### `bootConfig`<sup>Optional</sup> <a name="bootConfig" id="projen.javascript.PnpmWorkspaceYamlOptions.property.bootConfig"></a>
+
+```typescript
+public readonly bootConfig: PnpmWorkspaceYamlSchemaBootConfig;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a>
+
+Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded.
+
+Added in pnpm v12.15.0.
 
 ---
 
@@ -16820,6 +17109,20 @@ public readonly cafile: string;
 - *Type:* string
 
 A path to a file containing one or multiple Certificate Authority signing certificates.
+
+---
+
+##### `cargo`<sup>Optional</sup> <a name="cargo" id="projen.javascript.PnpmWorkspaceYamlOptions.property.cargo"></a>
+
+```typescript
+public readonly cargo: PnpmWorkspaceYamlSchemaCargo;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaCargo">PnpmWorkspaceYamlSchemaCargo</a>
+
+Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages.
+
+Multi-ecosystem support is experimental. Added in: v12.4.0 (pnpm v12 only).
 
 ---
 
@@ -16885,6 +17188,18 @@ A client certificate to pass when accessing the registry.
 
 ---
 
+##### `changedFilesIgnorePattern`<sup>Optional</sup> <a name="changedFilesIgnorePattern" id="projen.javascript.PnpmWorkspaceYamlOptions.property.changedFilesIgnorePattern"></a>
+
+```typescript
+public readonly changedFilesIgnorePattern: string[];
+```
+
+- *Type:* string[]
+
+Glob patterns of changed files to ignore when filtering for the projects changed since a commit or branch.
+
+---
+
 ##### `childConcurrency`<sup>Optional</sup> <a name="childConcurrency" id="projen.javascript.PnpmWorkspaceYamlOptions.property.childConcurrency"></a>
 
 ```typescript
@@ -16935,6 +17250,18 @@ Controls colors in the output.
 
 ---
 
+##### `concurrencyGroups`<sup>Optional</sup> <a name="concurrencyGroups" id="projen.javascript.PnpmWorkspaceYamlOptions.property.concurrencyGroups"></a>
+
+```typescript
+public readonly concurrencyGroups: {[ key: string ]: number};
+```
+
+- *Type:* {[ key: string ]: number}
+
+Machine-wide concurrency limits for named groups of tasks (assigned via `tasks.<name>.concurrencyGroup`). At most the given number of tasks in a group run at once across pnpm processes sharing the same stateDir, including pnpm pipeline. A missing or zero group limit does not restrict execution. Added in pnpm v12.5.0.
+
+---
+
 ##### `configDependencies`<sup>Optional</sup> <a name="configDependencies" id="projen.javascript.PnpmWorkspaceYamlOptions.property.configDependencies"></a>
 
 ```typescript
@@ -16946,6 +17273,20 @@ public readonly configDependencies: any;
 Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects.
 
 They are installed before all regular dependencies ('dependencies', 'devDependencies', 'optionalDependencies'), making them ideal for setting up custom hooks, patches, and catalog entries.
+
+---
+
+##### `confirmModulesPurge`<sup>Optional</sup> <a name="confirmModulesPurge" id="projen.javascript.PnpmWorkspaceYamlOptions.property.confirmModulesPurge"></a>
+
+```typescript
+public readonly confirmModulesPurge: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether pnpm asks for confirmation before removing and reinstalling a modules directory that is incompatible with the current install settings.
+
+Confirmation is disabled in CI. Supported by pnpm v11.
 
 ---
 
@@ -17229,6 +17570,20 @@ Added in pnpm v10.18.0.
 
 ---
 
+##### `forceIgnoresPlatform`<sup>Optional</sup> <a name="forceIgnoresPlatform" id="projen.javascript.PnpmWorkspaceYamlOptions.property.forceIgnoresPlatform"></a>
+
+```typescript
+public readonly forceIgnoresPlatform: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm install --force also installs optional dependencies whose os, cpu, or libc do not match the host.
+
+When false, --force refetches every package but still skips optional dependencies built for other platforms. pnpm v11 behaved as if this setting were true; prefer supportedArchitectures to install optional dependencies for other platforms on purpose. Added in pnpm v12.7.0.
+
+---
+
 ##### `forceLegacyDeploy`<sup>Optional</sup> <a name="forceLegacyDeploy" id="projen.javascript.PnpmWorkspaceYamlOptions.property.forceLegacyDeploy"></a>
 
 ```typescript
@@ -17240,6 +17595,18 @@ public readonly forceLegacyDeploy: boolean;
 By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment.
 
 If this setting is set to true, the legacy deploy behavior will be used.
+
+---
+
+##### `frozenLockfile`<sup>Optional</sup> <a name="frozenLockfile" id="projen.javascript.PnpmWorkspaceYamlOptions.property.frozenLockfile"></a>
+
+```typescript
+public readonly frozenLockfile: boolean;
+```
+
+- *Type:* boolean
+
+When true, installation fails if the lockfile is missing or needs to be updated.
 
 ---
 
@@ -17538,6 +17905,20 @@ Adding a new dependency to the root workspace package fails, unless the --ignore
 
 ---
 
+##### `include`<sup>Optional</sup> <a name="include" id="projen.javascript.PnpmWorkspaceYamlOptions.property.include"></a>
+
+```typescript
+public readonly include: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+Delegates settings to other YAML files and to config dependencies.
+
+Added in pnpm v12.15.0.
+
+---
+
 ##### `includeWorkspaceRoot`<sup>Optional</sup> <a name="includeWorkspaceRoot" id="projen.javascript.PnpmWorkspaceYamlOptions.property.includeWorkspaceRoot"></a>
 
 ```typescript
@@ -17574,6 +17955,20 @@ A client key to pass when accessing the registry.
 
 ---
 
+##### `legacyDirFiltering`<sup>Optional</sup> <a name="legacyDirFiltering" id="projen.javascript.PnpmWorkspaceYamlOptions.property.legacyDirFiltering"></a>
+
+```typescript
+public readonly legacyDirFiltering: boolean;
+```
+
+- *Type:* boolean
+
+When true, `{<dir>}` filter selectors use the legacy behavior: the selector names a directory and matches every project in the subtree below it.
+
+By default `{<dir>}` is matched as a glob pattern, so `{packages/*}` selects the projects one level below packages/ and a `**` reaches deeper. Only applies to user-written selectors; the workspace-root selectors pnpm generates are always matched as globs.
+
+---
+
 ##### `linkWorkspacePackages`<sup>Optional</sup> <a name="linkWorkspacePackages" id="projen.javascript.PnpmWorkspaceYamlOptions.property.linkWorkspacePackages"></a>
 
 ```typescript
@@ -17601,10 +17996,10 @@ The IP address of the local interface to use when making connections to the npm 
 ##### `lockfile`<sup>Optional</sup> <a name="lockfile" id="projen.javascript.PnpmWorkspaceYamlOptions.property.lockfile"></a>
 
 ```typescript
-public readonly lockfile: boolean;
+public readonly lockfile: any;
 ```
 
-- *Type:* boolean
+- *Type:* any
 
 When set to false, pnpm won't read or generate a pnpm-lock.yaml file.
 
@@ -17634,6 +18029,18 @@ Any logs at or higher than the given level will be shown.
 
 ---
 
+##### `macosBackup`<sup>Optional</sup> <a name="macosBackup" id="projen.javascript.PnpmWorkspaceYamlOptions.property.macosBackup"></a>
+
+```typescript
+public readonly macosBackup: PnpmWorkspaceYamlSchemaMacosBackup;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a>
+
+On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0.
+
+---
+
 ##### `managePackageManagerVersions`<sup>Optional</sup> <a name="managePackageManagerVersions" id="projen.javascript.PnpmWorkspaceYamlOptions.property.managePackageManagerVersions"></a>
 
 ```typescript
@@ -17655,6 +18062,20 @@ public readonly maxsockets: number;
 - *Type:* number
 
 The maximum number of connections to use per origin (protocol/host/port combination).
+
+---
+
+##### `maxTarballUnpackedSize`<sup>Optional</sup> <a name="maxTarballUnpackedSize" id="projen.javascript.PnpmWorkspaceYamlOptions.property.maxTarballUnpackedSize"></a>
+
+```typescript
+public readonly maxTarballUnpackedSize: number;
+```
+
+- *Type:* number
+
+Caps the total number of bytes the files of one package may unpack to.
+
+Added in pnpm v12.15.0.
 
 ---
 
@@ -17818,19 +18239,21 @@ public readonly nodeExperimentalPackageMap: boolean;
 
 - *Type:* boolean
 
-When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap.
+When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. Deprecated since pnpm v12.13.0: use nodePackageMap.mode instead. true is the same as mode: load and false the same as mode: off; nodePackageMap wins when both are set in the same place.
 
 ---
 
 ##### `nodeLinker`<sup>Optional</sup> <a name="nodeLinker" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodeLinker"></a>
 
 ```typescript
-public readonly nodeLinker: PnpmWorkspaceYamlSchemaNodeLinker;
+public readonly nodeLinker: any;
 ```
 
-- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a>
+- *Type:* any
 
 Defines what linker should be used for installing Node packages.
+
+loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
 
 ---
 
@@ -17846,6 +18269,18 @@ Options to pass through to Node.js via the NODE_OPTIONS environment variable.
 
 ---
 
+##### `nodePackageMap`<sup>Optional</sup> <a name="nodePackageMap" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMap"></a>
+
+```typescript
+public readonly nodePackageMap: PnpmWorkspaceYamlSchemaNodePackageMap;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a>
+
+Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0.
+
+---
+
 ##### `nodePackageMapType`<sup>Optional</sup> <a name="nodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType"></a>
 
 ```typescript
@@ -17854,7 +18289,7 @@ public readonly nodePackageMapType: PnpmWorkspaceYamlSchemaNodePackageMapType;
 
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a>
 
-Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place.
 
 ---
 
@@ -18080,6 +18515,34 @@ If the suffix is longer, it is replaced with a hash.
 
 ---
 
+##### `pipelineBase`<sup>Optional</sup> <a name="pipelineBase" id="projen.javascript.PnpmWorkspaceYamlOptions.property.pipelineBase"></a>
+
+```typescript
+public readonly pipelineBase: string;
+```
+
+- *Type:* string
+
+The git ref the affected selection of `pnpm pipeline` resolves its merge base against.
+
+Overridden by the `--base <ref>` option.
+
+---
+
+##### `pipelines`<sup>Optional</sup> <a name="pipelines" id="projen.javascript.PnpmWorkspaceYamlOptions.property.pipelines"></a>
+
+```typescript
+public readonly pipelines: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`.
+
+A pipeline is a set, not a sequence: the order in which its tasks run comes from `tasks.<name>.dependsOn`. The pipeline named `default` runs when no name is given. Added in pnpm v12.4.0 (experimental, pnpm v12 only).
+
+---
+
 ##### `pmOnFail`<sup>Optional</sup> <a name="pmOnFail" id="projen.javascript.PnpmWorkspaceYamlOptions.property.pmOnFail"></a>
 
 ```typescript
@@ -18154,6 +18617,34 @@ If this is enabled, local packages from the workspace are preferred over package
 
 ---
 
+##### `progress`<sup>Optional</sup> <a name="progress" id="projen.javascript.PnpmWorkspaceYamlOptions.property.progress"></a>
+
+```typescript
+public readonly progress: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether dependency and download progress lines are printed during installation.
+
+When set to false (or --no-progress is passed), progress output is suppressed. Warnings, lifecycle script output, and the dependency summary are still printed. Added in pnpm v12.6.0.
+
+---
+
+##### `projectScopedOptionalPeers`<sup>Optional</sup> <a name="projectScopedOptionalPeers" id="projen.javascript.PnpmWorkspaceYamlOptions.property.projectScopedOptionalPeers"></a>
+
+```typescript
+public readonly projectScopedOptionalPeers: boolean;
+```
+
+- *Type:* boolean
+
+When true, a project gets a missing optional peer dependency only if the project's own dependencies already install a version of it.
+
+The workspace root's dependencies also count if resolvePeersFromWorkspaceRoot is true; a version that only another workspace project's dependencies install does not. dedupePeerDependents keeps deduplicating everything else, and this setting has no effect when dedupePeerDependents is false, because optional peers are already resolved only from the project's own dependencies then. Changing this setting changes the lockfile. Added in pnpm v12.19.0.
+
+---
+
 ##### `provenance`<sup>Optional</sup> <a name="provenance" id="projen.javascript.PnpmWorkspaceYamlOptions.property.provenance"></a>
 
 ```typescript
@@ -18204,6 +18695,20 @@ The primary branch of the repository which is used for publishing the latest cha
 
 ---
 
+##### `publishWaitTimeout`<sup>Optional</sup> <a name="publishWaitTimeout" id="projen.javascript.PnpmWorkspaceYamlOptions.property.publishWaitTimeout"></a>
+
+```typescript
+public readonly publishWaitTimeout: number;
+```
+
+- *Type:* number
+
+After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry.
+
+If they are not available in time, the command fails. 0 disables the check. When publishing recursively, pnpm confirms that a package is available before it publishes the packages that depend on it. Added in pnpm v12.7.0.
+
+---
+
 ##### `recursiveInstall`<sup>Optional</sup> <a name="recursiveInstall" id="projen.javascript.PnpmWorkspaceYamlOptions.property.recursiveInstall"></a>
 
 ```typescript
@@ -18219,12 +18724,15 @@ If this is enabled, the primary behaviour of pnpm install becomes that of pnpm i
 ##### `registries`<sup>Optional</sup> <a name="registries" id="projen.javascript.PnpmWorkspaceYamlOptions.property.registries"></a>
 
 ```typescript
-public readonly registries: {[ key: string ]: string};
+public readonly registries: any;
 ```
 
-- *Type:* {[ key: string ]: string}
+- *Type:* any
 
-Configure registries for scoped packages in `pnpm-workspace.yaml`. The `default` key sets the main registry (equivalent to the `registry` `.npmrc` setting). Scoped keys configure registries for specific package scopes.
+Configures the registries packages resolve from, in one of two shapes.
+
+The declaration shape keys each registry by its URL and states everything about it in one place: which scopes and bare-specifier prefix are routed to it, how it lays out tarball URLs, and whether its abbreviated metadata carries the `time` field. The older shape maps the `default` registry and `@`-prefixed scopes straight to registry URLs. The two shapes cannot be mixed.
+https://pnpm.io/settings#registries
 
 ---
 
@@ -18249,6 +18757,20 @@ public readonly registrySupportsTimeField: boolean;
 - *Type:* boolean
 
 Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata.
+
+---
+
+##### `remoteCache`<sup>Optional</sup> <a name="remoteCache" id="projen.javascript.PnpmWorkspaceYamlOptions.property.remoteCache"></a>
+
+```typescript
+public readonly remoteCache: PnpmWorkspaceYamlSchemaRemoteCache;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache">PnpmWorkspaceYamlSchemaRemoteCache</a>
+
+The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with.
+
+Read by both sideEffectsCache.remote and the task cache of pnpm pipeline. Only org may be set in pnpm-workspace.yaml; the fields naming the server and its trust material (url, team, trustedKeys, publish, privateKey, keyId, builderId, imageDigest, architectureBaseline, buildEnv) are read from the global configuration file or the PNPM_REMOTE_CACHE_* environment variables instead, and setting them here fails with ERR_PNPM_WORKSPACE_REMOTE_CACHE_TRUST. Added in pnpm v12.12.0.
 
 ---
 
@@ -18302,6 +18824,18 @@ When enabled, dependencies of the root workspace project are used to resolve pee
 
 ---
 
+##### `runtime`<sup>Optional</sup> <a name="runtime" id="projen.javascript.PnpmWorkspaceYamlOptions.property.runtime"></a>
+
+```typescript
+public readonly runtime: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether pnpm installs runtime entries declared in `devEngines.runtime`. Set to false when the runtime is provisioned separately, such as in a CI matrix.
+
+---
+
 ##### `runtimeOnFail`<sup>Optional</sup> <a name="runtimeOnFail" id="projen.javascript.PnpmWorkspaceYamlOptions.property.runtimeOnFail"></a>
 
 ```typescript
@@ -18335,6 +18869,18 @@ public readonly savePrefix: PnpmWorkspaceYamlSchemaSavePrefix;
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix">PnpmWorkspaceYamlSchemaSavePrefix</a>
 
 Configure how versions of packages installed to a package.json file get prefixed.
+
+---
+
+##### `saveTypes`<sup>Optional</sup> <a name="saveTypes" id="projen.javascript.PnpmWorkspaceYamlOptions.property.saveTypes"></a>
+
+```typescript
+public readonly saveTypes: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm add saves available.
 
 ---
 
@@ -18427,6 +18973,20 @@ The older spelling of sideEffectsCache: { read: true, write: false }.
 
 ---
 
+##### `skills`<sup>Optional</sup> <a name="skills" id="projen.javascript.PnpmWorkspaceYamlOptions.property.skills"></a>
+
+```typescript
+public readonly skills: PnpmWorkspaceYamlSchemaSkills;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSkills">PnpmWorkspaceYamlSchemaSkills</a>
+
+Agent skills that approved dependencies ship.
+
+Added in pnpm v12.11.0.
+
+---
+
 ##### `stateDir`<sup>Optional</sup> <a name="stateDir" id="projen.javascript.PnpmWorkspaceYamlOptions.property.stateDir"></a>
 
 ```typescript
@@ -18448,6 +19008,20 @@ public readonly storeDir: string;
 - *Type:* string
 
 The location where all the packages are saved on the disk.
+
+---
+
+##### `storeIndexFormat`<sup>Optional</sup> <a name="storeIndexFormat" id="projen.javascript.PnpmWorkspaceYamlOptions.property.storeIndexFormat"></a>
+
+```typescript
+public readonly storeIndexFormat: PnpmWorkspaceYamlSchemaStoreIndexFormat;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat">PnpmWorkspaceYamlSchemaStoreIndexFormat</a>
+
+How the store records which files each package has.
+
+sqlite - one index.db database; SQLite's locking only works between processes on one machine, so this format is for a store on a local disk. files - one file per package in the store's index directory, for a store on a network filesystem that several machines use at once, such as a store shared by CI jobs; each entry is written to a temporary file and renamed into place, so concurrent jobs need no locks. The format belongs to the store: once the index directory exists, every pnpm process uses it whatever its own setting says, and the packages recorded in an existing index.db are not carried over when switching. pnpm v11 reads only index.db. Added in pnpm v12.13.0.
 
 ---
 
@@ -18502,12 +19076,14 @@ Some registries allow the exact same content to be published under different pac
 ##### `supportedArchitectures`<sup>Optional</sup> <a name="supportedArchitectures" id="projen.javascript.PnpmWorkspaceYamlOptions.property.supportedArchitectures"></a>
 
 ```typescript
-public readonly supportedArchitectures: PnpmWorkspaceYamlSchemaSupportedArchitectures;
+public readonly supportedArchitectures: any;
 ```
 
-- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures">PnpmWorkspaceYamlSchemaSupportedArchitectures</a>
+- *Type:* any
 
 Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install.
+
+Either a mapping of os, cpu, and libc lists, or a list of exact platform tags to prepare.
 
 ---
 
@@ -18563,6 +19139,20 @@ A task is a script in one workspace project; it becomes ready after every task i
 
 ---
 
+##### `testPattern`<sup>Optional</sup> <a name="testPattern" id="projen.javascript.PnpmWorkspaceYamlOptions.property.testPattern"></a>
+
+```typescript
+public readonly testPattern: string[];
+```
+
+- *Type:* string[]
+
+Glob patterns of test files.
+
+When the changed files of a project all match them, the "changed since" filter leaves out the projects that depend on it.
+
+---
+
 ##### `trustLockfile`<sup>Optional</sup> <a name="trustLockfile" id="projen.javascript.PnpmWorkspaceYamlOptions.property.trustLockfile"></a>
 
 ```typescript
@@ -18600,6 +19190,18 @@ public readonly trustPolicyExclude: string[];
 - *Type:* string[]
 
 You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement.
+
+---
+
+##### `trustPolicyExcludePrune`<sup>Optional</sup> <a name="trustPolicyExcludePrune" id="projen.javascript.PnpmWorkspaceYamlOptions.property.trustPolicyExcludePrune"></a>
+
+```typescript
+public readonly trustPolicyExcludePrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to `true`, `pnpm add`, `pnpm update`, and `pnpm remove` prune the entries of [`trustPolicyExclude`](#trustpolicyexclude) in `pnpm-workspace.yaml` that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (`@myorg/*`) are always kept.
 
 ---
 
@@ -18716,10 +19318,10 @@ When true, all the output is written to stderr.
 ##### `verifyDepsBeforeRun`<sup>Optional</sup> <a name="verifyDepsBeforeRun" id="projen.javascript.PnpmWorkspaceYamlOptions.property.verifyDepsBeforeRun"></a>
 
 ```typescript
-public readonly verifyDepsBeforeRun: any;
+public readonly verifyDepsBeforeRun: PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun;
 ```
 
-- *Type:* any
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun">PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun</a>
 
 This setting allows the checking of the state of dependencies before running scripts.
 
@@ -18797,7 +19399,7 @@ public readonly virtualStoreType: PnpmWorkspaceYamlSchemaVirtualStoreType;
 
 Determines where the virtual store is located.
 
-When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
 
 ---
 
@@ -18831,6 +19433,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.addMissingPeerTypes">addMissingPeerTypes</a></code> | <code>boolean</code> | When true, every peer dependency of a dependency also makes the matching. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowBuilds">allowBuilds</a></code> | <code>any</code> | A map of package matchers to explicitly allow (`true`) or disallow (`false`) script execution. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowNonAppliedPatches">allowNonAppliedPatches</a></code> | <code>boolean</code> | When true, installation won't fail if some of the patches from the "patchedDependencies" field were not applied. |
@@ -18838,21 +19441,27 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.audit">audit</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAudit">PnpmWorkspaceYamlSchemaAudit</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.auditConfig">auditConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditConfig">PnpmWorkspaceYamlSchemaAuditConfig</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoDedupe">autoDedupe</a></code> | <code>boolean</code> | When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.blockExoticSubdeps">blockExoticSubdeps</a></code> | <code>boolean</code> | When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.bootConfig">bootConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a></code> | Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ca">ca</a></code> | <code>string</code> | The Certificate Authority signing certificate that is trusted for SSL connections to the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cacheDir">cacheDir</a></code> | <code>string</code> | The location of the cache (package metadata and dlx). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cafile">cafile</a></code> | <code>string</code> | A path to a file containing one or multiple Certificate Authority signing certificates. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cargo">cargo</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCargo">PnpmWorkspaceYamlSchemaCargo</a></code> | Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalog">catalog</a></code> | <code>{[ key: string ]: string}</code> | Define dependency version ranges as reusable constants, for later reference in package.json files. This (singular) field creates a catalog named default. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogMode">catalogMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode">PnpmWorkspaceYamlSchemaCatalogMode</a></code> | Controlling if and how dependencies are added to the default catalog. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogPrune">catalogPrune</a></code> | <code>boolean</code> | When set to true, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.catalogs">catalogs</a></code> | <code>{[ key: string ]: {[ key: string ]: string}}</code> | Define arbitrarily named catalogs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cert">cert</a></code> | <code>string</code> | A client certificate to pass when accessing the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.changedFilesIgnorePattern">changedFilesIgnorePattern</a></code> | <code>string[]</code> | Glob patterns of changed files to ignore when filtering for the projects changed since a commit or branch. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.childConcurrency">childConcurrency</a></code> | <code>number</code> | The maximum number of child processes to allocate simultaneously to build node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ci">ci</a></code> | <code>boolean</code> | Explicitly tells pnpm whether the current environment is a Continuous Integration system, overriding pnpm's automatic CI detection. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.cleanupUnusedCatalogs">cleanupUnusedCatalogs</a></code> | <code>boolean</code> | When set to `true`, pnpm will remove unused catalog entries during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.color">color</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaColor">PnpmWorkspaceYamlSchemaColor</a></code> | Controls colors in the output. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.concurrencyGroups">concurrencyGroups</a></code> | <code>{[ key: string ]: number}</code> | Machine-wide concurrency limits for named groups of tasks (assigned via `tasks.<name>.concurrencyGroup`). At most the given number of tasks in a group run at once across pnpm processes sharing the same stateDir, including pnpm pipeline. A missing or zero group limit does not restrict execution. Added in pnpm v12.5.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.configDependencies">configDependencies</a></code> | <code>any</code> | Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.confirmModulesPurge">confirmModulesPurge</a></code> | <code>boolean</code> | Controls whether pnpm asks for confirmation before removing and reinstalling a modules directory that is incompatible with the current install settings. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.dangerouslyAllowAllBuilds">dangerouslyAllowAllBuilds</a></code> | <code>boolean</code> | If set to true, all build scripts (e.g. preinstall, install, postinstall) from dependencies will run automatically, without requiring approval. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.dedupeDirectDeps">dedupeDirectDeps</a></code> | <code>boolean</code> | When set to true, dependencies that are already symlinked to the root node_modules directory of the workspace will not be symlinked to subproject node_modules directories. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.dedupeInjectedDeps">dedupeInjectedDeps</a></code> | <code>boolean</code> | When this setting is enabled, dependencies that are injected will be symlinked from the workspace whenever possible. |
@@ -18876,7 +19485,9 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchRetryMintimeout">fetchRetryMintimeout</a></code> | <code>number</code> | The minimum (base) timeout for retrying requests. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchTimeout">fetchTimeout</a></code> | <code>number</code> | The maximum amount of time to wait for HTTP requests to complete. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.fetchWarnTimeoutMs">fetchWarnTimeoutMs</a></code> | <code>number</code> | A warning message is displayed if a metadata request to the registry takes longer than the specified threshold (in milliseconds). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.forceIgnoresPlatform">forceIgnoresPlatform</a></code> | <code>boolean</code> | When true, pnpm install --force also installs optional dependencies whose os, cpu, or libc do not match the host. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.forceLegacyDeploy">forceLegacyDeploy</a></code> | <code>boolean</code> | By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.frozenLockfile">frozenLockfile</a></code> | <code>boolean</code> | When true, installation fails if the lockfile is missing or needs to be updated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.frozenStore">frozenStore</a></code> | <code>boolean</code> | Makes pnpm install work against a read-only package store (such as a Nix store or OCI image layer). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitBranchLockfile">gitBranchLockfile</a></code> | <code>boolean</code> | When set to true, the generated lockfile name after installation will be named based on the current branch name to completely avoid merge conflicts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.gitChecks">gitChecks</a></code> | <code>boolean</code> | Check if current branch is your publish branch, clean, and up-to-date with remote. |
@@ -18900,16 +19511,20 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ignoreScripts">ignoreScripts</a></code> | <code>boolean</code> | Do not execute any scripts defined in the project package.json and its dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ignoreWorkspaceCycles">ignoreWorkspaceCycles</a></code> | <code>boolean</code> | When set to true, no workspace cycle warnings will be printed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ignoreWorkspaceRootCheck">ignoreWorkspaceRootCheck</a></code> | <code>boolean</code> | Adding a new dependency to the root workspace package fails, unless the --ignore-workspace-root-check or -w flag is used. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.include">include</a></code> | <code>{[ key: string ]: string[]}</code> | Delegates settings to other YAML files and to config dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.includeWorkspaceRoot">includeWorkspaceRoot</a></code> | <code>boolean</code> | When executing commands recursively in a workspace, execute them on the root workspace project as well. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.injectWorkspacePackages">injectWorkspacePackages</a></code> | <code>boolean</code> | Enables hard-linking of all local workspace dependencies instead of symlinking them. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.key">key</a></code> | <code>string</code> | A client key to pass when accessing the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.legacyDirFiltering">legacyDirFiltering</a></code> | <code>boolean</code> | When true, `{<dir>}` filter selectors use the legacy behavior: the selector names a directory and matches every project in the subtree below it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.linkWorkspacePackages">linkWorkspacePackages</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLinkWorkspacePackages">PnpmWorkspaceYamlSchemaLinkWorkspacePackages</a></code> | If this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.localAddress">localAddress</a></code> | <code>string</code> | The IP address of the local interface to use when making connections to the npm registry. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfile">lockfile</a></code> | <code>boolean</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfile">lockfile</a></code> | <code>any</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfileIncludeTarballUrl">lockfileIncludeTarballUrl</a></code> | <code>boolean</code> | Add the full URL to the package's tarball to every entry in pnpm-lock.yaml. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.loglevel">loglevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLoglevel">PnpmWorkspaceYamlSchemaLoglevel</a></code> | Any logs at or higher than the given level will be shown. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.macosBackup">macosBackup</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a></code> | On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.managePackageManagerVersions">managePackageManagerVersions</a></code> | <code>boolean</code> | When enabled, pnpm will automatically download and run the version of pnpm specified in the packageManager field of package.json. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.maxsockets">maxsockets</a></code> | <code>number</code> | The maximum number of connections to use per origin (protocol/host/port combination). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.maxTarballUnpackedSize">maxTarballUnpackedSize</a></code> | <code>number</code> | Caps the total number of bytes the files of one package may unpack to. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.mergeGitBranchLockfilesBranchPattern">mergeGitBranchLockfilesBranchPattern</a></code> | <code>any[]</code> | This configuration matches the current branch name to determine whether to merge all git branch lockfile files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>number</code> | minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.minimumReleaseAgeExclude">minimumReleaseAgeExclude</a></code> | <code>string[]</code> | If you set `minimumReleaseAge` but need certain dependencies to always install the newest version immediately, you can list them under `minimumReleaseAgeExclude`. |
@@ -18922,10 +19537,11 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.networkConcurrency">networkConcurrency</a></code> | <code>number</code> | Controls the maximum number of HTTP(S) requests to process simultaneously. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.neverBuiltDependencies">neverBuiltDependencies</a></code> | <code>string[]</code> | A list of dependencies to run builds for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeDownloadMirrors">nodeDownloadMirrors</a></code> | <code>{[ key: string ]: string}</code> | Configure custom Node.js download mirrors in `pnpm-workspace.yaml`. The keys are release channels (`release`, `rc`, `nightly`, `v8-canary`, etc.) and the values are base URLs. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker">nodeLinker</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a></code> | Defines what linker should be used for installing Node packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeExperimentalPackageMap">nodeExperimentalPackageMap</a></code> | <code>boolean</code> | When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. Deprecated since pnpm v12.13.0: use nodePackageMap.mode instead. true is the same as mode: load and false the same as mode: off; nodePackageMap wins when both are set in the same place. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker">nodeLinker</a></code> | <code>any</code> | Defines what linker should be used for installing Node packages. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeOptions">nodeOptions</a></code> | <code>string</code> | Options to pass through to Node.js via the NODE_OPTIONS environment variable. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMap">nodePackageMap</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a></code> | Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
@@ -18944,27 +19560,35 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.patchesDir">patchesDir</a></code> | <code>string</code> | The generated patch file will be saved to this directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.peerDependencyRules">peerDependencyRules</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPeerDependencyRules">PnpmWorkspaceYamlSchemaPeerDependencyRules</a></code> | *No description.* |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.peersSuffixMaxLength">peersSuffixMaxLength</a></code> | <code>number</code> | Max length of the peer IDs suffix added to dependency keys in the lockfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pipelineBase">pipelineBase</a></code> | <code>string</code> | The git ref the affected selection of `pnpm pipeline` resolves its merge base against. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pipelines">pipelines</a></code> | <code>{[ key: string ]: string[]}</code> | Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pmOnFail">pmOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPmOnFail">PnpmWorkspaceYamlSchemaPmOnFail</a></code> | Overrides the `onFail` behavior of both the `packageManager` field and `devEngines.packageManager` when the running pnpm version does not match the declared one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pnpmfile">pnpmfile</a></code> | <code>string</code> | The location of the local pnpmfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferFrozenLockfile">preferFrozenLockfile</a></code> | <code>boolean</code> | When set to true and the available pnpm-lock.yaml satisfies the package.json dependencies directive, a headless installation is performed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferOffline">preferOffline</a></code> | <code>boolean</code> | Bypass staleness checks for cached data. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferWorkspacePackages">preferWorkspacePackages</a></code> | <code>boolean</code> | If this is enabled, local packages from the workspace are preferred over packages from the registry, even if there is a newer version of the package in the registry. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.progress">progress</a></code> | <code>boolean</code> | Controls whether dependency and download progress lines are printed during installation. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.projectScopedOptionalPeers">projectScopedOptionalPeers</a></code> | <code>boolean</code> | When true, a project gets a missing optional peer dependency only if the project's own dependencies already install a version of it. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.provenance">provenance</a></code> | <code>boolean</code> | When publishing from a supported cloud CI/CD system, the package will be publicly linked to where it was built and published from. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.proxy">proxy</a></code> | <code>string</code> | npm's legacy proxy setting, used as the fallback for both httpsProxy and httpProxy. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publicHoistPattern">publicHoistPattern</a></code> | <code>string[]</code> | Unlike hoistPattern, which hoists dependencies to a hidden modules directory inside the virtual store, publicHoistPattern hoists dependencies matching the pattern to the root modules directory. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publishWaitTimeout">publishWaitTimeout</a></code> | <code>number</code> | After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registries">registries</a></code> | <code>{[ key: string ]: string}</code> | Configure registries for scoped packages in `pnpm-workspace.yaml`. The `default` key sets the main registry (equivalent to the `registry` `.npmrc` setting). Scoped keys configure registries for specific package scopes. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registries">registries</a></code> | <code>any</code> | Configures the registries packages resolve from, in one of two shapes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registry">registry</a></code> | <code>string</code> | The base URL of the npm package registry (trailing slash included). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registrySupportsTimeField">registrySupportsTimeField</a></code> | <code>boolean</code> | Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.remoteCache">remoteCache</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache">PnpmWorkspaceYamlSchemaRemoteCache</a></code> | The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.reporter">reporter</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaReporter">PnpmWorkspaceYamlSchemaReporter</a></code> | Allows you to customize the output style of the logs. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.requiredScripts">requiredScripts</a></code> | <code>string[]</code> | A list of scripts that must exist in each project. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.resolutionMode">resolutionMode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaResolutionMode">PnpmWorkspaceYamlSchemaResolutionMode</a></code> | Determines how pnpm resolves dependencies, See https://pnpm.io/settings#resolutionmode. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.resolvePeersFromWorkspaceRoot">resolvePeersFromWorkspaceRoot</a></code> | <code>boolean</code> | When enabled, dependencies of the root workspace project are used to resolve peer dependencies of any projects in the workspace. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.runtime">runtime</a></code> | <code>boolean</code> | Controls whether pnpm installs runtime entries declared in `devEngines.runtime`. Set to false when the runtime is provisioned separately, such as in a CI matrix. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.runtimeOnFail">runtimeOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaRuntimeOnFail">PnpmWorkspaceYamlSchemaRuntimeOnFail</a></code> | Overrides the `onFail` field of `devEngines.runtime` (and `engines.runtime`) in the root project's `package.json`. This is useful when you want a different local behavior than what is written in the manifest — for instance, forcing pnpm to download the declared runtime even when the manifest sets `onFail: "warn"`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.saveExact">saveExact</a></code> | <code>boolean</code> | Saved dependencies will be configured with an exact version rather than using pnpm's default semver range operator. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.savePrefix">savePrefix</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix">PnpmWorkspaceYamlSchemaSavePrefix</a></code> | Configure how versions of packages installed to a package.json file get prefixed. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.saveTypes">saveTypes</a></code> | <code>boolean</code> | When set to true, pnpm add saves available. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.saveWorkspaceProtocol">saveWorkspaceProtocol</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol">PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol</a></code> | This setting controls how dependencies that are linked from the workspace are added to package.json. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.scriptShell">scriptShell</a></code> | <code>string</code> | The shell to use for scripts run with the pnpm run command. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.shamefullyHoist">shamefullyHoist</a></code> | <code>boolean</code> | By default, pnpm creates a semistrict node_modules, meaning dependencies have access to undeclared dependencies but modules outside of node_modules do not. |
@@ -18972,20 +19596,24 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.shellEmulator">shellEmulator</a></code> | <code>boolean</code> | When true, pnpm will use a JavaScript implementation of a bash-like shell to execute scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCache">sideEffectsCache</a></code> | <code>any</code> | Use and cache the results of (pre/post)install hooks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.sideEffectsCacheReadonly">sideEffectsCacheReadonly</a></code> | <code>boolean</code> | Only use the side effects cache if present, do not create it for new packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.skills">skills</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSkills">PnpmWorkspaceYamlSchemaSkills</a></code> | Agent skills that approved dependencies ship. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.stateDir">stateDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.storeDir">storeDir</a></code> | <code>string</code> | The location where all the packages are saved on the disk. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.storeIndexFormat">storeIndexFormat</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat">PnpmWorkspaceYamlSchemaStoreIndexFormat</a></code> | How the store records which files each package has. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.strictDepBuilds">strictDepBuilds</a></code> | <code>boolean</code> | When strictDepBuilds is enabled, the installation will exit with a non-zero exit code if any dependencies have unreviewed build scripts (aka postinstall scripts). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.strictPeerDependencies">strictPeerDependencies</a></code> | <code>boolean</code> | If this is enabled, commands will fail if there is a missing or invalid peer dependency in the tree. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.strictSsl">strictSsl</a></code> | <code>boolean</code> | Whether or not to do SSL key validation when making requests to the registry via HTTPS. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.strictStorePkgContentCheck">strictStorePkgContentCheck</a></code> | <code>boolean</code> | Some registries allow the exact same content to be published under different package names and/or versions. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.supportedArchitectures">supportedArchitectures</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures">PnpmWorkspaceYamlSchemaSupportedArchitectures</a></code> | Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.supportedArchitectures">supportedArchitectures</a></code> | <code>any</code> | Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.symlink">symlink</a></code> | <code>boolean</code> | When symlink is set to false, pnpm creates a virtual store directory without any symlinks. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.syncInjectedDepsAfterScripts">syncInjectedDepsAfterScripts</a></code> | <code>string[]</code> | Injected workspace dependencies are collections of hardlinks, which don't add or remove the files when their sources change. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.tag">tag</a></code> | <code>string</code> | If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.tasks">tasks</a></code> | <code>{[ key: string ]: <a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks">PnpmWorkspaceYamlSchemaTasks</a>}</code> | Configure dependency relationships and per-task concurrency limits for recursive runs (`pnpm -r run <script>`). |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.testPattern">testPattern</a></code> | <code>string[]</code> | Glob patterns of test files. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustLockfile">trustLockfile</a></code> | <code>boolean</code> | A new trustLockfile setting controls whether pnpm install re-applies the `minimumReleaseAge` / `trustPolicy: 'no-downgrade'` checks to every entry in the loaded lockfile. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicy">trustPolicy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy">PnpmWorkspaceYamlSchemaTrustPolicy</a></code> | When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyExcludePrune">trustPolicyExcludePrune</a></code> | <code>boolean</code> | When set to `true`, `pnpm add`, `pnpm update`, and `pnpm remove` prune the entries of [`trustPolicyExclude`](#trustpolicyexclude) in `pnpm-workspace.yaml` that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (`@myorg/*`) are always kept. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyIgnoreAfter">trustPolicyIgnoreAfter</a></code> | <code>number</code> | Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.unsafePerm">unsafePerm</a></code> | <code>boolean</code> | Set to true to enable UID/GID switching when running package scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.update">update</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaUpdate">PnpmWorkspaceYamlSchemaUpdate</a></code> | *No description.* |
@@ -18995,7 +19623,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useNodeVersion">useNodeVersion</a></code> | <code>string</code> | Specifies which exact Node.js version should be used for the project's runtime. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useRunningStoreServer">useRunningStoreServer</a></code> | <code>boolean</code> | Deprecated. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.useStderr">useStderr</a></code> | <code>boolean</code> | When true, all the output is written to stderr. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code>any</code> | This setting allows the checking of the state of dependencies before running scripts. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyDepsBeforeRun">verifyDepsBeforeRun</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun">PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun</a></code> | This setting allows the checking of the state of dependencies before running scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.verifyStoreIntegrity">verifyStoreIntegrity</a></code> | <code>boolean</code> | By default, if a file in the store has been modified, the content of this file is checked before linking it to a project's node_modules. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.versioning">versioning</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning">PnpmWorkspaceYamlSchemaVersioning</a></code> | Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDir">virtualStoreDir</a></code> | <code>string</code> | The directory with links to the store. |
@@ -19003,6 +19631,18 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
+
+---
+
+##### `addMissingPeerTypes`<sup>Optional</sup> <a name="addMissingPeerTypes" id="projen.javascript.PnpmWorkspaceYamlSchema.property.addMissingPeerTypes"></a>
+
+```typescript
+public readonly addMissingPeerTypes: boolean;
+```
+
+- *Type:* boolean
+
+When true, every peer dependency of a dependency also makes the matching.
 
 ---
 
@@ -19092,6 +19732,20 @@ When set to 'low', all vulnerabilities are reported. When set to 'moderate', 'hi
 
 ---
 
+##### `autoDedupe`<sup>Optional</sup> <a name="autoDedupe" id="projen.javascript.PnpmWorkspaceYamlSchema.property.autoDedupe"></a>
+
+```typescript
+public readonly autoDedupe: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation.
+
+If a dependency appears at multiple versions and one version satisfies every range in the workspace, pnpm picks that version for all of them. Frozen installs (--frozen-lockfile) leave the lockfile unchanged; deduplication only runs when the lockfile is being written. Added in pnpm v12.6.0.
+
+---
+
 ##### `autoInstallPeers`<sup>Optional</sup> <a name="autoInstallPeers" id="projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeers"></a>
 
 ```typescript
@@ -19115,6 +19769,20 @@ public readonly blockExoticSubdeps: boolean;
 When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies.
 
 Only direct dependencies are allowed to use exotic sources.
+
+---
+
+##### `bootConfig`<sup>Optional</sup> <a name="bootConfig" id="projen.javascript.PnpmWorkspaceYamlSchema.property.bootConfig"></a>
+
+```typescript
+public readonly bootConfig: PnpmWorkspaceYamlSchemaBootConfig;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a>
+
+Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded.
+
+Added in pnpm v12.15.0.
 
 ---
 
@@ -19151,6 +19819,20 @@ public readonly cafile: string;
 - *Type:* string
 
 A path to a file containing one or multiple Certificate Authority signing certificates.
+
+---
+
+##### `cargo`<sup>Optional</sup> <a name="cargo" id="projen.javascript.PnpmWorkspaceYamlSchema.property.cargo"></a>
+
+```typescript
+public readonly cargo: PnpmWorkspaceYamlSchemaCargo;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaCargo">PnpmWorkspaceYamlSchemaCargo</a>
+
+Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages.
+
+Multi-ecosystem support is experimental. Added in: v12.4.0 (pnpm v12 only).
 
 ---
 
@@ -19216,6 +19898,18 @@ A client certificate to pass when accessing the registry.
 
 ---
 
+##### `changedFilesIgnorePattern`<sup>Optional</sup> <a name="changedFilesIgnorePattern" id="projen.javascript.PnpmWorkspaceYamlSchema.property.changedFilesIgnorePattern"></a>
+
+```typescript
+public readonly changedFilesIgnorePattern: string[];
+```
+
+- *Type:* string[]
+
+Glob patterns of changed files to ignore when filtering for the projects changed since a commit or branch.
+
+---
+
 ##### `childConcurrency`<sup>Optional</sup> <a name="childConcurrency" id="projen.javascript.PnpmWorkspaceYamlSchema.property.childConcurrency"></a>
 
 ```typescript
@@ -19266,6 +19960,18 @@ Controls colors in the output.
 
 ---
 
+##### `concurrencyGroups`<sup>Optional</sup> <a name="concurrencyGroups" id="projen.javascript.PnpmWorkspaceYamlSchema.property.concurrencyGroups"></a>
+
+```typescript
+public readonly concurrencyGroups: {[ key: string ]: number};
+```
+
+- *Type:* {[ key: string ]: number}
+
+Machine-wide concurrency limits for named groups of tasks (assigned via `tasks.<name>.concurrencyGroup`). At most the given number of tasks in a group run at once across pnpm processes sharing the same stateDir, including pnpm pipeline. A missing or zero group limit does not restrict execution. Added in pnpm v12.5.0.
+
+---
+
 ##### `configDependencies`<sup>Optional</sup> <a name="configDependencies" id="projen.javascript.PnpmWorkspaceYamlSchema.property.configDependencies"></a>
 
 ```typescript
@@ -19277,6 +19983,20 @@ public readonly configDependencies: any;
 Config dependencies allow you to share and centralize configuration files, settings, and hooks across multiple projects.
 
 They are installed before all regular dependencies ('dependencies', 'devDependencies', 'optionalDependencies'), making them ideal for setting up custom hooks, patches, and catalog entries.
+
+---
+
+##### `confirmModulesPurge`<sup>Optional</sup> <a name="confirmModulesPurge" id="projen.javascript.PnpmWorkspaceYamlSchema.property.confirmModulesPurge"></a>
+
+```typescript
+public readonly confirmModulesPurge: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether pnpm asks for confirmation before removing and reinstalling a modules directory that is incompatible with the current install settings.
+
+Confirmation is disabled in CI. Supported by pnpm v11.
 
 ---
 
@@ -19560,6 +20280,20 @@ Added in pnpm v10.18.0.
 
 ---
 
+##### `forceIgnoresPlatform`<sup>Optional</sup> <a name="forceIgnoresPlatform" id="projen.javascript.PnpmWorkspaceYamlSchema.property.forceIgnoresPlatform"></a>
+
+```typescript
+public readonly forceIgnoresPlatform: boolean;
+```
+
+- *Type:* boolean
+
+When true, pnpm install --force also installs optional dependencies whose os, cpu, or libc do not match the host.
+
+When false, --force refetches every package but still skips optional dependencies built for other platforms. pnpm v11 behaved as if this setting were true; prefer supportedArchitectures to install optional dependencies for other platforms on purpose. Added in pnpm v12.7.0.
+
+---
+
 ##### `forceLegacyDeploy`<sup>Optional</sup> <a name="forceLegacyDeploy" id="projen.javascript.PnpmWorkspaceYamlSchema.property.forceLegacyDeploy"></a>
 
 ```typescript
@@ -19571,6 +20305,18 @@ public readonly forceLegacyDeploy: boolean;
 By default, pnpm deploy will try creating a dedicated lockfile from a shared lockfile for deployment.
 
 If this setting is set to true, the legacy deploy behavior will be used.
+
+---
+
+##### `frozenLockfile`<sup>Optional</sup> <a name="frozenLockfile" id="projen.javascript.PnpmWorkspaceYamlSchema.property.frozenLockfile"></a>
+
+```typescript
+public readonly frozenLockfile: boolean;
+```
+
+- *Type:* boolean
+
+When true, installation fails if the lockfile is missing or needs to be updated.
 
 ---
 
@@ -19869,6 +20615,20 @@ Adding a new dependency to the root workspace package fails, unless the --ignore
 
 ---
 
+##### `include`<sup>Optional</sup> <a name="include" id="projen.javascript.PnpmWorkspaceYamlSchema.property.include"></a>
+
+```typescript
+public readonly include: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+Delegates settings to other YAML files and to config dependencies.
+
+Added in pnpm v12.15.0.
+
+---
+
 ##### `includeWorkspaceRoot`<sup>Optional</sup> <a name="includeWorkspaceRoot" id="projen.javascript.PnpmWorkspaceYamlSchema.property.includeWorkspaceRoot"></a>
 
 ```typescript
@@ -19905,6 +20665,20 @@ A client key to pass when accessing the registry.
 
 ---
 
+##### `legacyDirFiltering`<sup>Optional</sup> <a name="legacyDirFiltering" id="projen.javascript.PnpmWorkspaceYamlSchema.property.legacyDirFiltering"></a>
+
+```typescript
+public readonly legacyDirFiltering: boolean;
+```
+
+- *Type:* boolean
+
+When true, `{<dir>}` filter selectors use the legacy behavior: the selector names a directory and matches every project in the subtree below it.
+
+By default `{<dir>}` is matched as a glob pattern, so `{packages/*}` selects the projects one level below packages/ and a `**` reaches deeper. Only applies to user-written selectors; the workspace-root selectors pnpm generates are always matched as globs.
+
+---
+
 ##### `linkWorkspacePackages`<sup>Optional</sup> <a name="linkWorkspacePackages" id="projen.javascript.PnpmWorkspaceYamlSchema.property.linkWorkspacePackages"></a>
 
 ```typescript
@@ -19932,10 +20706,10 @@ The IP address of the local interface to use when making connections to the npm 
 ##### `lockfile`<sup>Optional</sup> <a name="lockfile" id="projen.javascript.PnpmWorkspaceYamlSchema.property.lockfile"></a>
 
 ```typescript
-public readonly lockfile: boolean;
+public readonly lockfile: any;
 ```
 
-- *Type:* boolean
+- *Type:* any
 
 When set to false, pnpm won't read or generate a pnpm-lock.yaml file.
 
@@ -19965,6 +20739,18 @@ Any logs at or higher than the given level will be shown.
 
 ---
 
+##### `macosBackup`<sup>Optional</sup> <a name="macosBackup" id="projen.javascript.PnpmWorkspaceYamlSchema.property.macosBackup"></a>
+
+```typescript
+public readonly macosBackup: PnpmWorkspaceYamlSchemaMacosBackup;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a>
+
+On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0.
+
+---
+
 ##### `managePackageManagerVersions`<sup>Optional</sup> <a name="managePackageManagerVersions" id="projen.javascript.PnpmWorkspaceYamlSchema.property.managePackageManagerVersions"></a>
 
 ```typescript
@@ -19986,6 +20772,20 @@ public readonly maxsockets: number;
 - *Type:* number
 
 The maximum number of connections to use per origin (protocol/host/port combination).
+
+---
+
+##### `maxTarballUnpackedSize`<sup>Optional</sup> <a name="maxTarballUnpackedSize" id="projen.javascript.PnpmWorkspaceYamlSchema.property.maxTarballUnpackedSize"></a>
+
+```typescript
+public readonly maxTarballUnpackedSize: number;
+```
+
+- *Type:* number
+
+Caps the total number of bytes the files of one package may unpack to.
+
+Added in pnpm v12.15.0.
 
 ---
 
@@ -20149,19 +20949,21 @@ public readonly nodeExperimentalPackageMap: boolean;
 
 - *Type:* boolean
 
-When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap.
+When true, pnpm injects the generated node_modules/.package-map.json into pnpm-managed Node.js script environments by adding Node's --experimental-package-map option to NODE_OPTIONS. see https://pnpm.io/settings/node-modules#nodeexperimentalpackagemap. Deprecated since pnpm v12.13.0: use nodePackageMap.mode instead. true is the same as mode: load and false the same as mode: off; nodePackageMap wins when both are set in the same place.
 
 ---
 
 ##### `nodeLinker`<sup>Optional</sup> <a name="nodeLinker" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodeLinker"></a>
 
 ```typescript
-public readonly nodeLinker: PnpmWorkspaceYamlSchemaNodeLinker;
+public readonly nodeLinker: any;
 ```
 
-- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker">PnpmWorkspaceYamlSchemaNodeLinker</a>
+- *Type:* any
 
 Defines what linker should be used for installing Node packages.
+
+loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
 
 ---
 
@@ -20177,6 +20979,18 @@ Options to pass through to Node.js via the NODE_OPTIONS environment variable.
 
 ---
 
+##### `nodePackageMap`<sup>Optional</sup> <a name="nodePackageMap" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMap"></a>
+
+```typescript
+public readonly nodePackageMap: PnpmWorkspaceYamlSchemaNodePackageMap;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a>
+
+Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0.
+
+---
+
 ##### `nodePackageMapType`<sup>Optional</sup> <a name="nodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType"></a>
 
 ```typescript
@@ -20185,7 +20999,7 @@ public readonly nodePackageMapType: PnpmWorkspaceYamlSchemaNodePackageMapType;
 
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a>
 
-Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place.
 
 ---
 
@@ -20411,6 +21225,34 @@ If the suffix is longer, it is replaced with a hash.
 
 ---
 
+##### `pipelineBase`<sup>Optional</sup> <a name="pipelineBase" id="projen.javascript.PnpmWorkspaceYamlSchema.property.pipelineBase"></a>
+
+```typescript
+public readonly pipelineBase: string;
+```
+
+- *Type:* string
+
+The git ref the affected selection of `pnpm pipeline` resolves its merge base against.
+
+Overridden by the `--base <ref>` option.
+
+---
+
+##### `pipelines`<sup>Optional</sup> <a name="pipelines" id="projen.javascript.PnpmWorkspaceYamlSchema.property.pipelines"></a>
+
+```typescript
+public readonly pipelines: {[ key: string ]: string[]};
+```
+
+- *Type:* {[ key: string ]: string[]}
+
+Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`.
+
+A pipeline is a set, not a sequence: the order in which its tasks run comes from `tasks.<name>.dependsOn`. The pipeline named `default` runs when no name is given. Added in pnpm v12.4.0 (experimental, pnpm v12 only).
+
+---
+
 ##### `pmOnFail`<sup>Optional</sup> <a name="pmOnFail" id="projen.javascript.PnpmWorkspaceYamlSchema.property.pmOnFail"></a>
 
 ```typescript
@@ -20485,6 +21327,34 @@ If this is enabled, local packages from the workspace are preferred over package
 
 ---
 
+##### `progress`<sup>Optional</sup> <a name="progress" id="projen.javascript.PnpmWorkspaceYamlSchema.property.progress"></a>
+
+```typescript
+public readonly progress: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether dependency and download progress lines are printed during installation.
+
+When set to false (or --no-progress is passed), progress output is suppressed. Warnings, lifecycle script output, and the dependency summary are still printed. Added in pnpm v12.6.0.
+
+---
+
+##### `projectScopedOptionalPeers`<sup>Optional</sup> <a name="projectScopedOptionalPeers" id="projen.javascript.PnpmWorkspaceYamlSchema.property.projectScopedOptionalPeers"></a>
+
+```typescript
+public readonly projectScopedOptionalPeers: boolean;
+```
+
+- *Type:* boolean
+
+When true, a project gets a missing optional peer dependency only if the project's own dependencies already install a version of it.
+
+The workspace root's dependencies also count if resolvePeersFromWorkspaceRoot is true; a version that only another workspace project's dependencies install does not. dedupePeerDependents keeps deduplicating everything else, and this setting has no effect when dedupePeerDependents is false, because optional peers are already resolved only from the project's own dependencies then. Changing this setting changes the lockfile. Added in pnpm v12.19.0.
+
+---
+
 ##### `provenance`<sup>Optional</sup> <a name="provenance" id="projen.javascript.PnpmWorkspaceYamlSchema.property.provenance"></a>
 
 ```typescript
@@ -20535,6 +21405,20 @@ The primary branch of the repository which is used for publishing the latest cha
 
 ---
 
+##### `publishWaitTimeout`<sup>Optional</sup> <a name="publishWaitTimeout" id="projen.javascript.PnpmWorkspaceYamlSchema.property.publishWaitTimeout"></a>
+
+```typescript
+public readonly publishWaitTimeout: number;
+```
+
+- *Type:* number
+
+After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry.
+
+If they are not available in time, the command fails. 0 disables the check. When publishing recursively, pnpm confirms that a package is available before it publishes the packages that depend on it. Added in pnpm v12.7.0.
+
+---
+
 ##### `recursiveInstall`<sup>Optional</sup> <a name="recursiveInstall" id="projen.javascript.PnpmWorkspaceYamlSchema.property.recursiveInstall"></a>
 
 ```typescript
@@ -20550,12 +21434,15 @@ If this is enabled, the primary behaviour of pnpm install becomes that of pnpm i
 ##### `registries`<sup>Optional</sup> <a name="registries" id="projen.javascript.PnpmWorkspaceYamlSchema.property.registries"></a>
 
 ```typescript
-public readonly registries: {[ key: string ]: string};
+public readonly registries: any;
 ```
 
-- *Type:* {[ key: string ]: string}
+- *Type:* any
 
-Configure registries for scoped packages in `pnpm-workspace.yaml`. The `default` key sets the main registry (equivalent to the `registry` `.npmrc` setting). Scoped keys configure registries for specific package scopes.
+Configures the registries packages resolve from, in one of two shapes.
+
+The declaration shape keys each registry by its URL and states everything about it in one place: which scopes and bare-specifier prefix are routed to it, how it lays out tarball URLs, and whether its abbreviated metadata carries the `time` field. The older shape maps the `default` registry and `@`-prefixed scopes straight to registry URLs. The two shapes cannot be mixed.
+https://pnpm.io/settings#registries
 
 ---
 
@@ -20580,6 +21467,20 @@ public readonly registrySupportsTimeField: boolean;
 - *Type:* boolean
 
 Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata.
+
+---
+
+##### `remoteCache`<sup>Optional</sup> <a name="remoteCache" id="projen.javascript.PnpmWorkspaceYamlSchema.property.remoteCache"></a>
+
+```typescript
+public readonly remoteCache: PnpmWorkspaceYamlSchemaRemoteCache;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache">PnpmWorkspaceYamlSchemaRemoteCache</a>
+
+The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with.
+
+Read by both sideEffectsCache.remote and the task cache of pnpm pipeline. Only org may be set in pnpm-workspace.yaml; the fields naming the server and its trust material (url, team, trustedKeys, publish, privateKey, keyId, builderId, imageDigest, architectureBaseline, buildEnv) are read from the global configuration file or the PNPM_REMOTE_CACHE_* environment variables instead, and setting them here fails with ERR_PNPM_WORKSPACE_REMOTE_CACHE_TRUST. Added in pnpm v12.12.0.
 
 ---
 
@@ -20633,6 +21534,18 @@ When enabled, dependencies of the root workspace project are used to resolve pee
 
 ---
 
+##### `runtime`<sup>Optional</sup> <a name="runtime" id="projen.javascript.PnpmWorkspaceYamlSchema.property.runtime"></a>
+
+```typescript
+public readonly runtime: boolean;
+```
+
+- *Type:* boolean
+
+Controls whether pnpm installs runtime entries declared in `devEngines.runtime`. Set to false when the runtime is provisioned separately, such as in a CI matrix.
+
+---
+
 ##### `runtimeOnFail`<sup>Optional</sup> <a name="runtimeOnFail" id="projen.javascript.PnpmWorkspaceYamlSchema.property.runtimeOnFail"></a>
 
 ```typescript
@@ -20666,6 +21579,18 @@ public readonly savePrefix: PnpmWorkspaceYamlSchemaSavePrefix;
 - *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSavePrefix">PnpmWorkspaceYamlSchemaSavePrefix</a>
 
 Configure how versions of packages installed to a package.json file get prefixed.
+
+---
+
+##### `saveTypes`<sup>Optional</sup> <a name="saveTypes" id="projen.javascript.PnpmWorkspaceYamlSchema.property.saveTypes"></a>
+
+```typescript
+public readonly saveTypes: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm add saves available.
 
 ---
 
@@ -20758,6 +21683,20 @@ The older spelling of sideEffectsCache: { read: true, write: false }.
 
 ---
 
+##### `skills`<sup>Optional</sup> <a name="skills" id="projen.javascript.PnpmWorkspaceYamlSchema.property.skills"></a>
+
+```typescript
+public readonly skills: PnpmWorkspaceYamlSchemaSkills;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSkills">PnpmWorkspaceYamlSchemaSkills</a>
+
+Agent skills that approved dependencies ship.
+
+Added in pnpm v12.11.0.
+
+---
+
 ##### `stateDir`<sup>Optional</sup> <a name="stateDir" id="projen.javascript.PnpmWorkspaceYamlSchema.property.stateDir"></a>
 
 ```typescript
@@ -20779,6 +21718,20 @@ public readonly storeDir: string;
 - *Type:* string
 
 The location where all the packages are saved on the disk.
+
+---
+
+##### `storeIndexFormat`<sup>Optional</sup> <a name="storeIndexFormat" id="projen.javascript.PnpmWorkspaceYamlSchema.property.storeIndexFormat"></a>
+
+```typescript
+public readonly storeIndexFormat: PnpmWorkspaceYamlSchemaStoreIndexFormat;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat">PnpmWorkspaceYamlSchemaStoreIndexFormat</a>
+
+How the store records which files each package has.
+
+sqlite - one index.db database; SQLite's locking only works between processes on one machine, so this format is for a store on a local disk. files - one file per package in the store's index directory, for a store on a network filesystem that several machines use at once, such as a store shared by CI jobs; each entry is written to a temporary file and renamed into place, so concurrent jobs need no locks. The format belongs to the store: once the index directory exists, every pnpm process uses it whatever its own setting says, and the packages recorded in an existing index.db are not carried over when switching. pnpm v11 reads only index.db. Added in pnpm v12.13.0.
 
 ---
 
@@ -20833,12 +21786,14 @@ Some registries allow the exact same content to be published under different pac
 ##### `supportedArchitectures`<sup>Optional</sup> <a name="supportedArchitectures" id="projen.javascript.PnpmWorkspaceYamlSchema.property.supportedArchitectures"></a>
 
 ```typescript
-public readonly supportedArchitectures: PnpmWorkspaceYamlSchemaSupportedArchitectures;
+public readonly supportedArchitectures: any;
 ```
 
-- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures">PnpmWorkspaceYamlSchemaSupportedArchitectures</a>
+- *Type:* any
 
 Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install.
+
+Either a mapping of os, cpu, and libc lists, or a list of exact platform tags to prepare.
 
 ---
 
@@ -20894,6 +21849,20 @@ A task is a script in one workspace project; it becomes ready after every task i
 
 ---
 
+##### `testPattern`<sup>Optional</sup> <a name="testPattern" id="projen.javascript.PnpmWorkspaceYamlSchema.property.testPattern"></a>
+
+```typescript
+public readonly testPattern: string[];
+```
+
+- *Type:* string[]
+
+Glob patterns of test files.
+
+When the changed files of a project all match them, the "changed since" filter leaves out the projects that depend on it.
+
+---
+
 ##### `trustLockfile`<sup>Optional</sup> <a name="trustLockfile" id="projen.javascript.PnpmWorkspaceYamlSchema.property.trustLockfile"></a>
 
 ```typescript
@@ -20931,6 +21900,18 @@ public readonly trustPolicyExclude: string[];
 - *Type:* string[]
 
 You can now list one or more specific packages or versions that pnpm should allow to install, even if those packages don't satisfy the trust policy requirement.
+
+---
+
+##### `trustPolicyExcludePrune`<sup>Optional</sup> <a name="trustPolicyExcludePrune" id="projen.javascript.PnpmWorkspaceYamlSchema.property.trustPolicyExcludePrune"></a>
+
+```typescript
+public readonly trustPolicyExcludePrune: boolean;
+```
+
+- *Type:* boolean
+
+When set to `true`, `pnpm add`, `pnpm update`, and `pnpm remove` prune the entries of [`trustPolicyExclude`](#trustpolicyexclude) in `pnpm-workspace.yaml` that the freshly written lockfile no longer resolves: a version that is gone is dropped (an entry is removed once none of its versions remain), and an entry for a package that is no longer in the lockfile is removed too. Name patterns (`@myorg/*`) are always kept.
 
 ---
 
@@ -21047,10 +22028,10 @@ When true, all the output is written to stderr.
 ##### `verifyDepsBeforeRun`<sup>Optional</sup> <a name="verifyDepsBeforeRun" id="projen.javascript.PnpmWorkspaceYamlSchema.property.verifyDepsBeforeRun"></a>
 
 ```typescript
-public readonly verifyDepsBeforeRun: any;
+public readonly verifyDepsBeforeRun: PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun;
 ```
 
-- *Type:* any
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun">PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun</a>
 
 This setting allows the checking of the state of dependencies before running scripts.
 
@@ -21128,7 +22109,7 @@ public readonly virtualStoreType: PnpmWorkspaceYamlSchemaVirtualStoreType;
 
 Determines where the virtual store is located.
 
-When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
 
 ---
 
@@ -21245,6 +22226,113 @@ A list of GHSA Codes that will be ignored by "pnpm audit".
 
 ---
 
+### PnpmWorkspaceYamlSchemaBootConfig <a name="PnpmWorkspaceYamlSchemaBootConfig" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig"></a>
+
+Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded.
+
+Added in pnpm v12.15.0.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaBootConfig: javascript.PnpmWorkspaceYamlSchemaBootConfig = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.minimumReleaseAge">minimumReleaseAge</a></code> | <code>number</code> | The minimum number of minutes that must pass after a version is published before pnpm will install it. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.minimumReleaseAgeExclude">minimumReleaseAgeExclude</a></code> | <code>string[]</code> | Packages that are exempt from the minimumReleaseAge check. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.trustPolicy">trustPolicy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy">PnpmWorkspaceYamlSchemaBootConfigTrustPolicy</a></code> | When set to no-downgrade, installation fails if a package's trust level has decreased compared to previous releases. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.trustPolicyExclude">trustPolicyExclude</a></code> | <code>string[]</code> | Packages or versions that are allowed to install even if they don't satisfy the trust policy requirement. |
+
+---
+
+##### `minimumReleaseAge`<sup>Optional</sup> <a name="minimumReleaseAge" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.minimumReleaseAge"></a>
+
+```typescript
+public readonly minimumReleaseAge: number;
+```
+
+- *Type:* number
+
+The minimum number of minutes that must pass after a version is published before pnpm will install it.
+
+---
+
+##### `minimumReleaseAgeExclude`<sup>Optional</sup> <a name="minimumReleaseAgeExclude" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.minimumReleaseAgeExclude"></a>
+
+```typescript
+public readonly minimumReleaseAgeExclude: string[];
+```
+
+- *Type:* string[]
+
+Packages that are exempt from the minimumReleaseAge check.
+
+---
+
+##### `trustPolicy`<sup>Optional</sup> <a name="trustPolicy" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.trustPolicy"></a>
+
+```typescript
+public readonly trustPolicy: PnpmWorkspaceYamlSchemaBootConfigTrustPolicy;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy">PnpmWorkspaceYamlSchemaBootConfigTrustPolicy</a>
+
+When set to no-downgrade, installation fails if a package's trust level has decreased compared to previous releases.
+
+---
+
+##### `trustPolicyExclude`<sup>Optional</sup> <a name="trustPolicyExclude" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfig.property.trustPolicyExclude"></a>
+
+```typescript
+public readonly trustPolicyExclude: string[];
+```
+
+- *Type:* string[]
+
+Packages or versions that are allowed to install even if they don't satisfy the trust policy requirement.
+
+---
+
+### PnpmWorkspaceYamlSchemaCargo <a name="PnpmWorkspaceYamlSchemaCargo" id="projen.javascript.PnpmWorkspaceYamlSchemaCargo"></a>
+
+Cargo (Rust) dependencies support: when enabled, `pnpm install` resolves and installs the workspace's Cargo dependencies next to the npm packages.
+
+Multi-ecosystem support is experimental. Added in: v12.4.0 (pnpm v12 only).
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaCargo.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaCargo: javascript.PnpmWorkspaceYamlSchemaCargo = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaCargo.property.enabled">enabled</a></code> | <code>boolean</code> | Whether pnpm install resolves and installs the workspace's Cargo dependencies. |
+
+---
+
+##### `enabled`<sup>Optional</sup> <a name="enabled" id="projen.javascript.PnpmWorkspaceYamlSchemaCargo.property.enabled"></a>
+
+```typescript
+public readonly enabled: boolean;
+```
+
+- *Type:* boolean
+
+Whether pnpm install resolves and installs the workspace's Cargo dependencies.
+
+---
+
 ### PnpmWorkspaceYamlSchemaExecutionEnv <a name="PnpmWorkspaceYamlSchemaExecutionEnv" id="projen.javascript.PnpmWorkspaceYamlSchemaExecutionEnv"></a>
 
 #### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaExecutionEnv.Initializer"></a>
@@ -21272,6 +22360,98 @@ public readonly nodeVersion: string;
 - *Type:* string
 
 Specifies which exact Node.js version should be used for the project's runtime.
+
+---
+
+### PnpmWorkspaceYamlSchemaMacosBackup <a name="PnpmWorkspaceYamlSchemaMacosBackup" id="projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup"></a>
+
+On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaMacosBackup: javascript.PnpmWorkspaceYamlSchemaMacosBackup = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup.property.excludeModulesDir">excludeModulesDir</a></code> | <code>boolean</code> | When true on macOS, newly created node_modules, virtual-store, and similar directories are marked so Time Machine skips them. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup.property.excludeStoreDir">excludeStoreDir</a></code> | <code>boolean</code> | When true on macOS, newly created package-store directories are marked so Time Machine skips them. |
+
+---
+
+##### `excludeModulesDir`<sup>Optional</sup> <a name="excludeModulesDir" id="projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup.property.excludeModulesDir"></a>
+
+```typescript
+public readonly excludeModulesDir: boolean;
+```
+
+- *Type:* boolean
+
+When true on macOS, newly created node_modules, virtual-store, and similar directories are marked so Time Machine skips them.
+
+---
+
+##### `excludeStoreDir`<sup>Optional</sup> <a name="excludeStoreDir" id="projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup.property.excludeStoreDir"></a>
+
+```typescript
+public readonly excludeStoreDir: boolean;
+```
+
+- *Type:* boolean
+
+When true on macOS, newly created package-store directories are marked so Time Machine skips them.
+
+---
+
+### PnpmWorkspaceYamlSchemaNodePackageMap <a name="PnpmWorkspaceYamlSchemaNodePackageMap" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap"></a>
+
+Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaNodePackageMap: javascript.PnpmWorkspaceYamlSchemaNodePackageMap = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap.property.mode">mode</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode">PnpmWorkspaceYamlSchemaNodePackageMapMode</a></code> | off - pnpm writes no package map, and an install removes a map that an earlier install left. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap.property.type">type</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. |
+
+---
+
+##### `mode`<sup>Optional</sup> <a name="mode" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap.property.mode"></a>
+
+```typescript
+public readonly mode: PnpmWorkspaceYamlSchemaNodePackageMapMode;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode">PnpmWorkspaceYamlSchemaNodePackageMapMode</a>
+
+off - pnpm writes no package map, and an install removes a map that an earlier install left.
+
+write-only - pnpm writes the package map for other tools to read; Node.js does not load it. load - pnpm also adds Node's --experimental-package-map option to NODE_OPTIONS in pnpm-managed Node.js script environments.
+
+---
+
+##### `type`<sup>Optional</sup> <a name="type" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap.property.type"></a>
+
+```typescript
+public readonly type: PnpmWorkspaceYamlSchemaNodePackageMapType;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a>
+
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
 
 ---
 
@@ -21331,55 +22511,75 @@ pnpm will not print warnings about missing peer dependencies from this list.
 
 ---
 
-### PnpmWorkspaceYamlSchemaSupportedArchitectures <a name="PnpmWorkspaceYamlSchemaSupportedArchitectures" id="projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures"></a>
+### PnpmWorkspaceYamlSchemaRemoteCache <a name="PnpmWorkspaceYamlSchemaRemoteCache" id="projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache"></a>
 
-Specifies architectures for which you'd like to install optional dependencies, even if they don't match the architecture of the system running the install.
+The server that shares task results and dependency builds between machines, and the keys every shared artifact is signed and verified with.
 
-#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.Initializer"></a>
+Read by both sideEffectsCache.remote and the task cache of pnpm pipeline. Only org may be set in pnpm-workspace.yaml; the fields naming the server and its trust material (url, team, trustedKeys, publish, privateKey, keyId, builderId, imageDigest, architectureBaseline, buildEnv) are read from the global configuration file or the PNPM_REMOTE_CACHE_* environment variables instead, and setting them here fails with ERR_PNPM_WORKSPACE_REMOTE_CACHE_TRUST. Added in pnpm v12.12.0.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache.Initializer"></a>
 
 ```typescript
 import { javascript } from 'projen'
 
-const pnpmWorkspaceYamlSchemaSupportedArchitectures: javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures = { ... }
+const pnpmWorkspaceYamlSchemaRemoteCache: javascript.PnpmWorkspaceYamlSchemaRemoteCache = { ... }
 ```
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.cpu">cpu</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.libc">libc</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.os">os</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache.property.org">org</a></code> | <code>string</code> | The organization that owns the artifacts. |
 
 ---
 
-##### `cpu`<sup>Optional</sup> <a name="cpu" id="projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.cpu"></a>
+##### `org`<sup>Optional</sup> <a name="org" id="projen.javascript.PnpmWorkspaceYamlSchemaRemoteCache.property.org"></a>
 
 ```typescript
-public readonly cpu: string[];
+public readonly org: string;
+```
+
+- *Type:* string
+
+The organization that owns the artifacts.
+
+On a pnpr server, one of the organizations it declares under artifacts.orgs. It also names the organization pnpm pipeline --report records a run under.
+
+---
+
+### PnpmWorkspaceYamlSchemaSkills <a name="PnpmWorkspaceYamlSchemaSkills" id="projen.javascript.PnpmWorkspaceYamlSchemaSkills"></a>
+
+Agent skills that approved dependencies ship.
+
+Added in pnpm v12.11.0.
+
+#### Initializer <a name="Initializer" id="projen.javascript.PnpmWorkspaceYamlSchemaSkills.Initializer"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+const pnpmWorkspaceYamlSchemaSkills: javascript.PnpmWorkspaceYamlSchemaSkills = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaSkills.property.dirs">dirs</a></code> | <code>string[]</code> | The directories, relative to the workspace root, that pnpm links approved agent skills into. |
+
+---
+
+##### `dirs`<sup>Optional</sup> <a name="dirs" id="projen.javascript.PnpmWorkspaceYamlSchemaSkills.property.dirs"></a>
+
+```typescript
+public readonly dirs: string[];
 ```
 
 - *Type:* string[]
 
----
+The directories, relative to the workspace root, that pnpm links approved agent skills into.
 
-##### `libc`<sup>Optional</sup> <a name="libc" id="projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.libc"></a>
-
-```typescript
-public readonly libc: string[];
-```
-
-- *Type:* string[]
-
----
-
-##### `os`<sup>Optional</sup> <a name="os" id="projen.javascript.PnpmWorkspaceYamlSchemaSupportedArchitectures.property.os"></a>
-
-```typescript
-public readonly os: string[];
-```
-
-- *Type:* string[]
+When set, it replaces the detected directories, and pnpm creates the ones that are missing. An empty list turns agent skills off.
 
 ---
 
@@ -21397,8 +22597,43 @@ const pnpmWorkspaceYamlSchemaTasks: javascript.PnpmWorkspaceYamlSchemaTasks = { 
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.cache">cache</a></code> | <code>boolean</code> | Set to false to opt a task with declared outputs back out of the `pnpm pipeline` cache. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.cargoTargetDir">cargoTargetDir</a></code> | <code>string</code> | Points Cargo's target and build directories at this path so a Cargo task keeps its local build state between runs and between git worktrees. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.concurrency">concurrency</a></code> | <code>number</code> | A positive integer limiting how many instances of this named task may run across workspace projects at once. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.concurrencyGroup">concurrencyGroup</a></code> | <code>string</code> | Assigns this task to a named concurrency group whose machine-wide limit is configured under concurrencyGroups. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.dependsOn">dependsOn</a></code> | <code>string[]</code> | Tasks this task depends on. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.env">env</a></code> | <code>string[]</code> | Environment variable names whose values take part in the task's cache key. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.inputs">inputs</a></code> | <code>string[]</code> | Globs narrowing what goes into the task's cache key. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.outputs">outputs</a></code> | <code>string[]</code> | Globs, relative to the project directory, naming the files the task produces. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.priority">priority</a></code> | <code>number</code> | Waiting tasks take available slots in order of descending priority, with higher values running first. |
+
+---
+
+##### `cache`<sup>Optional</sup> <a name="cache" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.cache"></a>
+
+```typescript
+public readonly cache: boolean;
+```
+
+- *Type:* boolean
+
+Set to false to opt a task with declared outputs back out of the `pnpm pipeline` cache.
+
+Read by pnpm pipeline only.
+
+---
+
+##### `cargoTargetDir`<sup>Optional</sup> <a name="cargoTargetDir" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.cargoTargetDir"></a>
+
+```typescript
+public readonly cargoTargetDir: string;
+```
+
+- *Type:* string
+
+Points Cargo's target and build directories at this path so a Cargo task keeps its local build state between runs and between git worktrees.
+
+The directory must be relative to the project and ignored by git. Read by pnpm pipeline only.
 
 ---
 
@@ -21416,6 +22651,20 @@ This limit is separate from workspaceConcurrency.
 
 ---
 
+##### `concurrencyGroup`<sup>Optional</sup> <a name="concurrencyGroup" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.concurrencyGroup"></a>
+
+```typescript
+public readonly concurrencyGroup: string;
+```
+
+- *Type:* string
+
+Assigns this task to a named concurrency group whose machine-wide limit is configured under concurrencyGroups.
+
+Added in pnpm v12.5.0.
+
+---
+
 ##### `dependsOn`<sup>Optional</sup> <a name="dependsOn" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.dependsOn"></a>
 
 ```typescript
@@ -21427,6 +22676,62 @@ public readonly dependsOn: string[];
 Tasks this task depends on.
 
 Each entry is either the task in the same project (e.g. `build`) or the task in each selected workspace dependency of the project (e.g. `^build`).
+
+---
+
+##### `env`<sup>Optional</sup> <a name="env" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.env"></a>
+
+```typescript
+public readonly env: string[];
+```
+
+- *Type:* string[]
+
+Environment variable names whose values take part in the task's cache key.
+
+The values are hashed, never stored. Read by pnpm pipeline only.
+
+---
+
+##### `inputs`<sup>Optional</sup> <a name="inputs" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.inputs"></a>
+
+```typescript
+public readonly inputs: string[];
+```
+
+- *Type:* string[]
+
+Globs narrowing what goes into the task's cache key.
+
+Without it, every tracked file of the project counts. An entry prefixed with `+` adds to that default instead of replacing it. Read by pnpm pipeline only.
+
+---
+
+##### `outputs`<sup>Optional</sup> <a name="outputs" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.outputs"></a>
+
+```typescript
+public readonly outputs: string[];
+```
+
+- *Type:* string[]
+
+Globs, relative to the project directory, naming the files the task produces.
+
+Their presence makes the task cacheable by `pnpm pipeline`; declaring `outputs: []` states the task produces no files. Read by pnpm pipeline only.
+
+---
+
+##### `priority`<sup>Optional</sup> <a name="priority" id="projen.javascript.PnpmWorkspaceYamlSchemaTasks.property.priority"></a>
+
+```typescript
+public readonly priority: number;
+```
+
+- *Type:* number
+
+Waiting tasks take available slots in order of descending priority, with higher values running first.
+
+Ties are broken by arrival order. Added in pnpm v12.6.0.
 
 ---
 
@@ -26219,6 +27524,67 @@ public readonly value: string | boolean;
 ---
 
 
+### PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun <a name="PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun"></a>
+
+This setting allows the checking of the state of dependencies before running scripts.
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromBoolean">fromBoolean</a></code> | *No description.* |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromString">fromString</a></code> | *No description.* |
+
+---
+
+##### `fromBoolean` <a name="fromBoolean" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromBoolean"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromBoolean(value: boolean)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromBoolean.parameter.value"></a>
+
+- *Type:* boolean
+
+---
+
+##### `fromString` <a name="fromString" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromString"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromString(value: string)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.fromString.parameter.value"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.property.value">value</a></code> | <code>string \| boolean</code> | *No description.* |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun.property.value"></a>
+
+```typescript
+public readonly value: string | boolean;
+```
+
+- *Type:* string | boolean
+
+---
+
+
 ### Transform <a name="Transform" id="projen.javascript.Transform"></a>
 
 #### Initializers <a name="Initializers" id="projen.javascript.Transform.Initializer"></a>
@@ -26951,6 +28317,33 @@ critical.
 ---
 
 
+### PnpmWorkspaceYamlSchemaBootConfigTrustPolicy <a name="PnpmWorkspaceYamlSchemaBootConfigTrustPolicy" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy"></a>
+
+When set to no-downgrade, installation fails if a package's trust level has decreased compared to previous releases.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy.OFF">OFF</a></code> | off. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy.NO_HYPHEN_DOWNGRADE">NO_HYPHEN_DOWNGRADE</a></code> | no-downgrade. |
+
+---
+
+##### `OFF` <a name="OFF" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy.OFF"></a>
+
+off.
+
+---
+
+
+##### `NO_HYPHEN_DOWNGRADE` <a name="NO_HYPHEN_DOWNGRADE" id="projen.javascript.PnpmWorkspaceYamlSchemaBootConfigTrustPolicy.NO_HYPHEN_DOWNGRADE"></a>
+
+no-downgrade.
+
+---
+
+
 ### PnpmWorkspaceYamlSchemaCatalogMode <a name="PnpmWorkspaceYamlSchemaCatalogMode" id="projen.javascript.PnpmWorkspaceYamlSchemaCatalogMode"></a>
 
 Controlling if and how dependencies are added to the default catalog.
@@ -27101,44 +28494,46 @@ error.
 ---
 
 
-### PnpmWorkspaceYamlSchemaNodeLinker <a name="PnpmWorkspaceYamlSchemaNodeLinker" id="projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker"></a>
+### PnpmWorkspaceYamlSchemaNodePackageMapMode <a name="PnpmWorkspaceYamlSchemaNodePackageMapMode" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode"></a>
 
-Defines what linker should be used for installing Node packages.
+off - pnpm writes no package map, and an install removes a map that an earlier install left.
+
+write-only - pnpm writes the package map for other tools to read; Node.js does not load it. load - pnpm also adds Node's --experimental-package-map option to NODE_OPTIONS in pnpm-managed Node.js script environments.
 
 #### Members <a name="Members" id="Members"></a>
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.ISOLATED">ISOLATED</a></code> | isolated. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.HOISTED">HOISTED</a></code> | hoisted. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.PNP">PNP</a></code> | pnp. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.OFF">OFF</a></code> | off. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.WRITE_HYPHEN_ONLY">WRITE_HYPHEN_ONLY</a></code> | write-only. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.LOAD">LOAD</a></code> | load. |
 
 ---
 
-##### `ISOLATED` <a name="ISOLATED" id="projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.ISOLATED"></a>
+##### `OFF` <a name="OFF" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.OFF"></a>
 
-isolated.
-
----
-
-
-##### `HOISTED` <a name="HOISTED" id="projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.HOISTED"></a>
-
-hoisted.
+off.
 
 ---
 
 
-##### `PNP` <a name="PNP" id="projen.javascript.PnpmWorkspaceYamlSchemaNodeLinker.PNP"></a>
+##### `WRITE_HYPHEN_ONLY` <a name="WRITE_HYPHEN_ONLY" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.WRITE_HYPHEN_ONLY"></a>
 
-pnp.
+write-only.
+
+---
+
+
+##### `LOAD` <a name="LOAD" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapMode.LOAD"></a>
+
+load.
 
 ---
 
 
 ### PnpmWorkspaceYamlSchemaNodePackageMapType <a name="PnpmWorkspaceYamlSchemaNodePackageMapType" id="projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType"></a>
 
-Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve.
+Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place.
 
 #### Members <a name="Members" id="Members"></a>
 
@@ -27415,6 +28810,35 @@ Configure how versions of packages installed to a package.json file get prefixed
 ---
 
 
+### PnpmWorkspaceYamlSchemaStoreIndexFormat <a name="PnpmWorkspaceYamlSchemaStoreIndexFormat" id="projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat"></a>
+
+How the store records which files each package has.
+
+sqlite - one index.db database; SQLite's locking only works between processes on one machine, so this format is for a store on a local disk. files - one file per package in the store's index directory, for a store on a network filesystem that several machines use at once, such as a store shared by CI jobs; each entry is written to a temporary file and renamed into place, so concurrent jobs need no locks. The format belongs to the store: once the index directory exists, every pnpm process uses it whatever its own setting says, and the packages recorded in an existing index.db are not carried over when switching. pnpm v11 reads only index.db. Added in pnpm v12.13.0.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat.SQLITE">SQLITE</a></code> | sqlite. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat.FILES">FILES</a></code> | files. |
+
+---
+
+##### `SQLITE` <a name="SQLITE" id="projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat.SQLITE"></a>
+
+sqlite.
+
+---
+
+
+##### `FILES` <a name="FILES" id="projen.javascript.PnpmWorkspaceYamlSchemaStoreIndexFormat.FILES"></a>
+
+files.
+
+---
+
+
 ### PnpmWorkspaceYamlSchemaTrustPolicy <a name="PnpmWorkspaceYamlSchemaTrustPolicy" id="projen.javascript.PnpmWorkspaceYamlSchemaTrustPolicy"></a>
 
 When set to no-downgrade, pnpm will fail if a package's trust level has decreased compared to previous releases.
@@ -27512,7 +28936,7 @@ major.
 
 Determines where the virtual store is located.
 
-When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. Added in pnpm v11.23.0.
+When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
 
 #### Members <a name="Members" id="Members"></a>
 

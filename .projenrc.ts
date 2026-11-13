@@ -338,14 +338,18 @@ new JsiiFromJsonSchema(project, {
   structName: "PyprojectToml",
   schemaPath: "https://json.schemastore.org/pyproject.json",
   filePath: path.join("src", "python", "pyproject-toml.ts"),
-  transform: (schema) => (
-    (schema.properties.tool.properties = Object.fromEntries(
+  transform: (schema) => {
+    schema.properties.tool.properties = Object.fromEntries(
       Object.entries(schema.properties.tool.properties).map(
         ([tool, def]) => (delete (def as any).$ref, [tool, def]),
       ),
-    )),
-    schema
-  ),
+    );
+    // json2jsii renders a union of two string types with a duplicate `fromString`
+    schema.properties.project.properties["import-names"].items = {
+      type: "string",
+    };
+    return schema;
+  },
 });
 
 new JsiiFromJsonSchema(project, {
@@ -366,6 +370,18 @@ new JsiiFromJsonSchema(project, {
   structName: "PnpmWorkspaceYamlSchema",
   schemaPath: "https://json.schemastore.org/pnpm-workspace.json",
   filePath: path.join("src", "javascript", "pnpm-workspace-config.ts"),
+  transform: (schema) => {
+    // json2jsii renders a union of two string types with a duplicate `fromString`,
+    // so keep only the enum
+    const virtualStoreType = schema.properties.virtualStoreType;
+    virtualStoreType.enum = virtualStoreType.oneOf[0].enum;
+    virtualStoreType.type = "string";
+    delete virtualStoreType.oneOf;
+    // json2jsii renders a `build` property as `build_`, which jsii rejects, and renaming
+    // it would also rename the key in pnpm-workspace.yaml
+    delete schema.properties.permissions;
+    return schema;
+  },
 });
 
 new JsiiFromJsonSchema(project, {

@@ -420,7 +420,7 @@ describe("github-workflow", () => {
            steps:
              - name: Download artifact
                id: download_artifact
-               uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+               uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
        "
       `);
     });
@@ -455,7 +455,7 @@ describe("github-workflow", () => {
            steps:
              - name: Download artifact
                id: download_artifact
-               uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+               uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
                with:
                  name: foobar
        "
@@ -492,7 +492,7 @@ describe("github-workflow", () => {
            steps:
              - name: Download artifact
                id: download_artifact
-               uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+               uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
                with:
                  artifact-ids: 123,456
        "
@@ -529,7 +529,7 @@ describe("github-workflow", () => {
            steps:
              - name: Download artifact
                id: download_artifact
-               uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+               uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
                with: {}
        "
       `);

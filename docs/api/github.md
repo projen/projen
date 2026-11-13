@@ -13149,23 +13149,23 @@ reviewed action version.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_CHECKOUT">ACTIONS_CHECKOUT</a></code> | <code>string</code> | actions/checkout at v7.0.1. |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_CREATE_GITHUB_APP_TOKEN">ACTIONS_CREATE_GITHUB_APP_TOKEN</a></code> | <code>string</code> | actions/create-github-app-token at v3.2.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_CREATE_GITHUB_APP_TOKEN">ACTIONS_CREATE_GITHUB_APP_TOKEN</a></code> | <code>string</code> | actions/create-github-app-token at v3.3.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_DEPENDENCY_REVIEW_ACTION">ACTIONS_DEPENDENCY_REVIEW_ACTION</a></code> | <code>string</code> | actions/dependency-review-action at v5.0.0. |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_DOWNLOAD_ARTIFACT">ACTIONS_DOWNLOAD_ARTIFACT</a></code> | <code>string</code> | actions/download-artifact at v8.0.1. |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_DOWNLOAD_ARTIFACT">ACTIONS_DOWNLOAD_ARTIFACT</a></code> | <code>string</code> | actions/download-artifact at v8.0.2. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_GITHUB_SCRIPT">ACTIONS_GITHUB_SCRIPT</a></code> | <code>string</code> | actions/github-script at v9.0.0. |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_DOTNET">ACTIONS_SETUP_DOTNET</a></code> | <code>string</code> | actions/setup-dotnet at v6.0.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_DOTNET">ACTIONS_SETUP_DOTNET</a></code> | <code>string</code> | actions/setup-dotnet at v6.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_GO">ACTIONS_SETUP_GO</a></code> | <code>string</code> | actions/setup-go at v7.0.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_JAVA">ACTIONS_SETUP_JAVA</a></code> | <code>string</code> | actions/setup-java at v6.0.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_NODE">ACTIONS_SETUP_NODE</a></code> | <code>string</code> | actions/setup-node at v7.0.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_PYTHON">ACTIONS_SETUP_PYTHON</a></code> | <code>string</code> | actions/setup-python at v7.0.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_JAVA">ACTIONS_SETUP_JAVA</a></code> | <code>string</code> | actions/setup-java at v6.2.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_NODE">ACTIONS_SETUP_NODE</a></code> | <code>string</code> | actions/setup-node at v7.1.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_PYTHON">ACTIONS_SETUP_PYTHON</a></code> | <code>string</code> | actions/setup-python at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_STALE">ACTIONS_STALE</a></code> | <code>string</code> | actions/stale at v11.0.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_UPLOAD_ARTIFACT">ACTIONS_UPLOAD_ARTIFACT</a></code> | <code>string</code> | actions/upload-artifact at v7.0.1. |
-| <code><a href="#projen.github.ActionRefs.property.AMANNN_ACTION_SEMANTIC_PULL_REQUEST">AMANNN_ACTION_SEMANTIC_PULL_REQUEST</a></code> | <code>string</code> | amannn/action-semantic-pull-request at v6.1.1. |
-| <code><a href="#projen.github.ActionRefs.property.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS">AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS</a></code> | <code>string</code> | aws-actions/configure-aws-credentials at v6.2.3 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.CODECOV_CODECOV_ACTION">CODECOV_CODECOV_ACTION</a></code> | <code>string</code> | codecov/codecov-action at v7.0.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_UPLOAD_ARTIFACT">ACTIONS_UPLOAD_ARTIFACT</a></code> | <code>string</code> | actions/upload-artifact at v7.0.2. |
+| <code><a href="#projen.github.ActionRefs.property.AMANNN_ACTION_SEMANTIC_PULL_REQUEST">AMANNN_ACTION_SEMANTIC_PULL_REQUEST</a></code> | <code>string</code> | amannn/action-semantic-pull-request at v6.1.2 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS">AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS</a></code> | <code>string</code> | aws-actions/configure-aws-credentials at v6.3.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.CODECOV_CODECOV_ACTION">CODECOV_CODECOV_ACTION</a></code> | <code>string</code> | codecov/codecov-action at v7.1.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.OVEN_SH_SETUP_BUN">OVEN_SH_SETUP_BUN</a></code> | <code>string</code> | oven-sh/setup-bun at v2.2.0. |
 | <code><a href="#projen.github.ActionRefs.property.PETER_EVANS_CREATE_PULL_REQUEST">PETER_EVANS_CREATE_PULL_REQUEST</a></code> | <code>string</code> | peter-evans/create-pull-request at v8.1.1 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.PNPM_ACTION_SETUP">PNPM_ACTION_SETUP</a></code> | <code>string</code> | pnpm/action-setup at v6.0.10 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.PNPM_ACTION_SETUP">PNPM_ACTION_SETUP</a></code> | <code>string</code> | pnpm/action-setup at v6.1.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.SQREN_BACKPORT_GITHUB_ACTION">SQREN_BACKPORT_GITHUB_ACTION</a></code> | <code>string</code> | sqren/backport-github-action at v12.0.4. |
 
 ---
@@ -13190,7 +13190,7 @@ public readonly ACTIONS_CREATE_GITHUB_APP_TOKEN: string;
 
 - *Type:* string
 
-actions/create-github-app-token at v3.2.0 (immutable).
+actions/create-github-app-token at v3.3.0 (immutable).
 
 ---
 
@@ -13214,7 +13214,7 @@ public readonly ACTIONS_DOWNLOAD_ARTIFACT: string;
 
 - *Type:* string
 
-actions/download-artifact at v8.0.1.
+actions/download-artifact at v8.0.2.
 
 ---
 
@@ -13238,7 +13238,7 @@ public readonly ACTIONS_SETUP_DOTNET: string;
 
 - *Type:* string
 
-actions/setup-dotnet at v6.0.0 (immutable).
+actions/setup-dotnet at v6.1.0 (immutable).
 
 ---
 
@@ -13262,7 +13262,7 @@ public readonly ACTIONS_SETUP_JAVA: string;
 
 - *Type:* string
 
-actions/setup-java at v6.0.0 (immutable).
+actions/setup-java at v6.2.0 (immutable).
 
 ---
 
@@ -13274,7 +13274,7 @@ public readonly ACTIONS_SETUP_NODE: string;
 
 - *Type:* string
 
-actions/setup-node at v7.0.0 (immutable).
+actions/setup-node at v7.1.0 (immutable).
 
 ---
 
@@ -13286,7 +13286,7 @@ public readonly ACTIONS_SETUP_PYTHON: string;
 
 - *Type:* string
 
-actions/setup-python at v7.0.0 (immutable).
+actions/setup-python at v7.1.0 (immutable).
 
 ---
 
@@ -13310,7 +13310,7 @@ public readonly ACTIONS_UPLOAD_ARTIFACT: string;
 
 - *Type:* string
 
-actions/upload-artifact at v7.0.1.
+actions/upload-artifact at v7.0.2.
 
 ---
 
@@ -13322,7 +13322,7 @@ public readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST: string;
 
 - *Type:* string
 
-amannn/action-semantic-pull-request at v6.1.1.
+amannn/action-semantic-pull-request at v6.1.2 (immutable).
 
 ---
 
@@ -13334,7 +13334,7 @@ public readonly AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS: string;
 
 - *Type:* string
 
-aws-actions/configure-aws-credentials at v6.2.3 (immutable).
+aws-actions/configure-aws-credentials at v6.3.0 (immutable).
 
 ---
 
@@ -13346,7 +13346,7 @@ public readonly CODECOV_CODECOV_ACTION: string;
 
 - *Type:* string
 
-codecov/codecov-action at v7.0.0 (immutable).
+codecov/codecov-action at v7.1.1 (immutable).
 
 ---
 
@@ -13382,7 +13382,7 @@ public readonly PNPM_ACTION_SETUP: string;
 
 - *Type:* string
 
-pnpm/action-setup at v6.0.10 (immutable).
+pnpm/action-setup at v6.1.1 (immutable).
 
 ---
 

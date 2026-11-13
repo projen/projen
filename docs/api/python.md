@@ -5947,7 +5947,7 @@ const pyprojectToml: python.PyprojectToml = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectToml.property.buildSystem">buildSystem</a></code> | <code><a href="#projen.python.BuildSystem">BuildSystem</a></code> | *No description.* |
-| <code><a href="#projen.python.PyprojectToml.property.dependencyGroups">dependencyGroups</a></code> | <code><a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a></code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
+| <code><a href="#projen.python.PyprojectToml.property.dependencyGroups">dependencyGroups</a></code> | <code>any</code> | Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/). |
 | <code><a href="#projen.python.PyprojectToml.property.project">project</a></code> | <code><a href="#projen.python.PyprojectTomlProject">PyprojectTomlProject</a></code> | There are three kinds of metadata: _static_, _dynamic_, and _partially dynamic_. |
 | <code><a href="#projen.python.PyprojectToml.property.tool">tool</a></code> | <code><a href="#projen.python.PyprojectTomlTool">PyprojectTomlTool</a></code> | Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`. |
 
@@ -5966,10 +5966,10 @@ public readonly buildSystem: BuildSystem;
 ##### `dependencyGroups`<sup>Optional</sup> <a name="dependencyGroups" id="projen.python.PyprojectToml.property.dependencyGroups"></a>
 
 ```typescript
-public readonly dependencyGroups: PyprojectTomlDependencyGroups;
+public readonly dependencyGroups: any;
 ```
 
-- *Type:* <a href="#projen.python.PyprojectTomlDependencyGroups">PyprojectTomlDependencyGroups</a>
+- *Type:* any
 
 Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
 
@@ -6002,36 +6002,6 @@ public readonly tool: PyprojectTomlTool;
 Every tool that is used by the project can have users specify configuration data as long as they use a sub-table within `[tool]`.
 
 Generally a project can use the subtable `tool.$NAME` if, and only if, they own the entry for `$NAME` in the Cheeseshop/PyPI.
-
----
-
-### PyprojectTomlDependencyGroups <a name="PyprojectTomlDependencyGroups" id="projen.python.PyprojectTomlDependencyGroups"></a>
-
-Named groups of dependencies, similar to `requirements.txt` files, which launchers, IDEs, and other tools can find and identify by name. Each item in `[dependency-groups]` is defined as mapping of group name to list of [dependency specifiers](https://packaging.python.org/en/latest/specifications/dependency-specifiers/).
-
-#### Initializer <a name="Initializer" id="projen.python.PyprojectTomlDependencyGroups.Initializer"></a>
-
-```typescript
-import { python } from 'projen'
-
-const pyprojectTomlDependencyGroups: python.PyprojectTomlDependencyGroups = { ... }
-```
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#projen.python.PyprojectTomlDependencyGroups.property.dev">dev</a></code> | <code>any[]</code> | *No description.* |
-
----
-
-##### `dev`<sup>Optional</sup> <a name="dev" id="projen.python.PyprojectTomlDependencyGroups.property.dev"></a>
-
-```typescript
-public readonly dev: any[];
-```
-
-- *Type:* any[]
 
 ---
 
@@ -6357,10 +6327,12 @@ const pyprojectTomlTool: python.PyprojectTomlTool = { ... }
 | --- | --- | --- |
 | <code><a href="#projen.python.PyprojectTomlTool.property.black">black</a></code> | <code>any</code> | The uncompromising Python code formatter. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.cibuildwheel">cibuildwheel</a></code> | <code>any</code> | Build Python wheels for all platforms. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.complexipy">complexipy</a></code> | <code>any</code> | Measures how hard Python code is for humans to understand. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.dfc">dfc</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.docstringFormatChecker">docstringFormatChecker</a></code> | <code>any</code> | A CLI tool to check and validate Python docstring formatting and completeness. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.fastapi">fastapi</a></code> | <code>any</code> | FastAPI web framework configuration. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.hatch">hatch</a></code> | <code>any</code> | Modern, extensible Python project management. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.inwards">inwards</a></code> | <code>any</code> | Architecture linter for Python: layers, bounded contexts and package shapes. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.maturin">maturin</a></code> | <code>any</code> | Build and publish crates with pyo3, cffi and uniffi bindings as well as rust binaries as python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.mypy">mypy</a></code> | <code>any</code> | Optional static typing for Python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.pdm">pdm</a></code> | <code>any</code> | A modern Python package manager with PEP 621 support. |
@@ -6376,11 +6348,13 @@ const pyprojectTomlTool: python.PyprojectTomlTool = { ... }
 | <code><a href="#projen.python.PyprojectTomlTool.property.scikitBuild">scikitBuild</a></code> | <code>any</code> | Improved build system generator for Python C/C++/Fortran extensions. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptools">setuptools</a></code> | <code>any</code> | Easily download, build, install, upgrade, and uninstall Python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.setuptoolsScm">setuptoolsScm</a></code> | <code>any</code> | Manage Python package versions using SCM (e.g. Git). |
+| <code><a href="#projen.python.PyprojectTomlTool.property.simplint">simplint</a></code> | <code>any</code> | Ruff companion linter with extra checks that make Python easier to read and review. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.taskipy">taskipy</a></code> | <code>any</code> | The complementary task runner for python. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.tombi">tombi</a></code> | <code>any</code> | Tombi is a toolkit for TOML; |
 | <code><a href="#projen.python.PyprojectTomlTool.property.tox">tox</a></code> | <code>any</code> | Standardized automated testing of Python packages. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.ty">ty</a></code> | <code>any</code> | An extremely fast Python type checker, written in Rust. |
 | <code><a href="#projen.python.PyprojectTomlTool.property.uv">uv</a></code> | <code>any</code> | An extremely fast Python package installer and resolver, written in Rust. |
+| <code><a href="#projen.python.PyprojectTomlTool.property.workers">workers</a></code> | <code>any</code> | Workers in Python's `pyproject.toml`. |
 
 ---
 
@@ -6405,6 +6379,18 @@ public readonly cibuildwheel: any;
 - *Type:* any
 
 Build Python wheels for all platforms.
+
+---
+
+##### `complexipy`<sup>Optional</sup> <a name="complexipy" id="projen.python.PyprojectTomlTool.property.complexipy"></a>
+
+```typescript
+public readonly complexipy: any;
+```
+
+- *Type:* any
+
+Measures how hard Python code is for humans to understand.
 
 ---
 
@@ -6453,6 +6439,20 @@ public readonly hatch: any;
 - *Type:* any
 
 Modern, extensible Python project management.
+
+---
+
+##### `inwards`<sup>Optional</sup> <a name="inwards" id="projen.python.PyprojectTomlTool.property.inwards"></a>
+
+```typescript
+public readonly inwards: any;
+```
+
+- *Type:* any
+
+Architecture linter for Python: layers, bounded contexts and package shapes.
+
+https://sircypkowskyy.github.io/inwards/guides/configuration/
 
 ---
 
@@ -6657,6 +6657,18 @@ Manage Python package versions using SCM (e.g. Git).
 
 ---
 
+##### `simplint`<sup>Optional</sup> <a name="simplint" id="projen.python.PyprojectTomlTool.property.simplint"></a>
+
+```typescript
+public readonly simplint: any;
+```
+
+- *Type:* any
+
+Ruff companion linter with extra checks that make Python easier to read and review.
+
+---
+
 ##### `taskipy`<sup>Optional</sup> <a name="taskipy" id="projen.python.PyprojectTomlTool.property.taskipy"></a>
 
 ```typescript
@@ -6716,6 +6728,41 @@ public readonly uv: any;
 - *Type:* any
 
 An extremely fast Python package installer and resolver, written in Rust.
+
+---
+
+##### `workers`<sup>Optional</sup> <a name="workers" id="projen.python.PyprojectTomlTool.property.workers"></a>
+
+```typescript
+public readonly workers: any;
+```
+
+- *Type:* any
+
+Workers in Python's `pyproject.toml`.
+
+This is a specification for declaring background workers in Python projects, in `pyproject.toml`.
+
+It defines how workers are declared and how providers would run them.
+
+For example, a file at `app/worker.py` could define:
+
+```python
+from time import sleep
+
+
+def run():
+while True:
+print("Doing background work", flush=True)
+sleep(1)
+```
+
+You could define a worker to run that function with:
+
+```toml
+[tool.workers.background]
+entrypoint = "app.worker:run"
+```
 
 ---
 

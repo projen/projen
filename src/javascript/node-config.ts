@@ -9,6 +9,11 @@ export interface NodeConfigSchema {
   readonly schema?: string;
 
   /**
+   * @schema NodeConfigSchema#bench
+   */
+  readonly bench?: NodeConfigSchemaBench;
+
+  /**
    * @schema NodeConfigSchema#nodeOptions
    */
   readonly nodeOptions?: NodeConfigSchemaNodeOptions;
@@ -43,11 +48,87 @@ export function toJson_NodeConfigSchema(obj: NodeConfigSchema | undefined): Reco
   if (obj === undefined) { return undefined; }
   const result = {
     '$schema': obj.schema,
+    'bench': toJson_NodeConfigSchemaBench(obj.bench),
     'nodeOptions': toJson_NodeConfigSchemaNodeOptions(obj.nodeOptions),
     'nodeVersion': obj.nodeVersion,
     'permission': toJson_NodeConfigSchemaPermission(obj.permission),
     'test': toJson_NodeConfigSchemaTest(obj.test),
     'watch': toJson_NodeConfigSchemaWatch(obj.watch),
+  };
+  // filter undefined values
+  return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
+}
+/* eslint-enable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+
+/**
+ * @schema NodeConfigSchemaBench
+ */
+export interface NodeConfigSchemaBench {
+  /**
+   * launch benchmark runner on startup
+   *
+   * @schema NodeConfigSchemaBench#bench
+   */
+  readonly bench?: boolean;
+
+  /**
+   * configures the type of benchmark isolation used in the benchmark runner
+   *
+   * @schema NodeConfigSchemaBench#bench-isolation
+   */
+  readonly benchIsolation?: string;
+
+  /**
+   * run benchmarks whose name matches this regular expression
+   *
+   * @schema NodeConfigSchemaBench#bench-name-pattern
+   */
+  readonly benchNamePattern?: string;
+
+  /**
+   * report benchmark output using the given reporter
+   *
+   * @schema NodeConfigSchemaBench#bench-reporter
+   */
+  readonly benchReporter?: string[];
+
+  /**
+   * report the given benchmark reporter to the given destination
+   *
+   * @schema NodeConfigSchemaBench#bench-reporter-destination
+   */
+  readonly benchReporterDestination?: string[];
+
+  /**
+   * specify the number of measured benchmark samples
+   *
+   * @schema NodeConfigSchemaBench#bench-samples
+   */
+  readonly benchSamples?: number;
+
+  /**
+   * specify the number of unreported benchmark warmup samples
+   *
+   * @schema NodeConfigSchemaBench#bench-warmup
+   */
+  readonly benchWarmup?: number;
+}
+
+/**
+ * Converts an object of type 'NodeConfigSchemaBench' to JSON representation.
+ * @internal
+ */
+/* eslint-disable max-len, @stylistic/max-len, quote-props, @stylistic/quote-props */
+export function toJson_NodeConfigSchemaBench(obj: NodeConfigSchemaBench | undefined): Record<string, any> | undefined {
+  if (obj === undefined) { return undefined; }
+  const result = {
+    'bench': obj.bench,
+    'bench-isolation': obj.benchIsolation,
+    'bench-name-pattern': obj.benchNamePattern,
+    'bench-reporter': obj.benchReporter?.map(y => y),
+    'bench-reporter-destination': obj.benchReporterDestination?.map(y => y),
+    'bench-samples': obj.benchSamples,
+    'bench-warmup': obj.benchWarmup,
   };
   // filter undefined values
   return Object.entries(result).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {});
@@ -141,6 +222,48 @@ export interface NodeConfigSchemaNodeOptions {
    * @schema NodeConfigSchemaNodeOptions#async-context-frame
    */
   readonly asyncContextFrame?: boolean;
+
+  /**
+   * configures the type of benchmark isolation used in the benchmark runner
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-isolation
+   */
+  readonly benchIsolation?: string;
+
+  /**
+   * run benchmarks whose name matches this regular expression
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-name-pattern
+   */
+  readonly benchNamePattern?: string;
+
+  /**
+   * report benchmark output using the given reporter
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-reporter
+   */
+  readonly benchReporter?: string[];
+
+  /**
+   * report the given benchmark reporter to the given destination
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-reporter-destination
+   */
+  readonly benchReporterDestination?: string[];
+
+  /**
+   * specify the number of measured benchmark samples
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-samples
+   */
+  readonly benchSamples?: number;
+
+  /**
+   * specify the number of unreported benchmark warmup samples
+   *
+   * @schema NodeConfigSchemaNodeOptions#bench-warmup
+   */
+  readonly benchWarmup?: number;
 
   /**
    * additional user conditions for conditional exports and imports
@@ -258,6 +381,13 @@ export interface NodeConfigSchemaNodeOptions {
    * @schema NodeConfigSchemaNodeOptions#experimental-addon-modules
    */
   readonly experimentalAddonModules?: boolean;
+
+  /**
+   * experimental node:bench module and benchmark runner
+   *
+   * @schema NodeConfigSchemaNodeOptions#experimental-bench
+   */
+  readonly experimentalBench?: boolean;
 
   /**
    * when ambiguous modules fail to evaluate because they contain ES module syntax, try again to evaluate them as ES modules
@@ -1038,7 +1168,7 @@ export interface NodeConfigSchemaNodeOptions {
   readonly useEnvProxy?: boolean;
 
   /**
-   * Map the Node.js static code to large pages. Options are 'off' (the default value, meaning do not map), 'on' (map and ignore failure, reporting it to stderr), or 'silent' (map and silently ignore failure)
+   * This option is no longer supported and a no-op. Options are 'off' (default), 'on' (report a warning to stderr), or 'silent' (same as 'off').
    *
    * @schema NodeConfigSchemaNodeOptions#use-largepages
    */
@@ -1133,6 +1263,12 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'allow-wasi': obj.allowWasi,
     'allow-worker': obj.allowWorker,
     'async-context-frame': obj.asyncContextFrame,
+    'bench-isolation': obj.benchIsolation,
+    'bench-name-pattern': obj.benchNamePattern,
+    'bench-reporter': obj.benchReporter?.map(y => y),
+    'bench-reporter-destination': obj.benchReporterDestination?.map(y => y),
+    'bench-samples': obj.benchSamples,
+    'bench-warmup': obj.benchWarmup,
     'conditions': obj.conditions?.map(y => y),
     'cpu-prof': obj.cpuProf,
     'cpu-prof-dir': obj.cpuProfDir,
@@ -1150,6 +1286,7 @@ export function toJson_NodeConfigSchemaNodeOptions(obj: NodeConfigSchemaNodeOpti
     'enable-source-maps': obj.enableSourceMaps,
     'entry-url': obj.entryUrl,
     'experimental-addon-modules': obj.experimentalAddonModules,
+    'experimental-bench': obj.experimentalBench,
     'experimental-detect-module': obj.experimentalDetectModule,
     'experimental-eventsource': obj.experimentalEventsource,
     'experimental-ffi': obj.experimentalFfi,
