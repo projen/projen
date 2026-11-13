@@ -92,8 +92,35 @@ test("add postCreateCommands", () => {
 
   expect(devcontainer).toStrictEqual({
     "//": expect.anything(),
-    postCreateCommand: "( npx projen testCwd1 ) && ( npx projen testCwd2 )",
+    postCreateCommand:
+      "npm install -g projen@99.99.99 && ( projen testCwd1 ) && ( projen testCwd2 )",
   });
+});
+
+test.each([
+  "npx -p projen projen",
+  "node ./projen.js",
+  "node scripts/run-task.cjs",
+  "pnpm exec projen",
+  "bunx projen",
+])("postCreateCommand keeps a custom projenCommand %j", (projenCommand) => {
+  // GIVEN
+  const project = new TestProject({
+    devContainer: true,
+    projenCommand,
+  });
+
+  // WHEN
+  project.devContainer?.addTasks(
+    project.addTask("task1"),
+    project.addTask("task2"),
+  );
+
+  // THEN
+  const devcontainer = synthSnapshot(project)[DEVCONTAINER_FILE];
+  expect(devcontainer.postCreateCommand).toBe(
+    `( ${projenCommand} task1 ) && ( ${projenCommand} task2 )`,
+  );
 });
 
 test("add features", () => {

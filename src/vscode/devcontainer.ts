@@ -1,3 +1,4 @@
+import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import type {
   DevEnvironmentDockerImage,
@@ -160,13 +161,23 @@ export class DevContainer
   }
 
   private renderTasks() {
-    if (this.postCreateTasks.length !== 0) {
-      return this.postCreateTasks
-        .map((task) => `( ${this.project.projenCommand} ${task.name} )`)
-        .join(" && ");
-    } else {
+    if (this.postCreateTasks.length === 0) {
       return undefined;
     }
+    const projenCommand = this.project.projenCommand;
+    if (projenCommand === "npx projen") {
+      // Install projen globally first so the tasks never stop on npx's
+      // "Ok to proceed? (y)" install prompt. Custom and ejected runners
+      // (pnpm exec, bunx, node scripts/run-task.cjs, ...) are kept as is.
+      const install = `npm install -g projen@${PROJEN_VERSION}`;
+      const tasks = this.postCreateTasks.map(
+        (task) => `( projen ${task.name} )`,
+      );
+      return [install, ...tasks].join(" && ");
+    }
+    return this.postCreateTasks
+      .map((task) => `( ${projenCommand} ${task.name} )`)
+      .join(" && ");
   }
 
   private renderFeatures() {
