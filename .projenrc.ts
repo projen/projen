@@ -158,6 +158,8 @@ const project = new TypeScriptProject({
   jestOptions: {
     // makes it very hard to iterate with jest --watch
     coverageText: false,
+    // dependencies such as dax are ESM-only
+    experimentalVmModules: true,
     jestConfig: {
       // Adding text-summary as a replacement for text
       coverageReporters: [
