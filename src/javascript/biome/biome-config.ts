@@ -3663,7 +3663,7 @@ export interface Source {
   readonly useSortedPackageJson?: any;
 
   /**
-   * Sort CSS properties and nested rules into a consistent order.
+   * Sort CSS properties into a consistent order.
    * See https://biomejs.dev/assist/actions/use-sorted-properties
    *
    * @schema Source#useSortedProperties
