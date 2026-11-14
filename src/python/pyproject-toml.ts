@@ -341,30 +341,28 @@ export interface PyprojectTomlTool {
   readonly scheduled?: any;
 
   /**
-   * Workers in Python's `pyproject.toml`.
+   * **Workers** lets you define your project's background programs in one place: the `pyproject.toml` file.
    *
-   * This is a specification for declaring background workers in Python projects, in `pyproject.toml`.
+   * These programs are called **workers**. They keep running to do work, like sending emails or processing files.
    *
-   * It defines how workers are declared and how providers would run them.
+   * A **provider** is a service or tool that runs your application. Providers can support this format to read your configuration and start your workers.
    *
-   * For example, a file at `app/worker.py` could define:
-   *
-   * ```python
-   * from time import sleep
-   *
-   *
-   * def run():
-   * while True:
-   * print("Doing background work", flush=True)
-   * sleep(1)
-   * ```
-   *
-   * You could define a worker to run that function with:
+   * Each worker needs a name and a **command** to run.
    *
    * ```toml
-   * [tool.workers.background]
-   * entrypoint = "app.worker:run"
+   * [tool.workers.my-background-worker]
+   * command = "python -m app.worker"
+   *
+   * [tool.workers.my-tasks-worker]
+   * command = "celery -A app.celery worker"
+   *
+   * [tool.workers.some-important-reports]
+   * command = "sheppy work"
    * ```
+   *
+   * You choose the worker names: `my-background-worker`, `my-tasks-worker`, and `some-important-reports` in this example.
+   *
+   * The provider runs each worker's command in a separate process.
    *
    * @schema PyprojectTomlTool#workers
    */
