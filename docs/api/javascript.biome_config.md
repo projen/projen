@@ -4417,7 +4417,7 @@ const source: javascript.biome_config.Source = { ... }
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedInterfaceMembers">useSortedInterfaceMembers</a></code> | <code>any</code> | Sort named members of a TypeScript interface. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedKeys">useSortedKeys</a></code> | <code>any</code> | Sort keys in a JSON object. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedPackageJson">useSortedPackageJson</a></code> | <code>any</code> | Organize package.json fields according to established conventions. See https://biomejs.dev/assist/actions/use-sorted-package-json. |
-| <code><a href="#projen.javascript.biome_config.Source.property.useSortedProperties">useSortedProperties</a></code> | <code>any</code> | Sort CSS properties and nested rules into a consistent order. |
+| <code><a href="#projen.javascript.biome_config.Source.property.useSortedProperties">useSortedProperties</a></code> | <code>any</code> | Sort CSS properties into a consistent order. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedSelectionSet">useSortedSelectionSet</a></code> | <code>any</code> | Sort selections inside GraphQL operations and fragments. |
 | <code><a href="#projen.javascript.biome_config.Source.property.useSortedTypeFields">useSortedTypeFields</a></code> | <code>any</code> | Sort fields in GraphQL type definitions by name. |
 
@@ -4601,7 +4601,7 @@ public readonly useSortedProperties: any;
 
 - *Type:* any
 
-Sort CSS properties and nested rules into a consistent order.
+Sort CSS properties into a consistent order.
 
 See https://biomejs.dev/assist/actions/use-sorted-properties
 
