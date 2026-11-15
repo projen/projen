@@ -411,6 +411,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly lockfile?: any;
 
   /**
+   * The directory in which pnpm-lock.yaml is written, instead of the directory of pnpm-workspace.yaml. A lockfileDir that points at the default lockfile directory installs the same way as leaving it unset.
+   *
+   * @schema PnpmWorkspaceYamlSchema#lockfileDir
+   */
+  readonly lockfileDir?: string;
+
+  /**
    * When true, installation fails if the lockfile is missing or needs to be updated.
    *
    * @schema PnpmWorkspaceYamlSchema#frozenLockfile
@@ -612,6 +619,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#autoInstallPeers
    */
   readonly autoInstallPeers?: boolean;
+
+  /**
+   * When set to true, pnpm joins conflicting peer dependency ranges with || and installs the highest version that satisfies any of them. For example, if one dependency requires react@^16.0.0 and another requires react@^17.0.0, pnpm installs the highest react@17. Only semver ranges can be joined; conflicting paths, aliases, or tags leave the peer dependency missing, and identical non-semver specifiers are preserved.
+   *
+   * @schema PnpmWorkspaceYamlSchema#autoInstallPeersFromHighestMatch
+   */
+  readonly autoInstallPeersFromHighestMatch?: boolean;
 
   /**
    * When this setting is set to true, packages with peer dependencies will be deduplicated after peers resolution.
@@ -1333,6 +1347,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly namedRegistries?: { [key: string]: string };
 
   /**
+   * URL of a pnpr server for install acceleration. When set, pnpm install offloads dependency resolution to the remote server: pnpm sends its workspace manifests and registry configuration, the server resolves the dependency graph and returns the lockfile, while tarballs are downloaded directly from their registries. If the server refuses a setting the install uses, or cannot return the lockfile format pnpm reads, pnpm prints a warning and resolves locally. May also be set with the --config.pnprServer=<url> command-line option or the PNPM_CONFIG_PNPR_SERVER environment variable.
+   *
+   * @schema PnpmWorkspaceYamlSchema#pnprServer
+   */
+  readonly pnprServer?: string;
+
+  /**
    * When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. This is useful for pre-populating a store (e.g., in Nix builds) without creating unnecessary project-level artifacts. pnpm fetch uses this mode internally.
    *
    * @schema PnpmWorkspaceYamlSchema#virtualStoreOnly
@@ -1456,6 +1477,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'strictStorePkgContentCheck': obj.strictStorePkgContentCheck,
     'enableGlobalVirtualStore': obj.enableGlobalVirtualStore,
     'lockfile': obj.lockfile,
+    'lockfileDir': obj.lockfileDir,
     'frozenLockfile': obj.frozenLockfile,
     'preferFrozenLockfile': obj.preferFrozenLockfile,
     'lockfileIncludeTarballUrl': obj.lockfileIncludeTarballUrl,
@@ -1485,6 +1507,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'fetchWarnTimeoutMs': obj.fetchWarnTimeoutMs,
     'fetchMinSpeedKiBps': obj.fetchMinSpeedKiBps,
     'autoInstallPeers': obj.autoInstallPeers,
+    'autoInstallPeersFromHighestMatch': obj.autoInstallPeersFromHighestMatch,
     'dedupePeerDependents': obj.dedupePeerDependents,
     'projectScopedOptionalPeers': obj.projectScopedOptionalPeers,
     'addMissingPeerTypes': obj.addMissingPeerTypes,
@@ -1587,6 +1610,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'minimumReleaseAgeIgnoreMissingTime': obj.minimumReleaseAgeIgnoreMissingTime,
     'registries': obj.registries,
     'namedRegistries': ((obj.namedRegistries) === undefined) ? undefined : (Object.entries(obj.namedRegistries).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
+    'pnprServer': obj.pnprServer,
     'virtualStoreOnly': obj.virtualStoreOnly,
     'pmOnFail': obj.pmOnFail,
     'runtime': obj.runtime,

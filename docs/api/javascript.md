@@ -16733,6 +16733,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoDedupe">autoDedupe</a></code> | <code>boolean</code> | When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeersFromHighestMatch">autoInstallPeersFromHighestMatch</a></code> | <code>boolean</code> | When set to true, pnpm joins conflicting peer dependency ranges with \|\| and installs the highest version that satisfies any of them. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.blockExoticSubdeps">blockExoticSubdeps</a></code> | <code>boolean</code> | When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.bootConfig">bootConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a></code> | Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.ca">ca</a></code> | <code>string</code> | The Certificate Authority signing certificate that is trusted for SSL connections to the registry. |
@@ -16809,6 +16810,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.linkWorkspacePackages">linkWorkspacePackages</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLinkWorkspacePackages">PnpmWorkspaceYamlSchemaLinkWorkspacePackages</a></code> | If this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.localAddress">localAddress</a></code> | <code>string</code> | The IP address of the local interface to use when making connections to the npm registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfile">lockfile</a></code> | <code>any</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfileDir">lockfileDir</a></code> | <code>string</code> | The directory in which pnpm-lock.yaml is written, instead of the directory of pnpm-workspace.yaml. A lockfileDir that points at the default lockfile directory installs the same way as leaving it unset. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.lockfileIncludeTarballUrl">lockfileIncludeTarballUrl</a></code> | <code>boolean</code> | Add the full URL to the package's tarball to every entry in pnpm-lock.yaml. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.loglevel">loglevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLoglevel">PnpmWorkspaceYamlSchemaLoglevel</a></code> | Any logs at or higher than the given level will be shown. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.macosBackup">macosBackup</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a></code> | On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0. |
@@ -16854,6 +16856,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pipelines">pipelines</a></code> | <code>{[ key: string ]: string[]}</code> | Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pmOnFail">pmOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPmOnFail">PnpmWorkspaceYamlSchemaPmOnFail</a></code> | Overrides the `onFail` behavior of both the `packageManager` field and `devEngines.packageManager` when the running pnpm version does not match the declared one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pnpmfile">pnpmfile</a></code> | <code>string</code> | The location of the local pnpmfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.pnprServer">pnprServer</a></code> | <code>string</code> | URL of a pnpr server for install acceleration. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferFrozenLockfile">preferFrozenLockfile</a></code> | <code>boolean</code> | When set to true and the available pnpm-lock.yaml satisfies the package.json dependencies directive, a headless installation is performed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferOffline">preferOffline</a></code> | <code>boolean</code> | Bypass staleness checks for cached data. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
@@ -17045,6 +17048,20 @@ public readonly autoInstallPeers: boolean;
 - *Type:* boolean
 
 When true, any missing non-optional peer dependencies are automatically installed.
+
+---
+
+##### `autoInstallPeersFromHighestMatch`<sup>Optional</sup> <a name="autoInstallPeersFromHighestMatch" id="projen.javascript.PnpmWorkspaceYamlOptions.property.autoInstallPeersFromHighestMatch"></a>
+
+```typescript
+public readonly autoInstallPeersFromHighestMatch: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm joins conflicting peer dependency ranges with || and installs the highest version that satisfies any of them.
+
+For example, if one dependency requires react@^16.0.0 and another requires react@^17.0.0, pnpm installs the highest react@17. Only semver ranges can be joined; conflicting paths, aliases, or tags leave the peer dependency missing, and identical non-semver specifiers are preserved.
 
 ---
 
@@ -18005,6 +18022,18 @@ When set to false, pnpm won't read or generate a pnpm-lock.yaml file.
 
 ---
 
+##### `lockfileDir`<sup>Optional</sup> <a name="lockfileDir" id="projen.javascript.PnpmWorkspaceYamlOptions.property.lockfileDir"></a>
+
+```typescript
+public readonly lockfileDir: string;
+```
+
+- *Type:* string
+
+The directory in which pnpm-lock.yaml is written, instead of the directory of pnpm-workspace.yaml. A lockfileDir that points at the default lockfile directory installs the same way as leaving it unset.
+
+---
+
 ##### `lockfileIncludeTarballUrl`<sup>Optional</sup> <a name="lockfileIncludeTarballUrl" id="projen.javascript.PnpmWorkspaceYamlOptions.property.lockfileIncludeTarballUrl"></a>
 
 ```typescript
@@ -18564,6 +18593,20 @@ public readonly pnpmfile: string;
 - *Type:* string
 
 The location of the local pnpmfile.
+
+---
+
+##### `pnprServer`<sup>Optional</sup> <a name="pnprServer" id="projen.javascript.PnpmWorkspaceYamlOptions.property.pnprServer"></a>
+
+```typescript
+public readonly pnprServer: string;
+```
+
+- *Type:* string
+
+URL of a pnpr server for install acceleration.
+
+When set, pnpm install offloads dependency resolution to the remote server: pnpm sends its workspace manifests and registry configuration, the server resolves the dependency graph and returns the lockfile, while tarballs are downloaded directly from their registries. If the server refuses a setting the install uses, or cannot return the lockfile format pnpm reads, pnpm prints a warning and resolves locally. May also be set with the --config.pnprServer=<url> command-line option or the PNPM_CONFIG_PNPR_SERVER environment variable.
 
 ---
 
@@ -19443,6 +19486,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.auditLevel">auditLevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAuditLevel">PnpmWorkspaceYamlSchemaAuditLevel</a></code> | Controls the level of issues reported by `pnpm audit`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoDedupe">autoDedupe</a></code> | <code>boolean</code> | When set to true, pnpm install and pnpm add deduplicate compatible dependency versions during installation. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeers">autoInstallPeers</a></code> | <code>boolean</code> | When true, any missing non-optional peer dependencies are automatically installed. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeersFromHighestMatch">autoInstallPeersFromHighestMatch</a></code> | <code>boolean</code> | When set to true, pnpm joins conflicting peer dependency ranges with \|\| and installs the highest version that satisfies any of them. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.blockExoticSubdeps">blockExoticSubdeps</a></code> | <code>boolean</code> | When set to true, it prevents the resolution of exotic protocols (like git+ssh: or direct https: tarballs) in transitive dependencies. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.bootConfig">bootConfig</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaBootConfig">PnpmWorkspaceYamlSchemaBootConfig</a></code> | Sets the release-age and trust policy pnpm applies when installing config dependencies and the pnpm version pinned by the packageManager field, before the regular configuration is loaded. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.ca">ca</a></code> | <code>string</code> | The Certificate Authority signing certificate that is trusted for SSL connections to the registry. |
@@ -19519,6 +19563,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.linkWorkspacePackages">linkWorkspacePackages</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLinkWorkspacePackages">PnpmWorkspaceYamlSchemaLinkWorkspacePackages</a></code> | If this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.localAddress">localAddress</a></code> | <code>string</code> | The IP address of the local interface to use when making connections to the npm registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfile">lockfile</a></code> | <code>any</code> | When set to false, pnpm won't read or generate a pnpm-lock.yaml file. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfileDir">lockfileDir</a></code> | <code>string</code> | The directory in which pnpm-lock.yaml is written, instead of the directory of pnpm-workspace.yaml. A lockfileDir that points at the default lockfile directory installs the same way as leaving it unset. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.lockfileIncludeTarballUrl">lockfileIncludeTarballUrl</a></code> | <code>boolean</code> | Add the full URL to the package's tarball to every entry in pnpm-lock.yaml. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.loglevel">loglevel</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaLoglevel">PnpmWorkspaceYamlSchemaLoglevel</a></code> | Any logs at or higher than the given level will be shown. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.macosBackup">macosBackup</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaMacosBackup">PnpmWorkspaceYamlSchemaMacosBackup</a></code> | On macOS, exclude newly created pnpm directories from Time Machine backups by marking them with the com.apple.metadata:com_apple_backup_excludeItem extended attribute. Read from the global configuration file or the PNPM_CONFIG_MACOS_BACKUP_* environment variables; ignored in project pnpm-workspace.yaml files. Added in pnpm v12.6.0. |
@@ -19564,6 +19609,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pipelines">pipelines</a></code> | <code>{[ key: string ]: string[]}</code> | Named sets of task names, keyed by pipeline name, run by `pnpm pipeline [name]`. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pmOnFail">pmOnFail</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaPmOnFail">PnpmWorkspaceYamlSchemaPmOnFail</a></code> | Overrides the `onFail` behavior of both the `packageManager` field and `devEngines.packageManager` when the running pnpm version does not match the declared one. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pnpmfile">pnpmfile</a></code> | <code>string</code> | The location of the local pnpmfile. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.pnprServer">pnprServer</a></code> | <code>string</code> | URL of a pnpr server for install acceleration. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferFrozenLockfile">preferFrozenLockfile</a></code> | <code>boolean</code> | When set to true and the available pnpm-lock.yaml satisfies the package.json dependencies directive, a headless installation is performed. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferOffline">preferOffline</a></code> | <code>boolean</code> | Bypass staleness checks for cached data. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.preferSymlinkedExecutables">preferSymlinkedExecutables</a></code> | <code>boolean</code> | Create symlinks to executables in node_modules/.bin instead of command shims. This setting is ignored on Windows, where only command shims work. |
@@ -19755,6 +19801,20 @@ public readonly autoInstallPeers: boolean;
 - *Type:* boolean
 
 When true, any missing non-optional peer dependencies are automatically installed.
+
+---
+
+##### `autoInstallPeersFromHighestMatch`<sup>Optional</sup> <a name="autoInstallPeersFromHighestMatch" id="projen.javascript.PnpmWorkspaceYamlSchema.property.autoInstallPeersFromHighestMatch"></a>
+
+```typescript
+public readonly autoInstallPeersFromHighestMatch: boolean;
+```
+
+- *Type:* boolean
+
+When set to true, pnpm joins conflicting peer dependency ranges with || and installs the highest version that satisfies any of them.
+
+For example, if one dependency requires react@^16.0.0 and another requires react@^17.0.0, pnpm installs the highest react@17. Only semver ranges can be joined; conflicting paths, aliases, or tags leave the peer dependency missing, and identical non-semver specifiers are preserved.
 
 ---
 
@@ -20715,6 +20775,18 @@ When set to false, pnpm won't read or generate a pnpm-lock.yaml file.
 
 ---
 
+##### `lockfileDir`<sup>Optional</sup> <a name="lockfileDir" id="projen.javascript.PnpmWorkspaceYamlSchema.property.lockfileDir"></a>
+
+```typescript
+public readonly lockfileDir: string;
+```
+
+- *Type:* string
+
+The directory in which pnpm-lock.yaml is written, instead of the directory of pnpm-workspace.yaml. A lockfileDir that points at the default lockfile directory installs the same way as leaving it unset.
+
+---
+
 ##### `lockfileIncludeTarballUrl`<sup>Optional</sup> <a name="lockfileIncludeTarballUrl" id="projen.javascript.PnpmWorkspaceYamlSchema.property.lockfileIncludeTarballUrl"></a>
 
 ```typescript
@@ -21274,6 +21346,20 @@ public readonly pnpmfile: string;
 - *Type:* string
 
 The location of the local pnpmfile.
+
+---
+
+##### `pnprServer`<sup>Optional</sup> <a name="pnprServer" id="projen.javascript.PnpmWorkspaceYamlSchema.property.pnprServer"></a>
+
+```typescript
+public readonly pnprServer: string;
+```
+
+- *Type:* string
+
+URL of a pnpr server for install acceleration.
+
+When set, pnpm install offloads dependency resolution to the remote server: pnpm sends its workspace manifests and registry configuration, the server resolves the dependency graph and returns the lockfile, while tarballs are downloaded directly from their registries. If the server refuses a setting the install uses, or cannot return the lockfile format pnpm reads, pnpm prints a warning and resolves locally. May also be set with the --config.pnprServer=<url> command-line option or the PNPM_CONFIG_PNPR_SERVER environment variable.
 
 ---
 
