@@ -18710,6 +18710,7 @@ The Node.js runtime to use.
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_20_X">NODEJS_20_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 20.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_22_X">NODEJS_22_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 22.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_24_X">NODEJS_24_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 24.x. |
+| <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_26_X">NODEJS_26_X</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Node.js 26.x. |
 | <code><a href="#projen.awscdk.LambdaRuntime.property.NODEJS_REGIONAL_LATEST">NODEJS_REGIONAL_LATEST</a></code> | <code><a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a></code> | Use the latest Node.js runtime available in the deployment region. |
 
 ---
@@ -18789,6 +18790,18 @@ public readonly NODEJS_24_X: LambdaRuntime;
 - *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
 
 Node.js 24.x.
+
+---
+
+##### `NODEJS_26_X`<sup>Required</sup> <a name="NODEJS_26_X" id="projen.awscdk.LambdaRuntime.property.NODEJS_26_X"></a>
+
+```typescript
+public readonly NODEJS_26_X: LambdaRuntime;
+```
+
+- *Type:* <a href="#projen.awscdk.LambdaRuntime">LambdaRuntime</a>
+
+Node.js 26.x.
 
 ---
 

@@ -197,6 +197,8 @@ test.each([
   awscdk.LambdaRuntime.NODEJS_18_X,
   awscdk.LambdaRuntime.NODEJS_20_X,
   awscdk.LambdaRuntime.NODEJS_22_X,
+  awscdk.LambdaRuntime.NODEJS_24_X,
+  awscdk.LambdaRuntime.NODEJS_26_X,
 ])(
   "runtime can be used to customize the lambda runtime $functionRuntime and esbuild target",
   (runtime) => {
