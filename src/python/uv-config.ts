@@ -1461,7 +1461,10 @@ export class ExcludeNewerOverride {
   public static fromString(value: string): ExcludeNewerOverride {
     return new ExcludeNewerOverride(value);
   }
-  private constructor(public readonly value: boolean | string) {
+  public readonly value: boolean | string;
+
+  private constructor(value: boolean | string) {
+    this.value = value;
   }
 }
 
