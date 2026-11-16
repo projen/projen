@@ -39,8 +39,8 @@ export class ActionRefs {
   public static readonly CODECOV_CODECOV_ACTION = "codecov/codecov-action@v7.1.1";
   /** oven-sh/setup-bun at v2.2.0 */
   public static readonly OVEN_SH_SETUP_BUN = "oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6";
-  /** peter-evans/create-pull-request at v8.1.1 (immutable) */
-  public static readonly PETER_EVANS_CREATE_PULL_REQUEST = "peter-evans/create-pull-request@v8.1.1";
+  /** peter-evans/create-pull-request at v8.1.2 (immutable) */
+  public static readonly PETER_EVANS_CREATE_PULL_REQUEST = "peter-evans/create-pull-request@v8.1.2";
   /** pnpm/action-setup at v6.1.1 (immutable) */
   public static readonly PNPM_ACTION_SETUP = "pnpm/action-setup@v6.1.1";
   /** sqren/backport-github-action at v12.0.4 */
