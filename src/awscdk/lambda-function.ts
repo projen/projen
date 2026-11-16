@@ -434,6 +434,14 @@ export class LambdaRuntime {
   );
 
   /**
+   * Node.js 26.x
+   */
+  public static readonly NODEJS_26_X = new LambdaRuntime(
+    "nodejs26.x",
+    "node26",
+  );
+
+  /**
    * Use the latest Node.js runtime available in the deployment region.
    *
    * This generates code that uses `determineLatestNodeRuntime()` at CDK synthesis time,
