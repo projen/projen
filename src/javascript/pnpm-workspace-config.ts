@@ -2097,7 +2097,10 @@ export class PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun {
   public static fromBoolean(value: boolean): PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun {
     return new PnpmWorkspaceYamlSchemaVerifyDepsBeforeRun(value);
   }
-  private constructor(public readonly value: string | boolean) {
+  public readonly value: string | boolean;
+
+  private constructor(value: string | boolean) {
+    this.value = value;
   }
 }
 
@@ -2113,7 +2116,10 @@ export class PnpmWorkspaceYamlSchemaLinkWorkspacePackages {
   public static fromString(value: string): PnpmWorkspaceYamlSchemaLinkWorkspacePackages {
     return new PnpmWorkspaceYamlSchemaLinkWorkspacePackages(value);
   }
-  private constructor(public readonly value: boolean | string) {
+  public readonly value: boolean | string;
+
+  private constructor(value: boolean | string) {
+    this.value = value;
   }
 }
 
@@ -2129,7 +2135,10 @@ export class PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol {
   public static fromString(value: string): PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol {
     return new PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol(value);
   }
-  private constructor(public readonly value: boolean | string) {
+  public readonly value: boolean | string;
+
+  private constructor(value: boolean | string) {
+    this.value = value;
   }
 }
 
