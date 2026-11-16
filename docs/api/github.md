@@ -13164,7 +13164,7 @@ reviewed action version.
 | <code><a href="#projen.github.ActionRefs.property.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS">AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS</a></code> | <code>string</code> | aws-actions/configure-aws-credentials at v6.3.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.CODECOV_CODECOV_ACTION">CODECOV_CODECOV_ACTION</a></code> | <code>string</code> | codecov/codecov-action at v7.1.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.OVEN_SH_SETUP_BUN">OVEN_SH_SETUP_BUN</a></code> | <code>string</code> | oven-sh/setup-bun at v2.2.0. |
-| <code><a href="#projen.github.ActionRefs.property.PETER_EVANS_CREATE_PULL_REQUEST">PETER_EVANS_CREATE_PULL_REQUEST</a></code> | <code>string</code> | peter-evans/create-pull-request at v8.1.1 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.PETER_EVANS_CREATE_PULL_REQUEST">PETER_EVANS_CREATE_PULL_REQUEST</a></code> | <code>string</code> | peter-evans/create-pull-request at v8.1.2 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.PNPM_ACTION_SETUP">PNPM_ACTION_SETUP</a></code> | <code>string</code> | pnpm/action-setup at v6.1.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.SQREN_BACKPORT_GITHUB_ACTION">SQREN_BACKPORT_GITHUB_ACTION</a></code> | <code>string</code> | sqren/backport-github-action at v12.0.4. |
 
@@ -13370,7 +13370,7 @@ public readonly PETER_EVANS_CREATE_PULL_REQUEST: string;
 
 - *Type:* string
 
-peter-evans/create-pull-request at v8.1.1 (immutable).
+peter-evans/create-pull-request at v8.1.2 (immutable).
 
 ---
 
