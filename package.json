@@ -231,7 +231,7 @@
       "java": {
         "package": "io.github.cdklabs.projen",
         "maven": {
-          "groupId": "io.github.cdklabs",
+          "groupId": "io.projen",
           "artifactId": "projen"
         }
       },

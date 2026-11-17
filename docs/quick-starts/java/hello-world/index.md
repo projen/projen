@@ -166,7 +166,7 @@ In order to synthesize, run: `pnpm projen synth`, which will compile your test c
 execute this program.
 
 By default, `projenrc.java` is placed under the `test` scope (and
-`io.github.cdklabs/projen` test dependency is added). This ensures that
+`io.projen/projen` test dependency is added). This ensures that
 application code does not take a dependency on projen code. You can change this
 behavior by setting the `testScope` option to `false`.
 

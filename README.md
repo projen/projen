@@ -283,6 +283,17 @@ Note: using a `.projenrc.json` file to specify configuration only allows
 accessing a subset of the entire API - the options which are passed to the
 constructor of each project type.
 
+### How do I upgrade a Java project to the `io.projen` Maven group ID?
+
+projen is published to Maven Central as `io.projen:projen`. Older versions were
+published as `io.github.cdklabs:projen` and will not receive new releases. The
+Java package name is still `io.github.cdklabs.projen`, so your projenrc imports
+do not change.
+
+To upgrade, change the projen dependency in your `pom.xml` to `io.projen:projen`
+with the new version and run `pnpm dlx projen` once. projen keeps the dependency
+up to date from then on.
+
 ### How does projen work with my IDE?
 
 projen has an unofficial [VS Code extension]. Check it out!

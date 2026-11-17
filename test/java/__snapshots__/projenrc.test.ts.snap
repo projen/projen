@@ -89,7 +89,7 @@ node_modules/
         "version": "3.0.0",
       },
       {
-        "name": "io.github.cdklabs/projen",
+        "name": "io.projen/projen",
         "type": "test",
         "version": "1.0.0",
       },
@@ -211,7 +211,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
@@ -299,7 +299,7 @@ node_modules/
         "version": "3.0.0",
       },
       {
-        "name": "io.github.cdklabs/projen",
+        "name": "io.projen/projen",
         "type": "test",
         "version": "7.7.7",
       },
@@ -421,7 +421,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>7.7.7</version>
             <scope>test</scope>
@@ -509,7 +509,7 @@ node_modules/
         "version": "3.0.0",
       },
       {
-        "name": "io.github.cdklabs/projen",
+        "name": "io.projen/projen",
         "type": "runtime",
         "version": "7.7.7",
       },
@@ -630,7 +630,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>7.7.7</version>
         </dependency>
