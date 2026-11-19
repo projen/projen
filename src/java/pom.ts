@@ -1,3 +1,4 @@
+import { validRange } from "semver";
 import { resolve } from "../_resolve";
 import type { ICompareString } from "../compare";
 import { Component } from "../component";
@@ -512,8 +513,17 @@ function mavenCoords(dep: DependencyCoordinates) {
   return {
     groupId: parts[0],
     artifactId: parts[1],
-    version: dep.version ? toMavenVersionRange(dep.version) : undefined,
+    version: dep.version ? mavenVersion(dep.version) : undefined,
   };
+}
+
+/**
+ * Converts a dependency version to a Maven version. SemVer ranges are
+ * converted to Maven's bracket notation, while versions that are not valid
+ * SemVer (e.g. `2.7.0.Final`) are native Maven versions and are used as-is.
+ */
+function mavenVersion(version: string) {
+  return validRange(version) === null ? version : toMavenVersionRange(version);
 }
 
 function pluginConfig(options: PluginOptions = {}) {
