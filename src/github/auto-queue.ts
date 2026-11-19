@@ -56,14 +56,18 @@ export interface AutoQueueOptions extends RunsOnOptions {
    *
    * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
    *
-   * Be sure not to enable `autoQueue` for branches that don't have branch rules
-   * with merge requirements set up, otherwise new PRs will be merged
-   * immediately after creating without a chance for review.
+   * > [!IMPORTANT]
+   * > Be sure not to enable `autoQueue` for branches that don't have branch rules
+   * > with merge requirements set up, otherwise new PRs will be merged
+   * > immediately after creating without a chance for review. Even worse, if you
+   * > have any PRs that get merged without human review, like dependency upgrades,
+   * > an attacker can have quickly automerge their own PR into the automerged
+   * > dependency upgrade PR!
    *
    * ## Automatically merging a set of Stacked PRs
    *
-   * If you set this to `['main']` you can automatically merge a set of Stacked PRs
-   * in the right order. It works like this:
+   * If you set this to `['main']` (the default) you can automatically merge a
+   * set of Stacked PRs in the right order. It works like this:
    *
    * - Create PR #1 from branch `a`, targeting `main`.
    * - Create PR #2 from branch `b`, targeting branch `a`.
@@ -80,6 +84,8 @@ export interface AutoQueueOptions extends RunsOnOptions {
    * > initially targeted at one of the branches in this list, and then
    * > subsequently retargeted to another branch, *AutoMerge is not
    * > automatically turned off*.
+   *
+   * @default ['main']
    */
   readonly targetBranches?: string[];
 }
@@ -91,6 +97,12 @@ export interface AutoQueueOptions extends RunsOnOptions {
 export class AutoQueue extends Component {
   constructor(scope: IConstruct, options: AutoQueueOptions = {}) {
     super(scope);
+
+    const branches = options.targetBranches ?? ['main'];
+
+    if (branches.length === 0) {
+      throw new Error("AutoQueue: an empty targetBranches list means \"all branches\" which is unsafe. Specify at least one target branch.");
+    }
 
     const workflowEngine = GitHub.of(this.project);
     if (!workflowEngine) {
@@ -128,7 +140,7 @@ export class AutoQueue extends Component {
     }
 
     let needsEditedEvent = false;
-    if (options.targetBranches) {
+    if (branches) {
       // Branch conditions, based off the 'opened' or 'edited' events.
       //
       // The current workflow will only run if the target branch is one of the intended
@@ -207,7 +219,7 @@ export class AutoQueue extends Component {
           "ready_for_review",
           ...(needsEditedEvent ? ["edited" as const] : []),
         ],
-        branches: options.targetBranches,
+        branches,
       },
     });
     workflow.addJobs({ enableAutoQueue: autoQueueJob });
