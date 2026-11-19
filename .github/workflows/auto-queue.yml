@@ -18,7 +18,7 @@ jobs:
       pull-requests: write
       contents: write
     environment: automation
-    if: (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
+    if: (github.event.action != 'edited' || github.event.changes.base)
     steps:
       - id: auto-queue-pr
         env:
