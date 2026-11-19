@@ -17,6 +17,14 @@ import { normalizePersistedPath } from "../util";
 import { DevContainer, VsCode } from "../vscode";
 
 /**
+ * The default main branch name for git projects.
+ *
+ * Could be `master` but most commonly these days it's `main`. There is no
+ * way to configure this currently in projen.
+ */
+export const DEFAULT_BRANCH_NAME = "main";
+
+/**
  * Options for `GitHubProject`.
  */
 export interface GitHubProjectOptions extends ProjectOptions {

@@ -155,9 +155,7 @@ describe("merge-queue", () => {
             },
           },
         }),
-    ).toThrow(
-      /Specify at least one target branch./,
-    );
+    ).toThrow(/Specify at least one target branch./);
   });
 
   test.each([

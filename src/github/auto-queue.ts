@@ -141,19 +141,19 @@ export class AutoQueue extends Component {
       );
     }
 
-    let needsEditedEvent = false;
-    if (branches) {
-      // Branch conditions, based off the 'opened' or 'edited' events.
-      //
-      // The current workflow will only run if the target branch is one of the intended
-      // ones, so we only need to check if the event type is correct.
-      needsEditedEvent = true;
-
-      const isOpened = `github.event.action == 'opened'`;
-      const isBranchChanged = `(github.event.action == 'edited' && github.event.changes.base)`;
-
-      conditions.push(`(${isOpened} || ${isBranchChanged})`);
-    }
+    // Branch conditions on the events.
+    //
+    // We trigger on a number of events; we want to run this code on every event
+    // type, except when the event is `edited` for anything else than the base branch
+    // changing.
+    //
+    // - Someone changes the base branch from `xxx` to `main`: the workflow runs and
+    //   turns on AutoQueue.
+    // - Someone changes the base branch from `main` to `xxx`: GitHub automatically
+    //   disables AutoQueue (verified experimentally), and our workflow doesn't run.
+    conditions.push(
+      `(github.event.action != 'edited' || github.event.changes.base)`,
+    );
 
     const credentials =
       options.projenCredentials ?? workflowEngine.projenCredentials;
@@ -215,12 +215,7 @@ export class AutoQueue extends Component {
       //
       // The 'edited' trigger is only used to detect base branch changes.
       pullRequestTarget: {
-        types: [
-          "opened",
-          "reopened",
-          "ready_for_review",
-          ...(needsEditedEvent ? ["edited" as const] : []),
-        ],
+        types: ["opened", "reopened", "ready_for_review", "edited"],
         branches,
       },
     });

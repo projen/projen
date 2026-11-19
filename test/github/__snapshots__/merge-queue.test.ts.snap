@@ -20,7 +20,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
+    if: (github.event.action != 'edited' || github.event.changes.base)
     steps:
       - id: auto-queue-pr
         env:
@@ -52,7 +52,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
+    if: (github.event.action != 'edited' || github.event.changes.base)
     steps:
       - id: auto-queue-pr
         env:
@@ -83,7 +83,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo') && (github.event.action == 'opened' || (github.event.action == 'edited' && github.event.changes.base))
+    if: (contains(github.event.pull_request.labels.*.name, 'abc')) && (github.event.pull_request.user.login == 'foo') && (github.event.action != 'edited' || github.event.changes.base)
     steps:
       - id: auto-queue-pr
         env:
