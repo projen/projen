@@ -98,10 +98,12 @@ export class AutoQueue extends Component {
   constructor(scope: IConstruct, options: AutoQueueOptions = {}) {
     super(scope);
 
-    const branches = options.targetBranches ?? ['main'];
+    const branches = options.targetBranches ?? ["main"];
 
     if (branches.length === 0) {
-      throw new Error("AutoQueue: an empty targetBranches list means \"all branches\" which is unsafe. Specify at least one target branch.");
+      throw new Error(
+        'AutoQueue: an empty targetBranches list means "all branches" which is unsafe. Specify at least one target branch.',
+      );
     }
 
     const workflowEngine = GitHub.of(this.project);
