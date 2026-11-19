@@ -6800,19 +6800,24 @@ public readonly targetBranches: string[];
 ```
 
 - *Type:* string[]
+- *Default:* ['main']
 
 The branch names that we should auto-queue for.
 
 This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
 
-Be sure not to enable `autoQueue` for branches that don't have branch rules
-with merge requirements set up, otherwise new PRs will be merged
-immediately after creating without a chance for review.
+> [!IMPORTANT]
+> Be sure not to enable `autoQueue` for branches that don't have branch rules
+> with merge requirements set up, otherwise new PRs will be merged
+> immediately after creating without a chance for review. Even worse, if you
+> have any PRs that get merged without human review, like dependency upgrades,
+> an attacker can have quickly automerge their own PR into the automerged
+> dependency upgrade PR!
 
 ## Automatically merging a set of Stacked PRs
 
-If you set this to `['main']` you can automatically merge a set of Stacked PRs
-in the right order. It works like this:
+If you set this to `['main']` (the default) you can automatically merge a
+set of Stacked PRs in the right order. It works like this:
 
 - Create PR #1 from branch `a`, targeting `main`.
 - Create PR #2 from branch `b`, targeting branch `a`.

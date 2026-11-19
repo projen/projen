@@ -4,6 +4,7 @@ import type { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { Component } from "../component";
 import type { RunsOnOptions } from "../runner-options";
+import { DEFAULT_BRANCH_NAME } from "./github-project";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -56,14 +57,18 @@ export interface AutoQueueOptions extends RunsOnOptions {
    *
    * This set of branches should be a subset of `MergeQueueOptions.targetBranches`.
    *
-   * Be sure not to enable `autoQueue` for branches that don't have branch rules
-   * with merge requirements set up, otherwise new PRs will be merged
-   * immediately after creating without a chance for review.
+   * > [!IMPORTANT]
+   * > Be sure not to enable `autoQueue` for branches that don't have branch rules
+   * > with merge requirements set up, otherwise new PRs will be merged
+   * > immediately after creating without a chance for review. Even worse, if you
+   * > have any PRs that get merged without human review, like dependency upgrades,
+   * > an attacker can have quickly automerge their own PR into the automerged
+   * > dependency upgrade PR!
    *
    * ## Automatically merging a set of Stacked PRs
    *
-   * If you set this to `['main']` you can automatically merge a set of Stacked PRs
-   * in the right order. It works like this:
+   * If you set this to `['main']` (the default) you can automatically merge a
+   * set of Stacked PRs in the right order. It works like this:
    *
    * - Create PR #1 from branch `a`, targeting `main`.
    * - Create PR #2 from branch `b`, targeting branch `a`.
@@ -80,6 +85,8 @@ export interface AutoQueueOptions extends RunsOnOptions {
    * > initially targeted at one of the branches in this list, and then
    * > subsequently retargeted to another branch, *AutoMerge is not
    * > automatically turned off*.
+   *
+   * @default ['main']
    */
   readonly targetBranches?: string[];
 }
@@ -91,6 +98,14 @@ export interface AutoQueueOptions extends RunsOnOptions {
 export class AutoQueue extends Component {
   constructor(scope: IConstruct, options: AutoQueueOptions = {}) {
     super(scope);
+
+    const branches = options.targetBranches ?? [DEFAULT_BRANCH_NAME];
+
+    if (branches.length === 0) {
+      throw new Error(
+        'AutoQueue: an empty targetBranches list means "all branches" which is unsafe. Specify at least one target branch.',
+      );
+    }
 
     const workflowEngine = GitHub.of(this.project);
     if (!workflowEngine) {
@@ -127,19 +142,19 @@ export class AutoQueue extends Component {
       );
     }
 
-    let needsEditedEvent = false;
-    if (options.targetBranches) {
-      // Branch conditions, based off the 'opened' or 'edited' events.
-      //
-      // The current workflow will only run if the target branch is one of the intended
-      // ones, so we only need to check if the event type is correct.
-      needsEditedEvent = true;
-
-      const isOpened = `github.event.action == 'opened'`;
-      const isBranchChanged = `(github.event.action == 'edited' && github.event.changes.base)`;
-
-      conditions.push(`(${isOpened} || ${isBranchChanged})`);
-    }
+    // Branch conditions on the events.
+    //
+    // We trigger on a number of events; we want to run this code on every event
+    // type, except when the event is `edited` for anything else than the base branch
+    // changing.
+    //
+    // - Someone changes the base branch from `xxx` to `main`: the workflow runs and
+    //   turns on AutoQueue.
+    // - Someone changes the base branch from `main` to `xxx`: GitHub automatically
+    //   disables AutoQueue (verified experimentally), and our workflow doesn't run.
+    conditions.push(
+      `(github.event.action != 'edited' || github.event.changes.base)`,
+    );
 
     const credentials =
       options.projenCredentials ?? workflowEngine.projenCredentials;
@@ -201,13 +216,8 @@ export class AutoQueue extends Component {
       //
       // The 'edited' trigger is only used to detect base branch changes.
       pullRequestTarget: {
-        types: [
-          "opened",
-          "reopened",
-          "ready_for_review",
-          ...(needsEditedEvent ? ["edited" as const] : []),
-        ],
-        branches: options.targetBranches,
+        types: ["opened", "reopened", "ready_for_review", "edited"],
+        branches,
       },
     });
     workflow.addJobs({ enableAutoQueue: autoQueueJob });

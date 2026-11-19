@@ -24,7 +24,12 @@ import type {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
-import { AutoMerge, GitHub, GitHubProject } from "../github";
+import {
+  AutoMerge,
+  DEFAULT_BRANCH_NAME,
+  GitHub,
+  GitHubProject,
+} from "../github";
 import type { BiomeOptions } from "./biome/biome";
 import { Biome } from "./biome/biome";
 import {
@@ -761,7 +766,7 @@ export class NodeProject extends GitHubProject {
       this.release = new Release(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         tasks: releaseTasks,
-        branch: options.defaultReleaseBranch ?? "main",
+        branch: options.defaultReleaseBranch ?? DEFAULT_BRANCH_NAME,
         ...options,
 
         artifactsDirectory: this.artifactsDirectory,

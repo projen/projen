@@ -139,6 +139,25 @@ describe("merge-queue", () => {
     expect(autoQueue).toMatchSnapshot();
   });
 
+  test("auto queue with empty targetBranches throws", async () => {
+    expect(
+      () =>
+        new NodeProject({
+          buildWorkflow: true,
+          defaultReleaseBranch: "asd",
+          name: "adas",
+          githubOptions: {
+            mergeQueue: true,
+            mergeQueueOptions: {
+              autoQueueOptions: {
+                targetBranches: [],
+              },
+            },
+          },
+        }),
+    ).toThrow(/Specify at least one target branch./);
+  });
+
   test.each([
     [MergeMethod.SQUASH, "squash"],
     [MergeMethod.MERGE, "merge"],
