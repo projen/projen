@@ -4,6 +4,7 @@ import type { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { Component } from "../component";
 import type { RunsOnOptions } from "../runner-options";
+import { DEFAULT_BRANCH_NAME } from "./github-project";
 
 /**
  * The merge method used to add the PR to the merge queue
@@ -98,7 +99,7 @@ export class AutoQueue extends Component {
   constructor(scope: IConstruct, options: AutoQueueOptions = {}) {
     super(scope);
 
-    const branches = options.targetBranches ?? ["main"];
+    const branches = options.targetBranches ?? [DEFAULT_BRANCH_NAME];
 
     if (branches.length === 0) {
       throw new Error(
