@@ -42,3 +42,24 @@ test("addLine() can add lines later", () => {
   const output = synthSnapshot(project)["hello-world.txt"];
   expect(output).toEqual(["line1", "line2", "hey there", "you too"].join("\n"));
 });
+
+test("prepends the marker using the supplied comment prefix", () => {
+  const project = new TestProject();
+  const file = new TextFile(project, "hello.txt", {
+    markerCommentPrefix: "#",
+    lines: ["hello"],
+  });
+
+  expect(synthSnapshot(project)[file.path]).toEqual(`# ${file.marker}\nhello`);
+});
+
+test("omits the marker when disabled despite a comment prefix", () => {
+  const project = new TestProject();
+  const file = new TextFile(project, "hello.txt", {
+    marker: false,
+    markerCommentPrefix: "#",
+    lines: ["hello"],
+  });
+
+  expect(synthSnapshot(project)[file.path]).toEqual("hello");
+});
