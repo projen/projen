@@ -57,7 +57,7 @@
     },
     "actions/setup-java": {
       "major": "v6",
-      "pin": "v6.2.0",
+      "pin": "v6.3.0",
       "isImmutable": true
     },
     "actions/setup-node": {
