@@ -4,7 +4,7 @@
 
 ### DevContainer <a name="DevContainer" id="projen.vscode.DevContainer"></a>
 
-- *Implements:* <a href="#projen.vscode.IDevContainerEnvironment">IDevContainerEnvironment</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.vscode.IDevContainerEnvironment">IDevContainerEnvironment</a>, projen.IDevEnvironment
 
 A development environment running VSCode in a container;
 
@@ -336,6 +336,8 @@ Direct access to the devcontainer configuration (escape hatch).
 
 ### VsCode <a name="VsCode" id="projen.vscode.VsCode"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.vscode.VsCode.Initializer"></a>
 
 ```typescript
@@ -588,6 +590,8 @@ public readonly settings: VsCodeSettings;
 
 
 ### VsCodeLaunchConfig <a name="VsCodeLaunchConfig" id="projen.vscode.VsCodeLaunchConfig"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
 
@@ -896,6 +900,8 @@ public readonly file: JsonFile;
 
 ### VsCodeRecommendedExtensions <a name="VsCodeRecommendedExtensions" id="projen.vscode.VsCodeRecommendedExtensions"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
 
 #### Initializers <a name="Initializers" id="projen.vscode.VsCodeRecommendedExtensions.Initializer"></a>
@@ -1164,6 +1170,8 @@ public readonly file: JsonFile;
 
 
 ### VsCodeSettings <a name="VsCodeSettings" id="projen.vscode.VsCodeSettings"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
 

@@ -4,6 +4,8 @@
 
 ### ConstructLibraryCdktf <a name="ConstructLibraryCdktf" id="projen.cdktf.ConstructLibraryCdktf"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 CDKTF construct library project.
 
 A multi-language (jsii) construct library which vends constructs designed to

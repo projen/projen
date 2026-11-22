@@ -4,6 +4,8 @@
 
 ### BuildWorkflow <a name="BuildWorkflow" id="projen.build.BuildWorkflow"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.build.BuildWorkflow.Initializer"></a>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ### AutoDiscover <a name="AutoDiscover" id="projen.awscdk.AutoDiscover"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Discovers and creates integration tests and lambdas from code in the project's source and test trees.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.AutoDiscover.Initializer"></a>
@@ -232,6 +234,8 @@ public readonly project: Project;
 
 
 ### AwsCdkConstructLibrary <a name="AwsCdkConstructLibrary" id="projen.awscdk.AwsCdkConstructLibrary"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 AWS CDK construct library project.
 
@@ -1654,6 +1658,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### AwsCdkDeps <a name="AwsCdkDeps" id="projen.awscdk.AwsCdkDeps"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages dependencies on the AWS CDK.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.AwsCdkDeps.Initializer"></a>
@@ -1936,6 +1942,8 @@ The dependency requirement for AWS CDK (e.g. `^2.0.0`).
 
 
 ### AwsCdkDepsJava <a name="AwsCdkDepsJava" id="projen.awscdk.AwsCdkDepsJava"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Manages dependencies on the AWS CDK for Java projects.
 
@@ -2220,6 +2228,8 @@ The dependency requirement for AWS CDK (e.g. `^2.0.0`).
 
 ### AwsCdkDepsJs <a name="AwsCdkDepsJs" id="projen.awscdk.AwsCdkDepsJs"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages dependencies on the AWS CDK for Node.js projects.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.AwsCdkDepsJs.Initializer"></a>
@@ -2503,6 +2513,8 @@ The dependency requirement for AWS CDK (e.g. `^2.0.0`).
 
 ### AwsCdkDepsPy <a name="AwsCdkDepsPy" id="projen.awscdk.AwsCdkDepsPy"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages dependencies on the AWS CDK for Python projects.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.AwsCdkDepsPy.Initializer"></a>
@@ -2785,6 +2797,8 @@ The dependency requirement for AWS CDK (e.g. `^2.0.0`).
 
 
 ### AwsCdkJavaApp <a name="AwsCdkJavaApp" id="projen.awscdk.AwsCdkJavaApp"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 AWS CDK app in Java.
 
@@ -3807,6 +3821,8 @@ this task should synthesize the project files.
 
 ### AwsCdkPythonApp <a name="AwsCdkPythonApp" id="projen.awscdk.AwsCdkPythonApp"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 AWS CDK app in Python.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.AwsCdkPythonApp.Initializer"></a>
@@ -4800,6 +4816,8 @@ this task should synthesize the project files.
 ---
 
 ### AwsCdkTypeScriptApp <a name="AwsCdkTypeScriptApp" id="projen.awscdk.AwsCdkTypeScriptApp"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 AWS CDK app in TypeScript.
 
@@ -6257,6 +6275,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### CdkConfig <a name="CdkConfig" id="projen.awscdk.CdkConfig"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents cdk.json file.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.CdkConfig.Initializer"></a>
@@ -6585,6 +6605,8 @@ Represents the JSON file.
 
 ### CdkTasks <a name="CdkTasks" id="projen.awscdk.CdkTasks"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Adds standard AWS CDK tasks to your project.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.CdkTasks.Initializer"></a>
@@ -6885,6 +6907,8 @@ Watch task.
 
 ### EdgeLambdaAutoDiscover <a name="EdgeLambdaAutoDiscover" id="projen.awscdk.EdgeLambdaAutoDiscover"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Creates edge lambdas from entry points discovered in the project's source tree.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.EdgeLambdaAutoDiscover.Initializer"></a>
@@ -7126,6 +7150,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 
 ### IntegrationTest <a name="IntegrationTest" id="projen.awscdk.IntegrationTest"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Cloud integration tests.
 
@@ -7421,6 +7447,8 @@ The watch task.
 
 ### IntegrationTestAutoDiscover <a name="IntegrationTestAutoDiscover" id="projen.awscdk.IntegrationTestAutoDiscover"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Creates integration tests from entry points discovered in the test tree.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.IntegrationTestAutoDiscover.Initializer"></a>
@@ -7662,6 +7690,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 
 ### LambdaAutoDiscover <a name="LambdaAutoDiscover" id="projen.awscdk.LambdaAutoDiscover"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Creates lambdas from entry points discovered in the project's source tree.
 
@@ -7905,6 +7935,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 ### LambdaExtension <a name="LambdaExtension" id="projen.awscdk.LambdaExtension"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Create a Lambda Extension.
 
 #### Initializers <a name="Initializers" id="projen.awscdk.LambdaExtension.Initializer"></a>
@@ -8133,6 +8165,8 @@ public readonly project: Project;
 
 
 ### LambdaExtensionAutoDiscover <a name="LambdaExtensionAutoDiscover" id="projen.awscdk.LambdaExtensionAutoDiscover"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Creates Lambda Extensions from entrypoints discovered in the project's source tree.
 
@@ -8375,6 +8409,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 
 ### LambdaFunction <a name="LambdaFunction" id="projen.awscdk.LambdaFunction"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Generates a pre-bundled AWS Lambda function construct from handler code.
 
@@ -8628,6 +8664,8 @@ public readonly project: Project;
 
 
 ### SingletonLambdaAutoDiscover <a name="SingletonLambdaAutoDiscover" id="projen.awscdk.SingletonLambdaAutoDiscover"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Creates singleton lambdas from entry points discovered in the project's source tree.
 

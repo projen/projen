@@ -4,6 +4,8 @@
 
 ### SonarqubeJavascriptProperties <a name="SonarqubeJavascriptProperties" id="projen.sonarqube.SonarqubeJavascriptProperties"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A SonarQube configuration preset for JavaScript projects.
 
 Provides sensible defaults for JavaScript analysis:
@@ -269,6 +271,8 @@ The underlying properties file.
 
 ### SonarqubeProperties <a name="SonarqubeProperties" id="projen.sonarqube.SonarqubeProperties"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages the `sonar-project.properties` configuration file for SonarQube analysis.
 
 This component generates a `sonar-project.properties` file at the project
@@ -532,6 +536,8 @@ The underlying properties file.
 
 
 ### SonarqubeRustProperties <a name="SonarqubeRustProperties" id="projen.sonarqube.SonarqubeRustProperties"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A SonarQube configuration preset for Rust projects.
 
@@ -799,6 +805,8 @@ The underlying properties file.
 
 
 ### SonarqubeTypescriptProperties <a name="SonarqubeTypescriptProperties" id="projen.sonarqube.SonarqubeTypescriptProperties"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A SonarQube configuration preset for TypeScript projects.
 
