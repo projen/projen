@@ -138,6 +138,98 @@ test("all allowed default values can be discovered and rendered", () => {
   });
 });
 
+describe("project option documentation overrides", () => {
+  function struct(
+    name: string,
+    parents: string[],
+    summary?: string,
+    overrides?: string,
+  ) {
+    return {
+      name,
+      assembly: "test",
+      fqn: `test.${name}`,
+      kind: "interface",
+      interfaces: parents.map((p) => `test.${p}`),
+      properties: summary
+        ? [
+            {
+              name: "marker",
+              docs: { summary, default: overrides ? "false" : "true" },
+              optional: true,
+              type: { primitive: "boolean" },
+              overrides,
+            },
+          ]
+        : [],
+    };
+  }
+
+  function discover(parents: string[]) {
+    const { types } = inventory.readManifest(
+      path.join(__dirname, "inventory/renderable-defaults"),
+    );
+    // Reuse the fixture's Project and its initializer.
+    return toProjectType(
+      {
+        ...types,
+        "test.Base": struct("Base", [], "base docs"),
+        "test.Middle": struct("Middle", ["Base"], "middle docs", "test.Base"),
+        "test.Child": struct("Child", ["Middle"], "child docs", "test.Middle"),
+        "test.Left": struct("Left", ["Child"]),
+        "test.Right": struct("Right", ["Child"]),
+        "test.Other": struct("Other", [], "other docs"),
+        "test.OtherBranch": struct("OtherBranch", ["Other"]),
+        "test.Combined": struct(
+          "Combined",
+          ["Base", "OtherBranch"],
+          "combined docs",
+          "test.Base",
+        ),
+        "test.TestProjectOptions": struct("TestProjectOptions", parents),
+      },
+      "test.TestProject",
+    ).options;
+  }
+
+  test.each([
+    ["Child", "Base"],
+    ["Base", "Child"],
+    ["Left", "Right"],
+  ])("uses the most specific docs with parents %s and %s", (first, second) => {
+    expect(discover([first, second])).toEqual([
+      expect.objectContaining({
+        name: "marker",
+        parent: "Child",
+        docs: "child docs",
+        default: "false",
+      }),
+    ]);
+  });
+
+  test("rejects unrelated declarations with the same name", () => {
+    expect(() => discover(["Other", "Base"])).toThrow(
+      'duplicate option "marker" in test.TestProject (already declared in Other)',
+    );
+  });
+
+  test("a child redeclaration covers both branches although jsii names one base", () => {
+    expect(discover(["Combined"])).toEqual([
+      expect.objectContaining({
+        name: "marker",
+        parent: "Combined",
+        docs: "combined docs",
+      }),
+    ]);
+  });
+
+  test("an override does not resolve a collision with an unrelated sibling", () => {
+    expect(() => discover(["Child", "Other"])).toThrow(
+      'duplicate option "marker" in test.TestProject (already declared in Child)',
+    );
+  });
+});
+
 function throwIfNotRenderable(option: inventory.InventoryProjectOption) {
   return (
     option.default === undefined ||
