@@ -4,7 +4,7 @@
 
 ### Pip <a name="Pip" id="projen.python.Pip"></a>
 
-- *Implements:* <a href="#projen.python.IPythonDeps">IPythonDeps</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.python.IPythonDeps">IPythonDeps</a>
 
 Manages dependencies using a requirements.txt file and the pip CLI tool.
 
@@ -291,7 +291,7 @@ A task that installs and updates dependencies.
 
 ### Poetry <a name="Poetry" id="projen.python.Poetry"></a>
 
-- *Implements:* <a href="#projen.python.IPythonDeps">IPythonDeps</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.python.IPythonDeps">IPythonDeps</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
 
 Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 
@@ -626,6 +626,8 @@ Task for publishing the package to the Test PyPI repository for testing purposes
 
 ### PoetryPyproject <a name="PoetryPyproject" id="projen.python.PoetryPyproject"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents configuration of a pyproject.toml file for a Poetry project.
 
 > [https://python-poetry.org/docs/pyproject/](https://python-poetry.org/docs/pyproject/)
@@ -867,6 +869,8 @@ public readonly file: PyprojectTomlFile;
 
 
 ### Projenrc <a name="Projenrc" id="projen.python.Projenrc"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Allows writing projenrc files in python.
 
@@ -1142,6 +1146,8 @@ Path to the python executable to use.
 
 
 ### PyprojectTomlFile <a name="PyprojectTomlFile" id="projen.python.PyprojectTomlFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents configuration of a pyproject.toml file.
 
@@ -1689,6 +1695,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 ### Pytest <a name="Pytest" id="projen.python.Pytest"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.python.Pytest.Initializer"></a>
 
 ```typescript
@@ -1927,6 +1935,8 @@ public readonly testMatch: string[];
 
 ### PytestSample <a name="PytestSample" id="projen.python.PytestSample"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Python test code sample.
 
 #### Initializers <a name="Initializers" id="projen.python.PytestSample.Initializer"></a>
@@ -2155,6 +2165,8 @@ public readonly project: Project;
 
 
 ### PythonProject <a name="PythonProject" id="projen.python.PythonProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Python project.
 
@@ -3088,6 +3100,8 @@ this task should synthesize the project files.
 
 ### PythonSample <a name="PythonSample" id="projen.python.PythonSample"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Python code sample.
 
 #### Initializers <a name="Initializers" id="projen.python.PythonSample.Initializer"></a>
@@ -3316,6 +3330,8 @@ public readonly project: Project;
 
 
 ### RequirementsFile <a name="RequirementsFile" id="projen.python.RequirementsFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Specifies a list of packages to be installed using pip.
 
@@ -3701,6 +3717,8 @@ Indicates if the file should be read-only or read-write.
 
 ### SetupPy <a name="SetupPy" id="projen.python.SetupPy"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Python packaging script where package metadata can be placed.
 
 #### Initializers <a name="Initializers" id="projen.python.SetupPy.Initializer"></a>
@@ -4057,7 +4075,7 @@ Indicates if the file should be read-only or read-write.
 
 ### Setuptools <a name="Setuptools" id="projen.python.Setuptools"></a>
 
-- *Implements:* <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
 
 Manages packaging through setuptools with a setup.py script.
 
@@ -4314,7 +4332,7 @@ A task that uploads the package to the Test PyPI repository.
 
 ### Uv <a name="Uv" id="projen.python.Uv"></a>
 
-- *Implements:* <a href="#projen.python.IPythonDeps">IPythonDeps</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.python.IPythonDeps">IPythonDeps</a>, <a href="#projen.python.IPythonEnv">IPythonEnv</a>, <a href="#projen.python.IPythonPackaging">IPythonPackaging</a>
 
 Manage project dependencies, virtual environments, and packaging through uv.
 
@@ -4654,7 +4672,7 @@ public readonly publishTestTask: Task;
 
 ### Venv <a name="Venv" id="projen.python.Venv"></a>
 
-- *Implements:* <a href="#projen.python.IPythonEnv">IPythonEnv</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.python.IPythonEnv">IPythonEnv</a>
 
 Manages a virtual environment through the Python venv module.
 

@@ -4,6 +4,8 @@
 
 ### Biome <a name="Biome" id="projen.javascript.Biome"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Biome component.
 
 #### Initializers <a name="Initializers" id="projen.javascript.Biome.Initializer"></a>
@@ -341,6 +343,8 @@ Biome task.
 
 ### Bundler <a name="Bundler" id="projen.javascript.Bundler"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Adds support for bundling JavaScript applications and dependencies into a single file.
 
 In the future, this will also supports bundling websites.
@@ -657,6 +661,8 @@ The semantic version requirement for `esbuild` (if defined).
 
 
 ### Eslint <a name="Eslint" id="projen.javascript.Eslint"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents eslint configuration.
 
@@ -1121,6 +1127,8 @@ eslint rules.
 
 
 ### Jest <a name="Jest" id="projen.javascript.Jest"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Installs the following npm scripts:.
 
@@ -1600,6 +1608,8 @@ Jest config file.
 
 ### LicenseChecker <a name="LicenseChecker" id="projen.javascript.LicenseChecker"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Enforces allowed licenses used by dependencies.
 
 #### Initializers <a name="Initializers" id="projen.javascript.LicenseChecker.Initializer"></a>
@@ -1839,6 +1849,8 @@ public readonly task: Task;
 
 
 ### NodeConfigFile <a name="NodeConfigFile" id="projen.javascript.NodeConfigFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a Node.js configuration file, loaded via `--experimental-config-file`.
 
@@ -2113,6 +2125,8 @@ The underlying Node.js configuration file.
 
 
 ### NodeNativeTestRunner <a name="NodeNativeTestRunner" id="projen.javascript.NodeNativeTestRunner"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Configures Node's built-in test runner (`node --test`).
 
@@ -2460,6 +2474,8 @@ The generated Node.js configuration file.
 
 
 ### NodePackage <a name="NodePackage" id="projen.javascript.NodePackage"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents the npm `package.json` file.
 
@@ -3404,6 +3420,8 @@ The version of Yarn to use if using Yarn as a package manager.
 
 
 ### NodeProject <a name="NodeProject" id="projen.javascript.NodeProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Node.js project.
 
@@ -4654,6 +4672,8 @@ this task should synthesize the project files.
 
 ### NpmConfig <a name="NpmConfig" id="projen.javascript.NpmConfig"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 File representing the local NPM config in .npmrc.
 
 #### Initializers <a name="Initializers" id="projen.javascript.NpmConfig.Initializer"></a>
@@ -4935,6 +4955,8 @@ public readonly project: Project;
 
 ### PnpmWorkspaceYaml <a name="PnpmWorkspaceYaml" id="projen.javascript.PnpmWorkspaceYaml"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents a `pnpm-workspace.yaml` file.
 
 > [https://pnpm.io/pnpm-workspace_yaml](https://pnpm.io/pnpm-workspace_yaml)
@@ -5195,6 +5217,8 @@ The underlying `pnpm-workspace.yaml` file.
 
 
 ### Prettier <a name="Prettier" id="projen.javascript.Prettier"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents prettier configuration.
 
@@ -5513,6 +5537,8 @@ The .prettierIgnore file.
 
 ### Projenrc <a name="Projenrc" id="projen.javascript.Projenrc"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A projenrc file written in JavaScript.
 
 This component can be instantiated in any type of project
@@ -5774,6 +5800,8 @@ The path of the projenrc file.
 
 
 ### TypescriptConfig <a name="TypescriptConfig" id="projen.javascript.TypescriptConfig"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.javascript.TypescriptConfig.Initializer"></a>
 
@@ -6180,6 +6208,8 @@ public readonly compilerOptions: TypeScriptCompilerOptions;
 
 ### UpgradeDependencies <a name="UpgradeDependencies" id="projen.javascript.UpgradeDependencies"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Upgrade node project dependencies.
 
 #### Initializers <a name="Initializers" id="projen.javascript.UpgradeDependencies.Initializer"></a>
@@ -6479,6 +6509,8 @@ Container definitions for the upgrade workflow.
 
 
 ### Yarnrc <a name="Yarnrc" id="projen.javascript.Yarnrc"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.javascript.Yarnrc.Initializer"></a>
 

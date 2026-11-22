@@ -4,6 +4,8 @@
 
 ### Publisher <a name="Publisher" id="projen.release.Publisher"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Implements GitHub jobs for publishing modules to package managers.
 
 Under the hood, it uses https://github.com/cdklabs/publib
@@ -453,6 +455,8 @@ public readonly PUBLISH_GIT_TASK_NAME: string;
 ---
 
 ### Release <a name="Release" id="projen.release.Release"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Manages releases (currently through GitHub workflows).
 

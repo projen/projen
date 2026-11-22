@@ -4,6 +4,8 @@
 
 ### Projenrc <a name="Projenrc" id="projen.typescript.Projenrc"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A projenrc file written in TypeScript.
 
 This component is used within TypeScriptProject.
@@ -275,6 +277,8 @@ public readonly tsconfig: TypescriptConfig;
 
 
 ### ProjenrcTs <a name="ProjenrcTs" id="projen.typescript.ProjenrcTs"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A projenrc file written in TypeScript.
 
@@ -550,6 +554,8 @@ TypeScript configuration file used to compile projen source files.
 
 
 ### TypeScriptAppProject <a name="TypeScriptAppProject" id="projen.typescript.TypeScriptAppProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 TypeScript app.
 
@@ -1944,6 +1950,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### TypeScriptProject <a name="TypeScriptProject" id="projen.typescript.TypeScriptProject"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 TypeScript project.
 
 #### Initializers <a name="Initializers" id="projen.typescript.TypeScriptProject.Initializer"></a>
@@ -3336,6 +3344,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 ---
 
 ### TypeScriptRunner <a name="TypeScriptRunner" id="projen.typescript.TypeScriptRunner"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable, projen.IScriptRunner
 
 The runner used to execute TypeScript files.
 

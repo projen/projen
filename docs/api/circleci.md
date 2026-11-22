@@ -4,6 +4,8 @@
 
 ### Circleci <a name="Circleci" id="projen.circleci.Circleci"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Circleci Class to manage `.circleci/config.yml`. Check projen's docs for more information.
 
 > [https://circleci.com/docs/2.0/configuration-reference/](https://circleci.com/docs/2.0/configuration-reference/)

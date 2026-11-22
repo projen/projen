@@ -4,6 +4,8 @@
 
 ### AutoDiscover <a name="AutoDiscover" id="projen.cdk8s.AutoDiscover"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
 
 #### Initializers <a name="Initializers" id="projen.cdk8s.AutoDiscover.Initializer"></a>
@@ -232,6 +234,8 @@ public readonly project: Project;
 
 
 ### Cdk8sDeps <a name="Cdk8sDeps" id="projen.cdk8s.Cdk8sDeps"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Manages dependencies on the CDK8s.
 
@@ -501,6 +505,8 @@ The dependency requirement for CDK8s.
 
 ### Cdk8sDepsPy <a name="Cdk8sDepsPy" id="projen.cdk8s.Cdk8sDepsPy"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.cdk8s.Cdk8sDepsPy.Initializer"></a>
 
 ```typescript
@@ -766,6 +772,8 @@ The dependency requirement for CDK8s.
 
 
 ### Cdk8sPythonApp <a name="Cdk8sPythonApp" id="projen.cdk8s.Cdk8sPythonApp"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 CDK8s app in Python.
 
@@ -1722,6 +1730,8 @@ this task should synthesize the project files.
 ---
 
 ### Cdk8sTypeScriptApp <a name="Cdk8sTypeScriptApp" id="projen.cdk8s.Cdk8sTypeScriptApp"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 CDK8s app in TypeScript.
 
@@ -3139,6 +3149,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 ---
 
 ### ConstructLibraryCdk8s <a name="ConstructLibraryCdk8s" id="projen.cdk8s.ConstructLibraryCdk8s"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 CDK8s construct library project.
 
@@ -4563,6 +4575,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### IntegrationTest <a name="IntegrationTest" id="projen.cdk8s.IntegrationTest"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 CDK8S integration test.
 
 #### Initializers <a name="Initializers" id="projen.cdk8s.IntegrationTest.Initializer"></a>
@@ -4830,6 +4844,8 @@ Just update snapshot (without deployment).
 
 
 ### IntegrationTestAutoDiscover <a name="IntegrationTestAutoDiscover" id="projen.cdk8s.IntegrationTestAutoDiscover"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Discovers and creates integration tests from files in the test root.
 

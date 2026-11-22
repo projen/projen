@@ -4,6 +4,8 @@
 
 ### PolarisCoverity <a name="PolarisCoverity" id="projen.polaris.PolarisCoverity"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages `coverity.yml`, the configuration file for Coverity on Polaris (Black Duck's SAST scanning tool).
 
 > [https://docs.blackduck.com/r/cov_polaris/latest/coverity-on-polaris/configuration-file-schema.html](https://docs.blackduck.com/r/cov_polaris/latest/coverity-on-polaris/configuration-file-schema.html)
@@ -247,6 +249,8 @@ The YAML file for the Coverity on Polaris configuration.
 
 
 ### PolarisGoCoverity <a name="PolarisGoCoverity" id="projen.polaris.PolarisGoCoverity"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A Coverity on Polaris configuration preset for Go projects.
 
@@ -510,6 +514,8 @@ The YAML file for the Coverity on Polaris configuration.
 
 ### PolarisJavaCoverity <a name="PolarisJavaCoverity" id="projen.polaris.PolarisJavaCoverity"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A Coverity on Polaris configuration preset for Java projects.
 
 Provides sensible defaults for Java analysis:
@@ -772,6 +778,8 @@ The YAML file for the Coverity on Polaris configuration.
 
 
 ### PolarisJavascriptCoverity <a name="PolarisJavascriptCoverity" id="projen.polaris.PolarisJavascriptCoverity"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A Coverity on Polaris configuration preset for JavaScript/TypeScript projects.
 
