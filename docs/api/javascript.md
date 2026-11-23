@@ -16755,6 +16755,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.access">access</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess">PnpmWorkspaceYamlSchemaAccess</a></code> | Sets the default for pnpm publish --access. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.addMissingPeerTypes">addMissingPeerTypes</a></code> | <code>boolean</code> | When true, every peer dependency of a dependency also makes the matching. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowBuilds">allowBuilds</a></code> | <code>any</code> | A map of package matchers to explicitly allow (`true`) or disallow (`false`) script execution. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
@@ -16867,7 +16868,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMap">nodePackageMap</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a></code> | Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy">noProxy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy">PnpmWorkspaceYamlSchemaNoProxy</a></code> | A comma-separated string of domain extensions that a proxy should not be used for, or a boolean. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.npmrcAuthFile">npmrcAuthFile</a></code> | <code>string</code> | The path to a file containing registry authentication tokens. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.onlyBuiltDependencies">onlyBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that are allowed to be executed during installation. |
@@ -16901,6 +16902,7 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.publishWaitTimeout">publishWaitTimeout</a></code> | <code>number</code> | After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.referenceTime">referenceTime</a></code> | <code>Date</code> | The reference time, as an RFC 3339 timestamp, used to evaluate time-dependent settings. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registries">registries</a></code> | <code>any</code> | Configures the registries packages resolve from, in one of two shapes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registry">registry</a></code> | <code>string</code> | The base URL of the npm package registry (trailing slash included). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.registrySupportsTimeField">registrySupportsTimeField</a></code> | <code>boolean</code> | Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata. |
@@ -16955,7 +16957,22 @@ const pnpmWorkspaceYamlOptions: javascript.PnpmWorkspaceYamlOptions = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.warnUnusedOverrides">warnUnusedOverrides</a></code> | <code>boolean</code> | When true, an install that resolves the whole dependency graph warns about every entry in overrides that matched no dependency. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlOptions.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
+
+---
+
+##### `access`<sup>Optional</sup> <a name="access" id="projen.javascript.PnpmWorkspaceYamlOptions.property.access"></a>
+
+```typescript
+public readonly access: PnpmWorkspaceYamlSchemaAccess;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess">PnpmWorkspaceYamlSchemaAccess</a>
+
+Sets the default for pnpm publish --access.
+
+When set, it takes precedence over publishConfig.access. Configure it in pnpm-workspace.yaml or the global config.yaml, or with PNPM_CONFIG_ACCESS. Read from configuration since pnpm v12.23.0.
 
 ---
 
@@ -18162,7 +18179,7 @@ public readonly minimumReleaseAge: number;
 
 minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it.
 
-This applies to all dependencies, including transitive ones.
+This applies to all dependencies, including transitive ones. The age is counted back from referenceTime when that setting is set.
 
 ---
 
@@ -18314,7 +18331,7 @@ public readonly nodeLinker: any;
 
 Defines what linker should be used for installing Node packages.
 
-loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
+Scalar values remain supported. The object form selects a linker with type and groups linker-specific options with it: isolated accepts hoist, hoisted accepts hoistingLimits, and loaded accepts excluded. Configuration sources replace the selected linker; options from a higher-priority object override the same options from lower-priority sources. PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
 
 ---
 
@@ -18369,12 +18386,14 @@ The Node.js version to use when checking a package's engines setting.
 ##### `noProxy`<sup>Optional</sup> <a name="noProxy" id="projen.javascript.PnpmWorkspaceYamlOptions.property.noProxy"></a>
 
 ```typescript
-public readonly noProxy: string;
+public readonly noProxy: PnpmWorkspaceYamlSchemaNoProxy;
 ```
 
-- *Type:* string
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy">PnpmWorkspaceYamlSchemaNoProxy</a>
 
-A comma-separated string of domain extensions that a proxy should not be used for.
+A comma-separated string of domain extensions that a proxy should not be used for, or a boolean.
+
+A null value leaves the setting unset. Since pnpm v12.23.0, any other type fails validation.
 
 ---
 
@@ -18768,6 +18787,8 @@ public readonly publishBranch: string;
 
 The primary branch of the repository which is used for publishing the latest changes.
 
+Since pnpm v12.23.0, an empty value allows both master and main.
+
 ---
 
 ##### `publishWaitTimeout`<sup>Optional</sup> <a name="publishWaitTimeout" id="projen.javascript.PnpmWorkspaceYamlOptions.property.publishWaitTimeout"></a>
@@ -18793,6 +18814,20 @@ public readonly recursiveInstall: boolean;
 - *Type:* boolean
 
 If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages.
+
+---
+
+##### `referenceTime`<sup>Optional</sup> <a name="referenceTime" id="projen.javascript.PnpmWorkspaceYamlOptions.property.referenceTime"></a>
+
+```typescript
+public readonly referenceTime: Date;
+```
+
+- *Type:* Date
+
+The reference time, as an RFC 3339 timestamp, used to evaluate time-dependent settings.
+
+minimumReleaseAge and trustPolicyIgnoreAfter count back from this time during resolution and lockfile verification. When unset, pnpm uses the current time. Set it in pnpm-workspace.yaml or with PNPM_CONFIG_REFERENCE_TIME; the global config.yaml does not apply it. A value that is not a timestamp, or is more than 10 minutes in the future, fails the command. Added in pnpm v12.23.0.
 
 ---
 
@@ -19198,6 +19233,8 @@ public readonly tag: string;
 
 If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
 
+Since pnpm v12.23.0, pnpm publish also reads it from pnpm-workspace.yaml, the global config.yaml, or PNPM_CONFIG_TAG when --tag is not passed.
+
 ---
 
 ##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.javascript.PnpmWorkspaceYamlOptions.property.tasks"></a>
@@ -19290,7 +19327,7 @@ public readonly trustPolicyIgnoreAfter: number;
 
 Allows ignoring the trust policy check for packages published more than the specified number of minutes ago.
 
-This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age.
+This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age. The age is counted back from referenceTime when that setting is set.
 
 ---
 
@@ -19478,6 +19515,20 @@ When set to project, a separate virtual store is created in each project's node_
 
 ---
 
+##### `warnUnusedOverrides`<sup>Optional</sup> <a name="warnUnusedOverrides" id="projen.javascript.PnpmWorkspaceYamlOptions.property.warnUnusedOverrides"></a>
+
+```typescript
+public readonly warnUnusedOverrides: boolean;
+```
+
+- *Type:* boolean
+
+When true, an install that resolves the whole dependency graph warns about every entry in overrides that matched no dependency.
+
+Only overrides declared in pnpm-workspace.yaml are checked; entries added by a config dependency or an updateConfig hook are not. Added in pnpm v12.23.0.
+
+---
+
 ##### `workspaceConcurrency`<sup>Optional</sup> <a name="workspaceConcurrency" id="projen.javascript.PnpmWorkspaceYamlOptions.property.workspaceConcurrency"></a>
 
 ```typescript
@@ -19508,6 +19559,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.access">access</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess">PnpmWorkspaceYamlSchemaAccess</a></code> | Sets the default for pnpm publish --access. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.addMissingPeerTypes">addMissingPeerTypes</a></code> | <code>boolean</code> | When true, every peer dependency of a dependency also makes the matching. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowBuilds">allowBuilds</a></code> | <code>any</code> | A map of package matchers to explicitly allow (`true`) or disallow (`false`) script execution. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.allowedDeprecatedVersions">allowedDeprecatedVersions</a></code> | <code>{[ key: string ]: string}</code> | A list of deprecated versions that the warnings are suppressed. |
@@ -19620,7 +19672,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMap">nodePackageMap</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMap">PnpmWorkspaceYamlSchemaNodePackageMap</a></code> | Groups the package-map settings, which control node_modules/.package-map.json during isolated and hoisted installs. Replaces nodeExperimentalPackageMap and nodePackageMapType, which still work; nodePackageMap takes precedence when both are set in the same place. Added in pnpm v12.13.0. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodePackageMapType">nodePackageMapType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNodePackageMapType">PnpmWorkspaceYamlSchemaNodePackageMapType</a></code> | Controls how node_modules/.package-map.json is generated. standard - only declared dependencies are available through the package map. loose - also maps packages that are reachable through the installed node_modules layout, which can allow undeclared hoisted dependencies to resolve. Deprecated since pnpm v12.13.0: use nodePackageMap.type instead; nodePackageMap wins when both are set in the same place. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.nodeVersion">nodeVersion</a></code> | <code>string</code> | The Node.js version to use when checking a package's engines setting. |
-| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy">noProxy</a></code> | <code>string</code> | A comma-separated string of domain extensions that a proxy should not be used for. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy">noProxy</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy">PnpmWorkspaceYamlSchemaNoProxy</a></code> | A comma-separated string of domain extensions that a proxy should not be used for, or a boolean. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmPath">npmPath</a></code> | <code>string</code> | The location of the npm binary that pnpm uses for some actions, like publishing. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.npmrcAuthFile">npmrcAuthFile</a></code> | <code>string</code> | The path to a file containing registry authentication tokens. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.onlyBuiltDependencies">onlyBuiltDependencies</a></code> | <code>string[]</code> | A list of package names that are allowed to be executed during installation. |
@@ -19654,6 +19706,7 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publishBranch">publishBranch</a></code> | <code>string</code> | The primary branch of the repository which is used for publishing the latest changes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.publishWaitTimeout">publishWaitTimeout</a></code> | <code>number</code> | After uploading a package, wait up to this many milliseconds for the published version and its tarball to become available from the registry. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.recursiveInstall">recursiveInstall</a></code> | <code>boolean</code> | If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.referenceTime">referenceTime</a></code> | <code>Date</code> | The reference time, as an RFC 3339 timestamp, used to evaluate time-dependent settings. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registries">registries</a></code> | <code>any</code> | Configures the registries packages resolve from, in one of two shapes. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registry">registry</a></code> | <code>string</code> | The base URL of the npm package registry (trailing slash included). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.registrySupportsTimeField">registrySupportsTimeField</a></code> | <code>boolean</code> | Set this to true if the registry that you are using returns the "time" field in the abbreviated metadata. |
@@ -19708,7 +19761,22 @@ const pnpmWorkspaceYamlSchema: javascript.PnpmWorkspaceYamlSchema = { ... }
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreDirMaxLength">virtualStoreDirMaxLength</a></code> | <code>number</code> | Sets the maximum allowed length of directory names inside the virtual store directory (node_modules/.pnpm). |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreOnly">virtualStoreOnly</a></code> | <code>boolean</code> | When set to true, pnpm populates the virtual store without creating importer symlinks, hoisting, bin links, or running lifecycle scripts. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.virtualStoreType">virtualStoreType</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVirtualStoreType">PnpmWorkspaceYamlSchemaVirtualStoreType</a></code> | Determines where the virtual store is located. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.warnUnusedOverrides">warnUnusedOverrides</a></code> | <code>boolean</code> | When true, an install that resolves the whole dependency graph warns about every entry in overrides that matched no dependency. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchema.property.workspaceConcurrency">workspaceConcurrency</a></code> | <code>number</code> | Set the maximum number of tasks to run simultaneously. |
+
+---
+
+##### `access`<sup>Optional</sup> <a name="access" id="projen.javascript.PnpmWorkspaceYamlSchema.property.access"></a>
+
+```typescript
+public readonly access: PnpmWorkspaceYamlSchemaAccess;
+```
+
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess">PnpmWorkspaceYamlSchemaAccess</a>
+
+Sets the default for pnpm publish --access.
+
+When set, it takes precedence over publishConfig.access. Configure it in pnpm-workspace.yaml or the global config.yaml, or with PNPM_CONFIG_ACCESS. Read from configuration since pnpm v12.23.0.
 
 ---
 
@@ -20915,7 +20983,7 @@ public readonly minimumReleaseAge: number;
 
 minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it.
 
-This applies to all dependencies, including transitive ones.
+This applies to all dependencies, including transitive ones. The age is counted back from referenceTime when that setting is set.
 
 ---
 
@@ -21067,7 +21135,7 @@ public readonly nodeLinker: any;
 
 Defines what linker should be used for installing Node packages.
 
-loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
+Scalar values remain supported. The object form selects a linker with type and groups linker-specific options with it: isolated accepts hoist, hoisted accepts hoistingLimits, and loaded accepts excluded. Configuration sources replace the selected linker; options from a higher-priority object override the same options from lower-priority sources. PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
 
 ---
 
@@ -21122,12 +21190,14 @@ The Node.js version to use when checking a package's engines setting.
 ##### `noProxy`<sup>Optional</sup> <a name="noProxy" id="projen.javascript.PnpmWorkspaceYamlSchema.property.noProxy"></a>
 
 ```typescript
-public readonly noProxy: string;
+public readonly noProxy: PnpmWorkspaceYamlSchemaNoProxy;
 ```
 
-- *Type:* string
+- *Type:* <a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy">PnpmWorkspaceYamlSchemaNoProxy</a>
 
-A comma-separated string of domain extensions that a proxy should not be used for.
+A comma-separated string of domain extensions that a proxy should not be used for, or a boolean.
+
+A null value leaves the setting unset. Since pnpm v12.23.0, any other type fails validation.
 
 ---
 
@@ -21521,6 +21591,8 @@ public readonly publishBranch: string;
 
 The primary branch of the repository which is used for publishing the latest changes.
 
+Since pnpm v12.23.0, an empty value allows both master and main.
+
 ---
 
 ##### `publishWaitTimeout`<sup>Optional</sup> <a name="publishWaitTimeout" id="projen.javascript.PnpmWorkspaceYamlSchema.property.publishWaitTimeout"></a>
@@ -21546,6 +21618,20 @@ public readonly recursiveInstall: boolean;
 - *Type:* boolean
 
 If this is enabled, the primary behaviour of pnpm install becomes that of pnpm install -r, meaning the install is performed on all workspace or subdirectory packages.
+
+---
+
+##### `referenceTime`<sup>Optional</sup> <a name="referenceTime" id="projen.javascript.PnpmWorkspaceYamlSchema.property.referenceTime"></a>
+
+```typescript
+public readonly referenceTime: Date;
+```
+
+- *Type:* Date
+
+The reference time, as an RFC 3339 timestamp, used to evaluate time-dependent settings.
+
+minimumReleaseAge and trustPolicyIgnoreAfter count back from this time during resolution and lockfile verification. When unset, pnpm uses the current time. Set it in pnpm-workspace.yaml or with PNPM_CONFIG_REFERENCE_TIME; the global config.yaml does not apply it. A value that is not a timestamp, or is more than 10 minutes in the future, fails the command. Added in pnpm v12.23.0.
 
 ---
 
@@ -21951,6 +22037,8 @@ public readonly tag: string;
 
 If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
 
+Since pnpm v12.23.0, pnpm publish also reads it from pnpm-workspace.yaml, the global config.yaml, or PNPM_CONFIG_TAG when --tag is not passed.
+
 ---
 
 ##### `tasks`<sup>Optional</sup> <a name="tasks" id="projen.javascript.PnpmWorkspaceYamlSchema.property.tasks"></a>
@@ -22043,7 +22131,7 @@ public readonly trustPolicyIgnoreAfter: number;
 
 Allows ignoring the trust policy check for packages published more than the specified number of minutes ago.
 
-This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age.
+This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age. The age is counted back from referenceTime when that setting is set.
 
 ---
 
@@ -22228,6 +22316,20 @@ public readonly virtualStoreType: PnpmWorkspaceYamlSchemaVirtualStoreType;
 Determines where the virtual store is located.
 
 When set to project, a separate virtual store is created in each project's node_modules/.pnpm. When set to global, a single store is shared by every project on the machine, with each project's node_modules holding only symlinks into it. The value may also be an environment variable placeholder such as ${PNPM_VIRTUAL_STORE_TYPE:-global}. Added in pnpm v11.23.0.
+
+---
+
+##### `warnUnusedOverrides`<sup>Optional</sup> <a name="warnUnusedOverrides" id="projen.javascript.PnpmWorkspaceYamlSchema.property.warnUnusedOverrides"></a>
+
+```typescript
+public readonly warnUnusedOverrides: boolean;
+```
+
+- *Type:* boolean
+
+When true, an install that resolves the whole dependency graph warns about every entry in overrides that matched no dependency.
+
+Only overrides declared in pnpm-workspace.yaml are checked; entries added by a config dependency or an updateConfig hook are not. Added in pnpm v12.23.0.
 
 ---
 
@@ -22972,6 +23074,7 @@ const pnpmWorkspaceYamlSchemaVersioning: javascript.PnpmWorkspaceYamlSchemaVersi
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.epics">epics</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningEpics">PnpmWorkspaceYamlSchemaVersioningEpics</a>[]</code> | Ties member projects to a lead project and constrains their major versions to the lead's major-version band. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.fixed">fixed</a></code> | <code>string[][]</code> | Groups of workspace projects that always release together at one shared version. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.ignore">ignore</a></code> | <code>string[]</code> | Workspace projects permanently excluded from versioning and dependent propagation. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.includePrivatePackages">includePrivatePackages</a></code> | <code>boolean</code> | When false, pnpm change leaves private packages out of the packages it offers, and naming one on the command line fails. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.lanes">lanes</a></code> | <code>{[ key: string ]: string}</code> | Maps a workspace project to a release lane. |
 | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.maxBump">maxBump</a></code> | <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaVersioningMaxBump">PnpmWorkspaceYamlSchemaVersioningMaxBump</a></code> | Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution. |
 
@@ -23024,6 +23127,20 @@ public readonly ignore: string[];
 - *Type:* string[]
 
 Workspace projects permanently excluded from versioning and dependent propagation.
+
+---
+
+##### `includePrivatePackages`<sup>Optional</sup> <a name="includePrivatePackages" id="projen.javascript.PnpmWorkspaceYamlSchemaVersioning.property.includePrivatePackages"></a>
+
+```typescript
+public readonly includePrivatePackages: boolean;
+```
+
+- *Type:* boolean
+
+When false, pnpm change leaves private packages out of the packages it offers, and naming one on the command line fails.
+
+A private package can still be bumped as a dependent. Added in pnpm v12.23.0.
 
 ---
 
@@ -27581,6 +27698,69 @@ public readonly value: string | boolean;
 ---
 
 
+### PnpmWorkspaceYamlSchemaNoProxy <a name="PnpmWorkspaceYamlSchemaNoProxy" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy"></a>
+
+A comma-separated string of domain extensions that a proxy should not be used for, or a boolean.
+
+A null value leaves the setting unset. Since pnpm v12.23.0, any other type fails validation.
+
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromBoolean">fromBoolean</a></code> | *No description.* |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromString">fromString</a></code> | *No description.* |
+
+---
+
+##### `fromBoolean` <a name="fromBoolean" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromBoolean"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PnpmWorkspaceYamlSchemaNoProxy.fromBoolean(value: boolean)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromBoolean.parameter.value"></a>
+
+- *Type:* boolean
+
+---
+
+##### `fromString` <a name="fromString" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromString"></a>
+
+```typescript
+import { javascript } from 'projen'
+
+javascript.PnpmWorkspaceYamlSchemaNoProxy.fromString(value: string)
+```
+
+###### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.fromString.parameter.value"></a>
+
+- *Type:* string
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.property.value">value</a></code> | <code>string \| boolean</code> | *No description.* |
+
+---
+
+##### `value`<sup>Required</sup> <a name="value" id="projen.javascript.PnpmWorkspaceYamlSchemaNoProxy.property.value"></a>
+
+```typescript
+public readonly value: string | boolean;
+```
+
+- *Type:* string | boolean
+
+---
+
+
 ### PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol <a name="PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol" id="projen.javascript.PnpmWorkspaceYamlSchemaSaveWorkspaceProtocol"></a>
 
 This setting controls how dependencies that are linked from the workspace are added to package.json.
@@ -28388,6 +28568,35 @@ Package is public.
 ##### `RESTRICTED` <a name="RESTRICTED" id="projen.javascript.NpmAccess.RESTRICTED"></a>
 
 Package can only be accessed with credentials.
+
+---
+
+
+### PnpmWorkspaceYamlSchemaAccess <a name="PnpmWorkspaceYamlSchemaAccess" id="projen.javascript.PnpmWorkspaceYamlSchemaAccess"></a>
+
+Sets the default for pnpm publish --access.
+
+When set, it takes precedence over publishConfig.access. Configure it in pnpm-workspace.yaml or the global config.yaml, or with PNPM_CONFIG_ACCESS. Read from configuration since pnpm v12.23.0.
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess.PUBLIC">PUBLIC</a></code> | public. |
+| <code><a href="#projen.javascript.PnpmWorkspaceYamlSchemaAccess.RESTRICTED">RESTRICTED</a></code> | restricted. |
+
+---
+
+##### `PUBLIC` <a name="PUBLIC" id="projen.javascript.PnpmWorkspaceYamlSchemaAccess.PUBLIC"></a>
+
+public.
+
+---
+
+
+##### `RESTRICTED` <a name="RESTRICTED" id="projen.javascript.PnpmWorkspaceYamlSchemaAccess.RESTRICTED"></a>
+
+restricted.
 
 ---
 
