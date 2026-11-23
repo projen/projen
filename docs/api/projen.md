@@ -14332,7 +14332,7 @@ A name to add to the docker-compose.yml filename.
 ##### ~~`schemaVersion`~~<sup>Optional</sup> <a name="schemaVersion" id="projen.DockerComposeProps.property.schemaVersion"></a>
 
 - *Deprecated:* - The top level `version` field is obsolete per the Compose Specification.
-{@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements Compose Specification}
+{@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements | Compose Specification}
 
 ```typescript
 public readonly schemaVersion: string;

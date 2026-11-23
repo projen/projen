@@ -6623,7 +6623,7 @@ This token is used to approve pull requests.
 
 Github forbids an identity to approve its own pull request.
 If your project produces automated pull requests using the Github default token -
-{@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow `GITHUB_TOKEN` }
+{@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow | `GITHUB_TOKEN`}
 - that you would like auto approved, such as when using the `depsUpgrade` property in
 `NodeProjectOptions`, then you must use a different token here.
 
