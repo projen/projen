@@ -4,6 +4,8 @@
 
 ### NextComponent <a name="NextComponent" id="projen.web.NextComponent"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.web.NextComponent.Initializer"></a>
 
 ```typescript
@@ -230,6 +232,8 @@ public readonly project: Project;
 
 
 ### NextJsProject <a name="NextJsProject" id="projen.web.NextJsProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Next.js project using JavaScript.
 
@@ -1520,6 +1524,8 @@ this task should synthesize the project files.
 ---
 
 ### NextJsTypeScriptProject <a name="NextJsTypeScriptProject" id="projen.web.NextJsTypeScriptProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Next.js project using TypeScript.
 
@@ -2942,6 +2948,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### ReactComponent <a name="ReactComponent" id="projen.web.ReactComponent"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.web.ReactComponent.Initializer"></a>
 
 ```typescript
@@ -3168,6 +3176,8 @@ public readonly project: Project;
 
 
 ### ReactProject <a name="ReactProject" id="projen.web.ReactProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 React project using JavaScript.
 
@@ -4431,6 +4441,8 @@ this task should synthesize the project files.
 ---
 
 ### ReactTypeScriptProject <a name="ReactTypeScriptProject" id="projen.web.ReactTypeScriptProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 React project using TypeScript.
 

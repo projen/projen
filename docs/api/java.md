@@ -4,6 +4,8 @@
 
 ### JavaProject <a name="JavaProject" id="projen.java.JavaProject"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Java project.
 
 #### Initializers <a name="Initializers" id="projen.java.JavaProject.Initializer"></a>
@@ -947,6 +949,8 @@ this task should synthesize the project files.
 
 ### Junit <a name="Junit" id="projen.java.Junit"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Implements JUnit-based testing.
 
 #### Initializers <a name="Initializers" id="projen.java.Junit.Initializer"></a>
@@ -1175,6 +1179,8 @@ public readonly project: Project;
 
 
 ### MavenCompile <a name="MavenCompile" id="projen.java.MavenCompile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Adds the maven-compiler plugin to a POM file and the `compile` task.
 
@@ -1411,6 +1417,8 @@ public readonly project: Project;
 
 
 ### MavenPackaging <a name="MavenPackaging" id="projen.java.MavenPackaging"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Configures a maven project to produce a .jar archive with sources and javadocs.
 
@@ -1661,6 +1669,8 @@ The directory containing the package output, relative to the project outdir.
 
 ### MavenSample <a name="MavenSample" id="projen.java.MavenSample"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Java code sample.
 
 #### Initializers <a name="Initializers" id="projen.java.MavenSample.Initializer"></a>
@@ -1889,6 +1899,8 @@ public readonly project: Project;
 
 
 ### Pom <a name="Pom" id="projen.java.Pom"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A Project Object Model or POM is the fundamental unit of work in Maven.
 
@@ -2342,6 +2354,8 @@ Project URL.
 
 
 ### Projenrc <a name="Projenrc" id="projen.java.Projenrc"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Allows writing projenrc files in java.
 

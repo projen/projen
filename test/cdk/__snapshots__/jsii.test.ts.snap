@@ -1862,7 +1862,7 @@ exports[`language bindings release workflow includes release_golang job 1`] = `
       },
     },
     {
-      "uses": "actions/setup-go@v7.0.0",
+      "uses": "actions/setup-go@v7.1.0",
       "with": {
         "cache": false,
         "go-version": "^1.18.0",
@@ -1942,7 +1942,7 @@ exports[`language bindings release workflow includes release_maven job 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v6.2.0",
+      "uses": "actions/setup-java@v6.3.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
@@ -2367,7 +2367,7 @@ exports[`language bindings snapshot go 1`] = `
       },
     },
     {
-      "uses": "actions/setup-go@v7.0.0",
+      "uses": "actions/setup-go@v7.1.0",
       "with": {
         "cache": false,
         "go-version": "^1.18.0",
@@ -2437,7 +2437,7 @@ exports[`language bindings snapshot java 1`] = `
   "runs-on": "ubuntu-latest",
   "steps": [
     {
-      "uses": "actions/setup-java@v6.2.0",
+      "uses": "actions/setup-java@v6.3.0",
       "with": {
         "distribution": "corretto",
         "java-version": "11",
@@ -2823,7 +2823,7 @@ jobs:
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-go@v7.0.0
+      - uses: actions/setup-go@v7.1.0
         with:
           go-version: ^1.18.0
           cache: false
@@ -3043,7 +3043,7 @@ jobs:
         with:
           node-version: lts/*
           package-manager-cache: false
-      - uses: actions/setup-go@v7.0.0
+      - uses: actions/setup-go@v7.1.0
         with:
           go-version: ^1.18.0
           cache: false

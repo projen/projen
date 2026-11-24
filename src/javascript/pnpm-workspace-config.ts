@@ -79,6 +79,13 @@ export interface PnpmWorkspaceYamlSchema {
   readonly overrides?: any;
 
   /**
+   * When true, an install that resolves the whole dependency graph warns about every entry in overrides that matched no dependency. Only overrides declared in pnpm-workspace.yaml are checked; entries added by a config dependency or an updateConfig hook are not. Added in pnpm v12.23.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#warnUnusedOverrides
+   */
+  readonly warnUnusedOverrides?: boolean;
+
+  /**
    * Used to extend the existing package definitions with additional information.
    *
    * @schema PnpmWorkspaceYamlSchema#packageExtensions
@@ -264,7 +271,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly modulesDir?: string;
 
   /**
-   * Defines what linker should be used for installing Node packages. loaded is an experimental linker that loads packages directly from the content-addressable store, without placing them in node_modules; it also accepts an object with type: loaded and an optional excluded list. Configuration sources replace the whole nodeLinker value: a higher-priority scalar, or an object without excluded, clears exclusions from lower-priority sources. The environment variable PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
+   * Defines what linker should be used for installing Node packages. Scalar values remain supported. The object form selects a linker with type and groups linker-specific options with it: isolated accepts hoist, hoisted accepts hoistingLimits, and loaded accepts excluded. Configuration sources replace the selected linker; options from a higher-priority object override the same options from lower-priority sources. PNPM_CONFIG_NODE_LINKER and --config.node-linker accept the object as JSON.
    *
    * @schema PnpmWorkspaceYamlSchema#nodeLinker
    */
@@ -544,11 +551,11 @@ export interface PnpmWorkspaceYamlSchema {
   readonly maxsockets?: number;
 
   /**
-   * A comma-separated string of domain extensions that a proxy should not be used for.
+   * A comma-separated string of domain extensions that a proxy should not be used for, or a boolean. A null value leaves the setting unset. Since pnpm v12.23.0, any other type fails validation.
    *
    * @schema PnpmWorkspaceYamlSchema#noProxy
    */
-  readonly noProxy?: string;
+  readonly noProxy?: PnpmWorkspaceYamlSchemaNoProxy;
 
   /**
    * Whether or not to do SSL key validation when making requests to the registry via HTTPS.
@@ -988,7 +995,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly saveTypes?: boolean;
 
   /**
-   * If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting.
+   * If you pnpm add a package and you don't provide a specific version, then it will install the package at the version registered under the tag from this setting. Since pnpm v12.23.0, pnpm publish also reads it from pnpm-workspace.yaml, the global config.yaml, or PNPM_CONFIG_TAG when --tag is not passed.
    *
    * @schema PnpmWorkspaceYamlSchema#tag
    */
@@ -1142,7 +1149,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly embedReadme?: boolean;
 
   /**
-   * The primary branch of the repository which is used for publishing the latest changes.
+   * The primary branch of the repository which is used for publishing the latest changes. Since pnpm v12.23.0, an empty value allows both master and main.
    *
    * @schema PnpmWorkspaceYamlSchema#publishBranch
    */
@@ -1154,6 +1161,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#publishWaitTimeout
    */
   readonly publishWaitTimeout?: number;
+
+  /**
+   * Sets the default for pnpm publish --access. When set, it takes precedence over publishConfig.access. Configure it in pnpm-workspace.yaml or the global config.yaml, or with PNPM_CONFIG_ACCESS. Read from configuration since pnpm v12.23.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#access
+   */
+  readonly access?: PnpmWorkspaceYamlSchemaAccess;
 
   /**
    * Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
@@ -1226,7 +1240,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly saveExact?: boolean;
 
   /**
-   * minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. This applies to all dependencies, including transitive ones.
+   * minimumReleaseAge defines the minimum number of minutes that must pass after a version is published before pnpm will install it. This applies to all dependencies, including transitive ones. The age is counted back from referenceTime when that setting is set.
    *
    * @schema PnpmWorkspaceYamlSchema#minimumReleaseAge
    */
@@ -1238,6 +1252,13 @@ export interface PnpmWorkspaceYamlSchema {
    * @schema PnpmWorkspaceYamlSchema#minimumReleaseAgeExclude
    */
   readonly minimumReleaseAgeExclude?: string[];
+
+  /**
+   * The reference time, as an RFC 3339 timestamp, used to evaluate time-dependent settings. minimumReleaseAge and trustPolicyIgnoreAfter count back from this time during resolution and lockfile verification. When unset, pnpm uses the current time. Set it in pnpm-workspace.yaml or with PNPM_CONFIG_REFERENCE_TIME; the global config.yaml does not apply it. A value that is not a timestamp, or is more than 10 minutes in the future, fails the command. Added in pnpm v12.23.0.
+   *
+   * @schema PnpmWorkspaceYamlSchema#referenceTime
+   */
+  readonly referenceTime?: Date;
 
   /**
    * Controls how pnpm behaves when no version of a dependency satisfies the minimumReleaseAge constraint within the requested range.
@@ -1297,7 +1318,7 @@ export interface PnpmWorkspaceYamlSchema {
   readonly blockExoticSubdeps?: boolean;
 
   /**
-   * Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age.
+   * Allows ignoring the trust policy check for packages published more than the specified number of minutes ago. This is useful when enabling strict trust policies, as it allows older versions of packages (which may lack a process for publishing with signatures or provenance) to be installed without manual exclusion, assuming they are safe due to their age. The age is counted back from referenceTime when that setting is set.
    *
    * @schema PnpmWorkspaceYamlSchema#trustPolicyIgnoreAfter
    */
@@ -1428,6 +1449,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'catalogPrune': obj.catalogPrune,
     'onlyBuiltDependencies': obj.onlyBuiltDependencies?.map(y => y),
     'overrides': obj.overrides,
+    'warnUnusedOverrides': obj.warnUnusedOverrides,
     'packageExtensions': obj.packageExtensions,
     'packageConfigs': obj.packageConfigs,
     'peerDependencyRules': toJson_PnpmWorkspaceYamlSchemaPeerDependencyRules(obj.peerDependencyRules),
@@ -1496,7 +1518,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'proxy': obj.proxy,
     'localAddress': obj.localAddress,
     'maxsockets': obj.maxsockets,
-    'noProxy': obj.noProxy,
+    'noProxy': obj.noProxy?.value,
     'strictSsl': obj.strictSsl,
     'networkConcurrency': obj.networkConcurrency,
     'fetchRetries': obj.fetchRetries,
@@ -1583,6 +1605,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'embedReadme': obj.embedReadme,
     'publishBranch': obj.publishBranch,
     'publishWaitTimeout': obj.publishWaitTimeout,
+    'access': obj.access,
     'versioning': toJson_PnpmWorkspaceYamlSchemaVersioning(obj.versioning),
     'provenance': obj.provenance,
     'pnpmfile': obj.pnpmfile,
@@ -1595,6 +1618,7 @@ export function toJson_PnpmWorkspaceYamlSchema(obj: PnpmWorkspaceYamlSchema | un
     'saveExact': obj.saveExact,
     'minimumReleaseAge': obj.minimumReleaseAge,
     'minimumReleaseAgeExclude': obj.minimumReleaseAgeExclude?.map(y => y),
+    'referenceTime': obj.referenceTime?.toISOString(),
     'minimumReleaseAgeStrict': obj.minimumReleaseAgeStrict,
     'minimumReleaseAgeExcludePrune': obj.minimumReleaseAgeExcludePrune,
     'preferOffline': obj.preferOffline,
@@ -2010,6 +2034,25 @@ export enum PnpmWorkspaceYamlSchemaStoreIndexFormat {
 }
 
 /**
+ * A comma-separated string of domain extensions that a proxy should not be used for, or a boolean. A null value leaves the setting unset. Since pnpm v12.23.0, any other type fails validation.
+ *
+ * @schema PnpmWorkspaceYamlSchemaNoProxy
+ */
+export class PnpmWorkspaceYamlSchemaNoProxy {
+  public static fromString(value: string): PnpmWorkspaceYamlSchemaNoProxy {
+    return new PnpmWorkspaceYamlSchemaNoProxy(value);
+  }
+  public static fromBoolean(value: boolean): PnpmWorkspaceYamlSchemaNoProxy {
+    return new PnpmWorkspaceYamlSchemaNoProxy(value);
+  }
+  public readonly value: string | boolean;
+
+  private constructor(value: string | boolean) {
+    this.value = value;
+  }
+}
+
+/**
  * Controls colors in the output.
  *
  * @schema PnpmWorkspaceYamlSchemaColor
@@ -2328,6 +2371,18 @@ export enum PnpmWorkspaceYamlSchemaResolutionMode {
 }
 
 /**
+ * Sets the default for pnpm publish --access. When set, it takes precedence over publishConfig.access. Configure it in pnpm-workspace.yaml or the global config.yaml, or with PNPM_CONFIG_ACCESS. Read from configuration since pnpm v12.23.0.
+ *
+ * @schema PnpmWorkspaceYamlSchemaAccess
+ */
+export enum PnpmWorkspaceYamlSchemaAccess {
+  /** public */
+  PUBLIC = "public",
+  /** restricted */
+  RESTRICTED = "restricted",
+}
+
+/**
  * Versioning settings for pnpm's native workspace release management, used by `pnpm change` and recursive `pnpm version`.
  *
  * @schema PnpmWorkspaceYamlSchemaVersioning
@@ -2346,6 +2401,13 @@ export interface PnpmWorkspaceYamlSchemaVersioning {
    * @schema PnpmWorkspaceYamlSchemaVersioning#ignore
    */
   readonly ignore?: string[];
+
+  /**
+   * When false, pnpm change leaves private packages out of the packages it offers, and naming one on the command line fails. A private package can still be bumped as a dependent. Added in pnpm v12.23.0.
+   *
+   * @schema PnpmWorkspaceYamlSchemaVersioning#includePrivatePackages
+   */
+  readonly includePrivatePackages?: boolean;
 
   /**
    * Caps the bump that a release from the current checkout may apply, after dependent propagation and fixed-group resolution.
@@ -2386,6 +2448,7 @@ export function toJson_PnpmWorkspaceYamlSchemaVersioning(obj: PnpmWorkspaceYamlS
   const result = {
     'fixed': obj.fixed?.map(y => y?.map(y => y)),
     'ignore': obj.ignore?.map(y => y),
+    'includePrivatePackages': obj.includePrivatePackages,
     'maxBump': obj.maxBump,
     'lanes': ((obj.lanes) === undefined) ? undefined : (Object.entries(obj.lanes).reduce((r, i) => (i[1] === undefined) ? r : ({ ...r, [i[0]]: i[1] }), {})),
     'epics': obj.epics?.map(y => toJson_PnpmWorkspaceYamlSchemaVersioningEpics(y)),

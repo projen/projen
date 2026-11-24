@@ -111,8 +111,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - id: auto_afd3034a
-        uses: actions/setup-go@v7.0.0
+      - id: auto_4b6f1699
+        uses: actions/setup-go@v7.1.0
         with:
           go-version: ${{ matrix.go-version }}
       - id: auto_7f576795
@@ -148,8 +148,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - id: auto_cf498c1c
-        uses: actions/setup-java@v6.2.0
+      - id: auto_e428aef7
+        uses: actions/setup-java@v6.3.0
         with:
           java-version: ${{ matrix.java-version }}
           distribution: ${{ matrix.java-distribution }}

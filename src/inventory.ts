@@ -68,6 +68,7 @@ interface JsiiType {
   };
   properties?: Array<{
     name: string;
+    overrides?: string;
     docs: {
       summary?: string;
       default?: string;
@@ -298,18 +299,19 @@ function discoverOptions(
     );
   }
 
-  addOptions(optionsTypeFqn);
+  const optionStructs = new Map<string, JsiiType>();
+  const overridden = new Set<string>();
+  collectOptionStructs(optionsTypeFqn);
+  for (const [ofqn, struct] of optionStructs) {
+    addOptions(ofqn, struct);
+  }
 
   const opts = Object.values(options);
 
   return opts.sort((a, b) => a.name.localeCompare(b.name));
 
-  function addOptions(
-    ofqn?: string,
-    basePath: string[] = [],
-    optional = false,
-  ) {
-    if (!ofqn) {
+  function collectOptionStructs(ofqn?: string) {
+    if (!ofqn || optionStructs.has(ofqn)) {
       return;
     }
 
@@ -318,8 +320,35 @@ function discoverOptions(
       throw new Error(`unable to find options type ${ofqn} for project ${fqn}`);
     }
 
+    optionStructs.set(ofqn, struct);
+    // A base can also be reached through a sibling before its override.
     for (const prop of struct.properties ?? []) {
-      const propPath = [...basePath, prop.name];
+      if (prop.overrides) {
+        // jsii names only one base even when several supply the same property.
+        markOverridden(struct.interfaces ?? [], prop.name);
+      }
+    }
+    for (const ifc of struct.interfaces ?? []) {
+      collectOptionStructs(ifc);
+    }
+  }
+
+  function markOverridden(bases: string[], name: string) {
+    for (const base of bases) {
+      const member = `${base}.${name}`;
+      if (!overridden.has(member)) {
+        overridden.add(member);
+        markOverridden(jsii[base]?.interfaces ?? [], name);
+      }
+    }
+  }
+
+  function addOptions(ofqn: string, struct: JsiiType) {
+    for (const prop of struct.properties ?? []) {
+      if (overridden.has(`${ofqn}.${prop.name}`)) {
+        continue;
+      }
+      const propPath = [prop.name];
 
       // protect against double-booking
       if (prop.name in options) {
@@ -335,7 +364,7 @@ function discoverOptions(
         jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
       }
 
-      const isOptional = optional || prop.optional;
+      const isOptional = prop.optional;
       const defaultValue = sanitizeValue(prop.docs?.default);
       const pjnew = sanitizeValue(prop.docs?.custom?.pjnew);
 
@@ -364,10 +393,6 @@ function discoverOptions(
         featured: prop.docs?.custom?.featured === "true",
         deprecated: prop.docs.stability === "deprecated" ? true : undefined,
       });
-    }
-
-    for (const ifc of struct.interfaces ?? []) {
-      addOptions(ifc);
     }
   }
 }

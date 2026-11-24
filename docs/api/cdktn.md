@@ -4,6 +4,8 @@
 
 ### CdktnConfig <a name="CdktnConfig" id="projen.cdktn.CdktnConfig"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents cdktf.json file.
 
 CDKTN (CDK Terrain) continues to use the `cdktf.json` filename for
@@ -296,6 +298,8 @@ Represents the JSON file.
 
 ### CdktnDeps <a name="CdktnDeps" id="projen.cdktn.CdktnDeps"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages dependencies on CDK Terrain (CDKTN).
 
 #### Initializers <a name="Initializers" id="projen.cdktn.CdktnDeps.Initializer"></a>
@@ -563,6 +567,8 @@ The dependency requirement for CDKTN (e.g. `^0.24.0`).
 
 
 ### CdktnTasks <a name="CdktnTasks" id="projen.cdktn.CdktnTasks"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Adds standard CDKTN tasks to your project.
 
@@ -889,6 +895,8 @@ Watch task.
 
 
 ### CdktnTypeScriptApp <a name="CdktnTypeScriptApp" id="projen.cdktn.CdktnTypeScriptApp"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 CDKTN app in TypeScript.
 
@@ -2335,6 +2343,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 ---
 
 ### ConstructLibraryCdktn <a name="ConstructLibraryCdktn" id="projen.cdktn.ConstructLibraryCdktn"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 CDKTN construct library project.
 

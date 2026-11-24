@@ -30,6 +30,8 @@ The following submodules are available:
 
 ### AiInstructions <a name="AiInstructions" id="projen.AiInstructions"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Generates instruction files for AI coding assistants with projen-specific guidance.
 
 This component creates configuration files that help AI tools like GitHub Copilot,
@@ -380,6 +382,8 @@ public readonly project: Project;
 
 
 ### AiInstructionsFile <a name="AiInstructionsFile" id="projen.AiInstructionsFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.AiInstructionsFile.Initializer"></a>
 
@@ -757,6 +761,8 @@ Indicates if the file should be read-only or read-write.
 
 ### Component <a name="Component" id="projen.Component"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents a project component.
 
 #### Initializers <a name="Initializers" id="projen.Component.Initializer"></a>
@@ -985,6 +991,8 @@ public readonly project: Project;
 
 
 ### Dependencies <a name="Dependencies" id="projen.Dependencies"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 
@@ -1446,6 +1454,8 @@ The project-relative path of the deps manifest file.
 
 ### DockerCompose <a name="DockerCompose" id="projen.DockerCompose"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Create a docker-compose YAML file.
 
 #### Initializers <a name="Initializers" id="projen.DockerCompose.Initializer"></a>
@@ -1862,6 +1872,8 @@ The Docker Compose file.
 
 ### FileBase <a name="FileBase" id="projen.FileBase"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.FileBase.Initializer"></a>
 
 ```typescript
@@ -2223,6 +2235,8 @@ Indicates if the file should be read-only or read-write.
 
 ### FutureComponent <a name="FutureComponent" id="projen.FutureComponent"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A {@link Component} that is created *detached* from any project and attached to one later via {@link FutureComponent.attach}.
 
 Like a regular component, but constructed without a project. It improves on a
@@ -2538,6 +2552,8 @@ prefer `tryAttach()` over reading this and branching.
 
 
 ### GitAttributesFile <a name="GitAttributesFile" id="projen.GitAttributesFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Assign attributes to file names in a git repository.
 
@@ -2990,7 +3006,7 @@ Whether the current gitattributes file has any LFS patterns.
 
 ### Gitpod <a name="Gitpod" id="projen.Gitpod"></a>
 
-- *Implements:* <a href="#projen.IDevEnvironment">IDevEnvironment</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.IDevEnvironment">IDevEnvironment</a>
 
 The Gitpod component which emits .gitpod.yml.
 
@@ -3352,6 +3368,8 @@ Direct access to the gitpod configuration (escape hatch).
 
 
 ### IgnoreFile <a name="IgnoreFile" id="projen.IgnoreFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.IgnoreFile.Initializer"></a>
 
@@ -3816,6 +3834,8 @@ public readonly filterEmptyLines: boolean;
 
 
 ### IniFile <a name="IniFile" id="projen.IniFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents an INI file.
 
@@ -4367,6 +4387,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 
 ### JsonFile <a name="JsonFile" id="projen.JsonFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a JSON file.
 
@@ -4932,6 +4954,8 @@ Indicates if the files supports comments.
 
 ### License <a name="License" id="projen.License"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.License.Initializer"></a>
 
 ```typescript
@@ -5286,6 +5310,8 @@ Indicates if the file should be read-only or read-write.
 
 ### Logger <a name="Logger" id="projen.Logger"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Project-level logging utilities.
 
 #### Initializers <a name="Initializers" id="projen.Logger.Initializer"></a>
@@ -5627,6 +5653,8 @@ public readonly project: Project;
 
 
 ### Makefile <a name="Makefile" id="projen.Makefile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Minimal Makefile.
 
@@ -6063,6 +6091,8 @@ List of rule definitions.
 
 
 ### ObjectFile <a name="ObjectFile" id="projen.ObjectFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents an Object file.
 
@@ -6614,6 +6644,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 
 ### Project <a name="Project" id="projen.Project"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Base project.
 
@@ -7344,6 +7376,8 @@ this task should synthesize the project files.
 
 ### ProjectBuild <a name="ProjectBuild" id="projen.ProjectBuild"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Manages a standard build process for all projects.
 
 Build spawns these tasks in order:
@@ -7654,6 +7688,8 @@ Tests the code.
 
 ### ProjectTree <a name="ProjectTree" id="projen.ProjectTree"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Generates a `.projen/tree.json` file that provides a snapshot of your project's component hierarchy. This file includes metadata about each component such as file paths, types, and the projen version used.
 
 The tree file is helpful for:
@@ -7891,6 +7927,8 @@ public readonly file: JsonFile;
 
 
 ### ProjenrcFile <a name="ProjenrcFile" id="projen.ProjenrcFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A component representing the projen runtime configuration.
 
@@ -8153,6 +8191,8 @@ The path of the projenrc file.
 
 ### ProjenrcJson <a name="ProjenrcJson" id="projen.ProjenrcJson"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Sets up a project to use JSON for projenrc.
 
 #### Initializers <a name="Initializers" id="projen.ProjenrcJson.Initializer"></a>
@@ -8411,6 +8451,8 @@ The path of the projenrc file.
 
 
 ### PropertiesFile <a name="PropertiesFile" id="projen.PropertiesFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a Java `.properties` file.
 
@@ -8993,6 +9035,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 ### Renovatebot <a name="Renovatebot" id="projen.Renovatebot"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Defines renovatebot configuration for projen project.
 
 Ignores the versions controlled by Projen.
@@ -9236,6 +9280,8 @@ The file holding the renovatebot configuration.
 
 
 ### SampleDir <a name="SampleDir" id="projen.SampleDir"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Renders the given files into the directory if the directory does not exist.
 
@@ -9483,6 +9529,8 @@ public readonly project: Project;
 
 ### SampleFile <a name="SampleFile" id="projen.SampleFile"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Produces a file with the given contents but only once, if the file doesn't already exist.
 
 Use this for creating example code files or other resources.
@@ -9727,6 +9775,8 @@ public readonly project: Project;
 
 ### SampleReadme <a name="SampleReadme" id="projen.SampleReadme"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Represents a README.md sample file. You are expected to manage this file after creation.
 
 #### Initializers <a name="Initializers" id="projen.SampleReadme.Initializer"></a>
@@ -9956,7 +10006,7 @@ public readonly project: Project;
 
 ### ScriptRunner <a name="ScriptRunner" id="projen.ScriptRunner"></a>
 
-- *Implements:* <a href="#projen.IScriptRunner">IScriptRunner</a>
+- *Implements:* constructs.IConstruct, constructs.IDependable, <a href="#projen.IScriptRunner">IScriptRunner</a>
 
 A script runner that executes the entrypoint file directly.
 
@@ -10258,6 +10308,8 @@ prefer `tryAttach()` over reading this and branching.
 
 
 ### SourceCode <a name="SourceCode" id="projen.SourceCode"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a source file.
 
@@ -10567,6 +10619,8 @@ public readonly marker: string;
 
 
 ### Tasks <a name="Tasks" id="projen.Tasks"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Defines and manages project tasks.
 
@@ -10962,6 +11016,8 @@ Sets the default shell used to run all task commands.
 
 ### TextFile <a name="TextFile" id="projen.TextFile"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 A text file.
 
 #### Initializers <a name="Initializers" id="projen.TextFile.Initializer"></a>
@@ -11345,6 +11401,8 @@ Indicates if the file should be read-only or read-write.
 
 
 ### TomlFile <a name="TomlFile" id="projen.TomlFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a TOML file.
 
@@ -11897,6 +11955,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 ### Version <a name="Version" id="projen.Version"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.Version.Initializer"></a>
 
 ```typescript
@@ -12252,6 +12312,8 @@ by `bump`; its shell can be overridden via `task.shell`.
 
 
 ### XmlFile <a name="XmlFile" id="projen.XmlFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents an XML file.
 
@@ -12807,6 +12869,8 @@ Indicates if empty objects and arrays are omitted from the output object.
 
 
 ### YamlFile <a name="YamlFile" id="projen.YamlFile"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Represents a YAML file.
 
@@ -14268,7 +14332,7 @@ A name to add to the docker-compose.yml filename.
 ##### ~~`schemaVersion`~~<sup>Optional</sup> <a name="schemaVersion" id="projen.DockerComposeProps.property.schemaVersion"></a>
 
 - *Deprecated:* - The top level `version` field is obsolete per the Compose Specification.
-{@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements Compose Specification}
+{@link https://github.com/compose-spec/compose-spec/blob/master/spec.md#version-and-name-top-level-elements | Compose Specification}
 
 ```typescript
 public readonly schemaVersion: string;
@@ -18379,7 +18443,6 @@ const textFileOptions: TextFileOptions = { ... }
 | <code><a href="#projen.TextFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Adds the projen marker to the file. |
 | <code><a href="#projen.TextFileOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
 | <code><a href="#projen.TextFileOptions.property.lines">lines</a></code> | <code>string[]</code> | The contents of the text file. |
-| <code><a href="#projen.TextFileOptions.property.markerCommentPrefix">markerCommentPrefix</a></code> | <code>string</code> | Single-line comment prefix to use when prepending the projen marker. |
 
 ---
 
@@ -18466,33 +18529,6 @@ The contents of the text file.
 You can use `addLine()` to append lines.
 
 ---
-
-##### `markerCommentPrefix`<sup>Optional</sup> <a name="markerCommentPrefix" id="projen.TextFileOptions.property.markerCommentPrefix"></a>
-
-```typescript
-public readonly markerCommentPrefix: string;
-```
-
-- *Type:* string
-- *Default:* no marker line is written
-
-Single-line comment prefix to use when prepending the projen marker.
-
-Supply a prefix appropriate for the target file format, such as `#`.
-Omitting the prefix leaves the file contents unchanged. Setting
-`marker: true` alone does not add a marker or infer a comment prefix.
-
-The marker is omitted when `marker` is `false` or the project is ejected,
-even if a prefix is supplied.
-
----
-
-*Example*
-
-```typescript
-"#"
-```
-
 
 ### TomlFileOptions <a name="TomlFileOptions" id="projen.TomlFileOptions"></a>
 

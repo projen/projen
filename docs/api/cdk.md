@@ -4,6 +4,8 @@
 
 ### AutoDiscoverBase <a name="AutoDiscoverBase" id="projen.cdk.AutoDiscoverBase"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Base class for auto-discovering and creating project subcomponents.
 
 #### Initializers <a name="Initializers" id="projen.cdk.AutoDiscoverBase.Initializer"></a>
@@ -245,6 +247,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 
 ### ConstructLibrary <a name="ConstructLibrary" id="projen.cdk.ConstructLibrary"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A multi-language library for CDK constructs.
 
@@ -1639,6 +1643,8 @@ public readonly DEFAULT_TS_JEST_TRANFORM_PATTERN: string;
 
 ### IntegrationTestAutoDiscoverBase <a name="IntegrationTestAutoDiscoverBase" id="projen.cdk.IntegrationTestAutoDiscoverBase"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Base class for locating integration tests in the project's test tree.
 
 #### Initializers <a name="Initializers" id="projen.cdk.IntegrationTestAutoDiscoverBase.Initializer"></a>
@@ -1880,6 +1886,8 @@ Auto-discovered entry points with paths relative to the project directory.
 
 
 ### IntegrationTestBase <a name="IntegrationTestBase" id="projen.cdk.IntegrationTestBase"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.cdk.IntegrationTestBase.Initializer"></a>
 
@@ -2147,6 +2155,8 @@ Just update snapshot (without deployment).
 
 ### JsiiDocgen <a name="JsiiDocgen" id="projen.cdk.JsiiDocgen"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 
 #### Initializers <a name="Initializers" id="projen.cdk.JsiiDocgen.Initializer"></a>
@@ -2405,6 +2415,8 @@ The task that generates API documentation.
 
 
 ### JsiiProject <a name="JsiiProject" id="projen.cdk.JsiiProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Multi-language jsii library project.
 

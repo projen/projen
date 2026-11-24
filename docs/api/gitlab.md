@@ -4,6 +4,8 @@
 
 ### CiConfiguration <a name="CiConfiguration" id="projen.gitlab.CiConfiguration"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 CI for GitLab.
 
 A CI is a configurable automated process made up of one or more stages/jobs.
@@ -610,6 +612,8 @@ Used to control pipeline behavior.
 
 
 ### GitlabConfiguration <a name="GitlabConfiguration" id="projen.gitlab.GitlabConfiguration"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A GitLab CI for the main `.gitlab-ci.yml` file.
 
@@ -1238,6 +1242,8 @@ public readonly nestedTemplates: {[ key: string ]: NestedConfiguration};
 
 
 ### NestedConfiguration <a name="NestedConfiguration" id="projen.gitlab.NestedConfiguration"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
 

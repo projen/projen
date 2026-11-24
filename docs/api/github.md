@@ -4,6 +4,8 @@
 
 ### AutoApprove <a name="AutoApprove" id="projen.github.AutoApprove"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Auto approve pull requests that meet a criteria.
 
 #### Initializers <a name="Initializers" id="projen.github.AutoApprove.Initializer"></a>
@@ -260,6 +262,8 @@ public readonly label: string;
 
 
 ### AutoMerge <a name="AutoMerge" id="projen.github.AutoMerge"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Automatically merge Pull Requests using Mergify.
 
@@ -536,6 +540,8 @@ public readonly project: Project;
 
 ### AutoQueue <a name="AutoQueue" id="projen.github.AutoQueue"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Automatically add pull requests to the merge queue PRs will be merged once they pass required checks.
 
 #### Initializers <a name="Initializers" id="projen.github.AutoQueue.Initializer"></a>
@@ -764,6 +770,8 @@ public readonly project: Project;
 
 
 ### Dependabot <a name="Dependabot" id="projen.github.Dependabot"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Defines dependabot configuration for node projects.
 
@@ -1072,6 +1080,8 @@ Whether or not projen is also upgraded in this config,.
 
 ### DependencyReview <a name="DependencyReview" id="projen.github.DependencyReview"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Adds a GitHub workflow that runs the dependency-review-action on pull requests.
 
 This action scans pull requests for dependency changes and raises an error
@@ -1305,6 +1315,8 @@ public readonly project: Project;
 
 
 ### GitHub <a name="GitHub" id="projen.github.GitHub"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.github.GitHub.Initializer"></a>
 
@@ -1745,6 +1757,8 @@ The `Mergify` component configured on this repository This is `undefined` if Mer
 
 
 ### GitHubProject <a name="GitHubProject" id="projen.github.GitHubProject"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 GitHub-based project.
 
@@ -2730,6 +2744,8 @@ this task should synthesize the project files.
 
 ### GithubWorkflow <a name="GithubWorkflow" id="projen.github.GithubWorkflow"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Workflow for GitHub.
 
 A workflow is a configurable automated process made up of one or more jobs.
@@ -3454,6 +3470,8 @@ contexts.
 
 ### Kodiak <a name="Kodiak" id="projen.github.Kodiak"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Configure pull request merging via Kodiak (`.kodiak.toml`).
 
 > [https://kodiakhq.com/](https://kodiakhq.com/)
@@ -3685,6 +3703,8 @@ public readonly project: Project;
 
 ### MergeQueue <a name="MergeQueue" id="projen.github.MergeQueue"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Merge pull requests using a merge queue.
 
 #### Initializers <a name="Initializers" id="projen.github.MergeQueue.Initializer"></a>
@@ -3913,6 +3933,8 @@ public readonly project: Project;
 
 
 ### Mergify <a name="Mergify" id="projen.github.Mergify"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 #### Initializers <a name="Initializers" id="projen.github.Mergify.Initializer"></a>
 
@@ -4167,6 +4189,8 @@ public readonly project: Project;
 
 ### PullRequestBackport <a name="PullRequestBackport" id="projen.github.PullRequestBackport"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 #### Initializers <a name="Initializers" id="projen.github.PullRequestBackport.Initializer"></a>
 
 ```typescript
@@ -4415,6 +4439,8 @@ public readonly workflow: GithubWorkflow;
 
 
 ### PullRequestLint <a name="PullRequestLint" id="projen.github.PullRequestLint"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Configure validations to run on GitHub pull requests.
 
@@ -4673,6 +4699,8 @@ public readonly project: Project;
 
 
 ### PullRequestTemplate <a name="PullRequestTemplate" id="projen.github.PullRequestTemplate"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 Template for GitHub pull requests.
 
@@ -5066,6 +5094,8 @@ Indicates if the file should be read-only or read-write.
 
 ### Stale <a name="Stale" id="projen.github.Stale"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 
 The default configuration will:
@@ -5302,6 +5332,8 @@ public readonly project: Project;
 
 
 ### TaskWorkflow <a name="TaskWorkflow" id="projen.github.TaskWorkflow"></a>
+
+- *Implements:* constructs.IConstruct, constructs.IDependable
 
 A GitHub workflow for common build tasks within a project.
 
@@ -6032,6 +6064,8 @@ public readonly artifactsDirectory: string;
 
 ### TaskWorkflowJob <a name="TaskWorkflowJob" id="projen.github.TaskWorkflowJob"></a>
 
+- *Implements:* constructs.IConstruct, constructs.IDependable
+
 The primary or initial job of a TaskWorkflow.
 
 #### Initializers <a name="Initializers" id="projen.github.TaskWorkflowJob.Initializer"></a>
@@ -6589,7 +6623,7 @@ This token is used to approve pull requests.
 
 Github forbids an identity to approve its own pull request.
 If your project produces automated pull requests using the Github default token -
-{@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow `GITHUB_TOKEN` }
+{@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow | `GITHUB_TOKEN`}
 - that you would like auto approved, such as when using the `depsUpgrade` property in
 `NodeProjectOptions`, then you must use a different token here.
 
@@ -13159,8 +13193,8 @@ reviewed action version.
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_DOWNLOAD_ARTIFACT">ACTIONS_DOWNLOAD_ARTIFACT</a></code> | <code>string</code> | actions/download-artifact at v8.0.2. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_GITHUB_SCRIPT">ACTIONS_GITHUB_SCRIPT</a></code> | <code>string</code> | actions/github-script at v9.0.0. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_DOTNET">ACTIONS_SETUP_DOTNET</a></code> | <code>string</code> | actions/setup-dotnet at v6.1.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_GO">ACTIONS_SETUP_GO</a></code> | <code>string</code> | actions/setup-go at v7.0.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_JAVA">ACTIONS_SETUP_JAVA</a></code> | <code>string</code> | actions/setup-java at v6.2.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_GO">ACTIONS_SETUP_GO</a></code> | <code>string</code> | actions/setup-go at v7.1.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_JAVA">ACTIONS_SETUP_JAVA</a></code> | <code>string</code> | actions/setup-java at v6.3.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_NODE">ACTIONS_SETUP_NODE</a></code> | <code>string</code> | actions/setup-node at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_PYTHON">ACTIONS_SETUP_PYTHON</a></code> | <code>string</code> | actions/setup-python at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_STALE">ACTIONS_STALE</a></code> | <code>string</code> | actions/stale at v11.0.0 (immutable). |
@@ -13255,7 +13289,7 @@ public readonly ACTIONS_SETUP_GO: string;
 
 - *Type:* string
 
-actions/setup-go at v7.0.0 (immutable).
+actions/setup-go at v7.1.0 (immutable).
 
 ---
 
@@ -13267,7 +13301,7 @@ public readonly ACTIONS_SETUP_JAVA: string;
 
 - *Type:* string
 
-actions/setup-java at v6.2.0 (immutable).
+actions/setup-java at v6.3.0 (immutable).
 
 ---
 

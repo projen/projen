@@ -225,6 +225,43 @@ the `licensed` parameter, we could do so by adding it to the interface
 `createPrecommitHook`.
 :::
 
+### Changing the default of an inherited option
+
+To change the default of an option we inherit, we apply our own default in the
+constructor. Here, new projects get a dev container unless the user opts out:
+
+```ts
+import { github } from "projen";
+
+export interface MyProjectOptions extends github.GitHubProjectOptions {}
+
+export class MyProject extends github.GitHubProject {
+  constructor(options: MyProjectOptions) {
+    super({
+      ...options,
+      devContainer: options.devContainer ?? true,
+    });
+  }
+}
+```
+
+This changes the behavior, but the docs still describe the old default. Users
+see `@default false` from `GitHubProjectOptions` in their editor and the API
+reference. To fix this, we redeclare the option in our own options interface
+with the new default. The redeclared option must keep the same type,
+optionality and `readonly` modifier as the inherited one.
+
+```ts
+export interface MyProjectOptions extends github.GitHubProjectOptions {
+  /**
+   * Add a VSCode development environment (used for GitHub Codespaces)
+   *
+   * @default true
+   */
+  readonly devContainer?: boolean;
+}
+```
+
 ## Controlling the generated projenrc with JSDoc tags
 
 When a user runs `projen new`, projen generates a `projenrc.ts` file pre-populated with
