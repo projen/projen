@@ -19,8 +19,8 @@ export class ActionRefs {
   public static readonly ACTIONS_GITHUB_SCRIPT = "actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3";
   /** actions/setup-dotnet at v6.1.0 (immutable) */
   public static readonly ACTIONS_SETUP_DOTNET = "actions/setup-dotnet@v6.1.0";
-  /** actions/setup-go at v7.0.0 (immutable) */
-  public static readonly ACTIONS_SETUP_GO = "actions/setup-go@v7.0.0";
+  /** actions/setup-go at v7.1.0 (immutable) */
+  public static readonly ACTIONS_SETUP_GO = "actions/setup-go@v7.1.0";
   /** actions/setup-java at v6.3.0 (immutable) */
   public static readonly ACTIONS_SETUP_JAVA = "actions/setup-java@v6.3.0";
   /** actions/setup-node at v7.1.0 (immutable) */
