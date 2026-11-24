@@ -934,6 +934,7 @@ test("compiled tests (testdir under srcdir) generate a jest snapshot resolver", 
 
   const snapshot = synthSnapshot(project);
   const resolver = snapshot[".projen/jest-snapshot-resolver.js"];
+  expect(resolver).not.toContain("// undefined");
   expect(resolver).toContain("resolveSnapshotPath");
   expect(resolver).toContain("resolveTestPath");
 });

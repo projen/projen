@@ -45,6 +45,7 @@ export class SourceCode extends Component {
     this.file = new TextFile(project, filePath, {
       readonly: options.readonly ?? true,
       executable: options.executable,
+      marker: true,
     });
   }
 
