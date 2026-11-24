@@ -70,6 +70,17 @@ export interface AwsCdkConstructLibraryOptions
   readonly experimentalIntegRunner?: boolean;
 
   /**
+   * AWS regions the integ-runner deploys test stacks to. Requires `experimentalIntegRunner`.
+   *
+   * Written to `integ.config.json`, replacing any existing file.
+   * `--parallel-regions` on the command line takes precedence.
+   *
+   * @default - the integ-runner's default regions
+   * @experimental
+   */
+  readonly integRunnerParallelRegions?: string[];
+
+  /**
    * Common options for all AWS Lambda functions.
    *
    * @default - default options
@@ -116,7 +127,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     });
 
     if (options.experimentalIntegRunner) {
-      new IntegRunner(this);
+      new IntegRunner(this, options.integRunnerParallelRegions);
     }
 
     if (options.sampleCode ?? true) {

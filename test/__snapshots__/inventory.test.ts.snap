@@ -3677,6 +3677,28 @@ exports[`inventory 1`] = `
         },
       },
       {
+        "default": "- the integ-runner's default regions",
+        "docs": "AWS regions the integ-runner deploys test stacks to. Requires \`experimentalIntegRunner\`.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "integRunnerParallelRegions",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": [
+          "integRunnerParallelRegions",
+        ],
+        "simpleType": "unknown",
+        "switch": "integ-runner-parallel-regions",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+      },
+      {
         "default": "true",
         "docs": "Setup jest unit tests.",
         "featured": false,
@@ -6938,6 +6960,28 @@ exports[`inventory 1`] = `
         "switch": "integration-test-auto-discover",
         "type": {
           "primitive": "boolean",
+        },
+      },
+      {
+        "default": "- the integ-runner's default regions",
+        "docs": "AWS regions the integ-runner deploys test stacks to. Requires \`experimentalIntegRunner\`.",
+        "featured": false,
+        "jsonLike": true,
+        "name": "integRunnerParallelRegions",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": [
+          "integRunnerParallelRegions",
+        ],
+        "simpleType": "unknown",
+        "switch": "integ-runner-parallel-regions",
+        "type": {
+          "collection": {
+            "elementtype": {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
         },
       },
       {

@@ -475,6 +475,22 @@ describe("integ-runner", () => {
       expect.arrayContaining([{ spawn: "integ" }]),
     );
   });
+
+  test("writes parallel regions to an unmarked integ.config.json", () => {
+    const project = new AwsCdkTypeScriptApp({
+      name: "hello",
+      cdkVersion: "2.12.0",
+      defaultReleaseBranch: "main",
+      experimentalIntegRunner: true,
+      integRunnerParallelRegions: ["eu-west-1"],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot["integ.config.json"]).toStrictEqual({
+      parallelRegions: ["eu-west-1"],
+    });
+  });
 });
 
 describe("CDK v2", () => {

@@ -9333,6 +9333,7 @@ const awsCdkConstructLibraryOptions: awscdk.AwsCdkConstructLibraryOptions = { ..
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.edgeLambdaAutoDiscover">edgeLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.experimentalIntegRunner">experimentalIntegRunner</a></code> | <code>boolean</code> | Enable experimental support for the AWS CDK integ-runner. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.integrationTestAutoDiscover">integrationTestAutoDiscover</a></code> | <code>boolean</code> | Automatically discovers and creates integration tests for each `.integ.ts` file under your test directory. |
+| <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.integRunnerParallelRegions">integRunnerParallelRegions</a></code> | <code>string[]</code> | AWS regions the integ-runner deploys test stacks to. Requires `experimentalIntegRunner`. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
@@ -12033,6 +12034,22 @@ Automatically discovers and creates integration tests for each `.integ.ts` file 
 
 ---
 
+##### `integRunnerParallelRegions`<sup>Optional</sup> <a name="integRunnerParallelRegions" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.integRunnerParallelRegions"></a>
+
+```typescript
+public readonly integRunnerParallelRegions: string[];
+```
+
+- *Type:* string[]
+- *Default:* the integ-runner's default regions
+
+AWS regions the integ-runner deploys test stacks to. Requires `experimentalIntegRunner`.
+
+Written to `integ.config.json`, replacing any existing file.
+`--parallel-regions` on the command line takes precedence.
+
+---
+
 ##### `lambdaAutoDiscover`<sup>Optional</sup> <a name="lambdaAutoDiscover" id="projen.awscdk.AwsCdkConstructLibraryOptions.property.lambdaAutoDiscover"></a>
 
 ```typescript
@@ -14500,6 +14517,7 @@ const awsCdkTypeScriptAppOptions: awscdk.AwsCdkTypeScriptAppOptions = { ... }
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.edgeLambdaAutoDiscover">edgeLambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.experimentalIntegRunner">experimentalIntegRunner</a></code> | <code>boolean</code> | Enable experimental support for the AWS CDK integ-runner. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.integrationTestAutoDiscover">integrationTestAutoDiscover</a></code> | <code>boolean</code> | Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. |
+| <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.integRunnerParallelRegions">integRunnerParallelRegions</a></code> | <code>string[]</code> | AWS regions the integ-runner deploys test stacks to. Requires `experimentalIntegRunner`. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaAutoDiscover">lambdaAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaExtensionAutoDiscover">lambdaExtensionAutoDiscover</a></code> | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. |
 | <code><a href="#projen.awscdk.AwsCdkTypeScriptAppOptions.property.lambdaOptions">lambdaOptions</a></code> | <code><a href="#projen.awscdk.LambdaFunctionCommonOptions">LambdaFunctionCommonOptions</a></code> | Common options for all AWS Lambda functions. |
@@ -17098,6 +17116,22 @@ public readonly integrationTestAutoDiscover: boolean;
 - *Default:* true
 
 Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory.
+
+---
+
+##### `integRunnerParallelRegions`<sup>Optional</sup> <a name="integRunnerParallelRegions" id="projen.awscdk.AwsCdkTypeScriptAppOptions.property.integRunnerParallelRegions"></a>
+
+```typescript
+public readonly integRunnerParallelRegions: string[];
+```
+
+- *Type:* string[]
+- *Default:* the integ-runner's default regions
+
+AWS regions the integ-runner deploys test stacks to. Requires `experimentalIntegRunner`.
+
+Written to `integ.config.json`, replacing any existing file.
+`--parallel-regions` on the command line takes precedence.
 
 ---
 

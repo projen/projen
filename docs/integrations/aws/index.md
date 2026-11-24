@@ -322,6 +322,18 @@ the `test` directory will be automatically discovered and treated as
 integration tests. Projen will check that these integration tests match the
 committed snapshots at build-time, or whenever the test task is run.
 
+To choose the regions test stacks deploy to, set `integRunnerParallelRegions`.
+Projen writes them to `integ.config.json`, replacing any existing file, and
+`--parallel-regions` on the command line still takes precedence.
+
+```typescript
+new awscdk.AwsCdkConstructLibrary({
+  // ...
+  experimentalIntegRunner: true,
+  integRunnerParallelRegions: ['eu-west-1', 'eu-central-1'],
+});
+```
+
 Projen also provides two new commands:
 
 `projen integ [...test names]` - Verifies integration test snapshots. If test
