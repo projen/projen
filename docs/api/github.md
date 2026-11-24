@@ -13193,7 +13193,7 @@ reviewed action version.
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_DOWNLOAD_ARTIFACT">ACTIONS_DOWNLOAD_ARTIFACT</a></code> | <code>string</code> | actions/download-artifact at v8.0.2. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_GITHUB_SCRIPT">ACTIONS_GITHUB_SCRIPT</a></code> | <code>string</code> | actions/github-script at v9.0.0. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_DOTNET">ACTIONS_SETUP_DOTNET</a></code> | <code>string</code> | actions/setup-dotnet at v6.1.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_GO">ACTIONS_SETUP_GO</a></code> | <code>string</code> | actions/setup-go at v7.0.0 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_GO">ACTIONS_SETUP_GO</a></code> | <code>string</code> | actions/setup-go at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_JAVA">ACTIONS_SETUP_JAVA</a></code> | <code>string</code> | actions/setup-java at v6.3.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_NODE">ACTIONS_SETUP_NODE</a></code> | <code>string</code> | actions/setup-node at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_PYTHON">ACTIONS_SETUP_PYTHON</a></code> | <code>string</code> | actions/setup-python at v7.1.0 (immutable). |
@@ -13289,7 +13289,7 @@ public readonly ACTIONS_SETUP_GO: string;
 
 - *Type:* string
 
-actions/setup-go at v7.0.0 (immutable).
+actions/setup-go at v7.1.0 (immutable).
 
 ---
 

@@ -153,7 +153,7 @@ jobs:
         with:
           node-version: lts/-1
           package-manager-cache: false
-      - uses: actions/setup-go@v7.0.0
+      - uses: actions/setup-go@v7.1.0
         with:
           go-version: ^1.18.0
           cache: false
