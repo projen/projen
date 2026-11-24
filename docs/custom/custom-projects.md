@@ -231,11 +231,11 @@ To change the default of an option we inherit, we apply our own default in the
 constructor. Here, new projects get a dev container unless the user opts out:
 
 ```ts
-import { GitHubProject, GitHubProjectOptions } from "projen";
+import { github } from "projen";
 
-export interface MyProjectOptions extends GitHubProjectOptions {}
+export interface MyProjectOptions extends github.GitHubProjectOptions {}
 
-export class MyProject extends GitHubProject {
+export class MyProject extends github.GitHubProject {
   constructor(options: MyProjectOptions) {
     super({
       ...options,
@@ -252,7 +252,7 @@ with the new default. The redeclared option must keep the same type,
 optionality and `readonly` modifier as the inherited one.
 
 ```ts
-export interface MyProjectOptions extends GitHubProjectOptions {
+export interface MyProjectOptions extends github.GitHubProjectOptions {
   /**
    * Add a VSCode development environment (used for GitHub Codespaces)
    *
