@@ -225,26 +225,15 @@ the `licensed` parameter, we could do so by adding it to the interface
 `createPrecommitHook`.
 :::
 
-### Changing the documented default of an inherited option
+### Changing the default of an inherited option
 
-When your project changes the default of an option it inherits, redeclare the
-option in your own options interface with the new documentation. The
-redeclaration must keep the same type, optionality and `readonly` modifier.
-Only the docs may differ. `projen new --from` then uses your declaration, so the
-new default shows up in the generated projenrc.
+To change the default of an option we inherit, we apply our own default in the
+constructor. Here, new projects get a dev container unless the user opts out:
 
 ```ts
 import { GitHubProject, GitHubProjectOptions } from "projen";
 
-export interface MyProjectOptions extends GitHubProjectOptions {
-  /**
-   * Add a VSCode development environment (used for GitHub Codespaces)
-   *
-   * @default true
-   * @pjnew true
-   */
-  readonly devContainer?: boolean;
-}
+export interface MyProjectOptions extends GitHubProjectOptions {}
 
 export class MyProject extends GitHubProject {
   constructor(options: MyProjectOptions) {
@@ -256,16 +245,22 @@ export class MyProject extends GitHubProject {
 }
 ```
 
-The redeclaration only changes the documentation, so you still need to apply the
-default in the constructor. Because `devContainer` is optional, the example uses
-`@pjnew` to render the value in the generated projenrc. See
-[`@default`](#default) for how mandatory options behave.
+This changes the behavior, but the docs still describe the old default. Users
+see `@default false` from `GitHubProjectOptions` in their editor and the API
+reference. To fix this, we redeclare the option in our own options interface
+with the new default. The redeclared option must keep the same type,
+optionality and `readonly` modifier as the inherited one.
 
-:::note
-Redeclaring an inherited option requires jsii-compiler 5.9.60 or 6.0.24 or later.
-Users of your library in Python, Java, .NET or Go need jsii runtime 1.143.0 or
-later, and packaging the library needs jsii-pacmak 1.143.0 or later.
-:::
+```ts
+export interface MyProjectOptions extends GitHubProjectOptions {
+  /**
+   * Add a VSCode development environment (used for GitHub Codespaces)
+   *
+   * @default true
+   */
+  readonly devContainer?: boolean;
+}
+```
 
 ## Controlling the generated projenrc with JSDoc tags
 
