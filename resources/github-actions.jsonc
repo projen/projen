@@ -52,7 +52,7 @@
     },
     "actions/setup-go": {
       "major": "v7",
-      "pin": "v7.0.0",
+      "pin": "v7.1.0",
       "isImmutable": true
     },
     "actions/setup-java": {
