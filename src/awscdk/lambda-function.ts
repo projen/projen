@@ -255,14 +255,14 @@ export class LambdaFunction extends Component {
     src.line("/**");
     src.line(` * Props for ${constructName}`);
     src.line(" */");
+    src.open(`export interface ${propsType} extends lambda.FunctionOptions {`);
     if (options.edgeLambda) {
-      src.open(
-        `export interface ${propsType} extends cloudfront.experimental.EdgeFunctionProps {`,
-      );
-    } else {
-      src.open(
-        `export interface ${propsType} extends lambda.FunctionOptions {`,
-      );
+      src.line("/**");
+      src.line(" * The stack ID of Lambda@Edge function.");
+      src.line(" *");
+      src.line(" * @default - `edge-lambda-stack-${region}`");
+      src.line(" */");
+      src.line("readonly stackId?: string;");
     }
     if (options.singleton) {
       if (!options.singletonUuid) {

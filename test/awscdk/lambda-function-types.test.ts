@@ -31,6 +31,13 @@ const cases: Array<{
       },
     ],
   ),
+  { name: "edge function, default runtime", options: { edgeLambda: true } },
+  ...[LambdaRuntime.NODEJS_22_X, LambdaRuntime.NODEJS_REGIONAL_LATEST].map(
+    (runtime) => ({
+      name: `edge function, explicit ${runtime.functionRuntime}`,
+      options: { edgeLambda: true, runtime },
+    }),
+  ),
   { name: "ordinary function", options: {} },
 ];
 
@@ -54,15 +61,18 @@ function newProject() {
 function consumer(construct: string, options: LambdaFunctionCommonOptions) {
   const requiresUuid = options.singleton && !options.singletonUuid;
   const props = requiresUuid ? 'uuid: "caller-uuid",' : "";
-  const optionalProps = options.singleton ? 'lambdaPurpose: "provider",' : "";
-  const runtime = options.runtime ? "" : "runtime: Runtime.NODEJS_22_X,";
+  const optionalProps = options.singleton
+    ? 'lambdaPurpose: "provider",'
+    : options.edgeLambda
+      ? 'stackId: "edge-stack",'
+      : "";
   return `
-import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { Code, Runtime } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { ${construct} } from "./${construct}";
 declare const scope: Construct;
 new ${construct}(scope, "minimal", { ${props} });
-new ${construct}(scope, "options", { ${props} ${optionalProps} ${runtime} memorySize: 256 });
+new ${construct}(scope, "options", { ${props} ${optionalProps} memorySize: 256 });
 ${requiresUuid ? "// @ts-expect-error props must supply a UUID" : ""}
 new ${construct}(scope, "no-props");
 ${requiresUuid ? "// @ts-expect-error UUID is required" : ""}
@@ -71,6 +81,18 @@ ${
   options.runtime
     ? `// @ts-expect-error the generator fixes the runtime
 new ${construct}(scope, "runtime-override", { ${props} runtime: Runtime.NODEJS_20_X });`
+    : `new ${construct}(scope, "runtime-override", { ${props} runtime: Runtime.NODEJS_22_X });`
+}
+// @ts-expect-error memorySize must be a number
+new ${construct}(scope, "invalid-memory-size", { ${props} memorySize: "256" });
+// @ts-expect-error code is supplied by the generator
+new ${construct}(scope, "code-override", { ${props} code: Code.fromInline("exports.handler = async () => {}") });
+// @ts-expect-error handler is supplied by the generator
+new ${construct}(scope, "handler-override", { ${props} handler: "other.handler" });
+${
+  options.edgeLambda
+    ? `// @ts-expect-error stackId must be a string
+new ${construct}(scope, "invalid-stack-id", { stackId: 123 });`
     : ""
 }
 `.split("\n");
@@ -80,7 +102,9 @@ test("generated constructs compile", async () => {
   const { project, cdkDeps } = newProject();
   cases.forEach(({ options }, index) => {
     const construct = `Case${index}Function`;
-    const entrypoint = `src/case${index}.lambda.ts`;
+    const entrypoint = options.edgeLambda
+      ? `src/case${index}.edge-lambda.ts`
+      : `src/case${index}.lambda.ts`;
     new TextFile(project, entrypoint, {
       lines: ["export async function handler() {}"],
     });
@@ -104,12 +128,22 @@ test("generated constructs compile", async () => {
 test.each(cases)("generated construct source: $name", ({ options }) => {
   const { project, cdkDeps } = newProject();
   new LambdaFunction(project, {
-    entrypoint: "src/hello.lambda.ts",
+    entrypoint: options.edgeLambda
+      ? "src/hello.edge-lambda.ts"
+      : "src/hello.lambda.ts",
     cdkDeps,
     ...options,
   });
   const generatedSource: string =
     Testing.synth(project)["src/hello-function.ts"];
+
+  if (options.edgeLambda) {
+    expect(generatedSource).toContain(
+      "export interface HelloFunctionProps extends lambda.FunctionOptions {",
+    );
+    expect(generatedSource).toContain("readonly stackId?: string;");
+    expect(generatedSource).not.toContain("EdgeFunctionProps");
+  }
 
   if (options.singletonUuid) {
     expect(generatedSource).toContain("...props,");
