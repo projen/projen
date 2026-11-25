@@ -11,8 +11,8 @@ export class ActionRefs {
   public static readonly ACTIONS_CHECKOUT = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1";
   /** actions/create-github-app-token at v3.3.0 (immutable) */
   public static readonly ACTIONS_CREATE_GITHUB_APP_TOKEN = "actions/create-github-app-token@v3.3.0";
-  /** actions/dependency-review-action at v5.0.0 */
-  public static readonly ACTIONS_DEPENDENCY_REVIEW_ACTION = "actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294";
+  /** actions/dependency-review-action at v5.0.1 (immutable) */
+  public static readonly ACTIONS_DEPENDENCY_REVIEW_ACTION = "actions/dependency-review-action@v5.0.1";
   /** actions/download-artifact at v8.0.2 */
   public static readonly ACTIONS_DOWNLOAD_ARTIFACT = "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333";
   /** actions/github-script at v9.0.0 */
