@@ -9,8 +9,8 @@
 export class ActionRefs {
   /** actions/checkout at v7.0.1 */
   public static readonly ACTIONS_CHECKOUT = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1";
-  /** actions/create-github-app-token at v3.3.0 (immutable) */
-  public static readonly ACTIONS_CREATE_GITHUB_APP_TOKEN = "actions/create-github-app-token@v3.3.0";
+  /** actions/create-github-app-token at v3.4.0 (immutable) */
+  public static readonly ACTIONS_CREATE_GITHUB_APP_TOKEN = "actions/create-github-app-token@v3.4.0";
   /** actions/dependency-review-action at v5.0.1 (immutable) */
   public static readonly ACTIONS_DEPENDENCY_REVIEW_ACTION = "actions/dependency-review-action@v5.0.1";
   /** actions/download-artifact at v8.0.2 */
