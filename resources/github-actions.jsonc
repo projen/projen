@@ -27,7 +27,7 @@
     },
     "actions/create-github-app-token": {
       "major": "v3",
-      "pin": "v3.3.0",
+      "pin": "v3.4.0",
       "isImmutable": true
     },
     "actions/dependency-review-action": {
