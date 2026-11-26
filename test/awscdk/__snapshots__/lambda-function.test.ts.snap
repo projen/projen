@@ -11,7 +11,13 @@ import { Construct } from 'constructs';
 /**
  * Props for HelloFunction
  */
-export interface HelloFunctionProps extends cloudfront.experimental.EdgeFunctionProps {
+export interface HelloFunctionProps extends lambda.FunctionOptions {
+  /**
+   * The stack ID of Lambda@Edge function.
+   *
+   * @default - \`edge-lambda-stack-\${region}\`
+   */
+  readonly stackId?: string;
   /**
    * The Lambda runtime to use.
    * @default - Latest Node.js runtime available in the deployment region

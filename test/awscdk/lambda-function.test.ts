@@ -329,6 +329,20 @@ test("Edge function", () => {
   const snapshot = Testing.synth(project);
   const generatedSource = snapshot["src/hello-function.ts"];
   expect(generatedSource).toMatchSnapshot();
+
+  expect(generatedSource).toContain(
+    "export interface HelloFunctionProps extends lambda.FunctionOptions {",
+  );
+  expect(generatedSource).toContain("readonly stackId?: string;");
+  expect(generatedSource).toContain(
+    "export class HelloFunction extends cloudfront.experimental.EdgeFunction {",
+  );
+  expect(generatedSource).toContain(
+    "constructor(scope: Construct, id: string, props?: HelloFunctionProps) {",
+  );
+  expect(generatedSource).toContain(
+    "runtime: props?.runtime ?? determineLatestNodeRuntime(scope),",
+  );
 });
 
 test("Singleton function", () => {
