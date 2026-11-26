@@ -32,8 +32,8 @@
     },
     "actions/dependency-review-action": {
       "major": "v5",
-      "pin": "a1d282b36b6f3519aa1f3fc636f609c47dddb294",
-      "version": "v5.0.0"
+      "pin": "v5.0.1",
+      "isImmutable": true
     },
     "actions/download-artifact": {
       "major": "v8",

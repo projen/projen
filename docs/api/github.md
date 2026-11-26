@@ -13189,7 +13189,7 @@ reviewed action version.
 | --- | --- | --- |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_CHECKOUT">ACTIONS_CHECKOUT</a></code> | <code>string</code> | actions/checkout at v7.0.1. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_CREATE_GITHUB_APP_TOKEN">ACTIONS_CREATE_GITHUB_APP_TOKEN</a></code> | <code>string</code> | actions/create-github-app-token at v3.3.0 (immutable). |
-| <code><a href="#projen.github.ActionRefs.property.ACTIONS_DEPENDENCY_REVIEW_ACTION">ACTIONS_DEPENDENCY_REVIEW_ACTION</a></code> | <code>string</code> | actions/dependency-review-action at v5.0.0. |
+| <code><a href="#projen.github.ActionRefs.property.ACTIONS_DEPENDENCY_REVIEW_ACTION">ACTIONS_DEPENDENCY_REVIEW_ACTION</a></code> | <code>string</code> | actions/dependency-review-action at v5.0.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_DOWNLOAD_ARTIFACT">ACTIONS_DOWNLOAD_ARTIFACT</a></code> | <code>string</code> | actions/download-artifact at v8.0.2. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_GITHUB_SCRIPT">ACTIONS_GITHUB_SCRIPT</a></code> | <code>string</code> | actions/github-script at v9.0.0. |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_DOTNET">ACTIONS_SETUP_DOTNET</a></code> | <code>string</code> | actions/setup-dotnet at v6.1.0 (immutable). |
@@ -13241,7 +13241,7 @@ public readonly ACTIONS_DEPENDENCY_REVIEW_ACTION: string;
 
 - *Type:* string
 
-actions/dependency-review-action at v5.0.0.
+actions/dependency-review-action at v5.0.1 (immutable).
 
 ---
 

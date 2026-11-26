@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Dependency Review
         id: dependency_review
-        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294
+        uses: actions/dependency-review-action@v5.0.1
         with:
           allow-licenses: MIT, ISC, BSD-2-Clause, BSD-3-Clause, Apache-2.0, Python-2.0
           comment-summary-in-pr: always
