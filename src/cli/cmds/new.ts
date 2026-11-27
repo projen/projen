@@ -1,5 +1,6 @@
 import * as semver from "semver";
-import * as yargs from "yargs";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
@@ -64,33 +65,14 @@ class Command implements yargs.CommandModule {
 
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? "", {
-        builder: (cargs) => {
-          cargs.showHelpOnFail(false);
-          cargs.strictOptions();
-
-          for (const option of type.options ?? []) {
-            // not all types can be represented in the cli
-            if (!argTypeSupported(option)) {
-              continue;
-            }
-
-            const defaultValue = argInitialValue(option);
-            cargs.option(option.switch, {
-              group: !option.optional ? "Required:" : "Optional:",
-              type: argType(option),
-              description: argDesc(option),
-              required: !option.optional,
-              // yargs behaves differently for arrays if the defaultValue property is present or not
-              ...(!option.optional && defaultValue
-                ? { default: defaultValue }
-                : {}),
-            });
-          }
-
-          return cargs;
-        },
+        builder: (cargs) => projectTypeBuilder(cargs, type),
         handler: (argv) => initProject(process.cwd(), type, argv),
       });
+    }
+
+    // The project type of an external module is only known after installing it, so --help is handled later
+    if (hasFromOption(hideBin(process.argv))) {
+      args.help(false);
     }
 
     // Disable strict mode, otherwise the catch-all doesn't work
@@ -150,6 +132,58 @@ async function handler(args: any) {
     // rethrow so the full stack trace is displayed
     throw error;
   }
+}
+
+/**
+ * Adds the options of a project type to a yargs command
+ */
+function projectTypeBuilder(
+  cargs: yargs.Argv,
+  type: inventory.InventoryProjectType,
+): yargs.Argv {
+  cargs.showHelpOnFail(false);
+  cargs.strictOptions();
+
+  for (const option of type.options ?? []) {
+    // not all types can be represented in the cli
+    if (!argTypeSupported(option)) {
+      continue;
+    }
+
+    const defaultValue = argInitialValue(option);
+    cargs.option(option.switch, {
+      group: !option.optional ? "Required:" : "Optional:",
+      type: argType(option),
+      description: argDesc(option),
+      required: !option.optional,
+      // yargs behaves differently for arrays if the defaultValue property is present or not
+      ...(!option.optional && defaultValue ? { default: defaultValue } : {}),
+    });
+  }
+
+  return cargs;
+}
+
+function hasFromOption(argv: string[]): boolean {
+  return argv.some(
+    (arg) => arg === "--from" || arg === "-f" || arg.startsWith("--from="),
+  );
+}
+
+/**
+ * Prints the options of a project type from an external module
+ */
+function showProjectTypeHelp(type: inventory.InventoryProjectType) {
+  const cli = yargs([]);
+  cli
+    .scriptName("projen new")
+    .version(false)
+    .exitProcess(false)
+    .wrap(cli.terminalWidth())
+    .command(type.pjid, type.docs ?? "", (cargs: yargs.Argv) =>
+      projectTypeBuilder(cargs, type),
+    )
+    .parse([type.pjid, "--help"]);
 }
 
 /**
@@ -373,6 +407,10 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
       `Please specify a valid project type.`,
       `Example: pnpm dlx projen new --from ${spec} ${types[0]}`,
     );
+  }
+
+  if (args.help) {
+    return showProjectTypeHelp(type);
   }
 
   const missingOptions = [];

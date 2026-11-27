@@ -147,6 +147,27 @@ describe("projen new --from", () => {
       });
     });
 
+    test("--help shows the options of the external project type", async () => {
+      await withProjectDir(async (projectdir) => {
+        const output = await execProjenCLI(
+          projectdir,
+          [
+            "new",
+            "--from",
+            "@taimos/projen@0.0.187",
+            "taimos-ts-lib",
+            "--help",
+          ],
+          { capture: true },
+        );
+
+        expect(output).toContain("projen new taimos-ts-lib");
+        expect(output).toContain("--default-release-branch");
+        expect(output).not.toContain("Creates a new projen project");
+        expect(existsSync(join(projectdir, ".projenrc.ts"))).toBe(false);
+      });
+    });
+
     test("with pjid that is similar to a built-in one", async () => {
       await withProjectDir(async (projectdir) => {
         try {
