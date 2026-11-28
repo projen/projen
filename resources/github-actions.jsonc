@@ -82,7 +82,7 @@
     },
     "amannn/action-semantic-pull-request": {
       "major": "v6",
-      "pin": "v6.1.2",
+      "pin": "v6.1.3",
       "isImmutable": true
     },
     "aws-actions/configure-aws-credentials": {

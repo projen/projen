@@ -31,8 +31,8 @@ export class ActionRefs {
   public static readonly ACTIONS_STALE = "actions/stale@v11.0.0";
   /** actions/upload-artifact at v7.0.2 */
   public static readonly ACTIONS_UPLOAD_ARTIFACT = "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9";
-  /** amannn/action-semantic-pull-request at v6.1.2 (immutable) */
-  public static readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST = "amannn/action-semantic-pull-request@v6.1.2";
+  /** amannn/action-semantic-pull-request at v6.1.3 (immutable) */
+  public static readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST = "amannn/action-semantic-pull-request@v6.1.3";
   /** aws-actions/configure-aws-credentials at v6.3.0 (immutable) */
   public static readonly AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS = "aws-actions/configure-aws-credentials@v6.3.0";
   /** codecov/codecov-action at v7.1.1 (immutable) */
