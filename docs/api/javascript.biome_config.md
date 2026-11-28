@@ -4070,6 +4070,8 @@ const ruleDomains: javascript.biome_config.RuleDomains = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.astro">astro</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.biomePlugin">biomePlugin</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
+| <code><a href="#projen.javascript.biome_config.RuleDomains.property.convex">convex</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.drizzle">drizzle</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.next">next</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
 | <code><a href="#projen.javascript.biome_config.RuleDomains.property.playwright">playwright</a></code> | <code>projen.javascript.biome_config.RuleDomainValue</code> | *No description.* |
@@ -4092,6 +4094,26 @@ const ruleDomains: javascript.biome_config.RuleDomains = { ... }
 
 ```typescript
 public readonly astro: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `biomePlugin`<sup>Optional</sup> <a name="biomePlugin" id="projen.javascript.biome_config.RuleDomains.property.biomePlugin"></a>
+
+```typescript
+public readonly biomePlugin: RuleDomainValue;
+```
+
+- *Type:* projen.javascript.biome_config.RuleDomainValue
+
+---
+
+##### `convex`<sup>Optional</sup> <a name="convex" id="projen.javascript.biome_config.RuleDomains.property.convex"></a>
+
+```typescript
+public readonly convex: RuleDomainValue;
 ```
 
 - *Type:* projen.javascript.biome_config.RuleDomainValue

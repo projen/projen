@@ -2752,6 +2752,16 @@ export interface RuleDomains {
   readonly astro?: RuleDomainValue;
 
   /**
+   * @schema RuleDomains#biomePlugin
+   */
+  readonly biomePlugin?: RuleDomainValue;
+
+  /**
+   * @schema RuleDomains#convex
+   */
+  readonly convex?: RuleDomainValue;
+
+  /**
    * @schema RuleDomains#drizzle
    */
   readonly drizzle?: RuleDomainValue;
@@ -2836,6 +2846,8 @@ export function toJson_RuleDomains(obj: RuleDomains | undefined): Record<string,
   if (obj === undefined) { return undefined; }
   const result = {
     'astro': obj.astro,
+    'biomePlugin': obj.biomePlugin,
+    'convex': obj.convex,
     'drizzle': obj.drizzle,
     'next': obj.next,
     'playwright': obj.playwright,
