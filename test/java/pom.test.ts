@@ -66,6 +66,19 @@ test("addDependency()", () => {
   });
 });
 
+test("addDependency() with a non-semver Maven version", () => {
+  const pom = new TestPom();
+  pom.project.deps.addDependency(
+    "io.quarkus/quarkus-bom@2.7.0.Final",
+    DependencyType.RUNTIME,
+  );
+
+  const xml = actualPom(pom) as string;
+  expect(xml).toContain("<groupId>io.quarkus</groupId>");
+  expect(xml).toContain("<artifactId>quarkus-bom</artifactId>");
+  expect(xml).toContain("<version>2.7.0.Final</version>");
+});
+
 test("addPlugin()", () => {
   const pom = new TestPom();
 
