@@ -35,7 +35,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -546,7 +546,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -1057,7 +1057,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -1573,7 +1573,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2016,7 +2016,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2863,7 +2863,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3403,7 +3403,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3944,7 +3944,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -5095,7 +5095,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -6559,7 +6559,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -7101,7 +7101,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -7806,7 +7806,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -8178,7 +8178,7 @@ jobs:
     if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - id: validate-pr-title
-        uses: amannn/action-semantic-pull-request@v6.1.2
+        uses: amannn/action-semantic-pull-request@v6.1.3
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
