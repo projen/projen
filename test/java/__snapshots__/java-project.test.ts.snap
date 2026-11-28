@@ -176,7 +176,7 @@ dist/java
         "version": "3.0.0",
       },
       {
-        "name": "io.github.cdklabs/projen",
+        "name": "io.projen/projen",
         "type": "test",
         "version": "^1.2.3",
       },
@@ -465,7 +465,7 @@ dist/java
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -626,7 +626,7 @@ exports[`dependencies 1`] = `
             <version>[1.2.3,2.0.0)</version>
         </dependency>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -765,7 +765,7 @@ exports[`dependencies via ctor 1`] = `
             <version>[1.2.3,2.0.0)</version>
         </dependency>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -969,7 +969,7 @@ dist/java
         "version": "3.0.0",
       },
       {
-        "name": "io.github.cdklabs/projen",
+        "name": "io.projen/projen",
         "type": "test",
         "version": "^1.2.3",
       },
@@ -1240,7 +1240,7 @@ dist/java
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -1375,7 +1375,7 @@ exports[`pom options 1`] = `
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>

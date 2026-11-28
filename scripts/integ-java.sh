@@ -9,7 +9,7 @@ REPO_ROOT=$(get_repo_root)
 JAVA_REPO_PATH="$REPO_ROOT/dist/java"
 
 # Verify Java artifacts exist
-if [ ! -d "$JAVA_REPO_PATH/io/github/cdklabs/projen" ]; then
+if [ ! -d "$JAVA_REPO_PATH/io/projen/projen" ]; then
   echo "ERROR: No projen Java artifacts found at $JAVA_REPO_PATH. Run 'node ./projen.js package:java' first." >&2
   exit 1
 fi
@@ -20,9 +20,9 @@ echo "=== Test 1: Java import compatibility ==="
 # Install local projen artifacts to Maven cache, overwriting any existing version
 echo "Installing local projen artifacts to Maven cache..."
 mvn install:install-file \
-  -Dfile="$JAVA_REPO_PATH/io/github/cdklabs/projen/0.0.0/projen-0.0.0.jar" \
-  -DpomFile="$JAVA_REPO_PATH/io/github/cdklabs/projen/0.0.0/projen-0.0.0.pom" \
-  -DgroupId=io.github.cdklabs \
+  -Dfile="$JAVA_REPO_PATH/io/projen/projen/0.0.0/projen-0.0.0.jar" \
+  -DpomFile="$JAVA_REPO_PATH/io/projen/projen/0.0.0/projen-0.0.0.pom" \
+  -DgroupId=io.projen \
   -DartifactId=projen \
   -Dversion=0.0.0 \
   -Dpackaging=jar \
@@ -62,7 +62,7 @@ cat > pom.xml <<HERE
 
     <dependencies>
         <dependency>
-            <groupId>io.github.cdklabs</groupId>
+            <groupId>io.projen</groupId>
             <artifactId>projen</artifactId>
             <version>0.0.0</version>
         </dependency>
