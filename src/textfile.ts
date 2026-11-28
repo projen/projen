@@ -7,6 +7,17 @@ import { FileBase } from "./file";
  */
 export interface TextFileOptions extends FileBaseOptions {
   /**
+   * Makes the projen marker available via `TextFile.marker`.
+   *
+   * `TextFile` does not write the marker automatically. To include it, add it
+   * using the comment syntax of the file format. The marker is unavailable
+   * when the project is ejected.
+   *
+   * @default false
+   */
+  readonly marker?: boolean;
+
+  /**
    * The contents of the text file. You can use `addLine()` to append lines.
    *
    * @default [] empty file
@@ -32,7 +43,7 @@ export class TextFile extends FileBase {
     filePath: string,
     options: TextFileOptions = {},
   ) {
-    super(scope, filePath, options);
+    super(scope, filePath, { ...options, marker: options.marker ?? false });
 
     this.lines = options.lines ?? [];
   }

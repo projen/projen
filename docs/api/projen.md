@@ -18440,7 +18440,7 @@ const textFileOptions: TextFileOptions = { ... }
 | <code><a href="#projen.TextFileOptions.property.committed">committed</a></code> | <code>boolean</code> | Indicates whether this file should be committed to git or ignored. |
 | <code><a href="#projen.TextFileOptions.property.editGitignore">editGitignore</a></code> | <code>boolean</code> | Update the project's .gitignore file. |
 | <code><a href="#projen.TextFileOptions.property.executable">executable</a></code> | <code>boolean</code> | Whether the generated file should be marked as executable. |
-| <code><a href="#projen.TextFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Adds the projen marker to the file. |
+| <code><a href="#projen.TextFileOptions.property.marker">marker</a></code> | <code>boolean</code> | Makes the projen marker available via `TextFile.marker`. |
 | <code><a href="#projen.TextFileOptions.property.readonly">readonly</a></code> | <code>boolean</code> | Whether the generated file should be readonly. |
 | <code><a href="#projen.TextFileOptions.property.lines">lines</a></code> | <code>string[]</code> | The contents of the text file. |
 
@@ -18496,9 +18496,13 @@ public readonly marker: boolean;
 ```
 
 - *Type:* boolean
-- *Default:* marker will be included as long as the project is not ejected
+- *Default:* false
 
-Adds the projen marker to the file.
+Makes the projen marker available via `TextFile.marker`.
+
+`TextFile` does not write the marker automatically. To include it, add it
+using the comment syntax of the file format. The marker is unavailable
+when the project is ejected.
 
 ---
 

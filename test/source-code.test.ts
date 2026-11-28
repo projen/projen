@@ -1,5 +1,14 @@
 import { synthSnapshot, TestProject } from "./util";
 import { SourceCode } from "../src";
+import { PROJEN_MARKER } from "../src/common";
+
+test("can emit its marker as a comment", () => {
+  const project = new TestProject();
+  const source = new SourceCode(project, "test.js");
+  source.line(`// ${source.marker}`);
+
+  expect(synthSnapshot(project)["test.js"]).toContain(`// ${PROJEN_MARKER}`);
+});
 
 test("lines", () => {
   const project = new TestProject();
