@@ -13199,7 +13199,7 @@ reviewed action version.
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_SETUP_PYTHON">ACTIONS_SETUP_PYTHON</a></code> | <code>string</code> | actions/setup-python at v7.1.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_STALE">ACTIONS_STALE</a></code> | <code>string</code> | actions/stale at v11.0.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.ACTIONS_UPLOAD_ARTIFACT">ACTIONS_UPLOAD_ARTIFACT</a></code> | <code>string</code> | actions/upload-artifact at v7.0.2. |
-| <code><a href="#projen.github.ActionRefs.property.AMANNN_ACTION_SEMANTIC_PULL_REQUEST">AMANNN_ACTION_SEMANTIC_PULL_REQUEST</a></code> | <code>string</code> | amannn/action-semantic-pull-request at v6.1.2 (immutable). |
+| <code><a href="#projen.github.ActionRefs.property.AMANNN_ACTION_SEMANTIC_PULL_REQUEST">AMANNN_ACTION_SEMANTIC_PULL_REQUEST</a></code> | <code>string</code> | amannn/action-semantic-pull-request at v6.1.3 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS">AWS_ACTIONS_CONFIGURE_AWS_CREDENTIALS</a></code> | <code>string</code> | aws-actions/configure-aws-credentials at v6.3.0 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.CODECOV_CODECOV_ACTION">CODECOV_CODECOV_ACTION</a></code> | <code>string</code> | codecov/codecov-action at v7.1.1 (immutable). |
 | <code><a href="#projen.github.ActionRefs.property.OVEN_SH_SETUP_BUN">OVEN_SH_SETUP_BUN</a></code> | <code>string</code> | oven-sh/setup-bun at v2.2.0. |
@@ -13361,7 +13361,7 @@ public readonly AMANNN_ACTION_SEMANTIC_PULL_REQUEST: string;
 
 - *Type:* string
 
-amannn/action-semantic-pull-request at v6.1.2 (immutable).
+amannn/action-semantic-pull-request at v6.1.3 (immutable).
 
 ---
 
