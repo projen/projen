@@ -288,6 +288,32 @@ describe("integ-runner", () => {
       "/integ\\.[^/]*\\.ts$",
     );
   });
+
+  test("writes parallel regions to an unmarked integ.config.json", () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      experimentalIntegRunner: true,
+      integRunnerParallelRegions: ["eu-west-1", "eu-central-1"],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot["integ.config.json"]).toStrictEqual({
+      parallelRegions: ["eu-west-1", "eu-central-1"],
+    });
+    expect(snapshot[".npmignore"]).toContain("/integ.config.json");
+  });
+
+  test("does not write integ.config.json without parallel regions", () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      experimentalIntegRunner: true,
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot["integ.config.json"]).toBeUndefined();
+  });
 });
 
 it("warns the user if they add CDK v1 dependencies to a CDK v2 project", () => {

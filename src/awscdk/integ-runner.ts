@@ -1,5 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import { JsonFile } from "../json";
 import type { TypeScriptProject } from "../typescript";
 
 /**
@@ -7,8 +8,17 @@ import type { TypeScriptProject } from "../typescript";
  * in a construct library.
  */
 export class IntegRunner extends Component {
-  constructor(project: TypeScriptProject) {
+  constructor(project: TypeScriptProject, parallelRegions?: string[]) {
     super(project);
+
+    if (parallelRegions) {
+      new JsonFile(project, "integ.config.json", {
+        obj: { parallelRegions },
+        // integ-runner rejects unknown config keys, including the marker.
+        marker: false,
+      });
+      project.addPackageIgnore("/integ.config.json");
+    }
 
     project.deps.addDependency(
       "@aws-cdk/integ-runner@latest",
